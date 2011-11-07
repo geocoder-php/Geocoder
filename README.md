@@ -34,6 +34,13 @@ First, you need an `adapter`:
 $adapter  = new \Geocoder\HttpAdapter\BuzzHttpAdapter();
 ```
 
+The `BuzzHttpAdapter` is tweakable, actually you can pass a `Browser` object to this adapter:
+
+``` php
+$buzz    = new \Buzz\Browser(new \Buzz\Client\Curl());
+$adapter = new \Geocoder\HttpAdapter\BuzzHttpAdapter($buzz);
+```
+
 Now, you have to choose a `provider`.
 
 The `YahooProvider` is able to geocode both **IP addresses** and **street addresses**.

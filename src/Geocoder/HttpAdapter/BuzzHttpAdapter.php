@@ -10,18 +10,36 @@
 
 namespace Geocoder\HttpAdapter;
 
+use Buzz\Browser;
+
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
 class BuzzHttpAdapter implements HttpAdapterInterface
 {
     /**
+     * @var \Buzz\Browser
+     */
+    protected $browser;
+
+    /**
+     * @param \Buzz\Browser $browser
+     */
+    public function __construct(Browser $browser = null)
+    {
+        if (null === $browser) {
+            $this->browser = new Browser();
+        } else {
+            $this->browser = $browser;
+        }
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function getContent($url)
     {
-        $browser = new \Buzz\Browser();
-        $response = $browser->get($url);
+        $response = $this->browser->get($url);
 
         return $response->getContent();
     }
