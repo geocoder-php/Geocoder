@@ -100,6 +100,23 @@ You can also write your own `provider` by implementing the `ProviderInterface`. 
 providing useful features.
 
 
+Unit Tests
+----------
+
+To run unit tests, you'll need two dependencies:
+
+```
+git clone git://github.com/kriswallsmith/Buzz.git vendor/Buzz
+git clone git://github.com/symfony/ClassLoader.git vendor/Symfony/Component/ClassLoader
+```
+
+Once installed, just launch the following command:
+
+```
+phpunit
+```
+
+
 Credits
 -------
 
