@@ -62,13 +62,15 @@ That's we'll do:
 $geocoder = new \Geocoder\Geocoder();
 $geocoder->registerProviders(array(
     new \Geocoder\Provider\YahooProvider(
-        $adapter, '<YAHOO_API_KEY>'
+        $adapter, '<YAHOO_API_KEY>', $locale
     ),
     new \Geocoder\Provider\IpInfoDbProvider(
         $adapter, '<IPINFODB_API_KEY>'
     )
 ));
 ```
+
+The `$locale` parameter is available and optional for the `YahooProvider`. 
 
 Everything is ok, enjoy!
 
@@ -123,6 +125,18 @@ $geocoder
 
 The `using()` method allows you to choose the `adapter` to use. When you deal with multiple adapters, you may want to
 choose one of them. The default behavior is to use the first one but it can be annoying.
+
+
+Reverse Geocoding
+-----------------
+
+This library provides a `reverse()` method to retrieve information from coordinates:
+
+``` php
+$geocoder->reverse($latitude, $longitude);
+```
+
+**Note:** the `IpInfoDbProvider` doesn't provide this feature.
 
 
 Extending Things
