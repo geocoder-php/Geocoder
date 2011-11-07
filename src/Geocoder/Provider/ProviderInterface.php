@@ -21,7 +21,7 @@ interface ProviderInterface
      * @param string|array $value   A value or an array containing coordinates.
      * @return array
      */
-    function getData($value, $reversed = false);
+    function getData($value);
 
     /**
      * Returns the provider's name.

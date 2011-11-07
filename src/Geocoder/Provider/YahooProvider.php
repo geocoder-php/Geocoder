@@ -36,7 +36,7 @@ class YahooProvider extends AbstractProvider implements ProviderInterface
     /**
      * {@inheritDoc}
      */
-    public function getData($value, $reversed = false)
+    public function getData($value)
     {
         if (null === $this->apiKey) {
             throw new \RuntimeException('No API Key provided');
@@ -50,12 +50,10 @@ class YahooProvider extends AbstractProvider implements ProviderInterface
             );
         }
 
-        if ($reversed && is_array($value)) {
+        if (is_array($value)) {
             $query = sprintf('http://where.yahooapis.com/geocode?q=%s,+%s&gflags=R&flags=J&appid=%s', $value[0], $value[1], $this->apiKey);
-        } elseif (!is_array($value)) {
-            $query = sprintf('http://where.yahooapis.com/geocode?q=%s&flags=J&appid=%s', urlencode($value), $this->apiKey);
         } else {
-            return array();
+            $query = sprintf('http://where.yahooapis.com/geocode?q=%s&flags=J&appid=%s', urlencode($value), $this->apiKey);
         }
 
         if (null !== $this->getLocale()) {

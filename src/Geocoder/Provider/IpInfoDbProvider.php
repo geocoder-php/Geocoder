@@ -36,13 +36,13 @@ class IpInfoDbProvider extends AbstractProvider implements ProviderInterface
     /**
      * {@inheritDoc}
      */
-    public function getData($value, $reversed = false)
+    public function getData($value)
     {
         if (null === $this->apiKey) {
             throw new \RuntimeException('No API Key provided');
         }
 
-        if ($reversed) {
+        if (is_array($value)) {
             throw new \RuntimeException('The IpInfoDbProvider does not allow reverse geocoding.');
         }
 
