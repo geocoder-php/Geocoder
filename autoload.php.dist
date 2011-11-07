@@ -1,0 +1,14 @@
+<?php
+
+if (!class_exists('\Symfony\Component\ClassLoader\UniversalClassLoader')) {
+    require_once __DIR__ . '/vendor/Symfony/Component/ClassLoader/UniversalClassLoader.php';
+}
+
+$loader = new \Symfony\Component\ClassLoader\UniversalClassLoader();
+$loader->registerNamespaces(array(
+    'Geocoder'          => __DIR__.'/src',
+    'Geocoder\Tests'    => __DIR__.'/tests',
+    'Symfony\Component' => __DIR__.'/vendor',
+    'Buzz'              => __DIR__.'/../vendor/Buzz/lib',
+));
+$loader->register();
