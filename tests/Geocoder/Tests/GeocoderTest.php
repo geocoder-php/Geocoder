@@ -140,7 +140,7 @@ class MockProvider implements ProviderInterface
         $this->name = $name;
     }
 
-    public function getData($value)
+    public function getData($value, $reversed = false)
     {
     }
 

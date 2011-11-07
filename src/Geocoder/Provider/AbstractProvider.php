@@ -23,11 +23,17 @@ abstract class AbstractProvider
     private $adapter = null;
 
     /**
+     * @var string
+     */
+    private $locale;
+
+    /**
      * @param \Geocoder\HttpAdapter\HttpAdapterInterface $adapter   An HTTP adapter.
      */
-    public function __construct(HttpAdapterInterface $adapter)
+    public function __construct(HttpAdapterInterface $adapter, $locale = null)
     {
         $this->adapter = $adapter;
+        $this->locale = $locale;
     }
 
     /**
@@ -38,5 +44,15 @@ abstract class AbstractProvider
     protected function getAdapter()
     {
         return $this->adapter;
+    }
+
+    /**
+     * Returns the configured locale or null.
+     *
+     * @return string
+     */
+    protected function getLocale()
+    {
+        return $this->locale;
     }
 }

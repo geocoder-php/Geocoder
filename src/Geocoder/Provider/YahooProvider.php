@@ -26,9 +26,9 @@ class YahooProvider extends AbstractProvider implements ProviderInterface
     /**
      * @param string $apiKey
      */
-    public function __construct(HttpAdapterInterface $adapter, $apiKey)
+    public function __construct(HttpAdapterInterface $adapter, $apiKey, $locale = null)
     {
-        parent::__construct($adapter);
+        parent::__construct($adapter, $locale);
 
         $this->apiKey = $apiKey;
     }
@@ -52,8 +52,14 @@ class YahooProvider extends AbstractProvider implements ProviderInterface
 
         if ($reversed && is_array($value)) {
             $query = sprintf('http://where.yahooapis.com/geocode?q=%s,+%s&gflags=R&flags=J&appid=%s', $value[0], $value[1], $this->apiKey);
-        } else {
+        } elseif (!is_array($value)) {
             $query = sprintf('http://where.yahooapis.com/geocode?q=%s&flags=J&appid=%s', urlencode($value), $this->apiKey);
+        } else {
+            return array();
+        }
+
+        if (null !== $this->getLocale()) {
+            $query = sprintf('%s&locale=%s', $query, $this->getLocale());
         }
 
         return $this->executeQuery($query);

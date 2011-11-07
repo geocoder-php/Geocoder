@@ -43,7 +43,7 @@ class IpInfoDbProvider extends AbstractProvider implements ProviderInterface
         }
 
         if ($reversed) {
-            throw new \RuntimeException('The IpInfoDbProvider does not allow reverse geocoding');
+            throw new \RuntimeException('The IpInfoDbProvider does not allow reverse geocoding.');
         }
 
         if ('127.0.0.1' === $value) {
