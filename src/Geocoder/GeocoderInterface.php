@@ -23,6 +23,14 @@ interface GeocoderInterface
     function geocode($value);
 
     /**
+     * Revere geocode given latitude and longitude values.
+     *
+     * @param double $latitude  Latitude.
+     * @param double $longitude Longitude.
+     */
+    function reverse($latitude, $longitude);
+
+    /**
      * Returns an array of coordinates (latitude, longitude).
      *
      * @return array

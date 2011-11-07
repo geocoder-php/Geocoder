@@ -18,10 +18,10 @@ interface ProviderInterface
     /**
      * Returns an associative array with data treated by the provider.
      *
-     * @param string $value A value.
+     * @param string|array $value   A value or an array containing coordinates.
      * @return array
      */
-    function getData($value);
+    function getData($value, $reversed = false);
 
     /**
      * Returns the provider's name.

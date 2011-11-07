@@ -77,6 +77,15 @@ class Geocoder implements GeocoderInterface
     /**
      * {@inheritDoc}
      */
+    public function reverse($latitude, $longitude)
+    {
+        $data = $this->getProvider()->getData(array($latitude, $longitude), true);
+        $this->extractData($data);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getCoordinates()
     {
         return array($this->getLatitude(), $this->getLongitude());

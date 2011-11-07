@@ -36,7 +36,7 @@ class YahooProvider extends AbstractProvider implements ProviderInterface
     /**
      * {@inheritDoc}
      */
-    public function getData($value)
+    public function getData($value, $reversed = false)
     {
         if (null === $this->apiKey) {
             throw new \RuntimeException('No API Key provided');
@@ -50,9 +50,30 @@ class YahooProvider extends AbstractProvider implements ProviderInterface
             );
         }
 
-        $query   = sprintf('http://where.yahooapis.com/geocode?q=%s&flags=J&appid=%s', urlencode($value), $this->apiKey);
-        $content = $this->getAdapter()->getContent($query);
+        if ($reversed && is_array($value)) {
+            $query = sprintf('http://where.yahooapis.com/geocode?q=%s,+%s&gflags=R&flags=J&appid=%s', $value[0], $value[1], $this->apiKey);
+        } else {
+            $query = sprintf('http://where.yahooapis.com/geocode?q=%s&flags=J&appid=%s', urlencode($value), $this->apiKey);
+        }
 
+        return $this->executeQuery($query);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getName()
+    {
+        return 'yahoo';
+    }
+
+    /**
+     * @param string $query
+     * @return array
+     */
+    protected function executeQuery($query)
+    {
+        $content = $this->getAdapter()->getContent($query);
         $data = (array)json_decode($content)->ResultSet->Results[0];
 
         return array(
@@ -63,13 +84,5 @@ class YahooProvider extends AbstractProvider implements ProviderInterface
             'region'    => $data['state'],
             'country'   => $data['country']
         );
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getName()
-    {
-        return 'yahoo';
     }
 }
