@@ -18,10 +18,18 @@ interface ProviderInterface
     /**
      * Returns an associative array with data treated by the provider.
      *
-     * @param string|array $value   A value or an array containing coordinates.
+     * @param string $address   An address (IP or street).
      * @return array
      */
-    function getData($value);
+    function getGeocodedData($address);
+
+    /**
+     * Returns an associative array with data treated by the provider.
+     *
+     * @param array $coordinates    Coordinates (latitude, longitude).
+     * @return array
+     */
+    function getReversedData(array $coordinates);
 
     /**
      * Returns the provider's name.

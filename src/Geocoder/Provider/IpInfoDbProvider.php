@@ -36,17 +36,13 @@ class IpInfoDbProvider extends AbstractProvider implements ProviderInterface
     /**
      * {@inheritDoc}
      */
-    public function getData($value)
+    public function getGeocodedData($address)
     {
         if (null === $this->apiKey) {
             throw new \RuntimeException('No API Key provided');
         }
 
-        if (is_array($value)) {
-            throw new \RuntimeException('The IpInfoDbProvider does not allow reverse geocoding.');
-        }
-
-        if ('127.0.0.1' === $value) {
+        if ('127.0.0.1' === $address) {
             return array(
                 'city'      => 'localhost',
                 'region'    => 'localhost',
@@ -54,9 +50,9 @@ class IpInfoDbProvider extends AbstractProvider implements ProviderInterface
             );
         }
 
-        $query   = sprintf('http://api.ipinfodb.com/v3/ip-city/?key=%s&format=json&ip=%s', $this->apiKey, $value);
-        $content = $this->getAdapter()->getContent($query);
+        $query   = sprintf('http://api.ipinfodb.com/v3/ip-city/?key=%s&format=json&ip=%s', $this->apiKey, $address);
 
+        $content = $this->getAdapter()->getContent($query);
         $data = (array)json_decode($content);
 
         return array(
@@ -67,6 +63,15 @@ class IpInfoDbProvider extends AbstractProvider implements ProviderInterface
             'region'    => $data['regionName'],
             'country'   => $data['countryName']
         );
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getReversedData(array $coordinates)
+    {
+        throw new \RuntimeException('The IpInfoDbProvider is not able to do reverse geocoding.');
     }
 
     /**

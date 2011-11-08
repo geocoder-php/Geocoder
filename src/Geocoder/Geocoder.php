@@ -70,7 +70,7 @@ class Geocoder implements GeocoderInterface
      */
     public function geocode($value)
     {
-        $data = $this->getProvider()->getData($value);
+        $data = $this->getProvider()->getGeocodedData(trim($value));
         $this->extractData($data);
     }
 
@@ -79,7 +79,7 @@ class Geocoder implements GeocoderInterface
      */
     public function reverse($latitude, $longitude)
     {
-        $data = $this->getProvider()->getData(array($latitude, $longitude));
+        $data = $this->getProvider()->getReversedData(array($latitude, $longitude));
         $this->extractData($data);
     }
 

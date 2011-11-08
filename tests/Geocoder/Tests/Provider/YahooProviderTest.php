@@ -11,16 +11,29 @@ class YahooProviderTest extends TestCase
     /**
      * @expectedException \RuntimeException
      */
-    public function testGetDataWithNullApiKey()
+    public function testGetGeocodedDataWithNullApiKey()
     {
         $provider = new YahooProvider($this->getMock('\Geocoder\HttpAdapter\HttpAdapterInterface'), null);
-        $provider->getData('foo');
+        $provider->getGeocodedData('foo');
     }
 
-    public function testGetData()
+    public function testGetGeocodedData()
     {
         $this->provider = new YahooProvider($this->getMockAdapter(), 'api_key');
-        $result = $this->provider->getData('foobar');
+        $result = $this->provider->getGeocodedData('foobar');
+
+        $this->assertNull($result['latitude']);
+        $this->assertNull($result['longitude']);
+        $this->assertNull($result['city']);
+        $this->assertNull($result['zipcode']);
+        $this->assertNull($result['region']);
+        $this->assertNull($result['country']);
+    }
+
+    public function testGetReversedData()
+    {
+        $this->provider = new YahooProvider($this->getMockAdapter(), 'api_key');
+        $result = $this->provider->getReversedData(array(1, 2));
 
         $this->assertNull($result['latitude']);
         $this->assertNull($result['longitude']);

@@ -140,7 +140,11 @@ class MockProvider implements ProviderInterface
         $this->name = $name;
     }
 
-    public function getData($value, $reversed = false)
+    public function getGeocodedData($address)
+    {
+    }
+
+    public function getReversedData(array $coordinates)
     {
     }
 

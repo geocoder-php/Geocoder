@@ -14,13 +14,13 @@ class IpInfoDbProviderTest extends TestCase
     public function testGetDataWithNullApiKey()
     {
         $provider = new IpInfoDbProvider($this->getMock('\Geocoder\HttpAdapter\HttpAdapterInterface'), null);
-        $provider->getData('foo');
+        $provider->getGeocodedData('foo');
     }
 
-    public function testGetData()
+    public function testGetGeocodedData()
     {
         $this->provider = new IpInfoDbProvider($this->getMockAdapter(), 'api_key');
-        $result = $this->provider->getData('foobar');
+        $result = $this->provider->getGeocodedData('foobar');
 
         $this->assertNull($result['latitude']);
         $this->assertNull($result['longitude']);
@@ -28,6 +28,15 @@ class IpInfoDbProviderTest extends TestCase
         $this->assertNull($result['zipcode']);
         $this->assertNull($result['region']);
         $this->assertNull($result['country']);
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testReversedData()
+    {
+        $this->provider = new IpInfoDbProvider($this->getMock('\Geocoder\HttpAdapter\HttpAdapterInterface'), 'api_key');
+        $result = $this->provider->getReversedData(array());
     }
 
     protected function getMockAdapter()

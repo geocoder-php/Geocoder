@@ -36,13 +36,13 @@ class YahooProvider extends AbstractProvider implements ProviderInterface
     /**
      * {@inheritDoc}
      */
-    public function getData($value)
+    public function getGeocodedData($address)
     {
         if (null === $this->apiKey) {
             throw new \RuntimeException('No API Key provided');
         }
 
-        if ('127.0.0.1' === $value) {
+        if ('127.0.0.1' === $address) {
             return array(
                 'city'      => 'localhost',
                 'region'    => 'localhost',
@@ -50,15 +50,21 @@ class YahooProvider extends AbstractProvider implements ProviderInterface
             );
         }
 
-        if (is_array($value)) {
-            $query = sprintf('http://where.yahooapis.com/geocode?q=%s,+%s&gflags=R&flags=J&appid=%s', $value[0], $value[1], $this->apiKey);
-        } else {
-            $query = sprintf('http://where.yahooapis.com/geocode?q=%s&flags=J&appid=%s', urlencode($value), $this->apiKey);
+        $query = sprintf('http://where.yahooapis.com/geocode?q=%s&flags=J&appid=%s', urlencode($address), $this->apiKey);
+
+        return $this->executeQuery($query);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getReversedData(array $coordinates)
+    {
+        if (null === $this->apiKey) {
+            throw new \RuntimeException('No API Key provided');
         }
 
-        if (null !== $this->getLocale()) {
-            $query = sprintf('%s&locale=%s', $query, $this->getLocale());
-        }
+        $query = sprintf('http://where.yahooapis.com/geocode?q=%s,+%s&gflags=R&flags=J&appid=%s', $coordinates[0], $coordinates[1], $this->apiKey);
 
         return $this->executeQuery($query);
     }
@@ -77,6 +83,10 @@ class YahooProvider extends AbstractProvider implements ProviderInterface
      */
     protected function executeQuery($query)
     {
+        if (null !== $this->getLocale()) {
+            $query = sprintf('%s&locale=%s', $query, $this->getLocale());
+        }
+
         $content = $this->getAdapter()->getContent($query);
         $data = (array)json_decode($content)->ResultSet->Results[0];
 
