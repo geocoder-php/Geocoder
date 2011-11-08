@@ -5,14 +5,15 @@ Geocoder
 
 The library is splitted in two parts: `HttpAdapter` and `Provider`:
 
-`HttpAdapter`s are responsible to get data from remote APIs.
+**HttpAdapters** are responsible to get data from remote APIs.
 Currently, there is one adapter for [Buzz](https://github.com/kriswallsmith/Buzz), a lightweight PHP 5.3 library for issuing HTTP requests.
 
-`Provider`s contain the logic to extract useful information.
-Currently, there are two providers for the following APIs:
+**Providers** contain the logic to extract useful information.
+Currently, there are three providers for the following APIs:
 
-* [IpInfoDB](http://www.ipinfodb.com/) for the IP-Based geocoding part;
-* [Yahoo! PlaceFinder](http://developer.yahoo.com/geo/placefinder/) for the Address-Based geocoding part.
+* [IpInfoDB](http://www.ipinfodb.com/) as IP-Based geocoding provider;
+* [Yahoo! PlaceFinder](http://developer.yahoo.com/geo/placefinder/) as Address-Based geocoding provider;
+* [HostIp](http://www.hostip.info/) as IP-Based geocoding provider.
 
 Installation
 ------------
@@ -51,7 +52,7 @@ $adapter = new \Geocoder\HttpAdapter\BuzzHttpAdapter($buzz);
 Now, you have to choose a `provider`.
 
 The `YahooProvider` is able to geocode both **IP addresses** and **street addresses**.
-The `IpInfoDbProvider` is able to geocde **IP addresses** only.
+The `IpInfoDbProvider` and `HostIpProvider` are able to geocode **IP addresses** only.
 
 You can use one of them or write your own provider. You can also register all providers and decide later.
 That's we'll do:
@@ -66,11 +67,12 @@ $geocoder->registerProviders(array(
     ),
     new \Geocoder\Provider\IpInfoDbProvider(
         $adapter, '<IPINFODB_API_KEY>'
-    )
+    ),
+    new \Geocoder\Provider\HostIpProvider($adapter)
 ));
 ```
 
-The `$locale` parameter is available and optional for the `YahooProvider`. 
+The `$locale` parameter is available and optional for the `YahooProvider`.
 
 Everything is ok, enjoy!
 
