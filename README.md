@@ -9,11 +9,12 @@ The library is splitted in two parts: `HttpAdapter` and `Provider`:
 Currently, there is one adapter for [Buzz](https://github.com/kriswallsmith/Buzz), a lightweight PHP 5.3 library for issuing HTTP requests.
 
 **Providers** contain the logic to extract useful information.
-Currently, there are three providers for the following APIs:
+Currently, there are many providers for the following APIs:
 
 * [IpInfoDB](http://www.ipinfodb.com/) as IP-Based geocoding provider;
 * [Yahoo! PlaceFinder](http://developer.yahoo.com/geo/placefinder/) as Address-Based geocoding provider;
-* [HostIp](http://www.hostip.info/) as IP-Based geocoding provider.
+* [HostIp](http://www.hostip.info/) as IP-Based geocoding provider;
+* [FreeGeoIp](http://freegeoip.net/static/index.html) as IP-Based geocoding provider.
 
 Installation
 ------------
@@ -52,7 +53,8 @@ $adapter = new \Geocoder\HttpAdapter\BuzzHttpAdapter($buzz);
 Now, you have to choose a `provider`.
 
 The `YahooProvider` is able to geocode both **IP addresses** and **street addresses**.
-The `IpInfoDbProvider` and `HostIpProvider` are able to geocode **IP addresses** only.
+
+The `IpInfoDbProvider`, `FreeGeoIpProvider`, and `HostIpProvider` are able to geocode **IP addresses** only.
 
 You can use one of them or write your own provider. You can also register all providers and decide later.
 That's we'll do:
@@ -146,8 +148,9 @@ Extending Things
 
 You can provide your own `adapter`, you just need to create a new class which implements `HttpAdapterInterface`.
 
-You can also write your own `provider` by implementing the `ProviderInterface`. Note, the `AbstractProvider` class can help you by
-providing useful features.
+You can also write your own `provider` by implementing the `ProviderInterface`.
+
+Note, the `AbstractProvider` class can help you by providing useful features.
 
 
 Unit Tests

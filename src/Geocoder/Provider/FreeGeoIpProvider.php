@@ -16,32 +16,13 @@ use Geocoder\Provider\ProviderInterface;
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-class IpInfoDbProvider extends AbstractProvider implements ProviderInterface
+class FreeGeoIpProvider extends AbstractProvider implements ProviderInterface
 {
-    /**
-     * @var string
-     */
-    private $apiKey = null;
-
-    /**
-     * @param string $apiKey
-     */
-    public function __construct(HttpAdapterInterface $adapter, $apiKey)
-    {
-        parent::__construct($adapter);
-
-        $this->apiKey = $apiKey;
-    }
-
     /**
      * {@inheritDoc}
      */
     public function getGeocodedData($address)
     {
-        if (null === $this->apiKey) {
-            throw new \RuntimeException('No API Key provided');
-        }
-
         if ('127.0.0.1' === $address) {
             return array(
                 'city'      => 'localhost',
@@ -50,7 +31,7 @@ class IpInfoDbProvider extends AbstractProvider implements ProviderInterface
             );
         }
 
-        $query   = sprintf('http://api.ipinfodb.com/v3/ip-city/?key=%s&format=json&ip=%s', $this->apiKey, $address);
+        $query = sprintf('http://freegeoip.net/json/%s', $address);
 
         $content = $this->getAdapter()->getContent($query);
         $data = (array)json_decode($content);
@@ -58,10 +39,10 @@ class IpInfoDbProvider extends AbstractProvider implements ProviderInterface
         return array(
             'latitude'  => $data['latitude'],
             'longitude' => $data['longitude'],
-            'city'      => $data['cityName'],
-            'zipcode'   => $data['zipCode'],
-            'region'    => $data['regionName'],
-            'country'   => $data['countryName']
+            'city'      => $data['city'],
+            'zipcode'   => $data['zipcode'],
+            'region'    => $data['region_name'],
+            'country'   => $data['country_name']
         );
     }
 
@@ -70,7 +51,7 @@ class IpInfoDbProvider extends AbstractProvider implements ProviderInterface
      */
     public function getReversedData(array $coordinates)
     {
-        throw new \RuntimeException('The IpInfoDbProvider is not able to do reverse geocoding.');
+        throw new \RuntimeException('The FreeGeoIpProvider is not able to do reverse geocoding.');
     }
 
     /**
@@ -78,6 +59,6 @@ class IpInfoDbProvider extends AbstractProvider implements ProviderInterface
      */
     public function getName()
     {
-        return 'ip_info_db';
+        return 'free_geo_ip';
     }
 }
