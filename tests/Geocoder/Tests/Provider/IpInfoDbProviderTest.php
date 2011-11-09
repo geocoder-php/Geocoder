@@ -101,7 +101,7 @@ class IpInfoDbProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \RuntimeException
+     * @expectedException \Geocoder\Exception\UnsupportedException
      */
     public function testReversedData()
     {

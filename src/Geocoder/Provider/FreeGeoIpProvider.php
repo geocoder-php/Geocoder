@@ -10,6 +10,7 @@
 
 namespace Geocoder\Provider;
 
+use Geocoder\Exception\UnsupportedException;
 use Geocoder\HttpAdapter\HttpAdapterInterface;
 use Geocoder\Provider\ProviderInterface;
 
@@ -51,7 +52,7 @@ class FreeGeoIpProvider extends AbstractProvider implements ProviderInterface
      */
     public function getReversedData(array $coordinates)
     {
-        throw new \RuntimeException('The FreeGeoIpProvider is not able to do reverse geocoding.');
+        throw new UnsupportedException('The FreeGeoIpProvider is not able to do reverse geocoding.');
     }
 
     /**

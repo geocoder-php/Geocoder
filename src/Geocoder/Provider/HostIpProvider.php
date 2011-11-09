@@ -10,6 +10,7 @@
 
 namespace Geocoder\Provider;
 
+use Geocoder\Exception\UnsupportedException;
 use Geocoder\HttpAdapter\HttpAdapterInterface;
 use Geocoder\Provider\ProviderInterface;
 
@@ -81,7 +82,7 @@ class HostIpProvider extends AbstractProvider implements ProviderInterface
      */
     public function getReversedData(array $coordinates)
     {
-        throw new \RuntimeException('The HostIpProvider is not able to do reverse geocoding.');
+        throw new UnsupportedException('The HostIpProvider is not able to do reverse geocoding.');
     }
 
     /**

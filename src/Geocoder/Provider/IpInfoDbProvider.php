@@ -10,6 +10,7 @@
 
 namespace Geocoder\Provider;
 
+use Geocoder\Exception\UnsupportedException;
 use Geocoder\HttpAdapter\HttpAdapterInterface;
 use Geocoder\Provider\ProviderInterface;
 
@@ -70,7 +71,7 @@ class IpInfoDbProvider extends AbstractProvider implements ProviderInterface
      */
     public function getReversedData(array $coordinates)
     {
-        throw new \RuntimeException('The IpInfoDbProvider is not able to do reverse geocoding.');
+        throw new UnsupportedException('The IpInfoDbProvider is not able to do reverse geocoding.');
     }
 
     /**

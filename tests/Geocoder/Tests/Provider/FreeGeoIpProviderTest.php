@@ -75,7 +75,7 @@ class FreeGeoIpProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \RuntimeException
+     * @expectedException \Geocoder\Exception\UnsupportedException
      */
     public function testGetReverseData()
     {
