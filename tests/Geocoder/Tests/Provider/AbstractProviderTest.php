@@ -18,6 +18,16 @@ class AbstractProviderTest extends TestCase
         $provider = new MockProvider($adapter);
 
         $this->assertSame($adapter, $provider->getAdapter());
+        $this->assertNull($provider->getLocale());
+    }
+
+    public function testGetLocale()
+    {
+        $adapter  = new MockHttpAdapter();
+        $provider = new MockProvider($adapter, 'fr_FR');
+
+        $this->assertSame('fr_FR', $provider->getLocale());
+
     }
 }
 
@@ -27,6 +37,12 @@ class MockProvider extends AbstractProvider
     {
         return parent::getAdapter();
     }
+
+    public function getLocale()
+    {
+        return parent::getLocale();
+    }
+
 }
 
 class MockHttpAdapter implements HttpAdapterInterface

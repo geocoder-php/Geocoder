@@ -10,6 +10,10 @@
     syntaxCheck="false"
     bootstrap="tests/bootstrap.php"
     >
+    <php>
+        <!-- <server name="IPINFODB_API_KEY" value="YOUR_API_KEY" /> -->
+        <!-- <server name="YAHOO_API_KEY" value="YOUR_API_KEY" /> -->
+    </php>
     <testsuites>
         <testsuite name="Geocoder Test Suite">
             <directory>./tests/</directory>

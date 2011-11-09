@@ -80,30 +80,30 @@ class GeocoderTest extends TestCase
         $this->assertSame($provider1, $this->geocoder->getProvider());
     }
 
-    public function testExtractData()
+    public function testFromData()
     {
         $array = array(
-            'latitude'  => 'foo_latitude',
-            'longitude' => 'foo_longitude',
-            'city'      => 'foo_city',
-            'zipcode'   => 'foo_zipcode',
-            'region'    => 'foo_region',
-            'country'   => 'foo_country'
+            'latitude'  => 0.001,
+            'longitude' => 1,
+            'city'      => 'FOo CITY',
+            'zipcode'   => '65943',
+            'region'    => 'FOO region',
+            'country'   => 'FOO Country'
         );
 
-        $this->geocoder->extractData($array);
+        $this->geocoder->fromArray($array);
 
-        $this->assertEquals('foo_latitude', $this->geocoder->getLatitude());
-        $this->assertEquals('foo_longitude', $this->geocoder->getLongitude());
-        $this->assertEquals('foo_city', $this->geocoder->getCity());
-        $this->assertEquals('foo_zipcode', $this->geocoder->getZipcode());
-        $this->assertEquals('foo_region', $this->geocoder->getRegion());
-        $this->assertEquals('foo_country', $this->geocoder->getCountry());
+        $this->assertEquals(0.001, $this->geocoder->getLatitude());
+        $this->assertEquals(1, $this->geocoder->getLongitude());
+        $this->assertEquals('Foo City', $this->geocoder->getCity());
+        $this->assertEquals('65943', $this->geocoder->getZipcode());
+        $this->assertEquals('Foo Region', $this->geocoder->getRegion());
+        $this->assertEquals('Foo Country', $this->geocoder->getCountry());
     }
 
-    public function testExtractDataWithEmptyArray()
+    public function testFromDataWithEmptyArray()
     {
-        $this->geocoder->extractData(array());
+        $this->geocoder->fromArray(array());
 
         $this->assertEquals('', $this->geocoder->getLatitude());
         $this->assertEquals('', $this->geocoder->getLongitude());
@@ -113,17 +113,17 @@ class GeocoderTest extends TestCase
         $this->assertEquals('', $this->geocoder->getCountry());
     }
 
-    public function testExtractDataWithNull()
+    public function testFromDataWithNull()
     {
         $array = array(
-            'latitude'  => 'foo_latitude',
-            'longitude' => 'foo_longitude',
+            'latitude'  => 100,
+            'longitude' => 1.2
         );
 
-        $this->geocoder->extractData($array);
+        $this->geocoder->fromArray($array);
 
-        $this->assertEquals('foo_latitude', $this->geocoder->getLatitude());
-        $this->assertEquals('foo_longitude', $this->geocoder->getLongitude());
+        $this->assertEquals(100, $this->geocoder->getLatitude());
+        $this->assertEquals(1.2, $this->geocoder->getLongitude());
         $this->assertEquals('', $this->geocoder->getCity());
         $this->assertEquals('', $this->geocoder->getZipcode());
         $this->assertEquals('', $this->geocoder->getRegion());
@@ -161,8 +161,8 @@ class TestableGeocoder extends Geocoder
         return parent::getProvider();
     }
 
-    public function extractData(array $data = array())
+    public function fromArray(array $data = array())
     {
-        return parent::extractData($data);
+        return parent::fromArray($data);
     }
 }
