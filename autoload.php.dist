@@ -9,6 +9,6 @@ $loader->registerNamespaces(array(
     'Geocoder'          => __DIR__.'/src',
     'Geocoder\Tests'    => __DIR__.'/tests',
     'Symfony\Component' => __DIR__.'/vendor',
-    'Buzz'              => __DIR__.'/../vendor/Buzz/lib',
+    'Buzz'              => __DIR__.'/vendor/Buzz/lib',
 ));
 $loader->register();
