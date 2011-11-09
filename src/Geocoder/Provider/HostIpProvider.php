@@ -34,8 +34,14 @@ class HostIpProvider extends AbstractProvider implements ProviderInterface
         $query = sprintf('http://api.hostip.info/get_xml.php?ip=%s&position=true', $address);
 
         $content = $this->getAdapter()->getContent($query);
-        $xml = new \SimpleXmlElement($content);
-        $coordinates = $xml
+
+        try {
+            $xml = new \SimpleXmlElement($content);
+        } catch (\Exception $e) {
+            return array();
+        }
+
+        $coordinates = (string) $xml
             ->children('gml', true)
                 ->featureMember
                 ->children('', true)
@@ -47,7 +53,7 @@ class HostIpProvider extends AbstractProvider implements ProviderInterface
                         ->coordinates;
 
         $lngLat = explode(',', $coordinates);
-        $city = $xml
+        $city = (string) $xml
             ->children('gml', true)
                 ->featureMember
                 ->children('', true)
@@ -55,7 +61,7 @@ class HostIpProvider extends AbstractProvider implements ProviderInterface
                         ->children('gml', true)
                         ->name;
 
-        $country = $xml
+        $country = (string) $xml
             ->children('gml', true)
                 ->featureMember
                 ->children('', true)

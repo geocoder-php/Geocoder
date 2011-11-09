@@ -71,7 +71,7 @@ class Geocoder implements GeocoderInterface
     public function geocode($value)
     {
         $data = $this->getProvider()->getGeocodedData(trim($value));
-        $this->extractData($data);
+        $this->fromArray($data);
     }
 
     /**
@@ -80,7 +80,7 @@ class Geocoder implements GeocoderInterface
     public function reverse($latitude, $longitude)
     {
         $data = $this->getProvider()->getReversedData(array($latitude, $longitude));
-        $this->extractData($data);
+        $this->fromArray($data);
     }
 
     /**
@@ -207,25 +207,25 @@ class Geocoder implements GeocoderInterface
      *
      * @param array $data   An array.
      */
-    protected function extractData(array $data = array())
+    protected function fromArray(array $data = array())
     {
         if (isset($data['latitude'])) {
-            $this->latitude = $data['latitude'];
+            $this->latitude = (double) $data['latitude'];
         }
         if (isset($data['longitude'])) {
-            $this->longitude = $data['longitude'];
+            $this->longitude = (double) $data['longitude'];
         }
         if (isset($data['city'])) {
-            $this->city = $data['city'];
+            $this->city = ucwords(strtolower($data['city']));
         }
         if (isset($data['zipcode'])) {
-            $this->zipcode = $data['zipcode'];
+            $this->zipcode = (string) $data['zipcode'];
         }
         if (isset($data['region'])) {
-            $this->region = $data['region'];
+            $this->region = ucwords(strtolower($data['region']));
         }
         if (isset($data['country'])) {
-            $this->country = $data['country'];
+            $this->country = ucwords(strtolower($data['country']));
         }
     }
 }
