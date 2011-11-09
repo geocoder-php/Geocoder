@@ -212,7 +212,7 @@ Rename the `phpunit.xml.dist` file to `phpunit.xml`, then uncomment the followin
 Credits
 -------
 
-* William Durand
+William Durand <william.durand1@gmail.com>
 
 
 License
