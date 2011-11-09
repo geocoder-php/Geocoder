@@ -9,7 +9,10 @@ The library is splitted in two parts: `HttpAdapter` and `Provider` and is really
 
 _HttpAdapters_ are responsible to get data from remote APIs.
 
-Currently, there is only one adapter for [Buzz](https://github.com/kriswallsmith/Buzz), a lightweight PHP 5.3 library for issuing HTTP requests.
+Currently, there are the following adapters:
+
+* `BuzzHttpAdapter` for [Buzz](https://github.com/kriswallsmith/Buzz), a lightweight PHP 5.3 library for issuing HTTP requests;
+* `CurlHttpAdapter` for [cURL](http://php.net/manual/book.curl.php).
 
 
 ### Providers ###
