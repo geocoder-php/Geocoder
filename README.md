@@ -2,24 +2,32 @@ Geocoder
 ========
 
 **Geocoder** is a library which helps you build geo-aware applications. It provides an abstraction layer for geocoding manipulations.
+The library is splitted in two parts: `HttpAdapter` and `Provider` and is really extensible.
 
-The library is splitted in two parts: `HttpAdapter` and `Provider`:
 
-**HttpAdapters** are responsible to get data from remote APIs.
-Currently, there is one adapter for [Buzz](https://github.com/kriswallsmith/Buzz), a lightweight PHP 5.3 library for issuing HTTP requests.
+### HttpAdapters ###
 
-**Providers** contain the logic to extract useful information.
+_HttpAdapters_ are responsible to get data from remote APIs.
+
+Currently, there is only one adapter for [Buzz](https://github.com/kriswallsmith/Buzz), a lightweight PHP 5.3 library for issuing HTTP requests.
+
+
+### Providers ###
+
+_Providers_ contain the logic to extract useful information.
+
 Currently, there are many providers for the following APIs:
 
-* [IpInfoDB](http://www.ipinfodb.com/) as IP-Based geocoding provider;
-* [Yahoo! PlaceFinder](http://developer.yahoo.com/geo/placefinder/) as Address-Based geocoding provider;
+* [FreeGeoIp](http://freegeoip.net/static/index.html) as IP-Based geocoding provider;
 * [HostIp](http://www.hostip.info/) as IP-Based geocoding provider;
-* [FreeGeoIp](http://freegeoip.net/static/index.html) as IP-Based geocoding provider.
+* [IpInfoDB](http://www.ipinfodb.com/) as IP-Based geocoding provider;
+* [Yahoo! PlaceFinder](http://developer.yahoo.com/geo/placefinder/) as Address-Based geocoding and reverse geocoding provider.
+
 
 Installation
 ------------
 
-If you don't use a ClassLoader in your application, just require the provided autoloader:
+If you don't use a _ClassLoader_ in your application, just require the provided autoloader:
 
 ``` php
 <?php
@@ -33,7 +41,7 @@ You're done.
 Usage
 -----
 
-First, you need an `adapter`:
+First, you need an `adapter` to query an API:
 
 ``` php
 <?php
@@ -50,11 +58,29 @@ $buzz    = new \Buzz\Browser(new \Buzz\Client\Curl());
 $adapter = new \Geocoder\HttpAdapter\BuzzHttpAdapter($buzz);
 ```
 
-Now, you have to choose a `provider`.
+Now, you have to choose a `provider` which is closed to what you want to get.
+
+
+### FreeGeoIpProvider ###
+
+The `FreeGeoIpProvider` is able to geocode **IP addresses** only.
+
+
+### HostIpProvider ###
+
+The `HostIpProvider` is able to geocode **IP addresses** only.
+
+
+### IpInfoDbProvider ###
+
+The `IpInfoDbProvider` is able to geocode **IP addresses** only.
+
+
+### YahooProvider ###
 
 The `YahooProvider` is able to geocode both **IP addresses** and **street addresses**.
+This provider can also reverse information based on coordinates (latitude, longitude).
 
-The `IpInfoDbProvider`, `FreeGeoIpProvider`, and `HostIpProvider` are able to geocode **IP addresses** only.
 
 You can use one of them or write your own provider. You can also register all providers and decide later.
 That's we'll do:
@@ -74,7 +100,7 @@ $geocoder->registerProviders(array(
 ));
 ```
 
-The `$locale` parameter is available and optional for the `YahooProvider`.
+The `$locale` parameter is available for the `YahooProvider`.
 
 Everything is ok, enjoy!
 
@@ -88,7 +114,7 @@ The main method is called `geocode()` which receives a value to geocode. It can 
 
 $geocoder->geocode('88.188.221.14');
 // Result is:
-// "latitude"    => string(9) "47.901428"
+// "latitude"   => string(9) "47.901428"
 // "longitude"  => string(8) "1.904960"
 // "city"       => string(7) "Orleans"
 // "zipcode"    => string(0) ""
@@ -140,7 +166,7 @@ This library provides a `reverse()` method to retrieve information from coordina
 $geocoder->reverse($latitude, $longitude);
 ```
 
-**Note:** the `IpInfoDbProvider` doesn't provide this feature.
+**Note:** the `YahooProvider` bundled in this lib is the unique provider able to do this feature.
 
 
 Extending Things
@@ -167,6 +193,17 @@ Once installed, just launch the following command:
 
 ```
 phpunit
+```
+
+You'll obtain some _skipped_ unit tests due to the need of API keys.
+
+Rename the `phpunit.xml.dist` file to `phpunit.xml`, then uncomment the following lines and add your own API keys:
+
+``` xml
+<php>
+    <!-- <server name="IPINFODB_API_KEY" value="YOUR_API_KEY" /> -->
+    <!-- <server name="YAHOO_API_KEY" value="YOUR_API_KEY" /> -->
+</php>
 ```
 
 
