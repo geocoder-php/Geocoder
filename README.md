@@ -88,6 +88,10 @@ The `IpInfoDbProvider` is able to geocode **IP addresses** only.
 The `YahooProvider` is able to geocode both **IP addresses** and **street addresses**.
 This provider can also reverse information based on coordinates (latitude, longitude).
 
+### GoogleMapsProvider ###
+
+The `GoogleMapsProvider` is able to geocode and reverse geocode **street addresses**.
+
 
 You can use one of them or write your own provider. You can also register all providers and decide later.
 That's we'll do:
