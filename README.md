@@ -12,8 +12,9 @@ _HttpAdapters_ are responsible to get data from remote APIs.
 Currently, there are the following adapters:
 
 * `BuzzHttpAdapter` for [Buzz](https://github.com/kriswallsmith/Buzz), a lightweight PHP 5.3 library for issuing HTTP requests;
-* `CurlHttpAdapter` for [cURL](http://php.net/manual/book.curl.php).
-* `GuzzleHttpAdapter` for [Guzzle](https://github.com/guzzle/guzzle), PHP 5.3+ HTTP client and framework for building RESTful web service clients;
+* `CurlHttpAdapter` for [cURL](http://php.net/manual/book.curl.php);
+* `GuzzleHttpAdapter` for [Guzzle](https://github.com/guzzle/guzzle), PHP 5.3+ HTTP client and framework for building RESTful web service clients.
+
 
 ### Providers ###
 
@@ -189,9 +190,9 @@ Unit Tests
 To run unit tests, you'll need these dependencies:
 
 ```
-git clone git://github.com/guzzle/guzzle.git vendor/Guzzle
 git clone git://github.com/kriswallsmith/Buzz.git vendor/Buzz
 git clone git://github.com/symfony/ClassLoader.git vendor/Symfony/Component/ClassLoader
+git clone git://github.com/guzzle/guzzle.git vendor/Guzzle
 ```
 
 Once installed, just launch the following command:
@@ -211,6 +212,8 @@ Rename the `phpunit.xml.dist` file to `phpunit.xml`, then uncomment the followin
     <!-- <server name="GOOGLEMAPS_API_KEY" value="YOUR_API_KEY" /> -->
 </php>
 ```
+
+You're done.
 
 
 Credits
