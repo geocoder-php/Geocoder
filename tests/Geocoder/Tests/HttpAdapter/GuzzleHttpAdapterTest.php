@@ -14,6 +14,13 @@ use Guzzle\Service\Client;
  */
 class GuzzleHttpAdapterTest extends \Geocoder\Tests\TestCase
 {
+    protected function setUp()
+    {
+        if (!class_exists('Guzzle\Service\Client')) {
+            $this->markTestSkipped('Guzzle library has to be installed');
+        }
+    }
+
     /**
      * @covers Geocoder\HttpAdapter\GuzzleHttpAdapter::__construct
      */
