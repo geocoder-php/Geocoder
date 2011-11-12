@@ -1,0 +1,7 @@
+language: php
+php: 5.3
+before_script: ./bin/install_vendors.sh
+script: phpunit
+notifications:
+  email:
+    - william.durand1@gmail.com
