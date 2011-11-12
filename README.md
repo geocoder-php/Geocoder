@@ -187,12 +187,10 @@ Note, the `AbstractProvider` class can help you by providing useful features.
 Unit Tests
 ----------
 
-To run unit tests, you'll need these dependencies:
+To run unit tests, you'll need a set of dependencies you can install by running the `install_vendors.sh` script:
 
 ```
-git clone git://github.com/kriswallsmith/Buzz.git vendor/Buzz
-git clone git://github.com/symfony/ClassLoader.git vendor/Symfony/Component/ClassLoader
-git clone git://github.com/guzzle/guzzle.git vendor/Guzzle
+./bin/install_vendors.sh
 ```
 
 Once installed, just launch the following command:
