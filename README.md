@@ -11,6 +11,7 @@ _HttpAdapters_ are responsible to get data from remote APIs.
 
 Currently, there are the following adapters:
 
+* `GuzzleHttpAdapter` for [Guzzle](https://github.com/guzzle/guzzle), PHP 5.3+ HTTP client and framework for building RESTful web service clients;
 * `BuzzHttpAdapter` for [Buzz](https://github.com/kriswallsmith/Buzz), a lightweight PHP 5.3 library for issuing HTTP requests;
 * `CurlHttpAdapter` for [cURL](http://php.net/manual/book.curl.php).
 
