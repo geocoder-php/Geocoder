@@ -13,7 +13,7 @@ Currently, there are the following adapters:
 
 * `BuzzHttpAdapter` for [Buzz](https://github.com/kriswallsmith/Buzz), a lightweight PHP 5.3 library for issuing HTTP requests;
 * `CurlHttpAdapter` for [cURL](http://php.net/manual/book.curl.php).
-
+* `GuzzleHttpAdapter` for [Guzzle](https://github.com/guzzle/guzzle), PHP 5.3+ HTTP client and framework for building RESTful web service clients;
 
 ### Providers ###
 
@@ -186,9 +186,10 @@ Note, the `AbstractProvider` class can help you by providing useful features.
 Unit Tests
 ----------
 
-To run unit tests, you'll need two dependencies:
+To run unit tests, you'll need these dependencies:
 
 ```
+git clone git://github.com/guzzle/guzzle.git vendor/Guzzle
 git clone git://github.com/kriswallsmith/Buzz.git vendor/Buzz
 git clone git://github.com/symfony/ClassLoader.git vendor/Symfony/Component/ClassLoader
 ```
