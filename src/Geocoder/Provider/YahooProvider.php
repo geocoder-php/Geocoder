@@ -47,6 +47,7 @@ class YahooProvider extends AbstractProvider implements ProviderInterface
                 'city'      => 'localhost',
                 'region'    => 'localhost',
                 'country'   => 'localhost'
+
             );
         }
 
@@ -88,15 +89,25 @@ class YahooProvider extends AbstractProvider implements ProviderInterface
         }
 
         $content = $this->getAdapter()->getContent($query);
-        $data = (array)json_decode($content)->ResultSet->Results[0];
+
+        if (null === $content) {
+            return $this->getDefaults();
+        }
+
+        $json = json_decode($content);
+        if (isset($json->ResultSet)) {
+            $data = (array)$json->ResultSet->Results[0];
+        } else {
+            return $this->getDefaults();
+        }
 
         return array(
-            'latitude'  => $data['latitude'],
-            'longitude' => $data['longitude'],
-            'city'      => $data['city'],
-            'zipcode'   => $data['postal'],
-            'region'    => $data['state'],
-            'country'   => $data['country']
+            'latitude'  => isset($data['latitude']) ? $data['latitude'] : null,
+            'longitude' => isset($data['longitude']) ? $data['longitude'] : null,
+            'city'      => isset($data['city']) ? $data['city'] : null,
+            'zipcode'   => isset($data['postal']) ? $data['postal'] : null,
+            'region'    => isset($data['state']) ? $data['state'] : null,
+            'country'   => isset($data['country']) ? $data['country'] : null
         );
     }
 }

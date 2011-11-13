@@ -54,15 +54,20 @@ class IpInfoDbProvider extends AbstractProvider implements ProviderInterface
         $query   = sprintf('http://api.ipinfodb.com/v3/ip-city/?key=%s&format=json&ip=%s', $this->apiKey, $address);
 
         $content = $this->getAdapter()->getContent($query);
+
+        if (null === $content) {
+            return $this->getDefaults();
+        }
+
         $data = (array)json_decode($content);
 
         return array(
-            'latitude'  => $data['latitude'],
-            'longitude' => $data['longitude'],
-            'city'      => $data['cityName'],
-            'zipcode'   => $data['zipCode'],
-            'region'    => $data['regionName'],
-            'country'   => $data['countryName']
+            'latitude'  => isset($data['latitude']) ? $data['latitude'] : null,
+            'longitude' => isset($data['longitude']) ? $data['longitude'] : null,
+            'city'      => isset($data['cityName']) ? $data['cityName'] : null,
+            'zipcode'   => isset($data['zipCode']) ? $data['zipCode'] : null,
+            'region'    => isset($data['regionName']) ? $data['regionName'] : null,
+            'country'   => isset($data['countryName']) ? $data['countryName'] : null
         );
     }
 

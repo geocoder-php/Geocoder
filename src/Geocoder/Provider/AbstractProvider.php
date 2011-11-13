@@ -56,4 +56,21 @@ abstract class AbstractProvider
     {
         return $this->locale;
     }
+
+    /**
+     * Returns the default results.
+     *
+     * @return array
+     */
+    protected function getDefaults()
+    {
+        return array(
+            'latitude'  => null,
+            'longitude' => null,
+            'city'      => null,
+            'zipcode'   => null,
+            'region'    => null,
+            'country'   => null,
+        );
+    }
 }

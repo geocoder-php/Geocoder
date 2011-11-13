@@ -35,15 +35,20 @@ class FreeGeoIpProvider extends AbstractProvider implements ProviderInterface
         $query = sprintf('http://freegeoip.net/json/%s', $address);
 
         $content = $this->getAdapter()->getContent($query);
+
+        if (null === $content) {
+            return $this->getDefaults();
+        }
+
         $data = (array)json_decode($content);
 
         return array(
-            'latitude'  => $data['latitude'],
-            'longitude' => $data['longitude'],
-            'city'      => $data['city'],
-            'zipcode'   => $data['zipcode'],
-            'region'    => $data['region_name'],
-            'country'   => $data['country_name']
+            'latitude'  => isset($data['latitude']) ? $data['latitude'] : null,
+            'longitude' => isset($data['longitude']) ? $data['longitude'] : null,
+            'city'      => isset($data['city']) ? $data['city'] : null,
+            'zipcode'   => isset($data['zipcode']) ? $data['zipcode'] : null,
+            'region'    => isset($data['region_name']) ? $data['region_name'] : null,
+            'country'   => isset($data['country_name']) ? $data['country_name'] : null
         );
     }
 

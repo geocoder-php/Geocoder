@@ -39,7 +39,7 @@ class HostIpProvider extends AbstractProvider implements ProviderInterface
         try {
             $xml = new \SimpleXmlElement($content);
         } catch (\Exception $e) {
-            return array();
+            return $this->getDefaults();
         }
 
         $coordinates = (string) $xml

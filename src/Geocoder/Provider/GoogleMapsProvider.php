@@ -78,7 +78,18 @@ class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
     protected function executeQuery($query)
     {
         $content = $this->getAdapter()->getContent($query);
-        $data = (array)json_decode($content)->Placemark[0];
+
+        if (null === $content) {
+            return $this->getDefaults();
+        }
+
+        $json = json_decode($content);
+
+        if (isset($json->Placemark)) {
+            $data = (array)json_decode($content)->Placemark[0];
+        } else {
+            return $this->getDefaults();
+        }
 
         $coordinates = (array) $data['Point']->coordinates;
         $locality    = $data['AddressDetails']->Country->AdministrativeArea->SubAdministrativeArea->Locality;

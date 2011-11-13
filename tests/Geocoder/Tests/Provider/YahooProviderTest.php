@@ -61,9 +61,9 @@ class YahooProviderTest extends TestCase
         $this->provider = new YahooProvider($this->getMockAdapter($this->never()), 'api_key');
         $result = $this->provider->getGeocodedData('127.0.0.1');
 
-        $this->assertNull($result['latitude']);
-        $this->assertNull($result['longitude']);
-        $this->assertNull($result['zipcode']);
+        $this->assertArrayNotHasKey('latitude', $result);
+        $this->assertArrayNotHasKey('longitude', $result);
+        $this->assertArrayNotHasKey('zipcode', $result);
 
         $this->assertEquals('localhost', $result['city']);
         $this->assertEquals('localhost', $result['region']);
