@@ -1,7 +1,9 @@
 language: php
 php: 5.3
-before_script: ./bin/install_vendors.sh
-script: phpunit
+before_script:
+  - sudo apt-get install -y subversion
+  - ./bin/install_vendors.sh
+script: phpunit -d error_reporting=false
 notifications:
   email:
     - william.durand1@gmail.com
