@@ -15,7 +15,8 @@ Currently, there are the following adapters:
 
 * `BuzzHttpAdapter` for [Buzz](https://github.com/kriswallsmith/Buzz), a lightweight PHP 5.3 library for issuing HTTP requests;
 * `CurlHttpAdapter` for [cURL](http://php.net/manual/book.curl.php);
-* `GuzzleHttpAdapter` for [Guzzle](https://github.com/guzzle/guzzle), PHP 5.3+ HTTP client and framework for building RESTful web service clients.
+* `GuzzleHttpAdapter` for [Guzzle](https://github.com/guzzle/guzzle), PHP 5.3+ HTTP client and framework for building RESTful web service clients;
+* `ZendHttpAdapter` for [Zend Http Client](http://framework.zend.com/manual/en/zend.http.client.html).
 
 
 ### Providers ###
