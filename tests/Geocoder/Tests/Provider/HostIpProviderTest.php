@@ -52,9 +52,9 @@ class HostIpProviderTest extends TestCase
         $this->provider = new HostIpProvider($this->getMockAdapter($this->never()));
         $result = $this->provider->getGeocodedData('127.0.0.1');
 
-        $this->assertNull($result['latitude']);
-        $this->assertNull($result['longitude']);
-        $this->assertNull($result['zipcode']);
+        $this->assertArrayNotHasKey('latitude', $result);
+        $this->assertArrayNotHasKey('longitude', $result);
+        $this->assertArrayNotHasKey('zipcode', $result);
 
         $this->assertEquals('localhost', $result['city']);
         $this->assertEquals('localhost', $result['region']);
@@ -68,9 +68,9 @@ class HostIpProviderTest extends TestCase
 
         $this->assertEquals(45.5333, $result['latitude']);
         $this->assertEquals(2.6167, $result['longitude']);
-        $this->assertEquals(null, $result['zipcode']);
+        $this->assertArrayNotHasKey('zipcode', $result);
         $this->assertEquals('Aulnat', $result['city']);
-        $this->assertEquals(null, $result['region']);
+        $this->assertArrayNotHasKey('region', $result);
         $this->assertEquals('FRANCE', $result['country']);
     }
 

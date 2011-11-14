@@ -39,9 +39,14 @@ class BuzzHttpAdapter implements HttpAdapterInterface
      */
     public function getContent($url)
     {
-        $response = $this->browser->get($url);
+        try {
+            $response = $this->browser->get($url);
+            $content  = $response->getContent();
+        } catch (\Exception $e) {
+            $content = null;
+        }
 
-        return $response->getContent();
+        return $content;
     }
 
     /**

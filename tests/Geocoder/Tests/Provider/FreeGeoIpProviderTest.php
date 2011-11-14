@@ -52,9 +52,9 @@ class FreeGeoIpProviderTest extends TestCase
         $this->provider = new FreeGeoIpProvider($this->getMockAdapter($this->never()));
         $result = $this->provider->getGeocodedData('127.0.0.1');
 
-        $this->assertNull($result['latitude']);
-        $this->assertNull($result['longitude']);
-        $this->assertNull($result['zipcode']);
+        $this->assertArrayNotHasKey('latitude', $result);
+        $this->assertArrayNotHasKey('longitude', $result);
+        $this->assertArrayNotHasKey('zipcode', $result);
 
         $this->assertEquals('localhost', $result['city']);
         $this->assertEquals('localhost', $result['region']);

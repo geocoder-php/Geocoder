@@ -4,6 +4,8 @@ Geocoder
 **Geocoder** is a library which helps you build geo-aware applications. It provides an abstraction layer for geocoding manipulations.
 The library is splitted in two parts: `HttpAdapter` and `Provider` and is really extensible.
 
+[![Build Status](https://secure.travis-ci.org/willdurand/Geocoder.png)](http://travis-ci.org/willdurand/Geocoder)
+
 
 ### HttpAdapters ###
 
@@ -12,7 +14,9 @@ _HttpAdapters_ are responsible to get data from remote APIs.
 Currently, there are the following adapters:
 
 * `BuzzHttpAdapter` for [Buzz](https://github.com/kriswallsmith/Buzz), a lightweight PHP 5.3 library for issuing HTTP requests;
-* `CurlHttpAdapter` for [cURL](http://php.net/manual/book.curl.php).
+* `CurlHttpAdapter` for [cURL](http://php.net/manual/book.curl.php);
+* `GuzzleHttpAdapter` for [Guzzle](https://github.com/guzzle/guzzle), PHP 5.3+ HTTP client and framework for building RESTful web service clients;
+* `ZendHttpAdapter` for [Zend Http Client](http://framework.zend.com/manual/en/zend.http.client.html).
 
 
 ### Providers ###
@@ -84,6 +88,10 @@ The `IpInfoDbProvider` is able to geocode **IP addresses** only.
 
 The `YahooProvider` is able to geocode both **IP addresses** and **street addresses**.
 This provider can also reverse information based on coordinates (latitude, longitude).
+
+### GoogleMapsProvider ###
+
+The `GoogleMapsProvider` is able to geocode and reverse geocode **street addresses**.
 
 
 You can use one of them or write your own provider. You can also register all providers and decide later.
@@ -186,11 +194,10 @@ Note, the `AbstractProvider` class can help you by providing useful features.
 Unit Tests
 ----------
 
-To run unit tests, you'll need two dependencies:
+To run unit tests, you'll need a set of dependencies you can install by running the `install_vendors.sh` script:
 
 ```
-git clone git://github.com/kriswallsmith/Buzz.git vendor/Buzz
-git clone git://github.com/symfony/ClassLoader.git vendor/Symfony/Component/ClassLoader
+./bin/install_vendors.sh
 ```
 
 Once installed, just launch the following command:
@@ -210,6 +217,8 @@ Rename the `phpunit.xml.dist` file to `phpunit.xml`, then uncomment the followin
     <!-- <server name="GOOGLEMAPS_API_KEY" value="YOUR_API_KEY" /> -->
 </php>
 ```
+
+You're done.
 
 
 Credits
