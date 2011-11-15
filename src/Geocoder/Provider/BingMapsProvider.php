@@ -88,9 +88,19 @@ class BingMapsProvider extends AbstractProvider implements ProviderInterface
         }
 
         $content = $this->getAdapter()->getContent($query);
-        $data = (array)json_decode($content)->resourceSets[0]->resources[0];
 
-        $coordinates = (array) $data['geocodePoints']->coordinates;
+        if (null === $content) {
+            return $this->getDefaults();
+        }
+
+        $json = json_decode($content);
+        if (isset($json->resourceSets[0])) {
+            $data = (array) $json->resourceSets[0]->resources[0];
+        } else {
+            return $this->getDefaults();
+        }
+
+        $coordinates = (array) $data['geocodePoints'][0]->coordinates;
 
         $zipcode = (string) $data['address']->postalCode;
         $city = (string) $data['address']->locality;

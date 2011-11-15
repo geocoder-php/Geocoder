@@ -61,9 +61,9 @@ class BingMapsProviderTest extends TestCase
         $this->provider = new BingMapsProvider($this->getMockAdapter($this->never()), 'api_key');
         $result = $this->provider->getGeocodedData('127.0.0.1');
 
-        $this->assertNull($result['latitude']);
-        $this->assertNull($result['longitude']);
-        $this->assertNull($result['zipcode']);
+        $this->assertArrayNotHasKey('latitude', $result);
+        $this->assertArrayNotHasKey('longitude', $result);
+        $this->assertArrayNotHasKey('zipcode', $result);
 
         $this->assertEquals('localhost', $result['city']);
         $this->assertEquals('localhost', $result['region']);
@@ -107,10 +107,10 @@ class BingMapsProviderTest extends TestCase
         }
 
         $this->provider = new BingMapsProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter(), $_SERVER['BINGMAPS_API_KEY']);
-        $result = $this->provider->getReversedData(array(48.86321675999999, 2.3887721299999995));
+        $result = $this->provider->getReversedData(array(48.86321648955345, 2.3887719959020615));
 
-        $this->assertEquals(48.86321675999999, $result['latitude']);
-        $this->assertEquals(2.3887721299999995, $result['longitude']);
+        $this->assertEquals(48.86321648955345, $result['latitude']);
+        $this->assertEquals(2.3887719959020615, $result['longitude']);
         $this->assertEquals(75020, $result['zipcode']);
         $this->assertEquals('Paris', $result['city']);
         $this->assertEquals('IdF', $result['region']);
