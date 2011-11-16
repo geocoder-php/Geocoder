@@ -29,7 +29,7 @@ Currently, there are many providers for the following APIs:
 * [HostIp](http://www.hostip.info/) as IP-Based geocoding provider;
 * [IpInfoDB](http://www.ipinfodb.com/) as IP-Based geocoding provider;
 * [Yahoo! PlaceFinder](http://developer.yahoo.com/geo/placefinder/) as Address-Based geocoding and reverse geocoding provider;
-* [Google Maps](http://code.google.com/apis/maps/documentation/geocoding/) as Address-Based geocoding and reverse geocoding provider.
+* [Google Maps](http://code.google.com/apis/maps/documentation/geocoding/) as Address-Based geocoding and reverse geocoding provider;
 * [Bing Maps](http://msdn.microsoft.com/en-us/library/ff701715.aspx) as Address-Based geocoding and reverse geocoding provider.
 
 
@@ -229,7 +229,8 @@ You're done.
 Credits
 -------
 
-William Durand <william.durand1@gmail.com>
+* William Durand <william.durand1@gmail.com>
+* [All contributors](https://github.com/willdurand/Geocoder/contributors)
 
 
 License
