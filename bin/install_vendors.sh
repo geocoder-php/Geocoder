@@ -1,16 +1,22 @@
 #!/bin/bash
 
-if [ ! -d "vendor/Buzz" ] ; then
-    git clone git://github.com/kriswallsmith/Buzz.git vendor/Buzz
-fi
+function installOrUpdate
+{
+    echo "Installing/Updating $1"
 
-if [ ! -d "vendor/Symfony" ] ; then
-    git clone git://github.com/symfony/ClassLoader.git vendor/Symfony/Component/ClassLoader
-fi
+    if [ ! -d "$1" ] ; then
+        git clone $2 $1
+    fi
 
-if [ ! -d "vendor/Guzzle" ] ; then
-    git clone git://github.com/guzzle/guzzle.git vendor/Guzzle
-fi
+    cd $1
+    git fetch -q origin
+    git reset --hard $3
+    cd -
+}
+
+installOrUpdate "vendor/Symfony/Component/ClassLoader" "git://github.com/symfony/ClassLoader.git" "origin/master"
+installOrUpdate "vendor/Buzz" "git://github.com/kriswallsmith/Buzz.git" "origin/master"
+installOrUpdate "vendor/Guzzle" "git://github.com/guzzle/guzzle.git" "origin/master"
 
 if [ ! -d "vendor/Zend" ] ; then
     svn co http://framework.zend.com/svn/framework/standard/trunk/library/Zend/Http vendor/Zend/Http
