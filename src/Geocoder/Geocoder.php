@@ -19,6 +19,11 @@ use Geocoder\Result\Geocoded;
 class Geocoder implements GeocoderInterface
 {
     /**
+     * Version
+     */
+    const VERSION = '1.0.0';
+
+    /**
      * @var array
      */
     private $providers = array();
