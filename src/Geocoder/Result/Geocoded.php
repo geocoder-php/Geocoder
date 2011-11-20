@@ -113,16 +113,16 @@ class Geocoded implements ResultInterface, \ArrayAccess
             $this->longitude = (double) $data['longitude'];
         }
         if (isset($data['city'])) {
-            $this->city = ucwords(strtolower($data['city']));
+            $this->city = $this->formatString($data['city']);
         }
         if (isset($data['zipcode'])) {
             $this->zipcode = (string) $data['zipcode'];
         }
         if (isset($data['region'])) {
-            $this->region = ucwords(strtolower($data['region']));
+            $this->region = $this->formatString($data['region']);
         }
         if (isset($data['country'])) {
-            $this->country = ucwords(strtolower($data['country']));
+            $this->country = $this->formatString($data['country']);
         }
     }
 
@@ -163,5 +163,20 @@ class Geocoded implements ResultInterface, \ArrayAccess
         if ($this->offsetExists($offset)) {
             $this->$offset = null;
         }
+    }
+
+    /**
+     * Format a string data.
+     *
+     * @param string $str   A string.
+     * @return string
+     */
+    private function formatString($str)
+    {
+        $str = strtolower($str);
+        $str = str_replace('-', '- ', $str);
+        $str = ucwords($str);
+
+        return str_replace('- ', '-', $str);
     }
 }
