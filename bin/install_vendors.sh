@@ -14,9 +14,9 @@ function installOrUpdate
     cd -
 }
 
-installOrUpdate "vendor/Symfony/Component/ClassLoader" "git://github.com/symfony/ClassLoader.git" "origin/master"
-installOrUpdate "vendor/Buzz" "git://github.com/kriswallsmith/Buzz.git" "origin/master"
-installOrUpdate "vendor/Guzzle" "git://github.com/guzzle/guzzle.git" "origin/master"
+installOrUpdate "vendor/Symfony/Component/ClassLoader" "http://github.com/symfony/ClassLoader.git" "origin/master"
+installOrUpdate "vendor/Buzz" "http://github.com/kriswallsmith/Buzz.git" "origin/master"
+installOrUpdate "vendor/Guzzle" "http://github.com/guzzle/guzzle.git" "origin/master"
 
 if [ ! -d "vendor/Zend" ] ; then
     svn co http://framework.zend.com/svn/framework/standard/trunk/library/Zend/Http vendor/Zend/Http

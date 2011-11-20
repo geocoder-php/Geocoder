@@ -11,42 +11,13 @@
 namespace Geocoder;
 
 use Geocoder\Provider\ProviderInterface;
+use Geocoder\Result\Geocoded;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
 class Geocoder implements GeocoderInterface
 {
-    /**
-     * @var double
-     */
-    protected $latitude;
-
-    /**
-     * @var double
-     */
-    protected $longitude;
-
-    /**
-     * @var string
-     */
-    protected $city;
-
-    /**
-     * @var string
-     */
-    protected $zipcode;
-
-    /**
-     * @var string
-     */
-    protected $region;
-
-    /**
-     * @var string
-     */
-    protected $country;
-
     /**
      * @var array
      */
@@ -55,7 +26,7 @@ class Geocoder implements GeocoderInterface
     /**
      * @var \Geocoder\Provider\ProviderInterface
      */
-    private $provider;
+    private $provider = null;
 
     /**
      * @param \Geocoder\Provider\ProviderInterface $provider
@@ -71,7 +42,8 @@ class Geocoder implements GeocoderInterface
     public function geocode($value)
     {
         $data = $this->getProvider()->getGeocodedData(trim($value));
-        $this->fromArray($data);
+
+        return $this->returnResult($data);
     }
 
     /**
@@ -80,63 +52,8 @@ class Geocoder implements GeocoderInterface
     public function reverse($latitude, $longitude)
     {
         $data = $this->getProvider()->getReversedData(array($latitude, $longitude));
-        $this->fromArray($data);
-    }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getCoordinates()
-    {
-        return array($this->getLatitude(), $this->getLongitude());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getLatitude()
-    {
-        return $this->latitude;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getLongitude()
-    {
-        return $this->longitude;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getCity()
-    {
-        return $this->city;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getZipcode()
-    {
-        return $this->zipcode;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getRegion()
-    {
-        return $this->region;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getCountry()
-    {
-        return $this->country;
+        return $this->returnResult($data);
     }
 
     /**
@@ -203,29 +120,14 @@ class Geocoder implements GeocoderInterface
     }
 
     /**
-     * Extracts data from an array.
-     *
-     * @param array $data   An array.
+     * @param array $data   An array of data.
+     * @return \Geocoder\Result\Geocoded
      */
-    protected function fromArray(array $data = array())
+    private function returnResult(array $data = array())
     {
-        if (isset($data['latitude'])) {
-            $this->latitude = (double) $data['latitude'];
-        }
-        if (isset($data['longitude'])) {
-            $this->longitude = (double) $data['longitude'];
-        }
-        if (isset($data['city'])) {
-            $this->city = ucwords(strtolower($data['city']));
-        }
-        if (isset($data['zipcode'])) {
-            $this->zipcode = (string) $data['zipcode'];
-        }
-        if (isset($data['region'])) {
-            $this->region = ucwords(strtolower($data['region']));
-        }
-        if (isset($data['country'])) {
-            $this->country = ucwords(strtolower($data['country']));
-        }
+        $result = new Geocoded();
+        $result->fromArray($data);
+
+        return $result;
     }
 }

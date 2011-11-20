@@ -18,64 +18,17 @@ interface GeocoderInterface
     /**
      * Geocode a given value.
      *
-     * @param string $value A value to geocode.
+     * @param string $value                 A value to geocode.
+     * @return \Geocoder\Result\Geocoded    A Geocoded result object.
      */
     function geocode($value);
 
     /**
      * Reverse geocode given latitude and longitude values.
      *
-     * @param double $latitude  Latitude.
-     * @param double $longitude Longitude.
+     * @param double $latitude              Latitude.
+     * @param double $longitude             Longitude.
+     * @return \Geocoder\Result\Geocoded    A Geocoded result object.
      */
     function reverse($latitude, $longitude);
-
-    /**
-     * Returns an array of coordinates (latitude, longitude).
-     *
-     * @return array
-     */
-    function getCoordinates();
-
-    /**
-     * Returns the latitude value.
-     *
-     * @return double
-     */
-    function getLatitude();
-
-    /**
-     * Returns the longitude value.
-     *
-     * @return double
-     */
-    function getLongitude();
-
-    /**
-     * Returns the city value.
-     *
-     * @return string
-     */
-    function getCity();
-
-    /**
-     * Returns the zipcode value.
-     *
-     * @return string
-     */
-    function getZipcode();
-
-    /**
-     * Returns the region value.
-     *
-     * @return string
-     */
-    function getRegion();
-
-    /**
-     * Returns the country value.
-     *
-     * @return string
-     */
-    function getCountry();
 }

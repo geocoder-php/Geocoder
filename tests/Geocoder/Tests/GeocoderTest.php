@@ -69,7 +69,6 @@ class GeocoderTest extends TestCase
         $this->fail('getProvider() should throw an exception');
     }
 
-
     public function testGetProviderWithMultipleProvidersReturnsTheFirstOne()
     {
         $provider1 = new MockProvider('test1');
@@ -80,54 +79,10 @@ class GeocoderTest extends TestCase
         $this->assertSame($provider1, $this->geocoder->getProvider());
     }
 
-    public function testFromData()
+    public function testGeocodeReturnsInstanceOfGeocoded()
     {
-        $array = array(
-            'latitude'  => 0.001,
-            'longitude' => 1,
-            'city'      => 'FOo CITY',
-            'zipcode'   => '65943',
-            'region'    => 'FOO region',
-            'country'   => 'FOO Country'
-        );
-
-        $this->geocoder->fromArray($array);
-
-        $this->assertEquals(0.001, $this->geocoder->getLatitude());
-        $this->assertEquals(1, $this->geocoder->getLongitude());
-        $this->assertEquals('Foo City', $this->geocoder->getCity());
-        $this->assertEquals('65943', $this->geocoder->getZipcode());
-        $this->assertEquals('Foo Region', $this->geocoder->getRegion());
-        $this->assertEquals('Foo Country', $this->geocoder->getCountry());
-    }
-
-    public function testFromDataWithEmptyArray()
-    {
-        $this->geocoder->fromArray(array());
-
-        $this->assertEquals('', $this->geocoder->getLatitude());
-        $this->assertEquals('', $this->geocoder->getLongitude());
-        $this->assertEquals('', $this->geocoder->getCity());
-        $this->assertEquals('', $this->geocoder->getZipcode());
-        $this->assertEquals('', $this->geocoder->getRegion());
-        $this->assertEquals('', $this->geocoder->getCountry());
-    }
-
-    public function testFromDataWithNull()
-    {
-        $array = array(
-            'latitude'  => 100,
-            'longitude' => 1.2
-        );
-
-        $this->geocoder->fromArray($array);
-
-        $this->assertEquals(100, $this->geocoder->getLatitude());
-        $this->assertEquals(1.2, $this->geocoder->getLongitude());
-        $this->assertEquals('', $this->geocoder->getCity());
-        $this->assertEquals('', $this->geocoder->getZipcode());
-        $this->assertEquals('', $this->geocoder->getRegion());
-        $this->assertEquals('', $this->geocoder->getCountry());
+        $this->geocoder->registerProvider(new MockProvider('test1'));
+        $this->assertInstanceOf('\Geocoder\Result\Geocoded', $this->geocoder->geocode('foobar'));
     }
 }
 
@@ -142,10 +97,12 @@ class MockProvider implements ProviderInterface
 
     public function getGeocodedData($address)
     {
+        return array();
     }
 
     public function getReversedData(array $coordinates)
     {
+        return array();
     }
 
     public function getName()
@@ -159,10 +116,5 @@ class TestableGeocoder extends Geocoder
     public function getProvider()
     {
         return parent::getProvider();
-    }
-
-    public function fromArray(array $data = array())
-    {
-        return parent::fromArray($data);
     }
 }
