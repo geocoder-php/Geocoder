@@ -84,6 +84,29 @@ class GeocoderTest extends TestCase
         $this->geocoder->registerProvider(new MockProvider('test1'));
         $this->assertInstanceOf('\Geocoder\Result\Geocoded', $this->geocoder->geocode('foobar'));
     }
+
+    public function testGeocodeWithCache()
+    {
+        $cache = new IntrospectableInMemory();
+
+        $this->geocoder->registerProvider(new MockProviderWithData('test1'));
+        $this->geocoder->setCache($cache);
+
+        $result = $this->geocoder->geocode('hello, world');
+
+        $this->assertEquals(1, $this->geocoder->countCallGetProvider);
+
+        $store  = $cache->getStore();
+
+        $this->assertEquals(1, count($store));
+        $this->assertArrayHasKey(sha1('hello, world'), $store);
+        $this->assertSame($result, $store[sha1('hello, world')]);
+
+        $result = $this->geocoder->geocode('hello, world');
+
+        $this->assertEquals(1, $this->geocoder->countCallGetProvider);
+        $this->assertEquals(1, count($store));
+    }
 }
 
 class MockProvider implements ProviderInterface
@@ -111,10 +134,32 @@ class MockProvider implements ProviderInterface
     }
 }
 
+class MockProviderWithData extends MockProvider
+{
+    public function getGeocodedData($address)
+    {
+        return array(
+            'latitude' => 123,
+            'longitude' => 456
+        );
+    }
+}
+
 class TestableGeocoder extends Geocoder
 {
+    public $countCallGetProvider = 0;
+
     public function getProvider()
     {
+        $this->countCallGetProvider++;
         return parent::getProvider();
+    }
+}
+
+class IntrospectableInMemory extends \Geocoder\Cache\InMemory
+{
+    public function getStore()
+    {
+        return $this->store;
     }
 }
