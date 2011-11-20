@@ -129,7 +129,7 @@ The main method is called `geocode()` which receives a value to geocode. It can 
 ``` php
 <?php
 
-$geocoder->geocode('88.188.221.14');
+$result = $geocoder->geocode('88.188.221.14');
 // Result is:
 // "latitude"   => string(9) "47.901428"
 // "longitude"  => string(8) "1.904960"
@@ -138,7 +138,7 @@ $geocoder->geocode('88.188.221.14');
 // "region"     => string(6) "Centre"
 // "country"    => string(6) "France"
 
-$geocoder->geocode('10 rue Gambetta, Paris, France');
+$result = $geocoder->geocode('10 rue Gambetta, Paris, France');
 // Result is:
 // "latitude"   => string(9) "48.863217"
 // "longitude"  => string(8) "2.388821"
@@ -148,7 +148,7 @@ $geocoder->geocode('10 rue Gambetta, Paris, France');
 // "country"    => string(6) "France"
 ```
 
-Once you've called this method, the `geocoder` contains information that you can query with the following getters:
+The `geocode()` method returns a `Geocoded` result object with the following API, this object also implements the `ArrayAccess` interface:
 
 * `getCoordinates()` will return an array with `latitude` and `longitude` values;
 * `getLatitude()` will return the `latitude` value;
@@ -163,7 +163,7 @@ The Geocoder's API is fluent, you can write:
 ``` php
 <?php
 
-$geocoder
+$result = $geocoder
     ->registerProvider(new \My\Provider\Custom($adapter))
     ->using('custom')
     ->geocode('68.145.37.34')
@@ -180,10 +180,19 @@ Reverse Geocoding
 This library provides a `reverse()` method to retrieve information from coordinates:
 
 ``` php
-$geocoder->reverse($latitude, $longitude);
+$result = $geocoder->reverse($latitude, $longitude);
 ```
 
 **Note:** the `YahooProvider` bundled in this lib is the unique provider able to do this feature.
+
+
+Cache
+-----
+
+You can add a **cache layer** to the `Geocoder` object in order to save API calls by using the method `setCache()` or passing
+a cache object as a second argument of the `Geocoder` constructor. The cache object must implement the `CacheInterface` interface.
+
+There is only one cache layer provided at the moment: `InMemory` which is used for unit tests and provided as an example.
 
 
 Extending Things
@@ -194,6 +203,8 @@ You can provide your own `adapter`, you just need to create a new class which im
 You can also write your own `provider` by implementing the `ProviderInterface`.
 
 Note, the `AbstractProvider` class can help you by providing useful features.
+
+Finally, you can write your own `cache` layer by implementing the `CacheInterface`.
 
 
 Unit Tests
