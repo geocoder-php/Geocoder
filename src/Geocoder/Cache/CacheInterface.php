@@ -19,14 +19,14 @@ interface CacheInterface
      * Stores a value with a unique key.
      *
      * @param string $key   A unique key.
-     * @param mixed $value  A value.
+     * @param \Geocoder\Result\ResultInterface  A result object.
      */
     function store($key, $value);
 
     /**
      * Retrieves a value identified by its key.
      *
-     * @return mixed    A value.
+     * @return \Geocoder\Result\ResultInterface A result object.
      */
     function retrieve($key);
 }

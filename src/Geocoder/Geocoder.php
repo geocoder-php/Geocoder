@@ -178,10 +178,10 @@ class Geocoder implements GeocoderInterface
     }
 
     /**
-     * Retrieves a `Geocoded` object if cache enabled and key found,
+     * Retrieves a `ResultInterface` object if cache enabled and key found,
      * `null` otherwise.
      *
-     * @return A `Geocoded` result object or null.
+     * @return  A `ResultInterface` object or null.
      */
     private function retrieve($value)
     {
@@ -197,8 +197,8 @@ class Geocoder implements GeocoderInterface
     /**
      * Stores a `Geocoded` result object if cache enabled.
      *
-     * @param string $value                 A value.
-     * @param \Geocoder\Result\Geocoded     A Geocoded result object.
+     * @param string $value                     A value.
+     * @param \Geocoder\Result\ResultInterface  A result object.
      */
     private function store($value, $result)
     {
