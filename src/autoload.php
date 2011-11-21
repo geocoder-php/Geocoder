@@ -9,6 +9,9 @@
  */
 spl_autoload_register(function($className) {
     $className = ltrim($className, '\\');
+    if (0 != strpos($className, 'Geocoder')) {
+        return false;
+    }
     $fileName = '';
     $namespace = '';
     if ($lastNsPos = strripos($className, '\\')) {
@@ -17,7 +20,7 @@ spl_autoload_register(function($className) {
         $fileName = str_replace('\\', DIRECTORY_SEPARATOR, $namespace) . DIRECTORY_SEPARATOR;
     }
     $fileName = __DIR__ . DIRECTORY_SEPARATOR . $fileName . $className . '.php';
-    if (file_exists($fileName)) {
+    if (is_file($fileName)) {
         require $fileName;
         return true;
     }
