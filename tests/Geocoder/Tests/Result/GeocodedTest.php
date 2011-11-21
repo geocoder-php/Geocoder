@@ -66,4 +66,47 @@ class GeocodedTest extends TestCase
         $this->assertEquals('', $this->geocoded->getRegion());
         $this->assertEquals('', $this->geocoded->getCountry());
     }
+
+    public function testArrayInterface()
+    {
+        $array = array(
+            'latitude'  => 0.001,
+            'longitude' => 1,
+            'city'      => 'FOo CITY',
+            'zipcode'   => '65943',
+            'region'    => 'FOO region',
+            'country'   => 'FOO Country'
+        );
+
+        $this->geocoded->fromArray($array);
+
+        // array access
+        $this->assertEquals(0.001, $this->geocoded['latitude']);
+        $this->assertEquals(1, $this->geocoded['longitude']);
+        $this->assertEquals('Foo City', $this->geocoded['city']);
+        $this->assertEquals('65943', $this->geocoded['zipcode']);
+        $this->assertEquals('Foo Region', $this->geocoded['region']);
+        $this->assertEquals('Foo Country', $this->geocoded['country']);
+
+        // array access is case independant
+        $this->assertEquals(0.001, $this->geocoded['LATITUDE']);
+        $this->assertEquals(1, $this->geocoded['LONGITUDE']);
+        $this->assertEquals('Foo City', $this->geocoded['CITY']);
+        $this->assertEquals('65943', $this->geocoded['ZIPCODE']);
+        $this->assertEquals('Foo Region', $this->geocoded['REGION']);
+        $this->assertEquals('Foo Country', $this->geocoded['COUNTRY']);
+
+        // isset
+        $this->assertEquals(true, isset($this->geocoded['latitude']));
+        $this->assertEquals(true, isset($this->geocoded['longitude']));
+        $this->assertEquals(true, isset($this->geocoded['city']));
+        $this->assertEquals(true, isset($this->geocoded['zipcode']));
+        $this->assertEquals(true, isset($this->geocoded['region']));
+        $this->assertEquals(true, isset($this->geocoded['country']));
+        $this->assertEquals(false, isset($this->geocoded['other']));
+
+        // set
+        $this->geocoded['latitude'] = 0.123456;
+        $this->assertEquals(0.123456, $this->geocoded['latitude']);
+    }
 }
