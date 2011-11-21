@@ -19,7 +19,7 @@ use Geocoder\Provider\ProviderInterface;
 class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
 {
     /**
-     * @param string $apiKey
+     * @param HttpAdapterInterface $adapter
      */
     public function __construct(HttpAdapterInterface $adapter)
     {
@@ -75,14 +75,12 @@ class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
         $json = json_decode($content);
 
         // API error
-        if (!isset($json) || 'OK' !== $json->status)
-        {
+        if (!isset($json) || 'OK' !== $json->status) {
             return $this->getDefaults();
         }
 
         // no result
-        if (!isset($json->results) || !count($json->results))
-        {
+        if (!isset($json->results) || !count($json->results)) {
             return $this->getDefaults();
         }
 
@@ -90,12 +88,10 @@ class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
         $resultset = $this->getDefaults();
 
         // update address components
-        foreach ($result->address_components as $component)
-        {
-          foreach ($component->types as $type)
-          {
-            $this->updateAddressComponent($resultset, $type, $component->long_name);
-          }
+        foreach ($result->address_components as $component) {
+            foreach ($component->types as $type) {
+                $this->updateAddressComponent($resultset, $type, $component->long_name);
+            }
         }
 
         // update coordinates
@@ -116,9 +112,7 @@ class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
      */
     protected function updateAddressComponent(&$resultset, $type, $value)
     {
-
-        switch ($type)
-        {
+        switch ($type) {
             case 'postal_code':
                 $resultset['zipcode'] = $value;
                 break;

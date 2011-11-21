@@ -63,11 +63,7 @@ class GoogleMapsProviderTest extends TestCase
 
     public function testGetGeocodedDataWithRealIp()
     {
-        if (!isset($_SERVER['GOOGLEMAPS_API_KEY'])) {
-            $this->markTestSkipped('You need to configure the GOOGLEMAPS_API_KEY value in phpunit.xml');
-        }
-
-        $this->provider = new GoogleMapsProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter(), $_SERVER['GOOGLEMAPS_API_KEY']);
+        $this->provider = new GoogleMapsProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter());
         $result = $this->provider->getGeocodedData('74.200.247.59');
 
         $this->assertNull($result['latitude']);
@@ -80,11 +76,7 @@ class GoogleMapsProviderTest extends TestCase
 
     public function testGetGeocodedDataWithRealAddress()
     {
-        if (!isset($_SERVER['GOOGLEMAPS_API_KEY'])) {
-            $this->markTestSkipped('You need to configure the GOOGLEMAPS_API_KEY value in phpunit.xml');
-        }
-
-        $this->provider = new GoogleMapsProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter(), $_SERVER['GOOGLEMAPS_API_KEY']);
+        $this->provider = new GoogleMapsProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter());
         $result = $this->provider->getGeocodedData('10 avenue Gambetta, Paris, France');
 
         $this->assertEquals(48.8631507, $result['latitude']);
@@ -110,10 +102,6 @@ class GoogleMapsProviderTest extends TestCase
 
     public function testGetReversedDataWithRealCoordinates()
     {
-        if (!isset($_SERVER['GOOGLEMAPS_API_KEY'])) {
-            $this->markTestSkipped('You need to configure the GOOGLEMAPS_API_KEY value in phpunit.xml');
-        }
-
         $this->provider = new GoogleMapsProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter());
         $result = $this->provider->getReversedData(array(48.8631507, 2.388911));
 
