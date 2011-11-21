@@ -53,6 +53,11 @@ class Geocoder implements GeocoderInterface
      */
     public function geocode($value)
     {
+        if (empty($value)) {
+            // let's save a request
+            return $this->returnResult(array());
+        }
+
         $result = $this->retrieve($value);
 
         if (null === $result) {
@@ -70,6 +75,11 @@ class Geocoder implements GeocoderInterface
      */
     public function reverse($latitude, $longitude)
     {
+        if (empty($latitude) || empty($longitude)) {
+            // let's save a request
+            return $this->returnResult(array());
+        }
+
         $result = $this->retrieve($value);
 
         if (null === $result) {

@@ -107,6 +107,25 @@ class GeocoderTest extends TestCase
         $this->assertEquals(1, $this->geocoder->countCallGetProvider);
         $this->assertEquals(1, count($store));
     }
+
+    public function testEmpty()
+    {
+        $this->geocoder->registerProvider(new MockProviderWithRequestCount('test2'));
+        $this->assertEmptyResult($this->geocoder->geocode(''));
+        $this->assertEquals(0, $this->geocoder->getProvider('test2')->geocodeCount);
+        $this->assertEmptyResult($this->geocoder->geocode(null));
+        $this->assertEquals(0, $this->geocoder->getProvider('test2')->geocodeCount);
+    }
+
+    protected function assertEmptyResult($result)
+    {
+        $this->assertEquals(0, $result->getLatitude());
+        $this->assertEquals(0, $result->getLongitude());
+        $this->assertEquals('', $result->getCity());
+        $this->assertEquals('', $result->getZipcode());
+        $this->assertEquals('', $result->getRegion());
+        $this->assertEquals('', $result->getCountry());
+    }
 }
 
 class MockProvider implements ProviderInterface
@@ -142,6 +161,16 @@ class MockProviderWithData extends MockProvider
             'latitude' => 123,
             'longitude' => 456
         );
+    }
+}
+
+class MockProviderWithRequestCount extends MockProvider
+{
+    public $geocodeCount = 0;
+
+    public function getGeocodedData($address)
+    {
+        $this->geocodeCount++;
     }
 }
 
