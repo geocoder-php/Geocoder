@@ -230,7 +230,7 @@ Rename the `phpunit.xml.dist` file to `phpunit.xml`, then uncomment the followin
 <php>
     <!-- <server name="IPINFODB_API_KEY" value="YOUR_API_KEY" /> -->
     <!-- <server name="YAHOO_API_KEY" value="YOUR_API_KEY" /> -->
-    <!-- <server name="GOOGLEMAPS_API_KEY" value="YOUR_API_KEY" /> -->
+    <!-- <server name="BINGMAPS_API_KEY" value="YOUR_API_KEY" /> -->
 </php>
 ```
 
