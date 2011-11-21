@@ -90,7 +90,7 @@ class GeocoderTest extends TestCase
         $cache = new IntrospectableInMemory();
 
         $this->geocoder->registerProvider(new MockProviderWithData('test1'));
-        $this->geocoder->setCache($cache);
+        $this->geocoder->registerCache($cache);
 
         $result = $this->geocoder->geocode('hello, world');
 

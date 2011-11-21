@@ -128,11 +128,11 @@ class Geocoder implements GeocoderInterface
     }
 
     /**
-     * Sets the cache object to use.
+     * Registers the cache object to use.
      *
      * @param \Geocoder\Cache\CacheInterface    A cache object.
      */
-    public function setCache(CacheInterface $cache)
+    public function registerCache(CacheInterface $cache)
     {
         $this->cache = $cache;
     }

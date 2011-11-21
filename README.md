@@ -189,7 +189,7 @@ $result = $geocoder->reverse($latitude, $longitude);
 Cache
 -----
 
-You can add a **cache layer** to the `Geocoder` object in order to save API calls by using the method `setCache()` or passing
+You can add a **cache layer** to the `Geocoder` object in order to save API calls by using the method `registerCache()` or passing
 a cache object as a second argument of the `Geocoder` constructor. The cache object must implement the `CacheInterface` interface.
 
 There is only one cache layer provided at the moment: `InMemory` which is used for unit tests and provided as an example.
