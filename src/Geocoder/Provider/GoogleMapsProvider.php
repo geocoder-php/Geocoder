@@ -19,18 +19,11 @@ use Geocoder\Provider\ProviderInterface;
 class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
 {
     /**
-     * @var string
+     * @param HttpAdapterInterface $adapter
      */
-    private $apiKey = null;
-
-    /**
-     * @param string $apiKey
-     */
-    public function __construct(HttpAdapterInterface $adapter, $apiKey)
+    public function __construct(HttpAdapterInterface $adapter)
     {
         parent::__construct($adapter, null);
-
-        $this->apiKey = $apiKey;
     }
 
     /**
@@ -38,10 +31,6 @@ class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
      */
     public function getGeocodedData($address)
     {
-        if (null === $this->apiKey) {
-            throw new \RuntimeException('No API Key provided');
-        }
-
         if ('127.0.0.1' === $address) {
             return array(
                 'city'      => 'localhost',
@@ -50,7 +39,7 @@ class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
             );
         }
 
-        $query = sprintf('http://maps.google.com/maps/geo?q=%s&output=json&key=%s', urlencode($address), $this->apiKey);
+        $query = sprintf('http://maps.googleapis.com/maps/api/geocode/json?address=%s&sensor=false', urlencode($address));
 
         return $this->executeQuery($query);
     }
@@ -85,34 +74,64 @@ class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
 
         $json = json_decode($content);
 
-        if (isset($json->Placemark)) {
-            $data = (array)json_decode($content)->Placemark[0];
-        } else {
+        // API error
+        if (!isset($json) || 'OK' !== $json->status) {
             return $this->getDefaults();
         }
 
-        $coordinates = (array) $data['Point']->coordinates;
-        $locality    = $data['AddressDetails']->Country->AdministrativeArea->SubAdministrativeArea->Locality;
-
-        $zipcode = null;
-
-        if (isset($locality->PostalCode)) {
-            $zipcode = (string) $locality->PostalCode->PostalCodeNumber;
-        } elseif (isset($locality->DependentLocality->PostalCode->PostalCodeNumber)) {
-            $zipcode = (string) $locality->DependentLocality->PostalCode->PostalCodeNumber;
+        // no result
+        if (!isset($json->results) || !count($json->results)) {
+            return $this->getDefaults();
         }
 
-        $city = (string) $data['AddressDetails']->Country->AdministrativeArea->SubAdministrativeArea->Locality->LocalityName;
-        $region = (string) $data['AddressDetails']->Country->AdministrativeArea->AdministrativeAreaName;
-        $country = (string) $data['AddressDetails']->Country->CountryName;
+        $result = $json->results[0];
+        $resultset = $this->getDefaults();
 
-        return array(
-            'latitude'  => $coordinates[1],
-            'longitude' => $coordinates[0],
-            'city'      => empty($city) ? null : $city,
-            'zipcode'   => empty($zipcode) ? null : $zipcode,
-            'region'    => empty($region) ? null : $region,
-            'country'   => empty($country) ? null : $country
-        );
+        // update address components
+        foreach ($result->address_components as $component) {
+            foreach ($component->types as $type) {
+                $this->updateAddressComponent($resultset, $type, $component->long_name);
+            }
+        }
+
+        // update coordinates
+        $coordinates = $result->geometry->location;
+        $resultset['latitude']  = $coordinates->lat;
+        $resultset['longitude'] = $coordinates->lng;
+
+        return $resultset;
+    }
+
+    /**
+     * Update current resultset with given key/value.
+     *
+     * @param array   $resultset  resultset to update.
+     * @param String  $type       component type.
+     * @param String  $value      the component value;
+     * @return array
+     */
+    protected function updateAddressComponent(&$resultset, $type, $value)
+    {
+        switch ($type) {
+            case 'postal_code':
+                $resultset['zipcode'] = $value;
+                break;
+
+            case 'locality':
+                $resultset['city'] = $value;
+                break;
+
+            case 'administrative_area_level_1':
+                $resultset['region'] = $value;
+                break;
+
+            case 'country':
+                $resultset['country'] = $value;
+                break;
+
+            default:
+                break;
+        }
+        return $resultset;
     }
 }
