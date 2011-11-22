@@ -80,6 +80,7 @@ class Geocoder implements GeocoderInterface
             return $this->returnResult(array());
         }
 
+        $value  = $latitude.'-'.$longitude;
         $result = $this->retrieve($value);
 
         if (null === $result) {

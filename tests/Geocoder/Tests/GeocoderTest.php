@@ -108,6 +108,29 @@ class GeocoderTest extends TestCase
         $this->assertEquals(1, count($store));
     }
 
+    public function testReverseWithCache()
+    {
+        $cache = new IntrospectableInMemory();
+
+        $this->geocoder->registerProvider(new MockProviderWithData('test1'));
+        $this->geocoder->registerCache($cache);
+
+        $result = $this->geocoder->reverse('foo', 'bar');
+
+        $this->assertEquals(1, $this->geocoder->countCallGetProvider);
+
+        $store  = $cache->getStore();
+
+        $this->assertEquals(1, count($store));
+        $this->assertArrayHasKey(sha1('foo-bar'), $store);
+        $this->assertSame($result, $store[sha1('foo-bar')]);
+
+        $result = $this->geocoder->reverse('foo', 'bar');
+
+        $this->assertEquals(1, $this->geocoder->countCallGetProvider);
+        $this->assertEquals(1, count($store));
+    }
+
     public function testEmpty()
     {
         $this->geocoder->registerProvider(new MockProviderWithRequestCount('test2'));
