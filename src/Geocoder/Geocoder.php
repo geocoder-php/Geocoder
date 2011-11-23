@@ -170,7 +170,7 @@ class Geocoder implements GeocoderInterface
      * @param array $data   An array of data.
      * @return \Geocoder\Result\Geocoded
      */
-    private function returnResult(array $data = array())
+    protected function returnResult(array $data = array())
     {
         $result = new Geocoded();
         $result->fromArray($data);
@@ -184,7 +184,7 @@ class Geocoder implements GeocoderInterface
      *
      * @return  A `ResultInterface` object or null.
      */
-    private function retrieve($value)
+    protected function retrieve($value)
     {
         if (null !== $this->cache) {
             if ($result = $this->cache->retrieve(sha1($value))) {
@@ -201,7 +201,7 @@ class Geocoder implements GeocoderInterface
      * @param string $value                     A value.
      * @param \Geocoder\Result\ResultInterface  A result object.
      */
-    private function store($value, $result)
+    protected function store($value, $result)
     {
         if (null !== $this->cache) {
             $this->cache->store(sha1($value), $result);
