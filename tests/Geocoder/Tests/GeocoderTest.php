@@ -208,7 +208,7 @@ class TestableGeocoder extends Geocoder
     }
 }
 
-class IntrospectableInMemory extends \Geocoder\Cache\InMemory
+class IntrospectableInMemory extends \Geocoder\CacheAdapter\InMemory
 {
     public function getStore()
     {

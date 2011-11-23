@@ -7,7 +7,7 @@ use Geocoder\CacheAdapter\CacheInterface;
 /**
  *  @author Markus Bachmann <markus.bachmann@digital-connect,de>
  */
-class CacheProvider implements ProviderInterface
+class CacheProvider extends AbstractProvider implements ProviderInterface
 {
     /**
      * @var CacheInterface
@@ -23,6 +23,46 @@ class CacheProvider implements ProviderInterface
     {
         $this->cacheAdapter = $cache;
         $this->provider = $provider;
+    }
+
+    /**
+     * Get the provider
+     *
+     * @return ProviderInterface
+     */
+    public function getProvider()
+    {
+        return $this->provider;
+    }
+
+    /**
+     * Set a provider
+     *
+     * @param ProviderInterface $provider
+     */
+    public function setProvider(ProviderInterface $provider)
+    {
+        $this->provider = $provider;
+    }
+
+    /**
+     * Get the CacheAdapter
+     *
+     * @return CacheInterface
+     */
+    public function getCacheAdapter()
+    {
+        return $this->cacheAdapter;
+    }
+
+    /**
+     * Set the cache adapter
+     *
+     * @param CacheInterface $adapter
+     */
+    public function setCacheAdapter(CacheInterface $adapter)
+    {
+        $this->cacheAdapter = $adapter;
     }
 
     /**
