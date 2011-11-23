@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PhpProjectConfiguration">
+    <sdk>
+      <PhpSdkConfig home="">
+        <include_paths>
+          <path value="Z:\phpunit" />
+        </include_paths>
+      </PhpSdkConfig>
+    </sdk>
+  </component>
+</project>
+
