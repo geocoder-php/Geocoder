@@ -1,21 +1,28 @@
 <?php
+
 namespace Geocoder\Provider;
 
 use Geocoder\CacheAdapter\CacheInterface;
 
 /**
- *
+ *  @author Markus Bachmann <markus.bachmann@digital-connect,de>
  */
-class CacheProvider implements ProviderInterface {
+class CacheProvider implements ProviderInterface
+{
+    /**
+     * @var CacheInterface
+     */
+    protected $cacheAdapter;
 
-    protected $_cacheAdapter;
-
-    protected $_provider;
+    /**
+     * @var ProviderInterface
+     */
+    protected $provider;
 
     public function __construct(CacheInterface $cache, ProviderInterface $provider)
     {
-        $this->_cacheAdapter = $cache;
-        $this->_provider = $provider;
+        $this->cacheAdapter = $cache;
+        $this->provider = $provider;
     }
 
     /**
@@ -28,11 +35,11 @@ class CacheProvider implements ProviderInterface {
     {
         $key = sha1($address);
 
-        $result = $this->_cacheAdapter->retrieve($key);
+        $result = $this->cacheAdapter->retrieve($key);
 
-        if ( null === $result ) {
-            $result = $this->_provider->getGeocodedData($address);
-            $this->_cacheAdapter->store($key, $result);
+        if (null === $result) {
+            $result = $this->provider->getGeocodedData($address);
+            $this->cacheAdapter->store($key, $result);
         }
 
         return $result;
@@ -48,11 +55,11 @@ class CacheProvider implements ProviderInterface {
     {
         $key = sha1(serialize($coordinates));
 
-        $result = $this->_cacheAdapter->retrieve($key);
+        $result = $this->cacheAdapter->retrieve($key);
 
-        if ( null === $result ) {
-            $result = $this->_provider->getReversedData($coordinates);
-            $this->_cacheAdapter->store($key, $result);
+        if (null === $result) {
+            $result = $this->provider->getReversedData($coordinates);
+            $this->cacheAdapter->store($key, $result);
         }
 
         return $result;
@@ -67,5 +74,4 @@ class CacheProvider implements ProviderInterface {
     {
         return 'cache';
     }
-
 }
