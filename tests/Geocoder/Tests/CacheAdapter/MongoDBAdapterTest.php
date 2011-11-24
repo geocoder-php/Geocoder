@@ -8,7 +8,7 @@ use Geocoder\CacheAdapter\MongoDBAdapter;
  * @author Markus Bachmann <markus.bachmann@bachi.biz>
  */
  
-class MongoTest extends \PHPUnit_Framework_TestCase {
+class MongoDBAdapterTest extends \PHPUnit_Framework_TestCase {
 
     protected function setUp()
     {
