@@ -1,13 +1,23 @@
 <?php
 
+/**
+ * This file is part of the Geocoder package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license    MIT License
+ */
+
 namespace Geocoder\CacheAdapter;
 
 /**
  * @author Markus Bachmann <markus.bachmann@bachi.biz>
  */
- 
 class Filesystem implements CacheInterface
 {
+    /**
+     * @var string
+     */
     protected $path;
 
     public function __construct($path)
@@ -56,6 +66,12 @@ class Filesystem implements CacheInterface
         );
     }
 
+    /**
+     * Compute the filename for the given key
+     *
+     * @param $key
+     * @return string
+     */
     protected function computeFilename($key)
     {
         $hash = sha1($key);
