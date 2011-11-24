@@ -39,18 +39,6 @@ class MongoDBAdapter implements CacheInterface
     }
 
     /**
-     * Get the collectioname
-     *
-     * @return \MongoCollection
-     */
-    public function getCollection()
-    {
-        return $this->mongo
-                ->selectDB($this->databaseName)
-                ->selectCollection($this->collectionName);
-    }
-
-    /**
      * Stores a value with a unique key.
      *
      * @param string $key   A unique key.
@@ -74,5 +62,17 @@ class MongoDBAdapter implements CacheInterface
             return null;
         }
         return $data['data'];
+    }
+
+    /**
+     * Get the collectioname
+     *
+     * @return \MongoCollection
+     */
+    protected function getCollection()
+    {
+        return $this->mongo
+                ->selectDB($this->databaseName)
+                ->selectCollection($this->collectionName);
     }
 }

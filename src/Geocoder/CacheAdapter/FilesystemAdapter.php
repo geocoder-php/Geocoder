@@ -23,11 +23,11 @@ class FilesystemAdapter implements CacheInterface
     public function __construct($path)
     {
         $path = realpath($path);
-        if ( ! is_dir($path) ) {
+        if (! is_dir($path)) {
             throw new \RuntimeException(sprintf('The directory %s does not exist', $path));
         }
 
-        if ( ! is_writable($path) || ! is_readable($path) ) {
+        if (! is_writable($path) || ! is_readable($path)) {
             throw new \RuntimeException(sprintf('The directory %s is not writeable and not readable', $path));
         }
 
@@ -43,9 +43,9 @@ class FilesystemAdapter implements CacheInterface
     public function store($key, $value)
     {
         $filename = $this->computeFilename($key);
-        $dir      = $this->path . '/' . dirname($filename);
+        $dir      = $this->path . DIRECTORY_SEPARATOR . dirname($filename);
 
-        return file_put_contents($this->path . '/' . $filename, serialize($value));
+        return file_put_contents($this->path . DIRECTORY_SEPARATOR . $filename, serialize($value));
     }
 
     /**
@@ -55,9 +55,9 @@ class FilesystemAdapter implements CacheInterface
      */
     public function retrieve($key)
     {
-        $path = $this->path . '/' . $this->computeFilename($key);
+        $path = $this->path . DIRECTORY_SEPARATOR . $this->computeFilename($key);
 
-        if ( ! is_file($path) ) {
+        if (! is_file($path)) {
             return null;
         }
 
@@ -74,7 +74,6 @@ class FilesystemAdapter implements CacheInterface
      */
     protected function computeFilename($key)
     {
-        $hash = sha1($key);
-        return $hash . '.cache';
+        return sha1($key) . '.cache';
     }
 }

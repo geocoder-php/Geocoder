@@ -45,5 +45,4 @@ class MemcacheAdapter implements CacheInterface
     {
         return $this->adapter->get($key) ?: null;
     }
-
 }
