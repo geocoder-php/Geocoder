@@ -8,8 +8,8 @@ use Geocoder\Tests\TestCase;
  * @author Markus Bachmann <markus.bachmann@bachi.biz>
  */
  
-class MemcachedTest extends TestCase {
-
+class MemcachedTest extends TestCase
+{
     protected function setUp()
     {
         if ( ! class_exists('Memcached', false) ) {

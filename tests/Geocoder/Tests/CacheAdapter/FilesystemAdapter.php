@@ -8,8 +8,8 @@ use Geocoder\Tests\TestCase;
 /**
  * @author Markus Bachmann <markus.bachmann@bachi.biz>
  */
-class FilesystemAdapterTest extends TestCase {
-
+class FilesystemAdapterTest extends TestCase
+{
     /**
      * @dataProvider getCacheData
      */
@@ -32,5 +32,4 @@ class FilesystemAdapterTest extends TestCase {
             array('6', 2.1)
         );
     }
-
 }

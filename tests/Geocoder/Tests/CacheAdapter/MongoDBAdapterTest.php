@@ -9,7 +9,8 @@ use Geocoder\Tests\TestCase;
  * @author Markus Bachmann <markus.bachmann@bachi.biz>
  */
  
-class MongoDBAdapterTest extends TestCase {
+class MongoDBAdapterTest extends TestCase
+{
 
     protected function setUp()
     {

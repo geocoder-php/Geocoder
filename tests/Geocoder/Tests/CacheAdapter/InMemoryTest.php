@@ -8,8 +8,8 @@ use Geocoder\Tests\TestCase;
 /**
  * @author Markus Bachmann <markus.bachmann@bachi.biz>
  */
-class InMemoryTest extends TestCase {
-
+class InMemoryTest extends TestCase
+{
     protected function setUp()
     {
         $this->cache = new InMemory;

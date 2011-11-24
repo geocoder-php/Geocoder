@@ -40,5 +40,4 @@ class ApcAdapterTest extends TestCase
             array('6', 2.1)
         );
     }
-
 }

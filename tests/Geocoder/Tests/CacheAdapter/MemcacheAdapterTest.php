@@ -9,7 +9,6 @@ use Geocoder\Tests\TestCase;
  */
 class MemcacheAdapterTest extends TestCase
 {
-
     protected function setUp()
     {
         if ( ! class_exists('\Memcache', false) ) {
