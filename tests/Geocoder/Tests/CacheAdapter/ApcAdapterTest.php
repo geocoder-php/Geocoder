@@ -2,12 +2,12 @@
 
 namespace Geocoder\Tests\CacheAdapter;
 
-use Geocoder\CacheAdapter\ApcCache;
+use Geocoder\CacheAdapter\ApcAdapter;
 
 /**
  * @author Markus Bachmann <markus.bachmann@bachi.biz>
  */
-class ApcCacheTest extends \PHPUnit_Framework_TestCase {
+class ApcAdapterTest extends \PHPUnit_Framework_TestCase {
 
     protected function setUp()
     {

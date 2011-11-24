@@ -13,7 +13,7 @@ namespace Geocoder\CacheAdapter;
 /**
  * @author Markus Bachmann <markus.bachmann@bachi.biz>
  */
-class ApcCache implements CacheInterface
+class ApcAdapter implements CacheInterface
 {
 
     public function __construct()

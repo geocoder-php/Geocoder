@@ -13,7 +13,7 @@ namespace Geocoder\CacheAdapter;
 /**
  * @author Markus Bachmann <markus.bachmann@bachi.biz>
  */
-class Mongo implements CacheInterface
+class MongoDBAdapter implements CacheInterface
 {
 
     /**

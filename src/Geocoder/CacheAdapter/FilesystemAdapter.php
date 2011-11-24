@@ -13,7 +13,7 @@ namespace Geocoder\CacheAdapter;
 /**
  * @author Markus Bachmann <markus.bachmann@bachi.biz>
  */
-class Filesystem implements CacheInterface
+class FilesystemAdapter implements CacheInterface
 {
     /**
      * @var string

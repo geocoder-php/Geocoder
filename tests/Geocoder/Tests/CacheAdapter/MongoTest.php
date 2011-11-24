@@ -2,7 +2,7 @@
 
 namespace Geocoder\Tests\CacheAdapter;
 
-use \Geocoder\CacheAdapter\Mongo as MongoCache;
+use Geocoder\CacheAdapter\MongoDBAdapter;
 
 /**
  * @author Markus Bachmann <markus.bachmann@bachi.biz>
@@ -28,7 +28,7 @@ class MongoTest extends \PHPUnit_Framework_TestCase {
      */
     public function testRetrieveAndStore($key, $value)
     {
-        $cache = new MongoCache(new \Mongo, 'test', 'cache');
+        $cache = new MongoDBAdapter(new \Mongo, 'test', 'cache');
         $this->assertNull($cache->retrieve($key));
         $cache->store($key, $value);
         $this->assertEquals($value, $cache->retrieve($key));
