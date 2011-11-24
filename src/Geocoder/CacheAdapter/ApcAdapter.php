@@ -31,7 +31,7 @@ class ApcAdapter implements CacheInterface
      */
     public function store($key, $value)
     {
-        $retval = apc_store($key, $value, 3600);
+        $retval = apc_store($key, $value);
         return $retval;
     }
 
