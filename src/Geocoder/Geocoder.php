@@ -10,7 +10,7 @@
 
 namespace Geocoder;
 
-use Geocoder\Cache\CacheInterface;
+use Geocoder\CacheAdapter\CacheInterface;
 use Geocoder\Provider\ProviderInterface;
 use Geocoder\Result\Geocoded;
 
