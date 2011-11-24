@@ -5,7 +5,7 @@ namespace Geocoder\Provider;
 use Geocoder\CacheAdapter\CacheInterface;
 
 /**
- *  @author Markus Bachmann <markus.bachmann@digital-connect,de>
+ *  @author Markus Bachmann <markus.bachmann@bachi,biz>
  */
 class CacheProvider extends AbstractProvider implements ProviderInterface
 {
