@@ -21,7 +21,7 @@ class MongoDBAdapterTest extends TestCase
 
     protected function tearDown()
     {
-        $mongo = new \Mongo;
+        $mongo = new \Mongo();
         $mongo->dropDB('test');
     }
 
@@ -30,7 +30,7 @@ class MongoDBAdapterTest extends TestCase
      */
     public function testRetrieveAndStore($key, $value)
     {
-        $cache = new MongoDBAdapter(new \Mongo, 'test', 'cache');
+        $cache = new MongoDBAdapter(new \Mongo(), 'test', 'cache');
         $this->assertNull($cache->retrieve($key));
         $cache->store($key, $value);
         $this->assertEquals($value, $cache->retrieve($key));

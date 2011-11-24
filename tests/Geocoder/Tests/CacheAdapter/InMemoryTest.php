@@ -12,7 +12,7 @@ class InMemoryTest extends TestCase
 {
     protected function setUp()
     {
-        $this->cache = new InMemory;
+        $this->cache = new InMemory();
     }
 
     public function testRetrieve()
