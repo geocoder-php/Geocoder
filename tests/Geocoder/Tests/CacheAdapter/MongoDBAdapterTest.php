@@ -3,12 +3,13 @@
 namespace Geocoder\Tests\CacheAdapter;
 
 use Geocoder\CacheAdapter\MongoDBAdapter;
+use Geocoder\Tests\TestCase;
 
 /**
  * @author Markus Bachmann <markus.bachmann@bachi.biz>
  */
  
-class MongoDBAdapterTest extends \PHPUnit_Framework_TestCase {
+class MongoDBAdapterTest extends TestCase {
 
     protected function setUp()
     {

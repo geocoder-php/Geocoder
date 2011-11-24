@@ -3,11 +3,12 @@
 namespace Geocoder\Tests\CacheAdapter;
 
 use Geocoder\CacheAdapter\FilesystemAdapter;
+use Geocoder\Tests\TestCase;
 
 /**
  * @author Markus Bachmann <markus.bachmann@bachi.biz>
  */
-class FilesystemAdapterTest extends \PHPUnit_Framework_TestCase {
+class FilesystemAdapterTest extends TestCase {
 
     /**
      * @dataProvider getCacheData

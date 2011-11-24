@@ -2,11 +2,13 @@
 
 namespace Geocoder\Tests\CacheAdapter;
 
+use Geocoder\Tests\TestCase;
+
 /**
  * @author Markus Bachmann <markus.bachmann@bachi.biz>
  */
  
-class MemcachedTest extends \PHPUnit_Framework_TestCase {
+class MemcachedTest extends TestCase {
 
     protected function setUp()
     {

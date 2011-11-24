@@ -3,11 +3,12 @@
 namespace Geocoder\Tests\CacheAdapter;
 
 use Geocoder\CacheAdapter\InMemory;
+use Geocoder\Tests\TestCase;
 
 /**
  * @author Markus Bachmann <markus.bachmann@bachi.biz>
  */
-class InMemoryTest extends \PHPUnit_Framework_TestCase {
+class InMemoryTest extends TestCase {
 
     protected function setUp()
     {
