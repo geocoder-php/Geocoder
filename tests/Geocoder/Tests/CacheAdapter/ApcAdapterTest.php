@@ -11,7 +11,7 @@ class ApcAdapterTest extends \PHPUnit_Framework_TestCase {
 
     protected function setUp()
     {
-        if ( ! extension_loaded('apc') ) {
+        if (! extension_loaded('apc')) {
             $this->markTestSkipped('Apc extension must be loaded');
         }
     }
