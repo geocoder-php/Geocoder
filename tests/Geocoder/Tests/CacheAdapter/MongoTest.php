@@ -17,6 +17,12 @@ class MongoTest extends \PHPUnit_Framework_TestCase {
         }
     }
 
+    protected function tearDown()
+    {
+        $mongo = new \Mongo;
+        $mongo->dropDB('test');
+    }
+
     /**
      * @dataProvider getCacheData
      */
@@ -33,7 +39,6 @@ class MongoTest extends \PHPUnit_Framework_TestCase {
         return array(
             array('foo', null),
             array('foobar', 'bar'),
-            array('bar', new \stdClass()),
             array('foo', array('foo', 'bar')),
             array('foo', 1),
             array('foo', 2.1)

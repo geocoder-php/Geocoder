@@ -23,7 +23,8 @@ class ApcCache implements CacheInterface {
      */
     public function store($key, $value)
     {
-        apc_store($key, $value);
+        $retval = apc_store($key, $value, 3600);
+        return $retval;
     }
 
     /**
@@ -33,12 +34,8 @@ class ApcCache implements CacheInterface {
      */
     public function retrieve($key)
     {
-        $value = apc_fetch($key, $success);
-        if ( $success ) {
-            return $value;
-        }
-
-        return null;
+        $value = apc_fetch($key);
+        return false === $value ? null : $value;
     }
 
 

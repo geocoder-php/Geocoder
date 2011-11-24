@@ -49,8 +49,8 @@ class Mongo implements CacheInterface {
      */
     public function store($key, $value)
     {
-        $data = array('key' => $key, 'value' => $value);
-        $this->getCollection()->save($data);
+        $data = array('key' => $key, 'data' => $value);
+        $this->getCollection()->insert($data);
     }
 
     /**
@@ -60,11 +60,10 @@ class Mongo implements CacheInterface {
      */
     public function retrieve($key)
     {
-        $data = $this->getCollection()->findOne(array('key' => $key), array('value'));
+        $data = $this->getCollection()->findOne(array('key' => $key));
         if ( null === $data ) {
             return null;
         }
-
-        return $data['value'];
+        return $data['data'];
     }
 }
