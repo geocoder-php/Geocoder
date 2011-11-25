@@ -140,6 +140,7 @@ class Geocoded implements ResultInterface, \ArrayAccess
     public function offsetGet($offset)
     {
         $offset = strtolower($offset);
+
         return $this->offsetExists($offset) ? $this->$offset : null;
     }
 

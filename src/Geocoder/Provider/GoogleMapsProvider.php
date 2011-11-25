@@ -132,6 +132,7 @@ class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
             default:
                 break;
         }
+
         return $resultset;
     }
 }

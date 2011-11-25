@@ -204,6 +204,7 @@ class TestableGeocoder extends Geocoder
     public function getProvider()
     {
         $this->countCallGetProvider++;
+
         return parent::getProvider();
     }
 }

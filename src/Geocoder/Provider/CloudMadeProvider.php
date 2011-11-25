@@ -95,7 +95,7 @@ class CloudMadeProvider extends AbstractProvider implements ProviderInterface
         } else {
             return $this->getDefaults();
         }
-        
+
         $coordinates = (array) $data['centroid']->coordinates;
 
         return array(
