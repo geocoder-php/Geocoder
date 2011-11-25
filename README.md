@@ -31,6 +31,7 @@ Currently, there are many providers for the following APIs:
 * [Yahoo! PlaceFinder](http://developer.yahoo.com/geo/placefinder/) as Address-Based geocoding and reverse geocoding provider;
 * [Google Maps](http://code.google.com/apis/maps/documentation/geocoding/) as Address-Based geocoding and reverse geocoding provider;
 * [Bing Maps](http://msdn.microsoft.com/en-us/library/ff701715.aspx) as Address-Based geocoding and reverse geocoding provider;
+* [OpenStreetMaps](http://nominatim.openstreetmap.org/) as Address-Based geocoding and reverse geocoding provider;
 * [CloudMade](http://developers.cloudmade.com/projects/show/geocoding-http-api) as Address-Based geocoding and reverse geocoding provider;
 
 
@@ -98,6 +99,12 @@ The `GoogleMapsProvider` is able to geocode and reverse geocode **street address
 ### BingMapsProvider ###
 
 The `BingMapsProvider` is able to geocode and reverse geocode **street addresses**.
+
+
+### OpenStreetMapsProvider ###
+
+The `OpenStreetMapsProvider` is able to geocode and reverse geocode **street addresses**.
+
 
 ### CloudMadeProvider ###
 
