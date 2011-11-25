@@ -30,7 +30,8 @@ Currently, there are many providers for the following APIs:
 * [IpInfoDB](http://www.ipinfodb.com/) as IP-Based geocoding provider;
 * [Yahoo! PlaceFinder](http://developer.yahoo.com/geo/placefinder/) as Address-Based geocoding and reverse geocoding provider;
 * [Google Maps](http://code.google.com/apis/maps/documentation/geocoding/) as Address-Based geocoding and reverse geocoding provider;
-* [Bing Maps](http://msdn.microsoft.com/en-us/library/ff701715.aspx) as Address-Based geocoding and reverse geocoding provider.
+* [Bing Maps](http://msdn.microsoft.com/en-us/library/ff701715.aspx) as Address-Based geocoding and reverse geocoding provider;
+* [CloudMade](http://developers.cloudmade.com/projects/show/geocoding-http-api) as Address-Based geocoding and reverse geocoding provider;
 
 
 Installation
@@ -97,6 +98,10 @@ The `GoogleMapsProvider` is able to geocode and reverse geocode **street address
 ### BingMapsProvider ###
 
 The `BingMapsProvider` is able to geocode and reverse geocode **street addresses**.
+
+### CloudMadeProvider ###
+
+The `CloudMadeProvider` is able to geocode and reverse geocode **street addresses**.
 
 
 You can use one of them or write your own provider. You can also register all providers and decide later.
@@ -234,6 +239,7 @@ Rename the `phpunit.xml.dist` file to `phpunit.xml`, then uncomment the followin
     <!-- <server name="IPINFODB_API_KEY" value="YOUR_API_KEY" /> -->
     <!-- <server name="YAHOO_API_KEY" value="YOUR_API_KEY" /> -->
     <!-- <server name="BINGMAPS_API_KEY" value="YOUR_API_KEY" /> -->
+    <!-- <server name="CLOUDMADE_API_KEY" value="YOUR_API_KEY" /> -->
 </php>
 ```
 
