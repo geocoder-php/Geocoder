@@ -8,7 +8,7 @@
  * @license    MIT License
  */
 
-namespace Geocoder\Cache;
+namespace Geocoder\CacheAdapter;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
