@@ -15,7 +15,6 @@ namespace Geocoder\CacheAdapter;
  */
 class MongoDBAdapter implements CacheInterface
 {
-
     /**
      * @var \Mongo
      */
@@ -58,7 +57,7 @@ class MongoDBAdapter implements CacheInterface
     public function retrieve($key)
     {
         $data = $this->getCollection()->findOne(array('key' => $key));
-        if ( null === $data ) {
+        if (null === $data) {
             return null;
         }
         return unserialize($data['data']);

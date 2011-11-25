@@ -23,11 +23,11 @@ class FilesystemAdapter implements CacheInterface
     public function __construct($path)
     {
         $path = realpath($path);
-        if (! is_dir($path)) {
+        if (!is_dir($path)) {
             throw new \RuntimeException(sprintf('The directory %s does not exist', $path));
         }
 
-        if (! is_writable($path) || ! is_readable($path)) {
+        if (!is_writable($path) || !is_readable($path)) {
             throw new \RuntimeException(sprintf('The directory %s is not writeable and not readable', $path));
         }
 
@@ -57,7 +57,7 @@ class FilesystemAdapter implements CacheInterface
     {
         $path = $this->path . DIRECTORY_SEPARATOR . $this->computeFilename($key);
 
-        if (! is_file($path)) {
+        if (!is_file($path)) {
             return null;
         }
 

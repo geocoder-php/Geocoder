@@ -15,10 +15,9 @@ namespace Geocoder\CacheAdapter;
  */
 class ApcAdapter implements CacheInterface
 {
-
     public function __construct()
     {
-        if ( ! extension_loaded('apc') ) {
+        if (!extension_loaded('apc')) {
             throw new \RuntimeException('Apc extension must be loaded');
         }
     }
