@@ -10,18 +10,21 @@ use Geocoder\Tests\TestCase;
  */
 class MongoDBTest extends TestCase
 {
-
     protected function setUp()
     {
-        if ( ! class_exists('\Mongo') ) {
-            $this->markTestIncomplete('The mongo extension must be loaded');
+        if (!class_exists('\Mongo')) {
+            $this->markTestSkipped('The mongo extension must be loaded');
         }
+
+        $this->mongo = new \Mongo;
+        $this->database = 'geocoder_test';
+        $this->collection = 'cache';
     }
 
     protected function tearDown()
     {
-        $mongo = new \Mongo();
-        $mongo->dropDB('test');
+        $this->mongo->dropDB($this->database);
+        unset($this->mongo);
     }
 
     /**
@@ -29,7 +32,7 @@ class MongoDBTest extends TestCase
      */
     public function testRetrieveAndStore($key, $value)
     {
-        $cache = new MongoDB(new \Mongo(), 'test', 'cache');
+        $cache = new MongoDB($this->mongo, $this->database, $this->collection);
         $this->assertNull($cache->retrieve($key));
         $cache->store($key, $value);
         $this->assertEquals($value, $cache->retrieve($key));

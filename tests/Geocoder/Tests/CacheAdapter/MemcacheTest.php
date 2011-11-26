@@ -11,7 +11,7 @@ class MemcacheTest extends TestCase
 {
     protected function setUp()
     {
-        if ( ! class_exists('\Memcache', false) ) {
+        if (!class_exists('\Memcache', false)) {
             $this->markTestSkipped('Memcache extension must be loaded');
         }
     }

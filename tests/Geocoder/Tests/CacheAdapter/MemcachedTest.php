@@ -11,7 +11,7 @@ class MemcachedTest extends TestCase
 {
     protected function setUp()
     {
-        if ( ! class_exists('\Memcached', false) ) {
+        if (!class_exists('\Memcached', false)) {
             $this->markTestSkipped('Memcached must be loaded');
         }
     }
