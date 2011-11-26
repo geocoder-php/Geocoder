@@ -3,12 +3,12 @@
 namespace Geocoder\Tests\CacheAdapter;
 
 use Geocoder\Tests\TestCase;
-use Geocoder\CacheAdapter\ApcAdapter;
+use Geocoder\CacheAdapter\Apc;
 
 /**
  * @author Markus Bachmann <markus.bachmann@bachi.biz>
  */
-class ApcAdapterTest extends TestCase
+class ApcTest extends TestCase
 {
     protected function setUp()
     {
@@ -22,7 +22,7 @@ class ApcAdapterTest extends TestCase
      */
     public function testRetrieveAndStore($key, $value)
     {
-        $cache = new ApcAdapter();
+        $cache = new Apc();
         $this->assertNull($cache->retrieve($key));
         $cache->store($key, $value);
         $this->assertEquals($value, $cache->retrieve($key));

@@ -2,29 +2,20 @@
 
 namespace Geocoder\Tests\CacheAdapter;
 
+use Geocoder\CacheAdapter\Filesystem;
 use Geocoder\Tests\TestCase;
 
 /**
  * @author Markus Bachmann <markus.bachmann@bachi.biz>
  */
-class MemcacheAdapterTest extends TestCase
+class FilesystemTest extends TestCase
 {
-    protected function setUp()
-    {
-        if ( ! class_exists('\Memcache', false) ) {
-            $this->markTestSkipped('Memcache extension must be loaded');
-        }
-    }
-
     /**
      * @dataProvider getCacheData
      */
     public function testRetrieveAndStore($key, $value)
     {
-        $adapter = new \Memcache();
-        $adapter->addserver('127.0.0.1');
-        $adapter->delete($key);
-        $cache = new \Geocoder\CacheAdapter\MemcacheAdapter($adapter);
+        $cache = new Filesystem(sys_get_temp_dir());
         $this->assertNull($cache->retrieve($key));
         $cache->store($key, $value);
         $this->assertEquals($value, $cache->retrieve($key));
@@ -35,11 +26,10 @@ class MemcacheAdapterTest extends TestCase
         return array(
             array('1', null),
             array('2', 'bar'),
-            array('3', new \stdClass()),
+            array('3', new \Geocoder\Result\Geocoded()),
             array('4', array('foo', 'bar')),
             array('5', 1),
-            array('6', 2.1),
-            array('bar', new \Geocoder\Result\Geocoded()),
+            array('6', 2.1)
         );
     }
 }

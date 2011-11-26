@@ -13,7 +13,7 @@ namespace Geocoder\CacheAdapter;
 /**
  * @author Markus Bachmann <markus.bachmann@bachi.biz>
  */
-class MemcacheAdapter implements CacheInterface
+class Memcache implements CacheInterface
 {
     /**
      * @var \Memcache
