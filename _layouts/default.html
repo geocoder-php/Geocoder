@@ -1,0 +1,113 @@
+<!doctype html>
+<head>
+    <meta charset="UTF-8">
+    <title>Geocoder - The almost missing Geocoder PHP 5.3 library.</title>
+
+    <link rel="shortcut icon" href="images/favicon.gif" type="image/x-icon"/>
+    <link rel="icon" href="images/favicon.gif" type="image/x-icon"/>
+
+    <!--[if lt IE 9]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="css/styles.css"/>
+    <link rel="stylesheet" type="text/css" href="css/css3.css" />
+    <link rel="stylesheet" type="text/css" href="css/markdown.css" />
+    <link rel="stylesheet" type="text/css" href="css/base_syntax.css" />
+    <link rel="stylesheet" type="text/css" href="css/syntax.css" />
+
+    <script type="text/javascript" src=" https://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.js"></script>
+</head>
+<body>
+    <!--start container-->
+    <div id="container">
+        <header>
+            <nav>
+                <ul>
+                    <li><a href="#installation">Installation</a></li>
+                    <li><a href="#api">API</a></li>
+                    <li><a href="#extending_things">Extending things</a></li>
+                    <li><a href="#about">About</a></li>
+                </ul>
+            </nav>
+        </header>
+        <div id="intro">
+            <header class="group_bannner_left">
+                <hgroup>
+                    <h1>Geocoder</h1>
+                    <h2>The almost missing Geocoder <strong>PHP 5.3</strong> library.</h2>
+                </hgroup>
+            </header>
+        </div>
+        <div class="abstract">
+            Easy to use &bull; PHP 5.3+ &bull; FreeGeoIp, HostIp, IpInfoDB, Yahoo! PlaceFinder, Google Maps, Bing Maps, OpenStreetMaps, and CloudMade geocoding services &bull; Caching (InMemory, Memcached, MongoDB, Memcache) &bull; HTTP Adapters (Buzz, Curl, Guzzle, Zend)
+        </div>
+        <div class="holder_content">
+            <section class="group1">
+                <h3>Street Addresses</h3>
+                <table>
+                    <tr>
+                        <td>
+                            <span class="address">"Eiffel Tower"</span>
+                            <br />
+                            <span class="annotation">place name or address</span>
+                        </td>
+                        <td>&rarr;</td>
+                        <td>
+                            <span class="address">48.8582, 2.2945</span>
+                            <br />
+                            <span class="annotation">latitude, longitude</span>
+                        </td>
+                    </tr>
+                </table>
+            </section>
+            <section class="group2">
+                <h3>IP Addresses</h3>
+                <table>
+                    <tr>
+                        <td>
+                            <span class="address">44.9817, -93.2783</span>
+                            <br />
+                            <span class="annotation">latitude, longitude</span>
+                        </td>
+                        <td>&rarr;</td>
+                        <td>
+                            <span class="address">350 7th St N, Minneapolis, MN</span>
+                            <br />
+                            <span class="annotation">street address</span>
+                        </td>
+                    </tr>
+                </table>
+            </section>
+            <section class="group3">
+                <h3>Coordinates</h3>
+                <table>
+                    <tr>
+                        <td>
+                            <span class="address">88.188.221.14</span>
+                            <br />
+                            <span class="annotation">IP address</span>
+                        </td>
+                        <td>&rarr;</td>
+                        <td>
+                            <span class="address">Orleans, France</span>
+                            <br />
+                            <span class="annotation">street address</span>
+                        </td>
+                    </tr>
+                </table>
+            </section>
+        </div>
+        <div class="markdown">
+            {{ content }}
+        </div>
+    </div>
+    <footer>
+        <div class="container">
+            <div id="FooterTree">
+                William Durand - 2011 | Original design and code by <a href="http://www.marijazaric.com">marija zaric - creative simplicity</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
