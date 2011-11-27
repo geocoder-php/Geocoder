@@ -275,6 +275,10 @@ footer {
     position: absolute;
 }
 
+#FooterOne a, #FooterTwo a, #FooterTree a {
+    text-decoration: none;
+}
+
 #FooterTwo {
     position: absolute;
     right: 225px;
@@ -282,11 +286,19 @@ footer {
     color:white;
 }
 
-#FooterTree{
+#FooterTree {
     position: absolute;
     left: 225px;
     top:26px;
     color:white;
+}
+
+#FooterTree a {
+    color: white;
+}
+
+#FooterTree a:hover, #FooterTree a:focus {
+    color: black;
 }
 
 .container{

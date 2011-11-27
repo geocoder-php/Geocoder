@@ -86,6 +86,8 @@ $result = $geocoder->geocode('10 rue Gambetta, Paris, France');
 // "zipcode"    => string(5) "75020"
 // "region"     => string(14) "Ile-de-France"
 // "country"    => string(6) "France"
+
+$result = $geocoder->reverse($latitude, $longitude);
 {% endhighlight %}
         <p><br /></p>
         <p>The <code>$result</code> object is an instance of the <code>Geocoded</code> class which implements <a href="http://php.net/manual/class.arrayaccess.php">ArrayAccess</a> and the following API:</p>
@@ -98,6 +100,52 @@ $result = $geocoder->geocode('10 rue Gambetta, Paris, France');
             <li><code>getRegion()</code> will return the <code>region</code>;</li>
             <li><code>getCountry()</code> will return te <code>country</code>.</li>
         </ul>
+        <p><br /></p>
+        <p>The Geocoder's API is fluent, you can write:</p>
+{% highlight php %}
+<?php
+
+$result = $geocoder
+    ->registerProvider(new \My\Provider\Custom($adapter))
+    ->using('custom')
+    ->geocode('68.145.37.34')
+    ;
+{% endhighlight %}
+    <p><br /></p>
+    <p>The <code>using()</code> method allows you to choose the adapter to use. When you deal with multiple adapters, you may want to choose one of them. The default behavior is to use the first one but it can be annoying.</p>
+    </section>
+</div>
+<div class="holder_content">
+    <section class="group4" id="providers">
+        <h3>Providers</h3>
+        <p><strong>Geocoder</strong> comes with a lot of service providers:</p>
+        <table>
+            <tr>
+                <th>IP-Based</th>
+                <th>Address-Based</th>
+            </tr>
+            <tr>
+                <td><a href="http://freegeoip.net/static/index.html">FreeGeoIp</a> as IP-Based geocoding provider</td>
+                <td><a href="http://code.google.com/apis/maps/documentation/geocoding/">Google Maps</a> as Address-Based geocoding and reverse geocoding provider</td>
+            </tr>
+            <tr>
+                <td><a href="http://www.hostip.info/">HostIp</a> as IP-Based geocoding provider</td>
+                <td><a href="http://msdn.microsoft.com/en-us/library/ff701715.aspx">Bing Maps</a> as Address-Based geocoding and reverse geocoding provider</td>
+            </tr>
+            <tr>
+                <td><a href="http://www.ipinfodb.com/">IpInfoDB</a> as IP-Based geocoding provider</td>
+                <td><a href="http://nominatim.openstreetmap.org/">OpenStreetMaps</a> as Address-Based geocoding and reverse geocoding provider</td>
+            </tr>
+            <tr>
+                <td><a href="http://developer.yahoo.com/geo/placefinder/">Yahoo! PlaceFinder</a> as IP-Based geocoding provider</td>
+                <td><a href="http://developers.cloudmade.com/projects/show/geocoding-http-api">CloudMade</a> as Address-Based geocoding and reverse geocoding provider</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><a href="http://developer.yahoo.com/geo/placefinder/">Yahoo! PlaceFinder</a> as Address-Based geocoding and reverse geocoding provider</td>
+            </tr>
+
+        </table>
     </section>
 </div>
 <div class="holder_content">
@@ -117,7 +165,7 @@ $result = $geocoder->geocode('10 rue Gambetta, Paris, France');
         </p>
         <p><br /></p>
         <p>The MIT License</p>
-        <p>Copyright (c) 2010-2011 william.durand1@gmail.com</p>
+        <p>Copyright (c) 2010-2011 william.durand1[at]gmail.com</p>
         <p>Permission is hereby granted, free of charge, to any person obtaining a copy
         of this software and associated documentation files (the "Software"), to deal
         in the Software without restriction, including without limitation the rights
