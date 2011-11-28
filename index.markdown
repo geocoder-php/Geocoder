@@ -5,7 +5,9 @@ layout: default
 <div class="holder_content">
     <section class="group5" id="installation">
         <h3>Installation</h3>
-If you don't use a <em>ClassLoader</em> in your application, just require the provided autoloader:
+        <p>Get the code:</p>
+        <p><input type="text" value="git clone git://github.com/willdurand/Geocoder.git" size="74" class="git" /></p>
+        <p>If you don't use a <em>ClassLoader</em> in your application, just require the provided autoloader:</p>
 {% highlight php %}
 <?php
 

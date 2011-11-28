@@ -438,3 +438,11 @@ SPECIFIC
   /* shadow */
   text-shadow: 0 0 0.5em #444;
 }
+
+.git {
+    padding: 5px;
+    border: none;
+    color: #fff;
+    font-weight: bold;
+    background-color: #000;
+}
