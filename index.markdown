@@ -154,7 +154,6 @@ $result = $geocoder
         <p>You can provide your own <code>adapter</code>, you just need to create a new class which implements <code>HttpAdapterInterface</code>.</p>
         <p>You can also write your own <code>provider</code> by implementing the <code>ProviderInterface</code>.</p>
         <p>Note, the <code>AbstractProvider</code> class can help you by providing useful features.</p>
-        <p>Finally, you can write your own <code>cache</code> layer by implementing the <code>CacheInterface</code>.</p>
     </section>
 </div>
 <div class="holder_content">
