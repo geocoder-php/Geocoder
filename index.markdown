@@ -20,13 +20,16 @@ require_once 'path/to/geocoder/src/autoload.php';
     <section class="group6">
         <br />
         <br />
-        <br />
 {% highlight php %}
 <?php
 
-$adapter = new \Geocoder\HttpAdapter\BuzzHttpAdapter();
+// Create an adapter
+$adapter  = new \Geocoder\HttpAdapter\BuzzHttpAdapter();
 
+// Create a Geocoder object and pass it your adapter
 $geocoder = new \Geocoder\Geocoder();
+
+// Then, register all providers your want
 $geocoder->registerProviders(array(
     new \Geocoder\Provider\YahooProvider(
         $adapter, '<YAHOO_API_KEY>', $locale
