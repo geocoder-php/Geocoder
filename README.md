@@ -198,22 +198,6 @@ $result = $geocoder->reverse($latitude, $longitude);
 **Note:** the `YahooProvider` bundled in this lib is the unique provider able to do this feature.
 
 
-Cache
------
-
-You can add a **cache layer** to the `Geocoder` object in order to save API calls by using the method `registerCache()` or passing
-a cache object as a second argument of the `Geocoder` constructor. The cache object must implement the `CacheInterface` interface.
-
-There are the following cache adapters:
-
-* `InMemory` which is used for unit tests and provided as an example;
-* `Memcached` which uses [Memcached](http://php.net/manual/book.memcached.php) to store/retrieve data;
-* `Memcache` which use the [Memcache](http://php.net/manual/book.memcache.php);
-* `Apc` which use the binary cache extension [APC](http://php.net/manual/book.apc.php) to store/retrieve data;
-* `Filesystem` which used the filesystem;
-* `MongoDB` which used a MongoDB to store and retrieve data.
-
-
 Extending Things
 ----------------
 
@@ -222,8 +206,6 @@ You can provide your own `adapter`, you just need to create a new class which im
 You can also write your own `provider` by implementing the `ProviderInterface`.
 
 Note, the `AbstractProvider` class can help you by providing useful features.
-
-Finally, you can write your own `cache` layer by implementing the `CacheInterface`.
 
 
 Unit Tests

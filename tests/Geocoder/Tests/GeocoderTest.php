@@ -85,52 +85,6 @@ class GeocoderTest extends TestCase
         $this->assertInstanceOf('\Geocoder\Result\Geocoded', $this->geocoder->geocode('foobar'));
     }
 
-    public function testGeocodeWithCache()
-    {
-        $cache = new IntrospectableInMemory();
-
-        $this->geocoder->registerProvider(new MockProviderWithData('test1'));
-        $this->geocoder->registerCache($cache);
-
-        $result = $this->geocoder->geocode('hello, world');
-
-        $this->assertEquals(1, $this->geocoder->countCallGetProvider);
-
-        $store  = $cache->getStore();
-
-        $this->assertEquals(1, count($store));
-        $this->assertArrayHasKey(sha1('hello, world'), $store);
-        $this->assertSame($result, $store[sha1('hello, world')]);
-
-        $result = $this->geocoder->geocode('hello, world');
-
-        $this->assertEquals(1, $this->geocoder->countCallGetProvider);
-        $this->assertEquals(1, count($store));
-    }
-
-    public function testReverseWithCache()
-    {
-        $cache = new IntrospectableInMemory();
-
-        $this->geocoder->registerProvider(new MockProviderWithData('test1'));
-        $this->geocoder->registerCache($cache);
-
-        $result = $this->geocoder->reverse('foo', 'bar');
-
-        $this->assertEquals(1, $this->geocoder->countCallGetProvider);
-
-        $store  = $cache->getStore();
-
-        $this->assertEquals(1, count($store));
-        $this->assertArrayHasKey(sha1('foo-bar'), $store);
-        $this->assertSame($result, $store[sha1('foo-bar')]);
-
-        $result = $this->geocoder->reverse('foo', 'bar');
-
-        $this->assertEquals(1, $this->geocoder->countCallGetProvider);
-        $this->assertEquals(1, count($store));
-    }
-
     public function testEmpty()
     {
         $this->geocoder->registerProvider(new MockProviderWithRequestCount('test2'));
@@ -206,13 +160,5 @@ class TestableGeocoder extends Geocoder
         $this->countCallGetProvider++;
 
         return parent::getProvider();
-    }
-}
-
-class IntrospectableInMemory extends \Geocoder\CacheAdapter\InMemory
-{
-    public function getStore()
-    {
-        return $this->store;
     }
 }
