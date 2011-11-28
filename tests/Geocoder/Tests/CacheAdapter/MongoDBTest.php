@@ -31,7 +31,7 @@ class MongoDBTest extends TestCase
 
         $mongo->dropDB('geocoder_test');
     }
-    
+
     static public function getCacheData()
     {
         return array(

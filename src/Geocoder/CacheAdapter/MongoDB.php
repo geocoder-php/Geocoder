@@ -60,6 +60,7 @@ class MongoDB implements CacheInterface
         if (null === $data) {
             return null;
         }
+
         return unserialize($data['data']);
     }
 

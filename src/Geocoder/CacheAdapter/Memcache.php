@@ -44,6 +44,7 @@ class Memcache implements CacheInterface
     public function retrieve($key)
     {
         $value = $this->adapter->get($key);
+
         return $value ? unserialize($value) : null;
     }
 }

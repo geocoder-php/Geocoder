@@ -31,6 +31,7 @@ class Apc implements CacheInterface
     public function store($key, $value)
     {
         $retval = apc_store($key, $value);
+
         return $retval;
     }
 
@@ -42,6 +43,7 @@ class Apc implements CacheInterface
     public function retrieve($key)
     {
         $value = apc_fetch($key);
+
         return false === $value ? null : $value;
     }
 }
