@@ -44,6 +44,4 @@ class Apc implements CacheInterface
         $value = apc_fetch($key);
         return false === $value ? null : $value;
     }
-
-
 }
