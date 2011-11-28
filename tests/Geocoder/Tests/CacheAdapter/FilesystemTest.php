@@ -10,12 +10,28 @@ use Geocoder\Tests\TestCase;
  */
 class FilesystemTest extends TestCase
 {
+
+    protected function setUp()
+    {
+        $this->path = sys_get_temp_dir() . '/geocoder/filesystem_test';
+        if (!file_exists($this->path)) {
+            mkdir($this->path, 0777, true);
+        }
+    }
+
+    protected function tearDown()
+    {
+        array_map('unlink', glob($this->path.'/*.cache'));
+        rmdir($this->path);
+        $this->path = null;
+    }
+
     /**
      * @dataProvider getCacheData
      */
     public function testRetrieveAndStore($key, $value)
     {
-        $cache = new Filesystem(sys_get_temp_dir());
+        $cache = new Filesystem($this->path);
         $this->assertNull($cache->retrieve($key));
         $cache->store($key, $value);
         $this->assertEquals($value, $cache->retrieve($key));
