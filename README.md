@@ -208,6 +208,10 @@ There are the following cache adapters:
 
 * `InMemory` which is used for unit tests and provided as an example;
 * `Memcached` which uses [Memcached](http://php.net/manual/book.memcached.php) to store/retrieve data.
+* `Memcache` which use the [Memcache](http://php.net/manual/book.memcache.php)
+* `Apc` which use the binary cache extension [APC](http://php.net/manual/book.apc.php) to store/retrieve data
+* `Filesystem` which used the filesystem.
+* `MongoDB` which used a MongoDB to store and retrieve data.
 
 
 Extending Things
