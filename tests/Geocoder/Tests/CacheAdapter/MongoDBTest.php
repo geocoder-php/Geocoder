@@ -15,16 +15,6 @@ class MongoDBTest extends TestCase
         if (!class_exists('\Mongo')) {
             $this->markTestSkipped('The mongo extension must be loaded');
         }
-
-        $this->mongo = new \Mongo;
-        $this->database = 'geocoder_test';
-        $this->collection = 'cache';
-    }
-
-    protected function tearDown()
-    {
-        $this->mongo->dropDB($this->database);
-        unset($this->mongo);
     }
 
     /**
@@ -32,10 +22,14 @@ class MongoDBTest extends TestCase
      */
     public function testRetrieveAndStore($key, $value)
     {
-        $cache = new MongoDB($this->mongo, $this->database, $this->collection);
+        $mongo = new \Mongo();
+
+        $cache = new MongoDB($mongo, 'geocoder_test', 'cache');
         $this->assertNull($cache->retrieve($key));
         $cache->store($key, $value);
         $this->assertEquals($value, $cache->retrieve($key));
+
+        $mongo->dropDB('geocoder_test');
     }
     
     static public function getCacheData()
