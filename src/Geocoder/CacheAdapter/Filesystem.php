@@ -23,10 +23,10 @@ class Filesystem implements CacheInterface
     public function __construct($path)
     {
         $path = realpath($path);
+
         if (!is_dir($path)) {
             throw new \RuntimeException(sprintf('The directory %s does not exist', $path));
         }
-
         if (!is_writable($path) || !is_readable($path)) {
             throw new \RuntimeException(sprintf('The directory %s is not writeable and not readable', $path));
         }
@@ -35,10 +35,7 @@ class Filesystem implements CacheInterface
     }
 
     /**
-     * Stores a value with a unique key.
-     *
-     * @param string $key   A unique key.
-     * @param \Geocoder\Result\ResultInterface  A result object.
+     * {@inheritDoc}
      */
     public function store($key, $value)
     {
@@ -49,9 +46,7 @@ class Filesystem implements CacheInterface
     }
 
     /**
-     * Retrieves a value identified by its key.
-     *
-     * @return \Geocoder\Result\ResultInterface A result object.
+     * {@inheritDoc}
      */
     public function retrieve($key)
     {

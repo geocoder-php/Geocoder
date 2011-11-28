@@ -38,10 +38,7 @@ class MongoDB implements CacheInterface
     }
 
     /**
-     * Stores a value with a unique key.
-     *
-     * @param string $key   A unique key.
-     * @param \Geocoder\Result\ResultInterface  A result object.
+     * {@inheritdoc}
      */
     public function store($key, $value)
     {
@@ -50,9 +47,7 @@ class MongoDB implements CacheInterface
     }
 
     /**
-     * Retrieves a value identified by its key.
-     *
-     * @return \Geocoder\Result\ResultInterface A result object.
+     * {@inheritdoc}
      */
     public function retrieve($key)
     {
@@ -72,7 +67,7 @@ class MongoDB implements CacheInterface
     protected function getCollection()
     {
         return $this->mongo
-                ->selectDB($this->databaseName)
-                ->selectCollection($this->collectionName);
+            ->selectDB($this->databaseName)
+            ->selectCollection($this->collectionName);
     }
 }

@@ -23,10 +23,7 @@ class Apc implements CacheInterface
     }
 
     /**
-     * Stores a value with a unique key.
-     *
-     * @param string $key   A unique key.
-     * @param \Geocoder\Result\ResultInterface  A result object.
+     * {@inheritDoc}
      */
     public function store($key, $value)
     {
@@ -36,9 +33,7 @@ class Apc implements CacheInterface
     }
 
     /**
-     * Retrieves a value identified by its key.
-     *
-     * @return \Geocoder\Result\ResultInterface A result object.
+     * {@inheritDoc}
      */
     public function retrieve($key)
     {
