@@ -26,6 +26,7 @@ class BingMapsProviderTest extends TestCase
         $this->assertNull($result['longitude']);
         $this->assertNull($result['city']);
         $this->assertNull($result['zipcode']);
+        $this->assertNull($result['county']);
         $this->assertNull($result['region']);
         $this->assertNull($result['country']);
     }
@@ -39,6 +40,7 @@ class BingMapsProviderTest extends TestCase
         $this->assertNull($result['longitude']);
         $this->assertNull($result['city']);
         $this->assertNull($result['zipcode']);
+        $this->assertNull($result['county']);
         $this->assertNull($result['region']);
         $this->assertNull($result['country']);
     }
@@ -52,6 +54,7 @@ class BingMapsProviderTest extends TestCase
         $this->assertNull($result['longitude']);
         $this->assertNull($result['city']);
         $this->assertNull($result['zipcode']);
+        $this->assertNull($result['county']);
         $this->assertNull($result['region']);
         $this->assertNull($result['country']);
     }
@@ -83,6 +86,7 @@ class BingMapsProviderTest extends TestCase
         $this->assertEquals(2.3887721299999995, $result['longitude']);
         $this->assertEquals(75020, $result['zipcode']);
         $this->assertEquals('Paris', $result['city']);
+        $this->assertEquals('Paris', $result['county']);
         $this->assertEquals('IdF', $result['region']);
         $this->assertEquals('France', $result['country']);
     }
@@ -96,6 +100,7 @@ class BingMapsProviderTest extends TestCase
         $this->assertNull($result['longitude']);
         $this->assertNull($result['city']);
         $this->assertNull($result['zipcode']);
+        $this->assertNull($result['county']);
         $this->assertNull($result['region']);
         $this->assertNull($result['country']);
     }
@@ -113,6 +118,7 @@ class BingMapsProviderTest extends TestCase
         $this->assertEquals(2.3887719959020615, $result['longitude']);
         $this->assertEquals(75020, $result['zipcode']);
         $this->assertEquals('Paris', $result['city']);
+        $this->assertEquals('Paris', $result['county']);
         $this->assertEquals('IdF', $result['region']);
         $this->assertEquals('France', $result['country']);
     }

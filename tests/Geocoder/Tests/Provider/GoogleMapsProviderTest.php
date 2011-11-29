@@ -17,6 +17,7 @@ class GoogleMapsProviderTest extends TestCase
         $this->assertNull($result['longitude']);
         $this->assertNull($result['city']);
         $this->assertNull($result['zipcode']);
+        $this->assertNull($result['county']);
         $this->assertNull($result['region']);
         $this->assertNull($result['country']);
     }
@@ -30,6 +31,7 @@ class GoogleMapsProviderTest extends TestCase
         $this->assertNull($result['longitude']);
         $this->assertNull($result['city']);
         $this->assertNull($result['zipcode']);
+        $this->assertNull($result['county']);
         $this->assertNull($result['region']);
         $this->assertNull($result['country']);
     }
@@ -43,6 +45,7 @@ class GoogleMapsProviderTest extends TestCase
         $this->assertNull($result['longitude']);
         $this->assertNull($result['city']);
         $this->assertNull($result['zipcode']);
+        $this->assertNull($result['county']);
         $this->assertNull($result['region']);
         $this->assertNull($result['country']);
     }
@@ -70,6 +73,7 @@ class GoogleMapsProviderTest extends TestCase
         $this->assertNull($result['longitude']);
         $this->assertNull($result['city']);
         $this->assertNull($result['zipcode']);
+        $this->assertNull($result['county']);
         $this->assertNull($result['region']);
         $this->assertNull($result['country']);
     }
@@ -83,6 +87,7 @@ class GoogleMapsProviderTest extends TestCase
         $this->assertEquals(2.3889114, $result['longitude']);
         $this->assertEquals(75020, $result['zipcode']);
         $this->assertEquals('Paris', $result['city']);
+        $this->assertEquals('Paris', $result['county']);
         $this->assertEquals('Île-de-France', $result['region']);
         $this->assertEquals('France', $result['country']);
     }
@@ -96,6 +101,7 @@ class GoogleMapsProviderTest extends TestCase
         $this->assertNull($result['longitude']);
         $this->assertNull($result['city']);
         $this->assertNull($result['zipcode']);
+        $this->assertNull($result['county']);
         $this->assertNull($result['region']);
         $this->assertNull($result['country']);
     }
@@ -109,6 +115,7 @@ class GoogleMapsProviderTest extends TestCase
         $this->assertEquals(2.3889114, $result['longitude']);
         $this->assertEquals(75020, $result['zipcode']);
         $this->assertEquals('Paris', $result['city']);
+        $this->assertEquals('Paris', $result['county']);
         $this->assertEquals('Île-de-France', $result['region']);
         $this->assertEquals('France', $result['country']);
     }

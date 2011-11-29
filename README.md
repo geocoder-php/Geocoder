@@ -147,6 +147,7 @@ $result = $geocoder->geocode('88.188.221.14');
 // "longitude"  => string(8) "1.904960"
 // "city"       => string(7) "Orleans"
 // "zipcode"    => string(0) ""
+// "county"     => string(6) "Loiret"
 // "region"     => string(6) "Centre"
 // "country"    => string(6) "France"
 
@@ -155,6 +156,7 @@ $result = $geocoder->geocode('10 rue Gambetta, Paris, France');
 // "latitude"   => string(9) "48.863217"
 // "longitude"  => string(8) "2.388821"
 // "city"       => string(5) "Paris"
+// "county"     => string(5) "Paris"
 // "zipcode"    => string(5) "75020"
 // "region"     => string(14) "Ile-de-France"
 // "country"    => string(6) "France"
@@ -167,6 +169,7 @@ The `geocode()` method returns a `Geocoded` result object with the following API
 * `getLongitude()` will return the `longitude` value;
 * `getCity()` will return the `city`;
 * `getZipcode()` will return the `zipcode`;
+* `getCounty()` will return the `county`;
 * `getRegion()` will return the `region`;
 * `getCountry()` will return te `country`.
 

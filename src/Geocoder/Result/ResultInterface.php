@@ -51,6 +51,13 @@ interface ResultInterface
     function getZipcode();
 
     /**
+     * Returns the county value.
+     *
+     * @return string
+     */
+    function getCounty();
+
+    /**
      * Returns the region value.
      *
      * @return string

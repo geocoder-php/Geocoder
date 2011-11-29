@@ -39,6 +39,7 @@ class YahooProviderTest extends TestCase
         $this->assertNull($result['longitude']);
         $this->assertNull($result['city']);
         $this->assertNull($result['zipcode']);
+        $this->assertNull($result['county']);
         $this->assertNull($result['region']);
         $this->assertNull($result['country']);
     }
@@ -52,6 +53,7 @@ class YahooProviderTest extends TestCase
         $this->assertNull($result['longitude']);
         $this->assertNull($result['city']);
         $this->assertNull($result['zipcode']);
+        $this->assertNull($result['county']);
         $this->assertNull($result['region']);
         $this->assertNull($result['country']);
     }
@@ -100,6 +102,7 @@ class YahooProviderTest extends TestCase
         $this->assertEquals(2.388821, $result['longitude']);
         $this->assertEquals(75020, $result['zipcode']);
         $this->assertEquals('Paris', $result['city']);
+        $this->assertEquals('Paris', $result['county']);
         $this->assertEquals('Île-de-France', $result['region']);
         $this->assertEquals('France', $result['country']);
     }
@@ -113,6 +116,7 @@ class YahooProviderTest extends TestCase
         $this->assertNull($result['longitude']);
         $this->assertNull($result['city']);
         $this->assertNull($result['zipcode']);
+        $this->assertNull($result['county']);
         $this->assertNull($result['region']);
         $this->assertNull($result['country']);
     }
