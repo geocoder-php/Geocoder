@@ -121,6 +121,10 @@ class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
                 $resultset['city'] = $value;
                 break;
 
+            case 'administrative_area_level_2':
+                $resultset['county'] = $value;
+                break;
+
             case 'administrative_area_level_1':
                 $resultset['region'] = $value;
                 break;
