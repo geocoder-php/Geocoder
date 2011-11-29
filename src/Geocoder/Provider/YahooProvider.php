@@ -106,6 +106,7 @@ class YahooProvider extends AbstractProvider implements ProviderInterface
             'longitude' => isset($data['longitude']) ? $data['longitude'] : null,
             'city'      => isset($data['city']) ? $data['city'] : null,
             'zipcode'   => isset($data['postal']) ? $data['postal'] : null,
+            'county'    => isset($data['county']) ? $data['county'] : null,
             'region'    => isset($data['state']) ? $data['state'] : null,
             'country'   => isset($data['country']) ? $data['country'] : null
         );

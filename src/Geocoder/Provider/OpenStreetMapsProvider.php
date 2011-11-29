@@ -60,6 +60,8 @@ class OpenStreetMapsProvider extends AbstractProvider implements ProviderInterfa
             $ret['latitude'] = $bestNode->getAttribute('lat');
             $ret['longitude'] = $bestNode->getAttribute('lon');
             $ret['zipcode'] = $bestNode->getElementsByTagName('postcode')->item(0)->nodeValue;
+            $ret['county'] = $bestNode->getElementsByTagName('county')->length ? $bestNode->getElementsByTagName('county')->item(0)->nodeValue : null;
+            $ret['region'] = $bestNode->getElementsByTagName('state')->length ? $bestNode->getElementsByTagName('state')->item(0)->nodeValue : null;
             $ret['city'] = $bestNode->getElementsByTagName('city')->item(0)->nodeValue;
             $ret['country'] = $bestNode->getElementsByTagName('country')->item(0)->nodeValue;
 
@@ -95,6 +97,8 @@ class OpenStreetMapsProvider extends AbstractProvider implements ProviderInterfa
             $ret['latitude'] = $result->getAttribute('lat');
             $ret['longitude'] = $result->getAttribute('lon');
             $ret['zipcode'] = $addressParts->getElementsByTagName('postcode')->item(0)->nodeValue;
+            $ret['county'] = $addressParts->getElementsByTagName('county')->length ? $addressParts->getElementsByTagName('county')->item(0)->nodeValue : null;
+            $ret['region'] = $addressParts->getElementsByTagName('state')->length ? $addressParts->getElementsByTagName('state')->item(0)->nodeValue : null;
             $ret['city'] = $addressParts->getElementsByTagName('city')->item(0)->nodeValue;
             $ret['country'] = $addressParts->getElementsByTagName('country')->item(0)->nodeValue;
 
