@@ -64,7 +64,7 @@ class BingMapsProvider extends AbstractProvider implements ProviderInterface
             throw new \RuntimeException('No API Key provided');
         }
 
-        $query = sprintf('http://dev.virtualearth.net/REST/v1/Locations/%s,%s?key=%s', $coordinates[0], $coordinates[1], $this->apiKey);
+        $query = sprintf('http://dev.virtualearth.net/REST/v1/Locations/%F,%F?key=%s', $coordinates[0], $coordinates[1], $this->apiKey);
 
         return $this->executeQuery($query);
     }

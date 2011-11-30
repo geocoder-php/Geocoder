@@ -64,7 +64,7 @@ class CloudMadeProvider extends AbstractProvider implements ProviderInterface
             throw new \RuntimeException('No API Key provided');
         }
 
-        $query = sprintf('http://geocoding.cloudmade.com/%s/geocoding/v2/find.js?around=%s,%s&object_type=address&return_location=true&results=1', $this->apiKey, $coordinates[0], $coordinates[1]);
+        $query = sprintf('http://geocoding.cloudmade.com/%s/geocoding/v2/find.js?around=%F,%F&object_type=address&return_location=true&results=1', $this->apiKey, $coordinates[0], $coordinates[1]);
 
         return $this->executeQuery($query);
     }
