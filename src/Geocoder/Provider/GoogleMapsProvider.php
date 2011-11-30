@@ -49,7 +49,7 @@ class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
      */
     public function getReversedData(array $coordinates)
     {
-        return $this->getGeocodedData(sprintf('%s,%s', $coordinates[0], $coordinates[1]));
+        return $this->getGeocodedData(sprintf('%F,%F', $coordinates[0], $coordinates[1]));
     }
 
     /**

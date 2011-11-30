@@ -78,7 +78,7 @@ class OpenStreetMapsProvider extends AbstractProvider implements ProviderInterfa
     public function getReversedData(array $coordinates)
     {
 
-        $query = sprintf('http://nominatim.openstreetmap.org/reverse?format=xml&lat=%s&lon=%s&addressdetails=1', $coordinates[0], $coordinates[1]);
+        $query = sprintf('http://nominatim.openstreetmap.org/reverse?format=xml&lat=%F&lon=%F&addressdetails=1', $coordinates[0], $coordinates[1]);
 
         $content = $this->executeQuery($query);
 
