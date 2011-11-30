@@ -65,7 +65,7 @@ class YahooProvider extends AbstractProvider implements ProviderInterface
             throw new \RuntimeException('No API Key provided');
         }
 
-        $query = sprintf('http://where.yahooapis.com/geocode?q=%s,+%s&gflags=R&flags=J&appid=%s', $coordinates[0], $coordinates[1], $this->apiKey);
+        $query = sprintf('http://where.yahooapis.com/geocode?q=%F,+%F&gflags=R&flags=J&appid=%s', $coordinates[0], $coordinates[1], $this->apiKey);
 
         return $this->executeQuery($query);
     }
