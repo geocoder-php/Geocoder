@@ -15,8 +15,6 @@ class FreeGeoIpProviderTest extends TestCase
 
         $this->assertNull($result['latitude']);
         $this->assertNull($result['longitude']);
-        $this->assertNull($result['streetNumber']);
-        $this->assertNull($result['streetName']);
         $this->assertNull($result['city']);
         $this->assertNull($result['zipcode']);
         $this->assertNull($result['region']);
@@ -31,8 +29,6 @@ class FreeGeoIpProviderTest extends TestCase
 
         $this->assertNull($result['latitude']);
         $this->assertNull($result['longitude']);
-        $this->assertNull($result['streetNumber']);
-        $this->assertNull($result['streetName']);
         $this->assertNull($result['city']);
         $this->assertNull($result['zipcode']);
         $this->assertNull($result['region']);
@@ -47,8 +43,6 @@ class FreeGeoIpProviderTest extends TestCase
 
         $this->assertNull($result['latitude']);
         $this->assertNull($result['longitude']);
-        $this->assertNull($result['streetNumber']);
-        $this->assertNull($result['streetName']);
         $this->assertNull($result['city']);
         $this->assertNull($result['zipcode']);
         $this->assertNull($result['region']);
@@ -78,8 +72,6 @@ class FreeGeoIpProviderTest extends TestCase
 
         $this->assertEquals(33.0347, $result['latitude']);
         $this->assertEquals(-96.8134, $result['longitude']);
-        $this->assertNull($result['streetNumber']);
-        $this->assertNull($result['streetName']);
         $this->assertEquals(75093, $result['zipcode']);
         $this->assertEquals('Plano', $result['city']);
         $this->assertEquals('Texas', $result['region']);
