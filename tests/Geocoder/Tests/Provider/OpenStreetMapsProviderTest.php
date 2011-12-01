@@ -16,6 +16,8 @@ class OpenStreetMapsProviderTest extends TestCase
         $this->assertEquals('60.4539471728726', $result['latitude']);
         $this->assertEquals('22.2567841926781', $result['longitude']);
         $this->assertEquals('20100', $result['zipcode']);
+        $this->assertEquals(35, $result['streetNumber']);
+        $this->assertEquals('Läntinen Pitkäkatu', $result['streetName']);
         $this->assertEquals('Turku', $result['city']);
         $this->assertEquals(null, $result['county']);
         $this->assertEquals(null, $result['region']);
@@ -25,6 +27,8 @@ class OpenStreetMapsProviderTest extends TestCase
 
         $this->assertEquals('45.7595505', $result['latitude']);
         $this->assertEquals('3.1325205', $result['longitude']);
+        $this->assertEquals(null, $result['streetNumber']);
+        $this->assertEquals('Allée Évariste Galois', $result['streetName']);
         $this->assertEquals('63170', $result['zipcode']);
         $this->assertEquals('Clermont-Ferrand', $result['city']);
         $this->assertEquals('Puy-de-Dôme', $result['county']);
@@ -40,6 +44,8 @@ class OpenStreetMapsProviderTest extends TestCase
 
         $this->assertEquals(60.4539471728726, $result['latitude']);
         $this->assertEquals(22.2567841926781, $result['longitude']);
+        $this->assertEquals(35, $result['streetNumber']);
+        $this->assertEquals('Läntinen Pitkäkatu', $result['streetName']);
         $this->assertEquals(20100, $result['zipcode']);
         $this->assertEquals('Turku', $result['city']);
         $this->assertEquals(null, $result['county']);
