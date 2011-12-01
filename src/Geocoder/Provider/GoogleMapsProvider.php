@@ -107,28 +107,36 @@ class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
     protected function updateAddressComponent(&$resultset, $type, $value)
     {
         switch ($type) {
-        case 'postal_code':
-            $resultset['zipcode'] = $value;
-            break;
+            case 'postal_code':
+                $resultset['zipcode'] = $value;
+                break;
 
-        case 'locality':
-            $resultset['city'] = $value;
-            break;
+            case 'locality':
+                $resultset['city'] = $value;
+                break;
 
-        case 'administrative_area_level_2':
-            $resultset['county'] = $value;
-            break;
+            case 'administrative_area_level_2':
+                $resultset['county'] = $value;
+                break;
 
-        case 'administrative_area_level_1':
-            $resultset['region'] = $value;
-            break;
+            case 'administrative_area_level_1':
+                $resultset['region'] = $value;
+                break;
 
-        case 'country':
-            $resultset['country'] = $value;
-            break;
+            case 'country':
+                $resultset['country'] = $value;
+                break;
 
-        default:
-            break;
+            case 'street_number':
+                $resultset['streetNumber'] = $value;
+                break;
+
+            case 'route':
+                $resultset['streetName'] = $value;
+                break;
+
+            default:
+                break;
         }
 
         return $resultset;

@@ -15,6 +15,8 @@ class GoogleMapsProviderTest extends TestCase
 
         $this->assertNull($result['latitude']);
         $this->assertNull($result['longitude']);
+        $this->assertNull($result['streetNumber']);
+        $this->assertNull($result['streetName']);
         $this->assertNull($result['city']);
         $this->assertNull($result['zipcode']);
         $this->assertNull($result['county']);
@@ -29,6 +31,8 @@ class GoogleMapsProviderTest extends TestCase
 
         $this->assertNull($result['latitude']);
         $this->assertNull($result['longitude']);
+        $this->assertNull($result['streetNumber']);
+        $this->assertNull($result['streetName']);
         $this->assertNull($result['city']);
         $this->assertNull($result['zipcode']);
         $this->assertNull($result['county']);
@@ -43,6 +47,8 @@ class GoogleMapsProviderTest extends TestCase
 
         $this->assertNull($result['latitude']);
         $this->assertNull($result['longitude']);
+        $this->assertNull($result['streetNumber']);
+        $this->assertNull($result['streetName']);
         $this->assertNull($result['city']);
         $this->assertNull($result['zipcode']);
         $this->assertNull($result['county']);
@@ -61,6 +67,7 @@ class GoogleMapsProviderTest extends TestCase
 
         $this->assertEquals('localhost', $result['city']);
         $this->assertEquals('localhost', $result['region']);
+        $this->assertEquals('localhost', $result['county']);
         $this->assertEquals('localhost', $result['country']);
     }
 
@@ -71,6 +78,8 @@ class GoogleMapsProviderTest extends TestCase
 
         $this->assertNull($result['latitude']);
         $this->assertNull($result['longitude']);
+        $this->assertNull($result['streetNumber']);
+        $this->assertNull($result['streetName']);
         $this->assertNull($result['city']);
         $this->assertNull($result['zipcode']);
         $this->assertNull($result['county']);
@@ -85,6 +94,8 @@ class GoogleMapsProviderTest extends TestCase
 
         $this->assertEquals(48.8631507, $result['latitude']);
         $this->assertEquals(2.3889114, $result['longitude']);
+        $this->assertEquals(10, $result['streetNumber']);
+        $this->assertEquals('Avenue Gambetta', $result['streetName']);
         $this->assertEquals(75020, $result['zipcode']);
         $this->assertEquals('Paris', $result['city']);
         $this->assertEquals('Paris', $result['county']);
@@ -99,6 +110,8 @@ class GoogleMapsProviderTest extends TestCase
 
         $this->assertNull($result['latitude']);
         $this->assertNull($result['longitude']);
+        $this->assertNull($result['streetNumber']);
+        $this->assertNull($result['streetName']);
         $this->assertNull($result['city']);
         $this->assertNull($result['zipcode']);
         $this->assertNull($result['county']);
@@ -113,6 +126,8 @@ class GoogleMapsProviderTest extends TestCase
 
         $this->assertEquals(48.8631507, $result['latitude']);
         $this->assertEquals(2.3889114, $result['longitude']);
+        $this->assertEquals(10, $result['streetNumber']);
+        $this->assertEquals('Avenue Gambetta', $result['streetName']);
         $this->assertEquals(75020, $result['zipcode']);
         $this->assertEquals('Paris', $result['city']);
         $this->assertEquals('Paris', $result['county']);
