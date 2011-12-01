@@ -88,7 +88,7 @@ class IpInfoDbProvider extends AbstractProvider implements ProviderInterface
 
         $data = (array)json_decode($content);
 
-        if (empty($data)) {
+        if (empty($data) || 'OK' !== $data['statusCode']) {
             return $this->getDefaults();
         }
 
