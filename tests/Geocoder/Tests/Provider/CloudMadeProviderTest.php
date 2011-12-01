@@ -84,6 +84,7 @@ class CloudMadeProviderTest extends TestCase
         $this->assertNull($result['zipcode']);
         $this->assertNull($result['city']);
         $this->assertEquals('Ile-del-france', $result['region']);
+        $this->assertEquals('Ile-del-france', $result['county']);
         $this->assertEquals('France', $result['country']);
     }
 
@@ -114,6 +115,21 @@ class CloudMadeProviderTest extends TestCase
         $this->assertNull($result['zipcode']);
         $this->assertEquals('Paris', $result['city']);
         $this->assertEquals('Ile-del-france', $result['region']);
+        $this->assertEquals('France', $result['country']);
+    }
+
+    public function testGetGeocodedDataWithRealAddress2()
+    {
+        if (!isset($_SERVER['CLOUDMADE_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the CLOUDMADE_API_KEY value in phpunit.xml');
+        }
+
+        $this->provider = new CloudMadeProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter(), $_SERVER['CLOUDMADE_API_KEY']);
+        $result = $this->provider->getGeocodedData('73 Boulevard Schuman, Clermont-Ferrand');
+
+        $this->assertEquals('Clermont Ferrand', $result['city']);
+        $this->assertEquals('Auvergne', $result['region']);
+        $this->assertEquals('Auvergne', $result['county']);
         $this->assertEquals('France', $result['country']);
     }
 }

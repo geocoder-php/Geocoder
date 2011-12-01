@@ -111,6 +111,7 @@ class CloudMadeProvider extends AbstractProvider implements ProviderInterface
             'city'      => isset($data['location']->city) ? $data['location']->city : null,
             'zipcode'   => isset($data['location']->zipcode) ? $data['location']->zipcode : null,
             'region'    => isset($data['location']->county) ? $data['location']->county : null,
+            'county'    => isset($data['location']->county) ? $data['location']->county : null,
             'country'   => isset($data['location']->country) ? $data['location']->country : null,
         );
     }
