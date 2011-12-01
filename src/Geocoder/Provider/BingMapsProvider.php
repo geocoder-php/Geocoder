@@ -111,20 +111,24 @@ class BingMapsProvider extends AbstractProvider implements ProviderInterface
 
         $coordinates = (array) $data['geocodePoints'][0]->coordinates;
 
-        $zipcode = (string) $data['address']->postalCode;
-        $city    = (string) $data['address']->locality;
-        $county  = (string) $data['address']->adminDistrict2;
-        $region  = (string) $data['address']->adminDistrict;
-        $country = (string) $data['address']->countryRegion;
+        $streetNumber = null;
+        $streetName   = (string) $data['address']->addressLine;
+        $zipcode      = (string) $data['address']->postalCode;
+        $city         = (string) $data['address']->locality;
+        $county       = (string) $data['address']->adminDistrict2;
+        $region       = (string) $data['address']->adminDistrict;
+        $country      = (string) $data['address']->countryRegion;
 
         return array(
-            'latitude'  => $coordinates[0],
-            'longitude' => $coordinates[1],
-            'city'      => empty($city) ? null : $city,
-            'zipcode'   => empty($zipcode) ? null : $zipcode,
-            'county'    => empty($county) ? null : $county,
-            'region'    => empty($region) ? null : $region,
-            'country'   => empty($country) ? null : $country
+            'latitude'      => $coordinates[0],
+            'longitude'     => $coordinates[1],
+            'streetNumber'  => $streetNumber,
+            'streetName'    => $streetName,
+            'city'          => empty($city) ? null : $city,
+            'zipcode'       => empty($zipcode) ? null : $zipcode,
+            'county'        => empty($county) ? null : $county,
+            'region'        => empty($region) ? null : $region,
+            'country'       => empty($country) ? null : $country
         );
     }
 }
