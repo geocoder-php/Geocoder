@@ -68,6 +68,10 @@ class FreeGeoIpProvider extends AbstractProvider implements ProviderInterface
 
         $data = (array)json_decode($content);
 
+        if (empty($data)) {
+            return $this->getDefaults();
+        }
+
         return array(
             'latitude'  => isset($data['latitude']) ? $data['latitude'] : null,
             'longitude' => isset($data['longitude']) ? $data['longitude'] : null,

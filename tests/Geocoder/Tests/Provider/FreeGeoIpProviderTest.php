@@ -15,9 +15,12 @@ class FreeGeoIpProviderTest extends TestCase
 
         $this->assertNull($result['latitude']);
         $this->assertNull($result['longitude']);
+        $this->assertNull($result['streetNumber']);
+        $this->assertNull($result['streetName']);
         $this->assertNull($result['city']);
         $this->assertNull($result['zipcode']);
         $this->assertNull($result['region']);
+        $this->assertNull($result['county']);
         $this->assertNull($result['country']);
     }
 
@@ -28,9 +31,12 @@ class FreeGeoIpProviderTest extends TestCase
 
         $this->assertNull($result['latitude']);
         $this->assertNull($result['longitude']);
+        $this->assertNull($result['streetNumber']);
+        $this->assertNull($result['streetName']);
         $this->assertNull($result['city']);
         $this->assertNull($result['zipcode']);
         $this->assertNull($result['region']);
+        $this->assertNull($result['county']);
         $this->assertNull($result['country']);
     }
 
@@ -41,9 +47,12 @@ class FreeGeoIpProviderTest extends TestCase
 
         $this->assertNull($result['latitude']);
         $this->assertNull($result['longitude']);
+        $this->assertNull($result['streetNumber']);
+        $this->assertNull($result['streetName']);
         $this->assertNull($result['city']);
         $this->assertNull($result['zipcode']);
         $this->assertNull($result['region']);
+        $this->assertNull($result['county']);
         $this->assertNull($result['country']);
     }
 
@@ -58,6 +67,7 @@ class FreeGeoIpProviderTest extends TestCase
 
         $this->assertEquals('localhost', $result['city']);
         $this->assertEquals('localhost', $result['region']);
+        $this->assertEquals('localhost', $result['county']);
         $this->assertEquals('localhost', $result['country']);
     }
 
@@ -68,9 +78,12 @@ class FreeGeoIpProviderTest extends TestCase
 
         $this->assertEquals(33.0347, $result['latitude']);
         $this->assertEquals(-96.8134, $result['longitude']);
+        $this->assertNull($result['streetNumber']);
+        $this->assertNull($result['streetName']);
         $this->assertEquals(75093, $result['zipcode']);
         $this->assertEquals('Plano', $result['city']);
         $this->assertEquals('Texas', $result['region']);
+        $this->assertNull($result['county']);
         $this->assertEquals('United States', $result['country']);
     }
 
