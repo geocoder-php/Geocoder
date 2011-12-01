@@ -21,10 +21,22 @@ class YahooProvider extends AbstractProvider implements ProviderInterface
     /**
      * @var string
      */
+    const GEOCODE_ENDPOINT_URL = 'http://where.yahooapis.com/geocode?q=%s&flags=J&appid=%s';
+
+    /**
+     * @var string
+     */
+    const REVERSE_ENDPOINT_URL = 'http://where.yahooapis.com/geocode?q=%F,+%F&gflags=R&flags=J&appid=%s';
+
+    /**
+     * @var string
+     */
     private $apiKey = null;
 
     /**
+     * @param \Geocoder\HttpAdapter\HttpAdapterInterface $adapter
      * @param string $apiKey
+     * @param string $locale
      */
     public function __construct(HttpAdapterInterface $adapter, $apiKey, $locale = null)
     {
@@ -43,15 +55,10 @@ class YahooProvider extends AbstractProvider implements ProviderInterface
         }
 
         if ('127.0.0.1' === $address) {
-            return array(
-                'city'      => 'localhost',
-                'region'    => 'localhost',
-                'country'   => 'localhost'
-
-            );
+            return $this->getLocalhostDefaults();
         }
 
-        $query = sprintf('http://where.yahooapis.com/geocode?q=%s&flags=J&appid=%s', urlencode($address), $this->apiKey);
+        $query = sprintf(self::GEOCODE_ENDPOINT_URL, urlencode($address), $this->apiKey);
 
         return $this->executeQuery($query);
     }
@@ -65,7 +72,7 @@ class YahooProvider extends AbstractProvider implements ProviderInterface
             throw new \RuntimeException('No API Key provided');
         }
 
-        $query = sprintf('http://where.yahooapis.com/geocode?q=%F,+%F&gflags=R&flags=J&appid=%s', $coordinates[0], $coordinates[1], $this->apiKey);
+        $query = sprintf(self::REVERSE_ENDPOINT_URL, $coordinates[0], $coordinates[1], $this->apiKey);
 
         return $this->executeQuery($query);
     }

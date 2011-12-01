@@ -25,7 +25,7 @@ abstract class AbstractProvider
     /**
      * @var string
      */
-    private $locale;
+    private $locale = null;
 
     /**
      * @param \Geocoder\HttpAdapter\HttpAdapterInterface $adapter   An HTTP adapter.
@@ -72,6 +72,21 @@ abstract class AbstractProvider
             'county'    => null,
             'region'    => null,
             'country'   => null,
+        );
+    }
+
+    /**
+     * Returns the results for the 'localhost' special case.
+     *
+     * @return array
+     */
+    protected function getLocalhostDefaults()
+    {
+        return array(
+            'city'      => 'localhost',
+            'region'    => 'localhost',
+            'county'    => 'localhost',
+            'country'   => 'localhost',
         );
     }
 }

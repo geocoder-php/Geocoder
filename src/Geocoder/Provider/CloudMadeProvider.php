@@ -21,9 +21,20 @@ class CloudMadeProvider extends AbstractProvider implements ProviderInterface
     /**
      * @var string
      */
+    const GEOCODE_ENDPOINT_URL = 'http://geocoding.cloudmade.com/%s/geocoding/v2/find.js?query=%s&distance=closest&return_location=true&results=1';
+
+    /**
+     * @var string
+     */
+    const REVERSE_ENDPOINT_URL = 'http://geocoding.cloudmade.com/%s/geocoding/v2/find.js?around=%F,%F&object_type=address&return_location=true&results=1';
+
+    /**
+     * @var string
+     */
     private $apiKey = null;
 
     /**
+     * @param \Geocoder\HttpAdapter\HttpAdapterInterface $adapter
      * @param string $apiKey
      */
     public function __construct(HttpAdapterInterface $adapter, $apiKey)
@@ -43,14 +54,10 @@ class CloudMadeProvider extends AbstractProvider implements ProviderInterface
         }
 
         if ('127.0.0.1' === $address) {
-            return array(
-                'city'      => 'localhost',
-                'region'    => 'localhost',
-                'country'   => 'localhost'
-            );
+            return $this->getLocalhostDefaults();
         }
 
-        $query = sprintf('http://geocoding.cloudmade.com/%s/geocoding/v2/find.js?query=%s&distance=closest&return_location=true&results=1', $this->apiKey, urlencode($address));
+        $query = sprintf(self::GEOCODE_ENDPOINT_URL, $this->apiKey, urlencode($address));
 
         return $this->executeQuery($query);
     }
@@ -64,7 +71,7 @@ class CloudMadeProvider extends AbstractProvider implements ProviderInterface
             throw new \RuntimeException('No API Key provided');
         }
 
-        $query = sprintf('http://geocoding.cloudmade.com/%s/geocoding/v2/find.js?around=%F,%F&object_type=address&return_location=true&results=1', $this->apiKey, $coordinates[0], $coordinates[1]);
+        $query = sprintf(self::REVERSE_ENDPOINT_URL, $this->apiKey, $coordinates[0], $coordinates[1]);
 
         return $this->executeQuery($query);
     }

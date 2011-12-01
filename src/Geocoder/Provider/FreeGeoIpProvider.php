@@ -20,36 +20,22 @@ use Geocoder\Provider\ProviderInterface;
 class FreeGeoIpProvider extends AbstractProvider implements ProviderInterface
 {
     /**
+     * @var string
+     */
+    const ENDPOINT_URL = 'http://freegeoip.net/json/%s';
+
+    /**
      * {@inheritDoc}
      */
     public function getGeocodedData($address)
     {
         if ('127.0.0.1' === $address) {
-            return array(
-                'city'      => 'localhost',
-                'region'    => 'localhost',
-                'country'   => 'localhost'
-            );
+            return $this->getLocalhostDefaults();
         }
 
-        $query = sprintf('http://freegeoip.net/json/%s', $address);
+        $query = sprintf(self::ENDPOINT_URL, $address);
 
-        $content = $this->getAdapter()->getContent($query);
-
-        if (null === $content) {
-            return $this->getDefaults();
-        }
-
-        $data = (array)json_decode($content);
-
-        return array(
-            'latitude'  => isset($data['latitude']) ? $data['latitude'] : null,
-            'longitude' => isset($data['longitude']) ? $data['longitude'] : null,
-            'city'      => isset($data['city']) ? $data['city'] : null,
-            'zipcode'   => isset($data['zipcode']) ? $data['zipcode'] : null,
-            'region'    => isset($data['region_name']) ? $data['region_name'] : null,
-            'country'   => isset($data['country_name']) ? $data['country_name'] : null
-        );
+        return $this->executeQuery($query);
     }
 
     /**
@@ -66,5 +52,29 @@ class FreeGeoIpProvider extends AbstractProvider implements ProviderInterface
     public function getName()
     {
         return 'free_geo_ip';
+    }
+
+    /**
+     * @param string $query
+     * @return array
+     */
+    protected function executeQuery($query)
+    {
+        $content = $this->getAdapter()->getContent($query);
+
+        if (null === $content) {
+            return $this->getDefaults();
+        }
+
+        $data = (array)json_decode($content);
+
+        return array(
+            'latitude'  => isset($data['latitude']) ? $data['latitude'] : null,
+            'longitude' => isset($data['longitude']) ? $data['longitude'] : null,
+            'city'      => isset($data['city']) ? $data['city'] : null,
+            'zipcode'   => isset($data['zipcode']) ? $data['zipcode'] : null,
+            'region'    => isset($data['region_name']) ? $data['region_name'] : null,
+            'country'   => isset($data['country_name']) ? $data['country_name'] : null
+        );
     }
 }

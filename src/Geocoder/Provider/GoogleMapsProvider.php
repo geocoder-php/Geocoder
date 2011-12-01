@@ -18,13 +18,7 @@ use Geocoder\Provider\ProviderInterface;
  */
 class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
 {
-    /**
-     * @param HttpAdapterInterface $adapter
-     */
-    public function __construct(HttpAdapterInterface $adapter)
-    {
-        parent::__construct($adapter, null);
-    }
+    const ENDPOINT_URL = 'http://maps.googleapis.com/maps/api/geocode/json?address=%s&sensor=false';
 
     /**
      * {@inheritDoc}
@@ -32,14 +26,10 @@ class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
     public function getGeocodedData($address)
     {
         if ('127.0.0.1' === $address) {
-            return array(
-                'city'      => 'localhost',
-                'region'    => 'localhost',
-                'country'   => 'localhost'
-            );
+            return $this->getLocalhostDefaults();
         }
 
-        $query = sprintf('http://maps.googleapis.com/maps/api/geocode/json?address=%s&sensor=false', urlencode($address));
+        $query = sprintf(self::ENDPOINT_URL, urlencode($address));
 
         return $this->executeQuery($query);
     }
@@ -113,28 +103,28 @@ class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
     protected function updateAddressComponent(&$resultset, $type, $value)
     {
         switch ($type) {
-            case 'postal_code':
-                $resultset['zipcode'] = $value;
-                break;
+        case 'postal_code':
+            $resultset['zipcode'] = $value;
+            break;
 
-            case 'locality':
-                $resultset['city'] = $value;
-                break;
+        case 'locality':
+            $resultset['city'] = $value;
+            break;
 
-            case 'administrative_area_level_2':
-                $resultset['county'] = $value;
-                break;
+        case 'administrative_area_level_2':
+            $resultset['county'] = $value;
+            break;
 
-            case 'administrative_area_level_1':
-                $resultset['region'] = $value;
-                break;
+        case 'administrative_area_level_1':
+            $resultset['region'] = $value;
+            break;
 
-            case 'country':
-                $resultset['country'] = $value;
-                break;
+        case 'country':
+            $resultset['country'] = $value;
+            break;
 
-            default:
-                break;
+        default:
+            break;
         }
 
         return $resultset;
