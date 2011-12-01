@@ -92,7 +92,7 @@ class BingMapsProvider extends AbstractProvider implements ProviderInterface
     protected function executeQuery($query)
     {
         if (null !== $this->getLocale()) {
-            $query = sprintf('%s&culture=%s', $query, $this->getLocale());
+            $query = sprintf('%s&culture=%s', $query, str_replace('_', '-', $this->getLocale()));
         }
 
         $content = $this->getAdapter()->getContent($query);
