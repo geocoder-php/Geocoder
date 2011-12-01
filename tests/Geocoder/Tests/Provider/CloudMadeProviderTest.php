@@ -24,9 +24,12 @@ class CloudMadeProviderTest extends TestCase
 
         $this->assertNull($result['latitude']);
         $this->assertNull($result['longitude']);
+        $this->assertNull($result['streetNumber']);
+        $this->assertNull($result['streetName']);
         $this->assertNull($result['city']);
         $this->assertNull($result['zipcode']);
         $this->assertNull($result['region']);
+        $this->assertNull($result['county']);
         $this->assertNull($result['country']);
     }
 
@@ -37,9 +40,12 @@ class CloudMadeProviderTest extends TestCase
 
         $this->assertNull($result['latitude']);
         $this->assertNull($result['longitude']);
+        $this->assertNull($result['streetNumber']);
+        $this->assertNull($result['streetName']);
         $this->assertNull($result['city']);
         $this->assertNull($result['zipcode']);
         $this->assertNull($result['region']);
+        $this->assertNull($result['county']);
         $this->assertNull($result['country']);
     }
 
@@ -50,9 +56,12 @@ class CloudMadeProviderTest extends TestCase
 
         $this->assertNull($result['latitude']);
         $this->assertNull($result['longitude']);
+        $this->assertNull($result['streetNumber']);
+        $this->assertNull($result['streetName']);
         $this->assertNull($result['city']);
         $this->assertNull($result['zipcode']);
         $this->assertNull($result['region']);
+        $this->assertNull($result['county']);
         $this->assertNull($result['country']);
     }
 
@@ -67,6 +76,7 @@ class CloudMadeProviderTest extends TestCase
 
         $this->assertEquals('localhost', $result['city']);
         $this->assertEquals('localhost', $result['region']);
+        $this->assertEquals('localhost', $result['county']);
         $this->assertEquals('localhost', $result['country']);
     }
 
@@ -82,6 +92,7 @@ class CloudMadeProviderTest extends TestCase
         $this->assertEquals(48.85645, $result['latitude']);
         $this->assertEquals(2.35243, $result['longitude']);
         $this->assertNull($result['streetNumber']);
+        $this->assertEquals('Paris', $result['streetName']);
         $this->assertNull($result['zipcode']);
         $this->assertNull($result['city']);
         $this->assertEquals('Ile-del-france', $result['region']);
@@ -101,6 +112,7 @@ class CloudMadeProviderTest extends TestCase
         $this->assertNull($result['city']);
         $this->assertNull($result['zipcode']);
         $this->assertNull($result['region']);
+        $this->assertNull($result['county']);
         $this->assertNull($result['country']);
     }
 
@@ -120,6 +132,7 @@ class CloudMadeProviderTest extends TestCase
         $this->assertNull($result['zipcode']);
         $this->assertEquals('Paris', $result['city']);
         $this->assertEquals('Ile-del-france', $result['region']);
+        $this->assertEquals('Ile-del-france', $result['county']);
         $this->assertEquals('France', $result['country']);
     }
 
