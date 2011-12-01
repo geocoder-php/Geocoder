@@ -24,6 +24,11 @@ class Geocoded implements ResultInterface, \ArrayAccess
      * @var double
      */
     protected $longitude = 0;
+    
+    /**
+     * @var array
+     */
+    protected $bounds = null;
 
     /**
      * @var int
@@ -82,6 +87,14 @@ class Geocoded implements ResultInterface, \ArrayAccess
     public function getLongitude()
     {
         return $this->longitude;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public function getBounds()
+    {
+        return $this->bounds;
     }
 
     /**
@@ -150,6 +163,14 @@ class Geocoded implements ResultInterface, \ArrayAccess
         }
         if (isset($data['longitude'])) {
             $this->longitude = (double) $data['longitude'];
+        }
+        if (isset($data['bounds']) && is_array($data['bounds'])) {
+            $this->bounds = array(
+                'south' => (double) $data['bounds']['south'],
+                'west'  => (double) $data['bounds']['west'],
+                'north' => (double) $data['bounds']['north'],
+                'east'  => (double) $data['bounds']['east']
+            );
         }
         if (isset($data['streetNumber'])) {
             $this->streetNumber = (int) $data['streetNumber'];

@@ -35,6 +35,22 @@ interface ResultInterface
      * @return double
      */
     function getLongitude();
+    
+    /**
+     * Returns the bounds value.
+     * 
+     * Bounds format:
+     * 
+     * array(
+     *     'south' => (double)
+     *     'west'  => (double)
+     *     'north' => (double)
+     *     'east'  => (double)
+     * )
+     *
+     * @return array
+     */
+    function getBounds();
 
     /**
      * Returns the street number value.

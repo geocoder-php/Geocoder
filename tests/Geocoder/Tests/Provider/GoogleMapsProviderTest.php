@@ -15,6 +15,7 @@ class GoogleMapsProviderTest extends TestCase
 
         $this->assertNull($result['latitude']);
         $this->assertNull($result['longitude']);
+        $this->assertNull($result['bounds']);
         $this->assertNull($result['streetNumber']);
         $this->assertNull($result['streetName']);
         $this->assertNull($result['city']);
@@ -31,6 +32,7 @@ class GoogleMapsProviderTest extends TestCase
 
         $this->assertNull($result['latitude']);
         $this->assertNull($result['longitude']);
+        $this->assertNull($result['bounds']);
         $this->assertNull($result['streetNumber']);
         $this->assertNull($result['streetName']);
         $this->assertNull($result['city']);
@@ -47,6 +49,7 @@ class GoogleMapsProviderTest extends TestCase
 
         $this->assertNull($result['latitude']);
         $this->assertNull($result['longitude']);
+        $this->assertNull($result['bounds']);
         $this->assertNull($result['streetNumber']);
         $this->assertNull($result['streetName']);
         $this->assertNull($result['city']);
@@ -63,6 +66,7 @@ class GoogleMapsProviderTest extends TestCase
 
         $this->assertArrayNotHasKey('latitude', $result);
         $this->assertArrayNotHasKey('longitude', $result);
+        $this->assertArrayNotHasKey('bounds', $result);
         $this->assertArrayNotHasKey('zipcode', $result);
 
         $this->assertEquals('localhost', $result['city']);
@@ -78,6 +82,7 @@ class GoogleMapsProviderTest extends TestCase
 
         $this->assertNull($result['latitude']);
         $this->assertNull($result['longitude']);
+        $this->assertNull($result['bounds']);
         $this->assertNull($result['streetNumber']);
         $this->assertNull($result['streetName']);
         $this->assertNull($result['city']);
@@ -94,6 +99,14 @@ class GoogleMapsProviderTest extends TestCase
 
         $this->assertEquals(48.8631507, $result['latitude']);
         $this->assertEquals(2.3889114, $result['longitude']);
+        $this->assertArrayHasKey('south', $result['bounds']);
+        $this->assertArrayHasKey('west', $result['bounds']);
+        $this->assertArrayHasKey('north', $result['bounds']);
+        $this->assertArrayHasKey('east', $result['bounds']);
+        $this->assertEquals(48.8631507, $result['bounds']['south']);
+        $this->assertEquals(2.3889114, $result['bounds']['west']);
+        $this->assertEquals(48.8631507, $result['bounds']['north']);
+        $this->assertEquals(2.3889114, $result['bounds']['east']);
         $this->assertEquals(10, $result['streetNumber']);
         $this->assertEquals('Avenue Gambetta', $result['streetName']);
         $this->assertEquals(75020, $result['zipcode']);
@@ -101,6 +114,21 @@ class GoogleMapsProviderTest extends TestCase
         $this->assertEquals('Paris', $result['county']);
         $this->assertEquals('Île-de-France', $result['region']);
         $this->assertEquals('France', $result['country']);
+    }
+
+    public function testGetGeocodedDataBoundsWithRealAddressForNonRooftopLocation()
+    {
+        $this->provider = new GoogleMapsProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter());
+        $result = $this->provider->getGeocodedData('Paris, France');
+
+        $this->assertArrayHasKey('south', $result['bounds']);
+        $this->assertArrayHasKey('west', $result['bounds']);
+        $this->assertArrayHasKey('north', $result['bounds']);
+        $this->assertArrayHasKey('east', $result['bounds']);
+        $this->assertEquals(48.815573, $result['bounds']['south']);
+        $this->assertEquals(2.224199, $result['bounds']['west']);
+        $this->assertEquals(48.902145, $result['bounds']['north']);
+        $this->assertEquals(2.4699209, $result['bounds']['east']);
     }
 
     public function testGetReversedData()
@@ -126,6 +154,14 @@ class GoogleMapsProviderTest extends TestCase
 
         $this->assertEquals(48.8631507, $result['latitude']);
         $this->assertEquals(2.3889114, $result['longitude']);
+        $this->assertArrayHasKey('south', $result['bounds']);
+        $this->assertArrayHasKey('west', $result['bounds']);
+        $this->assertArrayHasKey('north', $result['bounds']);
+        $this->assertArrayHasKey('east', $result['bounds']);
+        $this->assertEquals(48.8631507, $result['bounds']['south']);
+        $this->assertEquals(2.3889114, $result['bounds']['west']);
+        $this->assertEquals(48.8631507, $result['bounds']['north']);
+        $this->assertEquals(2.3889114, $result['bounds']['east']);
         $this->assertEquals(10, $result['streetNumber']);
         $this->assertEquals('Avenue Gambetta', $result['streetName']);
         $this->assertEquals(75020, $result['zipcode']);

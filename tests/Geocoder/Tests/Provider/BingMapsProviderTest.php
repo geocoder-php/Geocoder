@@ -24,6 +24,7 @@ class BingMapsProviderTest extends TestCase
 
         $this->assertNull($result['latitude']);
         $this->assertNull($result['longitude']);
+        $this->assertNull($result['bounds']);
         $this->assertNull($result['streetNumber']);
         $this->assertNull($result['streetName']);
         $this->assertNull($result['city']);
@@ -40,6 +41,7 @@ class BingMapsProviderTest extends TestCase
 
         $this->assertNull($result['latitude']);
         $this->assertNull($result['longitude']);
+        $this->assertNull($result['bounds']);
         $this->assertNull($result['streetNumber']);
         $this->assertNull($result['streetName']);
         $this->assertNull($result['city']);
@@ -56,6 +58,7 @@ class BingMapsProviderTest extends TestCase
 
         $this->assertNull($result['latitude']);
         $this->assertNull($result['longitude']);
+        $this->assertNull($result['bounds']);
         $this->assertNull($result['streetNumber']);
         $this->assertNull($result['streetName']);
         $this->assertNull($result['city']);
@@ -72,6 +75,7 @@ class BingMapsProviderTest extends TestCase
 
         $this->assertArrayNotHasKey('latitude', $result);
         $this->assertArrayNotHasKey('longitude', $result);
+        $this->assertArrayNotHasKey('bounds', $result);
         $this->assertArrayNotHasKey('zipcode', $result);
         $this->assertArrayNotHasKey('streetNumber', $result);
         $this->assertArrayNotHasKey('streetName', $result);
@@ -92,6 +96,14 @@ class BingMapsProviderTest extends TestCase
 
         $this->assertEquals(48.86321675999999, $result['latitude']);
         $this->assertEquals(2.3887721299999995, $result['longitude']);
+        $this->assertArrayHasKey('south', $result['bounds']);
+        $this->assertArrayHasKey('west', $result['bounds']);
+        $this->assertArrayHasKey('north', $result['bounds']);
+        $this->assertArrayHasKey('east', $result['bounds']);
+        $this->assertEquals(48.859354042429, $result['bounds']['south']);
+        $this->assertEquals(2.3809438666389, $result['bounds']['west']);
+        $this->assertEquals(48.867079477571, $result['bounds']['north']);
+        $this->assertEquals(2.3966003933611, $result['bounds']['east']);
         $this->assertNull($result['streetNumber']);
         $this->assertEquals('10 Avenue Gambetta', $result['streetName']);
         $this->assertEquals(75020, $result['zipcode']);
@@ -108,6 +120,7 @@ class BingMapsProviderTest extends TestCase
 
         $this->assertNull($result['latitude']);
         $this->assertNull($result['longitude']);
+        $this->assertNull($result['bounds']);
         $this->assertNull($result['streetNumber']);
         $this->assertNull($result['streetName']);
         $this->assertNull($result['city']);
@@ -128,6 +141,14 @@ class BingMapsProviderTest extends TestCase
 
         $this->assertEquals(48.86321648955345, $result['latitude']);
         $this->assertEquals(2.3887719959020615, $result['longitude']);
+        $this->assertArrayHasKey('south', $result['bounds']);
+        $this->assertArrayHasKey('west', $result['bounds']);
+        $this->assertArrayHasKey('north', $result['bounds']);
+        $this->assertArrayHasKey('east', $result['bounds']);
+        $this->assertEquals(48.859353771983, $result['bounds']['south']);
+        $this->assertEquals(2.3809437325833, $result['bounds']['west']);
+        $this->assertEquals(48.867079207124, $result['bounds']['north']);
+        $this->assertEquals(2.3966002592208, $result['bounds']['east']);
         $this->assertNull($result['streetNumber']);
         $this->assertEquals('10 Avenue Gambetta', $result['streetName']);
         $this->assertEquals(75020, $result['zipcode']);

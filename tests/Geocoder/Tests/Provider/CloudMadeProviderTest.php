@@ -24,6 +24,7 @@ class CloudMadeProviderTest extends TestCase
 
         $this->assertNull($result['latitude']);
         $this->assertNull($result['longitude']);
+        $this->assertNull($result['bounds']);
         $this->assertNull($result['streetNumber']);
         $this->assertNull($result['streetName']);
         $this->assertNull($result['city']);
@@ -40,6 +41,7 @@ class CloudMadeProviderTest extends TestCase
 
         $this->assertNull($result['latitude']);
         $this->assertNull($result['longitude']);
+        $this->assertNull($result['bounds']);
         $this->assertNull($result['streetNumber']);
         $this->assertNull($result['streetName']);
         $this->assertNull($result['city']);
@@ -56,6 +58,7 @@ class CloudMadeProviderTest extends TestCase
 
         $this->assertNull($result['latitude']);
         $this->assertNull($result['longitude']);
+        $this->assertNull($result['bounds']);
         $this->assertNull($result['streetNumber']);
         $this->assertNull($result['streetName']);
         $this->assertNull($result['city']);
@@ -72,6 +75,7 @@ class CloudMadeProviderTest extends TestCase
 
         $this->assertArrayNotHasKey('latitude', $result);
         $this->assertArrayNotHasKey('longitude', $result);
+        $this->assertArrayNotHasKey('bounds', $result);
         $this->assertArrayNotHasKey('zipcode', $result);
 
         $this->assertEquals('localhost', $result['city']);
@@ -91,6 +95,14 @@ class CloudMadeProviderTest extends TestCase
 
         $this->assertEquals(48.85645, $result['latitude']);
         $this->assertEquals(2.35243, $result['longitude']);
+        $this->assertArrayHasKey('south', $result['bounds']);
+        $this->assertArrayHasKey('west', $result['bounds']);
+        $this->assertArrayHasKey('north', $result['bounds']);
+        $this->assertArrayHasKey('east', $result['bounds']);
+        $this->assertEquals(48.70804, $result['bounds']['south']);
+        $this->assertEquals(2.12785, $result['bounds']['west']);
+        $this->assertEquals(49.00442, $result['bounds']['north']);
+        $this->assertEquals(2.57701, $result['bounds']['east']);
         $this->assertNull($result['streetNumber']);
         $this->assertEquals('Paris', $result['streetName']);
         $this->assertNull($result['zipcode']);
@@ -107,6 +119,7 @@ class CloudMadeProviderTest extends TestCase
 
         $this->assertNull($result['latitude']);
         $this->assertNull($result['longitude']);
+        $this->assertNull($result['bounds']);
         $this->assertNull($result['streetNumber']);
         $this->assertNull($result['streetName']);
         $this->assertNull($result['city']);
@@ -127,6 +140,14 @@ class CloudMadeProviderTest extends TestCase
 
         $this->assertEquals(48.85657, $result['latitude']);
         $this->assertEquals(2.35325, $result['longitude']);
+        $this->assertArrayHasKey('south', $result['bounds']);
+        $this->assertArrayHasKey('west', $result['bounds']);
+        $this->assertArrayHasKey('north', $result['bounds']);
+        $this->assertArrayHasKey('east', $result['bounds']);
+        $this->assertEquals(48.85657, $result['bounds']['south']);
+        $this->assertEquals(2.35325, $result['bounds']['west']);
+        $this->assertEquals(48.85657, $result['bounds']['north']);
+        $this->assertEquals(2.35325, $result['bounds']['east']);
         $this->assertEquals(5, $result['streetNumber']);
         $this->assertEquals('Rue Lobau', $result['streetName']);
         $this->assertNull($result['zipcode']);

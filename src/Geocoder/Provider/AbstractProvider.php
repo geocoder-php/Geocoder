@@ -67,6 +67,7 @@ abstract class AbstractProvider
         return array(
             'latitude'      => null,
             'longitude'     => null,
+            'bounds'        => null,
             'streetNumber'  => null,
             'streetName'    => null,
             'city'          => null,
