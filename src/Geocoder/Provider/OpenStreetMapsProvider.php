@@ -65,8 +65,8 @@ class OpenStreetMapsProvider extends AbstractProvider implements ProviderInterfa
             $ret['zipcode']   = $bestNode->getElementsByTagName('postcode')->item(0)->nodeValue;
             $ret['county']    = $bestNode->getElementsByTagName('county')->length ? $bestNode->getElementsByTagName('county')->item(0)->nodeValue : null;
             $ret['region']    = $bestNode->getElementsByTagName('state')->length ? $bestNode->getElementsByTagName('state')->item(0)->nodeValue : null;
-            $ret['streetNumber'] = $addressParts->getElementsByTagName('house_number')->length ? $addressParts->getElementsByTagName('house_number')->item(0)->nodeValue : null;
-            $ret['streetName']   = $addressParts->getElementsByTagName('road')->length ? $addressParts->getElementsByTagName('road')->item(0)->nodeValue : null;
+            $ret['streetNumber'] = $bestNode->getElementsByTagName('house_number')->length ? $bestNode->getElementsByTagName('house_number')->item(0)->nodeValue : null;
+            $ret['streetName']   = $bestNode->getElementsByTagName('road')->length ? $bestNode->getElementsByTagName('road')->item(0)->nodeValue : null;
             $ret['city']      = $bestNode->getElementsByTagName('city')->item(0)->nodeValue;
             $ret['country']   = $bestNode->getElementsByTagName('country')->item(0)->nodeValue;
 
