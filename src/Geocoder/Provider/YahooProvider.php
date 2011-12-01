@@ -108,14 +108,25 @@ class YahooProvider extends AbstractProvider implements ProviderInterface
             return $this->getDefaults();
         }
 
+        $zipcode = null;
+        if (isset($data['postal'])) {
+            $zipcode = $data['postal'];
+
+            if ($parts = preg_split('#-#', $zipcode)) {
+                $zipcode = $parts[0];
+            }
+        }
+
         return array(
-            'latitude'  => isset($data['latitude']) ? $data['latitude'] : null,
-            'longitude' => isset($data['longitude']) ? $data['longitude'] : null,
-            'city'      => isset($data['city']) ? $data['city'] : null,
-            'zipcode'   => isset($data['postal']) ? $data['postal'] : null,
-            'county'    => isset($data['county']) ? $data['county'] : null,
-            'region'    => isset($data['state']) ? $data['state'] : null,
-            'country'   => isset($data['country']) ? $data['country'] : null
+            'latitude'      => isset($data['latitude']) ? $data['latitude'] : null,
+            'longitude'     => isset($data['longitude']) ? $data['longitude'] : null,
+            'streetNumber'  => isset($data['house']) ? $data['house'] : null,
+            'streetName'    => isset($data['street']) ? $data['street'] : null,
+            'city'          => isset($data['city']) ? $data['city'] : null,
+            'zipcode'       => $zipcode,
+            'county'        => isset($data['county']) ? $data['county'] : null,
+            'region'        => isset($data['state']) ? $data['state'] : null,
+            'country'       => isset($data['country']) ? $data['country'] : null
         );
     }
 }
