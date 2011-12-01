@@ -28,12 +28,6 @@ class ZendHttpAdapterTest extends TestCase
         $this->assertNull($zend->getContent(null));
     }
 
-    public function testGetFalseContent()
-    {
-        $zend = new ZendHttpAdapter();
-        $this->assertNull($zend->getContent(null));
-    }
-
     public function testGetContentWithCustomAdapter()
     {
         $content = 'foobar content';
