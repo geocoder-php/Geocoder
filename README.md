@@ -145,6 +145,12 @@ $result = $geocoder->geocode('88.188.221.14');
 // Result is:
 // "latitude"       => string(9) "47.901428"
 // "longitude"      => string(8) "1.904960"
+// "bounds"         => array(4) {
+//     "south" => string(9) "47.813320"
+//     "west"  => string(8) "1.809770"
+//     "north" => string(9) "47.960220"
+//     "east"  => string(8) "1.993860"
+// }
 // "streetNumber"   => string(0) ""
 // "streetName"     => string(0) ""
 // "city"           => string(7) "Orleans"
@@ -157,6 +163,12 @@ $result = $geocoder->geocode('10 rue Gambetta, Paris, France');
 // Result is:
 // "latitude"       => string(9) "48.863217"
 // "longitude"      => string(8) "2.388821"
+// "bounds"         => array(4) {
+//     "south" => string(9) "48.863217"
+//     "west"  => string(8) "2.388821"
+//     "north" => string(9) "48.863217"
+//     "east"  => string(8) "2.388821"
+// }
 // "streetNumber"   => string(2) "10"
 // "streetName"     => string(15) "Avenue Gambetta"
 // "city"           => string(5) "Paris"
@@ -171,6 +183,7 @@ The `geocode()` method returns a `Geocoded` result object with the following API
 * `getCoordinates()` will return an array with `latitude` and `longitude` values;
 * `getLatitude()` will return the `latitude` value;
 * `getLongitude()` will return the `longitude` value;
+* `getBounds()` will return an array with `south`, `west`, `north` and `east` values;
 * `getStreetNumber()` will return the `street number/house number` value;
 * `getStreetName()` will return the `street name` value;
 * `getCity()` will return the `city`;
