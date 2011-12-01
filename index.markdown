@@ -78,6 +78,12 @@ $result = $geocoder->geocode('88.188.221.14');
 // Result is:
 // "latitude"       => string(9) "47.901428"
 // "longitude"      => string(8) "1.904960"
+// "bounds"         => array(4) {
+//     "south" => string(9) "47.813320"
+//     "west"  => string(8) "1.809770"
+//     "north" => string(9) "47.960220"
+//     "east"  => string(8) "1.993860"
+// }
 // "streetNumber"   => string(0) ""
 // "streetName"     => string(0) ""
 // "city"           => string(7) "Orleans"
@@ -90,6 +96,12 @@ $result = $geocoder->geocode('10 rue Gambetta, Paris, France');
 // Result is:
 // "latitude"       => string(9) "48.863217"
 // "longitude"      => string(8) "2.388821"
+// "bounds"         => array(4) {
+//     "south" => string(9) "48.863217"
+//     "west"  => string(8) "2.388821"
+//     "north" => string(9) "48.863217"
+//     "east"  => string(8) "2.388821"
+// }
 // "streetNumber"   => string(2) "10"
 // "streetName"     => string(15) "Avenue Gambetta"
 // "city"           => string(5) "Paris"
@@ -106,6 +118,7 @@ $result = $geocoder->reverse($latitude, $longitude);
             <li><code>getCoordinates()</code> will return an array with <code>latitude</code> and <code>longitude</code> values;</li>
             <li><code>getLatitude()</code> will return the <code>latitude</code> value;</li>
             <li><code>getLongitude()</code> will return the <code>longitude</code> value;</li>
+            <li><code>getBounds()</code> will return an array with <code>south</code>, <code>west</code>, <code>north</code> and <code>east</code> values;</li>
             <li><code>getStreetNumber()</code> will return the <code>street number/house number</code> value;</li>
             <li><code>getStreetName()</code> will return the <code>street name</code> value;</li>
             <li><code>getCity()</code> will return the <code>city</code> value;</li>
