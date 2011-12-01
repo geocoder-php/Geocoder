@@ -26,6 +26,16 @@ class Geocoded implements ResultInterface, \ArrayAccess
     protected $longitude = 0;
 
     /**
+     * @var int
+     */
+    protected $streetNumber = null;
+
+    /**
+     * @var string
+     */
+    protected $streetName = null;
+
+    /**
      * @var string
      */
     protected $city = null;
@@ -72,6 +82,22 @@ class Geocoded implements ResultInterface, \ArrayAccess
     public function getLongitude()
     {
         return $this->longitude;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getStreetNumber()
+    {
+        return $this->streetNumber;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getStreetName()
+    {
+        return $this->streetName;
     }
 
     /**
@@ -124,6 +150,12 @@ class Geocoded implements ResultInterface, \ArrayAccess
         }
         if (isset($data['longitude'])) {
             $this->longitude = (double) $data['longitude'];
+        }
+        if (isset($data['streetNumber'])) {
+            $this->streetNumber = (int) $data['streetNumber'];
+        }
+        if (isset($data['streetName'])) {
+            $this->streetName = $this->formatString($data['streetName']);
         }
         if (isset($data['city'])) {
             $this->city = $this->formatString($data['city']);

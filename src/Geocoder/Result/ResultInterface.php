@@ -37,6 +37,20 @@ interface ResultInterface
     function getLongitude();
 
     /**
+     * Returns the street number value.
+     *
+     * @return int
+     */
+    function getStreetNumber();
+
+    /**
+     * Returns the street name value.
+     *
+     * @return string
+     */
+    function getStreetName();
+
+    /**
      * Returns the city value.
      *
      * @return string

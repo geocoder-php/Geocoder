@@ -65,13 +65,15 @@ abstract class AbstractProvider
     protected function getDefaults()
     {
         return array(
-            'latitude'  => null,
-            'longitude' => null,
-            'city'      => null,
-            'zipcode'   => null,
-            'county'    => null,
-            'region'    => null,
-            'country'   => null,
+            'latitude'      => null,
+            'longitude'     => null,
+            'streetNumber'  => null,
+            'streetName'    => null,
+            'city'          => null,
+            'zipcode'       => null,
+            'county'        => null,
+            'region'        => null,
+            'country'       => null,
         );
     }
 
