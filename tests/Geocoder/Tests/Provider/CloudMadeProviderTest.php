@@ -81,6 +81,7 @@ class CloudMadeProviderTest extends TestCase
 
         $this->assertEquals(48.85645, $result['latitude']);
         $this->assertEquals(2.35243, $result['longitude']);
+        $this->assertNull($result['streetNumber']);
         $this->assertNull($result['zipcode']);
         $this->assertNull($result['city']);
         $this->assertEquals('Ile-del-france', $result['region']);
@@ -95,6 +96,8 @@ class CloudMadeProviderTest extends TestCase
 
         $this->assertNull($result['latitude']);
         $this->assertNull($result['longitude']);
+        $this->assertNull($result['streetNumber']);
+        $this->assertNull($result['streetName']);
         $this->assertNull($result['city']);
         $this->assertNull($result['zipcode']);
         $this->assertNull($result['region']);
@@ -112,6 +115,8 @@ class CloudMadeProviderTest extends TestCase
 
         $this->assertEquals(48.85657, $result['latitude']);
         $this->assertEquals(2.35325, $result['longitude']);
+        $this->assertEquals(5, $result['streetNumber']);
+        $this->assertEquals('Rue Lobau', $result['streetName']);
         $this->assertNull($result['zipcode']);
         $this->assertEquals('Paris', $result['city']);
         $this->assertEquals('Ile-del-france', $result['region']);
@@ -127,6 +132,8 @@ class CloudMadeProviderTest extends TestCase
         $this->provider = new CloudMadeProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter(), $_SERVER['CLOUDMADE_API_KEY']);
         $result = $this->provider->getGeocodedData('73 Boulevard Schuman, Clermont-Ferrand');
 
+        $this->assertNull($result['streetNumber']);
+        $this->assertEquals('Boulevard Robert Schuman', $result['streetName']);
         $this->assertEquals('Clermont Ferrand', $result['city']);
         $this->assertEquals('Auvergne', $result['region']);
         $this->assertEquals('Auvergne', $result['county']);

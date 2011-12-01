@@ -104,15 +104,32 @@ class CloudMadeProvider extends AbstractProvider implements ProviderInterface
         }
 
         $coordinates = (array) $data['centroid']->coordinates;
+        $properties  = (array) $data['properties'];
+
+        $streetNumber = null;
+        if (isset($properties['addr:housenumber'])) {
+            $streetNumber = $properties['addr:housenumber'];
+        }
+
+        $streetName = null;
+        if (isset($properties['addr:street'])) {
+            $streetName = $properties['addr:street'];
+        } elseif (isset($properties['name'])) {
+            $streetName = $properties['name'];
+        } elseif (isset($data['location']->road)) {
+            $streetName = $data['location']->road;
+        }
 
         return array(
-            'latitude'  => $coordinates[0],
-            'longitude' => $coordinates[1],
-            'city'      => isset($data['location']->city) ? $data['location']->city : null,
-            'zipcode'   => isset($data['location']->zipcode) ? $data['location']->zipcode : null,
-            'region'    => isset($data['location']->county) ? $data['location']->county : null,
-            'county'    => isset($data['location']->county) ? $data['location']->county : null,
-            'country'   => isset($data['location']->country) ? $data['location']->country : null,
+            'latitude'      => $coordinates[0],
+            'longitude'     => $coordinates[1],
+            'streetNumber'  => $streetNumber,
+            'streetName'    => $streetName,
+            'city'          => isset($data['location']->city) ? $data['location']->city : null,
+            'zipcode'       => isset($data['location']->zipcode) ? $data['location']->zipcode : null,
+            'region'        => isset($data['location']->county) ? $data['location']->county : null,
+            'county'        => isset($data['location']->county) ? $data['location']->county : null,
+            'country'       => isset($data['location']->country) ? $data['location']->country : null,
         );
     }
 }
