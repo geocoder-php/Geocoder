@@ -27,7 +27,19 @@ class AbstractProviderTest extends TestCase
         $provider = new MockProvider($adapter, 'fr_FR');
 
         $this->assertSame('fr_FR', $provider->getLocale());
+    }
 
+    public function testGetLocalhostDefaults()
+    {
+        $adapter  = new MockHttpAdapter();
+        $provider = new MockProvider($adapter);
+        $result   = $provider->getLocalhostDefaults();
+
+        $this->assertEquals(4, count($result));
+        $this->assertEquals('localhost', $result['city']);
+        $this->assertEquals('localhost', $result['region']);
+        $this->assertEquals('localhost', $result['county']);
+        $this->assertEquals('localhost', $result['country']);
     }
 }
 
@@ -43,6 +55,10 @@ class MockProvider extends AbstractProvider
         return parent::getLocale();
     }
 
+    public function getLocalhostDefaults()
+    {
+        return parent::getLocalhostDefaults();
+    }
 }
 
 class MockHttpAdapter implements HttpAdapterInterface
