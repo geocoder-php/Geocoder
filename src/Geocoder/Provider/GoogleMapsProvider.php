@@ -56,6 +56,10 @@ class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
      */
     protected function executeQuery($query)
     {
+        if (null !== $this->getLocale()) {
+            $query = sprintf('%s&language=%s', $query, $this->getLocale());
+        }
+
         $content = $this->getAdapter()->getContent($query);
 
         if (null === $content) {
