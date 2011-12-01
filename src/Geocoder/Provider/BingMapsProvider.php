@@ -111,6 +111,16 @@ class BingMapsProvider extends AbstractProvider implements ProviderInterface
 
         $coordinates = (array) $data['geocodePoints'][0]->coordinates;
 
+        $bounds = null;
+        if (isset($data['bbox']) && is_array($data['bbox']) && count($data['bbox']) > 0) {
+            $bounds = array(
+                'south' => $data['bbox'][0],
+                'west'  => $data['bbox'][1],
+                'north' => $data['bbox'][2],
+                'east'  => $data['bbox'][3]
+            );
+        }
+
         $streetNumber = null;
         $streetName   = (string) $data['address']->addressLine;
         $zipcode      = (string) $data['address']->postalCode;
@@ -122,6 +132,7 @@ class BingMapsProvider extends AbstractProvider implements ProviderInterface
         return array(
             'latitude'      => $coordinates[0],
             'longitude'     => $coordinates[1],
+            'bounds'        => $bounds,
             'streetNumber'  => $streetNumber,
             'streetName'    => $streetName,
             'city'          => empty($city) ? null : $city,

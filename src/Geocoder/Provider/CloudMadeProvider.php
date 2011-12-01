@@ -104,7 +104,18 @@ class CloudMadeProvider extends AbstractProvider implements ProviderInterface
         }
 
         $coordinates = (array) $data['centroid']->coordinates;
-        $properties  = (array) $data['properties'];
+
+        $bounds = null;
+        if (isset($data['bounds']) && is_array($data['bounds']) && count($data['bounds']) > 0) {
+            $bounds = array(
+                'south' => $data['bounds'][0][0],
+                'west'  => $data['bounds'][0][1],
+                'north' => $data['bounds'][1][0],
+                'east'  => $data['bounds'][1][1]
+            );
+        }
+
+        $properties = (array) $data['properties'];
 
         $streetNumber = null;
         if (isset($properties['addr:housenumber'])) {
@@ -123,6 +134,7 @@ class CloudMadeProvider extends AbstractProvider implements ProviderInterface
         return array(
             'latitude'      => $coordinates[0],
             'longitude'     => $coordinates[1],
+            'bounds'        => $bounds,
             'streetNumber'  => $streetNumber,
             'streetName'    => $streetName,
             'city'          => isset($data['location']->city) ? $data['location']->city : null,
