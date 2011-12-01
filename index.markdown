@@ -76,23 +76,27 @@ $geocoder->registerProviders(array(
 
 $result = $geocoder->geocode('88.188.221.14');
 // Result is:
-// "latitude"   => string(9) "47.901428"
-// "longitude"  => string(8) "1.904960"
-// "city"       => string(7) "Orleans"
-// "zipcode"    => string(0) ""
-// "county"     => string(6) "Loiret"
-// "region"     => string(6) "Centre"
-// "country"    => string(6) "France"
+// "latitude"       => string(9) "47.901428"
+// "longitude"      => string(8) "1.904960"
+// "streetNumber"   => string(0) ""
+// "streetName"     => string(0) ""
+// "city"           => string(7) "Orleans"
+// "zipcode"        => string(0) ""
+// "county"         => string(6) "Loiret"
+// "region"         => string(6) "Centre"
+// "country"        => string(6) "France"
 
 $result = $geocoder->geocode('10 rue Gambetta, Paris, France');
 // Result is:
-// "latitude"   => string(9) "48.863217"
-// "longitude"  => string(8) "2.388821"
-// "city"       => string(5) "Paris"
-// "county"     => string(5) "Paris"
-// "zipcode"    => string(5) "75020"
-// "region"     => string(14) "Ile-de-France"
-// "country"    => string(6) "France"
+// "latitude"       => string(9) "48.863217"
+// "longitude"      => string(8) "2.388821"
+// "streetNumber"   => string(2) "10"
+// "streetName"     => string(15) "Avenue Gambetta"
+// "city"           => string(5) "Paris"
+// "county"         => string(5) "Paris"
+// "zipcode"        => string(5) "75020"
+// "region"         => string(14) "Ile-de-France"
+// "country"        => string(6) "France"
 
 $result = $geocoder->reverse($latitude, $longitude);
 {% endhighlight %}
@@ -102,11 +106,13 @@ $result = $geocoder->reverse($latitude, $longitude);
             <li><code>getCoordinates()</code> will return an array with <code>latitude</code> and <code>longitude</code> values;</li>
             <li><code>getLatitude()</code> will return the <code>latitude</code> value;</li>
             <li><code>getLongitude()</code> will return the <code>longitude</code> value;</li>
-            <li><code>getCity()</code> will return the <code>city</code>;</li>
-            <li><code>getZipcode()</code> will return the <code>zipcode</code>;</li>
-            <li><code>getCounty()</code> will return the <code>county</code>;</li>
-            <li><code>getRegion()</code> will return the <code>region</code>;</li>
-            <li><code>getCountry()</code> will return te <code>country</code>.</li>
+            <li><code>getStreetNumber()</code> will return the <code>street number/house number</code> value;</li>
+            <li><code>getStreetName()</code> will return the <code>street name</code> value;</li>
+            <li><code>getCity()</code> will return the <code>city</code> value;</li>
+            <li><code>getZipcode()</code> will return the <code>zipcode</code> value;</li>
+            <li><code>getCounty()</code> will return the <code>county</code> value;</li>
+            <li><code>getRegion()</code> will return the <code>region</code> value;</li>
+            <li><code>getCountry()</code> will return te <code>country</code> value.</li>
         </ul>
         <p><br /></p>
         <p>The Geocoder's API is fluent, you can write:</p>
