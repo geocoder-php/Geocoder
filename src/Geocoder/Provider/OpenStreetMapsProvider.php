@@ -59,9 +59,17 @@ class OpenStreetMapsProvider extends AbstractProvider implements ProviderInterfa
                 }
             }
 
+            $bounds = null;
+            $boundsAttr = $bestNode->getAttribute('boundingbox');
+            if ($boundsAttr) {
+                $bounds = array();
+                list($bounds['south'], $bounds['north'], $bounds['west'], $bounds['east']) = explode(',', $boundsAttr);
+            }
+
             $ret = $this->getDefaults();
             $ret['latitude']  = $bestNode->getAttribute('lat');
             $ret['longitude'] = $bestNode->getAttribute('lon');
+            $ret['bounds']    = $bounds;
             $ret['zipcode']   = $bestNode->getElementsByTagName('postcode')->item(0)->nodeValue;
             $ret['county']    = $bestNode->getElementsByTagName('county')->length ? $bestNode->getElementsByTagName('county')->item(0)->nodeValue : null;
             $ret['region']    = $bestNode->getElementsByTagName('state')->length ? $bestNode->getElementsByTagName('state')->item(0)->nodeValue : null;
