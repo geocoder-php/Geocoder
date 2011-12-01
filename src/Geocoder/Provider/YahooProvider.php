@@ -21,12 +21,12 @@ class YahooProvider extends AbstractProvider implements ProviderInterface
     /**
      * @var string
      */
-    const GEOCODE_ENDPOINT_URL = 'http://where.yahooapis.com/geocode?q=%s&flags=J&appid=%s';
+    const GEOCODE_ENDPOINT_URL = 'http://where.yahooapis.com/geocode?q=%s&flags=JX&appid=%s';
 
     /**
      * @var string
      */
-    const REVERSE_ENDPOINT_URL = 'http://where.yahooapis.com/geocode?q=%F,+%F&gflags=R&flags=J&appid=%s';
+    const REVERSE_ENDPOINT_URL = 'http://where.yahooapis.com/geocode?q=%F,+%F&gflags=R&flags=JX&appid=%s';
 
     /**
      * @var string
@@ -108,6 +108,17 @@ class YahooProvider extends AbstractProvider implements ProviderInterface
             return $this->getDefaults();
         }
 
+
+        $bounds = null;
+        if (isset($data['boundingbox'])) {
+            $bounds = array(
+                'south' => $data['boundingbox']->south,
+                'west'  => $data['boundingbox']->west,
+                'north' => $data['boundingbox']->north,
+                'east'  => $data['boundingbox']->east
+            );
+        }
+
         $zipcode = null;
         if (isset($data['postal'])) {
             $zipcode = $data['postal'];
@@ -120,6 +131,7 @@ class YahooProvider extends AbstractProvider implements ProviderInterface
         return array(
             'latitude'      => isset($data['latitude']) ? $data['latitude'] : null,
             'longitude'     => isset($data['longitude']) ? $data['longitude'] : null,
+            'bounds'        => $bounds,
             'streetNumber'  => isset($data['house']) ? $data['house'] : null,
             'streetName'    => isset($data['street']) ? $data['street'] : null,
             'city'          => isset($data['city']) ? $data['city'] : null,

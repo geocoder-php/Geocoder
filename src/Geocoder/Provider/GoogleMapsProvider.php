@@ -93,6 +93,24 @@ class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
         $resultset['latitude']  = $coordinates->lat;
         $resultset['longitude'] = $coordinates->lng;
 
+        $resultset['bounds'] = null;
+        if (isset($result->geometry->bounds)) {
+            $resultset['bounds'] = array(
+                'south' => $result->geometry->bounds->southwest->lat,
+                'west'  => $result->geometry->bounds->southwest->lng,
+                'north' => $result->geometry->bounds->northeast->lat,
+                'east'  => $result->geometry->bounds->northeast->lng
+            );
+        } elseif ('ROOFTOP' === $result->geometry->location_type) {
+            // Fake bounds
+            $resultset['bounds'] = array(
+                'south' => $coordinates->lat,
+                'west'  => $coordinates->lng,
+                'north' => $coordinates->lat,
+                'east'  => $coordinates->lng
+            );
+        }
+
         return $resultset;
     }
 
