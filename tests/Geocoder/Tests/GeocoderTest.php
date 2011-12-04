@@ -60,6 +60,24 @@ class GeocoderTest extends TestCase
         $this->assertSame($provider1, $this->geocoder->getProvider());
     }
 
+    public function testGetProviders()
+    {
+        $provider1 = new MockProvider('test1');
+        $provider2 = new MockProvider('test2');
+
+        $this->geocoder->registerProviders(array($provider1, $provider2));
+        $result = $this->geocoder->getProviders();
+
+        $expected = array(
+            'test1' => $provider1,
+            'test2' => $provider2
+        );
+
+        $this->assertSame($expected, $result);
+        $this->assertArrayHasKey('test1', $result);
+        $this->assertArrayHasKey('test2', $result);
+    }
+
     /**
      * @expectedException \RuntimeException
      */

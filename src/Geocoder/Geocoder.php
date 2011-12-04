@@ -119,6 +119,16 @@ class Geocoder implements GeocoderInterface
     }
 
     /**
+     * Returns registered providers indexed by name.
+     *
+     * @return array
+     */
+    public function getProviders()
+    {
+        return $this->providers;
+    }
+
+    /**
      * Returns the provider to use.
      *
      * @return \Geocoder\Provider\ProviderInterface
