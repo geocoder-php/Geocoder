@@ -17,7 +17,7 @@ class GeocodedTest extends TestCase
         $this->geocoded = new Geocoded();
     }
 
-    public function testFromData()
+    public function testFromArray()
     {
         $array = array(
             'latitude'  => 0.001,
@@ -35,7 +35,7 @@ class GeocodedTest extends TestCase
         );
 
         $this->geocoded->fromArray($array);
-        
+
         $bounds = $this->geocoded->getBounds();
 
         $this->assertEquals(0.001, $this->geocoded->getLatitude());
@@ -52,6 +52,45 @@ class GeocodedTest extends TestCase
         $this->assertEquals('65943', $this->geocoded->getZipcode());
         $this->assertEquals('Foo Region', $this->geocoded->getRegion());
         $this->assertEquals('Foo Country', $this->geocoded->getCountry());
+    }
+
+    public function testToArray()
+    {
+        $expected = array(
+            'latitude'  => 0.001,
+            'longitude' => 1,
+            'bounds'    => array(
+                'south' => 1,
+                'west'  => '2',
+                'north' => 3,
+                'east'  => 0.1
+            ),
+            'city'      => 'FOo CITY',
+            'zipcode'   => '65943',
+            'region'    => 'FOO region',
+            'country'   => 'FOO Country'
+        );
+
+        $this->geocoded->fromArray($expected);
+        $result = $this->geocoded->toArray();
+
+        $this->assertEquals(0.001, $result['latitude']);
+        $this->assertEquals(1, $result['longitude']);
+        $this->assertArrayHasKey('south', $result['bounds']);
+        $this->assertArrayHasKey('west', $result['bounds']);
+        $this->assertArrayHasKey('north', $result['bounds']);
+        $this->assertArrayHasKey('east', $result['bounds']);
+
+        $bounds = $result['bounds'];
+        $this->assertEquals(1, $bounds['south']);
+        $this->assertEquals(2, $bounds['west']);
+        $this->assertEquals(3, $bounds['north']);
+        $this->assertEquals(0.1, $bounds['east']);
+
+        $this->assertEquals('Foo City', $result['city']);
+        $this->assertEquals('65943', $result['zipcode']);
+        $this->assertEquals('Foo Region', $result['region']);
+        $this->assertEquals('Foo Country', $result['country']);
     }
 
     public function testFromDataWithEmptyArray()

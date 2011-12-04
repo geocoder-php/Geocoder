@@ -24,7 +24,7 @@ class Geocoded implements ResultInterface, \ArrayAccess
      * @var double
      */
     protected $longitude = 0;
-    
+
     /**
      * @var array
      */
@@ -88,7 +88,7 @@ class Geocoded implements ResultInterface, \ArrayAccess
     {
         return $this->longitude;
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -193,6 +193,25 @@ class Geocoded implements ResultInterface, \ArrayAccess
         if (isset($data['country'])) {
             $this->country = $this->formatString($data['country']);
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function toArray()
+    {
+        return array(
+            'latitude'      => $this->latitude,
+            'longitude'     => $this->longitude,
+            'bounds'        => $this->bounds,
+            'streetNumber'  => $this->streetNumber,
+            'streetName'    => $this->streetName,
+            'zipcode'       => $this->zipcode,
+            'city'          => $this->city,
+            'county'        => $this->county,
+            'region'        => $this->region,
+            'country'       => $this->country,
+        );
     }
 
     /**

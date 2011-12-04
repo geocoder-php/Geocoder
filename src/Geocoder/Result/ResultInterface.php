@@ -35,12 +35,12 @@ interface ResultInterface
      * @return double
      */
     function getLongitude();
-    
+
     /**
      * Returns the bounds value.
-     * 
+     *
      * Bounds format:
-     * 
+     *
      * array(
      *     'south' => (double)
      *     'west'  => (double)
@@ -107,4 +107,11 @@ interface ResultInterface
      * @param array $data   An array.
      */
     function fromArray(array $data = array());
+
+    /**
+     * Returns an array with data indexed by name.
+     *
+     * @return array
+     */
+    function toArray();
 }
