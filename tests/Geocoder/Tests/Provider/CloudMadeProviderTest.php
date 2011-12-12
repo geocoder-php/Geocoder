@@ -4,22 +4,22 @@ namespace Geocoder\Tests\Provider;
 
 use Geocoder\Tests\TestCase;
 
-use Geocoder\Provider\BingMapsProvider;
+use Geocoder\Provider\CloudMadeProvider;
 
-class BingMapsProviderTest extends TestCase
+class CloudMadeProviderTest extends TestCase
 {
     /**
      * @expectedException \RuntimeException
      */
     public function testGetGeocodedDataWithNullApiKey()
     {
-        $provider = new BingMapsProvider($this->getMock('\Geocoder\HttpAdapter\HttpAdapterInterface'), null);
+        $provider = new CloudMadeProvider($this->getMock('\Geocoder\HttpAdapter\HttpAdapterInterface'), null);
         $provider->getGeocodedData('foo');
     }
 
     public function testGetGeocodedData()
     {
-        $this->provider = new BingMapsProvider($this->getMockAdapter(), 'api_key');
+        $this->provider = new CloudMadeProvider($this->getMockAdapter(), 'api_key');
         $result = $this->provider->getGeocodedData('foobar');
 
         $this->assertNull($result['latitude']);
@@ -29,14 +29,14 @@ class BingMapsProviderTest extends TestCase
         $this->assertNull($result['streetName']);
         $this->assertNull($result['city']);
         $this->assertNull($result['zipcode']);
-        $this->assertNull($result['county']);
         $this->assertNull($result['region']);
+        $this->assertNull($result['county']);
         $this->assertNull($result['country']);
     }
 
     public function testGetGeocodedDataWithNull()
     {
-        $this->provider = new BingMapsProvider($this->getMockAdapter(), 'api_key');
+        $this->provider = new CloudMadeProvider($this->getMockAdapter(), 'api_key');
         $result = $this->provider->getGeocodedData(null);
 
         $this->assertNull($result['latitude']);
@@ -46,14 +46,14 @@ class BingMapsProviderTest extends TestCase
         $this->assertNull($result['streetName']);
         $this->assertNull($result['city']);
         $this->assertNull($result['zipcode']);
-        $this->assertNull($result['county']);
         $this->assertNull($result['region']);
+        $this->assertNull($result['county']);
         $this->assertNull($result['country']);
     }
 
     public function testGetGeocodedDataWithEmpty()
     {
-        $this->provider = new BingMapsProvider($this->getMockAdapter(), 'api_key');
+        $this->provider = new CloudMadeProvider($this->getMockAdapter(), 'api_key');
         $result = $this->provider->getGeocodedData('');
 
         $this->assertNull($result['latitude']);
@@ -63,59 +63,58 @@ class BingMapsProviderTest extends TestCase
         $this->assertNull($result['streetName']);
         $this->assertNull($result['city']);
         $this->assertNull($result['zipcode']);
-        $this->assertNull($result['county']);
         $this->assertNull($result['region']);
+        $this->assertNull($result['county']);
         $this->assertNull($result['country']);
     }
 
     public function testGetGeocodedDataWithLocalhost()
     {
-        $this->provider = new BingMapsProvider($this->getMockAdapter($this->never()), 'api_key');
+        $this->provider = new CloudMadeProvider($this->getMockAdapter($this->never()), 'api_key');
         $result = $this->provider->getGeocodedData('127.0.0.1');
 
         $this->assertArrayNotHasKey('latitude', $result);
         $this->assertArrayNotHasKey('longitude', $result);
         $this->assertArrayNotHasKey('bounds', $result);
         $this->assertArrayNotHasKey('zipcode', $result);
-        $this->assertArrayNotHasKey('streetNumber', $result);
-        $this->assertArrayNotHasKey('streetName', $result);
 
         $this->assertEquals('localhost', $result['city']);
         $this->assertEquals('localhost', $result['region']);
+        $this->assertEquals('localhost', $result['county']);
         $this->assertEquals('localhost', $result['country']);
     }
 
     public function testGetGeocodedDataWithRealAddress()
     {
-        if (!isset($_SERVER['BINGMAPS_API_KEY'])) {
-            $this->markTestSkipped('You need to configure the BINGMAPS_API_KEY value in phpunit.xml');
+        if (!isset($_SERVER['CLOUDMADE_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the CLOUDMADE_API_KEY value in phpunit.xml');
         }
 
-        $this->provider = new BingMapsProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter(), $_SERVER['BINGMAPS_API_KEY']);
-        $result = $this->provider->getGeocodedData('10 avenue Gambetta, Paris, France');
+        $this->provider = new CloudMadeProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter(), $_SERVER['CLOUDMADE_API_KEY']);
+        $result = $this->provider->getGeocodedData('36 Quai des Orfèvres, Paris, France');
 
-        $this->assertEquals(48.86321675999999, $result['latitude']);
-        $this->assertEquals(2.3887721299999995, $result['longitude']);
+        $this->assertEquals(48.85645, $result['latitude']);
+        $this->assertEquals(2.35243, $result['longitude']);
         $this->assertArrayHasKey('south', $result['bounds']);
         $this->assertArrayHasKey('west', $result['bounds']);
         $this->assertArrayHasKey('north', $result['bounds']);
         $this->assertArrayHasKey('east', $result['bounds']);
-        $this->assertEquals(48.859354042429, $result['bounds']['south']);
-        $this->assertEquals(2.3809438666389, $result['bounds']['west']);
-        $this->assertEquals(48.867079477571, $result['bounds']['north']);
-        $this->assertEquals(2.3966003933611, $result['bounds']['east']);
+        $this->assertEquals(48.70804, $result['bounds']['south']);
+        $this->assertEquals(2.12785, $result['bounds']['west']);
+        $this->assertEquals(49.00442, $result['bounds']['north']);
+        $this->assertEquals(2.57701, $result['bounds']['east']);
         $this->assertNull($result['streetNumber']);
-        $this->assertEquals('10 Avenue Gambetta', $result['streetName']);
-        $this->assertEquals(75020, $result['zipcode']);
-        $this->assertEquals('Paris', $result['city']);
-        $this->assertEquals('Paris', $result['county']);
-        $this->assertEquals('IdF', $result['region']);
+        $this->assertEquals('Paris', $result['streetName']);
+        $this->assertNull($result['zipcode']);
+        $this->assertNull($result['city']);
+        $this->assertEquals('Ile-del-france', $result['region']);
+        $this->assertEquals('Ile-del-france', $result['county']);
         $this->assertEquals('France', $result['country']);
     }
 
     public function testGetReversedData()
     {
-        $this->provider = new BingMapsProvider($this->getMockAdapter(), 'api_key');
+        $this->provider = new CloudMadeProvider($this->getMockAdapter(), 'api_key');
         $result = $this->provider->getReversedData(array(1, 2));
 
         $this->assertNull($result['latitude']);
@@ -125,36 +124,53 @@ class BingMapsProviderTest extends TestCase
         $this->assertNull($result['streetName']);
         $this->assertNull($result['city']);
         $this->assertNull($result['zipcode']);
-        $this->assertNull($result['county']);
         $this->assertNull($result['region']);
+        $this->assertNull($result['county']);
         $this->assertNull($result['country']);
     }
 
     public function testGetReversedDataWithRealCoordinates()
     {
-        if (!isset($_SERVER['BINGMAPS_API_KEY'])) {
-            $this->markTestSkipped('You need to configure the BINGMAPS_API_KEY value in phpunit.xml');
+        if (!isset($_SERVER['CLOUDMADE_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the CLOUDMADE_API_KEY value in phpunit.xml');
         }
 
-        $this->provider = new BingMapsProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter(), $_SERVER['BINGMAPS_API_KEY']);
-        $result = $this->provider->getReversedData(array(48.86321648955345, 2.3887719959020615));
+        $this->provider = new CloudMadeProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter(), $_SERVER['CLOUDMADE_API_KEY']);
+        $result = $this->provider->getReversedData(array(48.85657, 2.35325));
 
-        $this->assertEquals(48.86321648955345, $result['latitude']);
-        $this->assertEquals(2.3887719959020615, $result['longitude']);
+        $this->assertEquals(48.85657, $result['latitude']);
+        $this->assertEquals(2.35325, $result['longitude']);
         $this->assertArrayHasKey('south', $result['bounds']);
         $this->assertArrayHasKey('west', $result['bounds']);
         $this->assertArrayHasKey('north', $result['bounds']);
         $this->assertArrayHasKey('east', $result['bounds']);
-        $this->assertEquals(48.859353771983, $result['bounds']['south']);
-        $this->assertEquals(2.3809437325833, $result['bounds']['west']);
-        $this->assertEquals(48.867079207124, $result['bounds']['north']);
-        $this->assertEquals(2.3966002592208, $result['bounds']['east']);
-        $this->assertNull($result['streetNumber']);
-        $this->assertEquals('10 Avenue Gambetta', $result['streetName']);
-        $this->assertEquals(75020, $result['zipcode']);
+        $this->assertEquals(48.85657, $result['bounds']['south']);
+        $this->assertEquals(2.35325, $result['bounds']['west']);
+        $this->assertEquals(48.85657, $result['bounds']['north']);
+        $this->assertEquals(2.35325, $result['bounds']['east']);
+        $this->assertEquals(5, $result['streetNumber']);
+        $this->assertEquals('Rue Lobau', $result['streetName']);
+        $this->assertNull($result['zipcode']);
         $this->assertEquals('Paris', $result['city']);
-        $this->assertEquals('Paris', $result['county']);
-        $this->assertEquals('IdF', $result['region']);
+        $this->assertEquals('Ile-del-france', $result['region']);
+        $this->assertEquals('Ile-del-france', $result['county']);
+        $this->assertEquals('France', $result['country']);
+    }
+
+    public function testGetGeocodedDataWithRealAddress2()
+    {
+        if (!isset($_SERVER['CLOUDMADE_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the CLOUDMADE_API_KEY value in phpunit.xml');
+        }
+
+        $this->provider = new CloudMadeProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter(), $_SERVER['CLOUDMADE_API_KEY']);
+        $result = $this->provider->getGeocodedData('73 Boulevard Schuman, Clermont-Ferrand');
+
+        $this->assertNull($result['streetNumber']);
+        $this->assertEquals('Boulevard Robert Schuman', $result['streetName']);
+        $this->assertEquals('Clermont Ferrand', $result['city']);
+        $this->assertEquals('Auvergne', $result['region']);
+        $this->assertEquals('Auvergne', $result['county']);
         $this->assertEquals('France', $result['country']);
     }
 }

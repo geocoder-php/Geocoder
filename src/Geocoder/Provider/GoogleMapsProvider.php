@@ -18,13 +18,7 @@ use Geocoder\Provider\ProviderInterface;
  */
 class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
 {
-    /**
-     * @param HttpAdapterInterface $adapter
-     */
-    public function __construct(HttpAdapterInterface $adapter)
-    {
-        parent::__construct($adapter, null);
-    }
+    const ENDPOINT_URL = 'http://maps.googleapis.com/maps/api/geocode/json?address=%s&sensor=false';
 
     /**
      * {@inheritDoc}
@@ -32,14 +26,10 @@ class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
     public function getGeocodedData($address)
     {
         if ('127.0.0.1' === $address) {
-            return array(
-                'city'      => 'localhost',
-                'region'    => 'localhost',
-                'country'   => 'localhost'
-            );
+            return $this->getLocalhostDefaults();
         }
 
-        $query = sprintf('http://maps.googleapis.com/maps/api/geocode/json?address=%s&sensor=false', urlencode($address));
+        $query = sprintf(self::ENDPOINT_URL, urlencode($address));
 
         return $this->executeQuery($query);
     }
@@ -49,7 +39,7 @@ class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
      */
     public function getReversedData(array $coordinates)
     {
-        return $this->getGeocodedData(sprintf('%s,%s', $coordinates[0], $coordinates[1]));
+        return $this->getGeocodedData(sprintf('%F,%F', $coordinates[0], $coordinates[1]));
     }
 
     /**
@@ -66,6 +56,10 @@ class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
      */
     protected function executeQuery($query)
     {
+        if (null !== $this->getLocale()) {
+            $query = sprintf('%s&language=%s', $query, $this->getLocale());
+        }
+
         $content = $this->getAdapter()->getContent($query);
 
         if (null === $content) {
@@ -99,6 +93,24 @@ class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
         $resultset['latitude']  = $coordinates->lat;
         $resultset['longitude'] = $coordinates->lng;
 
+        $resultset['bounds'] = null;
+        if (isset($result->geometry->bounds)) {
+            $resultset['bounds'] = array(
+                'south' => $result->geometry->bounds->southwest->lat,
+                'west'  => $result->geometry->bounds->southwest->lng,
+                'north' => $result->geometry->bounds->northeast->lat,
+                'east'  => $result->geometry->bounds->northeast->lng
+            );
+        } elseif ('ROOFTOP' === $result->geometry->location_type) {
+            // Fake bounds
+            $resultset['bounds'] = array(
+                'south' => $coordinates->lat,
+                'west'  => $coordinates->lng,
+                'north' => $coordinates->lat,
+                'east'  => $coordinates->lng
+            );
+        }
+
         return $resultset;
     }
 
@@ -121,6 +133,10 @@ class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
                 $resultset['city'] = $value;
                 break;
 
+            case 'administrative_area_level_2':
+                $resultset['county'] = $value;
+                break;
+
             case 'administrative_area_level_1':
                 $resultset['region'] = $value;
                 break;
@@ -129,9 +145,18 @@ class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
                 $resultset['country'] = $value;
                 break;
 
+            case 'street_number':
+                $resultset['streetNumber'] = $value;
+                break;
+
+            case 'route':
+                $resultset['streetName'] = $value;
+                break;
+
             default:
                 break;
         }
+
         return $resultset;
     }
 }

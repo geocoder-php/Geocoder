@@ -15,9 +15,12 @@ class HostIpProviderTest extends TestCase
 
         $this->assertNull($result['latitude']);
         $this->assertNull($result['longitude']);
+        $this->assertNull($result['streetNumber']);
+        $this->assertNull($result['streetName']);
         $this->assertNull($result['city']);
         $this->assertNull($result['zipcode']);
         $this->assertNull($result['region']);
+        $this->assertNull($result['county']);
         $this->assertNull($result['country']);
     }
 
@@ -28,9 +31,12 @@ class HostIpProviderTest extends TestCase
 
         $this->assertNull($result['latitude']);
         $this->assertNull($result['longitude']);
+        $this->assertNull($result['streetNumber']);
+        $this->assertNull($result['streetName']);
         $this->assertNull($result['city']);
         $this->assertNull($result['zipcode']);
         $this->assertNull($result['region']);
+        $this->assertNull($result['county']);
         $this->assertNull($result['country']);
     }
 
@@ -44,6 +50,7 @@ class HostIpProviderTest extends TestCase
         $this->assertNull($result['city']);
         $this->assertNull($result['zipcode']);
         $this->assertNull($result['region']);
+        $this->assertNull($result['county']);
         $this->assertNull($result['country']);
     }
 
@@ -58,6 +65,7 @@ class HostIpProviderTest extends TestCase
 
         $this->assertEquals('localhost', $result['city']);
         $this->assertEquals('localhost', $result['region']);
+        $this->assertEquals('localhost', $result['county']);
         $this->assertEquals('localhost', $result['country']);
     }
 

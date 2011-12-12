@@ -20,61 +20,22 @@ use Geocoder\Provider\ProviderInterface;
 class HostIpProvider extends AbstractProvider implements ProviderInterface
 {
     /**
+     * @var string
+     */
+    const ENDPOINT_URL = 'http://api.hostip.info/get_xml.php?ip=%s&position=true';
+
+    /**
      * {@inheritDoc}
      */
     public function getGeocodedData($address)
     {
         if ('127.0.0.1' === $address) {
-            return array(
-                'city'      => 'localhost',
-                'region'    => 'localhost',
-                'country'   => 'localhost'
-            );
+            return $this->getLocalhostDefaults();
         }
 
-        $query = sprintf('http://api.hostip.info/get_xml.php?ip=%s&position=true', $address);
+        $query = sprintf(self::ENDPOINT_URL, $address);
 
-        $content = $this->getAdapter()->getContent($query);
-
-        try {
-            $xml = new \SimpleXmlElement($content);
-        } catch (\Exception $e) {
-            return $this->getDefaults();
-        }
-
-        $coordinates = (string) $xml
-            ->children('gml', true)
-                ->featureMember
-                ->children('', true)
-                    ->Hostip
-                    ->ipLocation
-                    ->children('gml', true)
-                        ->pointProperty
-                        ->Point
-                        ->coordinates;
-
-        $lngLat = explode(',', $coordinates);
-        $city = (string) $xml
-            ->children('gml', true)
-                ->featureMember
-                ->children('', true)
-                    ->Hostip
-                        ->children('gml', true)
-                        ->name;
-
-        $country = (string) $xml
-            ->children('gml', true)
-                ->featureMember
-                ->children('', true)
-                    ->Hostip
-                    ->countryName;
-
-        return array(
-            'latitude'  => $lngLat[1],
-            'longitude' => $lngLat[0],
-            'city'      => $city,
-            'country'   => $country
-        );
+        return $this->executeQuery($query);
     }
 
     /**
@@ -91,5 +52,54 @@ class HostIpProvider extends AbstractProvider implements ProviderInterface
     public function getName()
     {
         return 'host_ip';
+    }
+
+    /**
+     * @param string $query
+     * @return array
+     */
+    protected function executeQuery($query)
+    {
+        $content = $this->getAdapter()->getContent($query);
+
+        try {
+            $xml = new \SimpleXmlElement($content);
+        } catch (\Exception $e) {
+            return $this->getDefaults();
+        }
+
+        $coordinates = (string) $xml
+            ->children('gml', true)
+            ->featureMember
+            ->children('', true)
+            ->Hostip
+            ->ipLocation
+            ->children('gml', true)
+            ->pointProperty
+            ->Point
+            ->coordinates;
+
+        $lngLat = explode(',', $coordinates);
+        $city = (string) $xml
+            ->children('gml', true)
+            ->featureMember
+            ->children('', true)
+            ->Hostip
+            ->children('gml', true)
+            ->name;
+
+        $country = (string) $xml
+            ->children('gml', true)
+            ->featureMember
+            ->children('', true)
+            ->Hostip
+            ->countryName;
+
+        return array(
+            'latitude'  => $lngLat[1],
+            'longitude' => $lngLat[0],
+            'city'      => $city,
+            'country'   => $country
+        );
     }
 }

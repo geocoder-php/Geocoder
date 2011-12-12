@@ -21,10 +21,22 @@ class BingMapsProvider extends AbstractProvider implements ProviderInterface
     /**
      * @var string
      */
+    const GEOCODE_ENDPOINT_URL = 'http://dev.virtualearth.net/REST/v1/Locations/?q=%s&key=%s';
+
+    /**
+     * @var string
+     */
+    const REVERSE_ENDPOINT_URL = 'http://dev.virtualearth.net/REST/v1/Locations/%F,%F?key=%s';
+
+    /**
+     * @var string
+     */
     private $apiKey = null;
 
     /**
+     * @param \Geocoder\HttpAdapter\HttpAdapterInterface $adapter
      * @param string $apiKey
+     * @param string $locale
      */
     public function __construct(HttpAdapterInterface $adapter, $apiKey, $locale = null)
     {
@@ -43,14 +55,10 @@ class BingMapsProvider extends AbstractProvider implements ProviderInterface
         }
 
         if ('127.0.0.1' === $address) {
-            return array(
-                'city'      => 'localhost',
-                'region'    => 'localhost',
-                'country'   => 'localhost'
-            );
+            return $this->getLocalhostDefaults();
         }
 
-        $query = sprintf('http://dev.virtualearth.net/REST/v1/Locations/?q=%s&key=%s', urlencode($address), $this->apiKey);
+        $query = sprintf(self::GEOCODE_ENDPOINT_URL, urlencode($address), $this->apiKey);
 
         return $this->executeQuery($query);
     }
@@ -64,7 +72,7 @@ class BingMapsProvider extends AbstractProvider implements ProviderInterface
             throw new \RuntimeException('No API Key provided');
         }
 
-        $query = sprintf('http://dev.virtualearth.net/REST/v1/Locations/%s,%s?key=%s', $coordinates[0], $coordinates[1], $this->apiKey);
+        $query = sprintf(self::REVERSE_ENDPOINT_URL, $coordinates[0], $coordinates[1], $this->apiKey);
 
         return $this->executeQuery($query);
     }
@@ -84,7 +92,7 @@ class BingMapsProvider extends AbstractProvider implements ProviderInterface
     protected function executeQuery($query)
     {
         if (null !== $this->getLocale()) {
-            $query = sprintf('%s&culture=%s', $query, $this->getLocale());
+            $query = sprintf('%s&culture=%s', $query, str_replace('_', '-', $this->getLocale()));
         }
 
         $content = $this->getAdapter()->getContent($query);
@@ -94,6 +102,7 @@ class BingMapsProvider extends AbstractProvider implements ProviderInterface
         }
 
         $json = json_decode($content);
+
         if (isset($json->resourceSets[0])) {
             $data = (array) $json->resourceSets[0]->resources[0];
         } else {
@@ -102,18 +111,35 @@ class BingMapsProvider extends AbstractProvider implements ProviderInterface
 
         $coordinates = (array) $data['geocodePoints'][0]->coordinates;
 
-        $zipcode = (string) $data['address']->postalCode;
-        $city = (string) $data['address']->locality;
-        $region = (string) $data['address']->adminDistrict;
-        $country = (string) $data['address']->countryRegion;
+        $bounds = null;
+        if (isset($data['bbox']) && is_array($data['bbox']) && count($data['bbox']) > 0) {
+            $bounds = array(
+                'south' => $data['bbox'][0],
+                'west'  => $data['bbox'][1],
+                'north' => $data['bbox'][2],
+                'east'  => $data['bbox'][3]
+            );
+        }
+
+        $streetNumber = null;
+        $streetName   = (string) $data['address']->addressLine;
+        $zipcode      = (string) $data['address']->postalCode;
+        $city         = (string) $data['address']->locality;
+        $county       = (string) $data['address']->adminDistrict2;
+        $region       = (string) $data['address']->adminDistrict;
+        $country      = (string) $data['address']->countryRegion;
 
         return array(
-            'latitude'  => $coordinates[0],
-            'longitude' => $coordinates[1],
-            'city'      => empty($city) ? null : $city,
-            'zipcode'   => empty($zipcode) ? null : $zipcode,
-            'region'    => empty($region) ? null : $region,
-            'country'   => empty($country) ? null : $country
+            'latitude'      => $coordinates[0],
+            'longitude'     => $coordinates[1],
+            'bounds'        => $bounds,
+            'streetNumber'  => $streetNumber,
+            'streetName'    => $streetName,
+            'city'          => empty($city) ? null : $city,
+            'zipcode'       => empty($zipcode) ? null : $zipcode,
+            'county'        => empty($county) ? null : $county,
+            'region'        => empty($region) ? null : $region,
+            'country'       => empty($country) ? null : $country
         );
     }
 }

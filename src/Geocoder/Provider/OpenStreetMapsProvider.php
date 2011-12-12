@@ -1,12 +1,12 @@
 <?php
 
 /**
-* This file is part of the Geocoder package.
-* For the full copyright and license information, please view the LICENSE
-* file that was distributed with this source code.
-*
-* @license    MIT License
-*/
+ * This file is part of the Geocoder package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license    MIT License
+ */
 
 namespace Geocoder\Provider;
 
@@ -15,67 +15,81 @@ use Geocoder\Provider\ProviderInterface;
 use DOMDocument;
 
 /**
-* @author Niklas Närhinen <niklas@narhinen.net>
-*/
+ * @author Niklas Närhinen <niklas@narhinen.net>
+ */
 class OpenStreetMapsProvider extends AbstractProvider implements ProviderInterface
 {
-
-    public function __construct(HttpAdapterInterface $adapter, $locale = null)
-    {
-        parent::__construct($adapter, $locale);
-    }
+    /**
+     * @var string
+     */
+    const GEOCODE_ENDPOINT_URL = 'http://nominatim.openstreetmap.org/search?q=%s&format=xml&addressdetails=1';
 
     /**
-    * {@inheritDoc}
-    */
+     * @var string
+     */
+    const REVERSE_ENDPOINT_URL = 'http://nominatim.openstreetmap.org/reverse?format=xml&lat=%F&lon=%F&addressdetails=1';
+
+    /**
+     * {@inheritDoc}
+     */
     public function getGeocodedData($address)
     {
         if ('127.0.0.1' === $address) {
-            return array(
-                'city'      => 'localhost',
-                'region'    => 'localhost',
-                'country'   => 'localhost'
-                );
+            return $this->getLocalhostDefaults();
         }
 
-        $query = sprintf('http://nominatim.openstreetmap.org/search?q=%s&format=xml&addressdetails=1', urlencode($address));
+        $query = sprintf(self::GEOCODE_ENDPOINT_URL, urlencode($address));
 
         $content = $this->executeQuery($query);
+
         if (null === $content) {
             return $this->getDefaults();
         }
 
         $doc = new DOMDocument();
         if (@$doc->loadXML($content)) {
-            $maxRank = 0;
-            $bestNode = null;
+            $maxRank      = 0;
+            $bestNode     = null;
             $searchResult = $doc->getElementsByTagName('searchresults')->item(0);
+
             foreach ($searchResult->getElementsByTagName('place') as $node) {
                 if ($node->getAttribute('place_rank') > $maxRank) {
-                    $maxRank = $node->getAttribute('place_rank');
+                    $maxRank  = $node->getAttribute('place_rank');
                     $bestNode = $node;
                 }
             }
+
+            $bounds = null;
+            $boundsAttr = $bestNode->getAttribute('boundingbox');
+            if ($boundsAttr) {
+                $bounds = array();
+                list($bounds['south'], $bounds['north'], $bounds['west'], $bounds['east']) = explode(',', $boundsAttr);
+            }
+
             $ret = $this->getDefaults();
-            $ret['latitude'] = $bestNode->getAttribute('lat');
+            $ret['latitude']  = $bestNode->getAttribute('lat');
             $ret['longitude'] = $bestNode->getAttribute('lon');
-            $ret['zipcode'] = $bestNode->getElementsByTagName('postcode')->item(0)->nodeValue;
-            $ret['city'] = $bestNode->getElementsByTagName('city')->item(0)->nodeValue;
-            $ret['country'] = $bestNode->getElementsByTagName('country')->item(0)->nodeValue;
+            $ret['bounds']    = $bounds;
+            $ret['zipcode']   = $bestNode->getElementsByTagName('postcode')->item(0)->nodeValue;
+            $ret['county']    = $bestNode->getElementsByTagName('county')->length ? $bestNode->getElementsByTagName('county')->item(0)->nodeValue : null;
+            $ret['region']    = $bestNode->getElementsByTagName('state')->length ? $bestNode->getElementsByTagName('state')->item(0)->nodeValue : null;
+            $ret['streetNumber'] = $bestNode->getElementsByTagName('house_number')->length ? $bestNode->getElementsByTagName('house_number')->item(0)->nodeValue : null;
+            $ret['streetName']   = $bestNode->getElementsByTagName('road')->length ? $bestNode->getElementsByTagName('road')->item(0)->nodeValue : null;
+            $ret['city']      = $bestNode->getElementsByTagName('city')->item(0)->nodeValue;
+            $ret['country']   = $bestNode->getElementsByTagName('country')->item(0)->nodeValue;
+
             return $ret;
-        }
-        else {
+        } else {
             return $this->getDefaults();
         }
     }
 
     /**
-    * {@inheritDoc}
-    */
+     * {@inheritDoc}
+     */
     public function getReversedData(array $coordinates)
     {
-
-        $query = sprintf('http://nominatim.openstreetmap.org/reverse?format=xml&lat=%s&lon=%s&addressdetails=1', $coordinates[0], $coordinates[1]);
+        $query = sprintf(self::REVERSE_ENDPOINT_URL, $coordinates[0], $coordinates[1]);
 
         $content = $this->executeQuery($query);
 
@@ -85,36 +99,40 @@ class OpenStreetMapsProvider extends AbstractProvider implements ProviderInterfa
 
         $doc = new DOMDocument();
         if (@$doc->loadXML($content)) {
-            $maxRank = 0;
-            $bestNode = null;
-            $searchResult = $doc->getElementsByTagName('reversegeocode')->item(0);
-            $addressParts = $searchResult->getElementsByTagName('addressparts')->item(0);
-            $result = $searchResult->getElementsByTagName('result')->item(0);
-            $ret = $this->getDefaults();
-            $ret['latitude'] = $result->getAttribute('lat');
+            $maxRank          = 0;
+            $bestNode         = null;
+            $searchResult     = $doc->getElementsByTagName('reversegeocode')->item(0);
+            $addressParts     = $searchResult->getElementsByTagName('addressparts')->item(0);
+            $result           = $searchResult->getElementsByTagName('result')->item(0);
+            $ret              = $this->getDefaults();
+            $ret['latitude']  = $result->getAttribute('lat');
             $ret['longitude'] = $result->getAttribute('lon');
-            $ret['zipcode'] = $addressParts->getElementsByTagName('postcode')->item(0)->nodeValue;
-            $ret['city'] = $addressParts->getElementsByTagName('city')->item(0)->nodeValue;
-            $ret['country'] = $addressParts->getElementsByTagName('country')->item(0)->nodeValue;
+            $ret['zipcode']   = $addressParts->getElementsByTagName('postcode')->item(0)->nodeValue;
+            $ret['county']    = $addressParts->getElementsByTagName('county')->length ? $addressParts->getElementsByTagName('county')->item(0)->nodeValue : null;
+            $ret['region']    = $addressParts->getElementsByTagName('state')->length ? $addressParts->getElementsByTagName('state')->item(0)->nodeValue : null;
+            $ret['streetNumber'] = $addressParts->getElementsByTagName('house_number')->length ? $addressParts->getElementsByTagName('house_number')->item(0)->nodeValue : null;
+            $ret['streetName']   = $addressParts->getElementsByTagName('road')->length ? $addressParts->getElementsByTagName('road')->item(0)->nodeValue : null;
+            $ret['city']      = $addressParts->getElementsByTagName('city')->item(0)->nodeValue;
+            $ret['country']   = $addressParts->getElementsByTagName('country')->item(0)->nodeValue;
+
             return $ret;
-        }
-        else {
+        } else {
             return $this->getDefaults();
         }
     }
 
     /**
-    * {@inheritDoc}
-    */
+     * {@inheritDoc}
+     */
     public function getName()
     {
         return 'openstreetmaps';
     }
 
     /**
-    * @param string $query
-    * @return string
-    */
+     * @param string $query
+     * @return string
+     */
     protected function executeQuery($query)
     {
         if (null !== $this->getLocale()) {

@@ -26,6 +26,21 @@ class Geocoded implements ResultInterface, \ArrayAccess
     protected $longitude = 0;
 
     /**
+     * @var array
+     */
+    protected $bounds = null;
+
+    /**
+     * @var int
+     */
+    protected $streetNumber = null;
+
+    /**
+     * @var string
+     */
+    protected $streetName = null;
+
+    /**
      * @var string
      */
     protected $city = null;
@@ -34,6 +49,11 @@ class Geocoded implements ResultInterface, \ArrayAccess
      * @var string
      */
     protected $zipcode = null;
+
+    /**
+     * @var string
+     */
+    protected $county = null;
 
     /**
      * @var string
@@ -72,6 +92,30 @@ class Geocoded implements ResultInterface, \ArrayAccess
     /**
      * {@inheritDoc}
      */
+    public function getBounds()
+    {
+        return $this->bounds;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getStreetNumber()
+    {
+        return $this->streetNumber;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getStreetName()
+    {
+        return $this->streetName;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getCity()
     {
         return $this->city;
@@ -83,6 +127,14 @@ class Geocoded implements ResultInterface, \ArrayAccess
     public function getZipcode()
     {
         return $this->zipcode;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getCounty()
+    {
+        return $this->county;
     }
 
     /**
@@ -112,11 +164,28 @@ class Geocoded implements ResultInterface, \ArrayAccess
         if (isset($data['longitude'])) {
             $this->longitude = (double) $data['longitude'];
         }
+        if (isset($data['bounds']) && is_array($data['bounds'])) {
+            $this->bounds = array(
+                'south' => (double) $data['bounds']['south'],
+                'west'  => (double) $data['bounds']['west'],
+                'north' => (double) $data['bounds']['north'],
+                'east'  => (double) $data['bounds']['east']
+            );
+        }
+        if (isset($data['streetNumber'])) {
+            $this->streetNumber = (int) $data['streetNumber'];
+        }
+        if (isset($data['streetName'])) {
+            $this->streetName = $this->formatString($data['streetName']);
+        }
         if (isset($data['city'])) {
             $this->city = $this->formatString($data['city']);
         }
         if (isset($data['zipcode'])) {
             $this->zipcode = (string) $data['zipcode'];
+        }
+        if (isset($data['county'])) {
+            $this->county = $this->formatString($data['county']);
         }
         if (isset($data['region'])) {
             $this->region = $this->formatString($data['region']);
@@ -124,6 +193,25 @@ class Geocoded implements ResultInterface, \ArrayAccess
         if (isset($data['country'])) {
             $this->country = $this->formatString($data['country']);
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function toArray()
+    {
+        return array(
+            'latitude'      => $this->latitude,
+            'longitude'     => $this->longitude,
+            'bounds'        => $this->bounds,
+            'streetNumber'  => $this->streetNumber,
+            'streetName'    => $this->streetName,
+            'zipcode'       => $this->zipcode,
+            'city'          => $this->city,
+            'county'        => $this->county,
+            'region'        => $this->region,
+            'country'       => $this->country,
+        );
     }
 
     /**
@@ -140,6 +228,7 @@ class Geocoded implements ResultInterface, \ArrayAccess
     public function offsetGet($offset)
     {
         $offset = strtolower($offset);
+
         return $this->offsetExists($offset) ? $this->$offset : null;
     }
 

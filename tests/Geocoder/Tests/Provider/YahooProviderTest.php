@@ -24,6 +24,7 @@ class YahooProviderTest extends TestCase
 
         $this->assertNull($result['latitude']);
         $this->assertNull($result['longitude']);
+        $this->assertNull($result['bounds']);
         $this->assertNull($result['city']);
         $this->assertNull($result['zipcode']);
         $this->assertNull($result['region']);
@@ -37,8 +38,10 @@ class YahooProviderTest extends TestCase
 
         $this->assertNull($result['latitude']);
         $this->assertNull($result['longitude']);
+        $this->assertNull($result['bounds']);
         $this->assertNull($result['city']);
         $this->assertNull($result['zipcode']);
+        $this->assertNull($result['county']);
         $this->assertNull($result['region']);
         $this->assertNull($result['country']);
     }
@@ -50,8 +53,10 @@ class YahooProviderTest extends TestCase
 
         $this->assertNull($result['latitude']);
         $this->assertNull($result['longitude']);
+        $this->assertNull($result['bounds']);
         $this->assertNull($result['city']);
         $this->assertNull($result['zipcode']);
+        $this->assertNull($result['county']);
         $this->assertNull($result['region']);
         $this->assertNull($result['country']);
     }
@@ -63,6 +68,7 @@ class YahooProviderTest extends TestCase
 
         $this->assertArrayNotHasKey('latitude', $result);
         $this->assertArrayNotHasKey('longitude', $result);
+        $this->assertArrayNotHasKey('bounds', $result);
         $this->assertArrayNotHasKey('zipcode', $result);
 
         $this->assertEquals('localhost', $result['city']);
@@ -81,8 +87,17 @@ class YahooProviderTest extends TestCase
 
         $this->assertEquals(33.036711, $result['latitude']);
         $this->assertEquals(-96.813541, $result['longitude']);
+        $this->assertArrayHasKey('south', $result['bounds']);
+        $this->assertArrayHasKey('west', $result['bounds']);
+        $this->assertArrayHasKey('north', $result['bounds']);
+        $this->assertArrayHasKey('east', $result['bounds']);
+        $this->assertEquals(33.007820, $result['bounds']['south']);
+        $this->assertEquals(-96.860229, $result['bounds']['west']);
+        $this->assertEquals(33.065601, $result['bounds']['north']);
+        $this->assertEquals(-96.766853, $result['bounds']['east']);
         $this->assertEquals(75093, $result['zipcode']);
         $this->assertEquals('Plano', $result['city']);
+        $this->assertEquals('Collin County', $result['county']);
         $this->assertEquals('Texas', $result['region']);
         $this->assertEquals('United States', $result['country']);
     }
@@ -98,8 +113,19 @@ class YahooProviderTest extends TestCase
 
         $this->assertEquals(48.863217, $result['latitude']);
         $this->assertEquals(2.388821, $result['longitude']);
+        $this->assertArrayHasKey('south', $result['bounds']);
+        $this->assertArrayHasKey('west', $result['bounds']);
+        $this->assertArrayHasKey('north', $result['bounds']);
+        $this->assertArrayHasKey('east', $result['bounds']);
+        $this->assertEquals(48.863217, $result['bounds']['south']);
+        $this->assertEquals(2.388821, $result['bounds']['west']);
+        $this->assertEquals(48.863217, $result['bounds']['north']);
+        $this->assertEquals(2.388821, $result['bounds']['east']);
+        $this->assertEquals(10, $result['streetNumber']);
+        $this->assertEquals('avenue Gambetta', $result['streetName']);
         $this->assertEquals(75020, $result['zipcode']);
         $this->assertEquals('Paris', $result['city']);
+        $this->assertEquals('Paris', $result['county']);
         $this->assertEquals('Île-de-France', $result['region']);
         $this->assertEquals('France', $result['country']);
     }
@@ -111,8 +137,12 @@ class YahooProviderTest extends TestCase
 
         $this->assertNull($result['latitude']);
         $this->assertNull($result['longitude']);
+        $this->assertNull($result['bounds']);
+        $this->assertNull($result['streetNumber']);
+        $this->assertNull($result['streetName']);
         $this->assertNull($result['city']);
         $this->assertNull($result['zipcode']);
+        $this->assertNull($result['county']);
         $this->assertNull($result['region']);
         $this->assertNull($result['country']);
     }
@@ -128,8 +158,19 @@ class YahooProviderTest extends TestCase
 
         $this->assertEquals(33.036711, $result['latitude']);
         $this->assertEquals(-96.813541, $result['longitude']);
-        //$this->assertEquals(75093, $result['zipcode']);
+        $this->assertArrayHasKey('south', $result['bounds']);
+        $this->assertArrayHasKey('west', $result['bounds']);
+        $this->assertArrayHasKey('north', $result['bounds']);
+        $this->assertArrayHasKey('east', $result['bounds']);
+        $this->assertEquals(33.036711, $result['bounds']['south']);
+        $this->assertEquals(-96.813541, $result['bounds']['west']);
+        $this->assertEquals(33.036711, $result['bounds']['north']);
+        $this->assertEquals(-96.813541, $result['bounds']['east']);
+        $this->assertEquals(5599, $result['streetNumber']);
+        $this->assertEquals('Weatherby Ln', $result['streetName']);
+        $this->assertEquals(75093, $result['zipcode']);
         $this->assertEquals('Plano', $result['city']);
+        $this->assertEquals('Collin County', $result['county']);
         $this->assertEquals('Texas', $result['region']);
         $this->assertEquals('United States', $result['country']);
     }

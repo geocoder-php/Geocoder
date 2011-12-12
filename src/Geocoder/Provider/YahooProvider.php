@@ -21,10 +21,22 @@ class YahooProvider extends AbstractProvider implements ProviderInterface
     /**
      * @var string
      */
+    const GEOCODE_ENDPOINT_URL = 'http://where.yahooapis.com/geocode?q=%s&flags=JX&appid=%s';
+
+    /**
+     * @var string
+     */
+    const REVERSE_ENDPOINT_URL = 'http://where.yahooapis.com/geocode?q=%F,+%F&gflags=R&flags=JX&appid=%s';
+
+    /**
+     * @var string
+     */
     private $apiKey = null;
 
     /**
+     * @param \Geocoder\HttpAdapter\HttpAdapterInterface $adapter
      * @param string $apiKey
+     * @param string $locale
      */
     public function __construct(HttpAdapterInterface $adapter, $apiKey, $locale = null)
     {
@@ -43,15 +55,10 @@ class YahooProvider extends AbstractProvider implements ProviderInterface
         }
 
         if ('127.0.0.1' === $address) {
-            return array(
-                'city'      => 'localhost',
-                'region'    => 'localhost',
-                'country'   => 'localhost'
-
-            );
+            return $this->getLocalhostDefaults();
         }
 
-        $query = sprintf('http://where.yahooapis.com/geocode?q=%s&flags=J&appid=%s', urlencode($address), $this->apiKey);
+        $query = sprintf(self::GEOCODE_ENDPOINT_URL, urlencode($address), $this->apiKey);
 
         return $this->executeQuery($query);
     }
@@ -65,7 +72,7 @@ class YahooProvider extends AbstractProvider implements ProviderInterface
             throw new \RuntimeException('No API Key provided');
         }
 
-        $query = sprintf('http://where.yahooapis.com/geocode?q=%s,+%s&gflags=R&flags=J&appid=%s', $coordinates[0], $coordinates[1], $this->apiKey);
+        $query = sprintf(self::REVERSE_ENDPOINT_URL, $coordinates[0], $coordinates[1], $this->apiKey);
 
         return $this->executeQuery($query);
     }
@@ -101,13 +108,37 @@ class YahooProvider extends AbstractProvider implements ProviderInterface
             return $this->getDefaults();
         }
 
+
+        $bounds = null;
+        if (isset($data['boundingbox'])) {
+            $bounds = array(
+                'south' => $data['boundingbox']->south,
+                'west'  => $data['boundingbox']->west,
+                'north' => $data['boundingbox']->north,
+                'east'  => $data['boundingbox']->east
+            );
+        }
+
+        $zipcode = null;
+        if (isset($data['postal'])) {
+            $zipcode = $data['postal'];
+
+            if ($parts = preg_split('#-#', $zipcode)) {
+                $zipcode = $parts[0];
+            }
+        }
+
         return array(
-            'latitude'  => isset($data['latitude']) ? $data['latitude'] : null,
-            'longitude' => isset($data['longitude']) ? $data['longitude'] : null,
-            'city'      => isset($data['city']) ? $data['city'] : null,
-            'zipcode'   => isset($data['postal']) ? $data['postal'] : null,
-            'region'    => isset($data['state']) ? $data['state'] : null,
-            'country'   => isset($data['country']) ? $data['country'] : null
+            'latitude'      => isset($data['latitude']) ? $data['latitude'] : null,
+            'longitude'     => isset($data['longitude']) ? $data['longitude'] : null,
+            'bounds'        => $bounds,
+            'streetNumber'  => isset($data['house']) ? $data['house'] : null,
+            'streetName'    => isset($data['street']) ? $data['street'] : null,
+            'city'          => isset($data['city']) ? $data['city'] : null,
+            'zipcode'       => $zipcode,
+            'county'        => isset($data['county']) ? $data['county'] : null,
+            'region'        => isset($data['state']) ? $data['state'] : null,
+            'country'       => isset($data['country']) ? $data['country'] : null
         );
     }
 }

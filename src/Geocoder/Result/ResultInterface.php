@@ -37,6 +37,36 @@ interface ResultInterface
     function getLongitude();
 
     /**
+     * Returns the bounds value.
+     *
+     * Bounds format:
+     *
+     * array(
+     *     'south' => (double)
+     *     'west'  => (double)
+     *     'north' => (double)
+     *     'east'  => (double)
+     * )
+     *
+     * @return array
+     */
+    function getBounds();
+
+    /**
+     * Returns the street number value.
+     *
+     * @return int
+     */
+    function getStreetNumber();
+
+    /**
+     * Returns the street name value.
+     *
+     * @return string
+     */
+    function getStreetName();
+
+    /**
      * Returns the city value.
      *
      * @return string
@@ -49,6 +79,13 @@ interface ResultInterface
      * @return string
      */
     function getZipcode();
+
+    /**
+     * Returns the county value.
+     *
+     * @return string
+     */
+    function getCounty();
 
     /**
      * Returns the region value.
@@ -70,4 +107,11 @@ interface ResultInterface
      * @param array $data   An array.
      */
     function fromArray(array $data = array());
+
+    /**
+     * Returns an array with data indexed by name.
+     *
+     * @return array
+     */
+    function toArray();
 }

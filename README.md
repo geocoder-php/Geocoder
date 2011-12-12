@@ -31,7 +31,8 @@ Currently, there are many providers for the following APIs:
 * [Yahoo! PlaceFinder](http://developer.yahoo.com/geo/placefinder/) as Address-Based geocoding and reverse geocoding provider;
 * [Google Maps](http://code.google.com/apis/maps/documentation/geocoding/) as Address-Based geocoding and reverse geocoding provider;
 * [Bing Maps](http://msdn.microsoft.com/en-us/library/ff701715.aspx) as Address-Based geocoding and reverse geocoding provider;
-* [OpenStreetMaps](http://nominatim.openstreetmap.org/) as Address-Based geocoding and reverse geocoding provider.
+* [OpenStreetMaps](http://nominatim.openstreetmap.org/) as Address-Based geocoding and reverse geocoding provider;
+* [CloudMade](http://developers.cloudmade.com/projects/show/geocoding-http-api) as Address-Based geocoding and reverse geocoding provider.
 
 
 Installation
@@ -99,9 +100,15 @@ The `GoogleMapsProvider` is able to geocode and reverse geocode **street address
 
 The `BingMapsProvider` is able to geocode and reverse geocode **street addresses**.
 
+
 ### OpenStreetMapsProvider ###
 
 The `OpenStreetMapsProvider` is able to geocode and reverse geocode **street addresses**.
+
+
+### CloudMadeProvider ###
+
+The `CloudMadeProvider` is able to geocode and reverse geocode **street addresses**.
 
 
 You can use one of them or write your own provider. You can also register all providers and decide later.
@@ -136,21 +143,39 @@ The main method is called `geocode()` which receives a value to geocode. It can 
 
 $result = $geocoder->geocode('88.188.221.14');
 // Result is:
-// "latitude"   => string(9) "47.901428"
-// "longitude"  => string(8) "1.904960"
-// "city"       => string(7) "Orleans"
-// "zipcode"    => string(0) ""
-// "region"     => string(6) "Centre"
-// "country"    => string(6) "France"
+// "latitude"       => string(9) "47.901428"
+// "longitude"      => string(8) "1.904960"
+// "bounds"         => array(4) {
+//     "south" => string(9) "47.813320"
+//     "west"  => string(8) "1.809770"
+//     "north" => string(9) "47.960220"
+//     "east"  => string(8) "1.993860"
+// }
+// "streetNumber"   => string(0) ""
+// "streetName"     => string(0) ""
+// "city"           => string(7) "Orleans"
+// "zipcode"        => string(0) ""
+// "county"         => string(6) "Loiret"
+// "region"         => string(6) "Centre"
+// "country"        => string(6) "France"
 
 $result = $geocoder->geocode('10 rue Gambetta, Paris, France');
 // Result is:
-// "latitude"   => string(9) "48.863217"
-// "longitude"  => string(8) "2.388821"
-// "city"       => string(5) "Paris"
-// "zipcode"    => string(5) "75020"
-// "region"     => string(14) "Ile-de-France"
-// "country"    => string(6) "France"
+// "latitude"       => string(9) "48.863217"
+// "longitude"      => string(8) "2.388821"
+// "bounds"         => array(4) {
+//     "south" => string(9) "48.863217"
+//     "west"  => string(8) "2.388821"
+//     "north" => string(9) "48.863217"
+//     "east"  => string(8) "2.388821"
+// }
+// "streetNumber"   => string(2) "10"
+// "streetName"     => string(15) "Avenue Gambetta"
+// "city"           => string(5) "Paris"
+// "county"         => string(5) "Paris"
+// "zipcode"        => string(5) "75020"
+// "region"         => string(14) "Ile-de-France"
+// "country"        => string(6) "France"
 ```
 
 The `geocode()` method returns a `Geocoded` result object with the following API, this object also implements the `ArrayAccess` interface:
@@ -158,8 +183,12 @@ The `geocode()` method returns a `Geocoded` result object with the following API
 * `getCoordinates()` will return an array with `latitude` and `longitude` values;
 * `getLatitude()` will return the `latitude` value;
 * `getLongitude()` will return the `longitude` value;
+* `getBounds()` will return an array with `south`, `west`, `north` and `east` values;
+* `getStreetNumber()` will return the `street number/house number` value;
+* `getStreetName()` will return the `street name` value;
 * `getCity()` will return the `city`;
 * `getZipcode()` will return the `zipcode`;
+* `getCounty()` will return the `county`;
 * `getRegion()` will return the `region`;
 * `getCountry()` will return te `country`.
 
@@ -191,22 +220,6 @@ $result = $geocoder->reverse($latitude, $longitude);
 **Note:** the `YahooProvider` bundled in this lib is the unique provider able to do this feature.
 
 
-Cache
------
-
-You can add a **cache layer** to the `Geocoder` object in order to save API calls by using the method `registerCache()` or passing
-a cache object as a second argument of the `Geocoder` constructor. The cache object must implement the `CacheInterface` interface.
-
-There are the following cache adapters:
-
-* `InMemory` which is used for unit tests and provided as an example;
-* `Memcached` which uses [Memcached](http://php.net/manual/book.memcached.php) to store/retrieve data.
-* `Memcache` which use the [Memcache](http://php.net/manual/book.memcache.php)
-* `Apc` which use the binary cache extension [APC](http://php.net/manual/book.apc.php) to store/retrieve data
-* `Filesystem` which used the filesystem.
-* `MongoDB` which used a MongoDB to store and retrieve data.
-
-
 Extending Things
 ----------------
 
@@ -215,8 +228,6 @@ You can provide your own `adapter`, you just need to create a new class which im
 You can also write your own `provider` by implementing the `ProviderInterface`.
 
 Note, the `AbstractProvider` class can help you by providing useful features.
-
-Finally, you can write your own `cache` layer by implementing the `CacheInterface`.
 
 
 Unit Tests
@@ -243,6 +254,7 @@ Rename the `phpunit.xml.dist` file to `phpunit.xml`, then uncomment the followin
     <!-- <server name="IPINFODB_API_KEY" value="YOUR_API_KEY" /> -->
     <!-- <server name="YAHOO_API_KEY" value="YOUR_API_KEY" /> -->
     <!-- <server name="BINGMAPS_API_KEY" value="YOUR_API_KEY" /> -->
+    <!-- <server name="CLOUDMADE_API_KEY" value="YOUR_API_KEY" /> -->
 </php>
 ```
 

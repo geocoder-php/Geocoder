@@ -60,6 +60,24 @@ class GeocoderTest extends TestCase
         $this->assertSame($provider1, $this->geocoder->getProvider());
     }
 
+    public function testGetProviders()
+    {
+        $provider1 = new MockProvider('test1');
+        $provider2 = new MockProvider('test2');
+
+        $this->geocoder->registerProviders(array($provider1, $provider2));
+        $result = $this->geocoder->getProviders();
+
+        $expected = array(
+            'test1' => $provider1,
+            'test2' => $provider2
+        );
+
+        $this->assertSame($expected, $result);
+        $this->assertArrayHasKey('test1', $result);
+        $this->assertArrayHasKey('test2', $result);
+    }
+
     /**
      * @expectedException \RuntimeException
      */
@@ -83,52 +101,6 @@ class GeocoderTest extends TestCase
     {
         $this->geocoder->registerProvider(new MockProvider('test1'));
         $this->assertInstanceOf('\Geocoder\Result\Geocoded', $this->geocoder->geocode('foobar'));
-    }
-
-    public function testGeocodeWithCache()
-    {
-        $cache = new IntrospectableInMemory();
-
-        $this->geocoder->registerProvider(new MockProviderWithData('test1'));
-        $this->geocoder->registerCache($cache);
-
-        $result = $this->geocoder->geocode('hello, world');
-
-        $this->assertEquals(1, $this->geocoder->countCallGetProvider);
-
-        $store  = $cache->getStore();
-
-        $this->assertEquals(1, count($store));
-        $this->assertArrayHasKey(sha1('hello, world'), $store);
-        $this->assertSame($result, $store[sha1('hello, world')]);
-
-        $result = $this->geocoder->geocode('hello, world');
-
-        $this->assertEquals(1, $this->geocoder->countCallGetProvider);
-        $this->assertEquals(1, count($store));
-    }
-
-    public function testReverseWithCache()
-    {
-        $cache = new IntrospectableInMemory();
-
-        $this->geocoder->registerProvider(new MockProviderWithData('test1'));
-        $this->geocoder->registerCache($cache);
-
-        $result = $this->geocoder->reverse('foo', 'bar');
-
-        $this->assertEquals(1, $this->geocoder->countCallGetProvider);
-
-        $store  = $cache->getStore();
-
-        $this->assertEquals(1, count($store));
-        $this->assertArrayHasKey(sha1('foo-bar'), $store);
-        $this->assertSame($result, $store[sha1('foo-bar')]);
-
-        $result = $this->geocoder->reverse('foo', 'bar');
-
-        $this->assertEquals(1, $this->geocoder->countCallGetProvider);
-        $this->assertEquals(1, count($store));
     }
 
     public function testEmpty()
@@ -204,14 +176,7 @@ class TestableGeocoder extends Geocoder
     public function getProvider()
     {
         $this->countCallGetProvider++;
-        return parent::getProvider();
-    }
-}
 
-class IntrospectableInMemory extends \Geocoder\CacheAdapter\InMemory
-{
-    public function getStore()
-    {
-        return $this->store;
+        return parent::getProvider();
     }
 }

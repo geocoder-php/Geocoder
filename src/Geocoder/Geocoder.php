@@ -10,7 +10,6 @@
 
 namespace Geocoder;
 
-use Geocoder\CacheAdapter\CacheInterface;
 use Geocoder\Provider\ProviderInterface;
 use Geocoder\Result\Geocoded;
 
@@ -35,17 +34,11 @@ class Geocoder implements GeocoderInterface
     private $provider = null;
 
     /**
-     * @var \Geocoder\Cache\CacheInterface
-     */
-    private $cache = null;
-
-    /**
      * @param \Geocoder\Provider\ProviderInterface $provider
      */
-    public function __construct(ProviderInterface $provider = null, CacheInterface $cache = null)
+    public function __construct(ProviderInterface $provider = null)
     {
         $this->provider = $provider;
-        $this->cache    = $cache;
     }
 
     /**
@@ -58,14 +51,8 @@ class Geocoder implements GeocoderInterface
             return $this->returnResult(array());
         }
 
-        $result = $this->retrieve($value);
-
-        if (null === $result) {
-            $data = $this->getProvider()->getGeocodedData(trim($value));
-            $result = $this->returnResult($data);
-
-            $this->store($value, $result);
-        }
+        $data   = $this->getProvider()->getGeocodedData(trim($value));
+        $result = $this->returnResult($data);
 
         return $result;
     }
@@ -80,15 +67,8 @@ class Geocoder implements GeocoderInterface
             return $this->returnResult(array());
         }
 
-        $value  = $latitude.'-'.$longitude;
-        $result = $this->retrieve($value);
-
-        if (null === $result) {
-            $data = $this->getProvider()->getReversedData(array($latitude, $longitude));
-            $result = $this->returnResult($data);
-
-            $this->store($value, $result);
-        }
+        $data   = $this->getProvider()->getReversedData(array($latitude, $longitude));
+        $result = $this->returnResult($data);
 
         return $result;
     }
@@ -109,7 +89,7 @@ class Geocoder implements GeocoderInterface
     }
 
     /**
-     * Registers a set of providers..
+     * Registers a set of providers.
      *
      * @param array $providers
      * @return \Geocoder\AbstractGeocoder
@@ -139,13 +119,13 @@ class Geocoder implements GeocoderInterface
     }
 
     /**
-     * Registers the cache object to use.
+     * Returns registered providers indexed by name.
      *
-     * @param \Geocoder\Cache\CacheInterface    A cache object.
+     * @return array
      */
-    public function registerCache(CacheInterface $cache)
+    public function getProviders()
     {
-        $this->cache = $cache;
+        return $this->providers;
     }
 
     /**
@@ -176,35 +156,5 @@ class Geocoder implements GeocoderInterface
         $result->fromArray($data);
 
         return $result;
-    }
-
-    /**
-     * Retrieves a `ResultInterface` object if cache enabled and key found,
-     * `null` otherwise.
-     *
-     * @return  A `ResultInterface` object or null.
-     */
-    protected function retrieve($value)
-    {
-        if (null !== $this->cache) {
-            if ($result = $this->cache->retrieve(sha1($value))) {
-                return $result;
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * Stores a `Geocoded` result object if cache enabled.
-     *
-     * @param string $value                     A value.
-     * @param \Geocoder\Result\ResultInterface  A result object.
-     */
-    protected function store($value, $result)
-    {
-        if (null !== $this->cache) {
-            $this->cache->store(sha1($value), $result);
-        }
     }
 }
