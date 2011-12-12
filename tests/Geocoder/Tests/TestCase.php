@@ -24,34 +24,4 @@ class TestCase extends \PHPUnit_Framework_TestCase
 
         return $mock;
     }
-
-    protected function getMockProvider($expects = null)
-    {
-        if (null === $expects) {
-            $expects = $this->once();
-        }
-        $returnSet = array(
-            'latitude'  => null,
-            'longitude' => null,
-            'city'      => null,
-            'zipcode'   => null,
-            'region'    => null,
-            'country'   => null,
-        );
-        $mock = $this->getMock('\Geocoder\Provider\ProviderInterface');
-        $mock
-            ->expects($expects)
-            ->method('getGeocodedData')
-            ->will($this->returnValue($returnSet));
-        $mock
-            ->expects($expects)
-            ->method('getReversedData')
-            ->will($this->returnValue($returnSet));
-
-        $mock
-            ->expects($expects)
-            ->method('getName')
-            ->will($this->returnValue('mock'));
-        return $mock;
-    }
 }
