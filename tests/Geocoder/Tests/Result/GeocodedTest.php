@@ -174,5 +174,9 @@ class GeocodedTest extends TestCase
         // set
         $this->geocoded['latitude'] = 0.123456;
         $this->assertEquals(0.123456, $this->geocoded['latitude']);
+
+        // unset
+        unset($this->geocoded['latitude']);
+        $this->assertEquals(false, isset($this->geocoded['latitude']));
     }
 }

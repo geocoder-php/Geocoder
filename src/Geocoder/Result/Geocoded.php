@@ -219,7 +219,7 @@ class Geocoded implements ResultInterface, \ArrayAccess
      */
     public function offsetExists($offset)
     {
-        return property_exists($this, strtolower($offset));
+        return property_exists($this, strtolower($offset)) && null !== $this->$offset;
     }
 
     /**
