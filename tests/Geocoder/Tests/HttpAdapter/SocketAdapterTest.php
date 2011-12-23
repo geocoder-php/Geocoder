@@ -1,4 +1,5 @@
 <?php
+
 namespace Geocoder\Tests\HttpAdapter;
 
 use Geocoder\Tests\TestCase;
@@ -7,12 +8,11 @@ use Geocoder\HttpAdapter\SocketAdapter;
 /**
  * @author Markus Bachmann <markus.bachmann@bachi.biz>
  */
-class SocketTest extends TestCase
+class SocketAdapterTest extends TestCase
 {
-
     protected function setUp()
     {
-        $this->adapter = new SocketAdapter;
+        $this->adapter = new SocketAdapter();
     }
 
     public function testGetContent()
@@ -21,5 +21,4 @@ class SocketTest extends TestCase
         $this->assertNotNull($content);
         $this->assertContains('google', $content);
     }
-
 }

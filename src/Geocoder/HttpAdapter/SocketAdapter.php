@@ -1,4 +1,13 @@
 <?php
+
+/**
+ * This file is part of the Geocoder package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license    MIT License
+ */
+
 namespace Geocoder\HttpAdapter;
 
 /**
@@ -7,9 +16,7 @@ namespace Geocoder\HttpAdapter;
 class SocketAdapter implements HttpAdapterInterface
 {
     /**
-     * Returns the content fetched from a given URL.
-     *
-     * @return string
+     * {@inheritDoc}
      */
     public function getContent($url)
     {
@@ -27,10 +34,10 @@ class SocketAdapter implements HttpAdapterInterface
         }
 
         $request = "GET {$path} HTTP/1.1\r\n"
-        . "Host: {$hostname}\r\n"
-        . "Connection: Close\r\n"
-        . "User-Agent: Geocoder PHP-Library\r\n"
-        . "\r\n";
+            . "Host: {$hostname}\r\n"
+            . "Connection: Close\r\n"
+            . "User-Agent: Geocoder PHP-Library\r\n"
+            . "\r\n";
 
         if (!fwrite($handle, $request)) {
             throw new \RuntimeException('Could not send the request');
@@ -61,9 +68,7 @@ class SocketAdapter implements HttpAdapterInterface
     }
 
     /**
-     * Returns the name of the HTTP Adapter.
-     *
-     * @return string
+     * {@inheritDoc}
      */
     public function getName()
     {
