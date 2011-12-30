@@ -52,6 +52,10 @@ class OpenStreetMapsProvider extends AbstractProvider implements ProviderInterfa
             $bestNode     = null;
             $searchResult = $doc->getElementsByTagName('searchresults')->item(0);
 
+            if (null === $searchResult) {
+                return $this->getDefaults();
+            }
+
             foreach ($searchResult->getElementsByTagName('place') as $node) {
                 if ($node->getAttribute('place_rank') > $maxRank) {
                     $maxRank  = $node->getAttribute('place_rank');
