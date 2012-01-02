@@ -7,18 +7,45 @@ layout: default
         <h3>Installation</h3>
         <p>Get the code:</p>
         <p><input type="text" value="git clone git://github.com/willdurand/Geocoder.git" size="74" class="git" /></p>
-        <p>If you don't use a <em>ClassLoader</em> in your application, just require the provided autoloader:</p>
+        <p><br /></p>
+        <p>Or by using <strong><a href="http://packagist.org/">Composer</a></strong> by creating a <code>composer.json</code> file:</p>
+{% highlight javascript %}
+{
+    "require": {
+        "willdurand/geocoder": "*"
+    }
+}
+{% endhighlight %}
+        <p>Then, run these two commands to install it:</p>
+
+{% highlight bash %}
+$ wget http://getcomposer.org/composer.phar
+$ php composer.phar install
+{% endhighlight %}
+
+        <p>Now you can require the autoloader:</p>
+{% highlight php %}
+<?php
+
+require 'vendor/.composer/autoload.php';
+{% endhighlight %}
+
+        <p><br /></p>
+        <p>If you don't use neither Composer nor a <em>ClassLoader</em> in your application, just require the provided autoloader:</p>
 {% highlight php %}
 <?php
 
 require_once 'path/to/geocoder/src/autoload.php';
 {% endhighlight %}
         <p>You're done.</p>
-        <p><br /></p>
-        <p>Now, you need an <code>HTTP Adapter</code> to query an API. Then, you have to choose a <code>provider</code> which is closed to what you want to get. <strong>Geocoder</strong> provides a lot of providers, you can use one of them or write your own. You can also register all providers and decide later.</p>
     </section>
     <section class="group6">
         <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <p>You need an <code>HTTP Adapter</code> to query an API. Then, you have to choose a <code>provider</code> which is closed to what you want to get. <strong>Geocoder</strong> provides a lot of providers, you can use one of them or write your own. You can also register all providers and decide later.</p>
         <br />
 {% highlight php %}
 <?php
