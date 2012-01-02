@@ -3,6 +3,7 @@
     "type": "library",
     "description": "The almost missing Geocoder PHP 5.3 library.",
     "keywords": ["geocoder", "geocoding", "abstraction"],
+    "homepage": "http://geocoder-php.org",
     "license": "MIT",
     "authors": [
         {
