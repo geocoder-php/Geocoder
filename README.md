@@ -38,7 +38,34 @@ Currently, there are many providers for the following APIs:
 Installation
 ------------
 
-If you don't use a _ClassLoader_ in your application, just require the provided autoloader:
+The recommended way to install Geocoder is through composer.
+
+Just create a `composer.json` file for your project:
+
+``` json
+{
+    "require": {
+        "willdurand/geocoder": "*"
+    }
+}
+```
+
+And run these two commands to install it:
+
+``` bash
+$ wget http://getcomposer.org/composer.phar
+$ php composer.phar install
+```
+
+Now you can add the autoloader, and you will have access to the library:
+
+``` php
+<?php
+
+require 'vendor/.composer/autoload.php';
+```
+
+If you don't use neither **Composer** nor a _ClassLoader_ in your application, just require the provided autoloader:
 
 ``` php
 <?php
