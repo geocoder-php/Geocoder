@@ -122,10 +122,12 @@ class YahooProvider extends AbstractProvider implements ProviderInterface
         $zipcode = null;
         if (isset($data['postal'])) {
             $zipcode = $data['postal'];
-
-            if ($parts = preg_split('#-#', $zipcode)) {
-                $zipcode = $parts[0];
-            }
+        }
+        if (!$zipcode && isset($data['uzip'])) {
+            $zipcode = $data['uzip'];
+        }
+        if ($zipcode && $parts = preg_split('#-#', $zipcode)) {
+            $zipcode = $parts[0];
         }
 
         return array(
