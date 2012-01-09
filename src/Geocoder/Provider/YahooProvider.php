@@ -102,12 +102,11 @@ class YahooProvider extends AbstractProvider implements ProviderInterface
         }
 
         $json = json_decode($content);
-        if (isset($json->ResultSet)) {
+        if (isset($json->ResultSet) && isset($json->ResultSet->Results)) {
             $data = (array)$json->ResultSet->Results[0];
         } else {
             return $this->getDefaults();
         }
-
 
         $bounds = null;
         if (isset($data['boundingbox'])) {
@@ -140,7 +139,8 @@ class YahooProvider extends AbstractProvider implements ProviderInterface
             'zipcode'       => $zipcode,
             'county'        => isset($data['county']) ? $data['county'] : null,
             'region'        => isset($data['state']) ? $data['state'] : null,
-            'country'       => isset($data['country']) ? $data['country'] : null
+            'country'       => isset($data['country']) ? $data['country'] : null,
+            'countryCode'   => isset($data['countrycode']) ? $data['countrycode'] : null
         );
     }
 }
