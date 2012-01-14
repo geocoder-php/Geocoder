@@ -15,6 +15,7 @@ function installOrUpdate
 }
 
 installOrUpdate "vendor/Symfony/Component/ClassLoader" "http://github.com/symfony/ClassLoader.git" "origin/master"
+installOrUpdate "vendor/Symfony/Component/EventDispatcher" "http://github.com/symfony/EventDispatcher.git" "origin/master"
 installOrUpdate "vendor/Buzz" "http://github.com/kriswallsmith/Buzz.git" "origin/master"
 installOrUpdate "vendor/Guzzle" "http://github.com/guzzle/guzzle.git" "origin/master"
 
