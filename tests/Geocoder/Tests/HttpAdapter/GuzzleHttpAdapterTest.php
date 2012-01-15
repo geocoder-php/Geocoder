@@ -6,7 +6,7 @@ use Geocoder\HttpAdapter\GuzzleHttpAdapter;
 
 use Guzzle\Http\Message\Response;
 use Guzzle\Http\Plugin\HistoryPlugin;
-use Guzzle\Service\Plugin\MockPlugin;
+use Guzzle\Http\Plugin\MockPlugin;
 use Guzzle\Service\Client;
 
 /**
@@ -40,8 +40,8 @@ class GuzzleHttpAdapterTest extends \Geocoder\Tests\TestCase
         $mockPlugin = new MockPlugin(array(new Response(200, null, 'body')));
 
         $client = new Client();
-        $client->getEventManager()->attach($mockPlugin);
-        $client->getEventManager()->attach($historyPlugin);
+        $client->getEventDispatcher()->addSubscriber($mockPlugin);
+        $client->getEventDispatcher()->addSubscriber($historyPlugin);
 
         $adapter = new GuzzleHttpAdapter($client);
         $this->assertEquals('body', $adapter->getContent('http://test.com/'));
