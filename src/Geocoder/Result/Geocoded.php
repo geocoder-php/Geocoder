@@ -219,7 +219,7 @@ class Geocoded implements ResultInterface, \ArrayAccess
      */
     public function offsetExists($offset)
     {
-        return property_exists($this, strtolower($offset)) && null !== $this->$offset;
+        return property_exists($this, mb_strtolower($offset)) && null !== $this->$offset;
     }
 
     /**
@@ -227,7 +227,7 @@ class Geocoded implements ResultInterface, \ArrayAccess
      */
     public function offsetGet($offset)
     {
-        $offset = strtolower($offset);
+        $offset = mb_strtolower($offset);
 
         return $this->offsetExists($offset) ? $this->$offset : null;
     }
@@ -237,7 +237,7 @@ class Geocoded implements ResultInterface, \ArrayAccess
      */
     public function offsetSet($offset, $value)
     {
-        $offset = strtolower($offset);
+        $offset = mb_strtolower($offset);
         if ($this->offsetExists($offset)) {
             $this->$offset = $value;
         }
@@ -248,7 +248,7 @@ class Geocoded implements ResultInterface, \ArrayAccess
      */
     public function offsetUnset($offset)
     {
-        $offset = strtolower($offset);
+        $offset = mb_strtolower($offset);
         if ($this->offsetExists($offset)) {
             $this->$offset = null;
         }
@@ -262,9 +262,9 @@ class Geocoded implements ResultInterface, \ArrayAccess
      */
     private function formatString($str)
     {
-        $str = strtolower($str);
+        $str = mb_strtolower($str);
         $str = str_replace('-', '- ', $str);
-        $str = ucwords($str);
+        $str = mb_convert_case($str, MB_CASE_TITLE, "UTF-8");
 
         return str_replace('- ', '-', $str);
     }
