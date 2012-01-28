@@ -195,7 +195,7 @@ $result = $geocoder
                 <td><a href="http://developers.cloudmade.com/projects/show/geocoding-http-api">CloudMade</a> as Address-Based geocoding and reverse geocoding provider</td>
             </tr>
             <tr>
-                <td></td>
+                <td><a href="http://php.net/manual/book.geoip.php">Geoip PHP extension</a></td>
                 <td><a href="http://developer.yahoo.com/geo/placefinder/">Yahoo! PlaceFinder</a> as Address-Based geocoding and reverse geocoding provider</td>
             </tr>
 
