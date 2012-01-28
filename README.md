@@ -32,7 +32,8 @@ Currently, there are many providers for the following APIs:
 * [Google Maps](http://code.google.com/apis/maps/documentation/geocoding/) as Address-Based geocoding and reverse geocoding provider;
 * [Bing Maps](http://msdn.microsoft.com/en-us/library/ff701715.aspx) as Address-Based geocoding and reverse geocoding provider;
 * [OpenStreetMaps](http://nominatim.openstreetmap.org/) as Address-Based geocoding and reverse geocoding provider;
-* [CloudMade](http://developers.cloudmade.com/projects/show/geocoding-http-api) as Address-Based geocoding and reverse geocoding provider.
+* [CloudMade](http://developers.cloudmade.com/projects/show/geocoding-http-api) as Address-Based geocoding and reverse geocoding provider;
+* [Geoip](http://php.net/manual/book.geoip.php), the PHP extension, as IP-Based geocoding provider.
 
 
 Installation
@@ -119,9 +120,11 @@ The `IpInfoDbProvider` is able to geocode **IP addresses** only.
 The `YahooProvider` is able to geocode both **IP addresses** and **street addresses**.
 This provider can also reverse information based on coordinates (latitude, longitude).
 
+
 ### GoogleMapsProvider ###
 
 The `GoogleMapsProvider` is able to geocode and reverse geocode **street addresses**.
+
 
 ### BingMapsProvider ###
 
@@ -136,6 +139,12 @@ The `OpenStreetMapsProvider` is able to geocode and reverse geocode **street add
 ### CloudMadeProvider ###
 
 The `CloudMadeProvider` is able to geocode and reverse geocode **street addresses**.
+
+
+### GeoipProvider ###
+
+The `GeoipProvider` is able to geocode **IP addresses** only. No need to use an `HttpAdapter` as it uses a local database.
+See the [MaxMind page](http://www.maxmind.com/app/php) for more information.
 
 
 You can use one of them or write your own provider. You can also register all providers and decide later.

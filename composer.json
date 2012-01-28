@@ -2,7 +2,7 @@
     "name": "willdurand/geocoder",
     "type": "library",
     "description": "The almost missing Geocoder PHP 5.3 library.",
-    "keywords": ["geocoder", "geocoding", "abstraction"],
+    "keywords": ["geocoder", "geocoding", "abstraction", "geoip"],
     "homepage": "http://geocoder-php.org",
     "license": "MIT",
     "authors": [
