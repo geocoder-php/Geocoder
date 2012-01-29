@@ -17,7 +17,7 @@ class GeoipProviderTest extends TestCase
 
     public function testGetGeocodedDataWithNull()
     {
-        $this->provider = new GeoipProvider($this->getMockAdapter());
+        $this->provider = new GeoipProvider();
         $result = $this->provider->getGeocodedData(null);
 
         $this->assertNull($result['latitude']);
@@ -30,7 +30,7 @@ class GeoipProviderTest extends TestCase
 
     public function testGetGeocodedDataWithEmpty()
     {
-        $this->provider = new GeoipProvider($this->getMockAdapter());
+        $this->provider = new GeoipProvider();
         $result = $this->provider->getGeocodedData('');
 
         $this->assertNull($result['latitude']);
@@ -43,7 +43,7 @@ class GeoipProviderTest extends TestCase
 
     public function testGetGeocodedDataWithAddress()
     {
-        $this->provider = new GeoipProvider($this->getMockAdapter());
+        $this->provider = new GeoipProvider();
         $result = $this->provider->getGeocodedData('10 avenue Gambetta, Paris, France');
 
         $this->assertNull($result['latitude']);
@@ -56,7 +56,7 @@ class GeoipProviderTest extends TestCase
 
     public function testGetGeocodedDataWithLocalhost()
     {
-        $this->provider = new GeoipProvider($this->getMockAdapter($this->never()));
+        $this->provider = new GeoipProvider();
         $result = $this->provider->getGeocodedData('127.0.0.1');
 
         $this->assertArrayNotHasKey('latitude', $result);
@@ -71,7 +71,7 @@ class GeoipProviderTest extends TestCase
 
     public function testGetGeocodedDataWithRealIp()
     {
-        $this->provider = new GeoipProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter());
+        $this->provider = new GeoipProvider();
         $result = $this->provider->getGeocodedData('74.200.247.59');
 
         $this->assertEquals(33.034698486328, $result['latitude']);
@@ -87,21 +87,7 @@ class GeoipProviderTest extends TestCase
      */
     public function testGetReverseData()
     {
-        $this->provider = new GeoipProvider($this->getMockAdapter($this->never()));
+        $this->provider = new GeoipProvider();
         $this->provider->getReversedData(array(1, 2));
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function getMockAdapter($expects = null)
-    {
-        if (null === $expects) {
-            $expects = $this->once();
-        }
-
-        $mock = $this->getMock('\Geocoder\HttpAdapter\HttpAdapterInterface');
-
-        return $mock;
     }
 }
