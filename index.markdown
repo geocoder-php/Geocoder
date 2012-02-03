@@ -6,7 +6,7 @@ layout: default
     <section class="group5" id="installation">
         <h3>Installation</h3>
         <p>Get the code:</p>
-        <p><input type="text" value="git clone git://github.com/willdurand/Geocoder.git" size="74" class="git" /></p>
+        <pre class="git">git clone git://github.com/willdurand/Geocoder.git</pre>
         <p><br /></p>
         <p>Or by using <strong><a href="http://packagist.org/">Composer</a></strong> by creating a <code>composer.json</code> file:</p>
 {% highlight javascript %}
