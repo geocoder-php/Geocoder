@@ -8,7 +8,7 @@
  * @license    MIT License
  */
 
-namespace Geocoder\Gpx;
+namespace Geocoder\Dumper;
 
 use Geocoder\Geocoder;
 use Geocoder\Result\ResultInterface;

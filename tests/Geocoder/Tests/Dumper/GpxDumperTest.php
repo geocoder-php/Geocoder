@@ -1,9 +1,9 @@
 <?php
 
-namespace Geocoder\Tests\Gpx;
+namespace Geocoder\Tests\Dumper;
 
 use Geocoder\Geocoder;
-use Geocoder\Gpx\GpxDumper;
+use Geocoder\Dumper\GpxDumper;
 use Geocoder\Result\Geocoded;
 use Geocoder\Result\ResultInterface;
 use Geocoder\Tests\TestCase;
