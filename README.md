@@ -256,6 +256,41 @@ $result = $geocoder->reverse($latitude, $longitude);
 **Note:** the `YahooProvider` bundled in this lib is the unique provider able to do this feature.
 
 
+GPS eXchange Format (GPX)
+-------------------------
+
+The **GPS eXchange** format is designed to share geolocated data like point of interests, tracks, ways, but also
+coordinates. **Geocoder** provides a dumper to convert a `ResultInterface` object in an GPX compliant format.
+
+Assuming we got a `$result` object as seen previously:
+
+``` php
+<?php
+
+$dumper = new \Geocoder\Gpx\GpxDumper();
+$strGpx = $dumper->dump($result);
+
+echo $strGpx;
+```
+
+It will display:
+
+``` xml
+<gpx
+    version="1.0"
+    creator="Geocoder" version="1.0.1-dev"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://www.topografix.com/GPX/1/0"
+    xsi:schemaLocation="http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd">
+    <bounds minlat="2.388911" minlon="48.863151" maxlat="2.388911" maxlon="48.863151"/>
+    <wpt lat="48.8631507" lon="2.3889114">
+        <name><![CDATA[Paris]]></name>
+        <type><![CDATA[Address]]></type>
+    </wpt>
+</gpx>
+```
+
+
 Extending Things
 ----------------
 
