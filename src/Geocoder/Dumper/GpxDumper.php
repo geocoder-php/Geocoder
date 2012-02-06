@@ -16,7 +16,7 @@ use Geocoder\Result\ResultInterface;
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-class GpxDumper
+class GpxDumper implements DumperInterface
 {
     /**
      * @param \Geocoder\Result\ResultInterface $result
