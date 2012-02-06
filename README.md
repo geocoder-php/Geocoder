@@ -267,7 +267,7 @@ Assuming we got a `$result` object as seen previously:
 ``` php
 <?php
 
-$dumper = new \Geocoder\Gpx\GpxDumper();
+$dumper = new \Geocoder\Dumper\GpxDumper();
 $strGpx = $dumper->dump($result);
 
 echo $strGpx;
@@ -299,6 +299,8 @@ You can provide your own `adapter`, you just need to create a new class which im
 You can also write your own `provider` by implementing the `ProviderInterface`.
 
 Note, the `AbstractProvider` class can help you by providing useful features.
+
+You can provide your own `dumper` by implementing the `DumperInterface`.
 
 
 Unit Tests
