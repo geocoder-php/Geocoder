@@ -19,7 +19,7 @@ use Geocoder\Result\ResultInterface;
 class GpxDumper
 {
     /**
-     * @param ResultInterface $result
+     * @param \Geocoder\Result\ResultInterface $result
      * @return string
      */
     public function dump(ResultInterface $result)
@@ -46,16 +46,40 @@ GPX
 
         $gpx .= sprintf(<<<GPX
     <wpt lat="%.7f" lon="%.7f">
+        <name><![CDATA[%s]]></name>
         <type><![CDATA[Address]]></type>
     </wpt>
 
 GPX
-        , $result->getLatitude(), $result->getLongitude());
+        , $result->getLatitude(), $result->getLongitude(), $this->formatName($result));
 
         $gpx .= <<<GPX
 </gpx>
 GPX;
 
         return $gpx;
+    }
+
+    /**
+     * @param \Geocoder\Result\ResultInterface $result
+     * @return string
+     */
+    protected function formatName(ResultInterface $result)
+    {
+        $name  = '';
+        $array = $result->toArray();
+        $attrs = array('streetNumber', 'streetName', 'zipcode', 'city', 'county', 'region', 'country');
+
+        foreach ($attrs as $attr) {
+            if (isset($array[$attr]) && !empty($array[$attr])) {
+                $name .= sprintf('%s, ', $array[$attr]);
+            }
+        }
+
+        if (strlen($name) > 1) {
+            $name = substr($name, 0, strlen($name) - 2);
+        }
+
+        return $name;
     }
 }
