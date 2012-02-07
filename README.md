@@ -256,8 +256,12 @@ $result = $geocoder->reverse($latitude, $longitude);
 **Note:** the `YahooProvider` bundled in this lib is the unique provider able to do this feature.
 
 
-GPS eXchange Format (GPX)
--------------------------
+Dumpers
+-------
+
+**Geocoder** provides dumpers that aim to transform a `ResultInterface` object in standard formats.
+
+### GPS eXchange Format (GPX) ###
 
 The **GPS eXchange** format is designed to share geolocated data like point of interests, tracks, ways, but also
 coordinates. **Geocoder** provides a dumper to convert a `ResultInterface` object in an GPX compliant format.
@@ -289,6 +293,28 @@ It will display:
     </wpt>
 </gpx>
 ```
+
+### GeoJSON ###
+
+[GeoJSON](http://geojson.org/) is a format for encoding a variety of geographic data structures.
+
+
+### Keyhole Markup Language (KML) ###
+
+[Keyhole Markup Language](http://en.wikipedia.org/wiki/Keyhole_Markup_Language) is an XML notation
+for expressing geographic annotation and visualization within Internet-based, two-dimensional maps
+and three-dimensional Earth browsers.
+
+
+### Well-Known Binary (WKB) ###
+
+The Well-Known Binary (WKB) representation for geometric values is defined by the OpenGIS specification.
+
+
+### Well-Known Text (WKT) ###
+
+Well-known text (WKT) is a text markup language for representing vector geometry objects on a map,
+spatial reference systems of spatial objects and transformations between spatial reference systems.
 
 
 Extending Things
