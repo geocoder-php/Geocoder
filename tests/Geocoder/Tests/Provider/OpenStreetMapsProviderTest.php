@@ -13,8 +13,8 @@ class OpenStreetMapsProviderTest extends TestCase
         $this->provider = new OpenStreetMapsProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter());
         $result = $this->provider->getGeocodedData('Läntinen Pitkäkatu 35, Turku');
 
-        $this->assertEquals('60.4539471728726', $result['latitude']);
-        $this->assertEquals('22.2567841926781', $result['longitude']);
+        $this->assertEquals(60.4539471768582, $result['latitude']);
+        $this->assertEquals(22.2567842183875, $result['longitude']);
         $this->assertArrayHasKey('south', $result['bounds']);
         $this->assertArrayHasKey('west', $result['bounds']);
         $this->assertArrayHasKey('north', $result['bounds']);
@@ -33,33 +33,32 @@ class OpenStreetMapsProviderTest extends TestCase
 
         $result = $this->provider->getGeocodedData('10 allée Evariste Galois, Clermont ferrand');
 
-        $this->assertEquals('45.7595505', $result['latitude']);
-        $this->assertEquals('3.1325205', $result['longitude']);
+        $this->assertEquals(45.7600861473071, $result['latitude']);
+        $this->assertEquals(3.13073228527092, $result['longitude']);
         $this->assertArrayHasKey('south', $result['bounds']);
         $this->assertArrayHasKey('west', $result['bounds']);
         $this->assertArrayHasKey('north', $result['bounds']);
         $this->assertArrayHasKey('east', $result['bounds']);
-        $this->assertEquals(45.7595329284668, $result['bounds']['south']);
-        $this->assertEquals(3.13246083259583, $result['bounds']['west']);
-        $this->assertEquals(45.7595710754395, $result['bounds']['north']);
-        $this->assertEquals(3.13258028030396, $result['bounds']['east']);
+        $this->assertEquals(45.7595672607422, $result['bounds']['south']);
+        $this->assertEquals(3.12900018692017, $result['bounds']['west']);
+        $this->assertEquals(45.7605743408203, $result['bounds']['north']);
+        $this->assertEquals(3.1324610710144, $result['bounds']['east']);
         $this->assertEquals(null, $result['streetNumber']);
         $this->assertEquals('Allée Évariste Galois', $result['streetName']);
         $this->assertEquals('63170', $result['zipcode']);
         $this->assertEquals('Clermont-Ferrand', $result['city']);
         $this->assertEquals('Puy-de-Dôme', $result['county']);
         $this->assertEquals('Auvergne', $result['region']);
-        $this->assertEquals('France', $result['country']);
+        $this->assertEquals('France métropolitaine', $result['country']);
     }
 
     public function testGetReversedDataWithRealCoordinates()
     {
-
         $this->provider = new OpenStreetMapsProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter());
         $result = $this->provider->getReversedData(array('60.4539471728726', '22.2567841926781'));
 
-        $this->assertEquals(60.4539471728726, $result['latitude']);
-        $this->assertEquals(22.2567841926781, $result['longitude']);
+        $this->assertEquals(60.4539471768582, $result['latitude']);
+        $this->assertEquals(22.2567842183875, $result['longitude']);
         $this->assertEquals(35, $result['streetNumber']);
         $this->assertEquals('Läntinen Pitkäkatu', $result['streetName']);
         $this->assertEquals(20100, $result['zipcode']);
