@@ -14,7 +14,7 @@ use Geocoder\Geocoder;
 use Geocoder\Result\ResultInterface;
 
 /**
- * @author Jan Sorgalla <jsorgalla@googlemail.com>>
+ * @author Jan Sorgalla <jsorgalla@googlemail.com>
  */
 class GeoJsonDumper implements DumperInterface
 {
