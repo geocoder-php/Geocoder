@@ -39,7 +39,7 @@ class GeoipProvider extends AbstractProvider implements ProviderInterface
             return $this->getLocalhostDefaults();
         }
 
-        $results = geoip_record_by_name($address);
+        $results = @geoip_record_by_name($address);
 
         return array(
             'latitude'  => $results['latitude'],
