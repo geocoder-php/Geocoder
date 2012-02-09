@@ -68,38 +68,27 @@ class HostIpProvider extends AbstractProvider implements ProviderInterface
             return $this->getDefaults();
         }
 
-        $coordinates = (string) $xml
+        $dataNode = $xml
             ->children('gml', true)
             ->featureMember
             ->children('', true)
-            ->Hostip
+            ->Hostip;
+
+        $lngLat = explode(',', (string) $dataNode
             ->ipLocation
             ->children('gml', true)
             ->pointProperty
             ->Point
-            ->coordinates;
+            ->coordinates);
 
-        $lngLat = explode(',', $coordinates);
-        $city = (string) $xml
-            ->children('gml', true)
-            ->featureMember
-            ->children('', true)
-            ->Hostip
+        $city = (string) $dataNode
             ->children('gml', true)
             ->name;
 
-        $country = (string) $xml
-            ->children('gml', true)
-            ->featureMember
-            ->children('', true)
-            ->Hostip
+        $country = (string) $dataNode
             ->countryName;
 
-        $countryCode = (string) $xml
-            ->children('gml', true)
-            ->featureMember
-            ->children('', true)
-            ->Hostip
+        $countryCode = (string) $dataNode
             ->countryAbbrev;
 
         return array(
