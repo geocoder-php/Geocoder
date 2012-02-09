@@ -95,11 +95,19 @@ class HostIpProvider extends AbstractProvider implements ProviderInterface
             ->Hostip
             ->countryName;
 
+        $countryCode = (string) $xml
+            ->children('gml', true)
+            ->featureMember
+            ->children('', true)
+            ->Hostip
+            ->countryAbbrev;
+
         return array(
-            'latitude'  => $lngLat[1],
-            'longitude' => $lngLat[0],
-            'city'      => $city,
-            'country'   => $country
+            'latitude'    => $lngLat[1],
+            'longitude'   => $lngLat[0],
+            'city'        => $city,
+            'country'     => $country,
+            'countryCode' => $countryCode
         );
     }
 }
