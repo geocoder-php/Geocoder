@@ -42,12 +42,13 @@ class GeoipProvider extends AbstractProvider implements ProviderInterface
         $results = @geoip_record_by_name($address);
 
         return array(
-            'latitude'  => $results['latitude'],
-            'longitude' => $results['longitude'],
-            'city'      => $results['city'],
-            'zipcode'   => $results['postal_code'],
-            'region'    => $results['region'],
-            'country'   => $results['country_name'],
+            'latitude'    => $results['latitude'],
+            'longitude'   => $results['longitude'],
+            'city'        => $results['city'],
+            'zipcode'     => $results['postal_code'],
+            'region'      => $results['region'],
+            'country'     => $results['country_name'],
+            'countryCode' => $results['country_code'],
         );
     }
 

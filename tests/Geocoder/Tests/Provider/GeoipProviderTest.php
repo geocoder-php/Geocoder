@@ -26,6 +26,7 @@ class GeoipProviderTest extends TestCase
         $this->assertNull($result['zipcode']);
         $this->assertNull($result['region']);
         $this->assertNull($result['country']);
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetGeocodedDataWithEmpty()
@@ -39,6 +40,7 @@ class GeoipProviderTest extends TestCase
         $this->assertNull($result['zipcode']);
         $this->assertNull($result['region']);
         $this->assertNull($result['country']);
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetGeocodedDataWithAddress()
@@ -52,6 +54,7 @@ class GeoipProviderTest extends TestCase
         $this->assertNull($result['zipcode']);
         $this->assertNull($result['region']);
         $this->assertNull($result['country']);
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetGeocodedDataWithLocalhost()
@@ -80,6 +83,7 @@ class GeoipProviderTest extends TestCase
         $this->assertEquals('Plano', $result['city']);
         $this->assertEquals('TX', $result['region']);
         $this->assertEquals('United States', $result['country']);
+        $this->assertEquals('US', $result['countryCode']);
     }
 
     /**
