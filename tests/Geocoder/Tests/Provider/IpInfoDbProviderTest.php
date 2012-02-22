@@ -31,6 +31,7 @@ class IpInfoDbProviderTest extends TestCase
         $this->assertNull($result['region']);
         $this->assertNull($result['county']);
         $this->assertNull($result['country']);
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetGeocodedDataWithNull()
@@ -47,6 +48,7 @@ class IpInfoDbProviderTest extends TestCase
         $this->assertNull($result['region']);
         $this->assertNull($result['county']);
         $this->assertNull($result['country']);
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetGeocodedDataWithEmpty()
@@ -63,6 +65,7 @@ class IpInfoDbProviderTest extends TestCase
         $this->assertNull($result['region']);
         $this->assertNull($result['county']);
         $this->assertNull($result['country']);
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetGeocodedDataWithAddress()
@@ -79,6 +82,7 @@ class IpInfoDbProviderTest extends TestCase
         $this->assertNull($result['region']);
         $this->assertNull($result['county']);
         $this->assertNull($result['country']);
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetGeocodedDataWithLocalhost()
@@ -111,6 +115,7 @@ class IpInfoDbProviderTest extends TestCase
         $this->assertEquals('PLANO', $result['city']);
         $this->assertEquals('TEXAS', $result['region']);
         $this->assertEquals('UNITED STATES', $result['country']);
+        $this->assertEquals('US', $result['countryCode']);
     }
 
     /**

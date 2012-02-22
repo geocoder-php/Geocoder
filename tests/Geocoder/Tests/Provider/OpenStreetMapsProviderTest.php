@@ -30,6 +30,7 @@ class OpenStreetMapsProviderTest extends TestCase
         $this->assertEquals(null, $result['county']);
         $this->assertEquals(null, $result['region']);
         $this->assertEquals('Suomi', $result['country']);
+        $this->assertEquals('FI', $result['countryCode']);
 
         $result = $this->provider->getGeocodedData('10 allée Evariste Galois, Clermont ferrand');
 
@@ -50,6 +51,7 @@ class OpenStreetMapsProviderTest extends TestCase
         $this->assertEquals('Puy-de-Dôme', $result['county']);
         $this->assertEquals('Auvergne', $result['region']);
         $this->assertEquals('France métropolitaine', $result['country']);
+        $this->assertEquals('FR', $result['countryCode']);
     }
 
     public function testGetReversedDataWithRealCoordinates()
@@ -66,5 +68,6 @@ class OpenStreetMapsProviderTest extends TestCase
         $this->assertEquals(null, $result['county']);
         $this->assertEquals(null, $result['region']);
         $this->assertEquals('Suomi', $result['country']);
+        $this->assertEquals('FI', $result['countryCode']);
     }
 }

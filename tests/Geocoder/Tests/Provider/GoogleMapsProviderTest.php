@@ -23,6 +23,7 @@ class GoogleMapsProviderTest extends TestCase
         $this->assertNull($result['county']);
         $this->assertNull($result['region']);
         $this->assertNull($result['country']);
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetGeocodedDataWithNull()
@@ -40,6 +41,7 @@ class GoogleMapsProviderTest extends TestCase
         $this->assertNull($result['county']);
         $this->assertNull($result['region']);
         $this->assertNull($result['country']);
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetGeocodedDataWithEmpty()
@@ -57,6 +59,7 @@ class GoogleMapsProviderTest extends TestCase
         $this->assertNull($result['county']);
         $this->assertNull($result['region']);
         $this->assertNull($result['country']);
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetGeocodedDataWithLocalhost()
@@ -90,6 +93,7 @@ class GoogleMapsProviderTest extends TestCase
         $this->assertNull($result['county']);
         $this->assertNull($result['region']);
         $this->assertNull($result['country']);
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetGeocodedDataWithRealAddress()
@@ -114,6 +118,7 @@ class GoogleMapsProviderTest extends TestCase
         $this->assertEquals('Paris', $result['county']);
         $this->assertEquals('Île-de-France', $result['region']);
         $this->assertEquals('France', $result['country']);
+        $this->assertEquals('FR', $result['countryCode']);
     }
 
     public function testGetGeocodedDataBoundsWithRealAddressForNonRooftopLocation()
@@ -145,6 +150,7 @@ class GoogleMapsProviderTest extends TestCase
         $this->assertNull($result['county']);
         $this->assertNull($result['region']);
         $this->assertNull($result['country']);
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetReversedDataWithRealCoordinates()
@@ -170,5 +176,6 @@ class GoogleMapsProviderTest extends TestCase
         $this->assertEquals('Paris', $result['county']);
         $this->assertEquals('Île-de-France', $result['region']);
         $this->assertEquals('France', $result['country']);
+        $this->assertEquals('FR', $result['countryCode']);
     }
 }

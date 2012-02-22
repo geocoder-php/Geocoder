@@ -22,6 +22,7 @@ class HostIpProviderTest extends TestCase
         $this->assertNull($result['region']);
         $this->assertNull($result['county']);
         $this->assertNull($result['country']);
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetGeocodedDataWithEmpty()
@@ -38,6 +39,7 @@ class HostIpProviderTest extends TestCase
         $this->assertNull($result['region']);
         $this->assertNull($result['county']);
         $this->assertNull($result['country']);
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetGeocodedDataWithAddress()
@@ -52,6 +54,7 @@ class HostIpProviderTest extends TestCase
         $this->assertNull($result['region']);
         $this->assertNull($result['county']);
         $this->assertNull($result['country']);
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetGeocodedDataWithLocalhost()
@@ -80,6 +83,7 @@ class HostIpProviderTest extends TestCase
         $this->assertEquals('Aulnat', $result['city']);
         $this->assertArrayNotHasKey('region', $result);
         $this->assertEquals('FRANCE', $result['country']);
+        $this->assertEquals('FR', $result['countryCode']);
     }
 
     /**

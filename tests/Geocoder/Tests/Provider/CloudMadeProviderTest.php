@@ -32,6 +32,7 @@ class CloudMadeProviderTest extends TestCase
         $this->assertNull($result['region']);
         $this->assertNull($result['county']);
         $this->assertNull($result['country']);
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetGeocodedDataWithNull()
@@ -49,6 +50,7 @@ class CloudMadeProviderTest extends TestCase
         $this->assertNull($result['region']);
         $this->assertNull($result['county']);
         $this->assertNull($result['country']);
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetGeocodedDataWithEmpty()
@@ -66,6 +68,7 @@ class CloudMadeProviderTest extends TestCase
         $this->assertNull($result['region']);
         $this->assertNull($result['county']);
         $this->assertNull($result['country']);
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetGeocodedDataWithLocalhost()
@@ -110,6 +113,9 @@ class CloudMadeProviderTest extends TestCase
         $this->assertEquals('Ile-del-france', $result['region']);
         $this->assertEquals('Ile-del-france', $result['county']);
         $this->assertEquals('France', $result['country']);
+
+        // not provided
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetReversedData()
@@ -127,6 +133,7 @@ class CloudMadeProviderTest extends TestCase
         $this->assertNull($result['region']);
         $this->assertNull($result['county']);
         $this->assertNull($result['country']);
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetReversedDataWithRealCoordinates()
@@ -155,6 +162,9 @@ class CloudMadeProviderTest extends TestCase
         $this->assertEquals('Ile-del-france', $result['region']);
         $this->assertEquals('Ile-del-france', $result['county']);
         $this->assertEquals('France', $result['country']);
+
+        // not provided
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetGeocodedDataWithRealAddress2()
@@ -172,5 +182,8 @@ class CloudMadeProviderTest extends TestCase
         $this->assertEquals('Auvergne', $result['region']);
         $this->assertEquals('Auvergne', $result['county']);
         $this->assertEquals('France', $result['country']);
+
+        // not provided
+        $this->assertNull($result['countryCode']);
     }
 }

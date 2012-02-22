@@ -32,6 +32,7 @@ class BingMapsProviderTest extends TestCase
         $this->assertNull($result['county']);
         $this->assertNull($result['region']);
         $this->assertNull($result['country']);
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetGeocodedDataWithNull()
@@ -49,6 +50,7 @@ class BingMapsProviderTest extends TestCase
         $this->assertNull($result['county']);
         $this->assertNull($result['region']);
         $this->assertNull($result['country']);
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetGeocodedDataWithEmpty()
@@ -66,6 +68,7 @@ class BingMapsProviderTest extends TestCase
         $this->assertNull($result['county']);
         $this->assertNull($result['region']);
         $this->assertNull($result['country']);
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetGeocodedDataWithLocalhost()
@@ -79,10 +82,13 @@ class BingMapsProviderTest extends TestCase
         $this->assertArrayNotHasKey('zipcode', $result);
         $this->assertArrayNotHasKey('streetNumber', $result);
         $this->assertArrayNotHasKey('streetName', $result);
+        $this->assertArrayNotHasKey('countryCode', $result);
 
         $this->assertEquals('localhost', $result['city']);
         $this->assertEquals('localhost', $result['region']);
         $this->assertEquals('localhost', $result['country']);
+
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetGeocodedDataWithRealAddress()
@@ -111,6 +117,7 @@ class BingMapsProviderTest extends TestCase
         $this->assertEquals('Paris', $result['county']);
         $this->assertEquals('IdF', $result['region']);
         $this->assertEquals('France', $result['country']);
+        $this->assertEquals('FR', $result['countryCode']);
     }
 
     public function testGetReversedData()
@@ -128,6 +135,7 @@ class BingMapsProviderTest extends TestCase
         $this->assertNull($result['county']);
         $this->assertNull($result['region']);
         $this->assertNull($result['country']);
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetReversedDataWithRealCoordinates()
@@ -156,5 +164,6 @@ class BingMapsProviderTest extends TestCase
         $this->assertEquals('Paris', $result['county']);
         $this->assertEquals('IdF', $result['region']);
         $this->assertEquals('France', $result['country']);
+        $this->assertEquals('FR', $result['countryCode']);
     }
 }

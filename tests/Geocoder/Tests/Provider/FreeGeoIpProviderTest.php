@@ -19,6 +19,7 @@ class FreeGeoIpProviderTest extends TestCase
         $this->assertNull($result['zipcode']);
         $this->assertNull($result['region']);
         $this->assertNull($result['country']);
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetGeocodedDataWithEmpty()
@@ -32,6 +33,7 @@ class FreeGeoIpProviderTest extends TestCase
         $this->assertNull($result['zipcode']);
         $this->assertNull($result['region']);
         $this->assertNull($result['country']);
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetGeocodedDataWithAddress()
@@ -45,6 +47,7 @@ class FreeGeoIpProviderTest extends TestCase
         $this->assertNull($result['zipcode']);
         $this->assertNull($result['region']);
         $this->assertNull($result['country']);
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetGeocodedDataWithLocalhost()
@@ -73,6 +76,7 @@ class FreeGeoIpProviderTest extends TestCase
         $this->assertEquals('Plano', $result['city']);
         $this->assertEquals('Texas', $result['region']);
         $this->assertEquals('United States', $result['country']);
+        $this->assertEquals('US', $result['countryCode']);
     }
 
     /**
