@@ -81,7 +81,7 @@ class OpenStreetMapsProvider extends AbstractProvider implements ProviderInterfa
             $ret['streetName']   = $bestNode->getElementsByTagName('road')->length ? $bestNode->getElementsByTagName('road')->item(0)->nodeValue : null;
             $ret['city']      = $bestNode->getElementsByTagName('city')->item(0)->nodeValue;
             $ret['country']   = $bestNode->getElementsByTagName('country')->item(0)->nodeValue;
-            $ret['countryCode']  = $bestNode->getElementsByTagName('country_code')->item(0)->nodeValue;
+            $ret['countryCode']  = strtoupper($bestNode->getElementsByTagName('country_code')->item(0)->nodeValue);
 
             return $ret;
         } else {
@@ -119,6 +119,7 @@ class OpenStreetMapsProvider extends AbstractProvider implements ProviderInterfa
             $ret['streetName']   = $addressParts->getElementsByTagName('road')->length ? $addressParts->getElementsByTagName('road')->item(0)->nodeValue : null;
             $ret['city']      = $addressParts->getElementsByTagName('city')->item(0)->nodeValue;
             $ret['country']   = $addressParts->getElementsByTagName('country')->item(0)->nodeValue;
+            $ret['countryCode']  = strtoupper($addressParts->getElementsByTagName('country_code')->item(0)->nodeValue);
 
             return $ret;
         } else {
