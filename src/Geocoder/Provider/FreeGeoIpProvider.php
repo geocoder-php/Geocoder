@@ -73,12 +73,13 @@ class FreeGeoIpProvider extends AbstractProvider implements ProviderInterface
         }
 
         return array(
-            'latitude'  => isset($data['latitude']) ? $data['latitude'] : null,
-            'longitude' => isset($data['longitude']) ? $data['longitude'] : null,
-            'city'      => isset($data['city']) ? $data['city'] : null,
-            'zipcode'   => isset($data['zipcode']) ? $data['zipcode'] : null,
-            'region'    => isset($data['region_name']) ? $data['region_name'] : null,
-            'country'   => isset($data['country_name']) ? $data['country_name'] : null
+            'latitude'     => isset($data['latitude']) ? $data['latitude'] : null,
+            'longitude'    => isset($data['longitude']) ? $data['longitude'] : null,
+            'city'         => isset($data['city']) ? $data['city'] : null,
+            'zipcode'      => isset($data['zipcode']) ? $data['zipcode'] : null,
+            'region'       => isset($data['region_name']) ? $data['region_name'] : null,
+            'country'      => isset($data['country_name']) ? $data['country_name'] : null,
+            'country_code' => isset($data['country_code']) ? $data['country_code'] : null
         );
     }
 }
