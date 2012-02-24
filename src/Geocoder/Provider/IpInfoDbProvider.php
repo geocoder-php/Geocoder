@@ -93,12 +93,13 @@ class IpInfoDbProvider extends AbstractProvider implements ProviderInterface
         }
 
         return array(
-            'latitude'  => isset($data['latitude']) ? $data['latitude'] : null,
-            'longitude' => isset($data['longitude']) ? $data['longitude'] : null,
-            'city'      => isset($data['cityName']) ? $data['cityName'] : null,
-            'zipcode'   => isset($data['zipCode']) ? $data['zipCode'] : null,
-            'region'    => isset($data['regionName']) ? $data['regionName'] : null,
-            'country'   => isset($data['countryName']) ? $data['countryName'] : null
+            'latitude'    => isset($data['latitude']) ? $data['latitude'] : null,
+            'longitude'   => isset($data['longitude']) ? $data['longitude'] : null,
+            'city'        => isset($data['cityName']) ? $data['cityName'] : null,
+            'zipcode'     => isset($data['zipCode']) ? $data['zipCode'] : null,
+            'region'      => isset($data['regionName']) ? $data['regionName'] : null,
+            'country'     => isset($data['countryName']) ? $data['countryName'] : null,
+            'countryCode' => isset($data['countryName']) ? $data['countryCode'] : null
         );
     }
 }

@@ -32,6 +32,7 @@ class BingMapsProviderTest extends TestCase
         $this->assertNull($result['county']);
         $this->assertNull($result['region']);
         $this->assertNull($result['country']);
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetGeocodedDataWithNull()
@@ -49,6 +50,7 @@ class BingMapsProviderTest extends TestCase
         $this->assertNull($result['county']);
         $this->assertNull($result['region']);
         $this->assertNull($result['country']);
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetGeocodedDataWithEmpty()
@@ -66,6 +68,7 @@ class BingMapsProviderTest extends TestCase
         $this->assertNull($result['county']);
         $this->assertNull($result['region']);
         $this->assertNull($result['country']);
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetGeocodedDataWithLocalhost()
@@ -79,6 +82,8 @@ class BingMapsProviderTest extends TestCase
         $this->assertArrayNotHasKey('zipcode', $result);
         $this->assertArrayNotHasKey('streetNumber', $result);
         $this->assertArrayNotHasKey('streetName', $result);
+        $this->assertArrayNotHasKey('countryCode', $result);
+        $this->assertArrayNotHasKey('countryCode', $result);
 
         $this->assertEquals('localhost', $result['city']);
         $this->assertEquals('localhost', $result['region']);
@@ -94,16 +99,16 @@ class BingMapsProviderTest extends TestCase
         $this->provider = new BingMapsProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter(), $_SERVER['BINGMAPS_API_KEY']);
         $result = $this->provider->getGeocodedData('10 avenue Gambetta, Paris, France');
 
-        $this->assertEquals(48.86321675999999, $result['latitude']);
-        $this->assertEquals(2.3887721299999995, $result['longitude']);
+        $this->assertEquals(48.86321675999999, $result['latitude'], '', 0.0001);
+        $this->assertEquals(2.3887721299999995, $result['longitude'], '', 0.0001);
         $this->assertArrayHasKey('south', $result['bounds']);
         $this->assertArrayHasKey('west', $result['bounds']);
         $this->assertArrayHasKey('north', $result['bounds']);
         $this->assertArrayHasKey('east', $result['bounds']);
-        $this->assertEquals(48.859354042429, $result['bounds']['south']);
-        $this->assertEquals(2.3809438666389, $result['bounds']['west']);
-        $this->assertEquals(48.867079477571, $result['bounds']['north']);
-        $this->assertEquals(2.3966003933611, $result['bounds']['east']);
+        $this->assertEquals(48.859354042429, $result['bounds']['south'], '', 0.0001);
+        $this->assertEquals(2.3809438666389, $result['bounds']['west'], '', 0.0001);
+        $this->assertEquals(48.867079477571, $result['bounds']['north'], '', 0.0001);
+        $this->assertEquals(2.3966003933611, $result['bounds']['east'], '', 0.0001);
         $this->assertNull($result['streetNumber']);
         $this->assertEquals('10 Avenue Gambetta', $result['streetName']);
         $this->assertEquals(75020, $result['zipcode']);
@@ -111,6 +116,8 @@ class BingMapsProviderTest extends TestCase
         $this->assertEquals('Paris', $result['county']);
         $this->assertEquals('IdF', $result['region']);
         $this->assertEquals('France', $result['country']);
+
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetReversedData()
@@ -128,6 +135,7 @@ class BingMapsProviderTest extends TestCase
         $this->assertNull($result['county']);
         $this->assertNull($result['region']);
         $this->assertNull($result['country']);
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetReversedDataWithRealCoordinates()
@@ -139,16 +147,16 @@ class BingMapsProviderTest extends TestCase
         $this->provider = new BingMapsProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter(), $_SERVER['BINGMAPS_API_KEY']);
         $result = $this->provider->getReversedData(array(48.86321648955345, 2.3887719959020615));
 
-        $this->assertEquals(48.86321648955345, $result['latitude']);
-        $this->assertEquals(2.3887719959020615, $result['longitude']);
+        $this->assertEquals(48.86321648955345, $result['latitude'], '', 0.0001);
+        $this->assertEquals(2.3887719959020615, $result['longitude'], '', 0.0001);
         $this->assertArrayHasKey('south', $result['bounds']);
         $this->assertArrayHasKey('west', $result['bounds']);
         $this->assertArrayHasKey('north', $result['bounds']);
         $this->assertArrayHasKey('east', $result['bounds']);
-        $this->assertEquals(48.859353771983, $result['bounds']['south']);
-        $this->assertEquals(2.3809437325833, $result['bounds']['west']);
-        $this->assertEquals(48.867079207124, $result['bounds']['north']);
-        $this->assertEquals(2.3966002592208, $result['bounds']['east']);
+        $this->assertEquals(48.859353771983, $result['bounds']['south'], '', 0.0001);
+        $this->assertEquals(2.3809437325833, $result['bounds']['west'], '', 0.0001);
+        $this->assertEquals(48.867079207124, $result['bounds']['north'], '', 0.0001);
+        $this->assertEquals(2.3966002592208, $result['bounds']['east'], '', 0.0001);
         $this->assertNull($result['streetNumber']);
         $this->assertEquals('10 Avenue Gambetta', $result['streetName']);
         $this->assertEquals(75020, $result['zipcode']);
@@ -156,5 +164,7 @@ class BingMapsProviderTest extends TestCase
         $this->assertEquals('Paris', $result['county']);
         $this->assertEquals('IdF', $result['region']);
         $this->assertEquals('France', $result['country']);
+
+        $this->assertNull($result['countryCode']);
     }
 }

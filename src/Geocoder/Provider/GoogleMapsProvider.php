@@ -84,7 +84,7 @@ class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
         // update address components
         foreach ($result->address_components as $component) {
             foreach ($component->types as $type) {
-                $this->updateAddressComponent($resultset, $type, $component->long_name);
+                $this->updateAddressComponent($resultset, $type, $component);
             }
         }
 
@@ -119,38 +119,39 @@ class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
      *
      * @param array   $resultset  resultset to update.
      * @param String  $type       component type.
-     * @param String  $value      the component value;
+     * @param object  $values     the component values;
      * @return array
      */
-    protected function updateAddressComponent(&$resultset, $type, $value)
+    protected function updateAddressComponent(&$resultset, $type, $values)
     {
         switch ($type) {
             case 'postal_code':
-                $resultset['zipcode'] = $value;
+                $resultset['zipcode'] = $values->long_name;
                 break;
 
             case 'locality':
-                $resultset['city'] = $value;
+                $resultset['city'] = $values->long_name;
                 break;
 
             case 'administrative_area_level_2':
-                $resultset['county'] = $value;
+                $resultset['county'] = $values->long_name;
                 break;
 
             case 'administrative_area_level_1':
-                $resultset['region'] = $value;
+                $resultset['region'] = $values->long_name;
                 break;
 
             case 'country':
-                $resultset['country'] = $value;
+                $resultset['country'] = $values->long_name;
+                $resultset['countryCode'] = $values->short_name;
                 break;
 
             case 'street_number':
-                $resultset['streetNumber'] = $value;
+                $resultset['streetNumber'] = $values->long_name;
                 break;
 
             case 'route':
-                $resultset['streetName'] = $value;
+                $resultset['streetName'] = $values->long_name;
                 break;
 
             default:

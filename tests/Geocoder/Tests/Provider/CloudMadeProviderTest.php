@@ -32,6 +32,7 @@ class CloudMadeProviderTest extends TestCase
         $this->assertNull($result['region']);
         $this->assertNull($result['county']);
         $this->assertNull($result['country']);
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetGeocodedDataWithNull()
@@ -49,6 +50,7 @@ class CloudMadeProviderTest extends TestCase
         $this->assertNull($result['region']);
         $this->assertNull($result['county']);
         $this->assertNull($result['country']);
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetGeocodedDataWithEmpty()
@@ -66,6 +68,7 @@ class CloudMadeProviderTest extends TestCase
         $this->assertNull($result['region']);
         $this->assertNull($result['county']);
         $this->assertNull($result['country']);
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetGeocodedDataWithLocalhost()
@@ -93,16 +96,16 @@ class CloudMadeProviderTest extends TestCase
         $this->provider = new CloudMadeProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter(), $_SERVER['CLOUDMADE_API_KEY']);
         $result = $this->provider->getGeocodedData('36 Quai des Orfèvres, Paris, France');
 
-        $this->assertEquals(48.85645, $result['latitude']);
-        $this->assertEquals(2.35243, $result['longitude']);
+        $this->assertEquals(48.85645, $result['latitude'], '', 0.0001);
+        $this->assertEquals(2.35243, $result['longitude'], '', 0.0001);
         $this->assertArrayHasKey('south', $result['bounds']);
         $this->assertArrayHasKey('west', $result['bounds']);
         $this->assertArrayHasKey('north', $result['bounds']);
         $this->assertArrayHasKey('east', $result['bounds']);
-        $this->assertEquals(48.70804, $result['bounds']['south']);
-        $this->assertEquals(2.12785, $result['bounds']['west']);
-        $this->assertEquals(49.00442, $result['bounds']['north']);
-        $this->assertEquals(2.57701, $result['bounds']['east']);
+        $this->assertEquals(48.70804, $result['bounds']['south'], '', 0.0001);
+        $this->assertEquals(2.12785, $result['bounds']['west'], '', 0.0001);
+        $this->assertEquals(49.00442, $result['bounds']['north'], '', 0.0001);
+        $this->assertEquals(2.57701, $result['bounds']['east'], '', 0.0001);
         $this->assertNull($result['streetNumber']);
         $this->assertEquals('Paris', $result['streetName']);
         $this->assertNull($result['zipcode']);
@@ -110,6 +113,9 @@ class CloudMadeProviderTest extends TestCase
         $this->assertEquals('Ile-del-france', $result['region']);
         $this->assertEquals('Ile-del-france', $result['county']);
         $this->assertEquals('France', $result['country']);
+
+        // not provided
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetReversedData()
@@ -127,6 +133,7 @@ class CloudMadeProviderTest extends TestCase
         $this->assertNull($result['region']);
         $this->assertNull($result['county']);
         $this->assertNull($result['country']);
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetReversedDataWithRealCoordinates()
@@ -138,16 +145,16 @@ class CloudMadeProviderTest extends TestCase
         $this->provider = new CloudMadeProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter(), $_SERVER['CLOUDMADE_API_KEY']);
         $result = $this->provider->getReversedData(array(48.85657, 2.35325));
 
-        $this->assertEquals(48.85657, $result['latitude']);
-        $this->assertEquals(2.35325, $result['longitude']);
+        $this->assertEquals(48.85657, $result['latitude'], '', 0.0001);
+        $this->assertEquals(2.35325, $result['longitude'], '', 0.0001);
         $this->assertArrayHasKey('south', $result['bounds']);
         $this->assertArrayHasKey('west', $result['bounds']);
         $this->assertArrayHasKey('north', $result['bounds']);
         $this->assertArrayHasKey('east', $result['bounds']);
-        $this->assertEquals(48.85657, $result['bounds']['south']);
-        $this->assertEquals(2.35325, $result['bounds']['west']);
-        $this->assertEquals(48.85657, $result['bounds']['north']);
-        $this->assertEquals(2.35325, $result['bounds']['east']);
+        $this->assertEquals(48.85657, $result['bounds']['south'], '', 0.0001);
+        $this->assertEquals(2.35325, $result['bounds']['west'], '', 0.0001);
+        $this->assertEquals(48.85657, $result['bounds']['north'], '', 0.0001);
+        $this->assertEquals(2.35325, $result['bounds']['east'], '', 0.0001);
         $this->assertEquals(5, $result['streetNumber']);
         $this->assertEquals('Rue Lobau', $result['streetName']);
         $this->assertNull($result['zipcode']);
@@ -155,6 +162,9 @@ class CloudMadeProviderTest extends TestCase
         $this->assertEquals('Ile-del-france', $result['region']);
         $this->assertEquals('Ile-del-france', $result['county']);
         $this->assertEquals('France', $result['country']);
+
+        // not provided
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetGeocodedDataWithRealAddress2()
@@ -172,5 +182,8 @@ class CloudMadeProviderTest extends TestCase
         $this->assertEquals('Auvergne', $result['region']);
         $this->assertEquals('Auvergne', $result['county']);
         $this->assertEquals('France', $result['country']);
+
+        // not provided
+        $this->assertNull($result['countryCode']);
     }
 }

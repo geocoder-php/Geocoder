@@ -22,6 +22,7 @@ class HostIpProviderTest extends TestCase
         $this->assertNull($result['region']);
         $this->assertNull($result['county']);
         $this->assertNull($result['country']);
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetGeocodedDataWithEmpty()
@@ -38,6 +39,7 @@ class HostIpProviderTest extends TestCase
         $this->assertNull($result['region']);
         $this->assertNull($result['county']);
         $this->assertNull($result['country']);
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetGeocodedDataWithAddress()
@@ -52,6 +54,7 @@ class HostIpProviderTest extends TestCase
         $this->assertNull($result['region']);
         $this->assertNull($result['county']);
         $this->assertNull($result['country']);
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetGeocodedDataWithLocalhost()
@@ -74,12 +77,13 @@ class HostIpProviderTest extends TestCase
         $this->provider = new HostIpProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter());
         $result = $this->provider->getGeocodedData('88.188.221.14');
 
-        $this->assertEquals(45.5333, $result['latitude']);
-        $this->assertEquals(2.6167, $result['longitude']);
+        $this->assertEquals(45.5333, $result['latitude'], '', 0.0001);
+        $this->assertEquals(2.6167, $result['longitude'], '', 0.0001);
         $this->assertArrayNotHasKey('zipcode', $result);
         $this->assertEquals('Aulnat', $result['city']);
         $this->assertArrayNotHasKey('region', $result);
         $this->assertEquals('FRANCE', $result['country']);
+        $this->assertEquals('FR', $result['countryCode']);
     }
 
     /**

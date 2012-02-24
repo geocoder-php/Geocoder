@@ -102,6 +102,13 @@ interface ResultInterface
     function getCountry();
 
     /**
+     * Returns the country ISO code.
+     *
+     * @return string
+     */
+    function getCountryCode();
+
+    /**
      * Extracts data from an array.
      *
      * @param array $data   An array.
