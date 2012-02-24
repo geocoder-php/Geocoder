@@ -83,12 +83,11 @@ class BingMapsProviderTest extends TestCase
         $this->assertArrayNotHasKey('streetNumber', $result);
         $this->assertArrayNotHasKey('streetName', $result);
         $this->assertArrayNotHasKey('countryCode', $result);
+        $this->assertArrayNotHasKey('countryCode', $result);
 
         $this->assertEquals('localhost', $result['city']);
         $this->assertEquals('localhost', $result['region']);
         $this->assertEquals('localhost', $result['country']);
-
-        $this->assertNull($result['countryCode']);
     }
 
     public function testGetGeocodedDataWithRealAddress()
@@ -117,7 +116,8 @@ class BingMapsProviderTest extends TestCase
         $this->assertEquals('Paris', $result['county']);
         $this->assertEquals('IdF', $result['region']);
         $this->assertEquals('France', $result['country']);
-        $this->assertEquals('FR', $result['countryCode']);
+
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetReversedData()
