@@ -70,8 +70,8 @@ class FreeGeoIpProviderTest extends TestCase
         $this->provider = new FreeGeoIpProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter());
         $result = $this->provider->getGeocodedData('74.200.247.59');
 
-        $this->assertEquals(33.0347, $result['latitude']);
-        $this->assertEquals(-96.8134, $result['longitude']);
+        $this->assertEquals(33.0347, $result['latitude'], '', 0.0001);
+        $this->assertEquals(-96.8134, $result['longitude'], '', 0.0001);
         $this->assertEquals(75093, $result['zipcode']);
         $this->assertEquals('Plano', $result['city']);
         $this->assertEquals('Texas', $result['region']);

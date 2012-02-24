@@ -77,8 +77,8 @@ class GeoipProviderTest extends TestCase
         $this->provider = new GeoipProvider();
         $result = $this->provider->getGeocodedData('74.200.247.59');
 
-        $this->assertEquals(33.034698486328, $result['latitude']);
-        $this->assertEquals(-96.813400268555, $result['longitude']);
+        $this->assertEquals(33.034698486328, $result['latitude'], '', 0.0001);
+        $this->assertEquals(-96.813400268555, $result['longitude'], '', 0.0001);
         $this->assertEquals(75093, $result['zipcode']);
         $this->assertEquals('Plano', $result['city']);
         $this->assertEquals('TX', $result['region']);

@@ -109,8 +109,8 @@ class IpInfoDbProviderTest extends TestCase
         $this->provider = new IpInfoDbProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter(), $_SERVER['IPINFODB_API_KEY']);
         $result = $this->provider->getGeocodedData('74.200.247.59');
 
-        $this->assertEquals(33.0404, $result['latitude']);
-        $this->assertEquals(-96.7238, $result['longitude']);
+        $this->assertEquals(33.0404, $result['latitude'], '', 0.0001);
+        $this->assertEquals(-96.7238, $result['longitude'], '', 0.0001);
         $this->assertEquals(75093, $result['zipcode']);
         $this->assertEquals('PLANO', $result['city']);
         $this->assertEquals('TEXAS', $result['region']);
