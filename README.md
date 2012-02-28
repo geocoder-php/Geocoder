@@ -226,7 +226,8 @@ The `geocode()` method returns a `Geocoded` result object with the following API
 * `getZipcode()` will return the `zipcode`;
 * `getCounty()` will return the `county`;
 * `getRegion()` will return the `region`;
-* `getCountry()` will return te `country`.
+* `getCountry()` will return the `country`;
+* `getCountryCode()` will return the ISO country code.
 
 The Geocoder's API is fluent, you can write:
 
