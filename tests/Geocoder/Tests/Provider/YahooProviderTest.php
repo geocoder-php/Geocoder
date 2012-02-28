@@ -29,6 +29,7 @@ class YahooProviderTest extends TestCase
         $this->assertNull($result['zipcode']);
         $this->assertNull($result['region']);
         $this->assertNull($result['country']);
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetGeocodedDataWithNull()
@@ -44,6 +45,7 @@ class YahooProviderTest extends TestCase
         $this->assertNull($result['county']);
         $this->assertNull($result['region']);
         $this->assertNull($result['country']);
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetGeocodedDataWithEmpty()
@@ -59,6 +61,7 @@ class YahooProviderTest extends TestCase
         $this->assertNull($result['county']);
         $this->assertNull($result['region']);
         $this->assertNull($result['country']);
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetGeocodedDataWithLocalhost()
@@ -78,49 +81,46 @@ class YahooProviderTest extends TestCase
 
     public function testGetGeocodedDataWithRealIp()
     {
-        if (!isset($_SERVER['YAHOO_API_KEY'])) {
-            $this->markTestSkipped('You need to configure the YAHOO_API_KEY value in phpunit.xml');
-        }
+        // Yahoo API key is not required.
 
         $this->provider = new YahooProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter(), $_SERVER['YAHOO_API_KEY']);
         $result = $this->provider->getGeocodedData('74.200.247.59');
 
-        $this->assertEquals(33.036711, $result['latitude']);
-        $this->assertEquals(-96.813541, $result['longitude']);
+        $this->assertEquals(33.036711, $result['latitude'], '', 0.0001);
+        $this->assertEquals(-96.813541, $result['longitude'], '', 0.0001);
         $this->assertArrayHasKey('south', $result['bounds']);
         $this->assertArrayHasKey('west', $result['bounds']);
         $this->assertArrayHasKey('north', $result['bounds']);
         $this->assertArrayHasKey('east', $result['bounds']);
-        $this->assertEquals(33.007820, $result['bounds']['south']);
-        $this->assertEquals(-96.860229, $result['bounds']['west']);
-        $this->assertEquals(33.065601, $result['bounds']['north']);
-        $this->assertEquals(-96.766853, $result['bounds']['east']);
+        $this->assertEquals(33.007820, $result['bounds']['south'], '', 0.0001);
+        $this->assertEquals(-96.860229, $result['bounds']['west'], '', 0.0001);
+        $this->assertEquals(33.065601, $result['bounds']['north'], '', 0.0001);
+        $this->assertEquals(-96.766853, $result['bounds']['east'], '', 0.0001);
         $this->assertEquals(75093, $result['zipcode']);
         $this->assertEquals('Plano', $result['city']);
         $this->assertEquals('Collin County', $result['county']);
         $this->assertEquals('Texas', $result['region']);
         $this->assertEquals('United States', $result['country']);
+        $this->assertEquals('US', $result['countryCode']);
     }
 
     public function testGetGeocodedDataWithRealAddress()
     {
-        if (!isset($_SERVER['YAHOO_API_KEY'])) {
-            $this->markTestSkipped('You need to configure the YAHOO_API_KEY value in phpunit.xml');
-        }
+        // Yahoo API key is not required.
 
         $this->provider = new YahooProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter(), $_SERVER['YAHOO_API_KEY']);
         $result = $this->provider->getGeocodedData('10 avenue Gambetta, Paris, France');
 
-        $this->assertEquals(48.863217, $result['latitude']);
-        $this->assertEquals(2.388821, $result['longitude']);
+        $this->assertEquals(48.863217, $result['latitude'], '', 0.0001);
+        $this->assertEquals(2.388821, $result['longitude'], '', 0.0001);
         $this->assertArrayHasKey('south', $result['bounds']);
         $this->assertArrayHasKey('west', $result['bounds']);
         $this->assertArrayHasKey('north', $result['bounds']);
         $this->assertArrayHasKey('east', $result['bounds']);
-        $this->assertEquals(48.863217, $result['bounds']['south']);
-        $this->assertEquals(2.388821, $result['bounds']['west']);
-        $this->assertEquals(48.863217, $result['bounds']['north']);
-        $this->assertEquals(2.388821, $result['bounds']['east']);
+        $this->assertEquals(48.863217, $result['bounds']['south'], '', 0.0001);
+        $this->assertEquals(2.388821, $result['bounds']['west'], '', 0.0001);
+        $this->assertEquals(48.863217, $result['bounds']['north'], '', 0.0001);
+        $this->assertEquals(2.388821, $result['bounds']['east'], '', 0.0001);
         $this->assertEquals(10, $result['streetNumber']);
         $this->assertEquals('avenue Gambetta', $result['streetName']);
         $this->assertEquals(75020, $result['zipcode']);
@@ -128,6 +128,7 @@ class YahooProviderTest extends TestCase
         $this->assertEquals('Paris', $result['county']);
         $this->assertEquals('Île-de-France', $result['region']);
         $this->assertEquals('France', $result['country']);
+        $this->assertEquals('FR', $result['countryCode']);
     }
 
     public function testGetReversedData()
@@ -145,27 +146,26 @@ class YahooProviderTest extends TestCase
         $this->assertNull($result['county']);
         $this->assertNull($result['region']);
         $this->assertNull($result['country']);
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetReversedDataWithRealCoordinates()
     {
-        if (!isset($_SERVER['YAHOO_API_KEY'])) {
-            $this->markTestSkipped('You need to configure the YAHOO_API_KEY value in phpunit.xml');
-        }
+        // Yahoo API key is not required.
 
         $this->provider = new YahooProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter(), $_SERVER['YAHOO_API_KEY']);
         $result = $this->provider->getReversedData(array(33.036711, -96.813541));
 
-        $this->assertEquals(33.036711, $result['latitude']);
-        $this->assertEquals(-96.813541, $result['longitude']);
+        $this->assertEquals(33.036711, $result['latitude'], '', 0.0001);
+        $this->assertEquals(-96.813541, $result['longitude'], '', 0.0001);
         $this->assertArrayHasKey('south', $result['bounds']);
         $this->assertArrayHasKey('west', $result['bounds']);
         $this->assertArrayHasKey('north', $result['bounds']);
         $this->assertArrayHasKey('east', $result['bounds']);
-        $this->assertEquals(33.036711, $result['bounds']['south']);
-        $this->assertEquals(-96.813541, $result['bounds']['west']);
-        $this->assertEquals(33.036711, $result['bounds']['north']);
-        $this->assertEquals(-96.813541, $result['bounds']['east']);
+        $this->assertEquals(33.036711, $result['bounds']['south'], '', 0.0001);
+        $this->assertEquals(-96.813541, $result['bounds']['west'], '', 0.0001);
+        $this->assertEquals(33.036711, $result['bounds']['north'], '', 0.0001);
+        $this->assertEquals(-96.813541, $result['bounds']['east'], '', 0.0001);
         $this->assertEquals(5599, $result['streetNumber']);
         $this->assertEquals('Weatherby Ln', $result['streetName']);
         $this->assertEquals(75093, $result['zipcode']);
@@ -173,5 +173,6 @@ class YahooProviderTest extends TestCase
         $this->assertEquals('Collin County', $result['county']);
         $this->assertEquals('Texas', $result['region']);
         $this->assertEquals('United States', $result['country']);
+        $this->assertEquals('US', $result['countryCode']);
     }
 }

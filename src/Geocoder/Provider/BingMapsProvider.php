@@ -50,6 +50,7 @@ class BingMapsProvider extends AbstractProvider implements ProviderInterface
      */
     public function getGeocodedData($address)
     {
+
         if (null === $this->apiKey) {
             throw new \RuntimeException('No API Key provided');
         }
@@ -122,7 +123,7 @@ class BingMapsProvider extends AbstractProvider implements ProviderInterface
         }
 
         $streetNumber = null;
-        $streetName   = (string) $data['address']->addressLine;
+        $streetName   = property_exists($data['address'], 'addressLine') ? (string) $data['address']->addressLine : '';
         $zipcode      = (string) $data['address']->postalCode;
         $city         = (string) $data['address']->locality;
         $county       = (string) $data['address']->adminDistrict2;
@@ -139,7 +140,8 @@ class BingMapsProvider extends AbstractProvider implements ProviderInterface
             'zipcode'       => empty($zipcode) ? null : $zipcode,
             'county'        => empty($county) ? null : $county,
             'region'        => empty($region) ? null : $region,
-            'country'       => empty($country) ? null : $country
+            'country'       => empty($country) ? null : $country,
+            'countryCode'   => null
         );
     }
 }

@@ -23,6 +23,7 @@ class GoogleMapsProviderTest extends TestCase
         $this->assertNull($result['county']);
         $this->assertNull($result['region']);
         $this->assertNull($result['country']);
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetGeocodedDataWithNull()
@@ -40,6 +41,7 @@ class GoogleMapsProviderTest extends TestCase
         $this->assertNull($result['county']);
         $this->assertNull($result['region']);
         $this->assertNull($result['country']);
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetGeocodedDataWithEmpty()
@@ -57,6 +59,7 @@ class GoogleMapsProviderTest extends TestCase
         $this->assertNull($result['county']);
         $this->assertNull($result['region']);
         $this->assertNull($result['country']);
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetGeocodedDataWithLocalhost()
@@ -90,6 +93,7 @@ class GoogleMapsProviderTest extends TestCase
         $this->assertNull($result['county']);
         $this->assertNull($result['region']);
         $this->assertNull($result['country']);
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetGeocodedDataWithRealAddress()
@@ -97,16 +101,16 @@ class GoogleMapsProviderTest extends TestCase
         $this->provider = new GoogleMapsProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter());
         $result = $this->provider->getGeocodedData('10 avenue Gambetta, Paris, France');
 
-        $this->assertEquals(48.8631507, $result['latitude']);
-        $this->assertEquals(2.3889114, $result['longitude']);
+        $this->assertEquals(48.8631507, $result['latitude'], '', 0.0001);
+        $this->assertEquals(2.3889114, $result['longitude'], '', 0.0001);
         $this->assertArrayHasKey('south', $result['bounds']);
         $this->assertArrayHasKey('west', $result['bounds']);
         $this->assertArrayHasKey('north', $result['bounds']);
         $this->assertArrayHasKey('east', $result['bounds']);
-        $this->assertEquals(48.8631507, $result['bounds']['south']);
-        $this->assertEquals(2.3889114, $result['bounds']['west']);
-        $this->assertEquals(48.8631507, $result['bounds']['north']);
-        $this->assertEquals(2.3889114, $result['bounds']['east']);
+        $this->assertEquals(48.8631507, $result['bounds']['south'], '', 0.0001);
+        $this->assertEquals(2.3889114, $result['bounds']['west'], '', 0.0001);
+        $this->assertEquals(48.8631507, $result['bounds']['north'], '', 0.0001);
+        $this->assertEquals(2.3889114, $result['bounds']['east'], '', 0.0001);
         $this->assertEquals(10, $result['streetNumber']);
         $this->assertEquals('Avenue Gambetta', $result['streetName']);
         $this->assertEquals(75020, $result['zipcode']);
@@ -114,6 +118,7 @@ class GoogleMapsProviderTest extends TestCase
         $this->assertEquals('Paris', $result['county']);
         $this->assertEquals('Île-de-France', $result['region']);
         $this->assertEquals('France', $result['country']);
+        $this->assertEquals('FR', $result['countryCode']);
     }
 
     public function testGetGeocodedDataBoundsWithRealAddressForNonRooftopLocation()
@@ -125,10 +130,10 @@ class GoogleMapsProviderTest extends TestCase
         $this->assertArrayHasKey('west', $result['bounds']);
         $this->assertArrayHasKey('north', $result['bounds']);
         $this->assertArrayHasKey('east', $result['bounds']);
-        $this->assertEquals(48.815573, $result['bounds']['south']);
-        $this->assertEquals(2.224199, $result['bounds']['west']);
-        $this->assertEquals(48.902145, $result['bounds']['north']);
-        $this->assertEquals(2.4699209, $result['bounds']['east']);
+        $this->assertEquals(48.815573, $result['bounds']['south'], '', 0.0001);
+        $this->assertEquals(2.224199, $result['bounds']['west'], '', 0.0001);
+        $this->assertEquals(48.902145, $result['bounds']['north'], '', 0.0001);
+        $this->assertEquals(2.4699209, $result['bounds']['east'], '', 0.0001);
     }
 
     public function testGetReversedData()
@@ -145,6 +150,7 @@ class GoogleMapsProviderTest extends TestCase
         $this->assertNull($result['county']);
         $this->assertNull($result['region']);
         $this->assertNull($result['country']);
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetReversedDataWithRealCoordinates()
@@ -170,5 +176,6 @@ class GoogleMapsProviderTest extends TestCase
         $this->assertEquals('Paris', $result['county']);
         $this->assertEquals('Île-de-France', $result['region']);
         $this->assertEquals('France', $result['country']);
+        $this->assertEquals('FR', $result['countryCode']);
     }
 }

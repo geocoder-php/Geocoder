@@ -31,6 +31,7 @@ class IpInfoDbProviderTest extends TestCase
         $this->assertNull($result['region']);
         $this->assertNull($result['county']);
         $this->assertNull($result['country']);
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetGeocodedDataWithNull()
@@ -47,6 +48,7 @@ class IpInfoDbProviderTest extends TestCase
         $this->assertNull($result['region']);
         $this->assertNull($result['county']);
         $this->assertNull($result['country']);
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetGeocodedDataWithEmpty()
@@ -63,6 +65,7 @@ class IpInfoDbProviderTest extends TestCase
         $this->assertNull($result['region']);
         $this->assertNull($result['county']);
         $this->assertNull($result['country']);
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetGeocodedDataWithAddress()
@@ -79,6 +82,7 @@ class IpInfoDbProviderTest extends TestCase
         $this->assertNull($result['region']);
         $this->assertNull($result['county']);
         $this->assertNull($result['country']);
+        $this->assertNull($result['countryCode']);
     }
 
     public function testGetGeocodedDataWithLocalhost()
@@ -105,12 +109,13 @@ class IpInfoDbProviderTest extends TestCase
         $this->provider = new IpInfoDbProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter(), $_SERVER['IPINFODB_API_KEY']);
         $result = $this->provider->getGeocodedData('74.200.247.59');
 
-        $this->assertEquals(33.0404, $result['latitude']);
-        $this->assertEquals(-96.7238, $result['longitude']);
+        $this->assertEquals(33.0404, $result['latitude'], '', 0.0001);
+        $this->assertEquals(-96.7238, $result['longitude'], '', 0.0001);
         $this->assertEquals(75093, $result['zipcode']);
         $this->assertEquals('PLANO', $result['city']);
         $this->assertEquals('TEXAS', $result['region']);
         $this->assertEquals('UNITED STATES', $result['country']);
+        $this->assertEquals('US', $result['countryCode']);
     }
 
     /**

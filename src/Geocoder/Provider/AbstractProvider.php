@@ -75,6 +75,7 @@ abstract class AbstractProvider
             'county'        => null,
             'region'        => null,
             'country'       => null,
+            'countryCode'   => null,
         );
     }
 
