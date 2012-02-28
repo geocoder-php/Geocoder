@@ -81,7 +81,9 @@ class YahooProviderTest extends TestCase
 
     public function testGetGeocodedDataWithRealIp()
     {
-        // Yahoo API key is not required.
+        if (!isset($_SERVER['YAHOO_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the YAHOO_API_KEY value in phpunit.xml');
+        }
 
         $this->provider = new YahooProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter(), $_SERVER['YAHOO_API_KEY']);
         $result = $this->provider->getGeocodedData('74.200.247.59');
@@ -106,7 +108,9 @@ class YahooProviderTest extends TestCase
 
     public function testGetGeocodedDataWithRealAddress()
     {
-        // Yahoo API key is not required.
+        if (!isset($_SERVER['YAHOO_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the YAHOO_API_KEY value in phpunit.xml');
+        }
 
         $this->provider = new YahooProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter(), $_SERVER['YAHOO_API_KEY']);
         $result = $this->provider->getGeocodedData('10 avenue Gambetta, Paris, France');
@@ -151,7 +155,9 @@ class YahooProviderTest extends TestCase
 
     public function testGetReversedDataWithRealCoordinates()
     {
-        // Yahoo API key is not required.
+        if (!isset($_SERVER['YAHOO_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the YAHOO_API_KEY value in phpunit.xml');
+        }
 
         $this->provider = new YahooProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter(), $_SERVER['YAHOO_API_KEY']);
         $result = $this->provider->getReversedData(array(33.036711, -96.813541));

@@ -157,18 +157,7 @@ class GoogleMapsProviderTest extends TestCase
     {
         $this->provider = new GoogleMapsProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter());
         $result = $this->provider->getReversedData(array(48.8631507, 2.388911));
-/*
-        $this->assertEquals(48.8631507, $result['latitude']);
-        $this->assertEquals(2.3889114, $result['longitude']);
-        $this->assertArrayHasKey('south', $result['bounds']);
-        $this->assertArrayHasKey('west', $result['bounds']);
-        $this->assertArrayHasKey('north', $result['bounds']);
-        $this->assertArrayHasKey('east', $result['bounds']);
-        $this->assertEquals(48.8631507, $result['bounds']['south']);
-        $this->assertEquals(2.3889114, $result['bounds']['west']);
-        $this->assertEquals(48.8631507, $result['bounds']['north']);
-        $this->assertEquals(2.3889114, $result['bounds']['east']);
- */
+
         $this->assertEquals(10, $result['streetNumber']);
         $this->assertEquals('Avenue Gambetta', $result['streetName']);
         $this->assertEquals(75020, $result['zipcode']);
