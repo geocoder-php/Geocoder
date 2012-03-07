@@ -46,7 +46,6 @@ require_once 'path/to/geocoder/src/autoload.php';
         <br />
         <br />
         <p>You need an <code>HTTP Adapter</code> to query an API. Then, you have to choose a <code>provider</code> which is closed to what you want to get. <strong>Geocoder</strong> provides a lot of providers, you can use one of them or write your own. You can also register all providers and decide later.</p>
-        <br />
 {% highlight php %}
 <?php
 
@@ -71,7 +70,7 @@ $geocoder->registerProviders(array(
 
 // Use it!
 $result = $geocoder->geocode('Eiffel Tower');
-
+// Or
 $result = $geocoder->geocode('68.145.37.34');
 {% endhighlight %}
     </section>
