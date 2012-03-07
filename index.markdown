@@ -70,7 +70,9 @@ $geocoder->registerProviders(array(
 ));
 
 // Use it!
-$geocoder->geocode('Eiffel Tower');
+$result = $geocoder->geocode('Eiffel Tower');
+
+$result = $geocoder->geocode('68.145.37.34');
 {% endhighlight %}
     </section>
 </div>
@@ -214,22 +216,16 @@ $result = $geocoder
         <p>Geocoder provides dumpers that aim to transform a <code>ResultInterface</code> object in standard formats.</p>
         <table>
             <tr>
-                <th>Dumper</th>
-            </tr>
-            <tr>
-                <td>GPS eXchange Format</td>
-            </tr>
-            <tr>
+                <td><a>GPS eXchange Format</a></td>
                 <td><a href="http://geojson.org/">GeoJSON</a></td>
             </tr>
             <tr>
                 <td><a href="http://en.wikipedia.org/wiki/Keyhole_Markup_Language">Keyhole Markup Language</a></td>
+                <td><a>Well-Known Binary</a></td>
             </tr>
             <tr>
-                <td>Well-Known Binary</td>
-            </tr>
-            <tr>
-                <td>Well-Known Text</td>
+                <td><a>Well-Known Text</a></td>
+                <td></td>
             </tr>
         </table>
     </section>
