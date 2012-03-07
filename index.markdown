@@ -64,8 +64,13 @@ $geocoder->registerProviders(array(
     new \Geocoder\Provider\IpInfoDbProvider(
         $adapter, '<IPINFODB_API_KEY>'
     ),
-    new \Geocoder\Provider\HostIpProvider($adapter)
+    new \Geocoder\Provider\HostIpProvider($adapter),
+
+    // your provider here
 ));
+
+// Use it!
+$geocoder->geocode('Eiffel Tower');
 {% endhighlight %}
     </section>
 </div>
@@ -152,7 +157,8 @@ $result = $geocoder->reverse($latitude, $longitude);
             <li><code>getZipcode()</code> will return the <code>zipcode</code> value;</li>
             <li><code>getCounty()</code> will return the <code>county</code> value;</li>
             <li><code>getRegion()</code> will return the <code>region</code> value;</li>
-            <li><code>getCountry()</code> will return te <code>country</code> value.</li>
+            <li><code>getCountry()</code> will return te <code>country</code> value;</li>
+            <li><code>getCountryCode()</code> will return the ISO country code.</li>
         </ul>
         <p><br /></p>
         <p>The Geocoder's API is fluent, you can write:</p>
@@ -203,11 +209,38 @@ $result = $geocoder
     </section>
 </div>
 <div class="holder_content">
+    <section class="group4" id="dumpers">
+        <h3>Dumpers</h3>
+        <p>Geocoder provides dumpers that aim to transform a <code>ResultInterface</code> object in standard formats.</p>
+        <table>
+            <tr>
+                <th>Dumper</th>
+            </tr>
+            <tr>
+                <td>GPS eXchange Format</td>
+            </tr>
+            <tr>
+                <td><a href="http://geojson.org/">GeoJSON</a></td>
+            </tr>
+            <tr>
+                <td><a href="http://en.wikipedia.org/wiki/Keyhole_Markup_Language">Keyhole Markup Language</a></td>
+            </tr>
+            <tr>
+                <td>Well-Known Binary</td>
+            </tr>
+            <tr>
+                <td>Well-Known Text</td>
+            </tr>
+        </table>
+    </section>
+</div>
+<div class="holder_content">
     <section class="group4" id="extending_things">
         <h3>Extending Things</h3>
         <p>You can provide your own <code>adapter</code>, you just need to create a new class which implements <code>HttpAdapterInterface</code>.</p>
         <p>You can also write your own <code>provider</code> by implementing the <code>ProviderInterface</code>.</p>
         <p>Note, the <code>AbstractProvider</code> class can help you by providing useful features.</p>
+        <p>You can provide your own dumper by implementing the <code>DumperInterface</code>.</p>
     </section>
 </div>
 <div class="holder_content">
