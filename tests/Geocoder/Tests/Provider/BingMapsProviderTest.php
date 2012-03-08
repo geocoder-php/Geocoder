@@ -167,4 +167,16 @@ class BingMapsProviderTest extends TestCase
 
         $this->assertNull($result['countryCode']);
     }
+
+    public function testGetGeocodedDataWithCity()
+    {
+        if (!isset($_SERVER['BINGMAPS_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the BINGMAPS_API_KEY value in phpunit.xml');
+        }
+
+        $this->provider = new BingMapsProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter(), $_SERVER['BINGMAPS_API_KEY']);
+        $result = $this->provider->getGeocodedData('Hannover');
+
+        $this->assertNull($result['zipcode']);
+    }
 }
