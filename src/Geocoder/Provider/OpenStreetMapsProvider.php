@@ -63,6 +63,10 @@ class OpenStreetMapsProvider extends AbstractProvider implements ProviderInterfa
                 }
             }
 
+            if (null === $bestNode) {
+                return $this->getDefaults();
+            }
+
             $bounds = null;
             $boundsAttr = $bestNode->getAttribute('boundingbox');
             if ($boundsAttr) {
@@ -71,17 +75,17 @@ class OpenStreetMapsProvider extends AbstractProvider implements ProviderInterfa
             }
 
             $ret = $this->getDefaults();
-            $ret['latitude']  = $bestNode->getAttribute('lat');
-            $ret['longitude'] = $bestNode->getAttribute('lon');
-            $ret['bounds']    = $bounds;
-            $ret['zipcode']   = $bestNode->getElementsByTagName('postcode')->item(0)->nodeValue;
-            $ret['county']    = $bestNode->getElementsByTagName('county')->length ? $bestNode->getElementsByTagName('county')->item(0)->nodeValue : null;
-            $ret['region']    = $bestNode->getElementsByTagName('state')->length ? $bestNode->getElementsByTagName('state')->item(0)->nodeValue : null;
-            $ret['streetNumber'] = $bestNode->getElementsByTagName('house_number')->length ? $bestNode->getElementsByTagName('house_number')->item(0)->nodeValue : null;
-            $ret['streetName']   = $bestNode->getElementsByTagName('road')->length ? $bestNode->getElementsByTagName('road')->item(0)->nodeValue : null;
-            $ret['city']      = $bestNode->getElementsByTagName('city')->item(0)->nodeValue;
-            $ret['country']   = $bestNode->getElementsByTagName('country')->item(0)->nodeValue;
-            $ret['countryCode']  = strtoupper($bestNode->getElementsByTagName('country_code')->item(0)->nodeValue);
+            $ret['latitude']     = $bestNode->getAttribute('lat');
+            $ret['longitude']    = $bestNode->getAttribute('lon');
+            $ret['bounds']       = $bounds;
+            $ret['zipcode']      = $this->getNodeValue($bestNode->getElementsByTagName('postcode'));
+            $ret['county']       = $this->getNodeValue($bestNode->getElementsByTagName('county'));
+            $ret['region']       = $this->getNodeValue($bestNode->getElementsByTagName('state'));
+            $ret['streetNumber'] = $this->getNodeValue($bestNode->getElementsByTagName('house_number'));
+            $ret['streetName']   = $this->getNodeValue($bestNode->getElementsByTagName('road'));
+            $ret['city']         = $this->getNodeValue($bestNode->getElementsByTagName('city'));
+            $ret['country']      = $this->getNodeValue($bestNode->getElementsByTagName('country'));
+            $ret['countryCode']  = strtoupper($this->getNodeValue($bestNode->getElementsByTagName('country_code')));
 
             return $ret;
         } else {
@@ -110,16 +114,17 @@ class OpenStreetMapsProvider extends AbstractProvider implements ProviderInterfa
             $addressParts     = $searchResult->getElementsByTagName('addressparts')->item(0);
             $result           = $searchResult->getElementsByTagName('result')->item(0);
             $ret              = $this->getDefaults();
-            $ret['latitude']  = $result->getAttribute('lat');
-            $ret['longitude'] = $result->getAttribute('lon');
-            $ret['zipcode']   = $addressParts->getElementsByTagName('postcode')->item(0)->nodeValue;
-            $ret['county']    = $addressParts->getElementsByTagName('county')->length ? $addressParts->getElementsByTagName('county')->item(0)->nodeValue : null;
-            $ret['region']    = $addressParts->getElementsByTagName('state')->length ? $addressParts->getElementsByTagName('state')->item(0)->nodeValue : null;
-            $ret['streetNumber'] = $addressParts->getElementsByTagName('house_number')->length ? $addressParts->getElementsByTagName('house_number')->item(0)->nodeValue : null;
-            $ret['streetName']   = $addressParts->getElementsByTagName('road')->length ? $addressParts->getElementsByTagName('road')->item(0)->nodeValue : null;
-            $ret['city']      = $addressParts->getElementsByTagName('city')->item(0)->nodeValue;
-            $ret['country']   = $addressParts->getElementsByTagName('country')->item(0)->nodeValue;
-            $ret['countryCode']  = strtoupper($addressParts->getElementsByTagName('country_code')->item(0)->nodeValue);
+
+            $ret['latitude']     = $result->getAttribute('lat');
+            $ret['longitude']    = $result->getAttribute('lon');
+            $ret['zipcode']      = $this->getNodeValue($addressParts->getElementsByTagName('postcode'));
+            $ret['county']       = $this->getNodeValue($addressParts->getElementsByTagName('county'));
+            $ret['region']       = $this->getNodeValue($addressParts->getElementsByTagName('state'));
+            $ret['streetNumber'] = $this->getNodeValue($addressParts->getElementsByTagName('house_number'));
+            $ret['streetName']   = $this->getNodeValue($addressParts->getElementsByTagName('road'));
+            $ret['city']         = $this->getNodeValue($addressParts->getElementsByTagName('city'));
+            $ret['country']      = $this->getNodeValue($addressParts->getElementsByTagName('country'));
+            $ret['countryCode']  = strtoupper($this->getNodeValue($addressParts->getElementsByTagName('country_code')));
 
             return $ret;
         } else {
@@ -146,5 +151,14 @@ class OpenStreetMapsProvider extends AbstractProvider implements ProviderInterfa
         }
 
         return $this->getAdapter()->getContent($query);
+    }
+
+    private function getNodeValue($element)
+    {
+        if ($element->length) {
+            return $element->item(0)->nodeValue;
+        }
+
+        return null;
     }
 }
