@@ -104,7 +104,7 @@ class BingMapsProvider extends AbstractProvider implements ProviderInterface
 
         $json = json_decode($content);
 
-        if (isset($json->resourceSets[0])) {
+        if (isset($json->resourceSets[0]) && isset($json->resourceSets[0]->resources[0])) {
             $data = (array) $json->resourceSets[0]->resources[0];
         } else {
             return $this->getDefaults();
@@ -124,11 +124,11 @@ class BingMapsProvider extends AbstractProvider implements ProviderInterface
 
         $streetNumber = null;
         $streetName   = property_exists($data['address'], 'addressLine') ? (string) $data['address']->addressLine : '';
-        $zipcode      = (string) $data['address']->postalCode;
-        $city         = (string) $data['address']->locality;
-        $county       = (string) $data['address']->adminDistrict2;
-        $region       = (string) $data['address']->adminDistrict;
-        $country      = (string) $data['address']->countryRegion;
+        $zipcode      = property_exists($data['address'], 'postalCode') ? (string) $data['address']->postalCode : '';
+        $city         = property_exists($data['address'], 'locality') ? (string) $data['address']->locality: '';
+        $county       = property_exists($data['address'], 'adminDistrict2') ? (string) $data['address']->adminDistrict2 : '';
+        $region       = property_exists($data['address'], 'adminDistrict') ? (string) $data['address']->adminDistrict: '';
+        $country      = property_exists($data['address'], 'countryRegion') ? (string) $data['address']->countryRegion: '';
 
         return array(
             'latitude'      => $coordinates[0],
