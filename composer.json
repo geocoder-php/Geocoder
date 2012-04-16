@@ -14,9 +14,9 @@
     "require": {
         "php": ">=5.3.0"
     },
-    "recommend": {
-        "kriswallsmith/buzz": "*",
-        "ext-curl": "*"
+    "suggest": {
+        "kriswallsmith/buzz": "Enabling Buzz allows you to use the BuzzHttpAdapter, it's the recommended HTTP layer.",
+        "ext-curl": "Enabling the curl extension allows you to use CurlHttpAdapter."
     },
     "autoload": {
         "psr-0": { "Geocoder": "src/" }
