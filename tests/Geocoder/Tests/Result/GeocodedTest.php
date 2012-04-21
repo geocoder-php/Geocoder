@@ -52,6 +52,40 @@ class GeocodedTest extends TestCase
         $this->assertEquals('65943', $this->geocoded->getZipcode());
         $this->assertEquals('Foo Region', $this->geocoded->getRegion());
         $this->assertEquals('Foo Country', $this->geocoded->getCountry());
+        
+        $array = array(
+            'latitude'  => 0.001,
+            'longitude' => 1,
+            'bounds'    => array(
+                'south' => 1,
+                'west'  => '2',
+                'north' => 3,
+                'east'  => 0.1
+            ),
+            'city'      => 'Toulouse',
+            'zipcode'   => '31000',
+            'region'    => 'Midi-Pyrénées',
+            'country'   => 'France'
+        );
+
+        $this->geocoded->fromArray($array);
+
+        $bounds = $this->geocoded->getBounds();
+
+        $this->assertEquals(0.001, $this->geocoded->getLatitude());
+        $this->assertEquals(1, $this->geocoded->getLongitude());
+        $this->assertArrayHasKey('south', $bounds);
+        $this->assertArrayHasKey('west', $bounds);
+        $this->assertArrayHasKey('north', $bounds);
+        $this->assertArrayHasKey('east', $bounds);
+        $this->assertEquals(1, $bounds['south']);
+        $this->assertEquals(2, $bounds['west']);
+        $this->assertEquals(3, $bounds['north']);
+        $this->assertEquals(0.1, $bounds['east']);
+        $this->assertEquals('Toulouse', $this->geocoded->getCity());
+        $this->assertEquals('31000', $this->geocoded->getZipcode());
+        $this->assertEquals('Midi-Pyrénées', $this->geocoded->getRegion());
+        $this->assertEquals('France', $this->geocoded->getCountry());
     }
 
     public function testToArray()
