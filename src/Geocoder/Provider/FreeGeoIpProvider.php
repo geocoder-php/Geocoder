@@ -78,6 +78,7 @@ class FreeGeoIpProvider extends AbstractProvider implements ProviderInterface
             'city'        => isset($data['city']) ? $data['city'] : null,
             'zipcode'     => isset($data['zipcode']) ? $data['zipcode'] : null,
             'region'      => isset($data['region_name']) ? $data['region_name'] : null,
+            'regionCode'  => null,
             'country'     => isset($data['country_name']) ? $data['country_name'] : null,
             'countryCode' => isset($data['country_code']) ? $data['country_code'] : null
         );

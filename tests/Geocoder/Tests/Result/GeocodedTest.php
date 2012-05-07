@@ -28,10 +28,11 @@ class GeocodedTest extends TestCase
                 'north' => 3,
                 'east'  => 0.1
             ),
-            'city'      => 'FOo CITY',
-            'zipcode'   => '65943',
-            'region'    => 'FOO region',
-            'country'   => 'FOO Country'
+            'city'          => 'FOo CITY',
+            'zipcode'       => '65943',
+            'region'        => 'FOO region',
+            'regionCode'    => 'FOO',
+            'country'       => 'FOO Country'
         );
 
         $this->geocoded->fromArray($array);
@@ -52,6 +53,7 @@ class GeocodedTest extends TestCase
         $this->assertEquals('65943', $this->geocoded->getZipcode());
         $this->assertEquals('Foo Region', $this->geocoded->getRegion());
         $this->assertEquals('Foo Country', $this->geocoded->getCountry());
+        $this->assertEquals('FOO', $this->geocoded->getRegionCode());
     }
 
     public function testToArray()
@@ -65,10 +67,11 @@ class GeocodedTest extends TestCase
                 'north' => 3,
                 'east'  => 0.1
             ),
-            'city'      => 'FOo CITY',
-            'zipcode'   => '65943',
-            'region'    => 'FOO region',
-            'country'   => 'FOO Country'
+            'city'          => 'FOo CITY',
+            'zipcode'       => '65943',
+            'region'        => 'FOO region',
+            'regionCode'    => 'Foo',
+            'country'       => 'FOO Country'
         );
 
         $this->geocoded->fromArray($expected);
@@ -91,6 +94,7 @@ class GeocodedTest extends TestCase
         $this->assertEquals('65943', $result['zipcode']);
         $this->assertEquals('Foo Region', $result['region']);
         $this->assertEquals('Foo Country', $result['country']);
+        $this->assertEquals('FOO', $result['regionCode']);
     }
 
     public function testFromDataWithEmptyArray()

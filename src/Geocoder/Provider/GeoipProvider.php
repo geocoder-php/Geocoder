@@ -47,6 +47,7 @@ class GeoipProvider extends AbstractProvider implements ProviderInterface
             'city'        => $results['city'],
             'zipcode'     => $results['postal_code'],
             'region'      => $results['region'],
+            'regionCode'  => $results['region'],
             'country'     => $results['country_name'],
             'countryCode' => $results['country_code'],
         );

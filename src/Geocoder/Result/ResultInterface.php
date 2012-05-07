@@ -95,6 +95,13 @@ interface ResultInterface
     function getRegion();
 
     /**
+     * Returns the region short name.
+     *
+     * @return string
+     */
+    function getRegionCode();
+
+    /**
      * Returns the country value.
      *
      * @return string

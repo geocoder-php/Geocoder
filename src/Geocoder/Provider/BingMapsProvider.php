@@ -140,6 +140,7 @@ class BingMapsProvider extends AbstractProvider implements ProviderInterface
             'zipcode'       => empty($zipcode) ? null : $zipcode,
             'county'        => empty($county) ? null : $county,
             'region'        => empty($region) ? null : $region,
+            'regionCode'    => null,
             'country'       => empty($country) ? null : $country,
             'countryCode'   => null
         );

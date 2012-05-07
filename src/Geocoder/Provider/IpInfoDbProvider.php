@@ -98,6 +98,7 @@ class IpInfoDbProvider extends AbstractProvider implements ProviderInterface
             'city'        => isset($data['cityName']) ? $data['cityName'] : null,
             'zipcode'     => isset($data['zipCode']) ? $data['zipCode'] : null,
             'region'      => isset($data['regionName']) ? $data['regionName'] : null,
+            'regionCode'  => null,
             'country'     => isset($data['countryName']) ? $data['countryName'] : null,
             'countryCode' => isset($data['countryName']) ? $data['countryCode'] : null
         );
