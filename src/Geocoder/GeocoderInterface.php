@@ -18,7 +18,7 @@ interface GeocoderInterface
     /**
      * Geocode a given value.
      *
-     * @param string $value                 A value to geocode.
+     * @param string $value A value to geocode.
      * @return \Geocoder\Result\Geocoded    A Geocoded result object.
      */
     function geocode($value);
@@ -26,8 +26,8 @@ interface GeocoderInterface
     /**
      * Reverse geocode given latitude and longitude values.
      *
-     * @param double $latitude              Latitude.
-     * @param double $longitude             Longitude.
+     * @param double $latitude  Latitude.
+     * @param double $longitude Longitude.
      * @return \Geocoder\Result\Geocoded    A Geocoded result object.
      */
     function reverse($latitude, $longitude);

@@ -118,7 +118,7 @@ interface ResultInterface
     /**
      * Extracts data from an array.
      *
-     * @param array $data   An array.
+     * @param array $data An array.
      */
     function fromArray(array $data = array());
 

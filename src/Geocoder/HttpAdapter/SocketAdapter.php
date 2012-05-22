@@ -49,7 +49,7 @@ class SocketAdapter implements HttpAdapterInterface
             $line = trim(fgets($handle));
             if (preg_match('@^HTTP/\d\.\d\s*(\d+)\s*.*$@', $line, $matches)) {
                 $rawHeaders['status'] = (integer) $matches[1];
-            } else if (preg_match('@^(.*):(.*)@', $line, $matches)) {
+            } elseif (preg_match('@^(.*):(.*)@', $line, $matches)) {
                 $rawHeaders[strtolower($matches[1])] = trim($matches[2]);
             } else {
                 $rawContent .= $line;

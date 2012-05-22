@@ -31,7 +31,7 @@ class IpInfoDbProvider extends AbstractProvider implements ProviderInterface
 
     /**
      * @param \Geocoder\HttpAdapter\HttpAdapterInterface $adapter
-     * @param string $apiKey
+     * @param string                                     $apiKey
      */
     public function __construct(HttpAdapterInterface $adapter, $apiKey)
     {

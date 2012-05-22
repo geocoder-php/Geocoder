@@ -106,7 +106,7 @@ class Geocoder implements GeocoderInterface
     /**
      * Sets the provider to use.
      *
-     * @param string $name  A provider's name
+     * @param string $name A provider's name
      * @return \Geocoder\AbstractGeocoder
      */
     public function using($name)
@@ -147,7 +147,7 @@ class Geocoder implements GeocoderInterface
     }
 
     /**
-     * @param array $data   An array of data.
+     * @param array $data An array of data.
      * @return \Geocoder\Result\Geocoded
      */
     protected function returnResult(array $data = array())

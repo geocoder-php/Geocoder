@@ -10,7 +10,6 @@
 
 namespace Geocoder\Provider;
 
-use Geocoder\HttpAdapter\HttpAdapterInterface;
 use Geocoder\Provider\ProviderInterface;
 
 /**
@@ -117,9 +116,9 @@ class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
     /**
      * Update current resultset with given key/value.
      *
-     * @param array   $resultset  resultset to update.
-     * @param String  $type       component type.
-     * @param object  $values     the component values;
+     * @param array  $resultset resultset to update.
+     * @param String $type      component type.
+     * @param object $values    the component values;
      * @return array
      */
     protected function updateAddressComponent(&$resultset, $type, $values)

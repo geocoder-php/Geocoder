@@ -217,13 +217,13 @@ class Geocoded implements ResultInterface, \ArrayAccess
             $this->region = $this->formatString($data['region']);
         }
         if (isset($data['regionCode'])) {
-            $this->regionCode = strtoupper($data['regionCode']);
+            $this->regionCode = $this->upperize($data['regionCode']);
         }
         if (isset($data['country'])) {
             $this->country = $this->formatString($data['country']);
         }
         if (isset($data['countryCode'])) {
-            $this->countryCode = strtoupper($data['countryCode']);
+            $this->countryCode = $this->lowerize($data['countryCode']);
         }
     }
 
@@ -253,7 +253,7 @@ class Geocoded implements ResultInterface, \ArrayAccess
      */
     public function offsetExists($offset)
     {
-        return property_exists($this, strtolower($offset)) && null !== $this->$offset;
+        return property_exists($this, $this->lowerize($offset)) && null !== $this->$offset;
     }
 
     /**
@@ -261,7 +261,7 @@ class Geocoded implements ResultInterface, \ArrayAccess
      */
     public function offsetGet($offset)
     {
-        $offset = strtolower($offset);
+        $offset = $this->lowerize($offset);
 
         return $this->offsetExists($offset) ? $this->$offset : null;
     }
@@ -271,7 +271,7 @@ class Geocoded implements ResultInterface, \ArrayAccess
      */
     public function offsetSet($offset, $value)
     {
-        $offset = strtolower($offset);
+        $offset = $this->lowerize($offset);
         if ($this->offsetExists($offset)) {
             $this->$offset = $value;
         }
@@ -282,7 +282,7 @@ class Geocoded implements ResultInterface, \ArrayAccess
      */
     public function offsetUnset($offset)
     {
-        $offset = strtolower($offset);
+        $offset = $this->lowerize($offset);
         if ($this->offsetExists($offset)) {
             $this->$offset = null;
         }
@@ -291,15 +291,43 @@ class Geocoded implements ResultInterface, \ArrayAccess
     /**
      * Format a string data.
      *
-     * @param string $str   A string.
+     * @param string $str A string.
      * @return string
      */
     private function formatString($str)
     {
-        $str = strtolower($str);
-        $str = str_replace('-', '- ', $str);
-        $str = ucwords($str);
+        if (extension_loaded('mbstring')) {
+            $str = mb_convert_case($str, MB_CASE_TITLE, 'UTF-8');
+        } else {
+            $str = strtolower($str);
+            $str = ucwords($str);
+        }
 
-        return str_replace('- ', '-', $str);
+        $str = str_replace('-', '- ', $str);
+        $str = str_replace('- ', '-', $str);
+
+        return $str;
+    }
+
+    private function lowerize($str)
+    {
+        if (extension_loaded('mbstring')) {
+            $str = mb_strtolower($str, 'UTF-8');
+        } else {
+            $str = strtolower($str);
+        }
+
+        return $str;
+    }
+
+    private function upperize($str)
+    {
+        if (extension_loaded('mbstring')) {
+            $str = mb_strtoupper($str, 'UTF-8');
+        } else {
+            $str = strtolower($str);
+        }
+
+        return $str;
     }
 }

@@ -10,7 +10,6 @@
 
 namespace Geocoder\Provider;
 
-use Geocoder\HttpAdapter\HttpAdapterInterface;
 use Geocoder\Provider\ProviderInterface;
 use DOMDocument;
 

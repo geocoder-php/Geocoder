@@ -18,7 +18,7 @@ interface ProviderInterface
     /**
      * Returns an associative array with data treated by the provider.
      *
-     * @param string $address   An address (IP or street).
+     * @param string $address An address (IP or street).
      * @return array
      */
     function getGeocodedData($address);
@@ -26,7 +26,7 @@ interface ProviderInterface
     /**
      * Returns an associative array with data treated by the provider.
      *
-     * @param array $coordinates    Coordinates (latitude, longitude).
+     * @param array $coordinates Coordinates (latitude, longitude).
      * @return array
      */
     function getReversedData(array $coordinates);

@@ -21,7 +21,7 @@ interface DumperInterface
      * Dump a `ResultInterface` object as a string representation of
      * the implemented format.
      *
-     * @param \Geocoder\Result\ResultInterface $result   A result object
+     * @param \Geocoder\Result\ResultInterface $result A result object
      * @return string
      */
     function dump(ResultInterface $result);
