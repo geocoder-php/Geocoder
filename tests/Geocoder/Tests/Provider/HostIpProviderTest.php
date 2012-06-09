@@ -94,4 +94,13 @@ class HostIpProviderTest extends TestCase
         $this->provider = new HostIpProvider($this->getMockAdapter($this->never()));
         $this->provider->getReversedData(array(1, 2));
     }
+
+    public function testGetGeocodedDataWithAnotherIp()
+    {
+        $this->provider = new HostIpProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter());
+        $result = $this->provider->getGeocodedData('33.33.33.22');
+
+        $this->assertNull($result['latitude']);
+        $this->assertNull($result['longitude']);
+    }
 }

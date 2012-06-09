@@ -73,12 +73,17 @@ class HostIpProvider extends AbstractProvider implements ProviderInterface
             ->children('', true)
             ->Hostip;
 
-        $lngLat = explode(',', (string) $dataNode
-            ->ipLocation
-            ->children('gml', true)
-            ->pointProperty
-            ->Point
-            ->coordinates);
+        if (isset($dataNode->ipLocation)) {
+            $lngLat = explode(',', (string) $dataNode
+                ->ipLocation
+                ->children('gml', true)
+                ->pointProperty
+                ->Point
+                ->coordinates
+            );
+        } else {
+            $lngLat = array(null, null);
+        }
 
         $city = (string) $dataNode
             ->children('gml', true)
