@@ -20,5 +20,10 @@
     },
     "autoload": {
         "psr-0": { "Geocoder": "src/" }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
     }
 }
