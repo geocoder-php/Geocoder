@@ -104,6 +104,8 @@ class YahooProvider extends AbstractProvider implements ProviderInterface
         $json = json_decode($content);
         if (isset($json->ResultSet) && isset($json->ResultSet->Results)) {
             $data = (array)$json->ResultSet->Results[0];
+        } elseif (isset($json->ResultSet) && isset($json->ResultSet->Result)) {
+            $data = (array)$json->ResultSet->Result;
         } else {
             return $this->getDefaults();
         }
