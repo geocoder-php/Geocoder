@@ -36,7 +36,7 @@ interface FormatterInterface
     /**
      * Format a ResultInterface object using a given format string.
      *
-     * @param  string $format
+     * @param string $format
      * @return string
      */
     function format($format);
