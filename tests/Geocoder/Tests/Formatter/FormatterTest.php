@@ -41,7 +41,7 @@ class FormatterTest extends TestCase
             ),
             array(
                 array('city' => 'Zuerich'),
-                '%T',
+                '%L',
                 'Zuerich'
             ),
             array(
@@ -51,7 +51,7 @@ class FormatterTest extends TestCase
             ),
             array(
                 array('county' => 'Collin County'),
-                '%K',
+                '%P',
                 'Collin County'
             ),
             array(
@@ -81,7 +81,7 @@ class FormatterTest extends TestCase
                     'zipcode'       => 8001,
                     'city'          => 'Zuerich',
                 ),
-                '%S %n, %z %T',
+                '%S %n, %z %L',
                 'Badenerstrasse 120, 8001 Zuerich'
             ),
             array(
@@ -91,7 +91,7 @@ class FormatterTest extends TestCase
                     'zipcode'       => 8001,
                     'city'          => 'Zuerich',
                 ),
-                '<p>%S %n, %z <a href="#%T">%T</a></p>',
+                '<p>%S %n, %z <a href="#%L">%L</a></p>',
                 '<p>Badenerstrasse 120, 8001 <a href="#Zuerich">Zuerich</a></p>'
             ),
             array(
@@ -101,7 +101,7 @@ class FormatterTest extends TestCase
                     'zipcode'       => 8001,
                     'city'          => 'Zuerich',
                 ),
-                '<p>%S %n, %z <a href="#%T">%T</a></p><p>%K</p>',
+                '<p>%S %n, %z <a href="#%L">%L</a></p><p>%P</p>',
                 '<p>Badenerstrasse 120, 8001 <a href="#Zuerich">Zuerich</a></p><p></p>'
             ),
         );

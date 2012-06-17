@@ -19,11 +19,11 @@ interface FormatterInterface
 
     const STREET_NAME   = '%S';
 
-    const CITY          = '%T';
+    const CITY          = '%L';
 
     const ZIPCODE       = '%z';
 
-    const COUNTY        = '%K';
+    const COUNTY        = '%P';
 
     const REGION        = '%R';
 

@@ -344,11 +344,11 @@ Here is the mapping:
 
 * Street Name: `%S`
 
-* City: `%T`
+* City: `%L`
 
 * Zipcode: `%z`
 
-* County: `%K`
+* County: `%P`
 
 * Region: `%R`
 
