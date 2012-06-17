@@ -126,6 +126,7 @@ class GoogleMapsProviderTest extends TestCase
         $this->provider = new GoogleMapsProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter());
         $result = $this->provider->getGeocodedData('Paris, France');
 
+        $this->assertNotNull($result['bounds']);
         $this->assertArrayHasKey('south', $result['bounds']);
         $this->assertArrayHasKey('west', $result['bounds']);
         $this->assertArrayHasKey('north', $result['bounds']);

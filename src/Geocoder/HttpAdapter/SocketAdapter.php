@@ -27,9 +27,14 @@ class SocketAdapter implements HttpAdapterInterface
         $port     = (isset($info['port']) ? $info['port'] : 80);
         $path     = (isset($info['path']) ? $info['path'] : '/');
         $query    = (isset($info['query']) ? '?'.$info['query'] : '');
-        $handle   = fsockopen($hostname, $port, $errno, $errstr, 30);
 
-        if (!$handle) {
+        try {
+            $handle = fsockopen($hostname, $port, $errno, $errstr, 30);
+        } catch (\Exception $e) {
+            $handle = null;
+        }
+
+        if (null === $handle) {
             throw new \RuntimeException(sprintf('Could not connect to socket. (%s)', $errstr));
         }
 

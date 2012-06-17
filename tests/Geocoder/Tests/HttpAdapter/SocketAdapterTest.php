@@ -17,7 +17,12 @@ class SocketAdapterTest extends TestCase
 
     public function testGetContent()
     {
-        $content = $this->adapter->getContent('http://www.google.de');
+        try {
+            $content = $this->adapter->getContent('http://www.google.de');
+        } catch (\Exception $e) {
+            $this->fail('Exception catched: ' . $e->getMessage());
+        }
+
         $this->assertNotNull($content);
         $this->assertContains('google', $content);
     }
