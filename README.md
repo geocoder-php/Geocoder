@@ -331,10 +331,10 @@ it's really easy to format a `ResultInterface` object as a string:
 // $result is an instance of ResultInterface
 $formatter = new \Geocoder\Formatter\Formatter($result);
 
-$formatter->format('%S %n, %z %T');
+$formatter->format('%S %n, %z %L');
 // 'Badenerstrasse 120, 8001 Zuerich'
 
-$formatter->format('<p>%S %n, %z %T</p>');
+$formatter->format('<p>%S %n, %z %L</p>');
 // '<p>Badenerstrasse 120, 8001 Zuerich</p>'
 ```
 
