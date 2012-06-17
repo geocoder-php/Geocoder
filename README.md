@@ -319,6 +319,46 @@ Well-known text (WKT) is a text markup language for representing vector geometry
 spatial reference systems of spatial objects and transformations between spatial reference systems.
 
 
+Formatter
+---------
+
+A common use case is to print geocoded data. Thanks to the `Formatter` class,
+it's really easy to format a `ResultInterface` object as a string:
+
+``` php
+<?php
+
+// $result is an instance of ResultInterface
+$formatter = new \Geocoder\Formatter\Formatter($result);
+
+$formatter->format('%S %n, %z %T');
+// 'Badenerstrasse 120, 8001 Zuerich'
+
+$formatter->format('<p>%S %n, %z %T</p>');
+// '<p>Badenerstrasse 120, 8001 Zuerich</p>'
+```
+
+Here is the mapping:
+
+* Street Number: '%n'
+
+* Street Name: '%S'
+
+* City: '%T'
+
+* Zipcode: '%z'
+
+* County: '%K'
+
+* Region: '%R'
+
+* Region Code: '%r'
+
+* Country: '%C'
+
+* Country Code: '%c'
+
+
 Extending Things
 ----------------
 
@@ -329,6 +369,8 @@ You can also write your own `provider` by implementing the `ProviderInterface`.
 Note, the `AbstractProvider` class can help you by providing useful features.
 
 You can provide your own `dumper` by implementing the `DumperInterface`.
+
+Write your own `formatter` by implementing the `FormatterInterface`.
 
 
 Unit Tests
