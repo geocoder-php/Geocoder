@@ -340,23 +340,23 @@ $formatter->format('<p>%S %n, %z %T</p>');
 
 Here is the mapping:
 
-* Street Number: '%n'
+* Street Number: `%n`
 
-* Street Name: '%S'
+* Street Name: `%S`
 
-* City: '%T'
+* City: `%T`
 
-* Zipcode: '%z'
+* Zipcode: `%z`
 
-* County: '%K'
+* County: `%K`
 
-* Region: '%R'
+* Region: `%R`
 
-* Region Code: '%r'
+* Region Code: `%r`
 
-* Country: '%C'
+* Country: `%C`
 
-* Country Code: '%c'
+* Country Code: `%c`
 
 
 Extending Things
