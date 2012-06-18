@@ -75,6 +75,11 @@ class FormatterTest extends TestCase
                 'fr'
             ),
             array(
+                array('cityDistrict' => 'District'),
+                '%D',
+                'District'
+            ),
+            array(
                 array(
                     'streetNumber'  => 120,
                     'streetName'    => 'Badenerstrasse',
