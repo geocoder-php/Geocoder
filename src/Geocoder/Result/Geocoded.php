@@ -31,7 +31,7 @@ class Geocoded implements ResultInterface, \ArrayAccess
     protected $bounds = null;
 
     /**
-     * @var int
+     * @var string|int
      */
     protected $streetNumber = null;
 
@@ -199,7 +199,7 @@ class Geocoded implements ResultInterface, \ArrayAccess
             );
         }
         if (isset($data['streetNumber'])) {
-            $this->streetNumber = (int) $data['streetNumber'];
+            $this->streetNumber = (string) $data['streetNumber'];
         }
         if (isset($data['streetName'])) {
             $this->streetName = $this->formatString($data['streetName']);

@@ -55,7 +55,7 @@ interface ResultInterface
     /**
      * Returns the street number value.
      *
-     * @return int
+     * @return string|int
      */
     function getStreetNumber();
 

@@ -220,4 +220,14 @@ class GeocodedTest extends TestCase
         $this->assertEquals('Midi-Pyrénées', $this->geocoded->getRegion());
         $this->assertEquals('France', $this->geocoded->getCountry());
     }
+
+    public function testFromArrayWithLettersInStreetNumber()
+    {
+        $array = array(
+            'streetNumber'   => '1A'
+        );
+
+        $this->geocoded->fromArray($array);
+        $this->assertEquals('1A', $this->geocoded->getStreetNumber());
+    }
 }
