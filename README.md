@@ -224,6 +224,7 @@ The `geocode()` method returns a `Geocoded` result object with the following API
 * `getStreetName()` will return the `street name` value;
 * `getCity()` will return the `city`;
 * `getZipcode()` will return the `zipcode`;
+* `getCityDistrict()` will return the `city district`, or `sublocality`;
 * `getCounty()` will return the `county`;
 * `getRegion()` will return the `region`;
 * `getRegionCode()` will return the `region` code (region short name);
