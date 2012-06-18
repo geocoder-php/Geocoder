@@ -23,6 +23,8 @@ interface FormatterInterface
 
     const ZIPCODE       = '%z';
 
+    const CITY_DISTRICT = '%D';
+
     const COUNTY        = '%P';
 
     const REGION        = '%R';

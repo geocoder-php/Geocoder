@@ -168,4 +168,12 @@ class GoogleMapsProviderTest extends TestCase
         $this->assertEquals('France', $result['country']);
         $this->assertEquals('FR', $result['countryCode']);
     }
+
+    public function testGetGeocodedDataWithCityDistrict()
+    {
+        $this->provider = new GoogleMapsProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter());
+        $result = $this->provider->getGeocodedData('Kalbacher Hauptstraße 10, 60437 Frankfurt, Germany');
+
+        $this->assertEquals('Kalbach/Riedberg', $result['cityDistrict']);
+    }
 }

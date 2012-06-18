@@ -81,6 +81,14 @@ interface ResultInterface
     function getZipcode();
 
     /**
+     * Returns the city district, or
+     * sublocality, or neighborhood.
+     *
+     * @return string
+     */
+    function getCityDistrict();
+
+    /**
      * Returns the county value.
      *
      * @return string

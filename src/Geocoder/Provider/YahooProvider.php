@@ -139,6 +139,7 @@ class YahooProvider extends AbstractProvider implements ProviderInterface
             'streetName'    => isset($data['street']) ? $data['street'] : null,
             'city'          => isset($data['city']) ? $data['city'] : null,
             'zipcode'       => $zipcode,
+            'cityDistrict'  => isset($data['neighborhood']) ? $data['neighborhood'] : null,
             'county'        => isset($data['county']) ? $data['county'] : null,
             'region'        => isset($data['state']) ? $data['state'] : null,
             'regionCode'    => null,

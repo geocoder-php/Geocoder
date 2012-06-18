@@ -43,6 +43,11 @@ class Geocoded implements ResultInterface, \ArrayAccess
     /**
      * @var string
      */
+    protected $cityDistrict = null;
+
+    /**
+     * @var string
+     */
     protected $city = null;
 
     /**
@@ -142,6 +147,14 @@ class Geocoded implements ResultInterface, \ArrayAccess
     /**
      * {@inheritDoc}
      */
+    public function getCityDistrict()
+    {
+        return $this->cityDistrict;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getCounty()
     {
         return $this->county;
@@ -210,6 +223,9 @@ class Geocoded implements ResultInterface, \ArrayAccess
         if (isset($data['zipcode'])) {
             $this->zipcode = (string) $data['zipcode'];
         }
+        if (isset($data['cityDistrict'])) {
+            $this->cityDistrict = $this->formatString($data['cityDistrict']);
+        }
         if (isset($data['county'])) {
             $this->county = $this->formatString($data['county']);
         }
@@ -240,6 +256,7 @@ class Geocoded implements ResultInterface, \ArrayAccess
             'streetName'    => $this->streetName,
             'zipcode'       => $this->zipcode,
             'city'          => $this->city,
+            'cityDistrict'  => $this->cityDistrict,
             'county'        => $this->county,
             'region'        => $this->region,
             'regionCode'    => $this->regionCode,

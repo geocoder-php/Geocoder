@@ -11,7 +11,6 @@
 namespace Geocoder\Provider;
 
 use Geocoder\Provider\ProviderInterface;
-use DOMDocument;
 
 /**
  * @author Niklas Närhinen <niklas@narhinen.net>
@@ -37,15 +36,14 @@ class OpenStreetMapsProvider extends AbstractProvider implements ProviderInterfa
             return $this->getLocalhostDefaults();
         }
 
-        $query = sprintf(self::GEOCODE_ENDPOINT_URL, urlencode($address));
-
+        $query   = sprintf(self::GEOCODE_ENDPOINT_URL, urlencode($address));
         $content = $this->executeQuery($query);
 
         if (null === $content) {
             return $this->getDefaults();
         }
 
-        $doc = new DOMDocument();
+        $doc = new \DOMDocument();
         if (@$doc->loadXML($content)) {
             $maxRank      = 0;
             $bestNode     = null;
@@ -83,6 +81,7 @@ class OpenStreetMapsProvider extends AbstractProvider implements ProviderInterfa
             $ret['streetNumber'] = $this->getNodeValue($bestNode->getElementsByTagName('house_number'));
             $ret['streetName']   = $this->getNodeValue($bestNode->getElementsByTagName('road'));
             $ret['city']         = $this->getNodeValue($bestNode->getElementsByTagName('city'));
+            $ret['cityDistrict'] = $this->getNodeValue($bestNode->getElementsByTagName('suburb'));
             $ret['country']      = $this->getNodeValue($bestNode->getElementsByTagName('country'));
             $ret['countryCode']  = strtoupper($this->getNodeValue($bestNode->getElementsByTagName('country_code')));
 
@@ -97,15 +96,14 @@ class OpenStreetMapsProvider extends AbstractProvider implements ProviderInterfa
      */
     public function getReversedData(array $coordinates)
     {
-        $query = sprintf(self::REVERSE_ENDPOINT_URL, $coordinates[0], $coordinates[1]);
-
+        $query   = sprintf(self::REVERSE_ENDPOINT_URL, $coordinates[0], $coordinates[1]);
         $content = $this->executeQuery($query);
 
         if (null === $content) {
             return $this->getDefaults();
         }
 
-        $doc = new DOMDocument();
+        $doc = new \DOMDocument();
         if (@$doc->loadXML($content)) {
             $maxRank          = 0;
             $bestNode         = null;
@@ -122,6 +120,7 @@ class OpenStreetMapsProvider extends AbstractProvider implements ProviderInterfa
             $ret['streetNumber'] = $this->getNodeValue($addressParts->getElementsByTagName('house_number'));
             $ret['streetName']   = $this->getNodeValue($addressParts->getElementsByTagName('road'));
             $ret['city']         = $this->getNodeValue($addressParts->getElementsByTagName('city'));
+            $ret['cityDistrict'] = $this->getNodeValue($addressParts->getElementsByTagName('suburb'));
             $ret['country']      = $this->getNodeValue($addressParts->getElementsByTagName('country'));
             $ret['countryCode']  = strtoupper($this->getNodeValue($addressParts->getElementsByTagName('country_code')));
 

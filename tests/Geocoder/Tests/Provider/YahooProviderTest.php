@@ -181,4 +181,16 @@ class YahooProviderTest extends TestCase
         $this->assertEquals('United States', $result['country']);
         $this->assertEquals('US', $result['countryCode']);
     }
+
+    public function testGetGeocodedDataWithCityDistrict()
+    {
+        if (!isset($_SERVER['YAHOO_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the YAHOO_API_KEY value in phpunit.xml');
+        }
+
+        $this->provider = new YahooProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter(), $_SERVER['YAHOO_API_KEY']);
+        $result = $this->provider->getGeocodedData('Kalbacher Hauptstraße 10, 60437 Frankfurt, Germany');
+
+        $this->assertEquals('Kalbach', $result['cityDistrict']);
+    }
 }

@@ -124,7 +124,7 @@ class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
     protected function updateAddressComponent(&$resultset, $type, $values)
     {
         switch ($type) {
-            case 'postal_code':
+        case 'postal_code':
                 $resultset['zipcode'] = $values->long_name;
                 break;
 
@@ -154,8 +154,11 @@ class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
                 $resultset['streetName'] = $values->long_name;
                 break;
 
-            default:
+            case 'sublocality':
+                $resultset['cityDistrict'] = $values->long_name;
                 break;
+
+            default:
         }
 
         return $resultset;

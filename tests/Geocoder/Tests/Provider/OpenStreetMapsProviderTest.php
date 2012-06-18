@@ -78,4 +78,12 @@ class OpenStreetMapsProviderTest extends TestCase
 
         $this->assertNull($result['city']);
     }
+
+    public function testGetGeocodedDataWithCityDistrict()
+    {
+        $this->provider = new OpenStreetMapsProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter());
+        $result = $this->provider->getGeocodedData('Kalbacher Hauptstraße, 60437 Frankfurt, Germany');
+
+        $this->assertNotNull('Kalbach', $result['cityDistrict']);
+    }
 }

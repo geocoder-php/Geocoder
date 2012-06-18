@@ -186,4 +186,16 @@ class CloudMadeProviderTest extends TestCase
         // not provided
         $this->assertNull($result['countryCode']);
     }
+
+    public function testGetGeocodedDataWithCityDistrict()
+    {
+        if (!isset($_SERVER['CLOUDMADE_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the CLOUDMADE_API_KEY value in phpunit.xml');
+        }
+
+        $this->provider = new CloudMadeProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter(), $_SERVER['CLOUDMADE_API_KEY']);
+        $result = $this->provider->getGeocodedData('Kalbacher Hauptstraße 10, 60437 Frankfurt, Germany');
+
+        $this->assertNull($result['cityDistrict']);
+    }
 }
