@@ -28,6 +28,12 @@ class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
             return $this->getLocalhostDefaults();
         }
 
+        // Google API returns invalid data if IP address given
+        // This API doesn't handle IPs
+        if (preg_match('/[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/', $address)) {
+            return $this->getDefaults();
+        }
+
         $query = sprintf(self::ENDPOINT_URL, urlencode($address));
 
         return $this->executeQuery($query);
