@@ -21,6 +21,7 @@ class FreeGeoIpProvider extends AbstractProvider implements ProviderInterface
     /**
      * @var string
      */
+
     const ENDPOINT_URL = 'http://freegeoip.net/json/%s';
 
     /**
@@ -65,35 +66,37 @@ class FreeGeoIpProvider extends AbstractProvider implements ProviderInterface
             return $this->getDefaults();
         }
 
-        $data = (array)json_decode($content);
+        $data = (array) json_decode($content);
 
         if (empty($data)) {
             return $this->getDefaults();
         }
 
         //it appears that for US states the region code is not returning the FIPS standard
-        if($data['country_code'] == 'US' && isset($data['region_code']) && !is_numeric($data['region_code'])) {
+        if ($data['country_code'] == 'US' && isset($data['region_code']) && !is_numeric($data['region_code'])) {
+
             $newRegionCode = $this->stateToRegionCode($data['region_code']);
-            if(is_numeric($newRegionCode)) {
+
+            if (is_numeric($newRegionCode)) {
                 $data['region_code'] = $newRegionCode;
-            }else{
+            } else {
                 $data['region_code'] = null;
             }
         }
 
         return array(
-            'latitude'      => isset($data['latitude']) ? $data['latitude'] : null,
-            'longitude'     => isset($data['longitude']) ? $data['longitude'] : null,
-            'city'          => isset($data['city']) ? $data['city'] : null,
-            'cityDistrict'  => null,
-            'zipcode'       => isset($data['zipcode']) ? $data['zipcode'] : null,
-            'region'        => isset($data['region_name']) ? $data['region_name'] : null,
-            'regionCode'    => isset($data['region_code']) ? $data['region_code'] : null,
-            'country'       => isset($data['country_name']) ? $data['country_name'] : null,
-            'countryCode'   => isset($data['country_code']) ? $data['country_code'] : null
+            'latitude' => isset($data['latitude']) ? $data['latitude'] : null,
+            'longitude' => isset($data['longitude']) ? $data['longitude'] : null,
+            'city' => isset($data['city']) ? $data['city'] : null,
+            'cityDistrict' => null,
+            'zipcode' => isset($data['zipcode']) ? $data['zipcode'] : null,
+            'region' => isset($data['region_name']) ? $data['region_name'] : null,
+            'regionCode' => isset($data['region_code']) ? $data['region_code'] : null,
+            'country' => isset($data['country_name']) ? $data['country_name'] : null,
+            'countryCode' => isset($data['country_code']) ? $data['country_code'] : null
         );
     }
-    
+
     /**
      * Converts the state code to FIPS standard
      * 
@@ -103,14 +106,14 @@ class FreeGeoIpProvider extends AbstractProvider implements ProviderInterface
     protected function stateToRegionCode($state)
     {
         $codes = $this->getRegionCodes();
-        
-        if(array_key_exists($state, $codes)) {
+
+        if (array_key_exists($state, $codes)) {
             return $codes[$state];
-        }else{
+        } else {
             return $state;
         }
     }
-    
+
     /**
      * Returns an array of state codes => FIPS codes
      * @see http://www.epa.gov/enviro/html/codes/state.html
@@ -118,7 +121,7 @@ class FreeGeoIpProvider extends AbstractProvider implements ProviderInterface
      */
     protected function getRegionCodes()
     {
-        
+
         $csv = <<<CSV
 AK,2,ALASKA
 AL,1,ALABAMA
@@ -176,15 +179,16 @@ WI,55,WISCONSIN
 WV,54,WEST VIRGINIA
 WY,56,WYOMING
 CSV;
-        
+
         $lines = explode("\n", $csv);
         $ret = array();
-        
-        foreach($lines as $line) {
+
+        foreach ($lines as $line) {
             $cols = str_getcsv($line);
             $ret[$cols[0]] = $cols[1];
         }
 
         return $ret;
     }
+
 }
