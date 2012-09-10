@@ -21,7 +21,7 @@ class ChainProviderTest extends TestCase
 
     public function testGetName()
     {
-        $chain = new ChainProvider;
+        $chain = new ChainProvider();
         $this->assertEquals('chain', $chain->getName());
     }
 
