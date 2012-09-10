@@ -23,11 +23,11 @@ class ChainProvider implements ProviderInterface
     /**
      * Constructor
      *
-     * @param array $provider
+     * @param array $providers
      */
-    public function __construct(array $provider = array())
+    public function __construct(array $providers = array())
     {
-        $this->providers = $provider;
+        $this->providers = $providers;
     }
 
     /**
