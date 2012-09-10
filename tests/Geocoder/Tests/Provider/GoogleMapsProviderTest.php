@@ -174,6 +174,6 @@ class GoogleMapsProviderTest extends TestCase
         $this->provider = new GoogleMapsProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter());
         $result = $this->provider->getGeocodedData('Kalbacher Hauptstraße 10, 60437 Frankfurt, Germany');
 
-        $this->assertEquals('Kalbach/Riedberg', $result['cityDistrict']);
+        $this->assertEquals('Kalbach-Riedberg', $result['cityDistrict']);
     }
 }
