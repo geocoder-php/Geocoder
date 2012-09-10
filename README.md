@@ -33,7 +33,9 @@ Currently, there are many providers for the following APIs:
 * [Bing Maps](http://msdn.microsoft.com/en-us/library/ff701715.aspx) as Address-Based geocoding and reverse geocoding provider;
 * [OpenStreetMaps](http://nominatim.openstreetmap.org/) as Address-Based geocoding and reverse geocoding provider;
 * [CloudMade](http://developers.cloudmade.com/projects/show/geocoding-http-api) as Address-Based geocoding and reverse geocoding provider;
-* [Geoip](http://php.net/manual/book.geoip.php), the PHP extension, as IP-Based geocoding provider.
+* [Geoip](http://php.net/manual/book.geoip.php), the PHP extension, as IP-Based geocoding provider;
+* ChainProvider is a special provider that takes a list of providers and iterates
+  over this list to get information.
 
 
 Installation
