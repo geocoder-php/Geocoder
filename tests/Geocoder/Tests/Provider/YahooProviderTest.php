@@ -108,9 +108,7 @@ class YahooProviderTest extends TestCase
         $this->assertEquals('Texas', $result['region']);
         $this->assertEquals('United States', $result['country']);
         $this->assertEquals('US', $result['countryCode']);
-
-        // not provided
-        $this->assertNull($result['timezone']);
+        $this->assertEquals('America/Chicago', $result['timezone']);
     }
 
     public function testGetGeocodedDataWithRealAddress()
@@ -140,9 +138,7 @@ class YahooProviderTest extends TestCase
         $this->assertEquals('Île-de-France', $result['region']);
         $this->assertEquals('France', $result['country']);
         $this->assertEquals('FR', $result['countryCode']);
-
-        // not provided
-        $this->assertNull($result['timezone']);
+        $this->assertEquals('Europe/Paris', $result['timezone']);
     }
 
     public function testGetReversedData()
