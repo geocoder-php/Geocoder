@@ -20,7 +20,7 @@ class BuzzHttpAdapterTest extends TestCase
     public function testGetFalseContent()
     {
         $buzz = new BuzzHttpAdapter();
-        $this->assertNull($buzz->getContent(null));
+        $this->assertNull($buzz->getContent(false));
     }
 
     public function testGetContentWithCustomBrowser()
