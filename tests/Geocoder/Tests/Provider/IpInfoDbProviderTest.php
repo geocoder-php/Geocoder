@@ -116,6 +116,7 @@ class IpInfoDbProviderTest extends TestCase
         $this->assertEquals('TEXAS', $result['region']);
         $this->assertEquals('UNITED STATES', $result['country']);
         $this->assertEquals('US', $result['countryCode']);
+        $this->assertEquals('America/Denver', $result['timezone']);
     }
 
     /**

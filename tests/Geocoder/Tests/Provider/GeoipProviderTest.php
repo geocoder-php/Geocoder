@@ -88,6 +88,7 @@ class GeoipProviderTest extends TestCase
         $this->assertEquals('TX', $result['region']);
         $this->assertEquals('United States', $result['country']);
         $this->assertEquals('US', $result['countryCode']);
+        $this->assertEquals('America/Chicago', $result['timezone']);
     }
 
     /**
