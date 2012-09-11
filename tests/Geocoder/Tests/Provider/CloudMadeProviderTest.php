@@ -33,6 +33,7 @@ class CloudMadeProviderTest extends TestCase
         $this->assertNull($result['county']);
         $this->assertNull($result['country']);
         $this->assertNull($result['countryCode']);
+        $this->assertNull($result['timezone']);
     }
 
     public function testGetGeocodedDataWithNull()
@@ -51,6 +52,7 @@ class CloudMadeProviderTest extends TestCase
         $this->assertNull($result['county']);
         $this->assertNull($result['country']);
         $this->assertNull($result['countryCode']);
+        $this->assertNull($result['timezone']);
     }
 
     public function testGetGeocodedDataWithEmpty()
@@ -69,6 +71,7 @@ class CloudMadeProviderTest extends TestCase
         $this->assertNull($result['county']);
         $this->assertNull($result['country']);
         $this->assertNull($result['countryCode']);
+        $this->assertNull($result['timezone']);
     }
 
     public function testGetGeocodedDataWithLocalhost()
@@ -80,6 +83,7 @@ class CloudMadeProviderTest extends TestCase
         $this->assertArrayNotHasKey('longitude', $result);
         $this->assertArrayNotHasKey('bounds', $result);
         $this->assertArrayNotHasKey('zipcode', $result);
+        $this->assertArrayNotHasKey('timezone', $result);
 
         $this->assertEquals('localhost', $result['city']);
         $this->assertEquals('localhost', $result['region']);
@@ -116,6 +120,7 @@ class CloudMadeProviderTest extends TestCase
 
         // not provided
         $this->assertNull($result['countryCode']);
+        $this->assertNull($result['timezone']);
     }
 
     public function testGetReversedData()
@@ -134,6 +139,7 @@ class CloudMadeProviderTest extends TestCase
         $this->assertNull($result['county']);
         $this->assertNull($result['country']);
         $this->assertNull($result['countryCode']);
+        $this->assertNull($result['timezone']);
     }
 
     public function testGetReversedDataWithRealCoordinates()
@@ -165,6 +171,7 @@ class CloudMadeProviderTest extends TestCase
 
         // not provided
         $this->assertNull($result['countryCode']);
+        $this->assertNull($result['timezone']);
     }
 
     public function testGetGeocodedDataWithRealAddress2()
@@ -185,6 +192,7 @@ class CloudMadeProviderTest extends TestCase
 
         // not provided
         $this->assertNull($result['countryCode']);
+        $this->assertNull($result['timezone']);
     }
 
     public function testGetGeocodedDataWithCityDistrict()
