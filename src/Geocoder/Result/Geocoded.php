@@ -81,6 +81,11 @@ class Geocoded implements ResultInterface, \ArrayAccess
     protected $countryCode = null;
 
     /**
+     * @var string
+     */
+    protected $timezone = null;
+
+    /**
      * {@inheritDoc}
      */
     public function getCoordinates()
@@ -195,6 +200,14 @@ class Geocoded implements ResultInterface, \ArrayAccess
     /**
      * {@inheritDoc}
      */
+    public function getTimezone()
+    {
+        return $this->timezone;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function fromArray(array $data = array())
     {
         if (isset($data['latitude'])) {
@@ -241,6 +254,9 @@ class Geocoded implements ResultInterface, \ArrayAccess
         if (isset($data['countryCode'])) {
             $this->countryCode = $this->lowerize($data['countryCode']);
         }
+        if (isset($data['timezone'])) {
+            $this->timezone = (string) $data['timezone'];
+        }
     }
 
     /**
@@ -262,6 +278,7 @@ class Geocoded implements ResultInterface, \ArrayAccess
             'regionCode'    => $this->regionCode,
             'country'       => $this->country,
             'countryCode'   => $this->countryCode,
+            'timezone'      => $this->timezone,
         );
     }
 

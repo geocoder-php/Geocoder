@@ -24,6 +24,7 @@ class GoogleMapsProviderTest extends TestCase
         $this->assertNull($result['region']);
         $this->assertNull($result['country']);
         $this->assertNull($result['countryCode']);
+        $this->assertNull($result['timezone']);
     }
 
     public function testGetGeocodedDataWithNull()
@@ -42,6 +43,7 @@ class GoogleMapsProviderTest extends TestCase
         $this->assertNull($result['region']);
         $this->assertNull($result['country']);
         $this->assertNull($result['countryCode']);
+        $this->assertNull($result['timezone']);
     }
 
     public function testGetGeocodedDataWithEmpty()
@@ -60,6 +62,7 @@ class GoogleMapsProviderTest extends TestCase
         $this->assertNull($result['region']);
         $this->assertNull($result['country']);
         $this->assertNull($result['countryCode']);
+        $this->assertNull($result['timezone']);
     }
 
     public function testGetGeocodedDataWithLocalhost()
@@ -71,6 +74,7 @@ class GoogleMapsProviderTest extends TestCase
         $this->assertArrayNotHasKey('longitude', $result);
         $this->assertArrayNotHasKey('bounds', $result);
         $this->assertArrayNotHasKey('zipcode', $result);
+        $this->assertArrayNotHasKey('timezone', $result);
 
         $this->assertEquals('localhost', $result['city']);
         $this->assertEquals('localhost', $result['region']);
@@ -94,6 +98,7 @@ class GoogleMapsProviderTest extends TestCase
         $this->assertNull($result['region']);
         $this->assertNull($result['country']);
         $this->assertNull($result['countryCode']);
+        $this->assertNull($result['timezone']);
     }
 
     public function testGetGeocodedDataWithRealAddress()
@@ -119,6 +124,9 @@ class GoogleMapsProviderTest extends TestCase
         $this->assertEquals('Île-de-France', $result['region']);
         $this->assertEquals('France', $result['country']);
         $this->assertEquals('FR', $result['countryCode']);
+
+        // not provided
+        $this->assertNull($result['timezone']);
     }
 
     public function testGetGeocodedDataBoundsWithRealAddressForNonRooftopLocation()
@@ -152,6 +160,7 @@ class GoogleMapsProviderTest extends TestCase
         $this->assertNull($result['region']);
         $this->assertNull($result['country']);
         $this->assertNull($result['countryCode']);
+        $this->assertNull($result['timezone']);
     }
 
     public function testGetReversedDataWithRealCoordinates()

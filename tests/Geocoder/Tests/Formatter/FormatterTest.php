@@ -75,6 +75,11 @@ class FormatterTest extends TestCase
                 'fr'
             ),
             array(
+                array('timezone' => 'Europe/Paris'),
+                '%T',
+                'Europe/Paris'
+            ),
+            array(
                 array('cityDistrict' => 'District'),
                 '%D',
                 'District'
