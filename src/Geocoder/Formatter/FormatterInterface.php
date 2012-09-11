@@ -35,6 +35,8 @@ interface FormatterInterface
 
     const COUNTRY_CODE  = '%c';
 
+    const TIMEZONE      = '%T';
+
     /**
      * Format a ResultInterface object using a given format string.
      *

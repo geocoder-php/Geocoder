@@ -100,7 +100,8 @@ class IpInfoDbProvider extends AbstractProvider implements ProviderInterface
             'region'      => isset($data['regionName']) ? $data['regionName'] : null,
             'regionCode'  => null,
             'country'     => isset($data['countryName']) ? $data['countryName'] : null,
-            'countryCode' => isset($data['countryName']) ? $data['countryCode'] : null
+            'countryCode' => isset($data['countryName']) ? $data['countryCode'] : null,
+            'timezone'    => isset($data['timezone']) ? $data['timezone'] : null
         );
     }
 }
