@@ -124,6 +124,13 @@ interface ResultInterface
     function getCountryCode();
 
     /**
+     * Returns the timezone.
+     *
+     * @return string
+     */
+    function getTimezone();
+
+    /**
      * Extracts data from an array.
      *
      * @param array $data An array.
