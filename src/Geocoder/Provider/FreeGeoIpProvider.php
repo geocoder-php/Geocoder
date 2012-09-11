@@ -73,7 +73,7 @@ class FreeGeoIpProvider extends AbstractProvider implements ProviderInterface
         }
 
         //it appears that for US states the region code is not returning the FIPS standard
-        if ($data['country_code'] == 'US' && isset($data['region_code']) && !is_numeric($data['region_code'])) {
+        if ('US' == $data['country_code'] && isset($data['region_code']) && !is_numeric($data['region_code'])) {
 
             $newRegionCode = $this->stateToRegionCode($data['region_code']);
 
@@ -85,15 +85,15 @@ class FreeGeoIpProvider extends AbstractProvider implements ProviderInterface
         }
 
         return array(
-            'latitude' => isset($data['latitude']) ? $data['latitude'] : null,
-            'longitude' => isset($data['longitude']) ? $data['longitude'] : null,
-            'city' => isset($data['city']) ? $data['city'] : null,
-            'cityDistrict' => null,
-            'zipcode' => isset($data['zipcode']) ? $data['zipcode'] : null,
-            'region' => isset($data['region_name']) ? $data['region_name'] : null,
-            'regionCode' => isset($data['region_code']) ? $data['region_code'] : null,
-            'country' => isset($data['country_name']) ? $data['country_name'] : null,
-            'countryCode' => isset($data['country_code']) ? $data['country_code'] : null
+            'latitude'      => isset($data['latitude']) ? $data['latitude'] : null,
+            'longitude'     => isset($data['longitude']) ? $data['longitude'] : null,
+            'city'          => isset($data['city']) ? $data['city'] : null,
+            'cityDistrict'  => null,
+            'zipcode'       => isset($data['zipcode']) ? $data['zipcode'] : null,
+            'region'        => isset($data['region_name']) ? $data['region_name'] : null,
+            'regionCode'    => isset($data['region_code']) ? $data['region_code'] : null,
+            'country'       => isset($data['country_name']) ? $data['country_name'] : null,
+            'countryCode'   => isset($data['country_code']) ? $data['country_code'] : null
         );
     }
 
