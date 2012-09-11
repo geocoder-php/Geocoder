@@ -21,12 +21,12 @@ class YahooProvider extends AbstractProvider implements ProviderInterface
     /**
      * @var string
      */
-    const GEOCODE_ENDPOINT_URL = 'http://where.yahooapis.com/geocode?q=%s&flags=JX&appid=%s';
+    const GEOCODE_ENDPOINT_URL = 'http://where.yahooapis.com/geocode?q=%s&flags=JXT&appid=%s';
 
     /**
      * @var string
      */
-    const REVERSE_ENDPOINT_URL = 'http://where.yahooapis.com/geocode?q=%F,+%F&gflags=R&flags=JX&appid=%s';
+    const REVERSE_ENDPOINT_URL = 'http://where.yahooapis.com/geocode?q=%F,+%F&gflags=RT&flags=JX&appid=%s';
 
     /**
      * @var string
@@ -144,7 +144,8 @@ class YahooProvider extends AbstractProvider implements ProviderInterface
             'region'        => isset($data['state']) ? $data['state'] : null,
             'regionCode'    => null,
             'country'       => isset($data['country']) ? $data['country'] : null,
-            'countryCode'   => isset($data['countrycode']) ? $data['countrycode'] : null
+            'countryCode'   => isset($data['countrycode']) ? $data['countrycode'] : null,
+            'timezone'      => isset($data['timezone']) ? $data['timezone'] : null
         );
     }
 }
