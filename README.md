@@ -196,6 +196,7 @@ $result = $geocoder->geocode('88.188.221.14');
 // "county"         => string(6) "Loiret"
 // "region"         => string(6) "Centre"
 // "country"        => string(6) "France"
+// "timezone"       => string(6) "Europe/Paris"
 
 $result = $geocoder->geocode('10 rue Gambetta, Paris, France');
 // Result is:
@@ -214,6 +215,7 @@ $result = $geocoder->geocode('10 rue Gambetta, Paris, France');
 // "zipcode"        => string(5) "75020"
 // "region"         => string(14) "Ile-de-France"
 // "country"        => string(6) "France"
+// "timezone"       => string(6) "Europe/Paris"
 ```
 
 The `geocode()` method returns a `Geocoded` result object with the following API, this object also implements the `ArrayAccess` interface:
@@ -231,7 +233,8 @@ The `geocode()` method returns a `Geocoded` result object with the following API
 * `getRegion()` will return the `region`;
 * `getRegionCode()` will return the `region` code (region short name);
 * `getCountry()` will return the `country`;
-* `getCountryCode()` will return the ISO country code.
+* `getCountryCode()` will return the ISO country code;
+* `getTimezone()` will return the timezone.
 
 The Geocoder's API is fluent, you can write:
 
@@ -360,6 +363,8 @@ Here is the mapping:
 * Country: `%C`
 
 * Country Code: `%c`
+
+* Timezone: `%T`
 
 
 Extending Things
