@@ -79,6 +79,24 @@ class FreeGeoIpProviderTest extends TestCase
         $this->assertEquals('US', $result['countryCode']);
     }
 
+    public function testGetGeocodedDataWithUSIp()
+    {
+        $this->provider = new FreeGeoIpProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter());
+        $result = $this->provider->getGeocodedData('74.200.247.59');
+
+        $this->assertEquals('48', $result['regionCode']);
+
+    }
+
+    public function testGetGeocodedDataWithUKIp()
+    {
+        $this->provider = new FreeGeoIpProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter());
+        $result = $this->provider->getGeocodedData('132.185.255.60');
+
+        $this->assertEquals('H9', $result['regionCode']);
+
+    }
+    
     /**
      * @expectedException \Geocoder\Exception\UnsupportedException
      */
