@@ -88,9 +88,6 @@ class HostIpProviderTest extends TestCase
         $this->assertArrayNotHasKey('region', $result);
         $this->assertEquals('FRANCE', $result['country']);
         $this->assertEquals('FR', $result['countryCode']);
-
-        // not provided
-        $this->assertNull($result['timezone']);
     }
 
     /**

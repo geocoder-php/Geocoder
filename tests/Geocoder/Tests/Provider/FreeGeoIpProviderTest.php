@@ -80,11 +80,7 @@ class FreeGeoIpProviderTest extends TestCase
         $this->assertEquals('Plano', $result['city']);
         $this->assertEquals('Texas', $result['region']);
         $this->assertEquals('United States', $result['country']);
-        $this->assertNull($result['timezone']);
-
-        // not provided
         $this->assertEquals('US', $result['countryCode']);
-        $this->assertNull($result['timezone']);
     }
 
     /**
