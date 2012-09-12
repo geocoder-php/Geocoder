@@ -11,12 +11,27 @@
             "email": "william.durand1@gmail.com"
         }
     ],
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "http://packages.zendframework.com/"
+        }
+    ],
     "require": {
-        "php": ">=5.3.0"
+        "php": ">=5.3.0",
+        "symfony/class-loader": "*",
+        "symfony/event-dispatcher": "*",
+        "kriswallsmith/buzz": "*",
+        "guzzle/guzzle": "*",
+        "zendframework/zend-http": "*",
+        "zendframework/zend-uri": "*",
+        "zendframework/zend-loader": "*",
+        "zendframework/zend-validator": "*"
     },
     "suggest": {
         "kriswallsmith/buzz": "Enabling Buzz allows you to use the BuzzHttpAdapter, it's the recommended HTTP layer.",
-        "ext-curl": "Enabling the curl extension allows you to use CurlHttpAdapter."
+        "ext-curl": "Enabling the curl extension allows you to use CurlHttpAdapter.",
+        "guzzle/guzzle": "Enabling Guzzle allows you to use the GuzzleHttpAdapter."
     },
     "autoload": {
         "psr-0": { "Geocoder": "src/" }
