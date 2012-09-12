@@ -5,7 +5,7 @@ php:
     - 5.4
 
 before_script:
-    - sudo apt-get install -y subversion
-    - ./bin/install_vendors.sh
+    - curl -s http://getcomposer.org/installer | php
+    - php composer.phar install --dev
 
 script: phpunit --coverage-text
