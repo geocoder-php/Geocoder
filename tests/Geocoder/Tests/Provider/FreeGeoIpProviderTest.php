@@ -100,7 +100,7 @@ class FreeGeoIpProviderTest extends TestCase
         $this->assertEquals('H9', $result['regionCode']);
 
     }
-    
+
     /**
      * @expectedException \Geocoder\Exception\UnsupportedException
      */

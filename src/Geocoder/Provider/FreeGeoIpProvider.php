@@ -21,7 +21,6 @@ class FreeGeoIpProvider extends AbstractProvider implements ProviderInterface
     /**
      * @var string
      */
-
     const ENDPOINT_URL = 'http://freegeoip.net/json/%s';
 
     /**
@@ -73,8 +72,7 @@ class FreeGeoIpProvider extends AbstractProvider implements ProviderInterface
         }
 
         //it appears that for US states the region code is not returning the FIPS standard
-        if ('US' == $data['country_code'] && isset($data['region_code']) && !is_numeric($data['region_code'])) {
-
+        if ('US' === $data['country_code'] && isset($data['region_code']) && !is_numeric($data['region_code'])) {
             $newRegionCode = $this->stateToRegionCode($data['region_code']);
 
             if (is_numeric($newRegionCode)) {
@@ -93,36 +91,37 @@ class FreeGeoIpProvider extends AbstractProvider implements ProviderInterface
             'region'        => isset($data['region_name']) ? $data['region_name'] : null,
             'regionCode'    => isset($data['region_code']) ? $data['region_code'] : null,
             'country'       => isset($data['country_name']) ? $data['country_name'] : null,
-            'countryCode'   => isset($data['country_code']) ? $data['country_code'] : null
+            'countryCode'   => isset($data['country_code']) ? $data['country_code'] : null,
+            'timezone'      => null,
         );
     }
 
     /**
      * Converts the state code to FIPS standard
-     * 
-     * @param string $state
-     * @return the FIPS code or the state code if not found
+     *
+     * @param  string $state
+     * @return The FIPS code or the state code if not found
      */
-    protected function stateToRegionCode($state)
+    private function stateToRegionCode($state)
     {
         $codes = $this->getRegionCodes();
 
         if (array_key_exists($state, $codes)) {
             return $codes[$state];
-        } else {
-            return $state;
         }
+
+        return $state;
     }
 
     /**
      * Returns an array of state codes => FIPS codes
      * @see http://www.epa.gov/enviro/html/codes/state.html
-     * @return type
+     *
+     * @return array
      */
-    protected function getRegionCodes()
+    private function getRegionCodes()
     {
-
-        $states = array(
+        return array(
             'AK' => 2, //ALASKA
             'AL' => 1, //ALABAMA
             'AR' => 5, //ARKANSAS
@@ -181,5 +180,4 @@ class FreeGeoIpProvider extends AbstractProvider implements ProviderInterface
 
         return $states;
     }
-
 }
