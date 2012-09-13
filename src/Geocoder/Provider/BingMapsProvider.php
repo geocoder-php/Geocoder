@@ -143,7 +143,8 @@ class BingMapsProvider extends AbstractProvider implements ProviderInterface
             'region'        => empty($region) ? null : $region,
             'regionCode'    => null,
             'country'       => empty($country) ? null : $country,
-            'countryCode'   => null
+            'countryCode'   => null,
+            'timezone'      => null,
         );
     }
 }

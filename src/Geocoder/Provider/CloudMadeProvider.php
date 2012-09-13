@@ -144,7 +144,8 @@ class CloudMadeProvider extends AbstractProvider implements ProviderInterface
             'regionCode'    => null,
             'county'        => isset($data['location']->county) ? $data['location']->county : null,
             'country'       => isset($data['location']->country) ? $data['location']->country : null,
-            'countryCode'   => null
+            'countryCode'   => null,
+            'timezone'      => null,
         );
     }
 }
