@@ -21,6 +21,7 @@ class FreeGeoIpProvider extends AbstractProvider implements ProviderInterface
     /**
      * @var string
      */
+
     const ENDPOINT_URL = 'http://freegeoip.net/json/%s';
 
     /**
@@ -71,6 +72,18 @@ class FreeGeoIpProvider extends AbstractProvider implements ProviderInterface
             return $this->getDefaults();
         }
 
+        //it appears that for US states the region code is not returning the FIPS standard
+        if ('US' == $data['country_code'] && isset($data['region_code']) && !is_numeric($data['region_code'])) {
+
+            $newRegionCode = $this->stateToRegionCode($data['region_code']);
+
+            if (is_numeric($newRegionCode)) {
+                $data['region_code'] = $newRegionCode;
+            } else {
+                $data['region_code'] = null;
+            }
+        }
+
         return array(
             'latitude'      => isset($data['latitude']) ? $data['latitude'] : null,
             'longitude'     => isset($data['longitude']) ? $data['longitude'] : null,
@@ -78,9 +91,95 @@ class FreeGeoIpProvider extends AbstractProvider implements ProviderInterface
             'cityDistrict'  => null,
             'zipcode'       => isset($data['zipcode']) ? $data['zipcode'] : null,
             'region'        => isset($data['region_name']) ? $data['region_name'] : null,
-            'regionCode'    => null,
+            'regionCode'    => isset($data['region_code']) ? $data['region_code'] : null,
             'country'       => isset($data['country_name']) ? $data['country_name'] : null,
             'countryCode'   => isset($data['country_code']) ? $data['country_code'] : null
         );
     }
+
+    /**
+     * Converts the state code to FIPS standard
+     * 
+     * @param string $state
+     * @return the FIPS code or the state code if not found
+     */
+    protected function stateToRegionCode($state)
+    {
+        $codes = $this->getRegionCodes();
+
+        if (array_key_exists($state, $codes)) {
+            return $codes[$state];
+        } else {
+            return $state;
+        }
+    }
+
+    /**
+     * Returns an array of state codes => FIPS codes
+     * @see http://www.epa.gov/enviro/html/codes/state.html
+     * @return type
+     */
+    protected function getRegionCodes()
+    {
+
+        $states = array(
+            'AK' => 2, //ALASKA
+            'AL' => 1, //ALABAMA
+            'AR' => 5, //ARKANSAS
+            'AS' => 60, //AMERICAN SAMOA
+            'AZ' => 4, //ARIZONA
+            'CA' => 6, //CALIFORNIA
+            'CO' => 8, //COLORADO
+            'CT' => 9, //CONNECTICUT
+            'DC' => 11, //DISTRICT OF COLUMBIA
+            'DE' => 10, //DELAWARE
+            'FL' => 12, //FLORIDA
+            'GA' => 13, //GEORGIA
+            'GU' => 66, //GUAM
+            'HI' => 15, //HAWAII
+            'IA' => 19, //IOWA
+            'ID' => 16, //IDAHO
+            'IL' => 17, //ILLINOIS
+            'IN' => 18, //INDIANA
+            'KS' => 20, //KANSAS
+            'KY' => 21, //KENTUCKY
+            'LA' => 22, //LOUISIANA
+            'MA' => 25, //MASSACHUSETTS
+            'MD' => 24, //MARYLAND
+            'ME' => 23, //MAINE
+            'MI' => 26, //MICHIGAN
+            'MN' => 27, //MINNESOTA
+            'MO' => 29, //MISSOURI
+            'MS' => 28, //MISSISSIPPI
+            'MT' => 30, //MONTANA
+            'NC' => 37, //NORTH CAROLINA
+            'ND' => 38, //NORTH DAKOTA
+            'NE' => 31, //NEBRASKA
+            'NH' => 33, //NEW HAMPSHIRE
+            'NJ' => 34, //NEW JERSEY
+            'NM' => 35, //NEW MEXICO
+            'NV' => 32, //NEVADA
+            'NY' => 36, //NEW YORK
+            'OH' => 39, //OHIO
+            'OK' => 40, //OKLAHOMA
+            'OR' => 41, //OREGON
+            'PA' => 42, //PENNSYLVANIA
+            'PR' => 72, //PUERTO RICO
+            'RI' => 44, //RHODE ISLAND
+            'SC' => 45, //SOUTH CAROLINA
+            'SD' => 46, //SOUTH DAKOTA
+            'TN' => 47, //TENNESSEE
+            'TX' => 48, //TEXAS
+            'UT' => 49, //UTAH
+            'VA' => 51, //VIRGINIA
+            'VI' => 78, //VIRGIN ISLANDS
+            'VT' => 50, //VERMONT
+            'WA' => 53, //WASHINGTON
+            'WI' => 55, //WISCONSIN
+            'WV' => 54, //WEST VIRGINIA
+        );
+
+        return $states;
+    }
+
 }
