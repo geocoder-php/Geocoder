@@ -76,7 +76,7 @@ class Geocoder implements GeocoderInterface
     /**
      * Registers a provider.
      *
-     * @param \Geocoder\Provider\ProviderInterface $provider
+     * @param  \Geocoder\Provider\ProviderInterface $provider
      * @return \Geocoder\GeocoderInterface
      */
     public function registerProvider(ProviderInterface $provider)
@@ -91,7 +91,7 @@ class Geocoder implements GeocoderInterface
     /**
      * Registers a set of providers.
      *
-     * @param array $providers
+     * @param  array                       $providers
      * @return \Geocoder\GeocoderInterface
      */
     public function registerProviders(array $providers = array())
@@ -106,7 +106,7 @@ class Geocoder implements GeocoderInterface
     /**
      * Sets the provider to use.
      *
-     * @param string $name A provider's name
+     * @param  string                      $name A provider's name
      * @return \Geocoder\GeocoderInterface
      */
     public function using($name)
@@ -147,7 +147,7 @@ class Geocoder implements GeocoderInterface
     }
 
     /**
-     * @param array $data An array of data.
+     * @param  array                     $data An array of data.
      * @return \Geocoder\Result\Geocoded
      */
     protected function returnResult(array $data = array())

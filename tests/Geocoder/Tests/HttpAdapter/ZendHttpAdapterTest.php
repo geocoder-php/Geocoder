@@ -6,7 +6,6 @@ use Geocoder\Tests\TestCase;
 
 use Geocoder\HttpAdapter\ZendHttpAdapter;
 use Zend\Http\Client;
-use Zend\Http\Response;
 
 /**
  * @author William Durand <william.durand1@gmail.com>

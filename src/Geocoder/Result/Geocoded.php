@@ -325,7 +325,7 @@ class Geocoded implements ResultInterface, \ArrayAccess
     /**
      * Format a string data.
      *
-     * @param string $str A string.
+     * @param  string $str A string.
      * @return string
      */
     private function formatString($str)

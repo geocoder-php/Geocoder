@@ -120,7 +120,7 @@ class BingMapsProviderTest extends TestCase
         $this->assertEquals('Paris', $result['county']);
         $this->assertEquals('IdF', $result['region']);
         $this->assertEquals('France', $result['country']);
-        
+
         $this->assertNull($result['countryCode']);
         $this->assertNull($result['timezone']);
     }

@@ -26,7 +26,7 @@ class FormatterTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    static public function dataProviderForTestFormat()
+    public static function dataProviderForTestFormat()
     {
         return array(
             array(

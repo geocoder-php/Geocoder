@@ -20,12 +20,12 @@ interface HttpAdapterInterface
      *
      * @return string
      */
-    function getContent($url);
+    public function getContent($url);
 
     /**
      * Returns the name of the HTTP Adapter.
      *
      * @return string
      */
-    function getName();
+    public function getName();
 }

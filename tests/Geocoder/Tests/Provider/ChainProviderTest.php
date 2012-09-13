@@ -38,7 +38,6 @@ class ChainProviderTest extends TestCase
             ->with(array('11', '22'))
             ->will($this->returnValue(array('foo' => 'bar')));
 
-
         $chain = new ChainProvider(array($mockOne, $mockTwo));
 
         $this->assertEquals(array('foo' => 'bar'), $chain->getReversedData(array('11', '22')));
@@ -56,7 +55,6 @@ class ChainProviderTest extends TestCase
             ->method('getGeocodedData')
             ->with('Paris')
             ->will($this->returnValue(array('foo' => 'bar')));
-
 
         $chain = new ChainProvider(array($mockOne, $mockTwo));
 

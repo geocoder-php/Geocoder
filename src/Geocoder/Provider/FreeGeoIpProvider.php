@@ -54,7 +54,7 @@ class FreeGeoIpProvider extends AbstractProvider implements ProviderInterface
     }
 
     /**
-     * @param string $query
+     * @param  string $query
      * @return array
      */
     protected function executeQuery($query)
@@ -65,7 +65,7 @@ class FreeGeoIpProvider extends AbstractProvider implements ProviderInterface
             return $this->getDefaults();
         }
 
-        $data = (array)json_decode($content);
+        $data = (array) json_decode($content);
 
         if (empty($data)) {
             return $this->getDefaults();

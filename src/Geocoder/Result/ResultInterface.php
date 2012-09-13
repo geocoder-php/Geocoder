@@ -20,21 +20,21 @@ interface ResultInterface
      *
      * @return array
      */
-    function getCoordinates();
+    public function getCoordinates();
 
     /**
      * Returns the latitude value.
      *
      * @return double
      */
-    function getLatitude();
+    public function getLatitude();
 
     /**
      * Returns the longitude value.
      *
      * @return double
      */
-    function getLongitude();
+    public function getLongitude();
 
     /**
      * Returns the bounds value.
@@ -50,35 +50,35 @@ interface ResultInterface
      *
      * @return array
      */
-    function getBounds();
+    public function getBounds();
 
     /**
      * Returns the street number value.
      *
      * @return string|int
      */
-    function getStreetNumber();
+    public function getStreetNumber();
 
     /**
      * Returns the street name value.
      *
      * @return string
      */
-    function getStreetName();
+    public function getStreetName();
 
     /**
      * Returns the city value.
      *
      * @return string
      */
-    function getCity();
+    public function getCity();
 
     /**
      * Returns the zipcode value.
      *
      * @return string
      */
-    function getZipcode();
+    public function getZipcode();
 
     /**
      * Returns the city district, or
@@ -86,61 +86,61 @@ interface ResultInterface
      *
      * @return string
      */
-    function getCityDistrict();
+    public function getCityDistrict();
 
     /**
      * Returns the county value.
      *
      * @return string
      */
-    function getCounty();
+    public function getCounty();
 
     /**
      * Returns the region value.
      *
      * @return string
      */
-    function getRegion();
+    public function getRegion();
 
     /**
      * Returns the region short name.
      *
      * @return string
      */
-    function getRegionCode();
+    public function getRegionCode();
 
     /**
      * Returns the country value.
      *
      * @return string
      */
-    function getCountry();
+    public function getCountry();
 
     /**
      * Returns the country ISO code.
      *
      * @return string
      */
-    function getCountryCode();
+    public function getCountryCode();
 
     /**
      * Returns the timezone.
      *
      * @return string
      */
-    function getTimezone();
+    public function getTimezone();
 
     /**
      * Extracts data from an array.
      *
      * @param array $data An array.
      */
-    function fromArray(array $data = array());
+    public function fromArray(array $data = array());
 
     /**
      * Returns an array with data indexed by name.
      *
      * @return array
      */
-    function toArray();
+    public function toArray();
 }

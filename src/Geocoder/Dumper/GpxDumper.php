@@ -19,7 +19,7 @@ use Geocoder\Result\ResultInterface;
 class GpxDumper implements DumperInterface
 {
     /**
-     * @param \Geocoder\Result\ResultInterface $result
+     * @param  \Geocoder\Result\ResultInterface $result
      * @return string
      */
     public function dump(ResultInterface $result)
@@ -61,7 +61,7 @@ GPX;
     }
 
     /**
-     * @param \Geocoder\Result\ResultInterface $result
+     * @param  \Geocoder\Result\ResultInterface $result
      * @return string
      */
     protected function formatName(ResultInterface $result)
