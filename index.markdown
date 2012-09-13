@@ -124,6 +124,7 @@ $result = $geocoder->geocode('88.188.221.14');
 // "county"         => string(6) "Loiret"
 // "region"         => string(6) "Centre"
 // "country"        => string(6) "France"
+// "timezone"       => string(6) "Europe/Paris"
 
 $result = $geocoder->geocode('10 rue Gambetta, Paris, France');
 // Result is:
@@ -142,6 +143,7 @@ $result = $geocoder->geocode('10 rue Gambetta, Paris, France');
 // "zipcode"        => string(5) "75020"
 // "region"         => string(14) "Ile-de-France"
 // "country"        => string(6) "France"
+// "timezone"       => string(6) "Europe/Paris"
 
 $result = $geocoder->reverse($latitude, $longitude);
 {% endhighlight %}
@@ -159,7 +161,8 @@ $result = $geocoder->reverse($latitude, $longitude);
             <li><code>getCounty()</code> will return the <code>county</code> value;</li>
             <li><code>getRegion()</code> will return the <code>region</code> value;</li>
             <li><code>getCountry()</code> will return te <code>country</code> value;</li>
-            <li><code>getCountryCode()</code> will return the ISO country code.</li>
+            <li><code>getCountryCode()</code> will return the ISO country code;</li>
+            <li><code>getTimezone()</code> will return the timezone.</li>
         </ul>
         <p><br /></p>
         <p>The Geocoder's API is fluent, you can write:</p>
@@ -246,7 +249,7 @@ $result = $geocoder
         </p>
         <p><br /></p>
         <p>The MIT License</p>
-        <p>Copyright (c) 2010-2011 william.durand1[at]gmail.com</p>
+        <p>Copyright (c) 2011-2012 william.durand1[at]gmail.com</p>
         <p>Permission is hereby granted, free of charge, to any person obtaining a copy
         of this software and associated documentation files (the "Software"), to deal
         in the Software without restriction, including without limitation the rights
