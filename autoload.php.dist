@@ -1,20 +1,3 @@
 <?php
 
-if (!class_exists('\Symfony\Component\ClassLoader\UniversalClassLoader')) {
-    require_once __DIR__ . '/vendor/Symfony/Component/ClassLoader/UniversalClassLoader.php';
-}
-
-$loader = new \Symfony\Component\ClassLoader\UniversalClassLoader();
-$loader->registerNamespaces(array(
-    'Geocoder\Tests'    => __DIR__ . '/tests',
-    'Symfony\Component' => __DIR__ . '/vendor',
-    'Buzz'              => __DIR__ . '/vendor/Buzz/lib',
-    'Guzzle'            => __DIR__ . '/vendor/Guzzle/src',
-));
-$loader->registerPrefixes(array(
-    'Zend_'             => __DIR__ . '/vendor',
-));
-$loader->register();
-
-// Use the bundled autoloader
-require_once __DIR__.'/src/autoload.php';
+require_once __DIR__ . '/vendor/autoload.php';

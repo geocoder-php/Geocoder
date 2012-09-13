@@ -89,7 +89,7 @@ class YahooProviderTest extends TestCase
             $this->markTestSkipped('You need to configure the YAHOO_API_KEY value in phpunit.xml');
         }
 
-        $this->provider = new YahooProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter(), $_SERVER['YAHOO_API_KEY']);
+        $this->provider = new YahooProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['YAHOO_API_KEY']);
         $result = $this->provider->getGeocodedData('74.200.247.59');
 
         $this->assertEquals(33.036711, $result['latitude'], '', 0.0001);
@@ -117,7 +117,7 @@ class YahooProviderTest extends TestCase
             $this->markTestSkipped('You need to configure the YAHOO_API_KEY value in phpunit.xml');
         }
 
-        $this->provider = new YahooProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter(), $_SERVER['YAHOO_API_KEY']);
+        $this->provider = new YahooProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['YAHOO_API_KEY']);
         $result = $this->provider->getGeocodedData('10 avenue Gambetta, Paris, France');
 
         $this->assertEquals(48.863217, $result['latitude'], '', 0.0001);
@@ -166,7 +166,7 @@ class YahooProviderTest extends TestCase
             $this->markTestSkipped('You need to configure the YAHOO_API_KEY value in phpunit.xml');
         }
 
-        $this->provider = new YahooProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter(), $_SERVER['YAHOO_API_KEY']);
+        $this->provider = new YahooProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['YAHOO_API_KEY']);
         $result = $this->provider->getReversedData(array(33.036711, -96.813541));
 
         $this->assertEquals(33.036711, $result['latitude'], '', 0.0001);
@@ -198,7 +198,7 @@ class YahooProviderTest extends TestCase
             $this->markTestSkipped('You need to configure the YAHOO_API_KEY value in phpunit.xml');
         }
 
-        $this->provider = new YahooProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter(), $_SERVER['YAHOO_API_KEY']);
+        $this->provider = new YahooProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['YAHOO_API_KEY']);
         $result = $this->provider->getGeocodedData('Kalbacher Hauptstraße 10, 60437 Frankfurt, Germany');
 
         $this->assertEquals('Kalbach', $result['cityDistrict']);

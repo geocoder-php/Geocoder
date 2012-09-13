@@ -11,6 +11,13 @@ use Geocoder\HttpAdapter\BuzzHttpAdapter;
  */
 class BuzzHttpAdapterTest extends TestCase
 {
+    protected function setUp()
+    {
+        if (!class_exists('Buzz\Browser')) {
+            $this->markTestSkipped('Buzz library has to be installed');
+        }
+    }
+
     public function testGetNullContent()
     {
         $buzz = new BuzzHttpAdapter();

@@ -71,7 +71,7 @@ class FreeGeoIpProviderTest extends TestCase
 
     public function testGetGeocodedDataWithRealIp()
     {
-        $this->provider = new FreeGeoIpProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter());
+        $this->provider = new FreeGeoIpProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result = $this->provider->getGeocodedData('74.200.247.59');
 
         $this->assertEquals(33.0347, $result['latitude'], '', 0.0001);

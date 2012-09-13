@@ -10,26 +10,24 @@
 
 namespace Geocoder\HttpAdapter;
 
+use Zend\Http\Client;
+
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
 class ZendHttpAdapter implements HttpAdapterInterface
 {
     /**
-     * @var \Zend_Http_Client_Adapter_Interface
+     * @var Client
      */
-    protected $adapter;
+    protected $client;
 
     /**
-     * @param \Buzz\Browser $browser
+     * @param Client $client Client object
      */
-    public function __construct(\Zend_Http_Client_Adapter_Interface $adapter = null)
+    public function __construct(Client $client = null)
     {
-        if (null === $adapter) {
-            $this->adapter = new \Zend_Http_Client_Adapter_Socket();
-        } else {
-            $this->adapter = $adapter;
-        }
+        $this->client = null === $client ? new Client() : $client;
     }
 
     /**
@@ -38,17 +36,14 @@ class ZendHttpAdapter implements HttpAdapterInterface
     public function getContent($url)
     {
         try {
-            $http = new \Zend_Http_Client($url, array(
-                'adapter' => $this->adapter
-            ));
-            $reponse = $http->request();
+            $response = $this->client->setUri($url)->send();
 
-            if ($reponse->isSuccessful()) {
-                $content = $reponse->getBody();
+            if ($response->isSuccess()) {
+                $content = $response->getBody();
             } else {
                 $content = null;
             }
-        } catch (\Zend_Http_Client_Exception $e) {
+        } catch (\Exception $e) {
             $content = null;
         }
 

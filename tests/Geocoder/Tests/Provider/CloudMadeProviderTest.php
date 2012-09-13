@@ -97,7 +97,7 @@ class CloudMadeProviderTest extends TestCase
             $this->markTestSkipped('You need to configure the CLOUDMADE_API_KEY value in phpunit.xml');
         }
 
-        $this->provider = new CloudMadeProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter(), $_SERVER['CLOUDMADE_API_KEY']);
+        $this->provider = new CloudMadeProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['CLOUDMADE_API_KEY']);
         $result = $this->provider->getGeocodedData('36 Quai des Orfèvres, Paris, France');
 
         $this->assertEquals(48.85645, $result['latitude'], '', 0.0001);
@@ -148,7 +148,7 @@ class CloudMadeProviderTest extends TestCase
             $this->markTestSkipped('You need to configure the CLOUDMADE_API_KEY value in phpunit.xml');
         }
 
-        $this->provider = new CloudMadeProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter(), $_SERVER['CLOUDMADE_API_KEY']);
+        $this->provider = new CloudMadeProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['CLOUDMADE_API_KEY']);
         $result = $this->provider->getReversedData(array(48.85657, 2.35325));
 
         $this->assertEquals(48.85657, $result['latitude'], '', 0.0001);
@@ -180,7 +180,7 @@ class CloudMadeProviderTest extends TestCase
             $this->markTestSkipped('You need to configure the CLOUDMADE_API_KEY value in phpunit.xml');
         }
 
-        $this->provider = new CloudMadeProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter(), $_SERVER['CLOUDMADE_API_KEY']);
+        $this->provider = new CloudMadeProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['CLOUDMADE_API_KEY']);
         $result = $this->provider->getGeocodedData('73 Boulevard Schuman, Clermont-Ferrand');
 
         $this->assertNull($result['streetNumber']);
@@ -201,7 +201,7 @@ class CloudMadeProviderTest extends TestCase
             $this->markTestSkipped('You need to configure the CLOUDMADE_API_KEY value in phpunit.xml');
         }
 
-        $this->provider = new CloudMadeProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter(), $_SERVER['CLOUDMADE_API_KEY']);
+        $this->provider = new CloudMadeProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['CLOUDMADE_API_KEY']);
         $result = $this->provider->getGeocodedData('Kalbacher Hauptstraße 10, 60437 Frankfurt, Germany');
 
         $this->assertNull($result['cityDistrict']);
