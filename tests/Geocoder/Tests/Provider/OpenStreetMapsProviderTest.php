@@ -10,7 +10,7 @@ class OpenStreetMapsProviderTest extends TestCase
 {
     public function testGetGeocodedDataWithRealAddress()
     {
-        $this->provider = new OpenStreetMapsProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter());
+        $this->provider = new OpenStreetMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result = $this->provider->getGeocodedData('Läntinen Pitkäkatu 35, Turku');
 
         $this->assertEquals(60.4539471768582, $result['latitude'], '', 0.0001);
@@ -56,7 +56,7 @@ class OpenStreetMapsProviderTest extends TestCase
 
     public function testGetReversedDataWithRealCoordinates()
     {
-        $this->provider = new OpenStreetMapsProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter());
+        $this->provider = new OpenStreetMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result = $this->provider->getReversedData(array('60.4539471728726', '22.2567841926781'));
 
         $this->assertEquals(60.4539471768582, $result['latitude'], '', 0.0001);
@@ -73,7 +73,7 @@ class OpenStreetMapsProviderTest extends TestCase
 
     public function testGetGeocodedDataWithUnknownCity()
     {
-        $this->provider = new OpenStreetMapsProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter());
+        $this->provider = new OpenStreetMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result = $this->provider->getGeocodedData('Hammm');
 
         $this->assertNull($result['city']);
@@ -81,7 +81,7 @@ class OpenStreetMapsProviderTest extends TestCase
 
     public function testGetGeocodedDataWithCityDistrict()
     {
-        $this->provider = new OpenStreetMapsProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter());
+        $this->provider = new OpenStreetMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result = $this->provider->getGeocodedData('Kalbacher Hauptstraße, 60437 Frankfurt, Germany');
 
         $this->assertNotNull('Kalbach', $result['cityDistrict']);
