@@ -78,7 +78,7 @@ class HostIpProviderTest extends TestCase
 
     public function testGetGeocodedDataWithRealIp()
     {
-        $this->provider = new HostIpProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter());
+        $this->provider = new HostIpProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result = $this->provider->getGeocodedData('88.188.221.14');
 
         $this->assertEquals(45.5333, $result['latitude'], '', 0.0001);
@@ -101,7 +101,7 @@ class HostIpProviderTest extends TestCase
 
     public function testGetGeocodedDataWithAnotherIp()
     {
-        $this->provider = new HostIpProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter());
+        $this->provider = new HostIpProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result = $this->provider->getGeocodedData('33.33.33.22');
 
         $this->assertNull($result['latitude']);

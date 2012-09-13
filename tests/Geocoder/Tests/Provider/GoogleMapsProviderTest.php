@@ -84,7 +84,7 @@ class GoogleMapsProviderTest extends TestCase
 
     public function testGetGeocodedDataWithRealIp()
     {
-        $this->provider = new GoogleMapsProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter());
+        $this->provider = new GoogleMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result = $this->provider->getGeocodedData('74.200.247.59');
 
         $this->assertNull($result['latitude']);
@@ -103,7 +103,7 @@ class GoogleMapsProviderTest extends TestCase
 
     public function testGetGeocodedDataWithRealAddress()
     {
-        $this->provider = new GoogleMapsProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter());
+        $this->provider = new GoogleMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result = $this->provider->getGeocodedData('10 avenue Gambetta, Paris, France');
 
         $this->assertEquals(48.8630462, $result['latitude'], '', 0.001);
@@ -131,7 +131,7 @@ class GoogleMapsProviderTest extends TestCase
 
     public function testGetGeocodedDataBoundsWithRealAddressForNonRooftopLocation()
     {
-        $this->provider = new GoogleMapsProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter());
+        $this->provider = new GoogleMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result = $this->provider->getGeocodedData('Paris, France');
 
         $this->assertNotNull($result['bounds']);
@@ -165,7 +165,7 @@ class GoogleMapsProviderTest extends TestCase
 
     public function testGetReversedDataWithRealCoordinates()
     {
-        $this->provider = new GoogleMapsProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter());
+        $this->provider = new GoogleMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result = $this->provider->getReversedData(array(48.8631507, 2.388911));
 
         $this->assertEquals(10, $result['streetNumber']);
@@ -180,7 +180,7 @@ class GoogleMapsProviderTest extends TestCase
 
     public function testGetGeocodedDataWithCityDistrict()
     {
-        $this->provider = new GoogleMapsProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter());
+        $this->provider = new GoogleMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result = $this->provider->getGeocodedData('Kalbacher Hauptstraße 10, 60437 Frankfurt, Germany');
 
         $this->assertEquals('Kalbach-Riedberg', $result['cityDistrict']);

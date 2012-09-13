@@ -100,7 +100,7 @@ class BingMapsProviderTest extends TestCase
             $this->markTestSkipped('You need to configure the BINGMAPS_API_KEY value in phpunit.xml');
         }
 
-        $this->provider = new BingMapsProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter(), $_SERVER['BINGMAPS_API_KEY']);
+        $this->provider = new BingMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['BINGMAPS_API_KEY']);
         $result = $this->provider->getGeocodedData('10 avenue Gambetta, Paris, France');
 
         $this->assertEquals(48.86321675999999, $result['latitude'], '', 0.0001);
@@ -150,7 +150,7 @@ class BingMapsProviderTest extends TestCase
             $this->markTestSkipped('You need to configure the BINGMAPS_API_KEY value in phpunit.xml');
         }
 
-        $this->provider = new BingMapsProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter(), $_SERVER['BINGMAPS_API_KEY']);
+        $this->provider = new BingMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['BINGMAPS_API_KEY']);
         $result = $this->provider->getReversedData(array(48.86321648955345, 2.3887719959020615));
 
         $this->assertEquals(48.86321648955345, $result['latitude'], '', 0.0001);
@@ -181,7 +181,7 @@ class BingMapsProviderTest extends TestCase
             $this->markTestSkipped('You need to configure the BINGMAPS_API_KEY value in phpunit.xml');
         }
 
-        $this->provider = new BingMapsProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter(), $_SERVER['BINGMAPS_API_KEY']);
+        $this->provider = new BingMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['BINGMAPS_API_KEY']);
         $result = $this->provider->getGeocodedData('Hannover');
 
         $this->assertNull($result['zipcode']);
@@ -194,7 +194,7 @@ class BingMapsProviderTest extends TestCase
             $this->markTestSkipped('You need to configure the BINGMAPS_API_KEY value in phpunit.xml');
         }
 
-        $this->provider = new BingMapsProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter(), $_SERVER['BINGMAPS_API_KEY']);
+        $this->provider = new BingMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['BINGMAPS_API_KEY']);
         $result = $this->provider->getGeocodedData('Kalbacher Hauptstraße 10, 60437 Frankfurt, Germany');
 
         $this->assertNull($result['cityDistrict']);
