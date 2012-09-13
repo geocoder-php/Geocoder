@@ -384,10 +384,10 @@ Write your own `formatter` by implementing the `FormatterInterface`.
 Unit Tests
 ----------
 
-To run unit tests, you'll need a set of dependencies you can install by running the `install_vendors.sh` script:
+To run unit tests, you'll need a set of dependencies you can install using Composer:
 
 ```
-./bin/install_vendors.sh
+php composer.phar install --dev
 ```
 
 Once installed, just launch the following command:
