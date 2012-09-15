@@ -359,7 +359,7 @@ class Geocoded implements ResultInterface, \ArrayAccess
         if (extension_loaded('mbstring')) {
             $str = mb_strtoupper($str, 'UTF-8');
         } else {
-            $str = strtolower($str);
+            $str = strtoupper($str);
         }
 
         return $str;
