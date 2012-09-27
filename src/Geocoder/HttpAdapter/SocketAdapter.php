@@ -56,6 +56,7 @@ class SocketAdapter implements HttpAdapterInterface
             $line = trim(fgets($handle));
             if(!$line){
                 $reachedEndOfHeaders = true;
+                continue;
             }
             if(!$reachedEndOfHeaders) {
                 if (preg_match('@^HTTP/\d\.\d\s*(\d+)\s*.*$@', $line, $matches)) {
