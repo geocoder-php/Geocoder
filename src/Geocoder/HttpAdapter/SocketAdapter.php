@@ -50,12 +50,19 @@ class SocketAdapter implements HttpAdapterInterface
 
         $rawHeaders = array();
         $rawContent = '';
+        $reachedEndOfHeaders = false;
+
         while (!feof($handle)) {
             $line = trim(fgets($handle));
-            if (preg_match('@^HTTP/\d\.\d\s*(\d+)\s*.*$@', $line, $matches)) {
-                $rawHeaders['status'] = (integer) $matches[1];
-            } elseif (preg_match('@^(.*):(.*)@', $line, $matches)) {
-                $rawHeaders[strtolower($matches[1])] = trim($matches[2]);
+            if(!$line){
+                $reachedEndOfHeaders = true;
+            }
+            if(!$reachedEndOfHeaders) {
+                if (preg_match('@^HTTP/\d\.\d\s*(\d+)\s*.*$@', $line, $matches)) {
+                    $rawHeaders['status'] = (integer) $matches[1];
+                } elseif (preg_match('@^([^:]+): (.+)@', $line, $matches)) {
+                    $rawHeaders[strtolower($matches[1])] = trim($matches[2]);
+                }
             } else {
                 $rawContent .= $line;
             }
