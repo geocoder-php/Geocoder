@@ -15,9 +15,6 @@ class SocketAdapterTest extends TestCase
         $this->adapter = new SocketAdapter();
     }
 
-    /**
-     * @group isolate
-     */
     public function testGetContent()
     {
         try {
@@ -58,9 +55,6 @@ class SocketAdapterTest extends TestCase
         );
     }
 
-    /**
-     * @group isolate
-     */
     public function testParseHtmlResponse()
     {
         $method = new \ReflectionMethod(
