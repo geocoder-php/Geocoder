@@ -16,6 +16,7 @@ namespace Geocoder\HttpAdapter;
 class SocketAdapter implements HttpAdapterInterface
 {
     const MAX_REDIRECTS = 5;
+
     private $redirects_remaining = self::MAX_REDIRECTS;
 
     /**
@@ -40,7 +41,7 @@ class SocketAdapter implements HttpAdapterInterface
         $httpResponse = $this->getParsedHttpResponse($socketHandle);
 
         if ($httpResponse['headers']['status'] === 301 && isset($httpResponse['headers']['location'])) {
-            if(--$this->redirects_remaining){
+            if (--$this->redirects_remaining) {
                 return $this->getContent($httpResponse['headers']['location']);
             } else {
                 throw new \RuntimeException('Too Many Redirects');
@@ -60,9 +61,9 @@ class SocketAdapter implements HttpAdapterInterface
      * This method strictly doesn't need to exist but can act as a "seam" for substituting fake sockets in test.
      * This would require a subclass that overloads the method and returns the fake socket.
      *
-     * @param string $hostname
-     * @param string $port
-     * @param int $timeout
+     * @param  string            $hostname
+     * @param  string            $port
+     * @param  int               $timeout
      * @return resource
      * @throws \RuntimeException
      */
@@ -71,7 +72,7 @@ class SocketAdapter implements HttpAdapterInterface
         $socketHandle = fsockopen($hostname, $port, $errno, $errstr, $timeout) ?: null;
 
         //verify handle
-        if (null === $socketHandle){
+        if (null === $socketHandle) {
             throw new \RuntimeException(sprintf('Could not connect to socket. (%s)', $errstr));
         }
 
@@ -79,8 +80,8 @@ class SocketAdapter implements HttpAdapterInterface
     }
 
     /**
-     * @param string $path
-     * @param string $hostname
+     * @param  string $path
+     * @param  string $hostname
      * @return string
      */
     protected function buildHttpRequest($path, $hostname)
@@ -98,7 +99,7 @@ class SocketAdapter implements HttpAdapterInterface
     /**
      * Given a resource parse the contents into its component parts (headers/contents)
      *
-     * @param resource $socketHandle
+     * @param  resource $socketHandle
      * @return array
      */
     protected function getParsedHttpResponse($socketHandle)
@@ -111,15 +112,14 @@ class SocketAdapter implements HttpAdapterInterface
 
         while (!feof($socketHandle)) {
             $line = trim(fgets($socketHandle));
-            if(!$line){
+            if (!$line) {
                 $reachedEndOfHeaders = true;
                 continue;
             }
-            if(!$reachedEndOfHeaders) {
+            if (!$reachedEndOfHeaders) {
                 if (preg_match('@^HTTP/\d\.\d\s*(\d+)\s*.*$@', $line, $matches)) {
-                    $httpResponse['headers']['status'] = (integer)$matches[1];
-                }
-                elseif (preg_match('@^([^:]+): (.+)$@', $line, $matches)) {
+                    $httpResponse['headers']['status'] = (integer) $matches[1];
+                } elseif (preg_match('@^([^:]+): (.+)$@', $line, $matches)) {
                     $httpResponse['headers'][strtolower($matches[1])] = trim($matches[2]);
                 }
             } else {

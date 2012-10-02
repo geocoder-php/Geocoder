@@ -100,7 +100,7 @@ class FreeGeoIpProvider extends AbstractProvider implements ProviderInterface
      * Converts the state code to FIPS standard
      *
      * @param  string $state
-     * @return The FIPS code or the state code if not found
+     * @return The    FIPS code or the state code if not found
      */
     private function stateToRegionCode($state)
     {
