@@ -177,7 +177,5 @@ class FreeGeoIpProvider extends AbstractProvider implements ProviderInterface
             'WI' => 55, //WISCONSIN
             'WV' => 54, //WEST VIRGINIA
         );
-
-        return $states;
     }
 }
