@@ -208,7 +208,10 @@ $result = $geocoder
                 <td><a href="http://php.net/manual/book.geoip.php">Geoip PHP extension</a> as IP-Based geocoding provider</td>
                 <td><a href="http://developer.yahoo.com/geo/placefinder/">Yahoo! PlaceFinder</a> as Address-Based geocoding and reverse geocoding provider</td>
             </tr>
-
+            <tr>
+                <td></td>
+                <td><a href="http://open.mapquestapi.com/geocoding/">MapQuest</a> as Address-Based geocoding and reverse geocoding provider</td>
+            </td>
         </table>
     </section>
 </div>
