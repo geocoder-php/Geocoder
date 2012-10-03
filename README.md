@@ -35,7 +35,8 @@ Currently, there are many providers for the following APIs:
 * [CloudMade](http://developers.cloudmade.com/projects/show/geocoding-http-api) as Address-Based geocoding and reverse geocoding provider;
 * [Geoip](http://php.net/manual/book.geoip.php), the PHP extension, as IP-Based geocoding provider;
 * ChainProvider is a special provider that takes a list of providers and iterates
-  over this list to get information.
+  over this list to get information;
+* [MapQuest](http://open.mapquestapi.com/) as Address-Based geocoding and reverse geocoding provider.
 
 
 Installation
