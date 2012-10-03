@@ -333,7 +333,7 @@ class Geocoded implements ResultInterface, \ArrayAccess
         if (extension_loaded('mbstring')) {
             $str = mb_convert_case($str, MB_CASE_TITLE, 'UTF-8');
         } else {
-            $str = strtolower($str);
+            $str = $this->lowerize($str);
             $str = ucwords($str);
         }
 

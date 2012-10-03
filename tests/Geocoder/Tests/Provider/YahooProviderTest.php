@@ -131,11 +131,11 @@ class YahooProviderTest extends TestCase
         $this->assertEquals(48.863217, $result['bounds']['north'], '', 0.01);
         $this->assertEquals(2.388821, $result['bounds']['east'], '', 0.01);
         $this->assertEquals(10, $result['streetNumber']);
-        $this->assertEquals('Avenue Gambetta', $result['streetName']);
+        $this->assertEquals('avenue Gambetta', $result['streetName']);
         $this->assertEquals(75020, $result['zipcode']);
         $this->assertEquals('Paris', $result['city']);
         $this->assertEquals('Paris', $result['county']);
-        $this->assertEquals('Ile-de-France', $result['region']);
+        $this->assertEquals('Île-de-France', $result['region']);
         $this->assertEquals('France', $result['country']);
         $this->assertEquals('FR', $result['countryCode']);
         $this->assertEquals('Europe/Paris', $result['timezone']);
