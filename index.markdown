@@ -211,7 +211,7 @@ $result = $geocoder
             <tr>
                 <td></td>
                 <td><a href="http://open.mapquestapi.com/geocoding/">MapQuest</a> as Address-Based geocoding and reverse geocoding provider</td>
-            </td>
+            </tr>
         </table>
     </section>
 </div>
