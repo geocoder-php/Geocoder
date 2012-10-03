@@ -10,6 +10,7 @@
 
 namespace Geocoder\Provider;
 
+use Geocoder\HttpAdapter\HttpAdapterInterface;
 use Geocoder\Provider\ProviderInterface;
 
 /**
@@ -18,6 +19,23 @@ use Geocoder\Provider\ProviderInterface;
 class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
 {
     const ENDPOINT_URL = 'http://maps.googleapis.com/maps/api/geocode/json?address=%s&sensor=false';
+
+    /**
+     * @var string
+     */
+    private $region = null;
+
+    /**
+     * @param \Geocoder\HttpAdapter\HttpAdapterInterface $adapter An HTTP adapter.
+     * @param string                                     $locale  A locale (optional).
+     * @param string                                     $region  Region biasing (optional).
+     */
+    public function __construct(HttpAdapterInterface $adapter, $locale = null, $region = null)
+    {
+        parent::__construct($adapter, $locale);
+        
+        $this->region = $region;
+    }
 
     /**
      * {@inheritDoc}
@@ -63,6 +81,10 @@ class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
     {
         if (null !== $this->getLocale()) {
             $query = sprintf('%s&language=%s', $query, $this->getLocale());
+        }
+
+        if (null !== $this->getRegion()) {
+            $query = sprintf('%s&region=%s', $query, $this->getRegion());
         }
 
         $content = $this->getAdapter()->getContent($query);
@@ -168,5 +190,15 @@ class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
         }
 
         return $resultset;
+    }
+    
+    /**
+     * Returns the configured region or null.
+     *
+     * @return string|null
+     */
+    protected function getRegion()
+    {
+        return $this->region;
     }
 }
