@@ -11,6 +11,8 @@
 namespace Geocoder\Provider;
 
 use Geocoder\Exception\UnsupportedException;
+use Geocoder\Exception\NoResultException;
+use Geocoder\Exception\InvalidCredentialsException;
 use Geocoder\HttpAdapter\HttpAdapterInterface;
 use Geocoder\Provider\ProviderInterface;
 
@@ -46,11 +48,11 @@ class IpInfoDbProvider extends AbstractProvider implements ProviderInterface
     public function getGeocodedData($address)
     {
         if (null === $this->apiKey) {
-            throw new \RuntimeException('No API Key provided');
+            throw new InvalidCredentialsException('No API Key provided');
         }
 
         if ('127.0.0.1' === $address) {
-            return $this->getLocalhostDefaults();
+            throw new NoResultException("The address '127.0.0.1' is not supported");
         }
 
         $query = sprintf(self::ENDPOINT_URL, $this->apiKey, $address);
@@ -83,13 +85,13 @@ class IpInfoDbProvider extends AbstractProvider implements ProviderInterface
         $content = $this->getAdapter()->getContent($query);
 
         if (null === $content) {
-            return $this->getDefaults();
+            throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
         $data = (array) json_decode($content);
 
         if (empty($data) || 'OK' !== $data['statusCode']) {
-            return $this->getDefaults();
+            throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
         $timezone = null;

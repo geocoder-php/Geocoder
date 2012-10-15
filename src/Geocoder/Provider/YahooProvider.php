@@ -12,6 +12,8 @@ namespace Geocoder\Provider;
 
 use Geocoder\HttpAdapter\HttpAdapterInterface;
 use Geocoder\Provider\ProviderInterface;
+use Geocoder\Exception\InvalidCredentialsException;
+use Geocoder\Exception\NoResultException;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -51,11 +53,11 @@ class YahooProvider extends AbstractProvider implements ProviderInterface
     public function getGeocodedData($address)
     {
         if (null === $this->apiKey) {
-            throw new \RuntimeException('No API Key provided');
+            throw new InvalidCredentialsException('No API Key provided');
         }
 
         if ('127.0.0.1' === $address) {
-            return $this->getLocalhostDefaults();
+            throw new NoResultException("The address '127.0.0.1' is not supported");
         }
 
         $query = sprintf(self::GEOCODE_ENDPOINT_URL, urlencode($address), $this->apiKey);
@@ -69,7 +71,7 @@ class YahooProvider extends AbstractProvider implements ProviderInterface
     public function getReversedData(array $coordinates)
     {
         if (null === $this->apiKey) {
-            throw new \RuntimeException('No API Key provided');
+            throw new InvalidCredentialsException('No API Key provided');
         }
 
         $query = sprintf(self::REVERSE_ENDPOINT_URL, $coordinates[0], $coordinates[1], $this->apiKey);
@@ -98,7 +100,7 @@ class YahooProvider extends AbstractProvider implements ProviderInterface
         $content = $this->getAdapter()->getContent($query);
 
         if (null === $content) {
-            return $this->getDefaults();
+            throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
         $json = json_decode($content);
@@ -107,7 +109,7 @@ class YahooProvider extends AbstractProvider implements ProviderInterface
         } elseif (isset($json->ResultSet) && isset($json->ResultSet->Result)) {
             $data = (array) $json->ResultSet->Result;
         } else {
-            return $this->getDefaults();
+            throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
         $bounds = null;
