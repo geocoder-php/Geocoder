@@ -27,7 +27,7 @@ class OpenStreetMapsProviderTest extends TestCase
         $this->assertEquals(35, $result['streetNumber']);
         $this->assertEquals('Läntinen Pitkäkatu', $result['streetName']);
         $this->assertEquals('Turku', $result['city']);
-        $this->assertEquals('Varsinais-Suomi', $result['county']);
+        $this->assertEquals('Finland Proper', $result['county']);
         $this->assertEquals(null, $result['region']);
         $this->assertEquals('Finland', $result['country']);
         $this->assertEquals('FI', $result['countryCode']);
@@ -65,7 +65,7 @@ class OpenStreetMapsProviderTest extends TestCase
         $this->assertEquals('Läntinen Pitkäkatu', $result['streetName']);
         $this->assertEquals(20100, $result['zipcode']);
         $this->assertEquals('Turku', $result['city']);
-        $this->assertEquals('Varsinais-Suomi', $result['county']);
+        $this->assertEquals('Finland Proper', $result['county']);
         $this->assertEquals(null, $result['region']);
         $this->assertEquals('Finland', $result['country']);
         $this->assertEquals('FI', $result['countryCode']);
