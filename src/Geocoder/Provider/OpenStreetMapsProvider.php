@@ -12,6 +12,7 @@ namespace Geocoder\Provider;
 
 use Geocoder\Exception\UnsupportedException;
 use Geocoder\Provider\ProviderInterface;
+use Geocoder\Exception\NoResultException;
 
 /**
  * @author Niklas Närhinen <niklas@narhinen.net>
@@ -46,55 +47,55 @@ class OpenStreetMapsProvider extends AbstractProvider implements ProviderInterfa
         $content = $this->executeQuery($query);
 
         if (null === $content) {
-            return $this->getDefaults();
+            throw new NoResultException(sprintf('Could not resolve address "%s"', $address));
         }
 
         $doc = new \DOMDocument();
-        if (@$doc->loadXML($content)) {
-            $maxRank      = 0;
-            $bestNode     = null;
-            $searchResult = $doc->getElementsByTagName('searchresults')->item(0);
-
-            if (null === $searchResult) {
-                return $this->getDefaults();
-            }
-
-            foreach ($searchResult->getElementsByTagName('place') as $node) {
-                if ($node->getAttribute('place_rank') > $maxRank) {
-                    $maxRank  = $node->getAttribute('place_rank');
-                    $bestNode = $node;
-                }
-            }
-
-            if (null === $bestNode) {
-                return $this->getDefaults();
-            }
-
-            $bounds = null;
-            $boundsAttr = $bestNode->getAttribute('boundingbox');
-            if ($boundsAttr) {
-                $bounds = array();
-                list($bounds['south'], $bounds['north'], $bounds['west'], $bounds['east']) = explode(',', $boundsAttr);
-            }
-
-            $ret = $this->getDefaults();
-            $ret['latitude']     = $bestNode->getAttribute('lat');
-            $ret['longitude']    = $bestNode->getAttribute('lon');
-            $ret['bounds']       = $bounds;
-            $ret['zipcode']      = $this->getNodeValue($bestNode->getElementsByTagName('postcode'));
-            $ret['county']       = $this->getNodeValue($bestNode->getElementsByTagName('county'));
-            $ret['region']       = $this->getNodeValue($bestNode->getElementsByTagName('state'));
-            $ret['streetNumber'] = $this->getNodeValue($bestNode->getElementsByTagName('house_number'));
-            $ret['streetName']   = $this->getNodeValue($bestNode->getElementsByTagName('road'));
-            $ret['city']         = $this->getNodeValue($bestNode->getElementsByTagName('city'));
-            $ret['cityDistrict'] = $this->getNodeValue($bestNode->getElementsByTagName('suburb'));
-            $ret['country']      = $this->getNodeValue($bestNode->getElementsByTagName('country'));
-            $ret['countryCode']  = strtoupper($this->getNodeValue($bestNode->getElementsByTagName('country_code')));
-
-            return $ret;
-        } else {
-            return $this->getDefaults();
+        if (!@$doc->loadXML($content)) {
+            throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
+
+        $maxRank      = 0;
+        $bestNode     = null;
+        $searchResult = $doc->getElementsByTagName('searchresults')->item(0);
+
+        if (null === $searchResult) {
+            throw new NoResultException(sprintf('Could not execute query %s', $query));
+        }
+
+        foreach ($searchResult->getElementsByTagName('place') as $node) {
+            if ($node->getAttribute('place_rank') > $maxRank) {
+                $maxRank  = $node->getAttribute('place_rank');
+                $bestNode = $node;
+            }
+        }
+
+        if (null === $bestNode) {
+            throw new NoResultException(sprintf('Could not execute query %s', $query));
+        }
+
+        $bounds = null;
+        $boundsAttr = $bestNode->getAttribute('boundingbox');
+        if ($boundsAttr) {
+            $bounds = array();
+            list($bounds['south'], $bounds['north'], $bounds['west'], $bounds['east']) = explode(',', $boundsAttr);
+        }
+
+        $ret = $this->getDefaults();
+        $ret['latitude']     = $bestNode->getAttribute('lat');
+        $ret['longitude']    = $bestNode->getAttribute('lon');
+        $ret['bounds']       = $bounds;
+        $ret['zipcode']      = $this->getNodeValue($bestNode->getElementsByTagName('postcode'));
+        $ret['county']       = $this->getNodeValue($bestNode->getElementsByTagName('county'));
+        $ret['region']       = $this->getNodeValue($bestNode->getElementsByTagName('state'));
+        $ret['streetNumber'] = $this->getNodeValue($bestNode->getElementsByTagName('house_number'));
+        $ret['streetName']   = $this->getNodeValue($bestNode->getElementsByTagName('road'));
+        $ret['city']         = $this->getNodeValue($bestNode->getElementsByTagName('city'));
+        $ret['cityDistrict'] = $this->getNodeValue($bestNode->getElementsByTagName('suburb'));
+        $ret['country']      = $this->getNodeValue($bestNode->getElementsByTagName('country'));
+        $ret['countryCode']  = strtoupper($this->getNodeValue($bestNode->getElementsByTagName('country_code')));
+
+        return $ret;
     }
 
     /**
@@ -106,34 +107,33 @@ class OpenStreetMapsProvider extends AbstractProvider implements ProviderInterfa
         $content = $this->executeQuery($query);
 
         if (null === $content) {
-            return $this->getDefaults();
+            throw new NoResultException(sprintf('Unable to resolve the coordinates %s', implode(', ', $coordinates)));
         }
 
         $doc = new \DOMDocument();
-        if (@$doc->loadXML($content)) {
-            $maxRank          = 0;
-            $bestNode         = null;
-            $searchResult     = $doc->getElementsByTagName('reversegeocode')->item(0);
-            $addressParts     = $searchResult->getElementsByTagName('addressparts')->item(0);
-            $result           = $searchResult->getElementsByTagName('result')->item(0);
-            $ret              = $this->getDefaults();
-
-            $ret['latitude']     = $result->getAttribute('lat');
-            $ret['longitude']    = $result->getAttribute('lon');
-            $ret['zipcode']      = $this->getNodeValue($addressParts->getElementsByTagName('postcode'));
-            $ret['county']       = $this->getNodeValue($addressParts->getElementsByTagName('county'));
-            $ret['region']       = $this->getNodeValue($addressParts->getElementsByTagName('state'));
-            $ret['streetNumber'] = $this->getNodeValue($addressParts->getElementsByTagName('house_number'));
-            $ret['streetName']   = $this->getNodeValue($addressParts->getElementsByTagName('road'));
-            $ret['city']         = $this->getNodeValue($addressParts->getElementsByTagName('city'));
-            $ret['cityDistrict'] = $this->getNodeValue($addressParts->getElementsByTagName('suburb'));
-            $ret['country']      = $this->getNodeValue($addressParts->getElementsByTagName('country'));
-            $ret['countryCode']  = strtoupper($this->getNodeValue($addressParts->getElementsByTagName('country_code')));
-
-            return $ret;
-        } else {
-            return $this->getDefaults();
+        if (!@$doc->loadXML($content)) {
+            throw new NoResultException(sprintf('Could not resolve coordinates %s', implode(', ', $coordinates)));
         }
+
+        $bestNode         = null;
+        $searchResult     = $doc->getElementsByTagName('reversegeocode')->item(0);
+        $addressParts     = $searchResult->getElementsByTagName('addressparts')->item(0);
+        $result           = $searchResult->getElementsByTagName('result')->item(0);
+        $ret              = $this->getDefaults();
+
+        $ret['latitude']     = $result->getAttribute('lat');
+        $ret['longitude']    = $result->getAttribute('lon');
+        $ret['zipcode']      = $this->getNodeValue($addressParts->getElementsByTagName('postcode'));
+        $ret['county']       = $this->getNodeValue($addressParts->getElementsByTagName('county'));
+        $ret['region']       = $this->getNodeValue($addressParts->getElementsByTagName('state'));
+        $ret['streetNumber'] = $this->getNodeValue($addressParts->getElementsByTagName('house_number'));
+        $ret['streetName']   = $this->getNodeValue($addressParts->getElementsByTagName('road'));
+        $ret['city']         = $this->getNodeValue($addressParts->getElementsByTagName('city'));
+        $ret['cityDistrict'] = $this->getNodeValue($addressParts->getElementsByTagName('suburb'));
+        $ret['country']      = $this->getNodeValue($addressParts->getElementsByTagName('country'));
+        $ret['countryCode']  = strtoupper($this->getNodeValue($addressParts->getElementsByTagName('country_code')));
+
+        return $ret;
     }
 
     /**

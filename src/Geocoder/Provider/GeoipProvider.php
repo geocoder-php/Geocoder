@@ -10,8 +10,10 @@
 
 namespace Geocoder\Provider;
 
-use Geocoder\Exception\UnsupportedException;
 use Geocoder\Provider\ProviderInterface;
+
+use Geocoder\Exception\UnsupportedException;
+use Geocoder\Exception\NoResultException;
 
 /**
  * @see http://php.net/manual/ref.geoip.php

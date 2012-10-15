@@ -13,6 +13,8 @@ namespace Geocoder\Provider;
 use Geocoder\Exception\UnsupportedException;
 use Geocoder\HttpAdapter\HttpAdapterInterface;
 use Geocoder\Provider\ProviderInterface;
+use Geocoder\Exception\NoResultException;
+use Geocoder\Exception\UnsupportedException;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -43,10 +45,6 @@ class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
      */
     public function getGeocodedData($address)
     {
-        if (in_array($address, array('127.0.0.1', '::1'))) {
-            return $this->getLocalhostDefaults();
-        }
-
         // Google API returns invalid data if IP address given
         // This API doesn't handle IPs
         if (filter_var($address, FILTER_VALIDATE_IP)) {
@@ -91,19 +89,19 @@ class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
         $content = $this->getAdapter()->getContent($query);
 
         if (null === $content) {
-            return $this->getDefaults();
+            throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
         $json = json_decode($content);
 
         // API error
         if (!isset($json) || 'OK' !== $json->status) {
-            return $this->getDefaults();
+            throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
         // no result
         if (!isset($json->results) || !count($json->results)) {
-            return $this->getDefaults();
+            throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
         $result = $json->results[0];

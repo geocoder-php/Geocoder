@@ -11,6 +11,7 @@
 namespace Geocoder\Provider;
 
 use Geocoder\Exception\UnsupportedException;
+use Geocoder\Exception\NoResultException;
 use Geocoder\Provider\ProviderInterface;
 
 /**
@@ -62,13 +63,13 @@ class FreeGeoIpProvider extends AbstractProvider implements ProviderInterface
         $content = $this->getAdapter()->getContent($query);
 
         if (null === $content) {
-            return $this->getDefaults();
+            throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
         $data = (array) json_decode($content);
 
         if (empty($data)) {
-            return $this->getDefaults();
+            throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
         //it appears that for US states the region code is not returning the FIPS standard

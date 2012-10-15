@@ -12,6 +12,7 @@ namespace Geocoder\Provider;
 
 use Geocoder\Exception\UnsupportedException;
 use Geocoder\Provider\ProviderInterface;
+use Geocoder\Exception\NoResultException;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -69,7 +70,7 @@ class HostIpProvider extends AbstractProvider implements ProviderInterface
         try {
             $xml = new \SimpleXmlElement($content);
         } catch (\Exception $e) {
-            return $this->getDefaults();
+            throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
         $dataNode = $xml

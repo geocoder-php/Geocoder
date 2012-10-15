@@ -13,6 +13,8 @@ namespace Geocoder\Provider;
 use Geocoder\Exception\UnsupportedException;
 use Geocoder\HttpAdapter\HttpAdapterInterface;
 use Geocoder\Provider\ProviderInterface;
+use Geocoder\Exception\InvalidCredentialsException;
+use Geocoder\Exception\NoResultException;
 
 /**
  * @author David Guyon <dguyon@gmail.com>
@@ -53,11 +55,7 @@ class BingMapsProvider extends AbstractProvider implements ProviderInterface
     {
 
         if (null === $this->apiKey) {
-            throw new \RuntimeException('No API Key provided');
-        }
-
-        if (in_array($address, array('127.0.0.1', '::1'))) {
-            return $this->getLocalhostDefaults();
+            throw new InvalidCredentialsException('No API Key provided');
         }
 
         // This API doesn't handle IPs
@@ -76,7 +74,7 @@ class BingMapsProvider extends AbstractProvider implements ProviderInterface
     public function getReversedData(array $coordinates)
     {
         if (null === $this->apiKey) {
-            throw new \RuntimeException('No API Key provided');
+            throw new InvalidCredentialsException('No API Key provided');
         }
 
         $query = sprintf(self::REVERSE_ENDPOINT_URL, $coordinates[0], $coordinates[1], $this->apiKey);
@@ -105,7 +103,7 @@ class BingMapsProvider extends AbstractProvider implements ProviderInterface
         $content = $this->getAdapter()->getContent($query);
 
         if (null === $content) {
-            return $this->getDefaults();
+            throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
         $json = json_decode($content);
@@ -113,7 +111,7 @@ class BingMapsProvider extends AbstractProvider implements ProviderInterface
         if (isset($json->resourceSets[0]) && isset($json->resourceSets[0]->resources[0])) {
             $data = (array) $json->resourceSets[0]->resources[0];
         } else {
-            return $this->getDefaults();
+            throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
         $coordinates = (array) $data['geocodePoints'][0]->coordinates;
