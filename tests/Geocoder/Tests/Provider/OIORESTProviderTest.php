@@ -15,6 +15,7 @@ class OIORESTProviderTest extends TestCase
 
         $this->assertNull($result['latitude']);
         $this->assertNull($result['longitude']);
+        $this->assertNull($result['bounds']);
         $this->assertNull($result['streetNumber']);
         $this->assertNull($result['streetName']);
         $this->assertNull($result['zipcode']);
@@ -34,6 +35,7 @@ class OIORESTProviderTest extends TestCase
 
         $this->assertNull($result['latitude']);
         $this->assertNull($result['longitude']);
+        $this->assertNull($result['bounds']);
         $this->assertNull($result['streetNumber']);
         $this->assertNull($result['streetName']);
         $this->assertNull($result['zipcode']);
@@ -53,6 +55,7 @@ class OIORESTProviderTest extends TestCase
 
         $this->assertNull($result['latitude']);
         $this->assertNull($result['longitude']);
+        $this->assertNull($result['bounds']);
         $this->assertNull($result['streetNumber']);
         $this->assertNull($result['streetName']);
         $this->assertNull($result['zipcode']);
@@ -72,6 +75,7 @@ class OIORESTProviderTest extends TestCase
 
         $this->assertEquals(55.6999, $result['latitude'], '', 0.0001);
         $this->assertEquals(12.5527, $result['longitude'], '', 0.0001);
+        $this->assertNull($result['bounds']);
         $this->assertEquals(47, $result['streetNumber']);
         $this->assertEquals('Tagensvej', $result['streetName']);
         $this->assertEquals(2200, $result['zipcode']);
@@ -81,7 +85,7 @@ class OIORESTProviderTest extends TestCase
         $this->assertNull($result['regionCode']);
         $this->assertEquals('Denmark', $result['country']);
         $this->assertEquals('DK', $result['countryCode']);
-        $this->assertNull($result['timezone']);
+        $this->assertEquals('Europe/Copenhagen', $result['timezone']);
     }
 
     public function testGetGeocodedDataWithRealAddressWithCurlHttpAdapter()
@@ -91,6 +95,7 @@ class OIORESTProviderTest extends TestCase
 
         $this->assertEquals(57.0489, $result['latitude'], '', 0.0001);
         $this->assertEquals(9.94566, $result['longitude'], '', 0.0001);
+        $this->assertNull($result['bounds']);
         $this->assertEquals(1, $result['streetNumber']);
         $this->assertEquals('Lauritzens Plads', $result['streetName']);
         $this->assertEquals(9000, $result['zipcode']);
@@ -100,7 +105,7 @@ class OIORESTProviderTest extends TestCase
         $this->assertNull($result['regionCode']);
         $this->assertEquals('Denmark', $result['country']);
         $this->assertEquals('DK', $result['countryCode']);
-        $this->assertNull($result['timezone']);
+        $this->assertEquals('Europe/Copenhagen', $result['timezone']);
     }
 
     public function testGetGeocodedDataWithRealAddressWithBuzzHttpAdapter()
@@ -110,6 +115,7 @@ class OIORESTProviderTest extends TestCase
 
         $this->assertEquals(56.1623, $result['latitude'], '', 0.0001);
         $this->assertEquals(10.1501, $result['longitude'], '', 0.0001);
+        $this->assertNull($result['bounds']);
         $this->assertEquals(74, $result['streetNumber']);
         $this->assertEquals('St.Blichers Vej', $result['streetName']);
         $this->assertEquals(8210, $result['zipcode']);
@@ -119,7 +125,7 @@ class OIORESTProviderTest extends TestCase
         $this->assertNull($result['regionCode']);
         $this->assertEquals('Denmark', $result['country']);
         $this->assertEquals('DK', $result['countryCode']);
-        $this->assertNull($result['timezone']);
+        $this->assertEquals('Europe/Copenhagen', $result['timezone']);
     }
 
     public function testGetGeocodedDataWithRealAddressWithGuzzleHttpAdapter()
@@ -129,6 +135,7 @@ class OIORESTProviderTest extends TestCase
 
         $this->assertEquals(55.7063, $result['latitude'], '', 0.0001);
         $this->assertEquals(12.5837, $result['longitude'], '', 0.0001);
+        $this->assertNull($result['bounds']);
         $this->assertEquals(80, $result['streetNumber']);
         $this->assertEquals('Århusgade', $result['streetName']);
         $this->assertEquals(2100, $result['zipcode']);
@@ -138,7 +145,7 @@ class OIORESTProviderTest extends TestCase
         $this->assertNull($result['regionCode']);
         $this->assertEquals('Denmark', $result['country']);
         $this->assertEquals('DK', $result['countryCode']);
-        $this->assertNull($result['timezone']);
+        $this->assertEquals('Europe/Copenhagen', $result['timezone']);
     }
 
     public function testGetGeocodedDataWithRealAddressWithZendHttpAdapter()
@@ -148,6 +155,7 @@ class OIORESTProviderTest extends TestCase
 
         $this->assertEquals(55.4221, $result['latitude'], '', 0.0001);
         $this->assertEquals(10.4588, $result['longitude'], '', 0.0001);
+        $this->assertNull($result['bounds']);
         $this->assertEquals(255, $result['streetNumber']);
         $this->assertEquals('Hvenekildeløkken', $result['streetName']);
         $this->assertEquals(5240, $result['zipcode']);
@@ -157,7 +165,7 @@ class OIORESTProviderTest extends TestCase
         $this->assertNull($result['regionCode']);
         $this->assertEquals('Denmark', $result['country']);
         $this->assertEquals('DK', $result['countryCode']);
-        $this->assertNull($result['timezone']);
+        $this->assertEquals('Europe/Copenhagen', $result['timezone']);
     }
 
     /**

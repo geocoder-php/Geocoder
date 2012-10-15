@@ -78,6 +78,7 @@ class OIORESTProvider extends AbstractProvider implements ProviderInterface
         return array(
             'latitude'     => isset($data['wgs84koordinat']['bredde']) ? $data['wgs84koordinat']['bredde'] : null,
             'longitude'    => isset($data['wgs84koordinat']['længde']) ? $data['wgs84koordinat']['længde'] : null,
+            'bounds'       => null,
             'streetNumber' => isset($data['husnr']) ? $data['husnr'] : null,
             'streetName'   => isset($data['vejnavn']['navn']) ? $data['vejnavn']['navn'] : null,
             'city'         => isset($data['postnummer']['navn']) ? $data['postnummer']['navn'] : null,
@@ -87,7 +88,7 @@ class OIORESTProvider extends AbstractProvider implements ProviderInterface
             'regionCode'   => null,
             'country'      => 'Denmark',
             'countryCode'  => 'DK',
-            'timezone'     => null
+            'timezone'     => 'Europe/Copenhagen'
         );
     }
 }
