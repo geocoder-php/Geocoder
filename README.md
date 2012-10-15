@@ -37,6 +37,7 @@ Currently, there are many providers for the following APIs:
 * ChainProvider is a special provider that takes a list of providers and iterates
   over this list to get information;
 * [MapQuest](http://open.mapquestapi.com/) as Address-Based geocoding and reverse geocoding provider.
+* [OIORest](http://geo.oiorest.dk/) as very accurate Address-Based geocoding provider (exclusively in Denmark)
 
 
 Installation
