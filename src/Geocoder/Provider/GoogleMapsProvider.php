@@ -33,7 +33,7 @@ class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
     public function __construct(HttpAdapterInterface $adapter, $locale = null, $region = null)
     {
         parent::__construct($adapter, $locale);
-        
+
         $this->region = $region;
     }
 
@@ -191,7 +191,7 @@ class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
 
         return $resultset;
     }
-    
+
     /**
      * Returns the configured region or null.
      *
