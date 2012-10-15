@@ -151,6 +151,21 @@ The `GeoipProvider` is able to geocode **IP addresses** only. No need to use an 
 See the [MaxMind page](http://www.maxmind.com/app/php) for more information.
 
 
+### ChainProvider ###
+
+The `ChainProvider` is a special provider that takes a list of providers and iterates over this list to get information.
+
+
+### MapQuestProvider ###
+
+The `MapQuestProvider` is able to geocode and reverse geocode **street addresses**.
+
+
+### OIORestProvider ###
+
+The `OIORestProvider` is able to geocode ***street addresses** only, exclusively in Denmark.
+
+
 You can use one of them or write your own provider. You can also register all providers and decide later.
 That's we'll do:
 
