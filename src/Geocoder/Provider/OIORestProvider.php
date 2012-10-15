@@ -12,6 +12,7 @@ namespace Geocoder\Provider;
 
 use Geocoder\Exception\UnsupportedException;
 use Geocoder\Provider\ProviderInterface;
+use Geocoder\Exception\NoResultException;
 
 /**
  * @author Antoine Corcy <contact@sbin.dk>
@@ -66,13 +67,13 @@ class OIORestProvider extends AbstractProvider implements ProviderInterface
         $content = $this->getAdapter()->getContent($query);
 
         if (null === $content) {
-            return $this->getDefaults();
+            throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
         $data = (array) json_decode($content, true);
 
         if (empty($data) || false === $data) {
-            return $this->getDefaults();
+            throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
         return array(

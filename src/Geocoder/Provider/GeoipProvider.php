@@ -10,8 +10,10 @@
 
 namespace Geocoder\Provider;
 
-use Geocoder\Exception\UnsupportedException;
 use Geocoder\Provider\ProviderInterface;
+
+use Geocoder\Exception\UnsupportedException;
+use Geocoder\Exception\NoResultException;
 
 /**
  * @see http://php.net/manual/ref.geoip.php
@@ -36,7 +38,7 @@ class GeoipProvider extends AbstractProvider implements ProviderInterface
     public function getGeocodedData($address)
     {
         if ('127.0.0.1' === $address) {
-            return $this->getLocalhostDefaults();
+            throw new NoResultException("The address '127.0.0.1' is not supported");
         }
 
         $results = @geoip_record_by_name($address);

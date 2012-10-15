@@ -12,6 +12,7 @@ namespace Geocoder\Provider;
 
 use Geocoder\HttpAdapter\HttpAdapterInterface;
 use Geocoder\Provider\ProviderInterface;
+use Geocoder\Exception\NoResultException;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -42,7 +43,7 @@ class MapQuestProvider extends AbstractProvider implements ProviderInterface
     public function getGeocodedData($address)
     {
         if ('127.0.0.1' === $address) {
-            return $this->getLocalhostDefaults();
+            throw new NoResultException("The address '127.0.0.1' is not supported");
         }
 
         $query = sprintf(self::GEOCODE_ENDPOINT_URL, urlencode($address));
@@ -77,7 +78,7 @@ class MapQuestProvider extends AbstractProvider implements ProviderInterface
         $content = $this->getAdapter()->getContent($query);
 
         if (null === $content) {
-            return $this->getDefaults();
+            throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
         $json = json_decode($content, true);
@@ -109,6 +110,6 @@ class MapQuestProvider extends AbstractProvider implements ProviderInterface
             }
         }
 
-        return $this->getDefaults();
+        throw new NoResultException(sprintf('Could not execute query %s', $query));
     }
 }
