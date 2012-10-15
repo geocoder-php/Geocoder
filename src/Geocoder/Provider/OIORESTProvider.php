@@ -16,7 +16,7 @@ use Geocoder\Provider\ProviderInterface;
 /**
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class OIORESTProvider extends AbstractProvider implements ProviderInterface
+class OIORestProvider extends AbstractProvider implements ProviderInterface
 {
     /**
      * @var string
@@ -29,7 +29,7 @@ class OIORESTProvider extends AbstractProvider implements ProviderInterface
     public function getGeocodedData($address)
     {
         if (filter_var($address, FILTER_VALIDATE_IP)) {
-            throw new UnsupportedException('The OIORESTProvider does not support IP addresses.');
+            throw new UnsupportedException('The OIORestProvider does not support IP addresses.');
         }
 
         // format address
@@ -46,7 +46,7 @@ class OIORESTProvider extends AbstractProvider implements ProviderInterface
      */
     public function getReversedData(array $coordinates)
     {
-        throw new UnsupportedException('The OIORESTProvider is not able to do reverse geocoding.');
+        throw new UnsupportedException('The OIORestProvider is not able to do reverse geocoding.');
     }
 
     /**

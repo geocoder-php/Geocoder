@@ -4,13 +4,13 @@ namespace Geocoder\Tests\Provider;
 
 use Geocoder\Tests\TestCase;
 
-use Geocoder\Provider\OIORESTProvider;
+use Geocoder\Provider\OIORestProvider;
 
-class OIORESTProviderTest extends TestCase
+class OIORestProviderTest extends TestCase
 {
     public function testGetGeocodedDataWithNull()
     {
-        $this->provider = new OIORESTProvider($this->getMockAdapter());
+        $this->provider = new OIORestProvider($this->getMockAdapter());
         $result = $this->provider->getGeocodedData(null);
 
         $this->assertNull($result['latitude']);
@@ -30,7 +30,7 @@ class OIORESTProviderTest extends TestCase
 
     public function testGetGeocodedDataWithEmpty()
     {
-        $this->provider = new OIORESTProvider($this->getMockAdapter());
+        $this->provider = new OIORestProvider($this->getMockAdapter());
         $result = $this->provider->getGeocodedData('');
 
         $this->assertNull($result['latitude']);
@@ -50,7 +50,7 @@ class OIORESTProviderTest extends TestCase
 
     public function testGetGeocodedDataWithAddress()
     {
-        $this->provider = new OIORESTProvider($this->getMockAdapter());
+        $this->provider = new OIORestProvider($this->getMockAdapter());
         $result = $this->provider->getGeocodedData('Tagensvej 47, 2200 København N');
 
         $this->assertNull($result['latitude']);
@@ -70,7 +70,7 @@ class OIORESTProviderTest extends TestCase
 
     public function testGetGeocodedDataWithRealAddressWithSocketAdapter()
     {
-        $this->provider = new OIORESTProvider(new \Geocoder\HttpAdapter\SocketAdapter());
+        $this->provider = new OIORestProvider(new \Geocoder\HttpAdapter\SocketAdapter());
         $result = $this->provider->getGeocodedData('Tagensvej 47, 2200 København N');
 
         $this->assertEquals(55.6999, $result['latitude'], '', 0.0001);
@@ -90,7 +90,7 @@ class OIORESTProviderTest extends TestCase
 
     public function testGetGeocodedDataWithRealAddressWithCurlHttpAdapter()
     {
-        $this->provider = new OIORESTProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $this->provider = new OIORestProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result = $this->provider->getGeocodedData('Lauritzens Plads 1, 9000 Aalborg');
 
         $this->assertEquals(57.0489, $result['latitude'], '', 0.0001);
@@ -110,7 +110,7 @@ class OIORESTProviderTest extends TestCase
 
     public function testGetGeocodedDataWithRealAddressWithBuzzHttpAdapter()
     {
-        $this->provider = new OIORESTProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter());
+        $this->provider = new OIORestProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter());
         $result = $this->provider->getGeocodedData('St.Blichers Vej 74, 8210 Århus V');
 
         $this->assertEquals(56.1623, $result['latitude'], '', 0.0001);
@@ -130,7 +130,7 @@ class OIORESTProviderTest extends TestCase
 
     public function testGetGeocodedDataWithRealAddressWithGuzzleHttpAdapter()
     {
-        $this->provider = new OIORESTProvider(new \Geocoder\HttpAdapter\GuzzleHttpAdapter());
+        $this->provider = new OIORestProvider(new \Geocoder\HttpAdapter\GuzzleHttpAdapter());
         $result = $this->provider->getGeocodedData('Århusgade 80, 2100 København Ø');
 
         $this->assertEquals(55.7063, $result['latitude'], '', 0.0001);
@@ -150,7 +150,7 @@ class OIORESTProviderTest extends TestCase
 
     public function testGetGeocodedDataWithRealAddressWithZendHttpAdapter()
     {
-        $this->provider = new OIORESTProvider(new \Geocoder\HttpAdapter\ZendHttpAdapter());
+        $this->provider = new OIORestProvider(new \Geocoder\HttpAdapter\ZendHttpAdapter());
         $result = $this->provider->getGeocodedData('Hvenekildeløkken 255, 5240 Odense');
 
         $this->assertEquals(55.4221, $result['latitude'], '', 0.0001);
@@ -173,7 +173,7 @@ class OIORESTProviderTest extends TestCase
      */
     public function testGetGeocodedDataWithLocalhost()
     {
-        $this->provider = new OIORESTProvider($this->getMockAdapter($this->never()));
+        $this->provider = new OIORestProvider($this->getMockAdapter($this->never()));
         $this->provider->getGeocodedData('127.0.0.1');
     }
 
@@ -182,7 +182,7 @@ class OIORESTProviderTest extends TestCase
      */
     public function testGetGeocodedDataWithIp()
     {
-        $this->provider = new OIORESTProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter());
+        $this->provider = new OIORestProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter());
         $this->provider->getGeocodedData('74.200.247.59');
     }
 
@@ -191,7 +191,7 @@ class OIORESTProviderTest extends TestCase
      */
     public function testGetReverseData()
     {
-        $this->provider = new OIORESTProvider($this->getMockAdapter($this->never()));
+        $this->provider = new OIORestProvider($this->getMockAdapter($this->never()));
         $this->provider->getReversedData(array(1, 2));
     }
 }
