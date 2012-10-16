@@ -82,23 +82,13 @@ class GoogleMapsProviderTest extends TestCase
         $this->assertEquals('localhost', $result['country']);
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\UnsupportedException
+     */
     public function testGetGeocodedDataWithRealIp()
     {
         $this->provider = new GoogleMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result = $this->provider->getGeocodedData('74.200.247.59');
-
-        $this->assertNull($result['latitude']);
-        $this->assertNull($result['longitude']);
-        $this->assertNull($result['bounds']);
-        $this->assertNull($result['streetNumber']);
-        $this->assertNull($result['streetName']);
-        $this->assertNull($result['city']);
-        $this->assertNull($result['zipcode']);
-        $this->assertNull($result['county']);
-        $this->assertNull($result['region']);
-        $this->assertNull($result['country']);
-        $this->assertNull($result['countryCode']);
-        $this->assertNull($result['timezone']);
     }
 
     public function testGetGeocodedDataWithRealAddress()
