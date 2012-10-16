@@ -121,7 +121,7 @@ The `IpInfoDbProvider` is able to geocode **IPv4 addresses** only.
 
 ### YahooProvider ###
 
-The `YahooProvider` is able to geocode both **IPv4 and IPv6 addresses** and **street addresses**.
+The `YahooProvider` is able to geocode both **IPv4 addresses** and **street addresses**.
 This provider can also reverse information based on coordinates (latitude, longitude).
 
 
@@ -163,7 +163,7 @@ The `MapQuestProvider` is able to geocode and reverse geocode **street addresses
 
 ### OIORestProvider ###
 
-The `OIORestProvider` is able to geocode ***street addresses** only, exclusively in Denmark.
+The `OIORestProvider` is able to geocode **street addresses** only, exclusively in Denmark.
 
 
 You can use one of them or write your own provider. You can also register all providers and decide later.
