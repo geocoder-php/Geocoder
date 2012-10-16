@@ -7,6 +7,12 @@ use Geocoder\Provider\GoogleMapsProvider;
 
 class GoogleMapsProviderTest extends TestCase
 {
+    public function testGetName()
+    {
+        $provider = new GoogleMapsProvider($this->getMock('\Geocoder\HttpAdapter\HttpAdapterInterface'), null);
+        $this->assertEquals('google_maps', $provider->getName());
+    }
+
     /**
      * @expectedException Geocoder\Exception\NoResultException
      * @expectedExceptionMessage Could not execute query http://maps.googleapis.com/maps/api/geocode/json?address=foobar&sensor=false

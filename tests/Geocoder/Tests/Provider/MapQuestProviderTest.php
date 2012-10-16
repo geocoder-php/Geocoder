@@ -10,6 +10,12 @@ use Geocoder\Provider\MapQuestProvider;
  */
 class MapQuestProviderTest extends TestCase
 {
+    public function testGetName()
+    {
+        $provider = new MapQuestProvider($this->getMock('\Geocoder\HttpAdapter\HttpAdapterInterface'), null);
+        $this->assertEquals('map_quest', $provider->getName());
+    }
+    
     /**
      * @expectedException Geocoder\Exception\NoResultException
      * @expectedExceptionMessage Could not find results for given query: http://open.mapquestapi.com/geocoding/v1/address?location=foobar&outFormat=json&maxResults=1&thumbMaps=fals

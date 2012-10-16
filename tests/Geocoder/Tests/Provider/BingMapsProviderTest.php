@@ -7,6 +7,12 @@ use Geocoder\Provider\BingMapsProvider;
 
 class BingMapsProviderTest extends TestCase
 {
+    public function testGetName()
+    {
+        $provider = new BingMapsProvider($this->getMock('\Geocoder\HttpAdapter\HttpAdapterInterface'), null);
+        $this->assertEquals('bing_maps', $provider->getName());
+    }
+
     /**
      * @expectedException \RuntimeException
      */

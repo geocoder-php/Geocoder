@@ -57,7 +57,7 @@ class ChainProvider implements ProviderInterface
             }
         }
 
-        throw new NoResultException(sprintf('No provider could provide the address "%"', $address));
+        throw new NoResultException(sprintf('No provider could provide the address "%s"', $address));
     }
 
     /**
