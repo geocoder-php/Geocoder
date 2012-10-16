@@ -278,8 +278,6 @@ This library provides a `reverse()` method to retrieve information from coordina
 $result = $geocoder->reverse($latitude, $longitude);
 ```
 
-**Note:** the `YahooProvider` bundled in this lib is the unique provider able to do this feature.
-
 
 Dumpers
 -------
