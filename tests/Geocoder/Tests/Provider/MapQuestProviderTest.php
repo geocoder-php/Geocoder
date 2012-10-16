@@ -2,31 +2,22 @@
 
 namespace Geocoder\Tests\Provider;
 
-use Geocoder\Provider\MapQuestProvider;
 use Geocoder\Tests\TestCase;
+use Geocoder\Provider\MapQuestProvider;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
 class MapQuestProviderTest extends TestCase
 {
+    /**
+     * @expectedException Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://open.mapquestapi.com/geocoding/v1/address?location=foobar&outFormat=json&maxResults=1&thumbMaps=false
+     */
     public function testGetGeocodedData()
     {
         $provider = new MapQuestProvider($this->getMockAdapter());
-        $result   = $provider->getGeocodedData('foobar');
-
-        $this->assertNull($result['latitude']);
-        $this->assertNull($result['longitude']);
-        $this->assertNull($result['bounds']);
-        $this->assertNull($result['streetNumber']);
-        $this->assertNull($result['streetName']);
-        $this->assertNull($result['city']);
-        $this->assertNull($result['zipcode']);
-        $this->assertNull($result['county']);
-        $this->assertNull($result['region']);
-        $this->assertNull($result['country']);
-        $this->assertNull($result['countryCode']);
-        $this->assertNull($result['timezone']);
+        $provider->getGeocodedData('foobar');
     }
 
     public function testGetGeocodedDataWithRealAddress()
@@ -49,6 +40,10 @@ class MapQuestProviderTest extends TestCase
         $this->assertNull($result['timezone']);
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://open.mapquestapi.com/geocoding/v1/reverse?lat=1.000000&lng=2.000000
+     */
     public function testGetReversedData()
     {
         $provider = new MapQuestProvider($this->getMockAdapter());
@@ -105,53 +100,43 @@ class MapQuestProviderTest extends TestCase
         $this->assertNull($result['cityDistrict']);
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedExceptionMessage The MapQuestProvider does not support IP addresses.
+     */
     public function testGetGeocodedDataWithLocalhostIPv4()
     {
-        $this->provider = new MapQuestProvider($this->getMockAdapter($this->never()));
-        $result = $this->provider->getGeocodedData('127.0.0.1');
-
-        $this->assertArrayNotHasKey('latitude', $result);
-        $this->assertArrayNotHasKey('longitude', $result);
-        $this->assertArrayNotHasKey('zipcode', $result);
-        $this->assertArrayNotHasKey('timezone', $result);
-
-        $this->assertEquals('localhost', $result['city']);
-        $this->assertEquals('localhost', $result['region']);
-        $this->assertEquals('localhost', $result['county']);
-        $this->assertEquals('localhost', $result['country']);
-    }
-
-    public function testGetGeocodedDataWithLocalhostIPv6()
-    {
-        $this->provider = new MapQuestProvider($this->getMockAdapter($this->never()));
-        $result = $this->provider->getGeocodedData('::1');
-
-        $this->assertArrayNotHasKey('latitude', $result);
-        $this->assertArrayNotHasKey('longitude', $result);
-        $this->assertArrayNotHasKey('zipcode', $result);
-        $this->assertArrayNotHasKey('timezone', $result);
-
-        $this->assertEquals('localhost', $result['city']);
-        $this->assertEquals('localhost', $result['region']);
-        $this->assertEquals('localhost', $result['county']);
-        $this->assertEquals('localhost', $result['country']);
+        $provider = new MapQuestProvider($this->getMockAdapter($this->never()));
+        $provider->getGeocodedData('127.0.0.1');
     }
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedExceptionMessage The MapQuestProvider does not support IP addresses.
+     */
+    public function testGetGeocodedDataWithLocalhostIPv6()
+    {
+        $provider = new MapQuestProvider($this->getMockAdapter($this->never()));
+        $provider->getGeocodedData('::1');
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedExceptionMessage The MapQuestProvider does not support IP addresses.
      */
     public function testGetGeocodedDataWithRealIPv4()
     {
-        $this->provider = new MapQuestProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
-        $result = $this->provider->getGeocodedData('74.200.247.59');
+        $provider = new MapQuestProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider->getGeocodedData('74.200.247.59');
     }
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedExceptionMessage The MapQuestProvider does not support IP addresses.
      */
     public function testGetGeocodedDataWithRealIPv6()
     {
-        $this->provider = new MapQuestProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
-        $result = $this->provider->getGeocodedData('::ffff:74.200.247.59');
+        $provider = new MapQuestProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider->getGeocodedData('::ffff:74.200.247.59');
     }
 }
