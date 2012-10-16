@@ -51,13 +51,17 @@ class IpInfoDbProvider extends AbstractProvider implements ProviderInterface
             throw new InvalidCredentialsException('No API Key provided');
         }
 
+        if (!filter_var($address, FILTER_VALIDATE_IP)) {
+            throw new UnsupportedException('The IpInfoDbProvider does not support Street addresses.');
+        }
+
         // This API does not support IPv6
         if (filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
             throw new UnsupportedException('The IpInfoDbProvider does not support IPv6 addresses.');
         }
 
         if ('127.0.0.1' === $address) {
-            throw new NoResultException("The address '127.0.0.1' is not supported");
+            return $this->getLocalhostDefaults();
         }
 
         $query = sprintf(self::ENDPOINT_URL, $this->apiKey, $address);
