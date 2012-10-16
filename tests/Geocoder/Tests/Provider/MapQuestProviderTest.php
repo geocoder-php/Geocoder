@@ -12,7 +12,7 @@ class MapQuestProviderTest extends TestCase
 {
     /**
      * @expectedException Geocoder\Exception\NoResultException
-     * @expectedExceptionMessage Could not execute query http://open.mapquestapi.com/geocoding/v1/address?location=foobar&outFormat=json&maxResults=1&thumbMaps=false
+     * @expectedExceptionMessage Could not find results for given query: http://open.mapquestapi.com/geocoding/v1/address?location=foobar&outFormat=json&maxResults=1&thumbMaps=fals
      */
     public function testGetGeocodedData()
     {
@@ -42,7 +42,7 @@ class MapQuestProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResultException
-     * @expectedExceptionMessage Could not execute query http://open.mapquestapi.com/geocoding/v1/reverse?lat=1.000000&lng=2.000000
+     * @expectedExceptionMessage Could not find results for given query: http://open.mapquestapi.com/geocoding/v1/reverse?lat=1.000000&lng=2.000000
      */
     public function testGetReversedData()
     {
