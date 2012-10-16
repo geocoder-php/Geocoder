@@ -6,8 +6,17 @@ use Geocoder\Tests\TestCase;
 
 use Geocoder\Provider\OIORestProvider;
 
+/**
+ * @author Antoine Corcy <contact@sbin.dk>
+ */
 class OIORestProviderTest extends TestCase
 {
+    public function testGetName()
+    {
+        $provider = new OIORestProvider($this->getMock('\Geocoder\HttpAdapter\HttpAdapterInterface'), null);
+        $this->assertEquals('oio_rest', $provider->getName());
+    }
+
     public function testGetGeocodedDataWithNull()
     {
         $this->provider = new OIORestProvider($this->getMockAdapter());
@@ -171,7 +180,7 @@ class OIORestProviderTest extends TestCase
     /**
      * @expectedException \Geocoder\Exception\UnsupportedException
      */
-    public function testGetGeocodedDataWithLocalhost()
+    public function testGetGeocodedDataWithLocalhostIPv4()
     {
         $this->provider = new OIORestProvider($this->getMockAdapter($this->never()));
         $this->provider->getGeocodedData('127.0.0.1');
@@ -180,10 +189,28 @@ class OIORestProviderTest extends TestCase
     /**
      * @expectedException \Geocoder\Exception\UnsupportedException
      */
-    public function testGetGeocodedDataWithIp()
+    public function testGetGeocodedDataWithLocalhostIPv6()
+    {
+        $this->provider = new OIORestProvider($this->getMockAdapter($this->never()));
+        $this->provider->getGeocodedData('::1');
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\UnsupportedException
+     */
+    public function testGetGeocodedDataWithIPv4()
     {
         $this->provider = new OIORestProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter());
         $this->provider->getGeocodedData('74.200.247.59');
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\UnsupportedException
+     */
+    public function testGetGeocodedDataWithIPv6()
+    {
+        $this->provider = new OIORestProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter());
+        $this->provider->getGeocodedData('::ffff:74.200.247.59');
     }
 
     /**

@@ -15,6 +15,12 @@ class GeoipProviderTest extends TestCase
         }
     }
 
+    public function testGetName()
+    {
+        $provider = new GeoipProvider();
+        $this->assertEquals('geoip', $provider->getName());
+    }
+
     public function testGetGeocodedDataWithNull()
     {
         $this->provider = new GeoipProvider();
@@ -60,7 +66,7 @@ class GeoipProviderTest extends TestCase
         $this->assertNull($result['timezone']);
     }
 
-    public function testGetGeocodedDataWithLocalhost()
+    public function testGetGeocodedDataWithLocalhostIPv4()
     {
         $this->provider = new GeoipProvider();
         $result = $this->provider->getGeocodedData('127.0.0.1');
@@ -76,10 +82,41 @@ class GeoipProviderTest extends TestCase
         $this->assertEquals('localhost', $result['country']);
     }
 
-    public function testGetGeocodedDataWithRealIp()
+    public function testGetGeocodedDataWithLocalhostIPv6()
+    {
+        $this->provider = new GeoipProvider();
+        $result = $this->provider->getGeocodedData('::1');
+
+        $this->assertArrayNotHasKey('latitude', $result);
+        $this->assertArrayNotHasKey('longitude', $result);
+        $this->assertArrayNotHasKey('zipcode', $result);
+        $this->assertArrayNotHasKey('timezone', $result);
+
+        $this->assertEquals('localhost', $result['city']);
+        $this->assertEquals('localhost', $result['region']);
+        $this->assertEquals('localhost', $result['county']);
+        $this->assertEquals('localhost', $result['country']);
+    }
+
+    public function testGetGeocodedDataWithRealIPv4()
     {
         $this->provider = new GeoipProvider();
         $result = $this->provider->getGeocodedData('74.200.247.59');
+
+        $this->assertEquals(33.034698486328, $result['latitude'], '', 0.0001);
+        $this->assertEquals(-96.813400268555, $result['longitude'], '', 0.0001);
+        $this->assertEquals(75093, $result['zipcode']);
+        $this->assertEquals('Plano', $result['city']);
+        $this->assertEquals('TX', $result['region']);
+        $this->assertEquals('United States', $result['country']);
+        $this->assertEquals('US', $result['countryCode']);
+        $this->assertEquals('America/Chicago', $result['timezone']);
+    }
+
+    public function testGetGeocodedDataWithRealIPv6()
+    {
+        $this->provider = new GeoipProvider();
+        $result = $this->provider->getGeocodedData('::ffff:74.200.247.59');
 
         $this->assertEquals(33.034698486328, $result['latitude'], '', 0.0001);
         $this->assertEquals(-96.813400268555, $result['longitude'], '', 0.0001);

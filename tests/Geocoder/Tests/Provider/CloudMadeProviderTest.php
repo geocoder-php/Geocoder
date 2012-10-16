@@ -8,6 +8,12 @@ use Geocoder\Provider\CloudMadeProvider;
 
 class CloudMadeProviderTest extends TestCase
 {
+    public function testGetName()
+    {
+        $provider = new CloudMadeProvider($this->getMock('\Geocoder\HttpAdapter\HttpAdapterInterface'), null);
+        $this->assertEquals('cloudmade', $provider->getName());
+    }
+    
     /**
      * @expectedException \RuntimeException
      */
@@ -74,10 +80,27 @@ class CloudMadeProviderTest extends TestCase
         $this->assertNull($result['timezone']);
     }
 
-    public function testGetGeocodedDataWithLocalhost()
+    public function testGetGeocodedDataWithLocalhostIPv4()
     {
         $this->provider = new CloudMadeProvider($this->getMockAdapter($this->never()), 'api_key');
         $result = $this->provider->getGeocodedData('127.0.0.1');
+
+        $this->assertArrayNotHasKey('latitude', $result);
+        $this->assertArrayNotHasKey('longitude', $result);
+        $this->assertArrayNotHasKey('bounds', $result);
+        $this->assertArrayNotHasKey('zipcode', $result);
+        $this->assertArrayNotHasKey('timezone', $result);
+
+        $this->assertEquals('localhost', $result['city']);
+        $this->assertEquals('localhost', $result['region']);
+        $this->assertEquals('localhost', $result['county']);
+        $this->assertEquals('localhost', $result['country']);
+    }
+
+    public function testGetGeocodedDataWithLocalhostIPv6()
+    {
+        $this->provider = new CloudMadeProvider($this->getMockAdapter($this->never()), 'api_key');
+        $result = $this->provider->getGeocodedData('::1');
 
         $this->assertArrayNotHasKey('latitude', $result);
         $this->assertArrayNotHasKey('longitude', $result);
@@ -205,5 +228,31 @@ class CloudMadeProviderTest extends TestCase
         $result = $this->provider->getGeocodedData('Kalbacher Hauptstraße 10, 60437 Frankfurt, Germany');
 
         $this->assertNull($result['cityDistrict']);
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\UnsupportedException
+     */
+    public function testGetGeocodedDataWithRealIPv4()
+    {
+        if (!isset($_SERVER['CLOUDMADE_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the CLOUDMADE_API_KEY value in phpunit.xml');
+        }
+
+        $this->provider = new CloudMadeProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['CLOUDMADE_API_KEY']);
+        $result = $this->provider->getGeocodedData('88.188.221.14');
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\UnsupportedException
+     */
+    public function testGetGeocodedDataWithRealIPv6()
+    {
+        if (!isset($_SERVER['CLOUDMADE_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the CLOUDMADE_API_KEY value in phpunit.xml');
+        }
+        
+        $this->provider = new CloudMadeProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['CLOUDMADE_API_KEY']);
+        $result = $this->provider->getGeocodedData('::ffff:88.188.221.14');
     }
 }

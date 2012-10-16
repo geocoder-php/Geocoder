@@ -8,6 +8,12 @@ use Geocoder\Provider\IpInfoDbProvider;
 
 class IpInfoDbProviderTest extends TestCase
 {
+    public function testGetName()
+    {
+        $provider = new IpInfoDbProvider($this->getMock('\Geocoder\HttpAdapter\HttpAdapterInterface'), null);
+        $this->assertEquals('ip_info_db', $provider->getName());
+    }
+
     /**
      * @expectedException \RuntimeException
      */
@@ -89,7 +95,7 @@ class IpInfoDbProviderTest extends TestCase
         $this->assertNull($result['timezone']);
     }
 
-    public function testGetGeocodedDataWithLocalhost()
+    public function testGetGeocodedDataWithLocalhostIPv4()
     {
         $this->provider = new IpInfoDbProvider($this->getMockAdapter($this->never()), 'api_key');
         $result = $this->provider->getGeocodedData('127.0.0.1');
@@ -105,23 +111,45 @@ class IpInfoDbProviderTest extends TestCase
         $this->assertEquals('localhost', $result['country']);
     }
 
-    public function testGetGeocodedDataWithRealIp()
+    /**
+     * @expectedException \Geocoder\Exception\UnsupportedException
+     */
+    public function testGetGeocodedDataWithLocalhostIPv6()
+    {
+        $this->provider = new IpInfoDbProvider($this->getMockAdapter($this->never()), 'api_key');
+        $result = $this->provider->getGeocodedData('::1');
+    }
+
+    public function testGetGeocodedDataWithRealIPv4()
     {
         if (!isset($_SERVER['IPINFODB_API_KEY'])) {
             $this->markTestSkipped('You need to configure the IPINFODB_API_KEY value in phpunit.xml');
         }
 
         $this->provider = new IpInfoDbProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['IPINFODB_API_KEY']);
-        $result = $this->provider->getGeocodedData('74.200.247.59');
+        $result = $this->provider->getGeocodedData('74.125.45.100');
 
-        $this->assertEquals(33.0404, $result['latitude'], '', 0.0001);
-        $this->assertEquals(-96.7238, $result['longitude'], '', 0.0001);
-        $this->assertEquals(75093, $result['zipcode']);
-        $this->assertEquals('PLANO', $result['city']);
-        $this->assertEquals('TEXAS', $result['region']);
+        $this->assertEquals(37.3861, $result['latitude'], '', 0.0001);
+        $this->assertEquals(-122.084, $result['longitude'], '', 0.0001);
+        $this->assertEquals(94043, $result['zipcode']);
+        $this->assertEquals('MOUNTAIN VIEW', $result['city']);
+        $this->assertEquals('CALIFORNIA', $result['region']);
         $this->assertEquals('UNITED STATES', $result['country']);
         $this->assertEquals('US', $result['countryCode']);
         $this->assertEquals('America/Denver', $result['timezone']);
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\UnsupportedException
+     */
+    public function testGetGeocodedDataWithRealIPv6()
+    {
+        if (!isset($_SERVER['IPINFODB_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the IPINFODB_API_KEY value in phpunit.xml');
+        }
+
+        $this->provider = new IpInfoDbProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['IPINFODB_API_KEY']);
+        $result = $this->provider->getGeocodedData('::ffff:74.125.45.100');
     }
 
     /**

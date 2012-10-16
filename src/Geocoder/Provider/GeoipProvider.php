@@ -35,7 +35,7 @@ class GeoipProvider extends AbstractProvider implements ProviderInterface
      */
     public function getGeocodedData($address)
     {
-        if ('127.0.0.1' === $address) {
+        if (in_array($address, array('127.0.0.1', '::1'))) {
             return $this->getLocalhostDefaults();
         }
 

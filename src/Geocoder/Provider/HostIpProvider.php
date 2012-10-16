@@ -28,8 +28,13 @@ class HostIpProvider extends AbstractProvider implements ProviderInterface
      */
     public function getGeocodedData($address)
     {
-        if ('127.0.0.1' === $address) {
+        if (in_array($address, array('127.0.0.1', '::1'))) {
             return $this->getLocalhostDefaults();
+        }
+
+        // This API does not support IPv6
+        if (filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+            throw new UnsupportedException('The HostIpProvider does not support IPv6 addresses.');
         }
 
         $query = sprintf(self::ENDPOINT_URL, $address);

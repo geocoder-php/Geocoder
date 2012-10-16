@@ -8,6 +8,12 @@ use Geocoder\Provider\OpenStreetMapsProvider;
 
 class OpenStreetMapsProviderTest extends TestCase
 {
+    public function testGetName()
+    {
+        $provider = new OpenStreetMapsProvider($this->getMock('\Geocoder\HttpAdapter\HttpAdapterInterface'), null);
+        $this->assertEquals('openstreetmaps', $provider->getName());
+    }
+    
     public function testGetGeocodedDataWithRealAddress()
     {
         $this->provider = new OpenStreetMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
@@ -85,5 +91,64 @@ class OpenStreetMapsProviderTest extends TestCase
         $result = $this->provider->getGeocodedData('Kalbacher Hauptstraße, 60437 Frankfurt, Germany');
 
         $this->assertNotNull('Kalbach', $result['cityDistrict']);
+    }
+
+    public function testGetGeocodedDataWithLocalhostIPv4()
+    {
+        $this->provider = new OpenStreetMapsProvider($this->getMockAdapter($this->never()));
+        $result = $this->provider->getGeocodedData('127.0.0.1');
+
+        $this->assertArrayNotHasKey('latitude', $result);
+        $this->assertArrayNotHasKey('longitude', $result);
+        $this->assertArrayNotHasKey('zipcode', $result);
+        $this->assertArrayNotHasKey('timezone', $result);
+
+        $this->assertEquals('localhost', $result['city']);
+        $this->assertEquals('localhost', $result['region']);
+        $this->assertEquals('localhost', $result['county']);
+        $this->assertEquals('localhost', $result['country']);
+    }
+
+    public function testGetGeocodedDataWithLocalhostIPv6()
+    {
+        $this->provider = new OpenStreetMapsProvider($this->getMockAdapter($this->never()));
+        $result = $this->provider->getGeocodedData('::1');
+
+        $this->assertArrayNotHasKey('latitude', $result);
+        $this->assertArrayNotHasKey('longitude', $result);
+        $this->assertArrayNotHasKey('zipcode', $result);
+        $this->assertArrayNotHasKey('timezone', $result);
+
+        $this->assertEquals('localhost', $result['city']);
+        $this->assertEquals('localhost', $result['region']);
+        $this->assertEquals('localhost', $result['county']);
+        $this->assertEquals('localhost', $result['country']);
+    }
+
+    public function testGetGeocodedDataWithRealIPv4()
+    {
+        $this->provider = new OpenStreetMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $result = $this->provider->getGeocodedData('88.188.221.14');
+
+        $this->assertEquals(43.6189, $result['latitude'], '', 0.0001);
+        $this->assertEquals(1.4564, $result['longitude'], '', 0.0001);
+        $this->assertNull($result['streetNumber']);
+        $this->assertEquals('Rue du Faubourg Bonnefoy', $result['streetName']);
+        $this->assertEquals(31506, $result['zipcode']);
+        $this->assertEquals(4, $result['cityDistrict']);
+        $this->assertEquals('Toulouse', $result['city']);
+        $this->assertEquals('Haute-Garonne', $result['county']);
+        $this->assertEquals('Midi-Pyrénées', $result['region']);
+        $this->assertEquals('France', $result['country']);
+        $this->assertEquals('FR', $result['countryCode']);
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\UnsupportedException
+     */
+    public function testGetGeocodedDataWithRealIPv6()
+    {
+        $this->provider = new OpenStreetMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $result = $this->provider->getGeocodedData('::ffff:88.188.221.14');
     }
 }

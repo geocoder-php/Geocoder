@@ -54,7 +54,7 @@ class YahooProvider extends AbstractProvider implements ProviderInterface
             throw new \RuntimeException('No API Key provided');
         }
 
-        if ('127.0.0.1' === $address) {
+        if (in_array($address, array('127.0.0.1', '::1'))) {
             return $this->getLocalhostDefaults();
         }
 

@@ -10,6 +10,7 @@
 
 namespace Geocoder\Provider;
 
+use Geocoder\Exception\UnsupportedException;
 use Geocoder\HttpAdapter\HttpAdapterInterface;
 use Geocoder\Provider\ProviderInterface;
 
@@ -42,14 +43,14 @@ class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
      */
     public function getGeocodedData($address)
     {
-        if ('127.0.0.1' === $address) {
+        if (in_array($address, array('127.0.0.1', '::1'))) {
             return $this->getLocalhostDefaults();
         }
 
         // Google API returns invalid data if IP address given
         // This API doesn't handle IPs
-        if (preg_match('/[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/', $address)) {
-            return $this->getDefaults();
+        if (filter_var($address, FILTER_VALIDATE_IP)) {
+            throw new UnsupportedException('The GoogleMapsProvider does not support IP addresses.');
         }
 
         $query = sprintf(self::ENDPOINT_URL, urlencode($address));

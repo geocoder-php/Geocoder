@@ -5,8 +5,8 @@ namespace Geocoder\Tests\HttpAdapter;
 use Geocoder\HttpAdapter\GuzzleHttpAdapter;
 
 use Guzzle\Http\Message\Response;
-use Guzzle\Http\Plugin\HistoryPlugin;
-use Guzzle\Http\Plugin\MockPlugin;
+use Guzzle\Plugin\History\HistoryPlugin;
+use Guzzle\Plugin\Mock\MockPlugin;
 use Guzzle\Service\Client;
 
 /**

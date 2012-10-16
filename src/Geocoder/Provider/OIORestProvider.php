@@ -28,6 +28,7 @@ class OIORestProvider extends AbstractProvider implements ProviderInterface
      */
     public function getGeocodedData($address)
     {
+        // This API doesn't handle IPs
         if (filter_var($address, FILTER_VALIDATE_IP)) {
             throw new UnsupportedException('The OIORestProvider does not support IP addresses.');
         }

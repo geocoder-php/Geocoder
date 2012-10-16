@@ -8,6 +8,12 @@ use Geocoder\Provider\BingMapsProvider;
 
 class BingMapsProviderTest extends TestCase
 {
+    public function testGetName()
+    {
+        $provider = new BingMapsProvider($this->getMock('\Geocoder\HttpAdapter\HttpAdapterInterface'), null);
+        $this->assertEquals('bing_maps', $provider->getName());
+    }
+
     /**
      * @expectedException \RuntimeException
      */
@@ -74,10 +80,30 @@ class BingMapsProviderTest extends TestCase
         $this->assertNull($result['timezone']);
     }
 
-    public function testGetGeocodedDataWithLocalhost()
+    public function testGetGeocodedDataWithLocalhostIPv4()
     {
         $this->provider = new BingMapsProvider($this->getMockAdapter($this->never()), 'api_key');
         $result = $this->provider->getGeocodedData('127.0.0.1');
+
+        $this->assertArrayNotHasKey('latitude', $result);
+        $this->assertArrayNotHasKey('longitude', $result);
+        $this->assertArrayNotHasKey('bounds', $result);
+        $this->assertArrayNotHasKey('zipcode', $result);
+        $this->assertArrayNotHasKey('streetNumber', $result);
+        $this->assertArrayNotHasKey('streetName', $result);
+        $this->assertArrayNotHasKey('countryCode', $result);
+        $this->assertArrayNotHasKey('countryCode', $result);
+        $this->assertArrayNotHasKey('timezone', $result);
+
+        $this->assertEquals('localhost', $result['city']);
+        $this->assertEquals('localhost', $result['region']);
+        $this->assertEquals('localhost', $result['country']);
+    }
+
+    public function testGetGeocodedDataWithLocalhostIPv6()
+    {
+        $this->provider = new BingMapsProvider($this->getMockAdapter($this->never()), 'api_key');
+        $result = $this->provider->getGeocodedData('::1');
 
         $this->assertArrayNotHasKey('latitude', $result);
         $this->assertArrayNotHasKey('longitude', $result);
@@ -166,7 +192,8 @@ class BingMapsProviderTest extends TestCase
         $this->assertNull($result['streetNumber']);
         $this->assertEquals('10 Avenue Gambetta', $result['streetName']);
         $this->assertEquals(75020, $result['zipcode']);
-        $this->assertEquals('Paris', $result['city']);
+        // $this->assertEquals('Paris', $result['city']);
+        $this->assertEquals('20e Arrondissement', $result['city']);
         $this->assertEquals('Paris', $result['county']);
         $this->assertEquals('IdF', $result['region']);
         $this->assertEquals('France', $result['country']);
@@ -198,5 +225,31 @@ class BingMapsProviderTest extends TestCase
         $result = $this->provider->getGeocodedData('Kalbacher Hauptstraße 10, 60437 Frankfurt, Germany');
 
         $this->assertNull($result['cityDistrict']);
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\UnsupportedException
+     */
+    public function testGetGeocodedDataWithRealIPv4()
+    {
+        if (!isset($_SERVER['BINGMAPS_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the BINGMAPS_API_KEY value in phpunit.xml');
+        }
+
+        $this->provider = new BingMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['BINGMAPS_API_KEY']);
+        $result = $this->provider->getGeocodedData('88.188.221.14');
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\UnsupportedException
+     */
+    public function testGetGeocodedDataWithRealIPv6()
+    {
+        if (!isset($_SERVER['BINGMAPS_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the BINGMAPS_API_KEY value in phpunit.xml');
+        }
+        
+        $this->provider = new BingMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['BINGMAPS_API_KEY']);
+        $result = $this->provider->getGeocodedData('::ffff:88.188.221.14');
     }
 }
