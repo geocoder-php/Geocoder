@@ -10,7 +10,6 @@
 
 namespace Geocoder\Provider;
 
-use Geocoder\Provider\ProviderInterface;
 use Geocoder\Exception\RuntimeException;
 use Geocoder\Exception\UnsupportedException;
 

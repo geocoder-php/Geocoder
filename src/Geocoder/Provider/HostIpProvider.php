@@ -12,7 +12,6 @@ namespace Geocoder\Provider;
 
 use Geocoder\Exception\NoResultException;
 use Geocoder\Exception\UnsupportedException;
-use Geocoder\Provider\ProviderInterface;
 
 /**
  * @author William Durand <william.durand1@gmail.com>

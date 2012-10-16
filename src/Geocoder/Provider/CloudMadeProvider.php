@@ -10,11 +10,10 @@
 
 namespace Geocoder\Provider;
 
-use Geocoder\Exception\UnsupportedException;
 use Geocoder\HttpAdapter\HttpAdapterInterface;
-use Geocoder\Provider\ProviderInterface;
 use Geocoder\Exception\NoResultException;
 use Geocoder\Exception\InvalidCredentialsException;
+use Geocoder\Exception\UnsupportedException;
 
 /**
  * @author David Guyon <dguyon@gmail.com>

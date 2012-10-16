@@ -10,9 +10,8 @@
 
 namespace Geocoder\Provider;
 
-use Geocoder\Provider\ProviderInterface;
-use Geocoder\Exception\UnsupportedException;
 use Geocoder\Exception\NoResultException;
+use Geocoder\Exception\UnsupportedException;
 
 /**
  * @author Niklas Närhinen <niklas@narhinen.net>

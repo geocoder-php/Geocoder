@@ -14,7 +14,6 @@ use Geocoder\Exception\InvalidCredentialsException;
 use Geocoder\Exception\NoResultException;
 use Geocoder\Exception\UnsupportedException;
 use Geocoder\HttpAdapter\HttpAdapterInterface;
-use Geocoder\Provider\ProviderInterface;
 
 /**
  * @author William Durand <william.durand1@gmail.com>

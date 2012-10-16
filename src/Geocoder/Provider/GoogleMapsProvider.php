@@ -10,10 +10,9 @@
 
 namespace Geocoder\Provider;
 
-use Geocoder\HttpAdapter\HttpAdapterInterface;
-use Geocoder\Provider\ProviderInterface;
 use Geocoder\Exception\NoResultException;
 use Geocoder\Exception\UnsupportedException;
+use Geocoder\HttpAdapter\HttpAdapterInterface;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
