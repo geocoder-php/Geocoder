@@ -21,7 +21,7 @@ class Geocoder implements GeocoderInterface
     /**
      * Version
      */
-    const VERSION = '1.0.14';
+    const VERSION = '1.1.1-dev';
 
     /**
      * @var array

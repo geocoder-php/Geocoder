@@ -3,7 +3,6 @@
 namespace Geocoder\Tests\Provider;
 
 use Geocoder\Tests\TestCase;
-
 use Geocoder\Provider\CloudMadeProvider;
 
 class CloudMadeProviderTest extends TestCase
@@ -23,95 +22,54 @@ class CloudMadeProviderTest extends TestCase
         $provider->getGeocodedData('foo');
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://geocoding.cloudmade.com/api_key/geocoding/v2/find.js?query=foobar&distance=closest&return_location=true&results=1
+     */
     public function testGetGeocodedData()
     {
-        $this->provider = new CloudMadeProvider($this->getMockAdapter(), 'api_key');
-        $result = $this->provider->getGeocodedData('foobar');
-
-        $this->assertNull($result['latitude']);
-        $this->assertNull($result['longitude']);
-        $this->assertNull($result['bounds']);
-        $this->assertNull($result['streetNumber']);
-        $this->assertNull($result['streetName']);
-        $this->assertNull($result['city']);
-        $this->assertNull($result['zipcode']);
-        $this->assertNull($result['region']);
-        $this->assertNull($result['county']);
-        $this->assertNull($result['country']);
-        $this->assertNull($result['countryCode']);
-        $this->assertNull($result['timezone']);
+        $provider = new CloudMadeProvider($this->getMockAdapter(), 'api_key');
+        $provider->getGeocodedData('foobar');
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://geocoding.cloudmade.com/api_key/geocoding/v2/find.js?query=&distance=closest&return_location=true&results=1
+     */
     public function testGetGeocodedDataWithNull()
     {
-        $this->provider = new CloudMadeProvider($this->getMockAdapter(), 'api_key');
-        $result = $this->provider->getGeocodedData(null);
-
-        $this->assertNull($result['latitude']);
-        $this->assertNull($result['longitude']);
-        $this->assertNull($result['bounds']);
-        $this->assertNull($result['streetNumber']);
-        $this->assertNull($result['streetName']);
-        $this->assertNull($result['city']);
-        $this->assertNull($result['zipcode']);
-        $this->assertNull($result['region']);
-        $this->assertNull($result['county']);
-        $this->assertNull($result['country']);
-        $this->assertNull($result['countryCode']);
-        $this->assertNull($result['timezone']);
+        $provider = new CloudMadeProvider($this->getMockAdapter(), 'api_key');
+        $provider->getGeocodedData(null);
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://geocoding.cloudmade.com/api_key/geocoding/v2/find.js?query=&distance=closest&return_location=true&results=1
+     */
     public function testGetGeocodedDataWithEmpty()
     {
-        $this->provider = new CloudMadeProvider($this->getMockAdapter(), 'api_key');
-        $result = $this->provider->getGeocodedData('');
-
-        $this->assertNull($result['latitude']);
-        $this->assertNull($result['longitude']);
-        $this->assertNull($result['bounds']);
-        $this->assertNull($result['streetNumber']);
-        $this->assertNull($result['streetName']);
-        $this->assertNull($result['city']);
-        $this->assertNull($result['zipcode']);
-        $this->assertNull($result['region']);
-        $this->assertNull($result['county']);
-        $this->assertNull($result['country']);
-        $this->assertNull($result['countryCode']);
-        $this->assertNull($result['timezone']);
+        $provider = new CloudMadeProvider($this->getMockAdapter(), 'api_key');
+        $provider->getGeocodedData('');
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedExceptionMessage The CloudMadeProvider does not support IP addresses.
+     */
     public function testGetGeocodedDataWithLocalhostIPv4()
     {
-        $this->provider = new CloudMadeProvider($this->getMockAdapter($this->never()), 'api_key');
-        $result = $this->provider->getGeocodedData('127.0.0.1');
-
-        $this->assertArrayNotHasKey('latitude', $result);
-        $this->assertArrayNotHasKey('longitude', $result);
-        $this->assertArrayNotHasKey('bounds', $result);
-        $this->assertArrayNotHasKey('zipcode', $result);
-        $this->assertArrayNotHasKey('timezone', $result);
-
-        $this->assertEquals('localhost', $result['city']);
-        $this->assertEquals('localhost', $result['region']);
-        $this->assertEquals('localhost', $result['county']);
-        $this->assertEquals('localhost', $result['country']);
+        $provider = new CloudMadeProvider($this->getMockAdapter($this->never()), 'api_key');
+        $provider->getGeocodedData('127.0.0.1');
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedExceptionMessage The CloudMadeProvider does not support IP addresses.
+     */
     public function testGetGeocodedDataWithLocalhostIPv6()
     {
-        $this->provider = new CloudMadeProvider($this->getMockAdapter($this->never()), 'api_key');
-        $result = $this->provider->getGeocodedData('::1');
-
-        $this->assertArrayNotHasKey('latitude', $result);
-        $this->assertArrayNotHasKey('longitude', $result);
-        $this->assertArrayNotHasKey('bounds', $result);
-        $this->assertArrayNotHasKey('zipcode', $result);
-        $this->assertArrayNotHasKey('timezone', $result);
-
-        $this->assertEquals('localhost', $result['city']);
-        $this->assertEquals('localhost', $result['region']);
-        $this->assertEquals('localhost', $result['county']);
-        $this->assertEquals('localhost', $result['country']);
+        $provider = new CloudMadeProvider($this->getMockAdapter($this->never()), 'api_key');
+        $provider->getGeocodedData('::1');
     }
 
     public function testGetGeocodedDataWithRealAddress()
@@ -120,8 +78,8 @@ class CloudMadeProviderTest extends TestCase
             $this->markTestSkipped('You need to configure the CLOUDMADE_API_KEY value in phpunit.xml');
         }
 
-        $this->provider = new CloudMadeProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['CLOUDMADE_API_KEY']);
-        $result = $this->provider->getGeocodedData('36 Quai des Orfèvres, Paris, France');
+        $provider = new CloudMadeProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['CLOUDMADE_API_KEY']);
+        $result = $provider->getGeocodedData('36 Quai des Orfèvres, Paris, France');
 
         $this->assertEquals(48.85645, $result['latitude'], '', 0.0001);
         $this->assertEquals(2.35243, $result['longitude'], '', 0.0001);
@@ -146,23 +104,14 @@ class CloudMadeProviderTest extends TestCase
         $this->assertNull($result['timezone']);
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://geocoding.cloudmade.com/api_key/geocoding/v2/find.js?around=1.000000,2.000000&object_type=address&return_location=true&results=1
+     */
     public function testGetReversedData()
     {
-        $this->provider = new CloudMadeProvider($this->getMockAdapter(), 'api_key');
-        $result = $this->provider->getReversedData(array(1, 2));
-
-        $this->assertNull($result['latitude']);
-        $this->assertNull($result['longitude']);
-        $this->assertNull($result['bounds']);
-        $this->assertNull($result['streetNumber']);
-        $this->assertNull($result['streetName']);
-        $this->assertNull($result['city']);
-        $this->assertNull($result['zipcode']);
-        $this->assertNull($result['region']);
-        $this->assertNull($result['county']);
-        $this->assertNull($result['country']);
-        $this->assertNull($result['countryCode']);
-        $this->assertNull($result['timezone']);
+        $provider = new CloudMadeProvider($this->getMockAdapter(), 'api_key');
+        $provider->getReversedData(array(1, 2));
     }
 
     public function testGetReversedDataWithRealCoordinates()
@@ -171,8 +120,8 @@ class CloudMadeProviderTest extends TestCase
             $this->markTestSkipped('You need to configure the CLOUDMADE_API_KEY value in phpunit.xml');
         }
 
-        $this->provider = new CloudMadeProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['CLOUDMADE_API_KEY']);
-        $result = $this->provider->getReversedData(array(48.85657, 2.35325));
+        $provider = new CloudMadeProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['CLOUDMADE_API_KEY']);
+        $result = $provider->getReversedData(array(48.85657, 2.35325));
 
         $this->assertEquals(48.85657, $result['latitude'], '', 0.0001);
         $this->assertEquals(2.35325, $result['longitude'], '', 0.0001);
@@ -203,8 +152,8 @@ class CloudMadeProviderTest extends TestCase
             $this->markTestSkipped('You need to configure the CLOUDMADE_API_KEY value in phpunit.xml');
         }
 
-        $this->provider = new CloudMadeProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['CLOUDMADE_API_KEY']);
-        $result = $this->provider->getGeocodedData('73 Boulevard Schuman, Clermont-Ferrand');
+        $provider = new CloudMadeProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['CLOUDMADE_API_KEY']);
+        $result = $provider->getGeocodedData('73 Boulevard Schuman, Clermont-Ferrand');
 
         $this->assertNull($result['streetNumber']);
         $this->assertEquals('Boulevard Robert Schuman', $result['streetName']);
@@ -224,14 +173,15 @@ class CloudMadeProviderTest extends TestCase
             $this->markTestSkipped('You need to configure the CLOUDMADE_API_KEY value in phpunit.xml');
         }
 
-        $this->provider = new CloudMadeProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['CLOUDMADE_API_KEY']);
-        $result = $this->provider->getGeocodedData('Kalbacher Hauptstraße 10, 60437 Frankfurt, Germany');
+        $provider = new CloudMadeProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['CLOUDMADE_API_KEY']);
+        $result = $provider->getGeocodedData('Kalbacher Hauptstraße 10, 60437 Frankfurt, Germany');
 
         $this->assertNull($result['cityDistrict']);
     }
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedExceptionMessage The CloudMadeProvider does not support IP addresses.
      */
     public function testGetGeocodedDataWithRealIPv4()
     {
@@ -239,20 +189,21 @@ class CloudMadeProviderTest extends TestCase
             $this->markTestSkipped('You need to configure the CLOUDMADE_API_KEY value in phpunit.xml');
         }
 
-        $this->provider = new CloudMadeProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['CLOUDMADE_API_KEY']);
-        $result = $this->provider->getGeocodedData('88.188.221.14');
+        $provider = new CloudMadeProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['CLOUDMADE_API_KEY']);
+        $result = $provider->getGeocodedData('88.188.221.14');
     }
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedExceptionMessage The CloudMadeProvider does not support IP addresses.
      */
     public function testGetGeocodedDataWithRealIPv6()
     {
         if (!isset($_SERVER['CLOUDMADE_API_KEY'])) {
             $this->markTestSkipped('You need to configure the CLOUDMADE_API_KEY value in phpunit.xml');
         }
-        
-        $this->provider = new CloudMadeProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['CLOUDMADE_API_KEY']);
-        $result = $this->provider->getGeocodedData('::ffff:88.188.221.14');
+
+        $provider = new CloudMadeProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['CLOUDMADE_API_KEY']);
+        $result = $provider->getGeocodedData('::ffff:88.188.221.14');
     }
 }

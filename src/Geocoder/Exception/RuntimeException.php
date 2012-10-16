@@ -13,6 +13,6 @@ namespace Geocoder\Exception;
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-class UnsupportedException extends InvalidArgumentException implements ExceptionInterface
+class RuntimeException extends \RuntimeException implements ExceptionInterface
 {
 }

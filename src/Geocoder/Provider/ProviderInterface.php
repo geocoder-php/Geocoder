@@ -18,7 +18,11 @@ interface ProviderInterface
     /**
      * Returns an associative array with data treated by the provider.
      *
-     * @param  string $address An address (IP or street).
+     * @param string $address An address (IP or street).
+     *
+     * @throws NoResultException           If the address could not be resolved
+     * @throws InvalidCredentialsException If the credentials are invalid
+     *
      * @return array
      */
     public function getGeocodedData($address);
@@ -26,7 +30,11 @@ interface ProviderInterface
     /**
      * Returns an associative array with data treated by the provider.
      *
-     * @param  array $coordinates Coordinates (latitude, longitude).
+     * @param array $coordinates Coordinates (latitude, longitude).
+     *
+     * @throws NoResultException           If the coordinates could not be resolved
+     * @throws InvalidCredentialsException If the credentials are invalid
+     *
      * @return array
      */
     public function getReversedData(array $coordinates);

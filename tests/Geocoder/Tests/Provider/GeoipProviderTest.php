@@ -3,13 +3,14 @@
 namespace Geocoder\Tests\Provider;
 
 use Geocoder\Tests\TestCase;
-
 use Geocoder\Provider\GeoipProvider;
 
 class GeoipProviderTest extends TestCase
 {
-    public function setUp()
+    protected function setUp()
     {
+        parent::setUp();
+
         if (!function_exists('geoip_record_by_name')) {
             $this->markTestSkipped('You have to install GeoIP.');
         }
@@ -21,55 +22,40 @@ class GeoipProviderTest extends TestCase
         $this->assertEquals('geoip', $provider->getName());
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedExceptionMessage The GeoipProvider does not support Street addresses.
+     */
     public function testGetGeocodedDataWithNull()
     {
-        $this->provider = new GeoipProvider();
-        $result = $this->provider->getGeocodedData(null);
-
-        $this->assertNull($result['latitude']);
-        $this->assertNull($result['longitude']);
-        $this->assertNull($result['city']);
-        $this->assertNull($result['zipcode']);
-        $this->assertNull($result['region']);
-        $this->assertNull($result['country']);
-        $this->assertNull($result['countryCode']);
-        $this->assertNull($result['timezone']);
+        $provider = new GeoipProvider();
+        $provider->getGeocodedData(null);
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedExceptionMessage The GeoipProvider does not support Street addresses.
+     */
     public function testGetGeocodedDataWithEmpty()
     {
-        $this->provider = new GeoipProvider();
-        $result = $this->provider->getGeocodedData('');
-
-        $this->assertNull($result['latitude']);
-        $this->assertNull($result['longitude']);
-        $this->assertNull($result['city']);
-        $this->assertNull($result['zipcode']);
-        $this->assertNull($result['region']);
-        $this->assertNull($result['country']);
-        $this->assertNull($result['countryCode']);
-        $this->assertNull($result['timezone']);
+        $provider = new GeoipProvider();
+        $provider->getGeocodedData('');
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedExceptionMessage The GeoipProvider does not support Street addresses.
+     */
     public function testGetGeocodedDataWithAddress()
     {
-        $this->provider = new GeoipProvider();
-        $result = $this->provider->getGeocodedData('10 avenue Gambetta, Paris, France');
-
-        $this->assertNull($result['latitude']);
-        $this->assertNull($result['longitude']);
-        $this->assertNull($result['city']);
-        $this->assertNull($result['zipcode']);
-        $this->assertNull($result['region']);
-        $this->assertNull($result['country']);
-        $this->assertNull($result['countryCode']);
-        $this->assertNull($result['timezone']);
+        $provider = new GeoipProvider();
+        $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
     }
 
     public function testGetGeocodedDataWithLocalhostIPv4()
     {
-        $this->provider = new GeoipProvider();
-        $result = $this->provider->getGeocodedData('127.0.0.1');
+        $provider = new GeoipProvider();
+        $result   = $provider->getGeocodedData('127.0.0.1');
 
         $this->assertArrayNotHasKey('latitude', $result);
         $this->assertArrayNotHasKey('longitude', $result);
@@ -84,8 +70,8 @@ class GeoipProviderTest extends TestCase
 
     public function testGetGeocodedDataWithLocalhostIPv6()
     {
-        $this->provider = new GeoipProvider();
-        $result = $this->provider->getGeocodedData('::1');
+        $provider = new GeoipProvider();
+        $result   = $provider->getGeocodedData('::1');
 
         $this->assertArrayNotHasKey('latitude', $result);
         $this->assertArrayNotHasKey('longitude', $result);
@@ -100,8 +86,8 @@ class GeoipProviderTest extends TestCase
 
     public function testGetGeocodedDataWithRealIPv4()
     {
-        $this->provider = new GeoipProvider();
-        $result = $this->provider->getGeocodedData('74.200.247.59');
+        $provider = new GeoipProvider();
+        $result   = $provider->getGeocodedData('74.200.247.59');
 
         $this->assertEquals(33.034698486328, $result['latitude'], '', 0.0001);
         $this->assertEquals(-96.813400268555, $result['longitude'], '', 0.0001);
@@ -115,8 +101,8 @@ class GeoipProviderTest extends TestCase
 
     public function testGetGeocodedDataWithRealIPv6()
     {
-        $this->provider = new GeoipProvider();
-        $result = $this->provider->getGeocodedData('::ffff:74.200.247.59');
+        $provider = new GeoipProvider();
+        $result   = $provider->getGeocodedData('::ffff:74.200.247.59');
 
         $this->assertEquals(33.034698486328, $result['latitude'], '', 0.0001);
         $this->assertEquals(-96.813400268555, $result['longitude'], '', 0.0001);
@@ -130,10 +116,11 @@ class GeoipProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedExceptionMessage The GeoipProvider is not able to do reverse geocoding.
      */
     public function testGetReverseData()
     {
-        $this->provider = new GeoipProvider();
-        $this->provider->getReversedData(array(1, 2));
+        $provider = new GeoipProvider();
+        $provider->getReversedData(array(1, 2));
     }
 }

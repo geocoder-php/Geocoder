@@ -3,7 +3,6 @@
 namespace Geocoder\Tests\Provider;
 
 use Geocoder\Tests\TestCase;
-
 use Geocoder\Provider\BingMapsProvider;
 
 class BingMapsProviderTest extends TestCase
@@ -19,105 +18,58 @@ class BingMapsProviderTest extends TestCase
      */
     public function testGetGeocodedDataWithNullApiKey()
     {
-        $provider = new BingMapsProvider($this->getMock('\Geocoder\HttpAdapter\HttpAdapterInterface'), null);
+        $provider = new BingMapsProvider($this->getMock('Geocoder\HttpAdapter\HttpAdapterInterface'), null);
         $provider->getGeocodedData('foo');
     }
 
-    public function testGetGeocodedData()
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://dev.virtualearth.net/REST/v1/Locations/?q=foobar&key=api_key
+     */
+    public function testGetGeocodedDataWithInvalidData()
     {
-        $this->provider = new BingMapsProvider($this->getMockAdapter(), 'api_key');
-        $result = $this->provider->getGeocodedData('foobar');
-
-        $this->assertNull($result['latitude']);
-        $this->assertNull($result['longitude']);
-        $this->assertNull($result['bounds']);
-        $this->assertNull($result['streetNumber']);
-        $this->assertNull($result['streetName']);
-        $this->assertNull($result['city']);
-        $this->assertNull($result['zipcode']);
-        $this->assertNull($result['county']);
-        $this->assertNull($result['region']);
-        $this->assertNull($result['country']);
-        $this->assertNull($result['countryCode']);
-        $this->assertNull($result['timezone']);
+        $provider = new BingMapsProvider($this->getMockAdapter(), 'api_key');
+        $provider->getGeocodedData('foobar');
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://dev.virtualearth.net/REST/v1/Locations/?q=&key=api_key
+     */
     public function testGetGeocodedDataWithNull()
     {
-        $this->provider = new BingMapsProvider($this->getMockAdapter(), 'api_key');
-        $result = $this->provider->getGeocodedData(null);
-
-        $this->assertNull($result['latitude']);
-        $this->assertNull($result['longitude']);
-        $this->assertNull($result['bounds']);
-        $this->assertNull($result['streetNumber']);
-        $this->assertNull($result['streetName']);
-        $this->assertNull($result['city']);
-        $this->assertNull($result['zipcode']);
-        $this->assertNull($result['county']);
-        $this->assertNull($result['region']);
-        $this->assertNull($result['country']);
-        $this->assertNull($result['countryCode']);
-        $this->assertNull($result['timezone']);
+        $provider = new BingMapsProvider($this->getMockAdapter(), 'api_key');
+        $provider->getGeocodedData(null);
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://dev.virtualearth.net/REST/v1/Locations/?q=&key=api_key
+     */
     public function testGetGeocodedDataWithEmpty()
     {
-        $this->provider = new BingMapsProvider($this->getMockAdapter(), 'api_key');
-        $result = $this->provider->getGeocodedData('');
-
-        $this->assertNull($result['latitude']);
-        $this->assertNull($result['longitude']);
-        $this->assertNull($result['bounds']);
-        $this->assertNull($result['streetNumber']);
-        $this->assertNull($result['streetName']);
-        $this->assertNull($result['city']);
-        $this->assertNull($result['zipcode']);
-        $this->assertNull($result['county']);
-        $this->assertNull($result['region']);
-        $this->assertNull($result['country']);
-        $this->assertNull($result['countryCode']);
-        $this->assertNull($result['timezone']);
+        $provider = new BingMapsProvider($this->getMockAdapter(), 'api_key');
+        $provider->getGeocodedData('');
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedExceptionMessage The BingMapsProvider does not support IP addresses.
+     */
     public function testGetGeocodedDataWithLocalhostIPv4()
     {
-        $this->provider = new BingMapsProvider($this->getMockAdapter($this->never()), 'api_key');
-        $result = $this->provider->getGeocodedData('127.0.0.1');
-
-        $this->assertArrayNotHasKey('latitude', $result);
-        $this->assertArrayNotHasKey('longitude', $result);
-        $this->assertArrayNotHasKey('bounds', $result);
-        $this->assertArrayNotHasKey('zipcode', $result);
-        $this->assertArrayNotHasKey('streetNumber', $result);
-        $this->assertArrayNotHasKey('streetName', $result);
-        $this->assertArrayNotHasKey('countryCode', $result);
-        $this->assertArrayNotHasKey('countryCode', $result);
-        $this->assertArrayNotHasKey('timezone', $result);
-
-        $this->assertEquals('localhost', $result['city']);
-        $this->assertEquals('localhost', $result['region']);
-        $this->assertEquals('localhost', $result['country']);
+        $provider = new BingMapsProvider($this->getMockAdapter($this->never()), 'api_key');
+        $provider->getGeocodedData('127.0.0.1');
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedExceptionMessage The BingMapsProvider does not support IP addresses.
+     */
     public function testGetGeocodedDataWithLocalhostIPv6()
     {
-        $this->provider = new BingMapsProvider($this->getMockAdapter($this->never()), 'api_key');
-        $result = $this->provider->getGeocodedData('::1');
-
-        $this->assertArrayNotHasKey('latitude', $result);
-        $this->assertArrayNotHasKey('longitude', $result);
-        $this->assertArrayNotHasKey('bounds', $result);
-        $this->assertArrayNotHasKey('zipcode', $result);
-        $this->assertArrayNotHasKey('streetNumber', $result);
-        $this->assertArrayNotHasKey('streetName', $result);
-        $this->assertArrayNotHasKey('countryCode', $result);
-        $this->assertArrayNotHasKey('countryCode', $result);
-        $this->assertArrayNotHasKey('timezone', $result);
-
-        $this->assertEquals('localhost', $result['city']);
-        $this->assertEquals('localhost', $result['region']);
-        $this->assertEquals('localhost', $result['country']);
+        $provider = new BingMapsProvider($this->getMockAdapter($this->never()), 'api_key');
+        $provider->getGeocodedData('::1');
     }
 
     public function testGetGeocodedDataWithRealAddress()
@@ -126,8 +78,8 @@ class BingMapsProviderTest extends TestCase
             $this->markTestSkipped('You need to configure the BINGMAPS_API_KEY value in phpunit.xml');
         }
 
-        $this->provider = new BingMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['BINGMAPS_API_KEY']);
-        $result = $this->provider->getGeocodedData('10 avenue Gambetta, Paris, France');
+        $provider = new BingMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['BINGMAPS_API_KEY']);
+        $result = $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
 
         $this->assertEquals(48.86321675999999, $result['latitude'], '', 0.0001);
         $this->assertEquals(2.3887721299999995, $result['longitude'], '', 0.0001);
@@ -151,23 +103,14 @@ class BingMapsProviderTest extends TestCase
         $this->assertNull($result['timezone']);
     }
 
+    /**
+     * @expectedException Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://dev.virtualearth.net/REST/v1/Locations/1.000000,2.000000?key=api_key
+     */
     public function testGetReversedData()
     {
-        $this->provider = new BingMapsProvider($this->getMockAdapter(), 'api_key');
-        $result = $this->provider->getReversedData(array(1, 2));
-
-        $this->assertNull($result['latitude']);
-        $this->assertNull($result['longitude']);
-        $this->assertNull($result['bounds']);
-        $this->assertNull($result['streetNumber']);
-        $this->assertNull($result['streetName']);
-        $this->assertNull($result['city']);
-        $this->assertNull($result['zipcode']);
-        $this->assertNull($result['county']);
-        $this->assertNull($result['region']);
-        $this->assertNull($result['country']);
-        $this->assertNull($result['countryCode']);
-        $this->assertNull($result['timezone']);
+        $provider = new BingMapsProvider($this->getMockAdapter(), 'api_key');
+        $provider->getReversedData(array(1, 2));
     }
 
     public function testGetReversedDataWithRealCoordinates()
@@ -176,8 +119,8 @@ class BingMapsProviderTest extends TestCase
             $this->markTestSkipped('You need to configure the BINGMAPS_API_KEY value in phpunit.xml');
         }
 
-        $this->provider = new BingMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['BINGMAPS_API_KEY']);
-        $result = $this->provider->getReversedData(array(48.86321648955345, 2.3887719959020615));
+        $provider = new BingMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['BINGMAPS_API_KEY']);
+        $result = $provider->getReversedData(array(48.86321648955345, 2.3887719959020615));
 
         $this->assertEquals(48.86321648955345, $result['latitude'], '', 0.0001);
         $this->assertEquals(2.3887719959020615, $result['longitude'], '', 0.0001);
@@ -208,8 +151,8 @@ class BingMapsProviderTest extends TestCase
             $this->markTestSkipped('You need to configure the BINGMAPS_API_KEY value in phpunit.xml');
         }
 
-        $this->provider = new BingMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['BINGMAPS_API_KEY']);
-        $result = $this->provider->getGeocodedData('Hannover');
+        $provider = new BingMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['BINGMAPS_API_KEY']);
+        $result = $provider->getGeocodedData('Hannover');
 
         $this->assertNull($result['zipcode']);
         $this->assertNull($result['timezone']);
@@ -221,14 +164,15 @@ class BingMapsProviderTest extends TestCase
             $this->markTestSkipped('You need to configure the BINGMAPS_API_KEY value in phpunit.xml');
         }
 
-        $this->provider = new BingMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['BINGMAPS_API_KEY']);
-        $result = $this->provider->getGeocodedData('Kalbacher Hauptstraße 10, 60437 Frankfurt, Germany');
+        $provider = new BingMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['BINGMAPS_API_KEY']);
+        $result = $provider->getGeocodedData('Kalbacher Hauptstraße 10, 60437 Frankfurt, Germany');
 
         $this->assertNull($result['cityDistrict']);
     }
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedExceptionMessage The BingMapsProvider does not support IP addresses.
      */
     public function testGetGeocodedDataWithRealIPv4()
     {
@@ -236,20 +180,21 @@ class BingMapsProviderTest extends TestCase
             $this->markTestSkipped('You need to configure the BINGMAPS_API_KEY value in phpunit.xml');
         }
 
-        $this->provider = new BingMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['BINGMAPS_API_KEY']);
-        $result = $this->provider->getGeocodedData('88.188.221.14');
+        $provider = new BingMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['BINGMAPS_API_KEY']);
+        $result = $provider->getGeocodedData('88.188.221.14');
     }
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedExceptionMessage The BingMapsProvider does not support IP addresses.
      */
     public function testGetGeocodedDataWithRealIPv6()
     {
         if (!isset($_SERVER['BINGMAPS_API_KEY'])) {
             $this->markTestSkipped('You need to configure the BINGMAPS_API_KEY value in phpunit.xml');
         }
-        
-        $this->provider = new BingMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['BINGMAPS_API_KEY']);
-        $result = $this->provider->getGeocodedData('::ffff:88.188.221.14');
+
+        $provider = new BingMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['BINGMAPS_API_KEY']);
+        $result = $provider->getGeocodedData('::ffff:88.188.221.14');
     }
 }

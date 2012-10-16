@@ -10,8 +10,8 @@
 
 namespace Geocoder\Provider;
 
+use Geocoder\Exception\NoResultException;
 use Geocoder\Exception\UnsupportedException;
-use Geocoder\Provider\ProviderInterface;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -28,6 +28,10 @@ class FreeGeoIpProvider extends AbstractProvider implements ProviderInterface
      */
     public function getGeocodedData($address)
     {
+        if (!filter_var($address, FILTER_VALIDATE_IP)) {
+            throw new UnsupportedException('The FreeGeoIpProvider does not support Street addresses.');
+        }
+
         if (in_array($address, array('127.0.0.1', '::1'))) {
             return $this->getLocalhostDefaults();
         }
@@ -62,13 +66,13 @@ class FreeGeoIpProvider extends AbstractProvider implements ProviderInterface
         $content = $this->getAdapter()->getContent($query);
 
         if (null === $content) {
-            return $this->getDefaults();
+            throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
         $data = (array) json_decode($content);
 
         if (empty($data)) {
-            return $this->getDefaults();
+            throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
         //it appears that for US states the region code is not returning the FIPS standard

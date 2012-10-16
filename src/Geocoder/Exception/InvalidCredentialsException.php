@@ -11,8 +11,8 @@
 namespace Geocoder\Exception;
 
 /**
- * @author William Durand <william.durand1@gmail.com>
+ * @author Markus Bachmann <markus.bachmann@bachi.biz>
  */
-class UnsupportedException extends InvalidArgumentException implements ExceptionInterface
+class InvalidCredentialsException extends RuntimeException implements ExceptionInterface
 {
 }

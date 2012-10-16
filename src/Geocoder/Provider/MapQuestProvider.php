@@ -10,9 +10,9 @@
 
 namespace Geocoder\Provider;
 
+use Geocoder\Exception\NoResultException;
 use Geocoder\Exception\UnsupportedException;
 use Geocoder\HttpAdapter\HttpAdapterInterface;
-use Geocoder\Provider\ProviderInterface;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -42,10 +42,6 @@ class MapQuestProvider extends AbstractProvider implements ProviderInterface
      */
     public function getGeocodedData($address)
     {
-        if (in_array($address, array('127.0.0.1', '::1'))) {
-            return $this->getLocalhostDefaults();
-        }
-
         // This API doesn't handle IPs
         if (filter_var($address, FILTER_VALIDATE_IP)) {
             throw new UnsupportedException('The MapQuestProvider does not support IP addresses.');
@@ -83,7 +79,7 @@ class MapQuestProvider extends AbstractProvider implements ProviderInterface
         $content = $this->getAdapter()->getContent($query);
 
         if (null === $content) {
-            return $this->getDefaults();
+            throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
         $json = json_decode($content, true);
@@ -115,6 +111,6 @@ class MapQuestProvider extends AbstractProvider implements ProviderInterface
             }
         }
 
-        return $this->getDefaults();
+        throw new NoResultException(sprintf('Could not find results for given query: %s', $query));
     }
 }

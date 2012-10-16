@@ -10,8 +10,8 @@
 
 namespace Geocoder\Provider;
 
+use Geocoder\Exception\NoResultException;
 use Geocoder\Exception\UnsupportedException;
-use Geocoder\Provider\ProviderInterface;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -28,6 +28,10 @@ class HostIpProvider extends AbstractProvider implements ProviderInterface
      */
     public function getGeocodedData($address)
     {
+        if (!filter_var($address, FILTER_VALIDATE_IP)) {
+            throw new UnsupportedException('The HostIpProvider does not support Street addresses.');
+        }
+
         if (in_array($address, array('127.0.0.1', '::1'))) {
             return $this->getLocalhostDefaults();
         }
@@ -69,7 +73,7 @@ class HostIpProvider extends AbstractProvider implements ProviderInterface
         try {
             $xml = new \SimpleXmlElement($content);
         } catch (\Exception $e) {
-            return $this->getDefaults();
+            throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
         $dataNode = $xml
