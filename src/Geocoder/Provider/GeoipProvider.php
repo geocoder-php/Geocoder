@@ -11,7 +11,7 @@
 namespace Geocoder\Provider;
 
 use Geocoder\Provider\ProviderInterface;
-
+use Geocoder\Exception\RuntimeException;
 use Geocoder\Exception\UnsupportedException;
 
 /**
@@ -27,7 +27,7 @@ class GeoipProvider extends AbstractProvider implements ProviderInterface
     public function __construct()
     {
         if (!function_exists('geoip_record_by_name')) {
-            throw new \RuntimeException('You have to install GeoIP');
+            throw new RuntimeException('You have to install GeoIP');
         }
     }
 
@@ -36,6 +36,10 @@ class GeoipProvider extends AbstractProvider implements ProviderInterface
      */
     public function getGeocodedData($address)
     {
+        if (!filter_var($address, FILTER_VALIDATE_IP)) {
+            throw new UnsupportedException('The GeoipProvider does not support Street addresses.');
+        }
+
         if (in_array($address, array('127.0.0.1', '::1'))) {
             return $this->getLocalhostDefaults();
         }
