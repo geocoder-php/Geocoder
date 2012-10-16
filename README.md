@@ -106,22 +106,22 @@ Now, you have to choose a `provider` which is closed to what you want to get.
 
 ### FreeGeoIpProvider ###
 
-The `FreeGeoIpProvider` is able to geocode **IP addresses** only.
+The `FreeGeoIpProvider` is able to geocode **IPv4 and IPv6 addresses** only.
 
 
 ### HostIpProvider ###
 
-The `HostIpProvider` is able to geocode **IP addresses** only.
+The `HostIpProvider` is able to geocode **IPv4 addresses** only.
 
 
 ### IpInfoDbProvider ###
 
-The `IpInfoDbProvider` is able to geocode **IP addresses** only.
+The `IpInfoDbProvider` is able to geocode **IPv4 addresses** only.
 
 
 ### YahooProvider ###
 
-The `YahooProvider` is able to geocode both **IP addresses** and **street addresses**.
+The `YahooProvider` is able to geocode both **IPv4 and IPv6 addresses** and **street addresses**.
 This provider can also reverse information based on coordinates (latitude, longitude).
 
 
@@ -147,7 +147,7 @@ The `CloudMadeProvider` is able to geocode and reverse geocode **street addresse
 
 ### GeoipProvider ###
 
-The `GeoipProvider` is able to geocode **IP addresses** only. No need to use an `HttpAdapter` as it uses a local database.
+The `GeoipProvider` is able to geocode **IPv4 and IPv6 addresses** only. No need to use an `HttpAdapter` as it uses a local database.
 See the [MaxMind page](http://www.maxmind.com/app/php) for more information.
 
 
