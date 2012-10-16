@@ -5,8 +5,17 @@ namespace Geocoder\Tests\Provider;
 use Geocoder\Tests\TestCase;
 use Geocoder\Provider\OIORestProvider;
 
+/**
+ * @author Antoine Corcy <contact@sbin.dk>
+ */
 class OIORestProviderTest extends TestCase
 {
+    public function testGetName()
+    {
+        $provider = new OIORestProvider($this->getMock('\Geocoder\HttpAdapter\HttpAdapterInterface'), null);
+        $this->assertEquals('oio_rest', $provider->getName());
+    }
+
     /**
      * @expectedException \Geocoder\Exception\NoResultException
      * @expectedExceptionMessage Could not execute query http://geo.oiorest.dk/adresser/.json

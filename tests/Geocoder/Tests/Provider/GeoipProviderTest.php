@@ -16,6 +16,12 @@ class GeoipProviderTest extends TestCase
         }
     }
 
+    public function testGetName()
+    {
+        $provider = new GeoipProvider();
+        $this->assertEquals('geoip', $provider->getName());
+    }
+
     /**
      * @expectedException \Geocoder\Exception\UnsupportedException
      * @expectedExceptionMessage The GeoipProvider does not support Street addresses.

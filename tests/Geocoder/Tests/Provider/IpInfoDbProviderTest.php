@@ -7,6 +7,12 @@ use Geocoder\Provider\IpInfoDbProvider;
 
 class IpInfoDbProviderTest extends TestCase
 {
+    public function testGetName()
+    {
+        $provider = new IpInfoDbProvider($this->getMock('\Geocoder\HttpAdapter\HttpAdapterInterface'), null);
+        $this->assertEquals('ip_info_db', $provider->getName());
+    }
+
     /**
      * @expectedException \Geocoder\Exception\InvalidCredentialsException
      */
