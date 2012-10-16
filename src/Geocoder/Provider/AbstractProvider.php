@@ -85,8 +85,6 @@ abstract class AbstractProvider
     /**
      * Returns the results for the 'localhost' special case.
      *
-     * @deprecated Please throw a NoResultException instead
-     *
      * @return array
      */
     protected function getLocalhostDefaults()
