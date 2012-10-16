@@ -3,115 +3,74 @@
 namespace Geocoder\Tests\Provider;
 
 use Geocoder\Tests\TestCase;
-
 use Geocoder\Provider\GoogleMapsProvider;
 
 class GoogleMapsProviderTest extends TestCase
 {
+    /**
+     * @expectedException Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://maps.googleapis.com/maps/api/geocode/json?address=foobar&sensor=false
+     */
     public function testGetGeocodedData()
     {
-        $this->provider = new GoogleMapsProvider($this->getMockAdapter());
-        $result = $this->provider->getGeocodedData('foobar');
-
-        $this->assertNull($result['latitude']);
-        $this->assertNull($result['longitude']);
-        $this->assertNull($result['bounds']);
-        $this->assertNull($result['streetNumber']);
-        $this->assertNull($result['streetName']);
-        $this->assertNull($result['city']);
-        $this->assertNull($result['zipcode']);
-        $this->assertNull($result['county']);
-        $this->assertNull($result['region']);
-        $this->assertNull($result['country']);
-        $this->assertNull($result['countryCode']);
-        $this->assertNull($result['timezone']);
+        $provider = new GoogleMapsProvider($this->getMockAdapter());
+        $provider->getGeocodedData('foobar');
     }
 
+    /**
+     * @expectedException Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://maps.googleapis.com/maps/api/geocode/json?address=&sensor=false
+     */
     public function testGetGeocodedDataWithNull()
     {
-        $this->provider = new GoogleMapsProvider($this->getMockAdapter());
-        $result = $this->provider->getGeocodedData(null);
-
-        $this->assertNull($result['latitude']);
-        $this->assertNull($result['longitude']);
-        $this->assertNull($result['bounds']);
-        $this->assertNull($result['streetNumber']);
-        $this->assertNull($result['streetName']);
-        $this->assertNull($result['city']);
-        $this->assertNull($result['zipcode']);
-        $this->assertNull($result['county']);
-        $this->assertNull($result['region']);
-        $this->assertNull($result['country']);
-        $this->assertNull($result['countryCode']);
-        $this->assertNull($result['timezone']);
+        $provider = new GoogleMapsProvider($this->getMockAdapter());
+        $provider->getGeocodedData(null);
     }
 
+    /**
+     * @expectedException Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://maps.googleapis.com/maps/api/geocode/json?address=&sensor=false
+     */
     public function testGetGeocodedDataWithEmpty()
     {
-        $this->provider = new GoogleMapsProvider($this->getMockAdapter());
-        $result = $this->provider->getGeocodedData('');
-
-        $this->assertNull($result['latitude']);
-        $this->assertNull($result['longitude']);
-        $this->assertNull($result['bounds']);
-        $this->assertNull($result['streetNumber']);
-        $this->assertNull($result['streetName']);
-        $this->assertNull($result['city']);
-        $this->assertNull($result['zipcode']);
-        $this->assertNull($result['county']);
-        $this->assertNull($result['region']);
-        $this->assertNull($result['country']);
-        $this->assertNull($result['countryCode']);
-        $this->assertNull($result['timezone']);
+        $provider = new GoogleMapsProvider($this->getMockAdapter());
+        $provider->getGeocodedData('');
     }
 
+    /**
+     * @expectedException Geocoder\Exception\UnsupportedException
+     * @expectedExceptionMessage The GoogleMapsProvider does not support IP addresses.
+     */
     public function testGetGeocodedDataWithLocalhostIPv4()
     {
-        $this->provider = new GoogleMapsProvider($this->getMockAdapter($this->never()));
-        $result = $this->provider->getGeocodedData('127.0.0.1');
-
-        $this->assertArrayNotHasKey('latitude', $result);
-        $this->assertArrayNotHasKey('longitude', $result);
-        $this->assertArrayNotHasKey('bounds', $result);
-        $this->assertArrayNotHasKey('zipcode', $result);
-        $this->assertArrayNotHasKey('timezone', $result);
-
-        $this->assertEquals('localhost', $result['city']);
-        $this->assertEquals('localhost', $result['region']);
-        $this->assertEquals('localhost', $result['county']);
-        $this->assertEquals('localhost', $result['country']);
+        $provider = new GoogleMapsProvider($this->getMockAdapter($this->never()));
+        $provider->getGeocodedData('127.0.0.1');
     }
 
+    /**
+     * @expectedException Geocoder\Exception\UnsupportedException
+     * @expectedExceptionMessage The GoogleMapsProvider does not support IP addresses.
+     */
     public function testGetGeocodedDataWithLocalhostIPv6()
     {
-        $this->provider = new GoogleMapsProvider($this->getMockAdapter($this->never()));
-        $result = $this->provider->getGeocodedData('::1');
-
-        $this->assertArrayNotHasKey('latitude', $result);
-        $this->assertArrayNotHasKey('longitude', $result);
-        $this->assertArrayNotHasKey('bounds', $result);
-        $this->assertArrayNotHasKey('zipcode', $result);
-        $this->assertArrayNotHasKey('timezone', $result);
-
-        $this->assertEquals('localhost', $result['city']);
-        $this->assertEquals('localhost', $result['region']);
-        $this->assertEquals('localhost', $result['county']);
-        $this->assertEquals('localhost', $result['country']);
+        $provider = new GoogleMapsProvider($this->getMockAdapter($this->never()));
+        $provider->getGeocodedData('::1');
     }
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedExceptionMessage The GoogleMapsProvider does not support IP addresses.
      */
     public function testGetGeocodedDataWithRealIp()
     {
-        $this->provider = new GoogleMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
-        $result = $this->provider->getGeocodedData('74.200.247.59');
+        $provider = new GoogleMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider->getGeocodedData('74.200.247.59');
     }
 
     public function testGetGeocodedDataWithRealAddress()
     {
-        $this->provider = new GoogleMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
-        $result = $this->provider->getGeocodedData('10 avenue Gambetta, Paris, France');
+        $provider = new GoogleMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $result   = $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
 
         $this->assertEquals(48.8630462, $result['latitude'], '', 0.001);
         $this->assertEquals(2.3882487, $result['longitude'], '', 0.001);
@@ -138,8 +97,8 @@ class GoogleMapsProviderTest extends TestCase
 
     public function testGetGeocodedDataBoundsWithRealAddressForNonRooftopLocation()
     {
-        $this->provider = new GoogleMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
-        $result = $this->provider->getGeocodedData('Paris, France');
+        $provider = new GoogleMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $result   = $provider->getGeocodedData('Paris, France');
 
         $this->assertNotNull($result['bounds']);
         $this->assertArrayHasKey('south', $result['bounds']);
@@ -152,28 +111,20 @@ class GoogleMapsProviderTest extends TestCase
         $this->assertEquals(2.4699209, $result['bounds']['east'], '', 0.0001);
     }
 
+    /**
+     * @expectedException Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://maps.googleapis.com/maps/api/geocode/json?address=1.000000%2C2.000000&sensor=false
+     */
     public function testGetReversedData()
     {
-        $this->provider = new GoogleMapsProvider($this->getMockAdapter());
-        $result = $this->provider->getReversedData(array(1, 2));
-
-        $this->assertNull($result['latitude']);
-        $this->assertNull($result['longitude']);
-        $this->assertNull($result['streetNumber']);
-        $this->assertNull($result['streetName']);
-        $this->assertNull($result['city']);
-        $this->assertNull($result['zipcode']);
-        $this->assertNull($result['county']);
-        $this->assertNull($result['region']);
-        $this->assertNull($result['country']);
-        $this->assertNull($result['countryCode']);
-        $this->assertNull($result['timezone']);
+        $provider = new GoogleMapsProvider($this->getMockAdapter());
+        $provider->getReversedData(array(1, 2));
     }
 
     public function testGetReversedDataWithRealCoordinates()
     {
-        $this->provider = new GoogleMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
-        $result = $this->provider->getReversedData(array(48.8631507, 2.388911));
+        $provider = new GoogleMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $result   = $provider->getReversedData(array(48.8631507, 2.388911));
 
         $this->assertEquals(10, $result['streetNumber']);
         $this->assertEquals('Avenue Gambetta', $result['streetName']);
@@ -187,8 +138,8 @@ class GoogleMapsProviderTest extends TestCase
 
     public function testGetGeocodedDataWithCityDistrict()
     {
-        $this->provider = new GoogleMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
-        $result = $this->provider->getGeocodedData('Kalbacher Hauptstraße 10, 60437 Frankfurt, Germany');
+        $provider = new GoogleMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $result   = $provider->getGeocodedData('Kalbacher Hauptstraße 10, 60437 Frankfurt, Germany');
 
         $this->assertEquals('Kalbach-Riedberg', $result['cityDistrict']);
     }
