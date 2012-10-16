@@ -112,6 +112,6 @@ class MapQuestProvider extends AbstractProvider implements ProviderInterface
             }
         }
 
-        throw new NoResultException(sprintf('Could not execute query %s', $query));
+        throw new NoResultException(sprintf('Could not find results for given query: %s', $query));
     }
 }

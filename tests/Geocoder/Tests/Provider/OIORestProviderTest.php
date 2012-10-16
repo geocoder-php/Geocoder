@@ -27,24 +27,14 @@ class OIORestProviderTest extends TestCase
         $provider->getGeocodedData('');
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://geo.oiorest.dk/adresser/Tagensvej%2C47%2C2200.json
+     */
     public function testGetGeocodedDataWithAddress()
     {
         $provider = new OIORestProvider($this->getMockAdapter());
-        $result   = $provider->getGeocodedData('Tagensvej 47, 2200 København N');
-
-        $this->assertNull($result['latitude']);
-        $this->assertNull($result['longitude']);
-        $this->assertNull($result['bounds']);
-        $this->assertNull($result['streetNumber']);
-        $this->assertNull($result['streetName']);
-        $this->assertNull($result['zipcode']);
-        $this->assertNull($result['city']);
-        $this->assertNull($result['cityDistrict']);
-        $this->assertNull($result['region']);
-        $this->assertNull($result['regionCode']);
-        $this->assertNull($result['country']);
-        $this->assertNull($result['countryCode']);
-        $this->assertNull($result['timezone']);
+        $provider->getGeocodedData('Tagensvej 47, 2200 København N');
     }
 
     public function testGetGeocodedDataWithRealAddressWithSocketAdapter()

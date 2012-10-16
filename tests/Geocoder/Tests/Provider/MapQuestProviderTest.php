@@ -92,12 +92,14 @@ class MapQuestProviderTest extends TestCase
         $this->assertNull($result['timezone']);
     }
 
+    /**
+     * @expectedException Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not find results for given query: http://open.mapquestapi.com/geocoding/v1/address?location=Kalbacher+Hauptstra%C3%9Fe+10%2C+60437+Frankfurt%2C+Germany&outFormat=json&maxResults=1&thumbMaps=false
+     */
     public function testGetGeocodedDataWithCityDistrict()
     {
         $provider = new MapQuestProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
-        $result   = $provider->getGeocodedData('Kalbacher Hauptstraße 10, 60437 Frankfurt, Germany');
-
-        $this->assertNull($result['cityDistrict']);
+        $provider->getGeocodedData('Kalbacher Hauptstraße 10, 60437 Frankfurt, Germany');
     }
 
     /**
