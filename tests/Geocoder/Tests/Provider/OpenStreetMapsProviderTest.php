@@ -8,6 +8,12 @@ use Geocoder\Provider\OpenStreetMapsProvider;
 
 class OpenStreetMapsProviderTest extends TestCase
 {
+    public function testGetName()
+    {
+        $provider = new OpenStreetMapsProvider($this->getMock('\Geocoder\HttpAdapter\HttpAdapterInterface'), null);
+        $this->assertEquals('openstreetmaps', $provider->getName());
+    }
+    
     public function testGetGeocodedDataWithRealAddress()
     {
         $this->provider = new OpenStreetMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());

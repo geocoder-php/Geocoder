@@ -8,6 +8,12 @@ use Geocoder\Provider\FreeGeoIpProvider;
 
 class FreeGeoIpProviderTest extends TestCase
 {
+    public function testGetName()
+    {
+        $provider = new FreeGeoIpProvider($this->getMock('\Geocoder\HttpAdapter\HttpAdapterInterface'), null);
+        $this->assertEquals('free_geo_ip', $provider->getName());
+    }
+
     public function testGetGeocodedDataWithNull()
     {
         $this->provider = new FreeGeoIpProvider($this->getMockAdapter());

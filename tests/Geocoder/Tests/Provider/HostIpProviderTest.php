@@ -8,6 +8,12 @@ use Geocoder\Provider\HostIpProvider;
 
 class HostIpProviderTest extends TestCase
 {
+    public function testGetName()
+    {
+        $provider = new HostIpProvider($this->getMock('\Geocoder\HttpAdapter\HttpAdapterInterface'), null);
+        $this->assertEquals('host_ip', $provider->getName());
+    }
+    
     public function testGetGeocodedDataWithNull()
     {
         $this->provider = new HostIpProvider($this->getMockAdapter());

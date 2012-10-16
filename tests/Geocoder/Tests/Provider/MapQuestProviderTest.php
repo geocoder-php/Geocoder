@@ -10,6 +10,12 @@ use Geocoder\Tests\TestCase;
  */
 class MapQuestProviderTest extends TestCase
 {
+    public function testGetName()
+    {
+        $provider = new MapQuestProvider($this->getMock('\Geocoder\HttpAdapter\HttpAdapterInterface'), null);
+        $this->assertEquals('map_quest', $provider->getName());
+    }
+    
     public function testGetGeocodedData()
     {
         $provider = new MapQuestProvider($this->getMockAdapter());

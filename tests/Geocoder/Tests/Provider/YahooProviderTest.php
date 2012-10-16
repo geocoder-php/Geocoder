@@ -8,6 +8,12 @@ use Geocoder\Provider\YahooProvider;
 
 class YahooProviderTest extends TestCase
 {
+    public function testGetName()
+    {
+        $provider = new YahooProvider($this->getMock('\Geocoder\HttpAdapter\HttpAdapterInterface'), null);
+        $this->assertEquals('yahoo', $provider->getName());
+    }
+
     /**
      * @expectedException \RuntimeException
      */

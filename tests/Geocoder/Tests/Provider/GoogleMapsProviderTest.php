@@ -8,6 +8,12 @@ use Geocoder\Provider\GoogleMapsProvider;
 
 class GoogleMapsProviderTest extends TestCase
 {
+    public function testGetName()
+    {
+        $provider = new GoogleMapsProvider($this->getMock('\Geocoder\HttpAdapter\HttpAdapterInterface'), null);
+        $this->assertEquals('google_maps', $provider->getName());
+    }
+
     public function testGetGeocodedData()
     {
         $this->provider = new GoogleMapsProvider($this->getMockAdapter());

@@ -8,6 +8,12 @@ use Geocoder\Provider\CloudMadeProvider;
 
 class CloudMadeProviderTest extends TestCase
 {
+    public function testGetName()
+    {
+        $provider = new CloudMadeProvider($this->getMock('\Geocoder\HttpAdapter\HttpAdapterInterface'), null);
+        $this->assertEquals('cloudmade', $provider->getName());
+    }
+    
     /**
      * @expectedException \RuntimeException
      */

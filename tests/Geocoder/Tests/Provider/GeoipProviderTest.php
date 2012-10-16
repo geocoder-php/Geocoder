@@ -15,6 +15,12 @@ class GeoipProviderTest extends TestCase
         }
     }
 
+    public function testGetName()
+    {
+        $provider = new GeoipProvider();
+        $this->assertEquals('geoip', $provider->getName());
+    }
+
     public function testGetGeocodedDataWithNull()
     {
         $this->provider = new GeoipProvider();
