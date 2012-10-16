@@ -245,7 +245,7 @@ class CloudMadeProviderTest extends TestCase
         if (!isset($_SERVER['CLOUDMADE_API_KEY'])) {
             $this->markTestSkipped('You need to configure the CLOUDMADE_API_KEY value in phpunit.xml');
         }
-        
+
         $this->provider = new CloudMadeProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['CLOUDMADE_API_KEY']);
         $result = $this->provider->getGeocodedData('::ffff:88.188.221.14');
     }
