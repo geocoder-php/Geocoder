@@ -60,7 +60,7 @@ class HostIpProviderTest extends TestCase
         $this->assertNull($result['timezone']);
     }
 
-    public function testGetGeocodedDataWithLocalhost()
+    public function testGetGeocodedDataWithLocalhostIPv4()
     {
         $this->provider = new HostIpProvider($this->getMockAdapter($this->never()));
         $result = $this->provider->getGeocodedData('127.0.0.1');
@@ -76,7 +76,23 @@ class HostIpProviderTest extends TestCase
         $this->assertEquals('localhost', $result['country']);
     }
 
-    public function testGetGeocodedDataWithRealIp()
+    public function testGetGeocodedDataWithLocalhostIPv6()
+    {
+        $this->provider = new HostIpProvider($this->getMockAdapter($this->never()));
+        $result = $this->provider->getGeocodedData('::1');
+
+        $this->assertArrayNotHasKey('latitude', $result);
+        $this->assertArrayNotHasKey('longitude', $result);
+        $this->assertArrayNotHasKey('zipcode', $result);
+        $this->assertArrayNotHasKey('timezone', $result);
+
+        $this->assertEquals('localhost', $result['city']);
+        $this->assertEquals('localhost', $result['region']);
+        $this->assertEquals('localhost', $result['county']);
+        $this->assertEquals('localhost', $result['country']);
+    }
+
+    public function testGetGeocodedDataWithRealIPv4()
     {
         $this->provider = new HostIpProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result = $this->provider->getGeocodedData('88.188.221.14');
@@ -88,6 +104,15 @@ class HostIpProviderTest extends TestCase
         $this->assertArrayNotHasKey('region', $result);
         $this->assertEquals('FRANCE', $result['country']);
         $this->assertEquals('FR', $result['countryCode']);
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\UnsupportedException
+     */
+    public function testGetGeocodedDataWithRealIPv6()
+    {
+        $this->provider = new HostIpProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $result = $this->provider->getGeocodedData('::ffff:88.188.221.14');
     }
 
     /**

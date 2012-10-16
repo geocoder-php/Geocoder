@@ -49,6 +49,11 @@ class IpInfoDbProvider extends AbstractProvider implements ProviderInterface
             throw new \RuntimeException('No API Key provided');
         }
 
+        // This API does not support IPv6
+        if (filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+            throw new UnsupportedException('The IpInfoDbProvider does not support IPv6 addresses.');
+        }
+
         if ('127.0.0.1' === $address) {
             return $this->getLocalhostDefaults();
         }

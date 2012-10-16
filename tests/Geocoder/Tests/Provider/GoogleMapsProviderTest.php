@@ -65,10 +65,27 @@ class GoogleMapsProviderTest extends TestCase
         $this->assertNull($result['timezone']);
     }
 
-    public function testGetGeocodedDataWithLocalhost()
+    public function testGetGeocodedDataWithLocalhostIPv4()
     {
         $this->provider = new GoogleMapsProvider($this->getMockAdapter($this->never()));
         $result = $this->provider->getGeocodedData('127.0.0.1');
+
+        $this->assertArrayNotHasKey('latitude', $result);
+        $this->assertArrayNotHasKey('longitude', $result);
+        $this->assertArrayNotHasKey('bounds', $result);
+        $this->assertArrayNotHasKey('zipcode', $result);
+        $this->assertArrayNotHasKey('timezone', $result);
+
+        $this->assertEquals('localhost', $result['city']);
+        $this->assertEquals('localhost', $result['region']);
+        $this->assertEquals('localhost', $result['county']);
+        $this->assertEquals('localhost', $result['country']);
+    }
+
+    public function testGetGeocodedDataWithLocalhostIPv6()
+    {
+        $this->provider = new GoogleMapsProvider($this->getMockAdapter($this->never()));
+        $result = $this->provider->getGeocodedData('::1');
 
         $this->assertArrayNotHasKey('latitude', $result);
         $this->assertArrayNotHasKey('longitude', $result);
