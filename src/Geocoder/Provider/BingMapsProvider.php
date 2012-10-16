@@ -53,7 +53,6 @@ class BingMapsProvider extends AbstractProvider implements ProviderInterface
      */
     public function getGeocodedData($address)
     {
-
         if (null === $this->apiKey) {
             throw new InvalidCredentialsException('No API Key provided');
         }
