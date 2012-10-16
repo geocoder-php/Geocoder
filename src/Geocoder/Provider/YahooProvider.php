@@ -10,10 +10,11 @@
 
 namespace Geocoder\Provider;
 
-use Geocoder\HttpAdapter\HttpAdapterInterface;
-use Geocoder\Provider\ProviderInterface;
 use Geocoder\Exception\InvalidCredentialsException;
 use Geocoder\Exception\NoResultException;
+use Geocoder\Exception\UnsupportedException;
+use Geocoder\HttpAdapter\HttpAdapterInterface;
+use Geocoder\Provider\ProviderInterface;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -56,7 +57,12 @@ class YahooProvider extends AbstractProvider implements ProviderInterface
             throw new InvalidCredentialsException('No API Key provided');
         }
 
-        if (in_array($address, array('127.0.0.1', '::1'))) {
+        // This API does not support IPv6
+        if (filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+            throw new UnsupportedException('The YahooProvider does not support IPv6 addresses.');
+        }
+
+        if ('127.0.0.1' === $address) {
             return $this->getLocalhostDefaults();
         }
 

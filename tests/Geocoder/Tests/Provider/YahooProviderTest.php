@@ -3,13 +3,13 @@
 namespace Geocoder\Tests\Provider;
 
 use Geocoder\Tests\TestCase;
-
 use Geocoder\Provider\YahooProvider;
 
 class YahooProviderTest extends TestCase
 {
     /**
-     * @expectedException \RuntimeException
+     * @expectedException \Geocoder\Exception\InvalidCredentialsException
+     * @expectedExceptionMessage No API Key provided
      */
     public function testGetGeocodedDataWithNullApiKey()
     {
@@ -17,60 +17,40 @@ class YahooProviderTest extends TestCase
         $provider->getGeocodedData('foo');
     }
 
-    public function testGetGeocodedData()
+    /**
+     * @expectedException Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://where.yahooapis.com/geocode?q=foobar&flags=JXT&appid=api_key
+     */
+    public function testGetGeocodedDataWithRandomString()
     {
-        $this->provider = new YahooProvider($this->getMockAdapter(), 'api_key');
-        $result = $this->provider->getGeocodedData('foobar');
-
-        $this->assertNull($result['latitude']);
-        $this->assertNull($result['longitude']);
-        $this->assertNull($result['bounds']);
-        $this->assertNull($result['city']);
-        $this->assertNull($result['zipcode']);
-        $this->assertNull($result['region']);
-        $this->assertNull($result['country']);
-        $this->assertNull($result['countryCode']);
-        $this->assertNull($result['timezone']);
+        $provider = new YahooProvider($this->getMockAdapter(), 'api_key');
+        $provider->getGeocodedData('foobar');
     }
 
+    /**
+     * @expectedException Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://where.yahooapis.com/geocode?q=&flags=JXT&appid=api_key
+     */
     public function testGetGeocodedDataWithNull()
     {
-        $this->provider = new YahooProvider($this->getMockAdapter(), 'api_key');
-        $result = $this->provider->getGeocodedData(null);
-
-        $this->assertNull($result['latitude']);
-        $this->assertNull($result['longitude']);
-        $this->assertNull($result['bounds']);
-        $this->assertNull($result['city']);
-        $this->assertNull($result['zipcode']);
-        $this->assertNull($result['county']);
-        $this->assertNull($result['region']);
-        $this->assertNull($result['country']);
-        $this->assertNull($result['countryCode']);
-        $this->assertNull($result['timezone']);
+        $provider = new YahooProvider($this->getMockAdapter(), 'api_key');
+        $provider->getGeocodedData(null);
     }
 
+    /**
+     * @expectedException Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://where.yahooapis.com/geocode?q=&flags=JXT&appid=api_key
+     */
     public function testGetGeocodedDataWithEmpty()
     {
-        $this->provider = new YahooProvider($this->getMockAdapter(), 'api_key');
-        $result = $this->provider->getGeocodedData('');
-
-        $this->assertNull($result['latitude']);
-        $this->assertNull($result['longitude']);
-        $this->assertNull($result['bounds']);
-        $this->assertNull($result['city']);
-        $this->assertNull($result['zipcode']);
-        $this->assertNull($result['county']);
-        $this->assertNull($result['region']);
-        $this->assertNull($result['country']);
-        $this->assertNull($result['countryCode']);
-        $this->assertNull($result['timezone']);
+        $provider = new YahooProvider($this->getMockAdapter(), 'api_key');
+        $provider->getGeocodedData('');
     }
 
     public function testGetGeocodedDataWithLocalhostIPv4()
     {
-        $this->provider = new YahooProvider($this->getMockAdapter($this->never()), 'api_key');
-        $result = $this->provider->getGeocodedData('127.0.0.1');
+        $provider = new YahooProvider($this->getMockAdapter($this->never()), 'api_key');
+        $result   = $provider->getGeocodedData('127.0.0.1');
 
         $this->assertArrayNotHasKey('latitude', $result);
         $this->assertArrayNotHasKey('longitude', $result);
@@ -83,20 +63,14 @@ class YahooProviderTest extends TestCase
         $this->assertEquals('localhost', $result['country']);
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedExceptionMessage The YahooProvider does not support IPv6 addresses.
+     */
     public function testGetGeocodedDataWithLocalhostIPv6()
     {
-        $this->provider = new YahooProvider($this->getMockAdapter($this->never()), 'api_key');
-        $result = $this->provider->getGeocodedData('::1');
-
-        $this->assertArrayNotHasKey('latitude', $result);
-        $this->assertArrayNotHasKey('longitude', $result);
-        $this->assertArrayNotHasKey('bounds', $result);
-        $this->assertArrayNotHasKey('zipcode', $result);
-        $this->assertArrayNotHasKey('timezone', $result);
-
-        $this->assertEquals('localhost', $result['city']);
-        $this->assertEquals('localhost', $result['region']);
-        $this->assertEquals('localhost', $result['country']);
+        $provider = new YahooProvider($this->getMockAdapter($this->never()), 'api_key');
+        $provider->getGeocodedData('::1');
     }
 
     public function testGetGeocodedDataWithRealIPv4()
@@ -105,8 +79,8 @@ class YahooProviderTest extends TestCase
             $this->markTestSkipped('You need to configure the YAHOO_API_KEY value in phpunit.xml');
         }
 
-        $this->provider = new YahooProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['YAHOO_API_KEY']);
-        $result = $this->provider->getGeocodedData('74.200.247.59');
+        $provider = new YahooProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['YAHOO_API_KEY']);
+        $result   = $provider->getGeocodedData('74.200.247.59');
 
         $this->assertEquals(33.036711, $result['latitude'], '', 0.0001);
         $this->assertEquals(-96.813541, $result['longitude'], '', 0.0001);
@@ -127,32 +101,14 @@ class YahooProviderTest extends TestCase
         $this->assertEquals('America/Chicago', $result['timezone']);
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedExceptionMessage The YahooProvider does not support IPv6 addresses.
+     */
     public function testGetGeocodedDataWithRealIPv6()
     {
-        if (!isset($_SERVER['YAHOO_API_KEY'])) {
-            $this->markTestSkipped('You need to configure the YAHOO_API_KEY value in phpunit.xml');
-        }
-
-        $this->provider = new YahooProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['YAHOO_API_KEY']);
-        $result = $this->provider->getGeocodedData('::ffff:74.200.247.59');
-
-        $this->assertEquals(33.036711, $result['latitude'], '', 0.0001);
-        $this->assertEquals(-96.813541, $result['longitude'], '', 0.0001);
-        $this->assertArrayHasKey('south', $result['bounds']);
-        $this->assertArrayHasKey('west', $result['bounds']);
-        $this->assertArrayHasKey('north', $result['bounds']);
-        $this->assertArrayHasKey('east', $result['bounds']);
-        $this->assertEquals(33.007820, $result['bounds']['south'], '', 0.0001);
-        $this->assertEquals(-96.860229, $result['bounds']['west'], '', 0.0001);
-        $this->assertEquals(33.065601, $result['bounds']['north'], '', 0.0001);
-        $this->assertEquals(-96.766853, $result['bounds']['east'], '', 0.0001);
-        $this->assertEquals(75093, $result['zipcode']);
-        $this->assertEquals('Plano', $result['city']);
-        $this->assertEquals('Collin County', $result['county']);
-        $this->assertEquals('Texas', $result['region']);
-        $this->assertEquals('United States', $result['country']);
-        $this->assertEquals('US', $result['countryCode']);
-        $this->assertEquals('America/Chicago', $result['timezone']);
+        $provider = new YahooProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), 'api_key');
+        $provider->getGeocodedData('::ffff:74.200.247.59');
     }
 
     public function testGetGeocodedDataWithRealAddress()
@@ -161,8 +117,8 @@ class YahooProviderTest extends TestCase
             $this->markTestSkipped('You need to configure the YAHOO_API_KEY value in phpunit.xml');
         }
 
-        $this->provider = new YahooProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['YAHOO_API_KEY']);
-        $result = $this->provider->getGeocodedData('10 avenue Gambetta, Paris, France');
+        $provider = new YahooProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['YAHOO_API_KEY']);
+        $result   = $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
 
         $this->assertEquals(48.863217, $result['latitude'], '', 0.01);
         $this->assertEquals(2.388821, $result['longitude'], '', 0.01);
@@ -185,23 +141,14 @@ class YahooProviderTest extends TestCase
         $this->assertEquals('Europe/Paris', $result['timezone']);
     }
 
-    public function testGetReversedData()
+    /**
+     * @expectedException Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://where.yahooapis.com/geocode?q=1.000000,+2.000000&gflags=RT&flags=JX&appid=api_key
+     */
+    public function testGetReversedDataWithBadCoordinates()
     {
-        $this->provider = new YahooProvider($this->getMockAdapter(), 'api_key');
-        $result = $this->provider->getReversedData(array(1, 2));
-
-        $this->assertNull($result['latitude']);
-        $this->assertNull($result['longitude']);
-        $this->assertNull($result['bounds']);
-        $this->assertNull($result['streetNumber']);
-        $this->assertNull($result['streetName']);
-        $this->assertNull($result['city']);
-        $this->assertNull($result['zipcode']);
-        $this->assertNull($result['county']);
-        $this->assertNull($result['region']);
-        $this->assertNull($result['country']);
-        $this->assertNull($result['countryCode']);
-        $this->assertNull($result['timezone']);
+        $provider = new YahooProvider($this->getMockAdapter(), 'api_key');
+        $provider->getReversedData(array(1, 2));
     }
 
     public function testGetReversedDataWithRealCoordinates()
@@ -210,8 +157,8 @@ class YahooProviderTest extends TestCase
             $this->markTestSkipped('You need to configure the YAHOO_API_KEY value in phpunit.xml');
         }
 
-        $this->provider = new YahooProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['YAHOO_API_KEY']);
-        $result = $this->provider->getReversedData(array(33.036711, -96.813541));
+        $provider = new YahooProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['YAHOO_API_KEY']);
+        $result   = $provider->getReversedData(array(33.036711, -96.813541));
 
         $this->assertEquals(33.036711, $result['latitude'], '', 0.01);
         $this->assertEquals(-96.813541, $result['longitude'], '', 0.01);
@@ -242,8 +189,8 @@ class YahooProviderTest extends TestCase
             $this->markTestSkipped('You need to configure the YAHOO_API_KEY value in phpunit.xml');
         }
 
-        $this->provider = new YahooProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['YAHOO_API_KEY']);
-        $result = $this->provider->getGeocodedData('Kalbacher Hauptstraße 10, 60437 Frankfurt, Germany');
+        $provider = new YahooProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['YAHOO_API_KEY']);
+        $result   = $provider->getGeocodedData('Kalbacher Hauptstraße 10, 60437 Frankfurt, Germany');
 
         $this->assertEquals('Kalbach', $result['cityDistrict']);
     }
