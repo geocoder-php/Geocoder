@@ -10,14 +10,13 @@
 
 namespace Geocoder\Provider;
 
-use Geocoder\GeocoderInterface;
 use Geocoder\Exception\NoResultException;
 use Geocoder\Exception\InvalidCredentialsException;
 
 /**
  * @author Markus Bachmann <markus.bachmann@bachi.biz>
  */
-class ChainProvider implements ProviderInterface, GeocoderInterface
+class ChainProvider implements ProviderInterface
 {
     /**
      * @var array
@@ -64,14 +63,6 @@ class ChainProvider implements ProviderInterface, GeocoderInterface
     /**
      * {@inheritDoc}
      */
-    public function geocode($value)
-    {
-        return $this->getGeocodedData($value);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function getReversedData(array $coordinates)
     {
         foreach ($this->providers as $provider) {
@@ -84,14 +75,6 @@ class ChainProvider implements ProviderInterface, GeocoderInterface
         }
 
         throw new NoResultException(sprintf('No provider could provide the coordinated %s', json_encode($coordinates)));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function reverse($latitude, $longitude)
-    {
-        return $this->getReversedData(array($latitude, $longitude));
     }
 
     /**
