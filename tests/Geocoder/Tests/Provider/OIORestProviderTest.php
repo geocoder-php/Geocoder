@@ -46,7 +46,7 @@ class OIORestProviderTest extends TestCase
         $provider->getGeocodedData('Tagensvej 47, 2200 København N');
     }
 
-    public function testGetGeocodedDataWithRealAddress1()
+    public function testGetGeocodedDataWithRealAddressOne()
     {
         $provider = new OIORestProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result   = $provider->getGeocodedData('Tagensvej 47, 2200 København N');
@@ -66,7 +66,7 @@ class OIORestProviderTest extends TestCase
         $this->assertEquals('Europe/Copenhagen', $result['timezone']);
     }
 
-    public function testGetGeocodedDataWithRealAddress2()
+    public function testGetGeocodedDataWithRealAddressTwo()
     {
         $provider = new OIORestProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result   = $provider->getGeocodedData('Lauritzens Plads 1, 9000 Aalborg');
@@ -86,7 +86,7 @@ class OIORestProviderTest extends TestCase
         $this->assertEquals('Europe/Copenhagen', $result['timezone']);
     }
 
-    public function testGetGeocodedDataWithRealAddress3()
+    public function testGetGeocodedDataWithRealAddressThree()
     {
         $provider = new OIORestProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result   = $provider->getGeocodedData('St.Blichers Vej 74, 8210 Århus V');
@@ -106,7 +106,7 @@ class OIORestProviderTest extends TestCase
         $this->assertEquals('Europe/Copenhagen', $result['timezone']);
     }
 
-    public function testGetGeocodedDataWithRealAddress4()
+    public function testGetGeocodedDataWithRealAddressFour()
     {
         $provider = new OIORestProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result   = $provider->getGeocodedData('Århusgade 80, 2100 København Ø');
@@ -126,7 +126,7 @@ class OIORestProviderTest extends TestCase
         $this->assertEquals('Europe/Copenhagen', $result['timezone']);
     }
 
-    public function testGetGeocodedDataWithRealAddress5()
+    public function testGetGeocodedDataWithRealAddressFive()
     {
         $provider = new OIORestProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result   = $provider->getGeocodedData('Hvenekildeløkken 255, 5240 Odense');

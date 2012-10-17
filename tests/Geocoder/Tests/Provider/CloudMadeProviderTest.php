@@ -146,7 +146,7 @@ class CloudMadeProviderTest extends TestCase
         $this->assertNull($result['timezone']);
     }
 
-    public function testGetGeocodedDataWithRealAddress2()
+    public function testGetGeocodedDataWithRealAddressTwo()
     {
         if (!isset($_SERVER['CLOUDMADE_API_KEY'])) {
             $this->markTestSkipped('You need to configure the CLOUDMADE_API_KEY value in phpunit.xml');
