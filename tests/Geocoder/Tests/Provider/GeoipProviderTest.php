@@ -5,17 +5,11 @@ namespace Geocoder\Tests\Provider;
 use Geocoder\Tests\TestCase;
 use Geocoder\Provider\GeoipProvider;
 
+/**
+ * @requires extension geoip_record_by_name
+ */
 class GeoipProviderTest extends TestCase
 {
-    protected function setUp()
-    {
-        parent::setUp();
-
-        if (!function_exists('geoip_record_by_name')) {
-            $this->markTestSkipped('You have to install GeoIP.');
-        }
-    }
-
     public function testGetName()
     {
         $provider = new GeoipProvider();

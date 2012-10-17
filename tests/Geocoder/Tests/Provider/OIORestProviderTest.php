@@ -46,9 +46,9 @@ class OIORestProviderTest extends TestCase
         $provider->getGeocodedData('Tagensvej 47, 2200 København N');
     }
 
-    public function testGetGeocodedDataWithRealAddressWithSocketAdapter()
+    public function testGetGeocodedDataWithRealAddress1()
     {
-        $provider = new OIORestProvider(new \Geocoder\HttpAdapter\SocketAdapter());
+        $provider = new OIORestProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result   = $provider->getGeocodedData('Tagensvej 47, 2200 København N');
 
         $this->assertEquals(55.6999, $result['latitude'], '', 0.0001);
@@ -66,7 +66,7 @@ class OIORestProviderTest extends TestCase
         $this->assertEquals('Europe/Copenhagen', $result['timezone']);
     }
 
-    public function testGetGeocodedDataWithRealAddressWithCurlHttpAdapter()
+    public function testGetGeocodedDataWithRealAddress2()
     {
         $provider = new OIORestProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result   = $provider->getGeocodedData('Lauritzens Plads 1, 9000 Aalborg');
@@ -86,9 +86,9 @@ class OIORestProviderTest extends TestCase
         $this->assertEquals('Europe/Copenhagen', $result['timezone']);
     }
 
-    public function testGetGeocodedDataWithRealAddressWithBuzzHttpAdapter()
+    public function testGetGeocodedDataWithRealAddress3()
     {
-        $provider = new OIORestProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter());
+        $provider = new OIORestProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result   = $provider->getGeocodedData('St.Blichers Vej 74, 8210 Århus V');
 
         $this->assertEquals(56.1623, $result['latitude'], '', 0.0001);
@@ -106,9 +106,9 @@ class OIORestProviderTest extends TestCase
         $this->assertEquals('Europe/Copenhagen', $result['timezone']);
     }
 
-    public function testGetGeocodedDataWithRealAddressWithGuzzleHttpAdapter()
+    public function testGetGeocodedDataWithRealAddress4()
     {
-        $provider = new OIORestProvider(new \Geocoder\HttpAdapter\GuzzleHttpAdapter());
+        $provider = new OIORestProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result   = $provider->getGeocodedData('Århusgade 80, 2100 København Ø');
 
         $this->assertEquals(55.7063, $result['latitude'], '', 0.0001);
@@ -126,9 +126,9 @@ class OIORestProviderTest extends TestCase
         $this->assertEquals('Europe/Copenhagen', $result['timezone']);
     }
 
-    public function testGetGeocodedDataWithRealAddressWithZendHttpAdapter()
+    public function testGetGeocodedDataWithRealAddress5()
     {
-        $provider = new OIORestProvider(new \Geocoder\HttpAdapter\ZendHttpAdapter());
+        $provider = new OIORestProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result   = $provider->getGeocodedData('Hvenekildeløkken 255, 5240 Odense');
 
         $this->assertEquals(55.4221, $result['latitude'], '', 0.0001);
@@ -172,7 +172,7 @@ class OIORestProviderTest extends TestCase
      */
     public function testGetGeocodedDataWithIPv4()
     {
-        $provider = new OIORestProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter());
+        $provider = new OIORestProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $provider->getGeocodedData('74.200.247.59');
     }
 
@@ -182,7 +182,7 @@ class OIORestProviderTest extends TestCase
      */
     public function testGetGeocodedDataWithIPv6()
     {
-        $provider = new OIORestProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter());
+        $provider = new OIORestProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $provider->getGeocodedData('::ffff:74.200.247.59');
     }
 
