@@ -399,7 +399,7 @@ Write your own `formatter` by implementing the `FormatterInterface`.
 Unit Tests
 ----------
 
-To run unit tests, you'll need a set of dependencies you can install using Composer:
+To run unit tests, you'll need `cURL` and a set of dependencies you can install using Composer:
 
 ```
 php composer.phar install --dev
