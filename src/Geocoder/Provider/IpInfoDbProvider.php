@@ -36,6 +36,10 @@ class IpInfoDbProvider extends AbstractProvider implements ProviderInterface
      */
     public function __construct(HttpAdapterInterface $adapter, $apiKey)
     {
+        if (!isset($apiKey)) {
+            throw new InvalidCredentialsException('No API Key provided');
+        }
+
         parent::__construct($adapter);
 
         $this->apiKey = $apiKey;
@@ -46,10 +50,6 @@ class IpInfoDbProvider extends AbstractProvider implements ProviderInterface
      */
     public function getGeocodedData($address)
     {
-        if (null === $this->apiKey) {
-            throw new InvalidCredentialsException('No API Key provided');
-        }
-
         if (!filter_var($address, FILTER_VALIDATE_IP)) {
             throw new UnsupportedException('The IpInfoDbProvider does not support Street addresses.');
         }

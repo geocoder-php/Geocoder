@@ -9,7 +9,7 @@ class FreeGeoIpProviderTest extends TestCase
 {
     public function testGetName()
     {
-        $provider = new FreeGeoIpProvider($this->getMock('\Geocoder\HttpAdapter\HttpAdapterInterface'), null);
+        $provider = new FreeGeoIpProvider($this->getMockAdapter($this->never()));
         $this->assertEquals('free_geo_ip', $provider->getName());
     }
 
@@ -75,6 +75,31 @@ class FreeGeoIpProviderTest extends TestCase
         $this->assertEquals('localhost', $result['country']);
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://freegeoip.net/json/74.200.247.59
+     */
+    public function testGetGeocodedDataWithRealIPv4ContentReturnNull()
+    {
+        $provider = new FreeGeoIpProvider($this->getMockAdapterGetContentReturnNull());
+        $provider->getGeocodedData('74.200.247.59');
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://freegeoip.net/json/74.200.247.59
+     */
+    public function testGetGeocodedDataWithRealIPv4ContentReturnNothing()
+    {
+        $mockReturnNothing = $this->getMock('Geocoder\\HttpAdapter\\HttpAdapterInterface');
+        $mockReturnNothing
+            ->expects($this->once())
+            ->method('getContent')
+            ->will($this->returnValue(''));
+        $provider = new FreeGeoIpProvider($mockReturnNothing);
+        $provider->getGeocodedData('74.200.247.59');
+    }
+
     public function testGetGeocodedDataWithRealIPv4()
     {
         $provider = new FreeGeoIpProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
@@ -87,6 +112,16 @@ class FreeGeoIpProviderTest extends TestCase
         $this->assertEquals('Texas', $result['region']);
         $this->assertEquals('United States', $result['country']);
         $this->assertEquals('US', $result['countryCode']);
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://freegeoip.net/json/::ffff:74.200.247.59
+     */
+    public function testGetGeocodedDataWithRealIPv6ContentReturnNull()
+    {
+        $provider = new FreeGeoIpProvider($this->getMockAdapterGetContentReturnNull());
+        $provider->getGeocodedData('::ffff:74.200.247.59');
     }
 
     public function testGetGeocodedDataWithRealIPv6()

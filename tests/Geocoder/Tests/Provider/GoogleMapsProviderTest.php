@@ -9,7 +9,7 @@ class GoogleMapsProviderTest extends TestCase
 {
     public function testGetName()
     {
-        $provider = new GoogleMapsProvider($this->getMock('\Geocoder\HttpAdapter\HttpAdapterInterface'), null);
+        $provider = new GoogleMapsProvider($this->getMockAdapter($this->never()));
         $this->assertEquals('google_maps', $provider->getName());
     }
 
@@ -73,9 +73,34 @@ class GoogleMapsProviderTest extends TestCase
         $provider->getGeocodedData('74.200.247.59');
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://maps.googleapis.com/maps/api/geocode/json?address=10+avenue+Gambetta%2C+Paris%2C+France&sensor=false
+     */
+    public function testGetGeocodedDataWithAddressContentReturnNull()
+    {
+        $provider = new GoogleMapsProvider($this->getMockAdapterGetContentReturnNull());
+        $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://maps.googleapis.com/maps/api/geocode/json?address=10+avenue+Gambetta%2C+Paris%2C+France&sensor=false
+     */
+    public function testGetGeocodedDataWithAddressContentReturnNothing()
+    {
+        $mockReturnNothing = $this->getMock('Geocoder\\HttpAdapter\\HttpAdapterInterface');
+        $mockReturnNothing
+            ->expects($this->any())
+            ->method('getContent')
+            ->will($this->returnValue('{"status":"OK"}'));
+        $provider = new GoogleMapsProvider($mockReturnNothing);
+        $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
+    }
+
     public function testGetGeocodedDataWithRealAddress()
     {
-        $provider = new GoogleMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new GoogleMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), 'fr-FR', 'Île-de-France');
         $result   = $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
 
         $this->assertEquals(48.8630462, $result['latitude'], '', 0.001);
@@ -125,6 +150,16 @@ class GoogleMapsProviderTest extends TestCase
     {
         $provider = new GoogleMapsProvider($this->getMockAdapter());
         $provider->getReversedData(array(1, 2));
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://maps.googleapis.com/maps/api/geocode/json?address=48.863151%2C2.388911&sensor=false
+     */
+    public function testGetReversedDataWithCoordinatesContentReturnNull()
+    {
+        $provider = new GoogleMapsProvider($this->getMockAdapterGetContentReturnNull());
+        $provider->getReversedData(array(48.8631507, 2.388911));
     }
 
     public function testGetReversedDataWithRealCoordinates()

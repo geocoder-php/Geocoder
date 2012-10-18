@@ -12,10 +12,20 @@ class MapQuestProviderTest extends TestCase
 {
     public function testGetName()
     {
-        $provider = new MapQuestProvider($this->getMock('\Geocoder\HttpAdapter\HttpAdapterInterface'), null);
+        $provider = new MapQuestProvider($this->getMockAdapter($this->never()));
         $this->assertEquals('map_quest', $provider->getName());
     }
-    
+
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://open.mapquestapi.com/geocoding/v1/address?location=10+avenue+Gambetta%2C+Paris%2C+France&outFormat=json&maxResults=1&thumbMaps=false
+     */
+    public function testGetGeocodedDataWithAddressContentReturnNull()
+    {
+        $provider = new MapQuestProvider($this->getMockAdapterGetContentReturnNull());
+        $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
+    }
+
     /**
      * @expectedException Geocoder\Exception\NoResultException
      * @expectedExceptionMessage Could not find results for given query: http://open.mapquestapi.com/geocoding/v1/address?location=foobar&outFormat=json&maxResults=1&thumbMaps=fals

@@ -9,7 +9,7 @@ class HostIpProviderTest extends TestCase
 {
     public function testGetName()
     {
-        $provider = new HostIpProvider($this->getMock('\Geocoder\HttpAdapter\HttpAdapterInterface'), null);
+        $provider = new HostIpProvider($this->getMockAdapter($this->never()));
         $this->assertEquals('host_ip', $provider->getName());
     }
     
@@ -73,6 +73,31 @@ class HostIpProviderTest extends TestCase
         $this->assertEquals('localhost', $result['region']);
         $this->assertEquals('localhost', $result['county']);
         $this->assertEquals('localhost', $result['country']);
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://api.hostip.info/get_xml.php?ip=88.188.221.14&position=true
+     */
+    public function testGetGeocodedDataWithRealIPv4ContentReturnNull()
+    {
+        $provider = new HostIpProvider($this->getMockAdapterGetContentReturnNull());
+        $provider->getGeocodedData('88.188.221.14');
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://api.hostip.info/get_xml.php?ip=88.188.221.14&position=true
+     */
+    public function testGetGeocodedDataWithRealIPv4ContentReturnNothing()
+    {
+        $mockReturnNothing = $this->getMock('Geocoder\\HttpAdapter\\HttpAdapterInterface');
+        $mockReturnNothing
+            ->expects($this->once())
+            ->method('getContent')
+            ->will($this->returnValue(''));
+        $provider = new HostIpProvider($mockReturnNothing);
+        $provider->getGeocodedData('88.188.221.14');
     }
 
     public function testGetGeocodedDataWithRealIPv4()

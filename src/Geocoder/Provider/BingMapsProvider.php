@@ -42,6 +42,10 @@ class BingMapsProvider extends AbstractProvider implements ProviderInterface
      */
     public function __construct(HttpAdapterInterface $adapter, $apiKey, $locale = null)
     {
+        if (!isset($apiKey)) {
+            throw new InvalidCredentialsException('No API Key provided');
+        }
+
         parent::__construct($adapter, $locale);
 
         $this->apiKey = $apiKey;
@@ -52,10 +56,6 @@ class BingMapsProvider extends AbstractProvider implements ProviderInterface
      */
     public function getGeocodedData($address)
     {
-        if (null === $this->apiKey) {
-            throw new InvalidCredentialsException('No API Key provided');
-        }
-
         // This API doesn't handle IPs
         if (filter_var($address, FILTER_VALIDATE_IP)) {
             throw new UnsupportedException('The BingMapsProvider does not support IP addresses.');
@@ -71,10 +71,6 @@ class BingMapsProvider extends AbstractProvider implements ProviderInterface
      */
     public function getReversedData(array $coordinates)
     {
-        if (null === $this->apiKey) {
-            throw new InvalidCredentialsException('No API Key provided');
-        }
-
         $query = sprintf(self::REVERSE_ENDPOINT_URL, $coordinates[0], $coordinates[1], $this->apiKey);
 
         return $this->executeQuery($query);

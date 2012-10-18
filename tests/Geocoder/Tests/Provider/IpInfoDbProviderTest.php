@@ -9,17 +9,17 @@ class IpInfoDbProviderTest extends TestCase
 {
     public function testGetName()
     {
-        $provider = new IpInfoDbProvider($this->getMock('\Geocoder\HttpAdapter\HttpAdapterInterface'), null);
+        $provider = new IpInfoDbProvider($this->getMockAdapter($this->never()), 'api_key');
         $this->assertEquals('ip_info_db', $provider->getName());
     }
 
     /**
      * @expectedException \Geocoder\Exception\InvalidCredentialsException
+     * @expectedExceptionMessage No API Key provided
      */
-    public function testGetDataWithNullApiKey()
+    public function testNullApiKey()
     {
-        $provider = new IpInfoDbProvider($this->getMock('\Geocoder\HttpAdapter\HttpAdapterInterface'), null);
-        $provider->getGeocodedData('foo');
+        new IpInfoDbProvider($this->getMockAdapter($this->never()), null);
     }
 
     /**
@@ -86,6 +86,31 @@ class IpInfoDbProviderTest extends TestCase
     {
         $provider = new IpInfoDbProvider($this->getMockAdapter($this->never()), 'api_key');
         $provider->getGeocodedData('::1');
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://api.ipinfodb.com/v3/ip-city/?key=api_key&format=json&ip=74.125.45.100
+     */
+    public function testGetGeocodedDataWithRealIPv4ContentReturnNull()
+    {
+        $provider = new IpInfoDbProvider($this->getMockAdapterGetContentReturnNull(), 'api_key');
+        $provider->getGeocodedData('74.125.45.100');
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://api.ipinfodb.com/v3/ip-city/?key=api_key&format=json&ip=74.125.45.100
+     */
+    public function testGetGeocodedDataWithRealIPv4ContentReturnNothing()
+    {
+        $mockReturnNothing = $this->getMock('Geocoder\\HttpAdapter\\HttpAdapterInterface');
+        $mockReturnNothing
+            ->expects($this->once())
+            ->method('getContent')
+            ->will($this->returnValue(''));
+        $provider = new IpInfoDbProvider($mockReturnNothing, 'api_key');
+        $provider->getGeocodedData('74.125.45.100');
     }
 
     public function testGetGeocodedDataWithRealIPv4()

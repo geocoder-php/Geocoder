@@ -42,6 +42,10 @@ class YahooProvider extends AbstractProvider implements ProviderInterface
      */
     public function __construct(HttpAdapterInterface $adapter, $apiKey, $locale = null)
     {
+        if (!isset($apiKey)) {
+            throw new InvalidCredentialsException('No API Key provided');
+        }
+
         parent::__construct($adapter, $locale);
 
         $this->apiKey = $apiKey;
@@ -52,10 +56,6 @@ class YahooProvider extends AbstractProvider implements ProviderInterface
      */
     public function getGeocodedData($address)
     {
-        if (null === $this->apiKey) {
-            throw new InvalidCredentialsException('No API Key provided');
-        }
-
         // This API does not support IPv6
         if (filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
             throw new UnsupportedException('The YahooProvider does not support IPv6 addresses.');
@@ -75,10 +75,6 @@ class YahooProvider extends AbstractProvider implements ProviderInterface
      */
     public function getReversedData(array $coordinates)
     {
-        if (null === $this->apiKey) {
-            throw new InvalidCredentialsException('No API Key provided');
-        }
-
         $query = sprintf(self::REVERSE_ENDPOINT_URL, $coordinates[0], $coordinates[1], $this->apiKey);
 
         return $this->executeQuery($query);

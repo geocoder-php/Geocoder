@@ -9,17 +9,17 @@ class BingMapsProviderTest extends TestCase
 {
     public function testGetName()
     {
-        $provider = new BingMapsProvider($this->getMock('\Geocoder\HttpAdapter\HttpAdapterInterface'), null);
+        $provider = new BingMapsProvider($this->getMockAdapter($this->never()), 'api_key');
         $this->assertEquals('bing_maps', $provider->getName());
     }
 
     /**
      * @expectedException \RuntimeException
+     * @expectedExceptionMessage No API Key provided
      */
-    public function testGetGeocodedDataWithNullApiKey()
+    public function testNullApiKey()
     {
-        $provider = new BingMapsProvider($this->getMock('Geocoder\HttpAdapter\HttpAdapterInterface'), null);
-        $provider->getGeocodedData('foo');
+        new BingMapsProvider($this->getMockAdapter($this->never()), null);
     }
 
     /**
@@ -72,13 +72,23 @@ class BingMapsProviderTest extends TestCase
         $provider->getGeocodedData('::1');
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://dev.virtualearth.net/REST/v1/Locations/?q=10+avenue+Gambetta%2C+Paris%2C+France&key=api_key
+     */
+    public function testGetGeocodedDataWithAddressContentReturnNull()
+    {
+        $provider = new BingMapsProvider($this->getMockAdapterGetContentReturnNull(), 'api_key');
+        $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
+    }
+
     public function testGetGeocodedDataWithRealAddress()
     {
         if (!isset($_SERVER['BINGMAPS_API_KEY'])) {
             $this->markTestSkipped('You need to configure the BINGMAPS_API_KEY value in phpunit.xml');
         }
 
-        $provider = new BingMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['BINGMAPS_API_KEY']);
+        $provider = new BingMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['BINGMAPS_API_KEY'], 'fr-FR');
         $result = $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
 
         $this->assertEquals(48.86321675999999, $result['latitude'], '', 0.0001);
@@ -111,6 +121,16 @@ class BingMapsProviderTest extends TestCase
     {
         $provider = new BingMapsProvider($this->getMockAdapter(), 'api_key');
         $provider->getReversedData(array(1, 2));
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://dev.virtualearth.net/REST/v1/Locations/48.863216,2.388772?key=api_key
+     */
+    public function testGetReversedDataWithCoordinatesContentReturnNull()
+    {
+        $provider = new BingMapsProvider($this->getMockAdapterGetContentReturnNull(), 'api_key');
+        $provider->getReversedData(array(48.86321648955345, 2.3887719959020615));
     }
 
     public function testGetReversedDataWithRealCoordinates()
