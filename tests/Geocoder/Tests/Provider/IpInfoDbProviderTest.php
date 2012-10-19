@@ -94,7 +94,7 @@ class IpInfoDbProviderTest extends TestCase
      */
     public function testGetGeocodedDataWithRealIPv4ContentReturnNull()
     {
-        $provider = new IpInfoDbProvider($this->getMockAdapterGetContentReturnNull(), 'api_key');
+        $provider = new IpInfoDbProvider($this->getMockAdapterReturn(), 'api_key');
         $provider->getGeocodedData('74.125.45.100');
     }
 
@@ -104,12 +104,7 @@ class IpInfoDbProviderTest extends TestCase
      */
     public function testGetGeocodedDataWithRealIPv4ContentReturnNothing()
     {
-        $mockReturnNothing = $this->getMock('Geocoder\\HttpAdapter\\HttpAdapterInterface');
-        $mockReturnNothing
-            ->expects($this->once())
-            ->method('getContent')
-            ->will($this->returnValue(''));
-        $provider = new IpInfoDbProvider($mockReturnNothing, 'api_key');
+        $provider = new IpInfoDbProvider($this->getMockAdapterReturn(''), 'api_key');
         $provider->getGeocodedData('74.125.45.100');
     }
 

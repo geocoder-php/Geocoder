@@ -79,7 +79,7 @@ class GoogleMapsProviderTest extends TestCase
      */
     public function testGetGeocodedDataWithAddressContentReturnNull()
     {
-        $provider = new GoogleMapsProvider($this->getMockAdapterGetContentReturnNull());
+        $provider = new GoogleMapsProvider($this->getMockAdapterReturn());
         $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
     }
 
@@ -89,16 +89,11 @@ class GoogleMapsProviderTest extends TestCase
      */
     public function testGetGeocodedDataWithAddressContentReturnNothing()
     {
-        $mockReturnNothing = $this->getMock('Geocoder\\HttpAdapter\\HttpAdapterInterface');
-        $mockReturnNothing
-            ->expects($this->any())
-            ->method('getContent')
-            ->will($this->returnValue('{"status":"OK"}'));
-        $provider = new GoogleMapsProvider($mockReturnNothing);
+        $provider = new GoogleMapsProvider($this->getMockAdapterReturn('{"status":"OK"}'));
         $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
     }
 
-    public function testGetGeocodedDataWithRealAddress()
+    public function testGetGeocodedDataWithRealAddressWithLocaleAndRegion()
     {
         $provider = new GoogleMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), 'fr-FR', 'Île-de-France');
         $result   = $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
@@ -158,7 +153,7 @@ class GoogleMapsProviderTest extends TestCase
      */
     public function testGetReversedDataWithCoordinatesContentReturnNull()
     {
-        $provider = new GoogleMapsProvider($this->getMockAdapterGetContentReturnNull());
+        $provider = new GoogleMapsProvider($this->getMockAdapterReturn());
         $provider->getReversedData(array(48.8631507, 2.388911));
     }
 

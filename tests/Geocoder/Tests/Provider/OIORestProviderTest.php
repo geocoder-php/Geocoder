@@ -42,7 +42,7 @@ class OIORestProviderTest extends TestCase
      */
     public function testGetGeocodedDataWithAddressContentReturnNull()
     {
-        $provider = new OIORestProvider($this->getMockAdapterGetContentReturnNull());
+        $provider = new OIORestProvider($this->getMockAdapterReturn());
         $provider->getGeocodedData('Tagensvej 47, 2200 København N');
     }
 

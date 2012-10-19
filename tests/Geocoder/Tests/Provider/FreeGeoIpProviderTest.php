@@ -81,7 +81,7 @@ class FreeGeoIpProviderTest extends TestCase
      */
     public function testGetGeocodedDataWithRealIPv4ContentReturnNull()
     {
-        $provider = new FreeGeoIpProvider($this->getMockAdapterGetContentReturnNull());
+        $provider = new FreeGeoIpProvider($this->getMockAdapterReturn());
         $provider->getGeocodedData('74.200.247.59');
     }
 
@@ -91,12 +91,7 @@ class FreeGeoIpProviderTest extends TestCase
      */
     public function testGetGeocodedDataWithRealIPv4ContentReturnNothing()
     {
-        $mockReturnNothing = $this->getMock('Geocoder\\HttpAdapter\\HttpAdapterInterface');
-        $mockReturnNothing
-            ->expects($this->once())
-            ->method('getContent')
-            ->will($this->returnValue(''));
-        $provider = new FreeGeoIpProvider($mockReturnNothing);
+        $provider = new FreeGeoIpProvider($this->getMockAdapterReturn(''));
         $provider->getGeocodedData('74.200.247.59');
     }
 
@@ -120,7 +115,7 @@ class FreeGeoIpProviderTest extends TestCase
      */
     public function testGetGeocodedDataWithRealIPv6ContentReturnNull()
     {
-        $provider = new FreeGeoIpProvider($this->getMockAdapterGetContentReturnNull());
+        $provider = new FreeGeoIpProvider($this->getMockAdapterReturn());
         $provider->getGeocodedData('::ffff:74.200.247.59');
     }
 

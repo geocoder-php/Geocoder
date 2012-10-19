@@ -19,7 +19,7 @@ class OpenStreetMapsProviderTest extends TestCase
      */
     public function testGetGeocodedDataWithAddressContentReturnNull()
     {
-        $provider = new OpenStreetMapsProvider($this->getMockAdapterGetContentReturnNull());
+        $provider = new OpenStreetMapsProvider($this->getMockAdapterReturn());
         $provider->getGeocodedData('Läntinen Pitkäkatu 35, Turku');
     }
 
@@ -29,12 +29,7 @@ class OpenStreetMapsProviderTest extends TestCase
      */
     public function testGetGeocodedDataWithAddressContentReturnNothing()
     {
-        $mockReturnNothing = $this->getMock('Geocoder\\HttpAdapter\\HttpAdapterInterface');
-        $mockReturnNothing
-            ->expects($this->once())
-            ->method('getContent')
-            ->will($this->returnValue(''));
-        $provider = new OpenStreetMapsProvider($mockReturnNothing);
+        $provider = new OpenStreetMapsProvider($this->getMockAdapterReturn(''));
         $provider->getGeocodedData('Läntinen Pitkäkatu 35, Turku');
     }
 
@@ -47,12 +42,7 @@ class OpenStreetMapsProviderTest extends TestCase
         $emptyXML = <<<XML
 <?xml version="1.0" encoding="utf-8"?><searchresults_empty></searchresults_empty>
 XML;
-        $mockReturnEmptyXML = $this->getMock('Geocoder\\HttpAdapter\\HttpAdapterInterface');
-        $mockReturnEmptyXML
-            ->expects($this->once())
-            ->method('getContent')
-            ->will($this->returnValue($emptyXML));
-        $provider = new OpenStreetMapsProvider($mockReturnEmptyXML);
+        $provider = new OpenStreetMapsProvider($this->getMockAdapterReturn($emptyXML));
         $provider->getGeocodedData('Läntinen Pitkäkatu 35, Turku');
     }
 
@@ -108,7 +98,7 @@ XML;
      */
     public function testGetReversedDataWithCoordinatesContentReturnNull()
     {
-        $provider = new OpenStreetMapsProvider($this->getMockAdapterGetContentReturnNull());
+        $provider = new OpenStreetMapsProvider($this->getMockAdapterReturn());
         $provider->getReversedData(array('60.4539471728726', '22.2567841926781'));
     }
 
@@ -118,16 +108,11 @@ XML;
      */
     public function testGetReversedDataWithCoordinatesContentReturnNothing()
     {
-        $mockReturnNothing = $this->getMock('Geocoder\\HttpAdapter\\HttpAdapterInterface');
-        $mockReturnNothing
-            ->expects($this->once())
-            ->method('getContent')
-            ->will($this->returnValue(''));
-        $provider = new OpenStreetMapsProvider($mockReturnNothing);
+        $provider = new OpenStreetMapsProvider($this->getMockAdapterReturn(''));
         $provider->getReversedData(array('60.4539471728726', '22.2567841926781'));
     }
 
-    public function testGetReversedDataWithRealCoordinates()
+    public function testGetReversedDataWithRealCoordinatesWithLocale()
     {
         $provider = new OpenStreetMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), 'fi-FI');
         $result   = $provider->getReversedData(array('60.4539471728726', '22.2567841926781'));

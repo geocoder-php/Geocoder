@@ -84,7 +84,7 @@ class YahooProviderTest extends TestCase
      */
     public function testGetGeocodedDataWithRealIPv4ContentReturnNull()
     {
-        $provider = new YahooProvider($this->getMockAdapterGetContentReturnNull(), 'api_key');
+        $provider = new YahooProvider($this->getMockAdapterReturn(), 'api_key');
         $provider->getGeocodedData('74.200.247.59');
     }
 
@@ -132,11 +132,11 @@ class YahooProviderTest extends TestCase
      */
     public function testGetGeocodedDataWithAddressContentReturnNull()
     {
-        $provider = new YahooProvider($this->getMockAdapterGetContentReturnNull(), 'api_key');
+        $provider = new YahooProvider($this->getMockAdapterReturn(), 'api_key');
         $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
     }
 
-    public function testGetGeocodedDataWithRealAddress()
+    public function testGetGeocodedDataWithRealAddressWithLocale()
     {
         if (!isset($_SERVER['YAHOO_API_KEY'])) {
             $this->markTestSkipped('You need to configure the YAHOO_API_KEY value in phpunit.xml');

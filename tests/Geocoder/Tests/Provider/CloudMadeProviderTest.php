@@ -78,7 +78,7 @@ class CloudMadeProviderTest extends TestCase
      */
     public function testGetGeocodedDataWithAddressContentReturnNull()
     {
-        $provider = new CloudMadeProvider($this->getMockAdapterGetContentReturnNull(), 'api_key');
+        $provider = new CloudMadeProvider($this->getMockAdapterReturn(), 'api_key');
         $provider->getGeocodedData('36 Quai des Orfèvres, Paris, France');
     }
 
@@ -130,7 +130,7 @@ class CloudMadeProviderTest extends TestCase
      */
     public function testGetReversedDataWithCoordinatesContentReturnNull()
     {
-        $provider = new CloudMadeProvider($this->getMockAdapterGetContentReturnNull(), 'api_key');
+        $provider = new CloudMadeProvider($this->getMockAdapterReturn(), 'api_key');
         $provider->getReversedData(array(48.85657, 2.35325));
     }
 

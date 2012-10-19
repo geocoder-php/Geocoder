@@ -81,7 +81,7 @@ class HostIpProviderTest extends TestCase
      */
     public function testGetGeocodedDataWithRealIPv4ContentReturnNull()
     {
-        $provider = new HostIpProvider($this->getMockAdapterGetContentReturnNull());
+        $provider = new HostIpProvider($this->getMockAdapterReturn());
         $provider->getGeocodedData('88.188.221.14');
     }
 
@@ -91,12 +91,7 @@ class HostIpProviderTest extends TestCase
      */
     public function testGetGeocodedDataWithRealIPv4ContentReturnNothing()
     {
-        $mockReturnNothing = $this->getMock('Geocoder\\HttpAdapter\\HttpAdapterInterface');
-        $mockReturnNothing
-            ->expects($this->once())
-            ->method('getContent')
-            ->will($this->returnValue(''));
-        $provider = new HostIpProvider($mockReturnNothing);
+        $provider = new HostIpProvider($this->getMockAdapterReturn(''));
         $provider->getGeocodedData('88.188.221.14');
     }
 

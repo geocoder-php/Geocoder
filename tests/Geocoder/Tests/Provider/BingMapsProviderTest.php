@@ -78,11 +78,11 @@ class BingMapsProviderTest extends TestCase
      */
     public function testGetGeocodedDataWithAddressContentReturnNull()
     {
-        $provider = new BingMapsProvider($this->getMockAdapterGetContentReturnNull(), 'api_key');
+        $provider = new BingMapsProvider($this->getMockAdapterReturn(), 'api_key');
         $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
     }
 
-    public function testGetGeocodedDataWithRealAddress()
+    public function testGetGeocodedDataWithRealAddressWithLocale()
     {
         if (!isset($_SERVER['BINGMAPS_API_KEY'])) {
             $this->markTestSkipped('You need to configure the BINGMAPS_API_KEY value in phpunit.xml');
@@ -129,7 +129,7 @@ class BingMapsProviderTest extends TestCase
      */
     public function testGetReversedDataWithCoordinatesContentReturnNull()
     {
-        $provider = new BingMapsProvider($this->getMockAdapterGetContentReturnNull(), 'api_key');
+        $provider = new BingMapsProvider($this->getMockAdapterReturn(), 'api_key');
         $provider->getReversedData(array(48.86321648955345, 2.3887719959020615));
     }
 

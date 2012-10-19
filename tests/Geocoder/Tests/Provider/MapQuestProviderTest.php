@@ -22,7 +22,7 @@ class MapQuestProviderTest extends TestCase
      */
     public function testGetGeocodedDataWithAddressContentReturnNull()
     {
-        $provider = new MapQuestProvider($this->getMockAdapterGetContentReturnNull());
+        $provider = new MapQuestProvider($this->getMockAdapterReturn());
         $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
     }
 
