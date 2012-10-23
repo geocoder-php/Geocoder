@@ -168,6 +168,16 @@ The `MapQuestProvider` is able to geocode and reverse geocode **street addresses
 The `OIORestProvider` is able to geocode **street addresses** only, exclusively in Denmark.
 
 
+### GeocoderCaProvider ###
+
+The `GeocoderCaProvider` is able to geocode and reverse geocode **street addresses**, exclusively in USA & Canada.
+
+
+### GeocoderUsProvider ###
+
+The `GeocoderUsProvider` is able to geocode **street addresses** only, exclusively in USA.
+
+
 You can use one of them or write your own provider. You can also register all providers and decide later.
 That's we'll do:
 
