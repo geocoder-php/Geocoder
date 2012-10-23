@@ -39,7 +39,12 @@ class GeoipProvider extends AbstractProvider implements ProviderInterface
             throw new UnsupportedException('The GeoipProvider does not support Street addresses.');
         }
 
-        if (in_array($address, array('127.0.0.1', '::1'))) {
+        // This API does not support IPv6
+        if (filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+            throw new UnsupportedException('The GeoipProvider does not support IPv6 addresses.');
+        }
+
+        if ('127.0.0.1' === $address) {
             return $this->getLocalhostDefaults();
         }
 

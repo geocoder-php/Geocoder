@@ -68,20 +68,14 @@ class GeoipProviderTest extends TestCase
         $this->assertEquals('localhost', $result['country']);
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedExceptionMessage The GeoipProvider does not support IPv6 addresses.
+     */
     public function testGetGeocodedDataWithLocalhostIPv6()
     {
         $provider = new GeoipProvider();
-        $result   = $provider->getGeocodedData('::1');
-
-        $this->assertArrayNotHasKey('latitude', $result);
-        $this->assertArrayNotHasKey('longitude', $result);
-        $this->assertArrayNotHasKey('zipcode', $result);
-        $this->assertArrayNotHasKey('timezone', $result);
-
-        $this->assertEquals('localhost', $result['city']);
-        $this->assertEquals('localhost', $result['region']);
-        $this->assertEquals('localhost', $result['county']);
-        $this->assertEquals('localhost', $result['country']);
+        $provider->getGeocodedData('::1');
     }
 
     public function testGetGeocodedDataWithRealIPv4()
@@ -99,19 +93,14 @@ class GeoipProviderTest extends TestCase
         $this->assertEquals('America/Chicago', $result['timezone']);
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedExceptionMessage The GeoipProvider does not support IPv6 addresses.
+     */
     public function testGetGeocodedDataWithRealIPv6()
     {
         $provider = new GeoipProvider();
-        $result   = $provider->getGeocodedData('::ffff:74.200.247.59');
-
-        $this->assertEquals(33.034698486328, $result['latitude'], '', 0.0001);
-        $this->assertEquals(-96.813400268555, $result['longitude'], '', 0.0001);
-        $this->assertEquals(75093, $result['zipcode']);
-        $this->assertEquals('Plano', $result['city']);
-        $this->assertEquals('TX', $result['region']);
-        $this->assertEquals('United States', $result['country']);
-        $this->assertEquals('US', $result['countryCode']);
-        $this->assertEquals('America/Chicago', $result['timezone']);
+        $provider->getGeocodedData('::ffff:74.200.247.59');
     }
 
     /**
