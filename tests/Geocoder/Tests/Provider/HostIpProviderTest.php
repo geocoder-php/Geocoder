@@ -12,7 +12,7 @@ class HostIpProviderTest extends TestCase
         $provider = new HostIpProvider($this->getMock('\Geocoder\HttpAdapter\HttpAdapterInterface'), null);
         $this->assertEquals('host_ip', $provider->getName());
     }
-    
+
     /**
      * @expectedException \Geocoder\Exception\UnsupportedException
      * @expectedExceptionMessage The HostIpProvider does not support Street addresses.

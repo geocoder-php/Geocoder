@@ -12,7 +12,7 @@ class CloudMadeProviderTest extends TestCase
         $provider = new CloudMadeProvider($this->getMock('\Geocoder\HttpAdapter\HttpAdapterInterface'), null);
         $this->assertEquals('cloudmade', $provider->getName());
     }
-    
+
     /**
      * @expectedException \RuntimeException
      */

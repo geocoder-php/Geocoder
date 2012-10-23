@@ -34,7 +34,7 @@ class GeocoderUsProvider extends AbstractProvider implements ProviderInterface
         }
 
         $query = sprintf(self::ENDPOINT_URL, urlencode($address));
-        
+
         return $this->executeQuery($query);
     }
 
