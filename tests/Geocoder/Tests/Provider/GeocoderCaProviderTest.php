@@ -28,12 +28,12 @@ class GeocoderCaProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResultException
-     * @expectedExceptionMessage Could not execute query http://geocoder.ca/?geoit=xml&locate=1600+Pennsylvania+Ave%2C+Toronto%2C+DC
+     * @expectedExceptionMessage Could not execute query http://geocoder.ca/?geoit=xml&locate=foobar
      */
     public function testGetGeocodedDataWithWrongAddress()
     {
         $provider = new GeocoderCaProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
-        $result   = $provider->getGeocodedData('1600 Pennsylvania Ave, Toronto, DC');
+        $provider->getGeocodedData('foobar');
     }
 
     public function testGetGeocodedDataWithRealAddressUS()
