@@ -1,6 +1,20 @@
 CHANGELOG
 =========
 
+### 1.1.1 (2012-10-23) ###
+
+* Add more tests thanks to Antoine Corcy (@toin0u)
+* Updated: README.md - need cURL to run unit tests
+* Fix README + CS
+* Updated: README
+* Added: GeocoderUsProvider
+* Added: GeocoderCaProvider
+* Fix Geoip provider
+* [Provider] fixed indentation.
+* Fixed: sprintf type specifier in ChainProvider
+* Fixed: tests
+* Updated: providers tests getName()
+
 ### 1.1.0 (2012-10-16) ###
 
 * Remove useless use statements
