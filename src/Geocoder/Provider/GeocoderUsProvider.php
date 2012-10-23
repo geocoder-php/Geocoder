@@ -69,12 +69,12 @@ class GeocoderUsProvider extends AbstractProvider implements ProviderInterface
 
         $xpath = new \SimpleXMLElement($content);
         $xpath->registerXPathNamespace('geo', 'http://www.w3.org/2003/01/geo/wgs84_pos#');
-        $lat  = $xpath->xpath('//geo:long');
+        $lat  = $xpath->xpath('//geo:lat');
         $long = $xpath->xpath('//geo:long');
 
         return array(
-            'latitude'     => isset($lat[0]) ?: null,
-            'longitude'    => isset($long[0]) ?: null,
+            'latitude'     => isset($lat[0]) ? (float) $lat[0] : null,
+            'longitude'    => isset($long[0]) ? (float) $long[0] : null,
             'bounds'       => null,
             'streetNumber' => null,
             'streetName'   => null,
