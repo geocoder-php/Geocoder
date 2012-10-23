@@ -9,7 +9,7 @@ class IpInfoDbProviderTest extends TestCase
 {
     public function testGetName()
     {
-        $provider = new IpInfoDbProvider($this->getMock('\Geocoder\HttpAdapter\HttpAdapterInterface'), null);
+        $provider = new IpInfoDbProvider($this->getMockAdapter($this->never()), 'api_key');
         $this->assertEquals('ip_info_db', $provider->getName());
     }
 
@@ -86,6 +86,26 @@ class IpInfoDbProviderTest extends TestCase
     {
         $provider = new IpInfoDbProvider($this->getMockAdapter($this->never()), 'api_key');
         $provider->getGeocodedData('::1');
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://api.ipinfodb.com/v3/ip-city/?key=api_key&format=json&ip=74.125.45.100
+     */
+    public function testGetGeocodedDataWithRealIPv4GetsNullContent()
+    {
+        $provider = new IpInfoDbProvider($this->getMockAdapterReturns(null), 'api_key');
+        $provider->getGeocodedData('74.125.45.100');
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://api.ipinfodb.com/v3/ip-city/?key=api_key&format=json&ip=74.125.45.100
+     */
+    public function testGetGeocodedDataWithRealIPv4GetsEmptyContent()
+    {
+        $provider = new IpInfoDbProvider($this->getMockAdapterReturns(''), 'api_key');
+        $provider->getGeocodedData('74.125.45.100');
     }
 
     public function testGetGeocodedDataWithRealIPv4()

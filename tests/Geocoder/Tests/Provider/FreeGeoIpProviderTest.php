@@ -9,7 +9,7 @@ class FreeGeoIpProviderTest extends TestCase
 {
     public function testGetName()
     {
-        $provider = new FreeGeoIpProvider($this->getMock('\Geocoder\HttpAdapter\HttpAdapterInterface'), null);
+        $provider = new FreeGeoIpProvider($this->getMockAdapter($this->never()));
         $this->assertEquals('free_geo_ip', $provider->getName());
     }
 
@@ -75,6 +75,26 @@ class FreeGeoIpProviderTest extends TestCase
         $this->assertEquals('localhost', $result['country']);
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://freegeoip.net/json/74.200.247.59
+     */
+    public function testGetGeocodedDataWithRealIPv4GetsNullContent()
+    {
+        $provider = new FreeGeoIpProvider($this->getMockAdapterReturns(null));
+        $provider->getGeocodedData('74.200.247.59');
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://freegeoip.net/json/74.200.247.59
+     */
+    public function testGetGeocodedDataWithRealIPv4GetsEmptyContent()
+    {
+        $provider = new FreeGeoIpProvider($this->getMockAdapterReturns(''));
+        $provider->getGeocodedData('74.200.247.59');
+    }
+
     public function testGetGeocodedDataWithRealIPv4()
     {
         $provider = new FreeGeoIpProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
@@ -103,10 +123,20 @@ class FreeGeoIpProviderTest extends TestCase
         $this->assertEquals('US', $result['countryCode']);
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://freegeoip.net/json/::ffff:74.200.247.59
+     */
+    public function testGetGeocodedDataWithRealIPv6GetsNullContent()
+    {
+        $provider = new FreeGeoIpProvider($this->getMockAdapterReturns(null));
+        $provider->getGeocodedData('::ffff:74.200.247.59');
+    }
+
     public function testGetGeocodedDataWithUSIPv4()
     {
         $provider = new FreeGeoIpProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter());
-        $result = $provider->getGeocodedData('74.200.247.59');
+        $result   = $provider->getGeocodedData('74.200.247.59');
 
         $this->assertEquals('48', $result['regionCode']);
     }

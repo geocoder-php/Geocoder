@@ -9,7 +9,7 @@ class CloudMadeProviderTest extends TestCase
 {
     public function testGetName()
     {
-        $provider = new CloudMadeProvider($this->getMock('\Geocoder\HttpAdapter\HttpAdapterInterface'), null);
+        $provider = new CloudMadeProvider($this->getMockAdapter($this->never()), 'api_key');
         $this->assertEquals('cloudmade', $provider->getName());
     }
 
@@ -72,6 +72,16 @@ class CloudMadeProviderTest extends TestCase
         $provider->getGeocodedData('::1');
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://geocoding.cloudmade.com/api_key/geocoding/v2/find.js?query=36+Quai+des+Orf%C3%A8vres%2C+Paris%2C+France&distance=closest&return_location=true&results=1
+     */
+    public function testGetGeocodedDataWithAddressGetsNullContent()
+    {
+        $provider = new CloudMadeProvider($this->getMockAdapterReturns(null), 'api_key');
+        $provider->getGeocodedData('36 Quai des Orfèvres, Paris, France');
+    }
+
     public function testGetGeocodedDataWithRealAddress()
     {
         if (!isset($_SERVER['CLOUDMADE_API_KEY'])) {
@@ -112,6 +122,16 @@ class CloudMadeProviderTest extends TestCase
     {
         $provider = new CloudMadeProvider($this->getMockAdapter(), 'api_key');
         $provider->getReversedData(array(1, 2));
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://geocoding.cloudmade.com/api_key/geocoding/v2/find.js?around=48.856570,2.353250&object_type=address&return_location=true&results=1
+     */
+    public function testGetReversedDataWithCoordinatesGetsNullContent()
+    {
+        $provider = new CloudMadeProvider($this->getMockAdapterReturns(null), 'api_key');
+        $provider->getReversedData(array(48.85657, 2.35325));
     }
 
     public function testGetReversedDataWithRealCoordinates()

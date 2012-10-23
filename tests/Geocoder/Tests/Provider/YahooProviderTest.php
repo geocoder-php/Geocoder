@@ -9,7 +9,7 @@ class YahooProviderTest extends TestCase
 {
     public function testGetName()
     {
-        $provider = new YahooProvider($this->getMock('\Geocoder\HttpAdapter\HttpAdapterInterface'), null);
+        $provider = new YahooProvider($this->getMockAdapter($this->never()), 'api_key');
         $this->assertEquals('yahoo', $provider->getName());
     }
 
@@ -79,6 +79,16 @@ class YahooProviderTest extends TestCase
         $provider->getGeocodedData('::1');
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://where.yahooapis.com/geocode?q=74.200.247.59&flags=JXT&appid=api_key
+     */
+    public function testGetGeocodedDataWithRealIPv4GetsNullContent()
+    {
+        $provider = new YahooProvider($this->getMockAdapterReturns(null), 'api_key');
+        $provider->getGeocodedData('74.200.247.59');
+    }
+
     public function testGetGeocodedDataWithRealIPv4()
     {
         if (!isset($_SERVER['YAHOO_API_KEY'])) {
@@ -115,6 +125,16 @@ class YahooProviderTest extends TestCase
     {
         $provider = new YahooProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), 'api_key');
         $provider->getGeocodedData('::ffff:74.200.247.59');
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://where.yahooapis.com/geocode?q=10+avenue+Gambetta%2C+Paris%2C+France&flags=JXT&appid=api_key
+     */
+    public function testGetGeocodedDataWithAddressGetsNullContent()
+    {
+        $provider = new YahooProvider($this->getMockAdapterReturns(null), 'api_key');
+        $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
     }
 
     public function testGetGeocodedDataWithRealAddress()

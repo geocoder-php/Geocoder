@@ -24,4 +24,18 @@ class TestCase extends \PHPUnit_Framework_TestCase
 
         return $mock;
     }
+
+    /**
+     * @return \Geocoder\HttpAdapter\HttpAdapterInterface
+     */
+    protected function getMockAdapterReturns($returnValue)
+    {
+        $mock = $this->getMock('\Geocoder\HttpAdapter\HttpAdapterInterface');
+        $mock
+            ->expects($this->once())
+            ->method('getContent')
+            ->will($this->returnValue($returnValue));
+
+        return $mock;
+    }
 }

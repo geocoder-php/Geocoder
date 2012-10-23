@@ -12,7 +12,7 @@ class OIORestProviderTest extends TestCase
 {
     public function testGetName()
     {
-        $provider = new OIORestProvider($this->getMock('\Geocoder\HttpAdapter\HttpAdapterInterface'), null);
+        $provider = new OIORestProvider($this->getMockAdapter($this->never()));
         $this->assertEquals('oio_rest', $provider->getName());
     }
 
@@ -34,6 +34,16 @@ class OIORestProviderTest extends TestCase
     {
         $provider = new OIORestProvider($this->getMockAdapter());
         $provider->getGeocodedData('');
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://geo.oiorest.dk/adresser/Tagensvej%2C47%2C2200.json
+     */
+    public function testGetGeocodedDataWithAddressContentReturnNull()
+    {
+        $provider = new OIORestProvider($this->getMockAdapterReturns(null));
+        $provider->getGeocodedData('Tagensvej 47, 2200 København N');
     }
 
     /**
