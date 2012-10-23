@@ -9,7 +9,7 @@ class FreeGeoIpProviderTest extends TestCase
 {
     public function testGetName()
     {
-        $provider = new FreeGeoIpProvider($this->getMock('\Geocoder\HttpAdapter\HttpAdapterInterface'), null);
+        $provider = new FreeGeoIpProvider($this->getMockAdapter($this->never()));
         $this->assertEquals('free_geo_ip', $provider->getName());
     }
 
@@ -75,6 +75,26 @@ class FreeGeoIpProviderTest extends TestCase
         $this->assertEquals('localhost', $result['country']);
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://freegeoip.net/json/74.200.247.59
+     */
+    public function testGetGeocodedDataWithRealIPv4ContentReturnNull()
+    {
+        $provider = new FreeGeoIpProvider($this->getMockAdapterReturn());
+        $provider->getGeocodedData('74.200.247.59');
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://freegeoip.net/json/74.200.247.59
+     */
+    public function testGetGeocodedDataWithRealIPv4ContentReturnNothing()
+    {
+        $provider = new FreeGeoIpProvider($this->getMockAdapterReturn(''));
+        $provider->getGeocodedData('74.200.247.59');
+    }
+
     public function testGetGeocodedDataWithRealIPv4()
     {
         $provider = new FreeGeoIpProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
@@ -87,6 +107,16 @@ class FreeGeoIpProviderTest extends TestCase
         $this->assertEquals('Texas', $result['region']);
         $this->assertEquals('United States', $result['country']);
         $this->assertEquals('US', $result['countryCode']);
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://freegeoip.net/json/::ffff:74.200.247.59
+     */
+    public function testGetGeocodedDataWithRealIPv6ContentReturnNull()
+    {
+        $provider = new FreeGeoIpProvider($this->getMockAdapterReturn());
+        $provider->getGeocodedData('::ffff:74.200.247.59');
     }
 
     public function testGetGeocodedDataWithRealIPv6()
@@ -105,7 +135,7 @@ class FreeGeoIpProviderTest extends TestCase
 
     public function testGetGeocodedDataWithUSIPv4()
     {
-        $provider = new FreeGeoIpProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter());
+        $provider = new FreeGeoIpProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result = $provider->getGeocodedData('74.200.247.59');
 
         $this->assertEquals('48', $result['regionCode']);
@@ -113,7 +143,7 @@ class FreeGeoIpProviderTest extends TestCase
 
     public function testGetGeocodedDataWithUSIPv6()
     {
-        $provider = new FreeGeoIpProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter());
+        $provider = new FreeGeoIpProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result = $provider->getGeocodedData('::ffff:74.200.247.59');
 
         $this->assertEquals('48', $result['regionCode']);
@@ -121,7 +151,7 @@ class FreeGeoIpProviderTest extends TestCase
 
     public function testGetGeocodedDataWithUKIPv4()
     {
-        $provider = new FreeGeoIpProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter());
+        $provider = new FreeGeoIpProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result = $provider->getGeocodedData('132.185.255.60');
 
         $this->assertEquals('H9', $result['regionCode']);
@@ -129,7 +159,7 @@ class FreeGeoIpProviderTest extends TestCase
 
     public function testGetGeocodedDataWithUKIPv6()
     {
-        $provider = new FreeGeoIpProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter());
+        $provider = new FreeGeoIpProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result = $provider->getGeocodedData('::ffff:132.185.255.60');
 
         $this->assertEquals('H9', $result['regionCode']);

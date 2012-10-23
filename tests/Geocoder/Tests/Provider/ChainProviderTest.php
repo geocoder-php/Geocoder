@@ -12,10 +12,9 @@ class ChainProviderTest extends TestCase
 {
     public function testAddProvider()
     {
-        $mock = $this->getMock('Geocoder\\Provider\\ProviderInterface');
+        $mock = $this->getMockProvider();
 
         $chain = new ChainProvider();
-
         $chain->addProvider($mock);
     }
 
@@ -27,37 +26,70 @@ class ChainProviderTest extends TestCase
 
     public function testGetReversedData()
     {
-        $mockOne = $this->getMock('Geocoder\\Provider\\ProviderInterface');
-        $mockOne->expects($this->once())
-            ->method('getReversedData')
-            ->will($this->returnCallback(function() { throw new \Exception; }));
-
-        $mockTwo = $this->getMock('Geocoder\\Provider\\ProviderInterface');
-        $mockTwo->expects($this->once())
-            ->method('getReversedData')
-            ->with(array('11', '22'))
-            ->will($this->returnValue(array('foo' => 'bar')));
+        $mockOne = $this->getMockProviderThrowException('getReversedData');
+        $mockTwo = $this->getMockProvider('getReversedData', array('11', '22'));
 
         $chain = new ChainProvider(array($mockOne, $mockTwo));
-
         $this->assertEquals(array('foo' => 'bar'), $chain->getReversedData(array('11', '22')));
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage No provider could provide the coordinated [55.699948,12.552839]
+     */
+    public function testGetReversedDataThrowNoResultException()
+    {
+        $mockOne = $this->getMockProviderThrowException('getReversedData');
+        $mockTwo = $this->getMockProviderThrowException('getReversedData');
+
+        $chain = new ChainProvider(array($mockOne, $mockTwo));
+        $chain->getReversedData(array(55.699948, 12.552839));
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\InvalidCredentialsException
+     */
+    public function testGetReversedDataThrowInvalidCredentialsException()
+    {
+        $mockOne = $this->getMockProviderThrowException('getReversedData');
+        $mockTwo = $this->getMockProviderThrowInvalidCredentialsException('getReversedData');
+
+        $chain = new ChainProvider(array($mockOne, $mockTwo));
+        $chain->getReversedData(array(55.699948, 12.552839));
     }
 
     public function testGetGeocodedData()
     {
-        $mockOne = $this->getMock('Geocoder\\Provider\\ProviderInterface');
-        $mockOne->expects($this->once())
-            ->method('getGeocodedData')
-            ->will($this->returnCallback(function() { throw new \Exception; }));
-
-        $mockTwo = $this->getMock('Geocoder\\Provider\\ProviderInterface');
-        $mockTwo->expects($this->once())
-            ->method('getGeocodedData')
-            ->with('Paris')
-            ->will($this->returnValue(array('foo' => 'bar')));
+        $mockOne = $this->getMockProviderThrowException('getGeocodedData');
+        $mockTwo = $this->getMockProvider('getGeocodedData', 'Paris');
 
         $chain = new ChainProvider(array($mockOne, $mockTwo));
-
         $this->assertEquals(array('foo' => 'bar'), $chain->getGeocodedData('Paris'));
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage No provider could provide the address "København"
+     */
+    public function testGetGeocodedDataThrowNoResultException()
+    {
+        $mockOne = $this->getMockProviderThrowException('getGeocodedData');
+        $mockTwo = $this->getMockProviderThrowException('getGeocodedData');
+
+        $chain = new ChainProvider(array($mockOne, $mockTwo));
+        $chain->getGeocodedData('København');
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\InvalidCredentialsException
+     *  @expectedExceptionMessage No API Key provided
+     */
+    public function testGetGeocodedDataThrowInvalidCredentialsException()
+    {
+        $mockOne = $this->getMockProviderThrowException('getGeocodedData');
+        $mockTwo = $this->getMockProviderThrowInvalidCredentialsException('getGeocodedData');
+
+        $chain = new ChainProvider(array($mockOne, $mockTwo));
+        $chain->getGeocodedData('København');
     }
 }

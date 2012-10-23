@@ -9,10 +9,43 @@ class OpenStreetMapsProviderTest extends TestCase
 {
     public function testGetName()
     {
-        $provider = new OpenStreetMapsProvider($this->getMock('\Geocoder\HttpAdapter\HttpAdapterInterface'), null);
+        $provider = new OpenStreetMapsProvider($this->getMockAdapter($this->never()));
         $this->assertEquals('openstreetmaps', $provider->getName());
     }
-    
+
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not resolve address "Läntinen Pitkäkatu 35, Turku"
+     */
+    public function testGetGeocodedDataWithAddressContentReturnNull()
+    {
+        $provider = new OpenStreetMapsProvider($this->getMockAdapterReturn());
+        $provider->getGeocodedData('Läntinen Pitkäkatu 35, Turku');
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://nominatim.openstreetmap.org/search?q=L%C3%A4ntinen+Pitk%C3%A4katu+35%2C+Turku&format=xml&addressdetails=1
+     */
+    public function testGetGeocodedDataWithAddressContentReturnNothing()
+    {
+        $provider = new OpenStreetMapsProvider($this->getMockAdapterReturn(''));
+        $provider->getGeocodedData('Läntinen Pitkäkatu 35, Turku');
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://nominatim.openstreetmap.org/search?q=L%C3%A4ntinen+Pitk%C3%A4katu+35%2C+Turku&format=xml&addressdetails=1
+     */
+    public function testGetGeocodedDataWithAddressContentReturnEmptyXML()
+    {
+        $emptyXML = <<<XML
+<?xml version="1.0" encoding="utf-8"?><searchresults_empty></searchresults_empty>
+XML;
+        $provider = new OpenStreetMapsProvider($this->getMockAdapterReturn($emptyXML));
+        $provider->getGeocodedData('Läntinen Pitkäkatu 35, Turku');
+    }
+
     public function testGetGeocodedDataWithRealAddress()
     {
         $provider = new OpenStreetMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
@@ -59,9 +92,29 @@ class OpenStreetMapsProviderTest extends TestCase
         $this->assertEquals('FR', $result['countryCode']);
     }
 
-    public function testGetReversedDataWithRealCoordinates()
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Unable to resolve the coordinates 60.4539471728726, 22.2567841926781
+     */
+    public function testGetReversedDataWithCoordinatesContentReturnNull()
     {
-        $provider = new OpenStreetMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new OpenStreetMapsProvider($this->getMockAdapterReturn());
+        $provider->getReversedData(array('60.4539471728726', '22.2567841926781'));
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not resolve coordinates 60.4539471728726, 22.2567841926781
+     */
+    public function testGetReversedDataWithCoordinatesContentReturnNothing()
+    {
+        $provider = new OpenStreetMapsProvider($this->getMockAdapterReturn(''));
+        $provider->getReversedData(array('60.4539471728726', '22.2567841926781'));
+    }
+
+    public function testGetReversedDataWithRealCoordinatesWithLocale()
+    {
+        $provider = new OpenStreetMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), 'fi-FI');
         $result   = $provider->getReversedData(array('60.4539471728726', '22.2567841926781'));
 
         $this->assertEquals(60.4539471768582, $result['latitude'], '', 0.0001);
@@ -70,9 +123,9 @@ class OpenStreetMapsProviderTest extends TestCase
         $this->assertEquals('Läntinen Pitkäkatu', $result['streetName']);
         $this->assertEquals(20100, $result['zipcode']);
         $this->assertEquals('Turku', $result['city']);
-        $this->assertEquals('Finland Proper', $result['county']);
+        $this->assertEquals('Varsinais-Suomi', $result['county']);
         $this->assertEquals(null, $result['region']);
-        $this->assertEquals('Finland', $result['country']);
+        $this->assertEquals('Suomi', $result['country']);
         $this->assertEquals('FI', $result['countryCode']);
     }
 

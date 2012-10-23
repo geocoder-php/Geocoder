@@ -9,17 +9,17 @@ class CloudMadeProviderTest extends TestCase
 {
     public function testGetName()
     {
-        $provider = new CloudMadeProvider($this->getMock('\Geocoder\HttpAdapter\HttpAdapterInterface'), null);
+        $provider = new CloudMadeProvider($this->getMockAdapter($this->never()), 'api_key');
         $this->assertEquals('cloudmade', $provider->getName());
     }
     
     /**
      * @expectedException \RuntimeException
+     * @expectedExceptionMessage No API Key provided
      */
-    public function testGetGeocodedDataWithNullApiKey()
+    public function testNullApiKey()
     {
-        $provider = new CloudMadeProvider($this->getMock('\Geocoder\HttpAdapter\HttpAdapterInterface'), null);
-        $provider->getGeocodedData('foo');
+        new CloudMadeProvider($this->getMockAdapter($this->never()), null);
     }
 
     /**
@@ -72,6 +72,16 @@ class CloudMadeProviderTest extends TestCase
         $provider->getGeocodedData('::1');
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://geocoding.cloudmade.com/api_key/geocoding/v2/find.js?query=36+Quai+des+Orf%C3%A8vres%2C+Paris%2C+France&distance=closest&return_location=true&results=1
+     */
+    public function testGetGeocodedDataWithAddressContentReturnNull()
+    {
+        $provider = new CloudMadeProvider($this->getMockAdapterReturn(), 'api_key');
+        $provider->getGeocodedData('36 Quai des Orfèvres, Paris, France');
+    }
+
     public function testGetGeocodedDataWithRealAddress()
     {
         if (!isset($_SERVER['CLOUDMADE_API_KEY'])) {
@@ -114,6 +124,16 @@ class CloudMadeProviderTest extends TestCase
         $provider->getReversedData(array(1, 2));
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://geocoding.cloudmade.com/api_key/geocoding/v2/find.js?around=48.856570,2.353250&object_type=address&return_location=true&results=1
+     */
+    public function testGetReversedDataWithCoordinatesContentReturnNull()
+    {
+        $provider = new CloudMadeProvider($this->getMockAdapterReturn(), 'api_key');
+        $provider->getReversedData(array(48.85657, 2.35325));
+    }
+
     public function testGetReversedDataWithRealCoordinates()
     {
         if (!isset($_SERVER['CLOUDMADE_API_KEY'])) {
@@ -146,7 +166,7 @@ class CloudMadeProviderTest extends TestCase
         $this->assertNull($result['timezone']);
     }
 
-    public function testGetGeocodedDataWithRealAddress2()
+    public function testGetGeocodedDataWithRealAddressTwo()
     {
         if (!isset($_SERVER['CLOUDMADE_API_KEY'])) {
             $this->markTestSkipped('You need to configure the CLOUDMADE_API_KEY value in phpunit.xml');
