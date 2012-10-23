@@ -1,0 +1,470 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Geocoder by willdurand</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Geocoder</h1>
+        <p>The almost missing Geocoder PHP 5.3 library.</p>
+
+        <p class="view"><a href="https://github.com/willdurand/Geocoder">View the Project on GitHub <small>willdurand/Geocoder</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/willdurand/Geocoder/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/willdurand/Geocoder/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/willdurand/Geocoder">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>Geocoder</h1>
+
+<p><strong>Geocoder</strong> is a library which helps you build geo-aware applications. It provides an abstraction layer for geocoding manipulations.
+The library is splitted in two parts: <code>HttpAdapter</code> and <code>Provider</code> and is really extensible.</p>
+
+<p><a href="http://travis-ci.org/willdurand/Geocoder"><img src="https://secure.travis-ci.org/willdurand/Geocoder.png?branch=master" alt="Build Status"></a></p>
+
+<h3>HttpAdapters</h3>
+
+<p><em>HttpAdapters</em> are responsible to get data from remote APIs.</p>
+
+<p>Currently, there are the following adapters:</p>
+
+<ul>
+<li>
+<code>BuzzHttpAdapter</code> for <a href="https://github.com/kriswallsmith/Buzz">Buzz</a>, a lightweight PHP 5.3 library for issuing HTTP requests;</li>
+<li>
+<code>CurlHttpAdapter</code> for <a href="http://php.net/manual/book.curl.php">cURL</a>;</li>
+<li>
+<code>GuzzleHttpAdapter</code> for <a href="https://github.com/guzzle/guzzle">Guzzle</a>, PHP 5.3+ HTTP client and framework for building RESTful web service clients;</li>
+<li>
+<code>ZendHttpAdapter</code> for <a href="http://framework.zend.com/manual/2.0/en/modules/zend.http.client.html">Zend Http Client</a>.</li>
+</ul><h3>Providers</h3>
+
+<p><em>Providers</em> contain the logic to extract useful information.</p>
+
+<p>Currently, there are many providers for the following APIs:</p>
+
+<ul>
+<li>
+<a href="http://freegeoip.net/static/index.html">FreeGeoIp</a> as IP-Based geocoding provider;</li>
+<li>
+<a href="http://www.hostip.info/">HostIp</a> as IP-Based geocoding provider;</li>
+<li>
+<a href="http://www.ipinfodb.com/">IpInfoDB</a> as IP-Based geocoding provider;</li>
+<li>
+<a href="http://developer.yahoo.com/geo/placefinder/">Yahoo! PlaceFinder</a> as Address-Based geocoding and reverse geocoding provider;</li>
+<li>
+<a href="http://code.google.com/apis/maps/documentation/geocoding/">Google Maps</a> as Address-Based geocoding and reverse geocoding provider;</li>
+<li>
+<a href="http://msdn.microsoft.com/en-us/library/ff701715.aspx">Bing Maps</a> as Address-Based geocoding and reverse geocoding provider;</li>
+<li>
+<a href="http://nominatim.openstreetmap.org/">OpenStreetMaps</a> as Address-Based geocoding and reverse geocoding provider;</li>
+<li>
+<a href="http://developers.cloudmade.com/projects/show/geocoding-http-api">CloudMade</a> as Address-Based geocoding and reverse geocoding provider;</li>
+<li>
+<a href="http://php.net/manual/book.geoip.php">Geoip</a>, the PHP extension, as IP-Based geocoding provider;</li>
+<li>ChainProvider is a special provider that takes a list of providers and iterates
+over this list to get information;</li>
+<li>
+<a href="http://open.mapquestapi.com/">MapQuest</a> as Address-Based geocoding and reverse geocoding provider;</li>
+<li>
+<a href="http://geo.oiorest.dk/">OIORest</a> as very accurate Address-Based geocoding provider (exclusively in Denmark);</li>
+<li>
+<a href="http://geocoder.ca/">GeoCoder.ca</a> as Address-Based geocoding and reverse geocoding provider (exclusively in USA &amp; Canada);</li>
+<li>
+<a href="http://geocoder.us/">GeoCoder.us</a> as Address-Based geocoding provider (exclusively in USA).</li>
+</ul><h2>Installation</h2>
+
+<p>The recommended way to install Geocoder is through composer.</p>
+
+<p>Just create a <code>composer.json</code> file for your project:</p>
+
+<div class="highlight"><pre><span class="p">{</span>
+    <span class="nt">"require"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">"willdurand/geocoder"</span><span class="p">:</span> <span class="s2">"*"</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>And run these two commands to install it:</p>
+
+<div class="highlight"><pre><span class="nv">$ </span>wget http://getcomposer.org/composer.phar
+<span class="nv">$ </span>php composer.phar install
+</pre></div>
+
+<p>Now you can add the autoloader, and you will have access to the library:</p>
+
+<div class="highlight"><pre><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">require</span> <span class="s1">'vendor/autoload.php'</span><span class="p">;</span>
+</pre></div>
+
+<p>If you don't use neither <strong>Composer</strong> nor a <em>ClassLoader</em> in your application, just require the provided autoloader:</p>
+
+<div class="highlight"><pre><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">require_once</span> <span class="s1">'src/autoload.php'</span><span class="p">;</span>
+</pre></div>
+
+<p>You're done.</p>
+
+<h2>Usage</h2>
+
+<p>First, you need an <code>adapter</code> to query an API:</p>
+
+<div class="highlight"><pre><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$adapter</span>  <span class="o">=</span> <span class="k">new</span> <span class="nx">\Geocoder\HttpAdapter\BuzzHttpAdapter</span><span class="p">();</span>
+</pre></div>
+
+<p>The <code>BuzzHttpAdapter</code> is tweakable, actually you can pass a <code>Browser</code> object to this adapter:</p>
+
+<div class="highlight"><pre><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$buzz</span>    <span class="o">=</span> <span class="k">new</span> <span class="nx">\Buzz\Browser</span><span class="p">(</span><span class="k">new</span> <span class="nx">\Buzz\Client\Curl</span><span class="p">());</span>
+<span class="nv">$adapter</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Geocoder\HttpAdapter\BuzzHttpAdapter</span><span class="p">(</span><span class="nv">$buzz</span><span class="p">);</span>
+</pre></div>
+
+<p>Now, you have to choose a <code>provider</code> which is closed to what you want to get.</p>
+
+<h3>FreeGeoIpProvider</h3>
+
+<p>The <code>FreeGeoIpProvider</code> is able to geocode <strong>IPv4 and IPv6 addresses</strong> only.</p>
+
+<h3>HostIpProvider</h3>
+
+<p>The <code>HostIpProvider</code> is able to geocode <strong>IPv4 addresses</strong> only.</p>
+
+<h3>IpInfoDbProvider</h3>
+
+<p>The <code>IpInfoDbProvider</code> is able to geocode <strong>IPv4 addresses</strong> only.</p>
+
+<h3>YahooProvider</h3>
+
+<p>The <code>YahooProvider</code> is able to geocode both <strong>IPv4 addresses</strong> and <strong>street addresses</strong>.
+This provider can also reverse information based on coordinates (latitude, longitude).</p>
+
+<h3>GoogleMapsProvider</h3>
+
+<p>The <code>GoogleMapsProvider</code> is able to geocode and reverse geocode <strong>street addresses</strong>.</p>
+
+<h3>BingMapsProvider</h3>
+
+<p>The <code>BingMapsProvider</code> is able to geocode and reverse geocode <strong>street addresses</strong>.</p>
+
+<h3>OpenStreetMapsProvider</h3>
+
+<p>The <code>OpenStreetMapsProvider</code> is able to geocode and reverse geocode <strong>street addresses</strong>.</p>
+
+<h3>CloudMadeProvider</h3>
+
+<p>The <code>CloudMadeProvider</code> is able to geocode and reverse geocode <strong>street addresses</strong>.</p>
+
+<h3>GeoipProvider</h3>
+
+<p>The <code>GeoipProvider</code> is able to geocode <strong>IPv4 and IPv6 addresses</strong> only. No need to use an <code>HttpAdapter</code> as it uses a local database.
+See the <a href="http://www.maxmind.com/app/php">MaxMind page</a> for more information.</p>
+
+<h3>ChainProvider</h3>
+
+<p>The <code>ChainProvider</code> is a special provider that takes a list of providers and iterates over this list to get information.</p>
+
+<h3>MapQuestProvider</h3>
+
+<p>The <code>MapQuestProvider</code> is able to geocode and reverse geocode <strong>street addresses</strong>.</p>
+
+<h3>OIORestProvider</h3>
+
+<p>The <code>OIORestProvider</code> is able to geocode <strong>street addresses</strong> only, exclusively in Denmark.</p>
+
+<h3>GeocoderCaProvider</h3>
+
+<p>The <code>GeocoderCaProvider</code> is able to geocode and reverse geocode <strong>street addresses</strong>, exclusively in USA &amp; Canada.</p>
+
+<h3>GeocoderUsProvider</h3>
+
+<p>The <code>GeocoderUsProvider</code> is able to geocode <strong>street addresses</strong> only, exclusively in USA.</p>
+
+<p>You can use one of them or write your own provider. You can also register all providers and decide later.
+That's we'll do:</p>
+
+<div class="highlight"><pre><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$geocoder</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Geocoder\Geocoder</span><span class="p">();</span>
+<span class="nv">$geocoder</span><span class="o">-&gt;</span><span class="na">registerProviders</span><span class="p">(</span><span class="k">array</span><span class="p">(</span>
+    <span class="k">new</span> <span class="nx">\Geocoder\Provider\YahooProvider</span><span class="p">(</span>
+        <span class="nv">$adapter</span><span class="p">,</span> <span class="s1">'&lt;YAHOO_API_KEY&gt;'</span><span class="p">,</span> <span class="nv">$locale</span>
+    <span class="p">),</span>
+    <span class="k">new</span> <span class="nx">\Geocoder\Provider\IpInfoDbProvider</span><span class="p">(</span>
+        <span class="nv">$adapter</span><span class="p">,</span> <span class="s1">'&lt;IPINFODB_API_KEY&gt;'</span>
+    <span class="p">),</span>
+    <span class="k">new</span> <span class="nx">\Geocoder\Provider\HostIpProvider</span><span class="p">(</span><span class="nv">$adapter</span><span class="p">)</span>
+<span class="p">));</span>
+</pre></div>
+
+<p>The <code>$locale</code> parameter is available for the <code>YahooProvider</code>.</p>
+
+<p>Everything is ok, enjoy!</p>
+
+<h2>API</h2>
+
+<p>The main method is called <code>geocode()</code> which receives a value to geocode. It can be an IP address or a street address (partial or not).</p>
+
+<div class="highlight"><pre><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$geocoder</span><span class="o">-&gt;</span><span class="na">geocode</span><span class="p">(</span><span class="s1">'88.188.221.14'</span><span class="p">);</span>
+<span class="c1">// Result is:</span>
+<span class="c1">// "latitude"       =&gt; string(9) "47.901428"</span>
+<span class="c1">// "longitude"      =&gt; string(8) "1.904960"</span>
+<span class="c1">// "bounds"         =&gt; array(4) {</span>
+<span class="c1">//     "south" =&gt; string(9) "47.813320"</span>
+<span class="c1">//     "west"  =&gt; string(8) "1.809770"</span>
+<span class="c1">//     "north" =&gt; string(9) "47.960220"</span>
+<span class="c1">//     "east"  =&gt; string(8) "1.993860"</span>
+<span class="c1">// }</span>
+<span class="c1">// "streetNumber"   =&gt; string(0) ""</span>
+<span class="c1">// "streetName"     =&gt; string(0) ""</span>
+<span class="c1">// "city"           =&gt; string(7) "Orleans"</span>
+<span class="c1">// "zipcode"        =&gt; string(0) ""</span>
+<span class="c1">// "county"         =&gt; string(6) "Loiret"</span>
+<span class="c1">// "region"         =&gt; string(6) "Centre"</span>
+<span class="c1">// "country"        =&gt; string(6) "France"</span>
+<span class="c1">// "timezone"       =&gt; string(6) "Europe/Paris"</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$geocoder</span><span class="o">-&gt;</span><span class="na">geocode</span><span class="p">(</span><span class="s1">'10 rue Gambetta, Paris, France'</span><span class="p">);</span>
+<span class="c1">// Result is:</span>
+<span class="c1">// "latitude"       =&gt; string(9) "48.863217"</span>
+<span class="c1">// "longitude"      =&gt; string(8) "2.388821"</span>
+<span class="c1">// "bounds"         =&gt; array(4) {</span>
+<span class="c1">//     "south" =&gt; string(9) "48.863217"</span>
+<span class="c1">//     "west"  =&gt; string(8) "2.388821"</span>
+<span class="c1">//     "north" =&gt; string(9) "48.863217"</span>
+<span class="c1">//     "east"  =&gt; string(8) "2.388821"</span>
+<span class="c1">// }</span>
+<span class="c1">// "streetNumber"   =&gt; string(2) "10"</span>
+<span class="c1">// "streetName"     =&gt; string(15) "Avenue Gambetta"</span>
+<span class="c1">// "city"           =&gt; string(5) "Paris"</span>
+<span class="c1">// "county"         =&gt; string(5) "Paris"</span>
+<span class="c1">// "zipcode"        =&gt; string(5) "75020"</span>
+<span class="c1">// "region"         =&gt; string(14) "Ile-de-France"</span>
+<span class="c1">// "country"        =&gt; string(6) "France"</span>
+<span class="c1">// "timezone"       =&gt; string(6) "Europe/Paris"</span>
+</pre></div>
+
+<p>The <code>geocode()</code> method returns a <code>Geocoded</code> result object with the following API, this object also implements the <code>ArrayAccess</code> interface:</p>
+
+<ul>
+<li>
+<code>getCoordinates()</code> will return an array with <code>latitude</code> and <code>longitude</code> values;</li>
+<li>
+<code>getLatitude()</code> will return the <code>latitude</code> value;</li>
+<li>
+<code>getLongitude()</code> will return the <code>longitude</code> value;</li>
+<li>
+<code>getBounds()</code> will return an array with <code>south</code>, <code>west</code>, <code>north</code> and <code>east</code> values;</li>
+<li>
+<code>getStreetNumber()</code> will return the <code>street number/house number</code> value;</li>
+<li>
+<code>getStreetName()</code> will return the <code>street name</code> value;</li>
+<li>
+<code>getCity()</code> will return the <code>city</code>;</li>
+<li>
+<code>getZipcode()</code> will return the <code>zipcode</code>;</li>
+<li>
+<code>getCityDistrict()</code> will return the <code>city district</code>, or <code>sublocality</code>;</li>
+<li>
+<code>getCounty()</code> will return the <code>county</code>;</li>
+<li>
+<code>getRegion()</code> will return the <code>region</code>;</li>
+<li>
+<code>getRegionCode()</code> will return the <code>region</code> code (region short name);</li>
+<li>
+<code>getCountry()</code> will return the <code>country</code>;</li>
+<li>
+<code>getCountryCode()</code> will return the ISO country code;</li>
+<li>
+<code>getTimezone()</code> will return the timezone.</li>
+</ul><p>The Geocoder's API is fluent, you can write:</p>
+
+<div class="highlight"><pre><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$geocoder</span>
+    <span class="o">-&gt;</span><span class="na">registerProvider</span><span class="p">(</span><span class="k">new</span> <span class="nx">\My\Provider\Custom</span><span class="p">(</span><span class="nv">$adapter</span><span class="p">))</span>
+    <span class="o">-&gt;</span><span class="na">using</span><span class="p">(</span><span class="s1">'custom'</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">geocode</span><span class="p">(</span><span class="s1">'68.145.37.34'</span><span class="p">)</span>
+    <span class="p">;</span>
+</pre></div>
+
+<p>The <code>using()</code> method allows you to choose the <code>adapter</code> to use. When you deal with multiple adapters, you may want to
+choose one of them. The default behavior is to use the first one but it can be annoying.</p>
+
+<h2>Reverse Geocoding</h2>
+
+<p>This library provides a <code>reverse()</code> method to retrieve information from coordinates:</p>
+
+<div class="highlight"><pre><span class="nv">$result</span> <span class="o">=</span> <span class="nv">$geocoder</span><span class="o">-&gt;</span><span class="na">reverse</span><span class="p">(</span><span class="nv">$latitude</span><span class="p">,</span> <span class="nv">$longitude</span><span class="p">);</span>
+</pre></div>
+
+<h2>Dumpers</h2>
+
+<p><strong>Geocoder</strong> provides dumpers that aim to transform a <code>ResultInterface</code> object in standard formats.</p>
+
+<h3>GPS eXchange Format (GPX)</h3>
+
+<p>The <strong>GPS eXchange</strong> format is designed to share geolocated data like point of interests, tracks, ways, but also
+coordinates. <strong>Geocoder</strong> provides a dumper to convert a <code>ResultInterface</code> object in an GPX compliant format.</p>
+
+<p>Assuming we got a <code>$result</code> object as seen previously:</p>
+
+<div class="highlight"><pre><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$dumper</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Geocoder\Dumper\GpxDumper</span><span class="p">();</span>
+<span class="nv">$strGpx</span> <span class="o">=</span> <span class="nv">$dumper</span><span class="o">-&gt;</span><span class="na">dump</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
+
+<span class="k">echo</span> <span class="nv">$strGpx</span><span class="p">;</span>
+</pre></div>
+
+<p>It will display:</p>
+
+<div class="highlight"><pre><span class="nt">&lt;gpx</span>
+    <span class="na">version=</span><span class="s">"1.0"</span>
+    <span class="na">creator=</span><span class="s">"Geocoder"</span> <span class="na">version=</span><span class="s">"1.0.1-dev"</span>
+    <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span>
+    <span class="na">xmlns=</span><span class="s">"http://www.topografix.com/GPX/1/0"</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">"http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;bounds</span> <span class="na">minlat=</span><span class="s">"2.388911"</span> <span class="na">minlon=</span><span class="s">"48.863151"</span> <span class="na">maxlat=</span><span class="s">"2.388911"</span> <span class="na">maxlon=</span><span class="s">"48.863151"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;wpt</span> <span class="na">lat=</span><span class="s">"48.8631507"</span> <span class="na">lon=</span><span class="s">"2.3889114"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;name&gt;</span><span class="cp">&lt;![CDATA[Paris]]&gt;</span><span class="nt">&lt;/name&gt;</span>
+        <span class="nt">&lt;type&gt;</span><span class="cp">&lt;![CDATA[Address]]&gt;</span><span class="nt">&lt;/type&gt;</span>
+    <span class="nt">&lt;/wpt&gt;</span>
+<span class="nt">&lt;/gpx&gt;</span>
+</pre></div>
+
+<h3>GeoJSON</h3>
+
+<p><a href="http://geojson.org/">GeoJSON</a> is a format for encoding a variety of geographic data structures.</p>
+
+<h3>Keyhole Markup Language (KML)</h3>
+
+<p><a href="http://en.wikipedia.org/wiki/Keyhole_Markup_Language">Keyhole Markup Language</a> is an XML notation
+for expressing geographic annotation and visualization within Internet-based, two-dimensional maps
+and three-dimensional Earth browsers.</p>
+
+<h3>Well-Known Binary (WKB)</h3>
+
+<p>The Well-Known Binary (WKB) representation for geometric values is defined by the OpenGIS specification.</p>
+
+<h3>Well-Known Text (WKT)</h3>
+
+<p>Well-known text (WKT) is a text markup language for representing vector geometry objects on a map,
+spatial reference systems of spatial objects and transformations between spatial reference systems.</p>
+
+<h2>Formatter</h2>
+
+<p>A common use case is to print geocoded data. Thanks to the <code>Formatter</code> class,
+it's really easy to format a <code>ResultInterface</code> object as a string:</p>
+
+<div class="highlight"><pre><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// $result is an instance of ResultInterface</span>
+<span class="nv">$formatter</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Geocoder\Formatter\Formatter</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
+
+<span class="nv">$formatter</span><span class="o">-&gt;</span><span class="na">format</span><span class="p">(</span><span class="s1">'%S %n, %z %L'</span><span class="p">);</span>
+<span class="c1">// 'Badenerstrasse 120, 8001 Zuerich'</span>
+
+<span class="nv">$formatter</span><span class="o">-&gt;</span><span class="na">format</span><span class="p">(</span><span class="s1">'&lt;p&gt;%S %n, %z %L&lt;/p&gt;'</span><span class="p">);</span>
+<span class="c1">// '&lt;p&gt;Badenerstrasse 120, 8001 Zuerich&lt;/p&gt;'</span>
+</pre></div>
+
+<p>Here is the mapping:</p>
+
+<ul>
+<li><p>Street Number: <code>%n</code></p></li>
+<li><p>Street Name: <code>%S</code></p></li>
+<li><p>City: <code>%L</code></p></li>
+<li><p>Zipcode: <code>%z</code></p></li>
+<li><p>County: <code>%P</code></p></li>
+<li><p>Region: <code>%R</code></p></li>
+<li><p>Region Code: <code>%r</code></p></li>
+<li><p>Country: <code>%C</code></p></li>
+<li><p>Country Code: <code>%c</code></p></li>
+<li><p>Timezone: <code>%T</code></p></li>
+</ul><h2>Extending Things</h2>
+
+<p>You can provide your own <code>adapter</code>, you just need to create a new class which implements <code>HttpAdapterInterface</code>.</p>
+
+<p>You can also write your own <code>provider</code> by implementing the <code>ProviderInterface</code>.</p>
+
+<p>Note, the <code>AbstractProvider</code> class can help you by providing useful features.</p>
+
+<p>You can provide your own <code>dumper</code> by implementing the <code>DumperInterface</code>.</p>
+
+<p>Write your own <code>formatter</code> by implementing the <code>FormatterInterface</code>.</p>
+
+<h2>Unit Tests</h2>
+
+<p>To run unit tests, you'll need <code>cURL</code> and a set of dependencies you can install using Composer:</p>
+
+<pre><code>php composer.phar install --dev
+</code></pre>
+
+<p>Once installed, just launch the following command:</p>
+
+<pre><code>phpunit
+</code></pre>
+
+<p>You'll obtain some <em>skipped</em> unit tests due to the need of API keys.</p>
+
+<p>Rename the <code>phpunit.xml.dist</code> file to <code>phpunit.xml</code>, then uncomment the following lines and add your own API keys:</p>
+
+<div class="highlight"><pre><span class="nt">&lt;php&gt;</span>
+    <span class="c">&lt;!-- &lt;server name="IPINFODB_API_KEY" value="YOUR_API_KEY" /&gt; --&gt;</span>
+    <span class="c">&lt;!-- &lt;server name="YAHOO_API_KEY" value="YOUR_API_KEY" /&gt; --&gt;</span>
+    <span class="c">&lt;!-- &lt;server name="BINGMAPS_API_KEY" value="YOUR_API_KEY" /&gt; --&gt;</span>
+    <span class="c">&lt;!-- &lt;server name="CLOUDMADE_API_KEY" value="YOUR_API_KEY" /&gt; --&gt;</span>
+<span class="nt">&lt;/php&gt;</span>
+</pre></div>
+
+<p>You're done.</p>
+
+<h2>Credits</h2>
+
+<ul>
+<li>William Durand <a href="mailto:william.durand1@gmail.com">william.durand1@gmail.com</a>
+</li>
+<li><a href="https://github.com/willdurand/Geocoder/contributors">All contributors</a></li>
+</ul><h2>License</h2>
+
+<p>Geocoder is released under the MIT License. See the bundled LICENSE file for details.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/willdurand">willdurand</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-27331396-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
