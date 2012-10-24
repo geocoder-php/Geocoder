@@ -135,7 +135,7 @@ class FreeGeoIpProviderTest extends TestCase
 
     public function testGetGeocodedDataWithUSIPv4()
     {
-        $provider = new FreeGeoIpProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter());
+        $provider = new FreeGeoIpProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result   = $provider->getGeocodedData('74.200.247.59');
 
         $this->assertEquals('48', $result['regionCode']);
@@ -143,7 +143,7 @@ class FreeGeoIpProviderTest extends TestCase
 
     public function testGetGeocodedDataWithUSIPv6()
     {
-        $provider = new FreeGeoIpProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter());
+        $provider = new FreeGeoIpProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result = $provider->getGeocodedData('::ffff:74.200.247.59');
 
         $this->assertEquals('48', $result['regionCode']);
@@ -151,7 +151,7 @@ class FreeGeoIpProviderTest extends TestCase
 
     public function testGetGeocodedDataWithUKIPv4()
     {
-        $provider = new FreeGeoIpProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter());
+        $provider = new FreeGeoIpProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result = $provider->getGeocodedData('132.185.255.60');
 
         $this->assertEquals('H9', $result['regionCode']);
@@ -159,7 +159,7 @@ class FreeGeoIpProviderTest extends TestCase
 
     public function testGetGeocodedDataWithUKIPv6()
     {
-        $provider = new FreeGeoIpProvider(new \Geocoder\HttpAdapter\BuzzHttpAdapter());
+        $provider = new FreeGeoIpProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result = $provider->getGeocodedData('::ffff:132.185.255.60');
 
         $this->assertEquals('H9', $result['regionCode']);
