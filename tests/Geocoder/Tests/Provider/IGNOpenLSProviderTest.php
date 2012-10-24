@@ -62,6 +62,42 @@ class IGNOpenLSProviderTest extends TestCase
         $provider->getGeocodedData('36 Quai des Orfèvres, Paris, France');
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://gpp3-wxs.ign.fr/api_key/geoportail/ols?output=json&xls=%3Cxls%3AXLS+xmlns%3Axls%3D%22http%3A%2F%2Fwww.opengis.net%2Fxls%22+version%3D%221.2%22%3E%3Cxls%3ARequestHeader%2F%3E%3Cxls%3ARequest+methodName%3D%22LocationUtilityService%22+version%3D%221.2%22+maximumResponses%3D%221%22%3E%3Cxls%3AGeocodeRequest+returnFreeForm%3D%22false%22%3E%3Cxls%3AAddress+countryCode%3D%22StreetAddress%22%3E%3Cxls%3AfreeFormAddress%3E36+Quai+des+Orf%C3%A8vres%2C+Paris%2C+France%3C%2Fxls%3AfreeFormAddress%3E%3C%2Fxls%3AAddress%3E%3C%2Fxls%3AGeocodeRequest%3E%3C%2Fxls%3ARequest%3E%3C%2Fxls%3AXLS%3E
+     */
+    public function testGetGeocodedDataWithAddressGetsEmptyContent()
+    {
+        $emptyContent = '{"http":{"status":200,"error":null}, "xml":null}';
+        $provider = new IGNOpenLSProvider($this->getMockAdapterReturns($emptyContent), 'api_key');
+        var_dump($provider->getGeocodedData('36 Quai des Orfèvres, Paris, France'));
+        $provider->getGeocodedData('36 Quai des Orfèvres, Paris, France');
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://gpp3-wxs.ign.fr/api_key/geoportail/ols?output=json&xls=%3Cxls%3AXLS+xmlns%3Axls%3D%22http%3A%2F%2Fwww.opengis.net%2Fxls%22+version%3D%221.2%22%3E%3Cxls%3ARequestHeader%2F%3E%3Cxls%3ARequest+methodName%3D%22LocationUtilityService%22+version%3D%221.2%22+maximumResponses%3D%221%22%3E%3Cxls%3AGeocodeRequest+returnFreeForm%3D%22false%22%3E%3Cxls%3AAddress+countryCode%3D%22StreetAddress%22%3E%3Cxls%3AfreeFormAddress%3E36+Quai+des+Orf%C3%A8vres%2C+Paris%2C+France%3C%2Fxls%3AfreeFormAddress%3E%3C%2Fxls%3AAddress%3E%3C%2Fxls%3AGeocodeRequest%3E%3C%2Fxls%3ARequest%3E%3C%2Fxls%3AXLS%3E
+     */
+    public function testGetGeocodedDataWithAddressGetsStatus403Content()
+    {
+        $status403Content = '{"http":{"status":403,"error":null}, "xml":"<EmptyContent></EmptyContent>"}';
+        $provider = new IGNOpenLSProvider($this->getMockAdapterReturns($status403Content), 'api_key');
+        var_dump($provider->getGeocodedData('36 Quai des Orfèvres, Paris, France'));
+        $provider->getGeocodedData('36 Quai des Orfèvres, Paris, France');
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://gpp3-wxs.ign.fr/api_key/geoportail/ols?output=json&xls=%3Cxls%3AXLS+xmlns%3Axls%3D%22http%3A%2F%2Fwww.opengis.net%2Fxls%22+version%3D%221.2%22%3E%3Cxls%3ARequestHeader%2F%3E%3Cxls%3ARequest+methodName%3D%22LocationUtilityService%22+version%3D%221.2%22+maximumResponses%3D%221%22%3E%3Cxls%3AGeocodeRequest+returnFreeForm%3D%22false%22%3E%3Cxls%3AAddress+countryCode%3D%22StreetAddress%22%3E%3Cxls%3AfreeFormAddress%3E36+Quai+des+Orf%C3%A8vres%2C+Paris%2C+France%3C%2Fxls%3AfreeFormAddress%3E%3C%2Fxls%3AAddress%3E%3C%2Fxls%3AGeocodeRequest%3E%3C%2Fxls%3ARequest%3E%3C%2Fxls%3AXLS%3E
+     */
+    public function testGetGeocodedDataWithAddressGetsErrorContent()
+    {
+        $errorContent = '{"http":{"status":200,"error":"<ErrorContent></ErrorContent>"}, "xml":"<EmptyContent></EmptyContent>"}';
+        $provider = new IGNOpenLSProvider($this->getMockAdapterReturns($errorContent), 'api_key');
+        var_dump($provider->getGeocodedData('36 Quai des Orfèvres, Paris, France'));
+        $provider->getGeocodedData('36 Quai des Orfèvres, Paris, France');
+    }
+
     public function testGetGeocodedDataWithRealAddressOne()
     {
         if (!isset($_SERVER['IGN_WEB_API_KEY'])) {
