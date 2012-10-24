@@ -131,9 +131,4 @@ class IGNOpenLSProvider extends AbstractProvider implements ProviderInterface
             'timezone'     => 'Europe/France'
         );
     }
-
-    private function getNodeValue($element)
-    {
-        return $element->length ? $element->item(0)->nodeValue : null;
-    }
 }
