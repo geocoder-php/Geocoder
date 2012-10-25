@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Geocoder - The almost missing Geocoder PHP 5.3 library</title>
+    <title>Geocoder by willdurand</title>
 
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
@@ -16,7 +16,7 @@
     <div class="wrapper">
       <header>
         <h1>Geocoder</h1>
-        <p>The almost missing Geocoder PHP 5.3 library.</p>
+        <p>The almost missing Geocoder PHP 5.3 library</p>
 
         <p class="view"><a href="https://github.com/willdurand/Geocoder">View the Project on GitHub <small>willdurand/Geocoder</small></a></p>
 
@@ -84,7 +84,9 @@ over this list to get information;</li>
 <li>
 <a href="http://geocoder.ca/">GeoCoder.ca</a> as Address-Based geocoding and reverse geocoding provider (exclusively in USA &amp; Canada);</li>
 <li>
-<a href="http://geocoder.us/">GeoCoder.us</a> as Address-Based geocoding provider (exclusively in USA).</li>
+<a href="http://geocoder.us/">GeoCoder.us</a> as Address-Based geocoding provider (exclusively in USA);</li>
+<li>
+<a href="http://www.ign.fr/">IGN OpenLS</a> as Address-Based geocoding provider (exclusively in France).</li>
 </ul><h2>Installation</h2>
 
 <p>The recommended way to install Geocoder is through composer.</p>
@@ -196,6 +198,10 @@ See the <a href="http://www.maxmind.com/app/php">MaxMind page</a> for more infor
 <h3>GeocoderUsProvider</h3>
 
 <p>The <code>GeocoderUsProvider</code> is able to geocode <strong>street addresses</strong> only, exclusively in USA.</p>
+
+<h3>IGNOpenLSProvider</h3>
+
+<p>The <code>IGNOpenLSProvider</code> is able to geocode <strong>street addresses</strong> only, exclusively in France.</p>
 
 <p>You can use one of them or write your own provider. You can also register all providers and decide later.
 That's we'll do:</p>
@@ -434,6 +440,7 @@ it's really easy to format a <code>ResultInterface</code> object as a string:</p
     <span class="c">&lt;!-- &lt;server name="YAHOO_API_KEY" value="YOUR_API_KEY" /&gt; --&gt;</span>
     <span class="c">&lt;!-- &lt;server name="BINGMAPS_API_KEY" value="YOUR_API_KEY" /&gt; --&gt;</span>
     <span class="c">&lt;!-- &lt;server name="CLOUDMADE_API_KEY" value="YOUR_API_KEY" /&gt; --&gt;</span>
+    <span class="c">&lt;!-- &lt;server name="IGN_WEB_API_KEY" value="YOUR_API_KEY" /&gt; --&gt;</span>
 <span class="nt">&lt;/php&gt;</span>
 </pre></div>
 
