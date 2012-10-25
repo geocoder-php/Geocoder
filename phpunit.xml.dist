@@ -15,6 +15,7 @@
         <!-- <server name="YAHOO_API_KEY" value="YOUR_API_KEY" /> -->
         <!-- <server name="BINGMAPS_API_KEY" value="YOUR_API_KEY" /> -->
         <!-- <server name="CLOUDMADE_API_KEY" value="YOUR_API_KEY" /> -->
+        <!-- <server name="IGN_WEB_API_KEY" value="YOUR_API_KEY" /> -->
     </php>
     <testsuites>
         <testsuite name="Geocoder Test Suite">
