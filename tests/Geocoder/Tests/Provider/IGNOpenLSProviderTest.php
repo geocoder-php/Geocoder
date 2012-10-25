@@ -70,7 +70,6 @@ class IGNOpenLSProviderTest extends TestCase
     {
         $emptyContent = '{"http":{"status":200,"error":null}, "xml":null}';
         $provider = new IGNOpenLSProvider($this->getMockAdapterReturns($emptyContent), 'api_key');
-        var_dump($provider->getGeocodedData('36 Quai des Orfèvres, Paris, France'));
         $provider->getGeocodedData('36 Quai des Orfèvres, Paris, France');
     }
 
@@ -82,7 +81,6 @@ class IGNOpenLSProviderTest extends TestCase
     {
         $status403Content = '{"http":{"status":403,"error":null}, "xml":"<EmptyContent></EmptyContent>"}';
         $provider = new IGNOpenLSProvider($this->getMockAdapterReturns($status403Content), 'api_key');
-        var_dump($provider->getGeocodedData('36 Quai des Orfèvres, Paris, France'));
         $provider->getGeocodedData('36 Quai des Orfèvres, Paris, France');
     }
 
@@ -94,7 +92,6 @@ class IGNOpenLSProviderTest extends TestCase
     {
         $errorContent = '{"http":{"status":200,"error":"<ErrorContent></ErrorContent>"}, "xml":"<EmptyContent></EmptyContent>"}';
         $provider = new IGNOpenLSProvider($this->getMockAdapterReturns($errorContent), 'api_key');
-        var_dump($provider->getGeocodedData('36 Quai des Orfèvres, Paris, France'));
         $provider->getGeocodedData('36 Quai des Orfèvres, Paris, France');
     }
 
@@ -108,7 +105,7 @@ class IGNOpenLSProviderTest extends TestCase
         $result = $provider->getGeocodedData('36 Quai des Orfèvres, 75001 Paris, France');
 
         $this->assertEquals(48.855471, $result['latitude'], '', 0.0001);
-        $this->assertEquals(2.343021, $result['longitude'], '', 0.0001);        
+        $this->assertEquals(2.343021, $result['longitude'], '', 0.0001);
         $this->assertEquals(36, $result['streetNumber']);
         $this->assertEquals('qu des orfevres', $result['streetName']);
         $this->assertEquals(75001, $result['zipcode']);
@@ -135,7 +132,7 @@ class IGNOpenLSProviderTest extends TestCase
         $result = $provider->getGeocodedData('Rue Marconi 57000 Metz');
 
         $this->assertEquals(49.100976, $result['latitude'], '', 0.0001);
-        $this->assertEquals(6.216957, $result['longitude'], '', 0.0001);        
+        $this->assertEquals(6.216957, $result['longitude'], '', 0.0001);
         $this->assertNull($result['streetNumber']);
         $this->assertEquals('r marconi', $result['streetName']);
         $this->assertEquals(57000, $result['zipcode']);

@@ -63,7 +63,7 @@ class IGNOpenLSProvider extends AbstractProvider implements ProviderInterface
         $query   = sprintf(self::ENDPOINT_URL, $this->apiKey) . urlencode(sprintf(self::ENDPOINT_QUERY, $address));
         $content = $this->getAdapter()->getContent($query);
         $data    = (array) json_decode($content, true);
-        
+
         if (empty($data)) {
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
