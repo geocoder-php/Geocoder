@@ -32,13 +32,13 @@ version="1.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="http://www.topografix.com/GPX/1/0"
     xsi:schemaLocation="http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd">
-    <wpt lat="0.0000000" lon="0.0000000">
+    <wpt lat="%01.7f" lon="%01.7f">
         <name><![CDATA[]]></name>
         <type><![CDATA[Address]]></type>
     </wpt>
 </gpx>
 GPX
-        , Geocoder::VERSION);
+        , Geocoder::VERSION, "0", "0");
 
         $result = $this->dumper->dump($obj);
 
@@ -60,13 +60,13 @@ version="1.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="http://www.topografix.com/GPX/1/0"
     xsi:schemaLocation="http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd">
-    <wpt lat="48.8631507" lon="2.3889114">
+    <wpt lat="%01.7f" lon="%01.7f">
         <name><![CDATA[]]></name>
         <type><![CDATA[Address]]></type>
     </wpt>
 </gpx>
 GPX
-        , Geocoder::VERSION);
+        , Geocoder::VERSION, $obj['latitude'], $obj['longitude']);
 
         $result = $this->dumper->dump($obj);
 
@@ -76,16 +76,16 @@ GPX
 
     public function testDumpWithBounds()
     {
-        $obj = new Geocoded();
-        $obj['latitude']  = 48.8631507;
-        $obj['longitude'] = 2.3889114;
-        $obj->fromArray(array(
-            'bounds' => array(
-                'south' => 48.8631507,
+        $bounds = array('south' => 48.8631507,
                 'west'  => 2.3889114,
                 'north' => 48.8631507,
-                'east'  => 2.388911
-            )
+                'east'  => 2.388911);
+
+        $obj = new Geocoded();
+        $obj['latitude']  = $bounds['north'];
+        $obj['longitude'] = $bounds['west'];
+        $obj->fromArray(array(
+            'bounds' => $bounds
         ));
 
         $expected = sprintf(<<<GPX
@@ -96,14 +96,14 @@ version="1.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="http://www.topografix.com/GPX/1/0"
     xsi:schemaLocation="http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd">
-    <bounds minlat="2.388911" minlon="48.863151" maxlat="2.388911" maxlon="48.863151"/>
-    <wpt lat="48.8631507" lon="2.3889114">
+    <bounds minlat="%01.6f" minlon="%01.6f" maxlat="%01.6f" maxlon="%01.6f"/>
+    <wpt lat="%01.7f" lon="%01.7f">
         <name><![CDATA[]]></name>
         <type><![CDATA[Address]]></type>
     </wpt>
 </gpx>
 GPX
-        , Geocoder::VERSION);
+        , Geocoder::VERSION, $bounds['east'],  "48.863151", $bounds['east'], "48.863151", $bounds['north'], $bounds['west']);
 
         $this->assertNotNull($obj->getBounds());
 
@@ -115,16 +115,17 @@ GPX
 
     public function testDumpWithName()
     {
+        $bounds = array(
+            'south' => 48.8631507,
+            'west'  => 2.3889114,
+            'north' => 48.8631507,
+            'east'  => 2.388911);
+
         $obj = new Geocoded();
         $obj['latitude']  = 48.8631507;
         $obj['longitude'] = 2.3889114;
         $obj->fromArray(array(
-            'bounds' => array(
-                'south' => 48.8631507,
-                'west'  => 2.3889114,
-                'north' => 48.8631507,
-                'east'  => 2.388911
-            ),
+            'bounds' => $bounds,
             'city'   => 'Paris'
         ));
 
@@ -136,14 +137,14 @@ version="1.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="http://www.topografix.com/GPX/1/0"
     xsi:schemaLocation="http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd">
-    <bounds minlat="2.388911" minlon="48.863151" maxlat="2.388911" maxlon="48.863151"/>
-    <wpt lat="48.8631507" lon="2.3889114">
+    <bounds minlat="%01.6f" minlon="%01.6f" maxlat="%01.6f" maxlon="%01.6f"/>
+    <wpt lat="%01.7f" lon="%01.7f">
         <name><![CDATA[Paris]]></name>
         <type><![CDATA[Address]]></type>
     </wpt>
 </gpx>
 GPX
-        , Geocoder::VERSION);
+        , Geocoder::VERSION, $bounds['east'],"48.863151", $bounds['east'], "48.863151", $bounds['north'], $bounds['west']);
 
         $this->assertNotNull($obj->getBounds());
 
