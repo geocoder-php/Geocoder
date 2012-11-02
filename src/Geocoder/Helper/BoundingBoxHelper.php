@@ -56,6 +56,7 @@ EOF;
      * getAngle: Get a bounding box angle
      * Determining two angles (southWest & northEast) is sufficient to create a boundinx box
      *
+     * @link http://richardpeacock.com/blog/2011/11/draw-box-around-coordinate-google-maps-based-miles-or-kilometers
      * @link http://www.sitepoint.com/forums/showthread.php?656315-adding-distance-gps-coordinates-get-bounding-box
      * @param  ResultInterface $result
      * @param  integer         $bearing
