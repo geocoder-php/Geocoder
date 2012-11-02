@@ -57,11 +57,11 @@ EOF;
      * Determining two angles (southWest & northEast) is sufficient to create a boundinx box
      *
      * @link http://www.sitepoint.com/forums/showthread.php?656315-adding-distance-gps-coordinates-get-bounding-box
-     * @param ResultInterface $result
-     * @param integer $bearing
-     * @param float $distance
-     * @param string $distance_unit
-     * @return Geoded : A bounding box Angle
+     * @param  ResultInterface $result
+     * @param  integer         $bearing
+     * @param  float           $distance
+     * @param  string          $distance_unit
+     * @return Geocoded        A bounding box Angle
      */
     public static function getAngle(Geocoded $result, $bearing, $distance, $distance_unit = "km")
     {
@@ -86,4 +86,3 @@ EOF;
     }
 
 }
-

@@ -22,4 +22,3 @@ interface HelperInterface
      */
     public function help();
 }
-
