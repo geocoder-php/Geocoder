@@ -4,7 +4,6 @@ namespace Geocoder\Tests\Provider;
 
 use Geocoder\Tests\TestCase;
 use Geocoder\Provider\DataScienceToolkitProvider;
-use Geocoder\Provider\HostIpProvider;
 
 class DataScienceToolkitProviderTest extends TestCase
 {
@@ -60,7 +59,6 @@ class DataScienceToolkitProviderTest extends TestCase
         $this->assertEquals('localhost', $result['country']);
     }
 
-
     /**
      * @expectedException \Geocoder\Exception\NoResultException
      * @expectedExceptionMessage Could not execute query
@@ -112,5 +110,4 @@ class DataScienceToolkitProviderTest extends TestCase
         $provider = new DataScienceToolkitProvider($this->getMockAdapter($this->never()));
         $provider->getReversedData(array(1, 2));
     }
-
 }

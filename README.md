@@ -28,7 +28,6 @@ Currently, there are many providers for the following APIs:
 * [FreeGeoIp](http://freegeoip.net/static/index.html) as IP-Based geocoding provider;
 * [HostIp](http://www.hostip.info/) as IP-Based geocoding provider;
 * [IpInfoDB](http://www.ipinfodb.com/) as IP-Based geocoding provider;
-* [DataScienceToolkit](http://www.datasciencetoolkit.org/) HostIp as IP-Based geocoding provider;
 * [Yahoo! PlaceFinder](http://developer.yahoo.com/geo/placefinder/) as Address-Based geocoding and reverse geocoding provider;
 * [Google Maps](http://code.google.com/apis/maps/documentation/geocoding/) as Address-Based geocoding and reverse geocoding provider;
 * [Bing Maps](http://msdn.microsoft.com/en-us/library/ff701715.aspx) as Address-Based geocoding and reverse geocoding provider;
@@ -41,7 +40,8 @@ Currently, there are many providers for the following APIs:
 * [OIORest](http://geo.oiorest.dk/) as very accurate Address-Based geocoding provider (exclusively in Denmark);
 * [GeoCoder.ca](http://geocoder.ca/) as Address-Based geocoding and reverse geocoding provider (exclusively in USA & Canada);
 * [GeoCoder.us](http://geocoder.us/) as Address-Based geocoding provider (exclusively in USA);
-* [IGN OpenLS](http://www.ign.fr/) as Address-Based geocoding provider (exclusively in France).
+* [IGN OpenLS](http://www.ign.fr/) as Address-Based geocoding provider (exclusively in France);
+* [DataScienceToolkit](http://www.datasciencetoolkit.org/) as IP-Based geocoding provider.
 
 
 Installation
@@ -183,6 +183,11 @@ The `GeocoderUsProvider` is able to geocode **street addresses** only, exclusive
 ### IGNOpenLSProvider ###
 
 The `IGNOpenLSProvider` is able to geocode **street addresses** only, exclusively in France.
+
+
+### DataScienceToolkitProvider ###
+
+The `DataScienceToolkitProvider` is able to geocode **IPv4 addresses** only.
 
 
 You can use one of them or write your own provider. You can also register all providers and decide later.

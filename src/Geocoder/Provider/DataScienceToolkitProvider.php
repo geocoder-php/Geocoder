@@ -18,8 +18,7 @@ use Geocoder\Exception\UnsupportedException;
  */
 class DataScienceToolkitProvider extends AbstractProvider implements ProviderInterface
 {
-
-	/**
+    /**
      * @var string
      */
     const ENDPOINT_URL = 'http://www.datasciencetoolkit.org/ip2coordinates/%s';
@@ -37,14 +36,13 @@ class DataScienceToolkitProvider extends AbstractProvider implements ProviderInt
             throw new UnsupportedException('The DataScienceToolkitProvider does not support IPv6 addresses.');
         }
 
-
-        if (in_array($address, array('127.0.0.1', '::1'))) {
+        if ('127.0.0.1' === $address) {
             return $this->getLocalhostDefaults();
         }
 
         $query = sprintf(self::ENDPOINT_URL, $address);
 
-      	return $this->executeQuery($query);
+        return $this->executeQuery($query);
     }
 
     /**
@@ -64,29 +62,27 @@ class DataScienceToolkitProvider extends AbstractProvider implements ProviderInt
     }
 
     /**
-    * @param  string $query
-    * @return array
-    */
-    protected function executeQuery($query) {
-    	$content = $this->getAdapter()->getContent($query);
+     * @param  string $query
+     * @return array
+     */
+    protected function executeQuery($query)
+    {
+        $content = $this->getAdapter()->getContent($query);
+        $result  = json_decode($content, true);
 
-    	$result = json_decode($content, true);
+        if (!$result) {
+            throw new NoResultException(sprintf('Could not execute query'));
+        }
 
-    	if (!$result) {
+        $result = array_shift($result);
 
-           throw new NoResultException(sprintf('Could not execute query'));
-    	}
-
-    	$result = array_shift($result);
-
-    	return array(
-    		'latitude'    => $result['latitude'],
+        return array(
+            'latitude'    => $result['latitude'],
             'longitude'   => $result['longitude'],
             'city'        => $result['locality'],
             'country'     => $result['country_name'],
             'countryCode' => $result['country_code'],
             'zipcode'	  => $result['postal_code']
-    	);
+        );
     }
-
 }
