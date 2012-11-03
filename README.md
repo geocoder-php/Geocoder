@@ -28,6 +28,7 @@ Currently, there are many providers for the following APIs:
 * [FreeGeoIp](http://freegeoip.net/static/index.html) as IP-Based geocoding provider;
 * [HostIp](http://www.hostip.info/) as IP-Based geocoding provider;
 * [IpInfoDB](http://www.ipinfodb.com/) as IP-Based geocoding provider;
+* [DataScienceToolkit](http://www.datasciencetoolkit.org/) HostIp as IP-Based geocoding provider;
 * [Yahoo! PlaceFinder](http://developer.yahoo.com/geo/placefinder/) as Address-Based geocoding and reverse geocoding provider;
 * [Google Maps](http://code.google.com/apis/maps/documentation/geocoding/) as Address-Based geocoding and reverse geocoding provider;
 * [Bing Maps](http://msdn.microsoft.com/en-us/library/ff701715.aspx) as Address-Based geocoding and reverse geocoding provider;
