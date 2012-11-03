@@ -18,10 +18,11 @@ use Geocoder\Exception\UnsupportedException;
  */
 class DataScienceToolkitProvider extends AbstractProvider implements ProviderInterface
 {
+
 	/**
      * @var string
      */
-    const API_URL = 'http://www.datasciencetoolkit.org/ip2coordinates/%s';
+    const ENDPOINT_URL = 'http://www.datasciencetoolkit.org/ip2coordinates/%s';
 
     /**
      * {@inheritDoc}
@@ -32,11 +33,16 @@ class DataScienceToolkitProvider extends AbstractProvider implements ProviderInt
             throw new UnsupportedException('The DataScienceToolkitProvider does not support Street addresses.');
         }
 
+        if (filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+            throw new UnsupportedException('The DataScienceToolkitProvider does not support IPv6 addresses.');
+        }
+
+
         if (in_array($address, array('127.0.0.1', '::1'))) {
             return $this->getLocalhostDefaults();
         }
 
-        $query = sprintf(self::API_URL, $address);
+        $query = sprintf(self::ENDPOINT_URL, $address);
 
       	return $this->executeQuery($query);
     }
@@ -67,7 +73,8 @@ class DataScienceToolkitProvider extends AbstractProvider implements ProviderInt
     	$result = json_decode($content, true);
 
     	if (!$result) {
-    		throw new NoResultException(sprintf('Could not execute query'));
+
+           throw new NoResultException(sprintf('Could not execute query'));
     	}
 
     	$result = array_shift($result);
@@ -80,7 +87,6 @@ class DataScienceToolkitProvider extends AbstractProvider implements ProviderInt
             'countryCode' => $result['country_code'],
             'zipcode'	  => $result['postal_code']
     	);
-
     }
 
 }

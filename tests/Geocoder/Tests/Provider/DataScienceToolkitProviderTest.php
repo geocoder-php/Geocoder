@@ -81,6 +81,16 @@ class DataScienceToolkitProviderTest extends TestCase
         $provider->getGeocodedData('81.220.239.218');
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedExceptionMessage The DataScienceToolkitProvider does not support IPv6 addresses.
+     */
+    public function testGetGeocodedDataWithRealIPv6()
+    {
+        $provider = new DataScienceToolkitProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $result = $provider->getGeocodedData('::ffff:88.188.221.14');
+    }
+
     public function testGetGeocodedDataWithRealIPv4()
     {
         $provider = new DataScienceToolkitProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
