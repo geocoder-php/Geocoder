@@ -29,7 +29,7 @@ class DataScienceToolkitProvider extends AbstractProvider implements ProviderInt
     public function getGeocodedData($address)
     {
         if (!filter_var($address, FILTER_VALIDATE_IP)) {
-            throw new UnsupportedException('The FreeGeoIpProvider does not support Street addresses.');
+            throw new UnsupportedException('The DataScienceToolkitProvider does not support Street addresses.');
         }
 
         if (in_array($address, array('127.0.0.1', '::1'))) {
@@ -67,7 +67,7 @@ class DataScienceToolkitProvider extends AbstractProvider implements ProviderInt
     	$result = json_decode($content, true);
 
     	if (!$result) {
-    		throw new NoResultException(sprintf('Could not execute query %s', $query));
+    		throw new NoResultException(sprintf('Could not execute query'));
     	}
 
     	$result = array_shift($result);
