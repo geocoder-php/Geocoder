@@ -61,7 +61,7 @@ class DataScienceToolkitProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResultException
-     * @expectedExceptionMessage Could not execute query
+     * @expectedExceptionMessage Could not execute query http://www.datasciencetoolkit.org/ip2coordinates/81.220.239.218
      */
     public function testGetGeocodedDataWithRealIPv4GetsNullContent()
     {
@@ -71,7 +71,7 @@ class DataScienceToolkitProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResultException
-     * @expectedExceptionMessage Could not execute query
+     * @expectedExceptionMessage Could not execute query http://www.datasciencetoolkit.org/ip2coordinates/81.220.239.218
      */
     public function testGetGeocodedDataWithRealIPv4GetsEmptyContent()
     {
