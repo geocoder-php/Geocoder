@@ -71,7 +71,7 @@ class DataScienceToolkitProvider extends AbstractProvider implements ProviderInt
         $result  = json_decode($content, true);
 
         if (!$result) {
-            throw new NoResultException(sprintf('Could not execute query'));
+            throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
         $result = array_shift($result);
