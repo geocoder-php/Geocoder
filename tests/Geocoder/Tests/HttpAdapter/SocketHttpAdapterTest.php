@@ -3,16 +3,16 @@
 namespace Geocoder\Tests\HttpAdapter;
 
 use Geocoder\Tests\TestCase;
-use Geocoder\HttpAdapter\SocketAdapter;
+use Geocoder\HttpAdapter\SocketHttpAdapter;
 
 /**
  * @author Markus Bachmann <markus.bachmann@bachi.biz>
  */
-class SocketAdapterTest extends TestCase
+class SocketHttpAdapterTest extends TestCase
 {
     protected function setUp()
     {
-        $this->adapter = new SocketAdapter();
+        $this->adapter = new SocketHttpAdapter();
     }
 
     public function testGetContent()
@@ -35,7 +35,7 @@ class SocketAdapterTest extends TestCase
     public function testBuildRequest()
     {
         $method = new \ReflectionMethod(
-           $this->adapter, 'buildHttpRequest'
+            $this->adapter, 'buildHttpRequest'
         );
 
         $method->setAccessible(TRUE);
@@ -51,14 +51,14 @@ class SocketAdapterTest extends TestCase
         $ex_body[] = "\r\n";
 
         $this->assertEquals(
-          implode("\r\n", $ex_body), $method->invoke($this->adapter, $ex_path, $ex_host)
+            implode("\r\n", $ex_body), $method->invoke($this->adapter, $ex_path, $ex_host)
         );
     }
 
     public function testParseHtmlResponse()
     {
         $method = new \ReflectionMethod(
-           $this->adapter, 'getParsedHttpResponse'
+            $this->adapter, 'getParsedHttpResponse'
         );
         $method->setAccessible(TRUE);
 
@@ -75,14 +75,14 @@ class SocketAdapterTest extends TestCase
 
             <!doctype html>
             <html itemscope="itemscope" itemtype="http://schema.org/WebPage">
-                <head>
-                    <title>Foo</title>
-                </head>
-                <body>
-                    <p>Bar</p>
-                </body>
+            <head>
+            <title>Foo</title>
+            </head>
+            <body>
+            <p>Bar</p>
+            </body>
             </html>
-        ');
+            ');
 
         //get a parsed response
         rewind($tempFileHandle);
@@ -106,7 +106,7 @@ class SocketAdapterTest extends TestCase
     public function testParseJson()
     {
         $method = new \ReflectionMethod(
-           $this->adapter, 'getParsedHttpResponse'
+            $this->adapter, 'getParsedHttpResponse'
         );
         $method->setAccessible(TRUE);
 
@@ -116,8 +116,8 @@ class SocketAdapterTest extends TestCase
             Foo: bar
             Baz: cat
 
-            {"foo":"bar","baz":"cat"}
-        ');
+    {"foo":"bar","baz":"cat"}
+    ');
 
         //get a parsed response
         rewind($tempFileHandle);

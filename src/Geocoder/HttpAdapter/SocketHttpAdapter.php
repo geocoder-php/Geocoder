@@ -13,7 +13,7 @@ namespace Geocoder\HttpAdapter;
 /**
  * @author Markus Bachmann <markus.bachmann@bachi.biz>
  */
-class SocketAdapter implements HttpAdapterInterface
+class SocketHttpAdapter implements HttpAdapterInterface
 {
     const MAX_REDIRECTS = 5;
 
