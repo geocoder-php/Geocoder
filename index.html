@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Geocoder - The almost missing Geocoder PHP 5.3 library</title>
+    <title>Geocoder by willdurand</title>
 
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
@@ -43,13 +43,15 @@ The library is splitted in two parts: <code>HttpAdapter</code> and <code>Provide
 
 <ul>
 <li>
-<code>BuzzHttpAdapter</code> for <a href="https://github.com/kriswallsmith/Buzz">Buzz</a>, a lightweight PHP 5.3 library for issuing HTTP requests;</li>
+<code>BuzzHttpAdapter</code> to use <a href="https://github.com/kriswallsmith/Buzz">Buzz</a>, a lightweight PHP 5.3 library for issuing HTTP requests;</li>
 <li>
-<code>CurlHttpAdapter</code> for <a href="http://php.net/manual/book.curl.php">cURL</a>;</li>
+<code>CurlHttpAdapter</code> to use <a href="http://php.net/manual/book.curl.php">cURL</a>;</li>
 <li>
-<code>GuzzleHttpAdapter</code> for <a href="https://github.com/guzzle/guzzle">Guzzle</a>, PHP 5.3+ HTTP client and framework for building RESTful web service clients;</li>
+<code>GuzzleHttpAdapter</code> to use <a href="https://github.com/guzzle/guzzle">Guzzle</a>, PHP 5.3+ HTTP client and framework for building RESTful web service clients;</li>
 <li>
-<code>ZendHttpAdapter</code> for <a href="http://framework.zend.com/manual/2.0/en/modules/zend.http.client.html">Zend Http Client</a>.</li>
+<code>SocketHttpAdapter</code> to use a <a href="http://www.php.net/manual/function.fsockopen.php">socket</a>;</li>
+<li>
+<code>ZendHttpAdapter</code> to use <a href="http://framework.zend.com/manual/2.0/en/modules/zend.http.client.html">Zend Http Client</a>.</li>
 </ul><h3>Providers</h3>
 
 <p><em>Providers</em> contain the logic to extract useful information.</p>
@@ -86,7 +88,9 @@ over this list to get information;</li>
 <li>
 <a href="http://geocoder.us/">GeoCoder.us</a> as Address-Based geocoding provider (exclusively in USA);</li>
 <li>
-<a href="http://www.ign.fr/">IGN OpenLS</a> as Address-Based geocoding provider (exclusively in France).</li>
+<a href="http://www.ign.fr/">IGN OpenLS</a> as Address-Based geocoding provider (exclusively in France);</li>
+<li>
+<a href="http://www.datasciencetoolkit.org/">DataScienceToolkit</a> as IP-Based geocoding provider.</li>
 </ul><h2>Installation</h2>
 
 <p>The recommended way to install Geocoder is through composer.</p>
@@ -202,6 +206,10 @@ See the <a href="http://www.maxmind.com/app/php">MaxMind page</a> for more infor
 <h3>IGNOpenLSProvider</h3>
 
 <p>The <code>IGNOpenLSProvider</code> is able to geocode <strong>street addresses</strong> only, exclusively in France.</p>
+
+<h3>DataScienceToolkitProvider</h3>
+
+<p>The <code>DataScienceToolkitProvider</code> is able to geocode <strong>IPv4 addresses</strong> only.</p>
 
 <p>You can use one of them or write your own provider. You can also register all providers and decide later.
 That's we'll do:</p>
