@@ -42,7 +42,8 @@ Currently, there are many providers for the following APIs:
 * [GeoCoder.ca](http://geocoder.ca/) as Address-Based geocoding and reverse geocoding provider (exclusively in USA & Canada);
 * [GeoCoder.us](http://geocoder.us/) as Address-Based geocoding provider (exclusively in USA);
 * [IGN OpenLS](http://www.ign.fr/) as Address-Based geocoding provider (exclusively in France);
-* [DataScienceToolkit](http://www.datasciencetoolkit.org/) as IP-Based geocoding provider.
+* [DataScienceToolkit](http://www.datasciencetoolkit.org/) as IP-Based geocoding provider;
+* [Yandex](http://api.yandex.com.tr/maps/doc/geocoder/desc/concepts/About.xml) as Address-Based geocoding and reverse geocoding provider.
 
 
 Installation
@@ -189,6 +190,12 @@ The `IGNOpenLSProvider` is able to geocode **street addresses** only, exclusivel
 ### DataScienceToolkitProvider ###
 
 The `DataScienceToolkitProvider` is able to geocode **IPv4 addresses** only.
+
+
+### YandexProvider ###
+
+The `YandexProvider` is able to geocode and reverse geocode **street addresses**. The default langage-locale is `ru-RU`, you can choose between `uk-UA`, `be-BY`, `en-US`, `en-BR` and `tr-TR`.
+This provider can also reverse information based on coordinates (latitude, longitude). It's possible to precise the toponym to get more accurate result: `house`, `street`, `metro`, `district` and `locality`.
 
 
 You can use one of them or write your own provider. You can also register all providers and decide later.
