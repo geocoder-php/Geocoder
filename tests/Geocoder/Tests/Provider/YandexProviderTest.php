@@ -166,11 +166,11 @@ class YandexProviderTest extends TestCase
         $provider = new YandexProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), 'be-BY');
         $result   = $provider->getGeocodedData('ул.Ленина, 19, Минск 220030, Республика Беларусь');
 
-        $this->assertEquals(53.897695, $result['latitude'], '', 0.0001);
+        $this->assertEquals(53.898077, $result['latitude'], '', 0.0001);
         $this->assertEquals(27.563673, $result['longitude'], '', 0.0001);
-        $this->assertEquals(53.896485, $result['bounds']['south'], '', 0.0001);
+        $this->assertEquals(53.896867, $result['bounds']['south'], '', 0.0001);
         $this->assertEquals(27.561624, $result['bounds']['west'], '', 0.0001);
-        $this->assertEquals(53.898904, $result['bounds']['north'], '', 0.0001);
+        $this->assertEquals(53.899286, $result['bounds']['north'], '', 0.0001);
         $this->assertEquals(27.565721, $result['bounds']['east'], '', 0.0001);
         $this->assertEquals(19, $result['streetNumber']);
         $this->assertNull($result['cityDistrict']);
