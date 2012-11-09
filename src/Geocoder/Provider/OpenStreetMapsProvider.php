@@ -120,6 +120,10 @@ class OpenStreetMapsProvider extends AbstractProvider implements ProviderInterfa
         $result           = $searchResult->getElementsByTagName('result')->item(0);
         $ret              = $this->getDefaults();
 
+        if (!$result) {
+            throw new NoResultException(sprintf('Could not resolve coordinates %s', implode(', ', $coordinates)));
+        }
+
         $ret['latitude']     = $result->getAttribute('lat');
         $ret['longitude']    = $result->getAttribute('lon');
         $ret['zipcode']      = $this->getNodeValue($addressParts->getElementsByTagName('postcode'));
