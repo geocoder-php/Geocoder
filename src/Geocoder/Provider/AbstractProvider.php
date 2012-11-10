@@ -28,8 +28,8 @@ abstract class AbstractProvider
     private $locale = null;
 
     /**
-     * @param \Geocoder\HttpAdapter\HttpAdapterInterface $adapter An HTTP adapter.
-     * @param string                                     $locale  A locale (optional).
+     * @param HttpAdapterInterface $adapter An HTTP adapter.
+     * @param string               $locale  A locale (optional).
      */
     public function __construct(HttpAdapterInterface $adapter, $locale = null)
     {
