@@ -110,7 +110,7 @@ class OpenStreetMapsProvider extends AbstractProvider implements ProviderInterfa
         }
 
         $doc = new \DOMDocument();
-        if (!@$doc->loadXML($content)) {
+        if (!@$doc->loadXML($content) || $doc->getElementsByTagName('error')->length > 0) {
             throw new NoResultException(sprintf('Could not resolve coordinates %s', implode(', ', $coordinates)));
         }
 
@@ -119,10 +119,6 @@ class OpenStreetMapsProvider extends AbstractProvider implements ProviderInterfa
         $addressParts     = $searchResult->getElementsByTagName('addressparts')->item(0);
         $result           = $searchResult->getElementsByTagName('result')->item(0);
         $ret              = $this->getDefaults();
-
-        if (!$result) {
-            throw new NoResultException(sprintf('Could not resolve coordinates %s', implode(', ', $coordinates)));
-        }
 
         $ret['latitude']     = $result->getAttribute('lat');
         $ret['longitude']    = $result->getAttribute('lon');

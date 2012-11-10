@@ -200,4 +200,20 @@ XML;
         $provider = new OpenStreetMapsProvider($this->getMockAdapterReturns(''));
         $provider->getReversedData(array('60.4539471728726', '22.2567841926781'));
     }
+
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not resolve coordinates -80.000000, -170.000000
+     */
+    public function testGetReversedDataWithCoordinatesGetsError()
+    {
+        $errorXml = <<<XML
+<?xml version="1.0" encoding="UTF-8" ?>
+<reversegeocode querystring='format=xml&amp;lat=-80.000000&amp;lon=-170.000000&amp;addressdetails=1'>
+    <error>Unable to geocode</error>
+</reversegeocode>
+XML;
+        $provider = new OpenStreetMapsProvider($this->getMockAdapterReturns($errorXml));
+        $provider->getReversedData(array('-80.000000', '-170.000000'));
+    }
 }
