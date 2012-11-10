@@ -110,7 +110,7 @@ class OpenStreetMapsProvider extends AbstractProvider implements ProviderInterfa
         }
 
         $doc = new \DOMDocument();
-        if (!@$doc->loadXML($content)) {
+        if (!@$doc->loadXML($content) || $doc->getElementsByTagName('error')->length > 0) {
             throw new NoResultException(sprintf('Could not resolve coordinates %s', implode(', ', $coordinates)));
         }
 
