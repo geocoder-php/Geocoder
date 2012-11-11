@@ -465,8 +465,6 @@ Rename the `phpunit.xml.dist` file to `phpunit.xml`, then uncomment the followin
     <!-- <server name="BINGMAPS_API_KEY" value="YOUR_API_KEY" /> -->
     <!-- <server name="CLOUDMADE_API_KEY" value="YOUR_API_KEY" /> -->
     <!-- <server name="IGN_WEB_API_KEY" value="YOUR_API_KEY" /> -->
-    <!-- <server name="MAXMIND_API_KEY" value="YOUR_API_KEY" /> -->
-    <!-- <server name="GEOIPS_API_KEY" value="YOUR_API_KEY" /> -->
 </php>
 ```
 
