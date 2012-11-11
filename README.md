@@ -43,7 +43,10 @@ Currently, there are many providers for the following APIs:
 * [GeoCoder.us](http://geocoder.us/) as Address-Based geocoding provider (exclusively in USA);
 * [IGN OpenLS](http://www.ign.fr/) as Address-Based geocoding provider (exclusively in France);
 * [DataScienceToolkit](http://www.datasciencetoolkit.org/) as IP-Based geocoding provider;
-* [Yandex](http://api.yandex.com.tr/maps/doc/geocoder/desc/concepts/About.xml) as Address-Based geocoding and reverse geocoding provider.
+* [Yandex](http://api.yandex.com.tr/maps/doc/geocoder/desc/concepts/About.xml) as Address-Based geocoding and reverse geocoding provider;
+* [MaxMind web services](http://dev.maxmind.com/geoip/web-services) as IP-Based geocoding providers;
+* [GeoIPs](http://www.geoips.com/developer/geoips-api) as IP-Based geocoding providers;
+* [geoPlugin](http://www.geoplugin.com/webservices) as IP-Based geocoding providers.
 
 
 Installation
@@ -123,12 +126,14 @@ The `HostIpProvider` is able to geocode **IPv4 addresses** only.
 ### IpInfoDbProvider ###
 
 The `IpInfoDbProvider` is able to geocode **IPv4 addresses** only.
+A valid api key is required.
 
 
 ### YahooProvider ###
 
 The `YahooProvider` is able to geocode both **IPv4 addresses** and **street addresses**.
 This provider can also reverse information based on coordinates (latitude, longitude).
+A valid api key is required.
 
 
 ### GoogleMapsProvider ###
@@ -139,6 +144,7 @@ The `GoogleMapsProvider` is able to geocode and reverse geocode **street address
 ### BingMapsProvider ###
 
 The `BingMapsProvider` is able to geocode and reverse geocode **street addresses**.
+A valid api key is required.
 
 
 ### OpenStreetMapsProvider ###
@@ -149,6 +155,7 @@ The `OpenStreetMapsProvider` is able to geocode and reverse geocode **street add
 ### CloudMadeProvider ###
 
 The `CloudMadeProvider` is able to geocode and reverse geocode **street addresses**.
+A valid api key is required.
 
 
 ### GeoipProvider ###
@@ -185,6 +192,7 @@ The `GeocoderUsProvider` is able to geocode **street addresses** only, exclusive
 ### IGNOpenLSProvider ###
 
 The `IGNOpenLSProvider` is able to geocode **street addresses** only, exclusively in France.
+A valid api key is required.
 
 
 ### DataScienceToolkitProvider ###
@@ -196,6 +204,41 @@ The `DataScienceToolkitProvider` is able to geocode **IPv4 addresses** only.
 
 The `YandexProvider` is able to geocode and reverse geocode **street addresses**. The default langage-locale is `ru-RU`, you can choose between `uk-UA`, `be-BY`, `en-US`, `en-BR` and `tr-TR`.
 This provider can also reverse information based on coordinates (latitude, longitude). It's possible to precise the toponym to get more accurate result: `house`, `street`, `metro`, `district` and `locality`.
+
+
+### MaxMindCountryProvider ###
+
+The `MaxMindCountryProvider` is able to geocode **IPv4 and IPv6 addresses** only. This MaxMind provider retrieves only country code and country name.
+A valid api key is required.
+
+
+### MaxMindCityProvider ###
+
+The `MaxMindCityProvider` is able to geocode **IPv4 addresses** only. This MaxMind provider retrieves city and coordinates too (using another webservice).
+A valid api key is required.
+
+
+### MaxMindCityIspOrgProvider ###
+
+The `MaxMindCityIspOrgProvider` is able to geocode **IPv4 addresses** only. This MaxMind provider retrieves zipcode too (using another webservice).
+A valid api key is required.
+
+
+### MaxMindOmniProvider ###
+
+The `MaxMindOmniProvider` is able to geocode **IPv4 addresses** only. This MaxMind provider retrieves timezone too (using another webservice).
+A valid api key is required.
+
+
+### GeoIPsProvider ###
+
+The `GeoIPsProvider` is able to geocode **IPv4 addresses** only.
+A valid api key is required.
+
+
+### GeoPluginProvider ###
+
+The `GeoPluginProvider` is able to geocode **IPv4 addresses and IPv6 addresses** only.
 
 
 You can use one of them or write your own provider. You can also register all providers and decide later.
@@ -454,6 +497,8 @@ Rename the `phpunit.xml.dist` file to `phpunit.xml`, then uncomment the followin
     <!-- <server name="BINGMAPS_API_KEY" value="YOUR_API_KEY" /> -->
     <!-- <server name="CLOUDMADE_API_KEY" value="YOUR_API_KEY" /> -->
     <!-- <server name="IGN_WEB_API_KEY" value="YOUR_API_KEY" /> -->
+    <!-- <server name="MAXMIND_API_KEY" value="YOUR_API_KEY" /> -->
+    <!-- <server name="GEOIPS_API_KEY" value="YOUR_API_KEY" /> -->
 </php>
 ```
 
