@@ -72,9 +72,9 @@ class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
 
     /**
      * @param  string $query
-     * @return array
+     * @return string Query with extra params
      */
-    protected function executeQuery($query)
+    protected function buildQuery($query)
     {
         if (null !== $this->getLocale()) {
             $query = sprintf('%s&language=%s', $query, $this->getLocale());
@@ -83,6 +83,17 @@ class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
         if (null !== $this->getRegion()) {
             $query = sprintf('%s&region=%s', $query, $this->getRegion());
         }
+
+        return $query;
+    }
+
+    /**
+     * @param  string $query
+     * @return array
+     */
+    protected function executeQuery($query)
+    {
+        $query = $this->buildQuery($query);
 
         $content = $this->getAdapter()->getContent($query);
 

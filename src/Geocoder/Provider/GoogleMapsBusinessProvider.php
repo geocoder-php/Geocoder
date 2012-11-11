@@ -69,18 +69,18 @@ class GoogleMapsBusinessProvider extends GoogleMapsProvider
     }
 
     /**
-     * @param  string $query
-     * @return array
+     * {@inheritDoc}
      */
-    protected function executeQuery($query)
+    protected function buildQuery($query)
     {
+        $query = parent::buildQuery($query);
         $query = sprintf('%s&client=%s', $query, $this->clientId);
 
         if (null !== $this->privateKey) {
             $query = $this->signQuery($query);
         }
 
-        return parent::executeQuery($query);
+        return $query;
     }
 
     /**
