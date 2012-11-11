@@ -96,7 +96,15 @@ class MaxMindCityIspOrgProvider extends AbstractProvider implements ProviderInte
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
+        if ('' === $content) {
+            throw new NoResultException(sprintf('Could not execute query %s', $query));
+        }
+
         $data = explode(',', $content);
+
+        if (24 !== count($data)) {
+            throw new NoResultException(sprintf('Could not execute query %s', $query));
+        }
 
         if (in_array($data[23], array('INVALID_LICENSE_KEY', 'LICENSE_REQUIRED'))) {
             throw new InvalidCredentialsException('API Key provided is not valid.');

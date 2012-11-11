@@ -114,7 +114,7 @@ class MaxMindCityIspOrgProviderTest extends TestCase
 
     public function testGetGeocodedDataWithRealIPv4GetsFakeContent()
     {
-        $provider = new MaxMindCityIspOrgProvider($this->getMockAdapterReturns('US,TX,Plano,75093,33.034698486328,-96.813400268555,,,,'), 'api_key');
+        $provider = new MaxMindCityIspOrgProvider($this->getMockAdapterReturns('US,TX,Plano,75093,33.034698486328,-96.813400268555,,,,,'), 'api_key');
         $result = $provider->getGeocodedData('74.200.247.59');
 
         $this->assertEquals('United States', $result['country']);
