@@ -86,7 +86,7 @@ abstract class AbstractMaxMindProvider extends AbstractProvider implements Provi
 
         $data = explode(',', $content);
 
-        if (self::MAXMIND_EXPECTED_CHUNKS !== count($data)) {
+        if (static::MAXMIND_EXPECTED_CHUNKS !== count($data)) {
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
