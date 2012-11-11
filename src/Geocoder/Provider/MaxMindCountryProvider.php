@@ -92,7 +92,15 @@ class MaxMindCountryProvider extends AbstractProvider implements ProviderInterfa
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
+        if (null === $content) {
+            throw new NoResultException(sprintf('Could not execute query %s', $query));
+        }
+
         $data = explode(',', $content);
+
+        if (2 !== count($data)) {
+            throw new NoResultException(sprintf('Could not execute query %s', $query));
+        }
 
         if (in_array($data[1], array('INVALID_LICENSE_KEY', 'LICENSE_REQUIRED'))) {
             throw new InvalidCredentialsException('API Key provided is not valid.');

@@ -23,18 +23,8 @@ class MaxMindCountryProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
-     * @expectedExceptionMessage Could not execute query http://geoip.maxmind.com/a?l=api_key&i=foobar
-     */
-    public function testGetGeocodedDataWithInvalidData()
-    {
-        $provider = new MaxMindCountryProvider($this->getMockAdapter(), 'api_key');
-        $provider->getGeocodedData('foobar');
-    }
-
-    /**
-     * @expectedException \Geocoder\Exception\NoResultException
-     * @expectedExceptionMessage Could not execute query http://geoip.maxmind.com/a?l=api_key&i=
+     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedExceptionMessage The FreeGeoIpProvider does not support Street addresses.
      */
     public function testGetGeocodedDataWithNull()
     {
@@ -43,8 +33,8 @@ class MaxMindCountryProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
-     * @expectedExceptionMessage Could not execute query http://geoip.maxmind.com/a?l=api_key&i=
+     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedExceptionMessage The FreeGeoIpProvider does not support Street addresses.
      */
     public function testGetGeocodedDataWithEmpty()
     {
@@ -54,7 +44,7 @@ class MaxMindCountryProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedException
-     * @expectedExceptionMessage The MaxMindCountryProvider is not able to do reverse geocoding.
+     * @expectedExceptionMessage The FreeGeoIpProvider does not support Street addresses.
      */
     public function testGetGeocodedDataWithAddress()
     {
@@ -114,13 +104,22 @@ class MaxMindCountryProviderTest extends TestCase
         $provider->getGeocodedData('74.200.247.59');
     }
 
+    public function testGetGeocodedDataGetsCountryNameFromCountryCode()
+    {
+        $provider = new MaxMindCountryProvider($this->getMockAdapterReturns('IT,'), 'api_key');
+        $result = $provider->getGeocodedData('74.200.247.59');
+
+        $this->assertEquals('Italy', $result['country']);
+        $this->assertEquals('IT', $result['countryCode']);
+    }
+
     public function testGetGeocodedDataWithRealIPv4()
     {
-        if (!isset($_SERVER['MAXMIND_COUNTRY_API_KEY'])) {
-            $this->markTestSkipped('You need to configure the MAXMIND_COUNTRY_API_KEY value in phpunit.xml');
+        if (!isset($_SERVER['MAXMIND_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the MAXMIND_API_KEY value in phpunit.xml');
         }
 
-        $provider = new MaxMindCountryProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['MAXMIND_COUNTRY_API_KEY']);
+        $provider = new MaxMindCountryProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['MAXMIND_API_KEY']);
         $result = $provider->getGeocodedData('74.200.247.59');
 
         $this->assertEquals('United States', $result['country']);
@@ -129,11 +128,11 @@ class MaxMindCountryProviderTest extends TestCase
 
     public function testGetGeocodedDataWithRealIPv6()
     {
-        if (!isset($_SERVER['MAXMIND_COUNTRY_API_KEY'])) {
-            $this->markTestSkipped('You need to configure the MAXMIND_COUNTRY_API_KEY value in phpunit.xml');
+        if (!isset($_SERVER['MAXMIND_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the MAXMIND_API_KEY value in phpunit.xml');
         }
 
-        $provider = new MaxMindCountryProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['MAXMIND_COUNTRY_API_KEY']);
+        $provider = new MaxMindCountryProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['MAXMIND_API_KEY']);
         $result = $provider->getGeocodedData('::ffff:74.200.247.59');
 
         $this->assertEquals('United States', $result['country']);
@@ -142,7 +141,7 @@ class MaxMindCountryProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResultException
-     * @expectedExceptionMessage Could not execute query Could not execute query http://geoip.maxmind.com/a?l=api_key&i=::ffff:74.200.247.59
+     * @expectedExceptionMessage Could not execute query http://geoip.maxmind.com/a?l=api_key&i=::ffff:74.200.247.59
      */
     public function testGetGeocodedDataWithRealIPv6GetsNullContent()
     {
