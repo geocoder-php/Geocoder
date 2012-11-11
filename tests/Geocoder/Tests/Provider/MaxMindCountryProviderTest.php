@@ -28,7 +28,7 @@ class MaxMindCountryProviderTest extends TestCase
      */
     public function testGetGeocodedDataWithNull()
     {
-        $provider = new MaxMindCountryProvider($this->getMockAdapter(), 'api_key');
+        $provider = new MaxMindCountryProvider($this->getMockAdapter($this->never()), 'api_key');
         $provider->getGeocodedData(null);
     }
 
@@ -38,7 +38,7 @@ class MaxMindCountryProviderTest extends TestCase
      */
     public function testGetGeocodedDataWithEmpty()
     {
-        $provider = new MaxMindCountryProvider($this->getMockAdapter(), 'api_key');
+        $provider = new MaxMindCountryProvider($this->getMockAdapter($this->never()), 'api_key');
         $provider->getGeocodedData('');
     }
 
