@@ -46,12 +46,12 @@ abstract class AbstractMaxMindProvider extends AbstractProvider implements Provi
         }
 
         if (!filter_var($address, FILTER_VALIDATE_IP)) {
-            throw new UnsupportedException(sprintf('The %s does not support street addresses.', get_called_class()));
+            throw new UnsupportedException(sprintf('The %s does not support street addresses.', $this->getProviderName()));
         }
 
         // This API does not support IPv6
         if (!static::MAXMIND_SUPPORTS_IPV6 && filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
-            throw new UnsupportedException(sprintf('The %s does not support IPv6 addresses.', get_called_class()));
+            throw new UnsupportedException(sprintf('The %s does not support IPv6 addresses.', $this->getProviderName()));
         }
 
         if (in_array($address, array('127.0.0.1', '::1'))) {
@@ -68,7 +68,7 @@ abstract class AbstractMaxMindProvider extends AbstractProvider implements Provi
      */
     public function getReversedData(array $coordinates)
     {
-        throw new UnsupportedException(sprintf('The %s is not able to do reverse geocoding.', get_called_class()));
+        throw new UnsupportedException(sprintf('The %s is not able to do reverse geocoding.', $this->getProviderName()));
     }
 
     /**
@@ -97,6 +97,15 @@ abstract class AbstractMaxMindProvider extends AbstractProvider implements Provi
         }
 
         return array_merge($this->getDefaults(), $this->mapChunksToArray($data));
+    }
+
+    /**
+     * @return string
+     */
+    protected function getProviderName()
+    {
+        $className = get_called_class();
+        return substr($className, strrpos($className, '\\') + 1);
     }
 
     /**
