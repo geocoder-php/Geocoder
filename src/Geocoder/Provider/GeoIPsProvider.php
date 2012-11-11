@@ -101,16 +101,18 @@ class GeoIPsProvider extends AbstractProvider implements ProviderInterface
         }
 
         $json = json_decode($content, true);
-        if (!is_array($json) or !count($json)) {
+        $response = $json['response'];
+
+        if (!is_array($response) or !count($response)) {
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
-        if (!array_key_exists('status', $json)) {
+        if (!array_key_exists('status', $response)) {
             throw new NoResultException(sprintf('Could not execute query %s', $query));
-        } elseif('Bad Request' == $json['status']) {
+        } elseif('Bad Request' == $response['status']) {
             throw new NoResultException(sprintf('Could not execute query %s', $query));
-        } elseif('Forbidden' == $json['status']) {
-            if ('Limit Exceeded' == $json['message']) {
+        } elseif('Forbidden' == $response['status']) {
+            if ('Limit Exceeded' == $response['message']) {
                 throw new NoResultException(sprintf('Could not execute query %s', $query));
             }
 
@@ -118,15 +120,15 @@ class GeoIPsProvider extends AbstractProvider implements ProviderInterface
         }
 
         return array_merge($this->getDefaults(), array(
-            'country'     => '' === $json['country_name'] ? null : $json['country_name'],
-            'countryCode' => '' === $json['country_code'] ? null : $json['country_code'],
-            'region'      => '' === $json['region_name']  ? null : $json['region_name'],
-            'regionCode'  => '' === $json['region_code']  ? null : $json['region_code'],
-            'county'      => '' === $json['county_name']  ? null : $json['county_name'],
-            'city'        => '' === $json['city_name']    ? null : $json['city_name'],
-            'latitude'    => '' === $json['latitude']     ? null : $json['latitude'],
-            'longitude'   => '' === $json['longitude']    ? null : $json['longitude'],
-            'timezone'    => '' === $json['timezone']     ? null : $json['timezone'],
+            'country'     => '' === $response['country_name'] ? null : $response['country_name'],
+            'countryCode' => '' === $response['country_code'] ? null : $response['country_code'],
+            'region'      => '' === $response['region_name']  ? null : $response['region_name'],
+            'regionCode'  => '' === $response['region_code']  ? null : $response['region_code'],
+            'county'      => '' === $response['county_name']  ? null : $response['county_name'],
+            'city'        => '' === $response['city_name']    ? null : $response['city_name'],
+            'latitude'    => '' === $response['latitude']     ? null : $response['latitude'],
+            'longitude'   => '' === $response['longitude']    ? null : $response['longitude'],
+            'timezone'    => '' === $response['timezone']     ? null : $response['timezone'],
         ));
     }
 }

@@ -100,7 +100,7 @@ class GeoIPsProviderTest extends TestCase
 
     public function testGetGeocodedDataWithRealIPv4GetsFakeContentFormattedEmpty()
     {
-        $json = '{
+        $json = '{"response":{
                     "status" : "Success",
                     "ip" : "66.147.244.214",
                     "hostname" : "box714.bluehost.com",
@@ -116,7 +116,7 @@ class GeoIPsProviderTest extends TestCase
                     "latitude" : "",
                     "longitude" : "",
                     "timezone" : "",
-                 }';
+                 }}';
 
         $provider = new GeoIPsProvider($this->getMockAdapterReturns($json), 'api_key');
         $result = $provider->getGeocodedData('66.147.244.214');
@@ -133,7 +133,7 @@ class GeoIPsProviderTest extends TestCase
 
     public function testGetGeocodedDataWithRealIPv4GetsFakeContent()
     {
-        $json = '{
+        $json = '{"response":{
                     "status" : "Success",
                     "ip" : "66.147.244.214",
                     "hostname" : "box714.bluehost.com",
@@ -149,7 +149,7 @@ class GeoIPsProviderTest extends TestCase
                     "latitude" : "40.3402",
                     "longitude" : "-111.6073",
                     "timezone" : "MST",
-                 }';
+                 }}';
 
         $provider = new GeoIPsProvider($this->getMockAdapterReturns($json), 'api_key');
         $result = $provider->getGeocodedData('66.147.244.214');
@@ -173,7 +173,7 @@ class GeoIPsProviderTest extends TestCase
      */
     public function testGetGeocodedDataWithRealIPv4AndInvalidApiKeyGetsFakeContent()
     {
-        $provider = new GeoIPsProvider($this->getMockAdapterReturns('{"status":"Forbidden", "message":"Not Authorized"}'), 'api_key');
+        $provider = new GeoIPsProvider($this->getMockAdapterReturns('{"response":{"status":"Forbidden", "message":"Not Authorized"}}'), 'api_key');
         $provider->getGeocodedData('74.200.247.59');
     }
 
@@ -183,7 +183,7 @@ class GeoIPsProviderTest extends TestCase
      */
     public function testGetGeocodedDataWithRealIPv4AndInvalidApiKeyGetsFakeContent2()
     {
-        $provider = new GeoIPsProvider($this->getMockAdapterReturns('{"status":"Forbidden", "message":"Account Inactive"}'), 'api_key');
+        $provider = new GeoIPsProvider($this->getMockAdapterReturns('{"response":{"status":"Forbidden", "message":"Account Inactive"}}'), 'api_key');
         $provider->getGeocodedData('74.200.247.59');
     }
 
@@ -193,7 +193,7 @@ class GeoIPsProviderTest extends TestCase
      */
     public function testGetGeocodedDataGetsFakeContentWithIpNotFound()
     {
-        $provider = new GeoIPsProvider($this->getMockAdapterReturns('{"status":"Bad Request", "message":"IP Not Found"}'), 'api_key');
+        $provider = new GeoIPsProvider($this->getMockAdapterReturns('{"response":{"status":"Bad Request", "message":"IP Not Found"}}'), 'api_key');
         $provider->getGeocodedData('74.200.247.59');
     }
 
