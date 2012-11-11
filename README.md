@@ -44,9 +44,7 @@ Currently, there are many providers for the following APIs:
 * [IGN OpenLS](http://www.ign.fr/) as Address-Based geocoding provider (exclusively in France);
 * [DataScienceToolkit](http://www.datasciencetoolkit.org/) as IP-Based geocoding provider;
 * [Yandex](http://api.yandex.com.tr/maps/doc/geocoder/desc/concepts/About.xml) as Address-Based geocoding and reverse geocoding provider;
-* [MaxMind web services](http://dev.maxmind.com/geoip/web-services) as IP-Based geocoding providers;
-* [GeoIPs](http://www.geoips.com/developer/geoips-api) as IP-Based geocoding providers;
-* [geoPlugin](http://www.geoplugin.com/webservices) as IP-Based geocoding providers.
+* [MaxMind web services](http://dev.maxmind.com/geoip/web-services) as IP-Based geocoding providers.
 
 
 Installation
@@ -228,17 +226,6 @@ A valid api key is required.
 
 The `MaxMindOmniProvider` is able to geocode **IPv4 addresses** only. This MaxMind provider retrieves timezone too (using another webservice).
 A valid api key is required.
-
-
-### GeoIPsProvider ###
-
-The `GeoIPsProvider` is able to geocode **IPv4 addresses** only.
-A valid api key is required.
-
-
-### GeoPluginProvider ###
-
-The `GeoPluginProvider` is able to geocode **IPv4 addresses and IPv6 addresses** only.
 
 
 You can use one of them or write your own provider. You can also register all providers and decide later.
@@ -498,7 +485,6 @@ Rename the `phpunit.xml.dist` file to `phpunit.xml`, then uncomment the followin
     <!-- <server name="CLOUDMADE_API_KEY" value="YOUR_API_KEY" /> -->
     <!-- <server name="IGN_WEB_API_KEY" value="YOUR_API_KEY" /> -->
     <!-- <server name="MAXMIND_API_KEY" value="YOUR_API_KEY" /> -->
-    <!-- <server name="GEOIPS_API_KEY" value="YOUR_API_KEY" /> -->
 </php>
 ```
 
