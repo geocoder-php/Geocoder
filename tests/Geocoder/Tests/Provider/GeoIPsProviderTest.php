@@ -115,7 +115,7 @@ class GeoIPsProviderTest extends TestCase
                     "city_name" : "",
                     "latitude" : "",
                     "longitude" : "",
-                    "timezone" : "",
+                    "timezone" : ""
                  }}';
 
         $provider = new GeoIPsProvider($this->getMockAdapterReturns($json), 'api_key');
@@ -148,7 +148,7 @@ class GeoIPsProviderTest extends TestCase
                     "city_name" : "PROVO",
                     "latitude" : "40.3402",
                     "longitude" : "-111.6073",
-                    "timezone" : "MST",
+                    "timezone" : "MST"
                  }}';
 
         $provider = new GeoIPsProvider($this->getMockAdapterReturns($json), 'api_key');
