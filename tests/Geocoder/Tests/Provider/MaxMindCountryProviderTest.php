@@ -104,13 +104,54 @@ class MaxMindCountryProviderTest extends TestCase
         $provider->getGeocodedData('74.200.247.59');
     }
 
-    public function testGetGeocodedDataGetsCountryNameFromCountryCode()
+    public function testGetGeocodedDataWithRealIPv4GetsFakeContent()
     {
         $provider = new MaxMindCountryProvider($this->getMockAdapterReturns('IT,'), 'api_key');
         $result = $provider->getGeocodedData('74.200.247.59');
 
         $this->assertEquals('Italy', $result['country']);
         $this->assertEquals('IT', $result['countryCode']);
+        $this->assertNull($result['latitude']);
+        $this->assertNull($result['zipcode']);
+        $this->assertNull($result['city']);
+
+        $provider2 = new MaxMindCountryProvider($this->getMockAdapterReturns('FR,'), 'api_key');
+        $result2 = $provider2->getGeocodedData('74.200.247.59');
+        $this->assertEquals('France', $result2['country']);
+
+        $provider3 = new MaxMindCountryProvider($this->getMockAdapterReturns('GB,'), 'api_key');
+        $result3 = $provider3->getGeocodedData('74.200.247.59');
+        $this->assertEquals('United Kingdom', $result3['country']);
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\InvalidCredentialsException
+     * @expectedExceptionMessage API Key provided is not valid.
+     */
+    public function testGetGeocodedDataWithRealIPv4AndInvalidApiKeyGetsFakeContent()
+    {
+        $provider = new MaxMindCountryProvider($this->getMockAdapterReturns('(null),INVALID_LICENSE_KEY'), 'api_key');
+        $provider->getGeocodedData('74.200.247.59');
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\InvalidCredentialsException
+     * @expectedExceptionMessage API Key provided is not valid.
+     */
+    public function testGetGeocodedDataWithRealIPv4AndInvalidApiKeyGetsFakeContent2()
+    {
+        $provider = new MaxMindCountryProvider($this->getMockAdapterReturns('(null),LICENSE_REQUIRED'), 'api_key');
+        $provider->getGeocodedData('74.200.247.59');
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not retrieve informations for the ip address provided.
+     */
+    public function testGetGeocodedDataGetsFakeContentWithIpNotFound()
+    {
+        $provider = new MaxMindCountryProvider($this->getMockAdapterReturns('(null),IP_NOT_FOUND'), 'api_key');
+        $provider->getGeocodedData('74.200.247.59');
     }
 
     public function testGetGeocodedDataWithRealIPv4()

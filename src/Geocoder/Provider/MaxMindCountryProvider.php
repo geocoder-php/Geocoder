@@ -25,7 +25,6 @@ class MaxMindCountryProvider extends AbstractProvider implements ProviderInterfa
      */
     const GEOCODE_ENDPOINT_URL = 'http://geoip.maxmind.com/a?l=%s&i=%s';
 
-
     /**
      * @var string
      */
@@ -92,7 +91,7 @@ class MaxMindCountryProvider extends AbstractProvider implements ProviderInterfa
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
-        if (null === $content) {
+        if ('' === $content) {
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
