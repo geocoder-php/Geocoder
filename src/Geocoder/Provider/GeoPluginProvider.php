@@ -59,27 +59,24 @@ class GeoPluginProvider extends AbstractProvider implements ProviderInterface
 
     /**
      * @param  string $query
+     * 
      * @return array
      */
     protected function executeQuery($query)
     {
         $content = $this->getAdapter()->getContent($query);
 
-        if (null === $content) {
-            throw new NoResultException(sprintf('Could not execute query %s', $query));
-        }
-
-        if ('' === $content) {
+        if (null === $content || '' === $content) {
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
         $json = json_decode($content, true);
 
-        if (!is_array($json) or !count($json)) {
+        if (!is_array($json) || !count($json)) {
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
-        if (!array_key_exists('geoplugin_status', $json) or (200 !== $json['geoplugin_status'])) {
+        if (!array_key_exists('geoplugin_status', $json) || (200 !== $json['geoplugin_status'])) {
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
@@ -97,15 +94,12 @@ class GeoPluginProvider extends AbstractProvider implements ProviderInterface
     /**
      * @param array $json
      * @param string $key
+     *
      * @return null|string
      */
     private function getJsonKey($json, $key)
     {
-        if (!array_key_exists($key, $json)) {
-            return null;
-        }
-
-        if ('' === $json[$key]) {
+        if (!array_key_exists($key, $json) || '' === $json[$key]) {
             return null;
         }
 

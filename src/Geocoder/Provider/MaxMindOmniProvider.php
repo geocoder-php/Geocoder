@@ -28,7 +28,7 @@ class MaxMindOmniProvider extends AbstractProvider implements ProviderInterface
     /**
      * @var string
      */
-    private $apiKey = null;
+    private $apiKey;
 
     /**
      * @param \Geocoder\HttpAdapter\HttpAdapterInterface $adapter
@@ -86,17 +86,14 @@ class MaxMindOmniProvider extends AbstractProvider implements ProviderInterface
 
     /**
      * @param  string $query
+     *
      * @return array
      */
     protected function executeQuery($query)
     {
         $content = $this->getAdapter()->getContent($query);
 
-        if (null === $content) {
-            throw new NoResultException(sprintf('Could not execute query %s', $query));
-        }
-
-        if ('' === $content) {
+        if (null === $content || '' === $content) {
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 

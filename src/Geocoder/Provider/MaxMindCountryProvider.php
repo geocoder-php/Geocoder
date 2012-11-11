@@ -28,7 +28,7 @@ class MaxMindCountryProvider extends AbstractProvider implements ProviderInterfa
     /**
      * @var string
      */
-    private $apiKey = null;
+    private $apiKey;
 
     /**
      * @param \Geocoder\HttpAdapter\HttpAdapterInterface $adapter
@@ -81,17 +81,14 @@ class MaxMindCountryProvider extends AbstractProvider implements ProviderInterfa
 
     /**
      * @param  string $query
+     *
      * @return array
      */
     protected function executeQuery($query)
     {
         $content = $this->getAdapter()->getContent($query);
 
-        if (null === $content) {
-            throw new NoResultException(sprintf('Could not execute query %s', $query));
-        }
-
-        if ('' === $content) {
+        if (null === $content || '' === $content) {
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
@@ -115,6 +112,7 @@ class MaxMindCountryProvider extends AbstractProvider implements ProviderInterfa
 
     /**
      * @param  string $code
+     *
      * @return string
      */
     private function getCountryNameFromCountryCode($code)
@@ -123,7 +121,7 @@ class MaxMindCountryProvider extends AbstractProvider implements ProviderInterfa
             return null;
         }
 
-        $countryNames = $this->getCountryNames();
+        $countryNames = self::getCountryNames();
 
         return $countryNames[$code];
     }
@@ -131,7 +129,7 @@ class MaxMindCountryProvider extends AbstractProvider implements ProviderInterfa
     /**
      * @return array
      */
-    private function getCountryNames()
+    private static function getCountryNames()
     {
         return array(
             'A1' => "Anonymous Proxy",

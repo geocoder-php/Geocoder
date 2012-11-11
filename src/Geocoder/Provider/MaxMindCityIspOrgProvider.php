@@ -28,7 +28,7 @@ class MaxMindCityIspOrgProvider extends AbstractProvider implements ProviderInte
     /**
      * @var string
      */
-    private $apiKey = null;
+    private $apiKey;
 
     /**
      * @param \Geocoder\HttpAdapter\HttpAdapterInterface $adapter
@@ -86,6 +86,7 @@ class MaxMindCityIspOrgProvider extends AbstractProvider implements ProviderInte
 
     /**
      * @param  string $query
+     *
      * @return array
      */
     protected function executeQuery($query)
@@ -125,6 +126,7 @@ class MaxMindCityIspOrgProvider extends AbstractProvider implements ProviderInte
 
     /**
      * @param  string $code
+     *
      * @return string
      */
     private function getCountryNameFromCountryCode($code)
@@ -133,7 +135,17 @@ class MaxMindCityIspOrgProvider extends AbstractProvider implements ProviderInte
             return null;
         }
 
-        $countryName = array(
+        $countryNames = self::getCountryNames();
+
+        return $countryNames[$code];
+    }
+
+    /**
+     * @return array
+     */
+    private static function getCountryNames()
+    {
+        return array(
             'A1' => "Anonymous Proxy",
             'A2' => 'Satellite Provider',
             'O1' => 'Other Country',
@@ -388,7 +400,5 @@ class MaxMindCityIspOrgProvider extends AbstractProvider implements ProviderInte
             'ZM' => 'Zambia',
             'ZW' => 'Zimbabwe',
         );
-
-        return $countryName[$code];
     }
 }

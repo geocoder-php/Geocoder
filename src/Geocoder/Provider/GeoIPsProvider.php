@@ -28,7 +28,7 @@ class GeoIPsProvider extends AbstractProvider implements ProviderInterface
     /**
      * @var string
      */
-    private $apiKey = null;
+    private $apiKey;
 
     /**
      * @param \Geocoder\HttpAdapter\HttpAdapterInterface $adapter
@@ -86,30 +86,25 @@ class GeoIPsProvider extends AbstractProvider implements ProviderInterface
 
     /**
      * @param  string $query
+     * 
      * @return array
      */
     protected function executeQuery($query)
     {
         $content = $this->getAdapter()->getContent($query);
 
-        if (null === $content) {
-            throw new NoResultException(sprintf('Could not execute query %s', $query));
-        }
-
-        if ('' === $content) {
+        if (null === $content || '' === $content) {
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
         $json = json_decode($content, true);
         $response = $json['response'];
 
-        if (!is_array($response) or !count($response)) {
+        if (!is_array($response) || !count($response)) {
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
-        if (!array_key_exists('status', $response)) {
-            throw new NoResultException(sprintf('Could not execute query %s', $query));
-        } elseif('Bad Request' == $response['status']) {
+        if (!array_key_exists('status', $response) || 'Bad Request' == $response['status']) {
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         } elseif('Forbidden' == $response['status']) {
             if ('Limit Exceeded' == $response['message']) {
