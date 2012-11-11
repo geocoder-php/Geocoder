@@ -98,6 +98,20 @@ class MaxMindCityProviderTest extends TestCase
         $provider->getGeocodedData('74.200.247.59');
     }
 
+    public function testGetGeocodedDataWithRealIPv4GetsFakeContentFormattedEmpty()
+    {
+        $provider = new MaxMindCityProvider($this->getMockAdapterReturns(',,,,,'), 'api_key');
+        $result = $provider->getGeocodedData('74.200.247.59');
+
+        $this->assertNull($result['country']);
+        $this->assertNull($result['countryCode']);
+        $this->assertNull($result['regionCode']);
+        $this->assertNull($result['city']);
+        $this->assertNull($result['latitude']);
+        $this->assertNull($result['longitude']);
+        $this->assertNull($result['zipcode']);
+    }
+
     public function testGetGeocodedDataWithRealIPv4GetsFakeContent()
     {
         $provider = new MaxMindCityProvider($this->getMockAdapterReturns('US,TX,Plano,33.034698486328,-96.813400268555,'), 'api_key');
@@ -111,11 +125,11 @@ class MaxMindCityProviderTest extends TestCase
         $this->assertEquals(-96.813400268555, $result['longitude'], '', 0.0001);
         $this->assertNull($result['zipcode']);
 
-        $provider2 = new MaxMindCityProvider($this->getMockAdapterReturns('FR,'), 'api_key');
+        $provider2 = new MaxMindCityProvider($this->getMockAdapterReturns('FR,,,,,'), 'api_key');
         $result2 = $provider2->getGeocodedData('74.200.247.59');
         $this->assertEquals('France', $result2['country']);
 
-        $provider3 = new MaxMindCityProvider($this->getMockAdapterReturns('GB,'), 'api_key');
+        $provider3 = new MaxMindCityProvider($this->getMockAdapterReturns('GB,,,,,'), 'api_key');
         $result3 = $provider3->getGeocodedData('74.200.247.59');
         $this->assertEquals('United Kingdom', $result3['country']);
     }
