@@ -18,7 +18,7 @@ use Geocoder\HttpAdapter\HttpAdapterInterface;
 /**
  * @author Andrea Cristaudo <andrea.cristaudo@gmail.com>
  */
-class MaxMindCityIspOrgProvider extends AbstractProvider implements ProviderInterface
+class MaxMindOmniProvider extends AbstractProvider implements ProviderInterface
 {
     /**
      * @var string
