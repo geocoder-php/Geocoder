@@ -3,7 +3,7 @@
 namespace Geocoder\Tests\Provider;
 
 use Geocoder\Tests\TestCase;
-use Geocoder\Provider\GeoPluginProviderTest;
+use Geocoder\Provider\GeoPluginProvider;
 
 class GeoPluginProviderTest extends TestCase
 {
