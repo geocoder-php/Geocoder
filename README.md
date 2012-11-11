@@ -44,8 +44,6 @@ Currently, there are many providers for the following APIs:
 * [IGN OpenLS](http://www.ign.fr/) as Address-Based geocoding provider (exclusively in France);
 * [DataScienceToolkit](http://www.datasciencetoolkit.org/) as IP-Based geocoding provider;
 * [Yandex](http://api.yandex.com.tr/maps/doc/geocoder/desc/concepts/About.xml) as Address-Based geocoding and reverse geocoding provider;
-* [MaxMind web services](http://dev.maxmind.com/geoip/web-services) as IP-Based geocoding providers;
-* [GeoIPs](http://www.geoips.com/developer/geoips-api) as IP-Based geocoding providers;
 * [geoPlugin](http://www.geoplugin.com/webservices) as IP-Based geocoding providers.
 
 
@@ -204,36 +202,6 @@ The `DataScienceToolkitProvider` is able to geocode **IPv4 addresses** only.
 
 The `YandexProvider` is able to geocode and reverse geocode **street addresses**. The default langage-locale is `ru-RU`, you can choose between `uk-UA`, `be-BY`, `en-US`, `en-BR` and `tr-TR`.
 This provider can also reverse information based on coordinates (latitude, longitude). It's possible to precise the toponym to get more accurate result: `house`, `street`, `metro`, `district` and `locality`.
-
-
-### MaxMindCountryProvider ###
-
-The `MaxMindCountryProvider` is able to geocode **IPv4 and IPv6 addresses** only. This MaxMind provider retrieves only country code and country name.
-A valid api key is required.
-
-
-### MaxMindCityProvider ###
-
-The `MaxMindCityProvider` is able to geocode **IPv4 addresses** only. This MaxMind provider retrieves city and coordinates too (using another webservice).
-A valid api key is required.
-
-
-### MaxMindCityIspOrgProvider ###
-
-The `MaxMindCityIspOrgProvider` is able to geocode **IPv4 addresses** only. This MaxMind provider retrieves zipcode too (using another webservice).
-A valid api key is required.
-
-
-### MaxMindOmniProvider ###
-
-The `MaxMindOmniProvider` is able to geocode **IPv4 addresses** only. This MaxMind provider retrieves timezone too (using another webservice).
-A valid api key is required.
-
-
-### GeoIPsProvider ###
-
-The `GeoIPsProvider` is able to geocode **IPv4 addresses** only.
-A valid api key is required.
 
 
 ### GeoPluginProvider ###
