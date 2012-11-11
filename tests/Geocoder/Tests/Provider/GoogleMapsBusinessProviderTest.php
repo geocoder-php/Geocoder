@@ -46,7 +46,7 @@ Client error response
 [request] GET /maps/api/geocode/json?address=10%2Bavenue%2BGambetta%252C%2BParis%252C%2BFrance&sensor=false&client=foo&signature=7lP36f0gF4j8NCWqUyiF0VCRAzw HTTP/1.1
 Host: maps.googleapis.com
 EOL;
-        $this->setExpectedException('Guzzle\Http\Exception\ClientErrorResponseException', $expectedException);
+        $this->setExpectedException('Guzzle\Http\Exception\ClientErrorResponseException', $expectedExceptionMessage);
 
         $provider = new GoogleMapsBusinessProvider(new \Geocoder\HttpAdapter\GuzzleHttpAdapter(), $this->testClientId, $this->testPrivateKey);
         $result   = $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
