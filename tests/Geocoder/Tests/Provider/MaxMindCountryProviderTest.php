@@ -24,7 +24,7 @@ class MaxMindCountryProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedException
-     * @expectedExceptionMessage The MaxMindCountryProvider does not support Street addresses.
+     * @expectedExceptionMessage The MaxMindCountryProvider does not support street addresses.
      */
     public function testGetGeocodedDataWithNull()
     {
@@ -34,7 +34,7 @@ class MaxMindCountryProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedException
-     * @expectedExceptionMessage The MaxMindCountryProvider does not support Street addresses.
+     * @expectedExceptionMessage The MaxMindCountryProvider does not support street addresses.
      */
     public function testGetGeocodedDataWithEmpty()
     {
@@ -44,7 +44,7 @@ class MaxMindCountryProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedException
-     * @expectedExceptionMessage The MaxMindCountryProvider does not support Street addresses.
+     * @expectedExceptionMessage The MaxMindCountryProvider does not support street addresses.
      */
     public function testGetGeocodedDataWithAddress()
     {
