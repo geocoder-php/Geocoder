@@ -103,7 +103,7 @@ class MaxMindCityProvider extends AbstractProvider implements ProviderInterface
         $data = explode(',', $content);
 
         if (6 !== count($data)) {
-            throw new NoResultException(sprintf('Could not execute query %s. Invalid format.', $query));
+            throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
         if (in_array($data[5], array('INVALID_LICENSE_KEY', 'LICENSE_REQUIRED'))) {
