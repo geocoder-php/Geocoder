@@ -206,39 +206,10 @@ The `YandexProvider` is able to geocode and reverse geocode **street addresses**
 This provider can also reverse information based on coordinates (latitude, longitude). It's possible to precise the toponym to get more accurate result: `house`, `street`, `metro`, `district` and `locality`.
 
 
-### MaxMindCountryProvider ###
-
-The `MaxMindCountryProvider` is able to geocode **IPv4 and IPv6 addresses** only. This MaxMind provider retrieves only country code and country name.
-A valid api key is required.
-
-
-### MaxMindCityProvider ###
-
-The `MaxMindCityProvider` is able to geocode **IPv4 addresses** only. This MaxMind provider retrieves city and coordinates too (using another webservice).
-A valid api key is required.
-
-
-### MaxMindCityIspOrgProvider ###
-
-The `MaxMindCityIspOrgProvider` is able to geocode **IPv4 addresses** only. This MaxMind provider retrieves zipcode too (using another webservice).
-A valid api key is required.
-
-
-### MaxMindOmniProvider ###
-
-The `MaxMindOmniProvider` is able to geocode **IPv4 addresses** only. This MaxMind provider retrieves timezone too (using another webservice).
-A valid api key is required.
-
-
 ### GeoIPsProvider ###
 
 The `GeoIPsProvider` is able to geocode **IPv4 addresses** only.
 A valid api key is required.
-
-
-### GeoPluginProvider ###
-
-The `GeoPluginProvider` is able to geocode **IPv4 addresses and IPv6 addresses** only.
 
 
 You can use one of them or write your own provider. You can also register all providers and decide later.
