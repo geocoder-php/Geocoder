@@ -14,15 +14,6 @@ class GeoPluginProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \RuntimeException
-     */
-    public function testGetGeocodedDataWithNullApiKey()
-    {
-        $provider = new GeoPluginProvider($this->getMock('Geocoder\HttpAdapter\HttpAdapterInterface'), null);
-        $provider->getGeocodedData('foo');
-    }
-
-    /**
      * @expectedException \Geocoder\Exception\UnsupportedException
      * @expectedExceptionMessage The GeoPluginProvider does not support street addresses.
      */

@@ -32,7 +32,7 @@ class GeoPluginProvider extends AbstractProvider implements ProviderInterface
             throw new UnsupportedException('The GeoPluginProvider does not support street addresses.');
         }
 
-        if ($address === '127.0.0.1') {
+        if (in_array($address, array('127.0.0.1', '::1'))) {
             return $this->getLocalhostDefaults();
         }
 
