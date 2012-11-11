@@ -160,11 +160,11 @@ class GeoIPsProviderTest extends TestCase
         $this->assertEquals('UT', $result['regionCode']);
         $this->assertEquals('UTAH', $result['county']);
         $this->assertEquals('PROVO', $result['city']);
-        $this->assertEquals(75093, $result['zipcode']);
         $this->assertEquals(40.3402, $result['latitude'], '', 0.0001);
         $this->assertEquals(-111.6073, $result['longitude'], '', 0.0001);
         $this->assertEquals('MST', $result['timezone']);
         $this->assertNull($result['streetName']);
+        $this->assertNull($result['zipcode']);
     }
 
     /**
