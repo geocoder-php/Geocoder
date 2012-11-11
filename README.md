@@ -45,6 +45,7 @@ Currently, there are many providers for the following APIs:
 * [DataScienceToolkit](http://www.datasciencetoolkit.org/) as IP-Based geocoding provider;
 * [Yandex](http://api.yandex.com.tr/maps/doc/geocoder/desc/concepts/About.xml) as Address-Based geocoding and reverse geocoding provider;
 * [MaxMind web services](http://dev.maxmind.com/geoip/web-services) as IP-Based geocoding providers.
+* [GeoIPs](http://www.geoips.com/developer/geoips-api) as IP-Based geocoding providers.
 
 
 Installation
@@ -225,6 +226,12 @@ A valid api key is required.
 ### MaxMindOmniProvider ###
 
 The `MaxMindOmniProvider` is able to geocode **IPv4 addresses** only. This MaxMind provider retrieves timezone too (using another webservice).
+A valid api key is required.
+
+
+### GeoIPsProvider ###
+
+The `GeoIPsProvider` is able to geocode **IPv4 addresses** only.
 A valid api key is required.
 
 

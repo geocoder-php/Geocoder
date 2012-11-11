@@ -96,8 +96,12 @@ class GeoIPsProvider extends AbstractProvider implements ProviderInterface
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
+        if ('' === $content) {
+            throw new NoResultException(sprintf('Could not execute query %s', $query));
+        }
+
         $json = json_decode($content, true);
-        if (!array_key_exists($json, 'status')) {
+        if (!array_key_exists('status', $json)) {
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         } elseif('Bad Request' == $json['status']) {
             throw new NoResultException(sprintf('Could not execute query %s', $query));
