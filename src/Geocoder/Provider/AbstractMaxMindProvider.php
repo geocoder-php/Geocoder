@@ -50,7 +50,7 @@ abstract class AbstractMaxMindProvider extends AbstractProvider implements Provi
         }
 
         // This API does not support IPv6
-        if (!self::MAXMIND_SUPPORTS_IPV6 && filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+        if (!static::MAXMIND_SUPPORTS_IPV6 && filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
             throw new UnsupportedException(sprintf('The %s does not support IPv6 addresses.', get_called_class()));
         }
 
@@ -58,7 +58,7 @@ abstract class AbstractMaxMindProvider extends AbstractProvider implements Provi
             return $this->getLocalhostDefaults();
         }
 
-        $query = sprintf(self::GEOCODE_ENDPOINT_URL, $this->apiKey, $address);
+        $query = sprintf(static::GEOCODE_ENDPOINT_URL, $this->apiKey, $address);
 
         return $this->executeQuery($query);
     }
@@ -90,9 +90,9 @@ abstract class AbstractMaxMindProvider extends AbstractProvider implements Provi
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
-        if (in_array($data[self::MAXMIND_EXPECTED_CHUNKS - 1], array('INVALID_LICENSE_KEY', 'LICENSE_REQUIRED'))) {
+        if (in_array($data[static::MAXMIND_EXPECTED_CHUNKS - 1], array('INVALID_LICENSE_KEY', 'LICENSE_REQUIRED'))) {
             throw new InvalidCredentialsException('API Key provided is not valid.');
-        } elseif ($data[self::MAXMIND_EXPECTED_CHUNKS - 1] == 'IP_NOT_FOUND') {
+        } elseif ($data[static::MAXMIND_EXPECTED_CHUNKS - 1] == 'IP_NOT_FOUND') {
             throw new NoResultException('Could not retrieve informations for the ip address provided.');
         }
 
