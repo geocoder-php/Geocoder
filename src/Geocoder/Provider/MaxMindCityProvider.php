@@ -96,7 +96,15 @@ class MaxMindCityProvider extends AbstractProvider implements ProviderInterface
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
+        if ('' === $content) {
+            throw new NoResultException(sprintf('Could not execute query %s', $query));
+        }
+
         $data = explode(',', $content);
+
+        if (6 !== count($data)) {
+            throw new NoResultException(sprintf('Could not execute query %s', $query));
+        }
 
         if (in_array($data[5], array('INVALID_LICENSE_KEY', 'LICENSE_REQUIRED'))) {
             throw new InvalidCredentialsException('API Key provided is not valid.');
@@ -124,7 +132,17 @@ class MaxMindCityProvider extends AbstractProvider implements ProviderInterface
             return null;
         }
 
-        $countryName = array(
+        $countryNames = $this->getCountryNames();
+
+        return $countryNames[$code];
+    }
+
+    /**
+     * @return array
+     */
+    private function getCountryNames()
+    {
+        return array(
             'A1' => "Anonymous Proxy",
             'A2' => 'Satellite Provider',
             'O1' => 'Other Country',
@@ -379,7 +397,5 @@ class MaxMindCityProvider extends AbstractProvider implements ProviderInterface
             'ZM' => 'Zambia',
             'ZW' => 'Zimbabwe',
         );
-
-        return $countryName[$code];
     }
 }

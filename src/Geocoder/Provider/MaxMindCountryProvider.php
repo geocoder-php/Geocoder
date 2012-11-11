@@ -113,9 +113,27 @@ class MaxMindCountryProvider extends AbstractProvider implements ProviderInterfa
         ));
     }
 
+    /**
+     * @param  string $code
+     * @return string
+     */
     private function getCountryNameFromCountryCode($code)
     {
-        $countryName = array(
+        if (in_array($code, array('(null)', ''))) {
+            return null;
+        }
+
+        $countryNames = $this->getCountryNames();
+
+        return $countryNames[$code];
+    }
+
+    /**
+     * @return array
+     */
+    private function getCountryNames()
+    {
+        return array(
             'A1' => "Anonymous Proxy",
             'A2' => 'Satellite Provider',
             'O1' => 'Other Country',
@@ -370,7 +388,5 @@ class MaxMindCountryProvider extends AbstractProvider implements ProviderInterfa
             'ZM' => 'Zambia',
             'ZW' => 'Zimbabwe',
         );
-
-        return $countryName[$code];
     }
 }
