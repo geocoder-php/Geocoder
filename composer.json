@@ -23,7 +23,8 @@
     "require-dev": {
         "kriswallsmith/buzz": "*",
         "guzzle/guzzle": "*",
-        "zendframework/zend-http": "*"
+        "zendframework/zend-http": "*",
+        "phpunit/phpunit": "3.7.*"
     },
     "suggest": {
         "kriswallsmith/buzz": "Enabling Buzz allows you to use the BuzzHttpAdapter, it's the recommended HTTP layer.",
