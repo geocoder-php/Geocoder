@@ -96,20 +96,4 @@ class GoogleMapsBusinessProviderTest extends TestCase
         $this->assertEquals('France', $result['country']);
         $this->assertEquals('FR', $result['countryCode']);
     }
-
-    public function testGetGeocodedDataWithBadPrivateKeyViaGuzzle()
-    {
-        $expectedExceptionMessage = <<<EOL
-Client error response
-[status code] 403
-[reason phrase] Forbidden
-[url] http://maps.googleapis.com/maps/api/geocode/json?address=10%2Bavenue%2BGambetta%252C%2BParis%252C%2BFrance&sensor=false&client=foo&signature=7lP36f0gF4j8NCWqUyiF0VCRAzw
-[request] GET /maps/api/geocode/json?address=10%2Bavenue%2BGambetta%252C%2BParis%252C%2BFrance&sensor=false&client=foo&signature=7lP36f0gF4j8NCWqUyiF0VCRAzw HTTP/1.1
-EOL;
-
-        $this->setExpectedException('Guzzle\Http\Exception\ClientErrorResponseException', $expectedExceptionMessage);
-
-        $provider = new GoogleMapsBusinessProvider(new \Geocoder\HttpAdapter\GuzzleHttpAdapter(), $this->testClientId, $this->testPrivateKey);
-        $result   = $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
-    }
 }

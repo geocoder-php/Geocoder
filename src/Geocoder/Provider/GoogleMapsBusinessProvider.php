@@ -57,20 +57,6 @@ class GoogleMapsBusinessProvider extends GoogleMapsProvider
     /**
      * {@inheritDoc}
      */
-    public function getGeocodedData($address)
-    {
-        if ($this->getAdapter() instanceof GuzzleHttpAdapter) {
-            // Encode the address before signing the address, Guzzle
-            // will re-encode it, thus invalidating the signature
-            $address = urlencode($address);
-        }
-
-        return parent::getGeocodedData($address);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     protected function buildQuery($query)
     {
         $query = parent::buildQuery($query);
