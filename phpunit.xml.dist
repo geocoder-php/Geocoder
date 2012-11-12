@@ -16,6 +16,8 @@
         <!-- <server name="BINGMAPS_API_KEY" value="YOUR_API_KEY" /> -->
         <!-- <server name="CLOUDMADE_API_KEY" value="YOUR_API_KEY" /> -->
         <!-- <server name="IGN_WEB_API_KEY" value="YOUR_API_KEY" /> -->
+        <!-- <server name="GOOGLEMAPS_BUSINESS_CLIENT_ID" value="YOUR_CLIENT_ID" /> -->
+        <!-- <server name="GOOGLEMAPS_BUSINESS_PRIVATE_KEY" value="YOUR_PRIVATE_KEY" /> -->
     </php>
     <testsuites>
         <testsuite name="Geocoder Test Suite">
