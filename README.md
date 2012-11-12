@@ -440,7 +440,7 @@ php composer.phar install --dev
 Once installed, just launch the following command:
 
 ```
-phpunit
+vendor/bin/phpunit
 ```
 
 You'll obtain some _skipped_ unit tests due to the need of API keys.
