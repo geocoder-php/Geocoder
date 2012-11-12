@@ -36,7 +36,68 @@ class GoogleMapsBusinessProviderTest extends TestCase
         $result   = $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
     }
 
-    public function testGetGeocodedDataWithPrivateKeyViaGuzzle()
+    public function testGetGeocodedDataWithRealAddress()
+    {
+        if (!isset($_SERVER['GOOGLEMAPS_BUSINESS_CLIENT_ID']) || !isset($_SERVER['GOOGLEMAPS_BUSINESS_PRIVATE_KEY'])) {
+            $this->markTestSkipped('You need to configure the GOOGLEMAPS_BUSINESS_CLIENT_ID and GOOGLEMAPS_BUSINESS_PRIVATE_KEY values in phpunit.xml');
+        }
+
+        $provider = new GoogleMapsBusinessProvider(
+            new \Geocoder\HttpAdapter\CurlHttpAdapter(),
+            $_SERVER['GOOGLEMAPS_BUSINESS_CLIENT_ID'],
+            $_SERVER['GOOGLEMAPS_BUSINESS_PRIVATE_KEY'],
+            'fr-FR',
+            'fr'
+        );
+        $result   = $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
+
+        $this->assertEquals(48.8630462, $result['latitude'], '', 0.001);
+        $this->assertEquals(2.3882487, $result['longitude'], '', 0.001);
+        $this->assertArrayHasKey('south', $result['bounds']);
+        $this->assertArrayHasKey('west', $result['bounds']);
+        $this->assertArrayHasKey('north', $result['bounds']);
+        $this->assertArrayHasKey('east', $result['bounds']);
+        $this->assertEquals(48.8630462, $result['bounds']['south'], '', 0.001);
+        $this->assertEquals(2.3882487, $result['bounds']['west'], '', 0.001);
+        $this->assertEquals(48.8630462, $result['bounds']['north'], '', 0.001);
+        $this->assertEquals(2.3882487, $result['bounds']['east'], '', 0.001);
+        $this->assertEquals(10, $result['streetNumber']);
+        $this->assertEquals('Avenue Gambetta', $result['streetName']);
+        $this->assertEquals(75020, $result['zipcode']);
+        $this->assertEquals('Paris', $result['city']);
+        $this->assertEquals('Paris', $result['county']);
+        $this->assertEquals('Île-de-France', $result['region']);
+        $this->assertEquals('France', $result['country']);
+        $this->assertEquals('FR', $result['countryCode']);
+
+        // not provided
+        $this->assertNull($result['timezone']);
+    }
+
+    public function testGetReversedDataWithRealCoordinates()
+    {
+        if (!isset($_SERVER['GOOGLEMAPS_BUSINESS_CLIENT_ID']) || !isset($_SERVER['GOOGLEMAPS_BUSINESS_PRIVATE_KEY'])) {
+            $this->markTestSkipped('You need to configure the GOOGLEMAPS_BUSINESS_CLIENT_ID and GOOGLEMAPS_BUSINESS_PRIVATE_KEY values in phpunit.xml');
+        }
+
+        $provider = new GoogleMapsBusinessProvider(
+            new \Geocoder\HttpAdapter\CurlHttpAdapter(),
+            $_SERVER['GOOGLEMAPS_BUSINESS_CLIENT_ID'],
+            $_SERVER['GOOGLEMAPS_BUSINESS_PRIVATE_KEY']
+        );
+        $result = $provider->getReversedData(array(48.8631507, 2.388911));
+
+        $this->assertEquals(10, $result['streetNumber']);
+        $this->assertEquals('Avenue Gambetta', $result['streetName']);
+        $this->assertEquals(75020, $result['zipcode']);
+        $this->assertEquals('Paris', $result['city']);
+        $this->assertEquals('Paris', $result['county']);
+        $this->assertEquals('Île-de-France', $result['region']);
+        $this->assertEquals('France', $result['country']);
+        $this->assertEquals('FR', $result['countryCode']);
+    }
+
+    public function testGetGeocodedDataWithBadPrivateKeyViaGuzzle()
     {
         $expectedExceptionMessage = <<<EOL
 Client error response
