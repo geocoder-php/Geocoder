@@ -1,6 +1,31 @@
 CHANGELOG
 =========
 
+### 1.1.2 (2012-11-13) ###
+
+* Removed useless contructor
+* Use short class name instead of FQCN
+* Add GeoIPsProvider provider + Tests
+* Add GeoPluginProvider + Tests
+* Optimized and tested OSM reverse data error catching
+* Fixed: YandexProvider test
+* Check result element exists
+* Added: YandexProvider, test and updated README
+* Update README
+* Rename SocketAdapter to SocketHttpAdapter to respect conventions
+* Fixed: DataScienceToolkit provider and its test
+* Fix PR #118
+* fix cs adn ipv6
+* unit test datasciencetoolkitprovider
+* fixing broken tests case in a fr_FR localized environment : made tests now PHP's locale-aware
+* Fix CS, remove var_dump
+* fix typo
+* Updated: tests bootstrap - check cURL and dependencies
+* DataScienceToolkitProvider
+* Added: IGNOpenLSProvider + tests
+* Fixed: tests should only use cURL as HttpAdapter
+* Fixed: casts in GeocoderUsProvider
+
 ### 1.1.1 (2012-10-23) ###
 
 * Add more tests thanks to Antoine Corcy (@toin0u)
