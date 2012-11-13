@@ -8,7 +8,7 @@ namespace Geocoder\Tests;
 class TestCase extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @return \Geocoder\HttpAdapter\HttpAdapterInterface
+     * @return HttpAdapterInterface
      */
     protected function getMockAdapter($expects = null)
     {
@@ -26,7 +26,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \Geocoder\HttpAdapter\HttpAdapterInterface
+     * @return HttpAdapterInterface
      */
     protected function getMockAdapterReturns($returnValue)
     {

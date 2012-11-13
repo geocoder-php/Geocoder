@@ -18,7 +18,7 @@ use Geocoder\Result\ResultInterface;
 class Formatter implements FormatterInterface
 {
     /**
-     * @var \Geocoder\Result\ResultInterface
+     * @var ResultInterface
      */
     private $result;
 

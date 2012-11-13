@@ -35,9 +35,9 @@ class YandexProvider extends AbstractProvider implements ProviderInterface
     private $toponym = null;
 
     /**
-     * @param \Geocoder\HttpAdapter\HttpAdapterInterface $adapter An HTTP adapter.
-     * @param string                                     $locale  A locale (optional).
-     * @param string                                     $toponym Toponym biasing only for reverse geocoding (optional).
+     * @param HttpAdapterInterface $adapter An HTTP adapter.
+     * @param string               $locale  A locale (optional).
+     * @param string               $toponym Toponym biasing only for reverse geocoding (optional).
      */
     public function __construct(HttpAdapterInterface $adapter, $locale = null, $toponym = null)
     {
