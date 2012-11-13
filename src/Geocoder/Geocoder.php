@@ -29,12 +29,12 @@ class Geocoder implements GeocoderInterface
     private $providers = array();
 
     /**
-     * @var \Geocoder\Provider\ProviderInterface
+     * @var ProviderInterface
      */
     private $provider = null;
 
     /**
-     * @param \Geocoder\Provider\ProviderInterface $provider
+     * @param ProviderInterface $provider
      */
     public function __construct(ProviderInterface $provider = null)
     {
@@ -76,8 +76,8 @@ class Geocoder implements GeocoderInterface
     /**
      * Registers a provider.
      *
-     * @param  \Geocoder\Provider\ProviderInterface $provider
-     * @return \Geocoder\GeocoderInterface
+     * @param  ProviderInterface $provider
+     * @return GeocoderInterface
      */
     public function registerProvider(ProviderInterface $provider)
     {
@@ -91,8 +91,8 @@ class Geocoder implements GeocoderInterface
     /**
      * Registers a set of providers.
      *
-     * @param  array                       $providers
-     * @return \Geocoder\GeocoderInterface
+     * @param  array             $providers
+     * @return GeocoderInterface
      */
     public function registerProviders(array $providers = array())
     {
@@ -106,8 +106,8 @@ class Geocoder implements GeocoderInterface
     /**
      * Sets the provider to use.
      *
-     * @param  string                      $name A provider's name
-     * @return \Geocoder\GeocoderInterface
+     * @param  string            $name A provider's name
+     * @return GeocoderInterface
      */
     public function using($name)
     {
@@ -131,7 +131,7 @@ class Geocoder implements GeocoderInterface
     /**
      * Returns the provider to use.
      *
-     * @return \Geocoder\Provider\ProviderInterface
+     * @return ProviderInterface
      */
     protected function getProvider()
     {
@@ -147,8 +147,8 @@ class Geocoder implements GeocoderInterface
     }
 
     /**
-     * @param  array                     $data An array of data.
-     * @return \Geocoder\Result\Geocoded
+     * @param  array    $data An array of data.
+     * @return Geocoded
      */
     protected function returnResult(array $data = array())
     {

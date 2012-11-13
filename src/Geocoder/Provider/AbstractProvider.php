@@ -18,7 +18,7 @@ use Geocoder\HttpAdapter\HttpAdapterInterface;
 abstract class AbstractProvider
 {
     /**
-     * @var \Geocoder\HttpAdapter\HttpAdapterInterface
+     * @var HttpAdapterInterface
      */
     private $adapter = null;
 
@@ -40,7 +40,7 @@ abstract class AbstractProvider
     /**
      * Returns the HTTP adapter.
      *
-     * @return \Geocoder\HttpAdapter\HttpAdapterInterface
+     * @return HttpAdapterInterface
      */
     protected function getAdapter()
     {
