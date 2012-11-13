@@ -27,9 +27,9 @@ class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
     private $region = null;
 
     /**
-     * @param \Geocoder\HttpAdapter\HttpAdapterInterface $adapter An HTTP adapter.
-     * @param string                                     $locale  A locale (optional).
-     * @param string                                     $region  Region biasing (optional).
+     * @param HttpAdapterInterface $adapter An HTTP adapter.
+     * @param string               $locale  A locale (optional).
+     * @param string               $region  Region biasing (optional).
      */
     public function __construct(HttpAdapterInterface $adapter, $locale = null, $region = null)
     {

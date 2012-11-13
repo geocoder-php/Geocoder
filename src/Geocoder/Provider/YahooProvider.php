@@ -36,9 +36,9 @@ class YahooProvider extends AbstractProvider implements ProviderInterface
     private $apiKey = null;
 
     /**
-     * @param \Geocoder\HttpAdapter\HttpAdapterInterface $adapter
-     * @param string                                     $apiKey
-     * @param string                                     $locale
+     * @param HttpAdapterInterface $adapter An HTTP adapter.
+     * @param string               $apiKey  An API key.
+     * @param string               $locale  A locale (optional).
      */
     public function __construct(HttpAdapterInterface $adapter, $apiKey, $locale = null)
     {

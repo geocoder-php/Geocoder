@@ -18,7 +18,7 @@ use Geocoder\HttpAdapter\HttpAdapterInterface;
 abstract class AbstractProvider
 {
     /**
-     * @var \Geocoder\HttpAdapter\HttpAdapterInterface
+     * @var HttpAdapterInterface
      */
     private $adapter = null;
 
@@ -28,8 +28,8 @@ abstract class AbstractProvider
     private $locale = null;
 
     /**
-     * @param \Geocoder\HttpAdapter\HttpAdapterInterface $adapter An HTTP adapter.
-     * @param string                                     $locale  A locale (optional).
+     * @param HttpAdapterInterface $adapter An HTTP adapter.
+     * @param string               $locale  A locale (optional).
      */
     public function __construct(HttpAdapterInterface $adapter, $locale = null)
     {
@@ -40,7 +40,7 @@ abstract class AbstractProvider
     /**
      * Returns the HTTP adapter.
      *
-     * @return \Geocoder\HttpAdapter\HttpAdapterInterface
+     * @return HttpAdapterInterface
      */
     protected function getAdapter()
     {

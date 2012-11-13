@@ -18,20 +18,16 @@ use Buzz\Browser;
 class BuzzHttpAdapter implements HttpAdapterInterface
 {
     /**
-     * @var \Buzz\Browser
+     * @var Browser
      */
     protected $browser;
 
     /**
-     * @param \Buzz\Browser $browser
+     * @param Browser $browser Browser object
      */
     public function __construct(Browser $browser = null)
     {
-        if (null === $browser) {
-            $this->browser = new Browser();
-        } else {
-            $this->browser = $browser;
-        }
+        $this->browser = null === $browser ? new Browser() : $browser;
     }
 
     /**

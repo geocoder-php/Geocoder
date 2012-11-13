@@ -30,14 +30,6 @@ class MapQuestProvider extends AbstractProvider implements ProviderInterface
     const REVERSE_ENDPOINT_URL = 'http://open.mapquestapi.com/geocoding/v1/reverse?lat=%F&lng=%F';
 
     /**
-     * @param \Geocoder\HttpAdapter\HttpAdapterInterface $adapter
-     */
-    public function __construct(HttpAdapterInterface $adapter)
-    {
-        parent::__construct($adapter, null);
-    }
-
-    /**
      * {@inheritDoc}
      */
     public function getGeocodedData($address)
