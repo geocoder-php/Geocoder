@@ -11,7 +11,6 @@
 namespace Geocoder\Provider;
 
 use Geocoder\HttpAdapter\HttpAdapterInterface;
-use Geocoder\HttpAdapter\GuzzleHttpAdapter;
 
 /**
  * Google Maps for Business
