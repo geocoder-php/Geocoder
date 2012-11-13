@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Geocoder - The almost missing Geocoder PHP 5.3 library</title>
+    <title>Geocoder by willdurand</title>
 
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
@@ -90,7 +90,13 @@ over this list to get information;</li>
 <li>
 <a href="http://www.ign.fr/">IGN OpenLS</a> as Address-Based geocoding provider (exclusively in France);</li>
 <li>
-<a href="http://www.datasciencetoolkit.org/">DataScienceToolkit</a> as IP-Based geocoding provider.</li>
+<a href="http://www.datasciencetoolkit.org/">DataScienceToolkit</a> as IP-Based geocoding provider;</li>
+<li>
+<a href="http://api.yandex.com.tr/maps/doc/geocoder/desc/concepts/About.xml">Yandex</a> as Address-Based geocoding and reverse geocoding provider;</li>
+<li>
+<a href="http://www.geoplugin.com/webservices">GeoPlugin</a> as IP-Based geocoding providers;</li>
+<li>
+<a href="http://www.geoips.com/developer/geoips-api">GeoIPs</a> as IP-Based geocoding providers.</li>
 </ul><h2>Installation</h2>
 
 <p>The recommended way to install Geocoder is through composer.</p>
@@ -155,12 +161,14 @@ over this list to get information;</li>
 
 <h3>IpInfoDbProvider</h3>
 
-<p>The <code>IpInfoDbProvider</code> is able to geocode <strong>IPv4 addresses</strong> only.</p>
+<p>The <code>IpInfoDbProvider</code> is able to geocode <strong>IPv4 addresses</strong> only.
+A valid api key is required.</p>
 
 <h3>YahooProvider</h3>
 
 <p>The <code>YahooProvider</code> is able to geocode both <strong>IPv4 addresses</strong> and <strong>street addresses</strong>.
-This provider can also reverse information based on coordinates (latitude, longitude).</p>
+This provider can also reverse information based on coordinates (latitude, longitude).
+A valid api key is required.</p>
 
 <h3>GoogleMapsProvider</h3>
 
@@ -168,7 +176,8 @@ This provider can also reverse information based on coordinates (latitude, longi
 
 <h3>BingMapsProvider</h3>
 
-<p>The <code>BingMapsProvider</code> is able to geocode and reverse geocode <strong>street addresses</strong>.</p>
+<p>The <code>BingMapsProvider</code> is able to geocode and reverse geocode <strong>street addresses</strong>.
+A valid api key is required.</p>
 
 <h3>OpenStreetMapsProvider</h3>
 
@@ -176,7 +185,8 @@ This provider can also reverse information based on coordinates (latitude, longi
 
 <h3>CloudMadeProvider</h3>
 
-<p>The <code>CloudMadeProvider</code> is able to geocode and reverse geocode <strong>street addresses</strong>.</p>
+<p>The <code>CloudMadeProvider</code> is able to geocode and reverse geocode <strong>street addresses</strong>.
+A valid api key is required.</p>
 
 <h3>GeoipProvider</h3>
 
@@ -205,11 +215,30 @@ See the <a href="http://www.maxmind.com/app/php">MaxMind page</a> for more infor
 
 <h3>IGNOpenLSProvider</h3>
 
-<p>The <code>IGNOpenLSProvider</code> is able to geocode <strong>street addresses</strong> only, exclusively in France.</p>
+<p>The <code>IGNOpenLSProvider</code> is able to geocode <strong>street addresses</strong> only, exclusively in France.
+A valid api key is required.</p>
 
 <h3>DataScienceToolkitProvider</h3>
 
 <p>The <code>DataScienceToolkitProvider</code> is able to geocode <strong>IPv4 addresses</strong> only.</p>
+
+<h3>YandexProvider</h3>
+
+<p>The <code>YandexProvider</code> is able to geocode and reverse geocode <strong>street addresses</strong>.
+The default langage-locale is <code>ru-RU</code>, you can choose between <code>uk-UA</code>, <code>be-BY</code>,
+<code>en-US</code>, <code>en-BR</code> and <code>tr-TR</code>.
+This provider can also reverse information based on coordinates (latitude,
+longitude). It's possible to precise the toponym to get more accurate result:
+<code>house</code>, <code>street</code>, <code>metro</code>, <code>district</code> and <code>locality</code>.</p>
+
+<h3>GeoPluginProvider</h3>
+
+<p>The <code>GeoPluginProvider</code> is able to geocode <strong>IPv4 addresses and IPv6 addresses</strong> only.</p>
+
+<h3>GeoIPsProvider</h3>
+
+<p>The <code>GeoIPsProvider</code> is able to geocode <strong>IPv4 addresses</strong> only.
+A valid api key is required.</p>
 
 <p>You can use one of them or write your own provider. You can also register all providers and decide later.
 That's we'll do:</p>
@@ -449,6 +478,7 @@ it's really easy to format a <code>ResultInterface</code> object as a string:</p
     <span class="c">&lt;!-- &lt;server name="BINGMAPS_API_KEY" value="YOUR_API_KEY" /&gt; --&gt;</span>
     <span class="c">&lt;!-- &lt;server name="CLOUDMADE_API_KEY" value="YOUR_API_KEY" /&gt; --&gt;</span>
     <span class="c">&lt;!-- &lt;server name="IGN_WEB_API_KEY" value="YOUR_API_KEY" /&gt; --&gt;</span>
+    <span class="c">&lt;!-- &lt;server name="GEOIPS_API_KEY" value="YOUR_API_KEY" /&gt; --&gt;</span>
 <span class="nt">&lt;/php&gt;</span>
 </pre></div>
 
