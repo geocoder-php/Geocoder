@@ -305,8 +305,8 @@ The `geocode()` method returns a `Geocoded` result object with the following API
 * `getRegion()` will return the `region`;
 * `getRegionCode()` will return the `region` code (region short name);
 * `getCountry()` will return the `country`;
-* `getCountryCode()` will return the ISO country code;
-* `getTimezone()` will return the timezone.
+* `getCountryCode()` will return the ISO `country` code;
+* `getTimezone()` will return the `timezone`.
 
 The Geocoder's API is fluent, you can write:
 
@@ -320,7 +320,7 @@ $result = $geocoder
     ;
 ```
 
-The `using()` method allows you to choose the `adapter` to use. When you deal with multiple adapters, you may want to
+The `using()` method allows you to choose the `provider` to use. When you deal with multiple providers, you may want to
 choose one of them. The default behavior is to use the first one but it can be annoying.
 
 
