@@ -144,7 +144,8 @@ class OpenStreetMapsProvider extends AbstractProvider implements ProviderInterfa
     }
 
     /**
-     * @param  string $query
+     * @param string $query
+     *
      * @return string
      */
     protected function executeQuery($query)

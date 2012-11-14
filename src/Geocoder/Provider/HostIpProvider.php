@@ -63,7 +63,8 @@ class HostIpProvider extends AbstractProvider implements ProviderInterface
     }
 
     /**
-     * @param  string $query
+     * @param string $query
+     *
      * @return array
      */
     protected function executeQuery($query)

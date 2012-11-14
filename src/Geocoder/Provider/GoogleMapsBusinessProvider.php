@@ -73,7 +73,8 @@ class GoogleMapsBusinessProvider extends GoogleMapsProvider
      * Note that this URL must be properly URL-encoded
      * src: http://gmaps-samples.googlecode.com/svn/trunk/urlsigning/UrlSigner.php-source
      *
-     * @param  string $query Query to be signed
+     * @param string $query Query to be signed
+     *
      * @return string $query Query with signature appended.
      */
     protected function signQuery($query)

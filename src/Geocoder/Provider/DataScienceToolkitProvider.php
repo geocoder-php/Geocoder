@@ -62,7 +62,8 @@ class DataScienceToolkitProvider extends AbstractProvider implements ProviderInt
     }
 
     /**
-     * @param  string $query
+     * @param string $query
+     *
      * @return array
      */
     protected function executeQuery($query)
