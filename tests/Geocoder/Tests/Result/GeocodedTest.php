@@ -149,7 +149,8 @@ class GeocodedTest extends TestCase
             'zipcode'   => '65943',
             'region'    => 'FOO region',
             'country'   => 'FOO Country',
-            'timezone'  => 'Foo/Timezone'
+            'timezone'  => 'Foo/Timezone',
+            'countryCode' => 'XX'
         );
 
         $this->geocoded->fromArray($array);
@@ -163,6 +164,8 @@ class GeocodedTest extends TestCase
         $this->assertEquals('Foo Region', $this->geocoded['region']);
         $this->assertEquals('Foo Country', $this->geocoded['country']);
         $this->assertEquals('Foo/Timezone', $this->geocoded['timezone']);
+
+        $this->assertEquals('XX', $this->geocoded['countryCode']);
 
         // array access is case independant
         $this->assertEquals(0.001, $this->geocoded['LATITUDE']);
