@@ -59,20 +59,14 @@ class HostIpProviderTest extends TestCase
         $this->assertEquals('localhost', $result['country']);
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedExceptionMessage The HostIpProvider does not support IPv6 addresses.
+     */
     public function testGetGeocodedDataWithLocalhostIPv6()
     {
         $provider = new HostIpProvider($this->getMockAdapter($this->never()));
         $result = $provider->getGeocodedData('::1');
-
-        $this->assertArrayNotHasKey('latitude', $result);
-        $this->assertArrayNotHasKey('longitude', $result);
-        $this->assertArrayNotHasKey('zipcode', $result);
-        $this->assertArrayNotHasKey('timezone', $result);
-
-        $this->assertEquals('localhost', $result['city']);
-        $this->assertEquals('localhost', $result['region']);
-        $this->assertEquals('localhost', $result['county']);
-        $this->assertEquals('localhost', $result['country']);
     }
 
     /**

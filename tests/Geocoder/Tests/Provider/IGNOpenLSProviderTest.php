@@ -113,13 +113,13 @@ class IGNOpenLSProviderTest extends TestCase
 
         // hard-coded
         $this->assertEquals('France', $result['country']);
+        $this->assertEquals('FR', $result['countryCode']);
         $this->assertEquals('Europe/Paris', $result['timezone']);
 
         // not provided
         $this->assertNull($result['bounds']);
         $this->assertNull($result['region']);
         $this->assertNull($result['regionCode']);
-        $this->assertNull($result['countryCode']);
     }
 
     public function testGetGeocodedDataWithRealAddressTwo()
@@ -140,13 +140,13 @@ class IGNOpenLSProviderTest extends TestCase
 
         // hard-coded
         $this->assertEquals('France', $result['country']);
+        $this->assertEquals('FR', $result['countryCode']);
         $this->assertEquals('Europe/Paris', $result['timezone']);
 
         // not provided
         $this->assertNull($result['bounds']);
         $this->assertNull($result['region']);
         $this->assertNull($result['regionCode']);
-        $this->assertNull($result['countryCode']);
     }
 
     /**
