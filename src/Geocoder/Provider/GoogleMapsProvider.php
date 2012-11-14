@@ -146,7 +146,7 @@ class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
             );
         }
 
-        return $resultset;
+        return array_merge($this->getDefaults(), $resultset);
     }
 
     /**

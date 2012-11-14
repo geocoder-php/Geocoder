@@ -96,9 +96,9 @@ class HostIpProviderTest extends TestCase
 
         $this->assertEquals(45.5333, $result['latitude'], '', 0.0001);
         $this->assertEquals(2.6167, $result['longitude'], '', 0.0001);
-        $this->assertArrayNotHasKey('zipcode', $result);
+        $this->assertNull($result['zipcode']);
         $this->assertEquals('Aulnat', $result['city']);
-        $this->assertArrayNotHasKey('region', $result);
+        $this->assertNull($result['region']);
         $this->assertEquals('FRANCE', $result['country']);
         $this->assertEquals('FR', $result['countryCode']);
     }

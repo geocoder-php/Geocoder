@@ -138,7 +138,7 @@ class YahooProvider extends AbstractProvider implements ProviderInterface
             $zipcode = $parts[0];
         }
 
-        return array(
+        return array_merge($this->getDefaults(), array(
             'latitude'      => isset($data['latitude']) ? $data['latitude'] : null,
             'longitude'     => isset($data['longitude']) ? $data['longitude'] : null,
             'bounds'        => $bounds,
@@ -149,10 +149,9 @@ class YahooProvider extends AbstractProvider implements ProviderInterface
             'cityDistrict'  => isset($data['neighborhood']) ? $data['neighborhood'] : null,
             'county'        => isset($data['county']) ? $data['county'] : null,
             'region'        => isset($data['state']) ? $data['state'] : null,
-            'regionCode'    => null,
             'country'       => isset($data['country']) ? $data['country'] : null,
             'countryCode'   => isset($data['countrycode']) ? $data['countrycode'] : null,
             'timezone'      => isset($data['timezone']) ? $data['timezone'] : null
-        );
+        ));
     }
 }

@@ -76,20 +76,18 @@ class OIORestProvider extends AbstractProvider implements ProviderInterface
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
-        return array(
+        return array_merge($this->getDefaults(), array(
             'latitude'     => isset($data['wgs84koordinat']['bredde']) ? $data['wgs84koordinat']['bredde'] : null,
             'longitude'    => isset($data['wgs84koordinat']['længde']) ? $data['wgs84koordinat']['længde'] : null,
-            'bounds'       => null,
             'streetNumber' => isset($data['husnr']) ? $data['husnr'] : null,
             'streetName'   => isset($data['vejnavn']['navn']) ? $data['vejnavn']['navn'] : null,
             'city'         => isset($data['postnummer']['navn']) ? $data['postnummer']['navn'] : null,
             'zipcode'      => isset($data['postnummer']['nr']) ? $data['postnummer']['nr'] : null,
             'cityDistrict' => isset($data['kommune']['navn']) ? $data['kommune']['navn'] : null,
             'region'       => isset($data['region']['navn']) ? $data['region']['navn'] : null,
-            'regionCode'   => null,
             'country'      => 'Denmark',
             'countryCode'  => 'DK',
             'timezone'     => 'Europe/Copenhagen'
-        );
+        ));
     }
 }

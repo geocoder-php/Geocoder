@@ -134,21 +134,17 @@ class CloudMadeProvider extends AbstractProvider implements ProviderInterface
             $streetName = $data['location']->road;
         }
 
-        return array(
-            'latitude'      => $coordinates[0],
-            'longitude'     => $coordinates[1],
-            'bounds'        => $bounds,
-            'streetNumber'  => $streetNumber,
-            'streetName'    => $streetName,
-            'city'          => isset($data['location']->city) ? $data['location']->city : null,
-            'zipcode'       => isset($data['location']->zipcode) ? $data['location']->zipcode : null,
-            'cityDistrict'  => null,
-            'region'        => isset($data['location']->county) ? $data['location']->county : null,
-            'regionCode'    => null,
-            'county'        => isset($data['location']->county) ? $data['location']->county : null,
-            'country'       => isset($data['location']->country) ? $data['location']->country : null,
-            'countryCode'   => null,
-            'timezone'      => null,
-        );
+        return array_merge($this->getDefaults(), array(
+            'latitude'     => $coordinates[0],
+            'longitude'    => $coordinates[1],
+            'bounds'       => $bounds,
+            'streetNumber' => $streetNumber,
+            'streetName'   => $streetName,
+            'city'         => isset($data['location']->city) ? $data['location']->city : null,
+            'zipcode'      => isset($data['location']->zipcode) ? $data['location']->zipcode : null,
+            'region'       => isset($data['location']->county) ? $data['location']->county : null,
+            'county'       => isset($data['location']->county) ? $data['location']->county : null,
+            'country'      => isset($data['location']->country) ? $data['location']->country : null,
+        ));
     }
 }
