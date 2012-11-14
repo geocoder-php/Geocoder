@@ -83,21 +83,18 @@ class IGNOpenLSProvider extends AbstractProvider implements ProviderInterface
         $streetNumber = $xpath->xpath('//xls:Building');
         $cityDistrict = $xpath->xpath('//xls:Street');
 
-        return array(
+        return array_merge($this->getDefaults(), array(
             'latitude'     => isset($positions[0]) ? (float) $positions[0] : null,
             'longitude'    => isset($positions[1]) ? (float) $positions[1] : null,
-            'bounds'       => null,
             'streetNumber' => isset($streetNumber[0]) ? (string) $streetNumber[0]->attributes() : null,
             'streetName'   => isset($cityDistrict[0]) ? (string) $cityDistrict[0] : null,
             'city'         => isset($city[0]) ? (string) $city[0] : null,
             'zipcode'      => isset($zipcode[0]) ? (string) $zipcode[0] : null,
             'cityDistrict' => isset($cityDistrict[0]) ? (string) $cityDistrict[0] : null,
-            'region'       => null,
-            'regionCode'   => null,
             'country'      => 'France',
             'countryCode'  => 'FR',
             'timezone'     => 'Europe/Paris'
-        );
+        ));
     }
 
     /**

@@ -46,23 +46,10 @@ class GeocoderCaProvider extends AbstractProvider implements ProviderInterface
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
-        return array(
-            'latitude'     => $this->getNodeValue($doc->getElementsByTagName('latt')),
-            'longitude'    => $this->getNodeValue($doc->getElementsByTagName('longt')),
-            'bounds'       => null,
-            'streetNumber' => null,
-            'streetName'   => null,
-            'city'         => null,
-            'zipcode'      => null,
-            'cityDistrict' => null,
-            'region'       => null,
-            'regionCode'   => null,
-            'country'      => null,
-            'countryCode'  => null,
-            'timezone'     => null
-        );
-
-
+        return array_merge($this->getDefaults(), array(
+            'latitude'  => $this->getNodeValue($doc->getElementsByTagName('latt')),
+            'longitude' => $this->getNodeValue($doc->getElementsByTagName('longt'))
+        ));
     }
 
     /**
@@ -78,21 +65,15 @@ class GeocoderCaProvider extends AbstractProvider implements ProviderInterface
             throw new NoResultException(sprintf('Could not resolve coordinates %s', implode(', ', $coordinates)));
         }
 
-        return array(
+        return array_merge($this->getDefaults(), array(
             'latitude'     => $this->getNodeValue($doc->getElementsByTagName('latt')),
             'longitude'    => $this->getNodeValue($doc->getElementsByTagName('longt')),
-            'bounds'       => null,
             'streetNumber' => $this->getNodeValue($doc->getElementsByTagName('stnumber')),
             'streetName'   => $this->getNodeValue($doc->getElementsByTagName('staddress')),
             'city'         => $this->getNodeValue($doc->getElementsByTagName('city')),
             'zipcode'      => $this->getNodeValue($doc->getElementsByTagName('postal')),
             'cityDistrict' => $this->getNodeValue($doc->getElementsByTagName('prov')),
-            'region'       => null,
-            'regionCode'   => null,
-            'country'      => null,
-            'countryCode'  => null,
-            'timezone'     => null
-        );
+        ));
     }
 
     /**

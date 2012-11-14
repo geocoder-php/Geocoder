@@ -83,22 +83,16 @@ class MapQuestProvider extends AbstractProvider implements ProviderInterface
 
                 // TODO: maybe add more information using the link below:
                 // http://open.mapquestapi.com/geocoding/
-                return array(
+                return array_merge($this->getDefaults(), array(
                     'latitude'      => $location['latLng']['lat'],
                     'longitude'     => $location['latLng']['lng'],
-                    'bounds'        => null,
-                    'streetNumber'  => null,
                     'streetName'    => $location['street'] ?: null,
                     'city'          => $location['adminArea5'] ?: null,
                     'zipcode'       => $location['postalCode'] ?: null,
-                    'cityDistrict'  => null,
                     'county'        => $location['adminArea4'] ?: null,
                     'region'        => $location['adminArea3'] ?: null,
-                    'regionCode'    => null,
                     'country'       => $location['adminArea1'] ?: null,
-                    'countryCode'   => null,
-                    'timezone'      => null,
-                );
+                ));
             }
         }
 

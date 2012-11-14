@@ -132,7 +132,7 @@ class OpenStreetMapsProvider extends AbstractProvider implements ProviderInterfa
         $ret['country']      = $this->getNodeValue($addressParts->getElementsByTagName('country'));
         $ret['countryCode']  = strtoupper($this->getNodeValue($addressParts->getElementsByTagName('country_code')));
 
-        return $ret;
+        return array_merge($this->getDefaults(), $ret);
     }
 
     /**
