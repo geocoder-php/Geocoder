@@ -10,7 +10,7 @@
 
 namespace Geocoder\HttpAdapter;
 
-use Geocoder\Exception\RuntimeException;
+use Geocoder\Exception\ExtensionNotLoadedException;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -23,7 +23,7 @@ class CurlHttpAdapter implements HttpAdapterInterface
     public function getContent($url)
     {
         if (!function_exists('curl_init')) {
-            throw new RuntimeException('cURL has to be enabled.');
+            throw new ExtensionNotLoadedException('cURL has to be enabled.');
         }
 
         $c = curl_init();
