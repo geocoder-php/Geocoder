@@ -96,7 +96,7 @@ class YandexProvider extends AbstractProvider implements ProviderInterface
         $content = $this->getAdapter()->getContent($query);
         $result  = (array) json_decode($content, true);
 
-        if (empty($result) || 0 == $result['response']['GeoObjectCollection']['metaDataProperty']['GeocoderResponseMetaData']['found']) {
+        if (empty($result) || '0' === $result['response']['GeoObjectCollection']['metaDataProperty']['GeocoderResponseMetaData']['found']) {
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
