@@ -10,6 +10,8 @@
 
 namespace Geocoder\HttpAdapter;
 
+use Geocoder\Exception\RuntimeException;
+
 /**
  * @author Markus Bachmann <markus.bachmann@bachi.biz>
  */
@@ -35,7 +37,7 @@ class SocketHttpAdapter implements HttpAdapterInterface
         $socketHandle = $this->createSocket($hostname, $port, 30);
 
         if (!fwrite($socketHandle, $this->buildHttpRequest($path, $hostname))) {
-            throw new \RuntimeException('Could not send the request');
+            throw new RuntimeException('Could not send the request');
         }
 
         $httpResponse = $this->getParsedHttpResponse($socketHandle);
@@ -44,14 +46,14 @@ class SocketHttpAdapter implements HttpAdapterInterface
             if (--$this->redirects_remaining) {
                 return $this->getContent($httpResponse['headers']['location']);
             } else {
-                throw new \RuntimeException('Too Many Redirects');
+                throw new RuntimeException('Too Many Redirects');
             }
         } else {
             $this->redirects_remaining = self::MAX_REDIRECTS;
         }
 
         if ($httpResponse['headers']['status'] !== 200) {
-            throw new \RuntimeException(sprintf('The server return a %s status.', $httpResponse['headers']['status']));
+            throw new RuntimeException(sprintf('The server return a %s status.', $httpResponse['headers']['status']));
         }
 
         return $httpResponse['content'];
@@ -65,7 +67,7 @@ class SocketHttpAdapter implements HttpAdapterInterface
      * @param  string            $port
      * @param  int               $timeout
      * @return resource
-     * @throws \RuntimeException
+     * @throws RuntimeException
      */
     protected function createSocket($hostname, $port, $timeout)
     {
@@ -73,7 +75,7 @@ class SocketHttpAdapter implements HttpAdapterInterface
 
         //verify handle
         if (null === $socketHandle) {
-            throw new \RuntimeException(sprintf('Could not connect to socket. (%s)', $errstr));
+            throw new RuntimeException(sprintf('Could not connect to socket. (%s)', $errstr));
         }
 
         return $socketHandle;
