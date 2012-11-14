@@ -27,7 +27,7 @@ class YandexProvider extends AbstractProvider implements ProviderInterface
     /**
      * @var string
      */
-    const REVERSE_ENDPOINT_URL = 'http://geocode-maps.yandex.ru/1.x/?results=1&format=json&geocode=%s,%s';
+    const REVERSE_ENDPOINT_URL = 'http://geocode-maps.yandex.ru/1.x/?results=1&format=json&geocode=%F,%F';
 
     /**
      * @var string
@@ -96,7 +96,7 @@ class YandexProvider extends AbstractProvider implements ProviderInterface
         $content = $this->getAdapter()->getContent($query);
         $result  = (array) json_decode($content, true);
 
-        if (empty($result) || $result['response']['GeoObjectCollection']['metaDataProperty']['GeocoderResponseMetaData']['found'] == 0) {
+        if (empty($result) || '0' === $result['response']['GeoObjectCollection']['metaDataProperty']['GeocoderResponseMetaData']['found']) {
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
@@ -110,15 +110,15 @@ class YandexProvider extends AbstractProvider implements ProviderInterface
         $lowerCorner    = explode(' ', $result['boundedBy']['Envelope']['lowerCorner']);
         $upperCorner    = explode(' ', $result['boundedBy']['Envelope']['upperCorner']);
         $bounds         = array(
-            'south' => isset($lowerCorner[1]) ? (float) $lowerCorner[1] : null,
-            'west'  => isset($lowerCorner[0]) ? (float) $lowerCorner[0] : null,
-            'north' => isset($upperCorner[1]) ? (float) $upperCorner[1] : null,
-            'east'  => isset($upperCorner[0]) ? (float) $upperCorner[0] : null
+            'south' => isset($lowerCorner[1]) ? $lowerCorner[1] : null,
+            'west'  => isset($lowerCorner[0]) ? $lowerCorner[0] : null,
+            'north' => isset($upperCorner[1]) ? $upperCorner[1] : null,
+            'east'  => isset($upperCorner[0]) ? $upperCorner[0] : null
         );
 
         return array(
-            'latitude'      => isset($coordinates[1]) ? (float) $coordinates[1] : null,
-            'longitude'     => isset($coordinates[0]) ? (float) $coordinates[0] : null,
+            'latitude'      => isset($coordinates[1]) ? $coordinates[1] : null,
+            'longitude'     => isset($coordinates[0]) ? $coordinates[0] : null,
             'bounds'        => $bounds,
             'streetNumber'  => isset($locality['Premise']['PremiseNumber']) ? $locality['Premise']['PremiseNumber'] : null,
             'streetName'    => isset($locality['ThoroughfareName']) ? $locality['ThoroughfareName'] : null,

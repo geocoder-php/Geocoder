@@ -188,7 +188,7 @@ class YandexProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResultException
-     * @expectedExceptionMessage Could not execute query http://geocode-maps.yandex.ru/1.x/?results=1&format=json&geocode=2,1
+     * @expectedExceptionMessage Could not execute query http://geocode-maps.yandex.ru/1.x/?results=1&format=json&geocode=2.000000,1.000000
      */
     public function testGetReversedData()
     {
@@ -198,7 +198,7 @@ class YandexProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResultException
-     * @expectedExceptionMessage Could not execute query http://geocode-maps.yandex.ru/1.x/?results=1&format=json&geocode=bar,foo
+     * @expectedExceptionMessage Could not execute query http://geocode-maps.yandex.ru/1.x/?results=1&format=json&geocode=0.000000,0.000000
      */
     public function testGetReversedDataWithInvalidData()
     {
@@ -208,7 +208,7 @@ class YandexProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResultException
-     * @expectedExceptionMessage Could not execute query http://geocode-maps.yandex.ru/1.x/?results=1&format=json&geocode=2.3887719959021,48.863216489553
+     * @expectedExceptionMessage Could not execute query http://geocode-maps.yandex.ru/1.x/?results=1&format=json&geocode=2.388772,48.863216
      */
     public function testGetReversedDataWithAddressGetsNullContent()
     {

@@ -95,7 +95,7 @@ class IGNOpenLSProvider extends AbstractProvider implements ProviderInterface
             'region'       => null,
             'regionCode'   => null,
             'country'      => 'France',
-            'countryCode'  => null,
+            'countryCode'  => 'FR',
             'timezone'     => 'Europe/Paris'
         );
     }

@@ -26,7 +26,7 @@ class GeocoderCaProvider extends AbstractProvider implements ProviderInterface
     /**
      * @var string
      */
-    const REVERSE_ENDPOINT_URL = 'http://geocoder.ca/?geoit=xml&reverse=1&latt=%s&longt=%s';
+    const REVERSE_ENDPOINT_URL = 'http://geocoder.ca/?geoit=xml&reverse=1&latt=%F&longt=%F';
 
     /**
      * {@inheritDoc}
