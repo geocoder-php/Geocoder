@@ -345,23 +345,11 @@ class Geocoded implements ResultInterface, \ArrayAccess
 
     private function lowerize($str)
     {
-        if (extension_loaded('mbstring')) {
-            $str = mb_strtolower($str, 'UTF-8');
-        } else {
-            $str = strtolower($str);
-        }
-
-        return $str;
+        return extension_loaded('mbstring') ? mb_strtolower($str, 'UTF-8') : strtolower($str);
     }
 
     private function upperize($str)
     {
-        if (extension_loaded('mbstring')) {
-            $str = mb_strtoupper($str, 'UTF-8');
-        } else {
-            $str = strtoupper($str);
-        }
-
-        return $str;
+        return extension_loaded('mbstring') ? mb_strtoupper($str, 'UTF-8') : strtoupper($str);
     }
 }
