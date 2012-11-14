@@ -76,13 +76,13 @@ class DataScienceToolkitProvider extends AbstractProvider implements ProviderInt
 
         $result = array_shift($result);
 
-        return array(
+        return array_merge($this->getDefaults(), array(
             'latitude'    => $result['latitude'],
             'longitude'   => $result['longitude'],
             'city'        => $result['locality'],
             'country'     => $result['country_name'],
             'countryCode' => $result['country_code'],
-            'zipcode'	  => $result['postal_code']
-        );
+            'zipcode'	  => $result['postal_code'],
+        ));
     }
 }

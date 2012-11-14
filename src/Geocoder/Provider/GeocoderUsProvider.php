@@ -72,20 +72,9 @@ class GeocoderUsProvider extends AbstractProvider implements ProviderInterface
         $lat  = $xpath->xpath('//geo:lat');
         $long = $xpath->xpath('//geo:long');
 
-        return array(
-            'latitude'     => isset($lat[0]) ? (double) $lat[0] : null,
-            'longitude'    => isset($long[0]) ? (double) $long[0] : null,
-            'bounds'       => null,
-            'streetNumber' => null,
-            'streetName'   => null,
-            'city'         => null,
-            'zipcode'      => null,
-            'cityDistrict' => null,
-            'region'       => null,
-            'regionCode'   => null,
-            'country'      => null,
-            'countryCode'  => null,
-            'timezone'     => null
-        );
+        return array_merge($this->getDefaults(), array(
+            'latitude'  => isset($lat[0]) ? (double) $lat[0] : null,
+            'longitude' => isset($long[0]) ? (double) $long[0] : null,
+        ));
     }
 }

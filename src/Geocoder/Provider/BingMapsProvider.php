@@ -132,21 +132,17 @@ class BingMapsProvider extends AbstractProvider implements ProviderInterface
         $region       = property_exists($data['address'], 'adminDistrict') ? (string) $data['address']->adminDistrict: '';
         $country      = property_exists($data['address'], 'countryRegion') ? (string) $data['address']->countryRegion: '';
 
-        return array(
-            'latitude'      => $coordinates[0],
-            'longitude'     => $coordinates[1],
-            'bounds'        => $bounds,
-            'streetNumber'  => $streetNumber,
-            'streetName'    => $streetName,
-            'city'          => empty($city) ? null : $city,
-            'zipcode'       => empty($zipcode) ? null : $zipcode,
-            'cityDistrict'  => null,
-            'county'        => empty($county) ? null : $county,
-            'region'        => empty($region) ? null : $region,
-            'regionCode'    => null,
-            'country'       => empty($country) ? null : $country,
-            'countryCode'   => null,
-            'timezone'      => null,
-        );
+        return array_merge($this->getDefaults(), array(
+            'latitude'     => $coordinates[0],
+            'longitude'    => $coordinates[1],
+            'bounds'       => $bounds,
+            'streetNumber' => $streetNumber,
+            'streetName'   => $streetName,
+            'city'         => empty($city) ? null : $city,
+            'zipcode'      => empty($zipcode) ? null : $zipcode,
+            'county'       => empty($county) ? null : $county,
+            'region'       => empty($region) ? null : $region,
+            'country'      => empty($country) ? null : $country,
+        ));
     }
 }

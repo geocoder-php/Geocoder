@@ -104,12 +104,12 @@ class HostIpProvider extends AbstractProvider implements ProviderInterface
         $countryCode = (string) $dataNode
             ->countryAbbrev;
 
-        return array(
+        return array_merge($this->getDefaults(), array(
             'latitude'    => $lngLat[1],
             'longitude'   => $lngLat[0],
             'city'        => $city,
             'country'     => $country,
-            'countryCode' => $countryCode
-        );
+            'countryCode' => $countryCode,
+        ));
     }
 }

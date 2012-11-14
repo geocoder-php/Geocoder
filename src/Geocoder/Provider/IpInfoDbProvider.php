@@ -107,16 +107,15 @@ class IpInfoDbProvider extends AbstractProvider implements ProviderInterface
             $timezone = timezone_name_from_abbr("", (int) substr($data['timeZone'], 0, strpos($data['timeZone'], ':')) * 3600, 0);
         }
 
-        return array(
+        return array_merge($this->getDefaults(), array(
             'latitude'    => isset($data['latitude']) ? $data['latitude'] : null,
             'longitude'   => isset($data['longitude']) ? $data['longitude'] : null,
             'city'        => isset($data['cityName']) ? $data['cityName'] : null,
             'zipcode'     => isset($data['zipCode']) ? $data['zipCode'] : null,
             'region'      => isset($data['regionName']) ? $data['regionName'] : null,
-            'regionCode'  => null,
             'country'     => isset($data['countryName']) ? $data['countryName'] : null,
             'countryCode' => isset($data['countryName']) ? $data['countryCode'] : null,
-            'timezone'    => $timezone
-        );
+            'timezone'    => $timezone,
+        ));
     }
 }

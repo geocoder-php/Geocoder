@@ -116,20 +116,15 @@ class YandexProvider extends AbstractProvider implements ProviderInterface
             'east'  => isset($upperCorner[0]) ? $upperCorner[0] : null
         );
 
-        return array(
+        return array_merge($this->getDefaults(), array(
             'latitude'      => isset($coordinates[1]) ? $coordinates[1] : null,
             'longitude'     => isset($coordinates[0]) ? $coordinates[0] : null,
             'bounds'        => $bounds,
             'streetNumber'  => isset($locality['Premise']['PremiseNumber']) ? $locality['Premise']['PremiseNumber'] : null,
             'streetName'    => isset($locality['ThoroughfareName']) ? $locality['ThoroughfareName'] : null,
-            'city'          => null,
-            'zipcode'       => null,
             'cityDistrict'  => isset($addressDetails['AdministrativeAreaName']) ? $addressDetails['AdministrativeAreaName'] : null,
-            'region'        => null,
-            'regionCode'    => null,
             'country'       => isset($country['CountryName']) ? $country['CountryName'] : null,
             'countryCode'   => isset($country['CountryNameCode']) ? $country['CountryNameCode'] : null,
-            'timezone'      => null,
-        );
+        ));
     }
 }
