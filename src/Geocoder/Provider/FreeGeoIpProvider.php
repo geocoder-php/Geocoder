@@ -110,11 +110,7 @@ class FreeGeoIpProvider extends AbstractProvider implements ProviderInterface
     {
         $codes = $this->getRegionCodes();
 
-        if (array_key_exists($state, $codes)) {
-            return $codes[$state];
-        }
-
-        return $state;
+        return array_key_exists($state, $codes) ? $codes[$state] : $state;
     }
 
     /**
