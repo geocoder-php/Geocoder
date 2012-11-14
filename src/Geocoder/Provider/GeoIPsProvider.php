@@ -28,7 +28,7 @@ class GeoIPsProvider extends AbstractProvider implements ProviderInterface
     /**
      * @var string
      */
-    private $apiKey;
+    private $apiKey = null;
 
     /**
      * @param HttpAdapterInterface $adapter
@@ -59,7 +59,7 @@ class GeoIPsProvider extends AbstractProvider implements ProviderInterface
             throw new UnsupportedException('The GeoIPsProvider does not support IPv6 addresses.');
         }
 
-        if ($address === '127.0.0.1') {
+        if ('127.0.0.1' === $address) {
             return $this->getLocalhostDefaults();
         }
 
