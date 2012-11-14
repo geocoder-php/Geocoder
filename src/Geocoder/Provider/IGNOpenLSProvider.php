@@ -64,11 +64,7 @@ class IGNOpenLSProvider extends AbstractProvider implements ProviderInterface
         $content = $this->getAdapter()->getContent($query);
         $data    = (array) json_decode($content, true);
 
-        if (empty($data)) {
-            throw new NoResultException(sprintf('Could not execute query %s', $query));
-        }
-
-        if (null === $data['xml']) {
+        if (empty($data) || null === $data['xml']) {
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 

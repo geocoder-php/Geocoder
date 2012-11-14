@@ -158,10 +158,6 @@ class OpenStreetMapsProvider extends AbstractProvider implements ProviderInterfa
 
     private function getNodeValue($element)
     {
-        if ($element->length) {
-            return $element->item(0)->nodeValue;
-        }
-
-        return null;
+        return $element->length ? $element->item(0)->nodeValue : null;
     }
 }
