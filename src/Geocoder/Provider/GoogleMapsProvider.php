@@ -71,7 +71,8 @@ class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
     }
 
     /**
-     * @param  string $query
+     * @param string $query
+     *
      * @return string Query with extra params
      */
     protected function buildQuery($query)
@@ -88,7 +89,8 @@ class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
     }
 
     /**
-     * @param  string $query
+     * @param string $query
+     *
      * @return array
      */
     protected function executeQuery($query)
@@ -152,9 +154,10 @@ class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
     /**
      * Update current resultset with given key/value.
      *
-     * @param  array  $resultset resultset to update.
-     * @param  String $type      component type.
-     * @param  object $values    the component values;
+     * @param array  $resultset Resultset to update.
+     * @param string $type      Component type.
+     * @param object $values    The component values;
+     *
      * @return array
      */
     protected function updateAddressComponent(&$resultset, $type, $values)

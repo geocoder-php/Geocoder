@@ -20,7 +20,7 @@ class SocketHttpAdapter implements HttpAdapterInterface
 {
     const MAX_REDIRECTS = 5;
 
-    private $redirects_remaining = self::MAX_REDIRECTS;
+    private $redirectsRemaining = self::MAX_REDIRECTS;
 
     /**
      * {@inheritDoc}
@@ -44,13 +44,13 @@ class SocketHttpAdapter implements HttpAdapterInterface
         $httpResponse = $this->getParsedHttpResponse($socketHandle);
 
         if ($httpResponse['headers']['status'] === 301 && isset($httpResponse['headers']['location'])) {
-            if (--$this->redirects_remaining) {
+            if (--$this->redirectsRemaining) {
                 return $this->getContent($httpResponse['headers']['location']);
             } else {
                 throw new HttpException('Too Many Redirects');
             }
         } else {
-            $this->redirects_remaining = self::MAX_REDIRECTS;
+            $this->redirectsRemaining = self::MAX_REDIRECTS;
         }
 
         if ($httpResponse['headers']['status'] !== 200) {
@@ -64,9 +64,10 @@ class SocketHttpAdapter implements HttpAdapterInterface
      * This method strictly doesn't need to exist but can act as a "seam" for substituting fake sockets in test.
      * This would require a subclass that overloads the method and returns the fake socket.
      *
-     * @param  string        $hostname
-     * @param  string        $port
-     * @param  int           $timeout
+     * @param string  $hostname The hostname.
+     * @param string  $port     The port number.
+     * @param integer $timeout  The timeout.
+     *
      * @return resource
      * @throws HttpException
      */
@@ -83,8 +84,9 @@ class SocketHttpAdapter implements HttpAdapterInterface
     }
 
     /**
-     * @param  string $path
-     * @param  string $hostname
+     * @param string $path     The path.
+     * @param string $hostname The hostname.
+     *
      * @return string
      */
     protected function buildHttpRequest($path, $hostname)
@@ -102,7 +104,8 @@ class SocketHttpAdapter implements HttpAdapterInterface
     /**
      * Given a resource parse the contents into its component parts (headers/contents)
      *
-     * @param  resource $socketHandle
+     * @param resource $socketHandle
+     *
      * @return array
      */
     protected function getParsedHttpResponse($socketHandle)

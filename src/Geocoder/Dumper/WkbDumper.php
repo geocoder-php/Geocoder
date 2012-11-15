@@ -19,7 +19,8 @@ use Geocoder\Result\ResultInterface;
 class WkbDumper implements DumperInterface
 {
     /**
-     * @param  ResultInterface $result
+     * @param ResultInterface $result
+     *
      * @return string
      */
     public function dump(ResultInterface $result)
