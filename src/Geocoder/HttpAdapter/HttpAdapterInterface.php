@@ -18,6 +18,8 @@ interface HttpAdapterInterface
     /**
      * Returns the content fetched from a given URL.
      *
+     * @param string $url
+     *
      * @return string
      */
     public function getContent($url);

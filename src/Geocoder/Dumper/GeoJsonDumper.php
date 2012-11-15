@@ -19,7 +19,8 @@ use Geocoder\Result\ResultInterface;
 class GeoJsonDumper implements DumperInterface
 {
     /**
-     * @param  ResultInterface $result
+     * @param ResultInterface $result
+     *
      * @return string
      */
     public function dump(ResultInterface $result)

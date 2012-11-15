@@ -19,7 +19,8 @@ use Geocoder\Result\ResultInterface;
 class KmlDumper extends GpxDumper
 {
     /**
-     * @param  ResultInterface $result
+     * @param ResultInterface $result
+     *
      * @return string
      */
     public function dump(ResultInterface $result)

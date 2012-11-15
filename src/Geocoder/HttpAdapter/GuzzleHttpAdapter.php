@@ -17,7 +17,7 @@ use Guzzle\Service\Client;
  * Http adapter for the Guzzle framework
  *
  * @author Michael Dowling <michael@guzzlephp.org>
- * @link http://www.guzzlephp.org
+ * @link   http://www.guzzlephp.org
  */
 class GuzzleHttpAdapter implements HttpAdapterInterface
 {
