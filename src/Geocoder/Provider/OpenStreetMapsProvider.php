@@ -81,6 +81,7 @@ class OpenStreetMapsProvider extends AbstractProvider implements ProviderInterfa
         }
 
         $ret = $this->getDefaults();
+
         $ret['latitude']     = $bestNode->getAttribute('lat');
         $ret['longitude']    = $bestNode->getAttribute('lon');
         $ret['bounds']       = $bounds;
@@ -94,7 +95,7 @@ class OpenStreetMapsProvider extends AbstractProvider implements ProviderInterfa
         $ret['country']      = $this->getNodeValue($bestNode->getElementsByTagName('country'));
         $ret['countryCode']  = strtoupper($this->getNodeValue($bestNode->getElementsByTagName('country_code')));
 
-        return $ret;
+        return array_merge($this->getDefaults(), $ret);
     }
 
     /**
@@ -114,11 +115,11 @@ class OpenStreetMapsProvider extends AbstractProvider implements ProviderInterfa
             throw new NoResultException(sprintf('Could not resolve coordinates %s', implode(', ', $coordinates)));
         }
 
-        $bestNode         = null;
-        $searchResult     = $doc->getElementsByTagName('reversegeocode')->item(0);
-        $addressParts     = $searchResult->getElementsByTagName('addressparts')->item(0);
-        $result           = $searchResult->getElementsByTagName('result')->item(0);
-        $ret              = $this->getDefaults();
+        $bestNode     = null;
+        $searchResult = $doc->getElementsByTagName('reversegeocode')->item(0);
+        $addressParts = $searchResult->getElementsByTagName('addressparts')->item(0);
+        $result       = $searchResult->getElementsByTagName('result')->item(0);
+        $ret          = $this->getDefaults();
 
         $ret['latitude']     = $result->getAttribute('lat');
         $ret['longitude']    = $result->getAttribute('lon');

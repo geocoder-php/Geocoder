@@ -28,11 +28,11 @@ class MaxMindProvider extends AbstractProvider implements ProviderInterface
     /**
      * @var string
      */
-    private $apiKey;
+    private $apiKey = null;
 
     /**
-     * @param \Geocoder\HttpAdapter\HttpAdapterInterface $adapter
-     * @param string                                     $apiKey
+     * @param HttpAdapterInterface $adapter An HTTP adapter.
+     * @param string               $apiKey  An API key.
      */
     public function __construct(HttpAdapterInterface $adapter, $apiKey)
     {
@@ -59,7 +59,7 @@ class MaxMindProvider extends AbstractProvider implements ProviderInterface
             throw new UnsupportedException('The MaxMindProvider does not support IPv6 addresses.');
         }
 
-        if ($address === '127.0.0.1') {
+        if ('127.0.0.1' === $address) {
             return $this->getLocalhostDefaults();
         }
 
@@ -123,7 +123,7 @@ class MaxMindProvider extends AbstractProvider implements ProviderInterface
      */
     protected function countryCodeToCountryName($code)
     {
-        $countryNames = self::getCountryNames();
+        $countryNames = $this->getCountryNames();
 
         return $countryNames[$code];
     }
@@ -139,7 +139,7 @@ class MaxMindProvider extends AbstractProvider implements ProviderInterface
     /**
      * @return array
      */
-    protected static function getCountryNames()
+    private function getCountryNames()
     {
         return array(
             'A1' => "Anonymous Proxy",
