@@ -1,6 +1,20 @@
 CHANGELOG
 =========
 
+### 1.1.3 (???) ###
+
+* Fix ArrayAccess methods in Geocoded class. Fix #150
+* add failing test for mixed case array access
+* Fix timezone in IpInfoDbProviderTest
+* Adding MaxMindProvider + Tests
+* Refactored providers result with array_merge + tests - fix #145
+* Added: HttpException and ExtensionNotLoadedException
+* Fix CS - start to use sf2 coding standard + closes #147
+* Fixed: use identical comparison operator
+* Fixed CS, logic and tests in some providers
+* Use exception interface to respect convention
+* Issue #81: Added Google Maps for Business provider
+
 ### 1.1.2 (2012-11-13) ###
 
 * Removed useless contructor
