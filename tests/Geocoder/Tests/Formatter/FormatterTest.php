@@ -72,7 +72,7 @@ class FormatterTest extends TestCase
             array(
                 array('countryCode' => 'fr'),
                 '%c',
-                'fr'
+                'FR'
             ),
             array(
                 array('timezone' => 'Europe/Paris'),

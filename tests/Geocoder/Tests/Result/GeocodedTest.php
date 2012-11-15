@@ -167,16 +167,6 @@ class GeocodedTest extends TestCase
 
         $this->assertEquals('XX', $this->geocoded['countryCode']);
 
-        // array access is case independant
-        $this->assertEquals(0.001, $this->geocoded['LATITUDE']);
-        $this->assertEquals(1, $this->geocoded['LONGITUDE']);
-        $this->assertInternalType('array', $this->geocoded['BOUNDS']);
-        $this->assertEquals('Foo City', $this->geocoded['CITY']);
-        $this->assertEquals('65943', $this->geocoded['ZIPCODE']);
-        $this->assertEquals('Foo Region', $this->geocoded['REGION']);
-        $this->assertEquals('Foo Country', $this->geocoded['COUNTRY']);
-        $this->assertEquals('Foo/Timezone', $this->geocoded['TIMEZONE']);
-
         // isset
         $this->assertEquals(true, isset($this->geocoded['latitude']));
         $this->assertEquals(true, isset($this->geocoded['longitude']));

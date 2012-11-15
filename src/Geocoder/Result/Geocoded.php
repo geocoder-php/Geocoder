@@ -213,9 +213,11 @@ class Geocoded implements ResultInterface, \ArrayAccess
         if (isset($data['latitude'])) {
             $this->latitude = (double) $data['latitude'];
         }
+
         if (isset($data['longitude'])) {
             $this->longitude = (double) $data['longitude'];
         }
+
         if (isset($data['bounds']) && is_array($data['bounds'])) {
             $this->bounds = array(
                 'south' => (double) $data['bounds']['south'],
@@ -224,36 +226,47 @@ class Geocoded implements ResultInterface, \ArrayAccess
                 'east'  => (double) $data['bounds']['east']
             );
         }
+
         if (isset($data['streetNumber'])) {
             $this->streetNumber = (string) $data['streetNumber'];
         }
+
         if (isset($data['streetName'])) {
             $this->streetName = $this->formatString($data['streetName']);
         }
+
         if (isset($data['city'])) {
             $this->city = $this->formatString($data['city']);
         }
+
         if (isset($data['zipcode'])) {
             $this->zipcode = (string) $data['zipcode'];
         }
+
         if (isset($data['cityDistrict'])) {
             $this->cityDistrict = $this->formatString($data['cityDistrict']);
         }
+
         if (isset($data['county'])) {
             $this->county = $this->formatString($data['county']);
         }
+
         if (isset($data['region'])) {
             $this->region = $this->formatString($data['region']);
         }
+
         if (isset($data['regionCode'])) {
             $this->regionCode = $this->upperize($data['regionCode']);
         }
+
         if (isset($data['country'])) {
             $this->country = $this->formatString($data['country']);
         }
+
         if (isset($data['countryCode'])) {
-            $this->countryCode = $this->lowerize($data['countryCode']);
+            $this->countryCode = $this->upperize($data['countryCode']);
         }
+
         if (isset($data['timezone'])) {
             $this->timezone = (string) $data['timezone'];
         }
@@ -287,7 +300,7 @@ class Geocoded implements ResultInterface, \ArrayAccess
      */
     public function offsetExists($offset)
     {
-        return property_exists($this, $this->lowerize($offset)) && null !== $this->$offset;
+        return property_exists($this, $offset) && null !== $this->$offset;
     }
 
     /**
@@ -295,8 +308,6 @@ class Geocoded implements ResultInterface, \ArrayAccess
      */
     public function offsetGet($offset)
     {
-        $offset = $this->lowerize($offset);
-
         return $this->offsetExists($offset) ? $this->$offset : null;
     }
 
@@ -305,7 +316,6 @@ class Geocoded implements ResultInterface, \ArrayAccess
      */
     public function offsetSet($offset, $value)
     {
-        $offset = $this->lowerize($offset);
         if ($this->offsetExists($offset)) {
             $this->$offset = $value;
         }
@@ -316,7 +326,6 @@ class Geocoded implements ResultInterface, \ArrayAccess
      */
     public function offsetUnset($offset)
     {
-        $offset = $this->lowerize($offset);
         if ($this->offsetExists($offset)) {
             $this->$offset = null;
         }
