@@ -64,9 +64,9 @@ class SocketHttpAdapter implements HttpAdapterInterface
      * This method strictly doesn't need to exist but can act as a "seam" for substituting fake sockets in test.
      * This would require a subclass that overloads the method and returns the fake socket.
      *
-     * @param  string            $hostname
-     * @param  string            $port
-     * @param  int               $timeout
+     * @param  string        $hostname
+     * @param  string        $port
+     * @param  int           $timeout
      * @return resource
      * @throws HttpException
      */
