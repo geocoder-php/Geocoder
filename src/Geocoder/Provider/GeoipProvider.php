@@ -10,6 +10,7 @@
 
 namespace Geocoder\Provider;
 
+use Geocoder\Exception\NoResultException;
 use Geocoder\Exception\RuntimeException;
 use Geocoder\Exception\UnsupportedException;
 
@@ -50,21 +51,12 @@ class GeoipProvider extends AbstractProvider implements ProviderInterface
 
         $results = @geoip_record_by_name($address);
 
-        $timezone = null;
-        if (isset($results['country_code'])) {
-            $timezone = @geoip_time_zone_by_country_and_region($results['country_code'], $results['region']);
-            if (false === $timezone) {
-                $timezone = null;
-            }
+        if (!is_array($results)) {
+            throw new NoResultException(sprintf('Could not find %s ip address in database.', $address));
         }
 
-        $region = null;
-        if (isset($results['country_code'])) {
-            $region = @geoip_region_name_by_code($results['country_code'], $results['region']);
-            if (false === $region) {
-                $region = $results['region'];
-            }
-        }
+        $timezone = @geoip_time_zone_by_country_and_region($results['country_code'], $results['region']) ?: null;
+        $region = @geoip_region_name_by_code($results['country_code'], $results['region']) ?: $results['region'];
 
         return array_merge($this->getDefaults(), array(
             'latitude'    => $results['latitude'],
