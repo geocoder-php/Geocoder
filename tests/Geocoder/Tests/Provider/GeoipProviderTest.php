@@ -87,7 +87,8 @@ class GeoipProviderTest extends TestCase
         $this->assertEquals(-96.813400268555, $result['longitude'], '', 0.0001);
         $this->assertEquals(75093, $result['zipcode']);
         $this->assertEquals('Plano', $result['city']);
-        $this->assertEquals('TX', $result['region']);
+        $this->assertEquals('TX', $result['regionCode']);
+        $this->assertEquals('Texas', $result['region']);
         $this->assertEquals('United States', $result['country']);
         $this->assertEquals('US', $result['countryCode']);
         $this->assertEquals('America/Chicago', $result['timezone']);
