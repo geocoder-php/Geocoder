@@ -1,8 +1,13 @@
 CHANGELOG
 =========
 
-### 1.1.3 (???) ###
+### 1.1.3 (2012-11-17) ###
 
+* Replace urlencode() by rawurlencode() in GoogleMapsProvider
+* Removed redundant if statement
+* Removed not reliable place_rank and limit result to one + test - fix #129
+* Use sf2 coding standard
+* Fixed some CS in providers
 * Fix ArrayAccess methods in Geocoded class. Fix #150
 * add failing test for mixed case array access
 * Fix timezone in IpInfoDbProviderTest
