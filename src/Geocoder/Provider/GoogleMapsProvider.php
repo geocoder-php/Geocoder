@@ -49,7 +49,7 @@ class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
             throw new UnsupportedException('The GoogleMapsProvider does not support IP addresses.');
         }
 
-        $query = sprintf(self::ENDPOINT_URL, urlencode($address));
+        $query = sprintf(self::ENDPOINT_URL, rawurlencode($address));
 
         return $this->executeQuery($query);
     }

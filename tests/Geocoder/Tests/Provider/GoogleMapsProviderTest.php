@@ -75,7 +75,7 @@ class GoogleMapsProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResultException
-     * @expectedExceptionMessage Could not execute query http://maps.googleapis.com/maps/api/geocode/json?address=10+avenue+Gambetta%2C+Paris%2C+France&sensor=false
+     * @expectedExceptionMessage Could not execute query http://maps.googleapis.com/maps/api/geocode/json?address=10%20avenue%20Gambetta%2C%20Paris%2C%20France&sensor=false
      */
     public function testGetGeocodedDataWithAddressGetsNullContent()
     {
@@ -85,7 +85,7 @@ class GoogleMapsProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResultException
-     * @expectedExceptionMessage Could not execute query http://maps.googleapis.com/maps/api/geocode/json?address=10+avenue+Gambetta%2C+Paris%2C+France&sensor=false
+     * @expectedExceptionMessage Could not execute query http://maps.googleapis.com/maps/api/geocode/json?address=10%20avenue%20Gambetta%2C%20Paris%2C%20France&sensor=false
      */
     public function testGetGeocodedDataWithAddressGetsEmptyContent()
     {
