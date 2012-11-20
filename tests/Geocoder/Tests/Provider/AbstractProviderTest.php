@@ -12,21 +12,28 @@ use Geocoder\Provider\AbstractProvider;
  */
 class AbstractProviderTest extends TestCase
 {
-    public function testGetAdapter()
+    public function testSetGetAdapter()
     {
         $adapter  = new MockHttpAdapter();
+        $adapter2 = new MockHttpAdapter();
         $provider = new MockProvider($adapter);
 
         $this->assertSame($adapter, $provider->getAdapter());
         $this->assertNull($provider->getLocale());
+
+        $provider->setAdapter($adapter2);
+        $this->assertSame($adapter2, $provider->getAdapter());
     }
 
-    public function testGetLocale()
+    public function testSetGetLocale()
     {
         $adapter  = new MockHttpAdapter();
         $provider = new MockProvider($adapter, 'fr_FR');
 
-        $this->assertSame('fr_FR', $provider->getLocale());
+        $this->assertEquals('fr_FR', $provider->getLocale());
+
+        $provider->setLocale('de_DE');
+        $this->assertEquals('de_DE', $provider->getLocale());
     }
 
     public function testGetLocalhostDefaults()
