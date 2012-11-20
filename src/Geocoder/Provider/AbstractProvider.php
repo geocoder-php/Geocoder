@@ -50,7 +50,7 @@ abstract class AbstractProvider
     /**
      * Sets the HTTP adapter to be used for further requests.
      *
-     * @param \Geocoder\HttpAdapter\HttpAdapterInterface $adapter
+     * @param HttpAdapterInterface $adapter
      *
      * @return AbstractProvider
      */
