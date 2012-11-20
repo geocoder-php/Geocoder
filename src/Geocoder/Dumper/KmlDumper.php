@@ -10,7 +10,6 @@
 
 namespace Geocoder\Dumper;
 
-use Geocoder\Geocoder;
 use Geocoder\Result\ResultInterface;
 
 /**
