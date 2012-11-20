@@ -20,12 +20,12 @@ abstract class AbstractProvider
     /**
      * @var HttpAdapterInterface
      */
-    private $adapter = null;
+    protected $adapter = null;
 
     /**
      * @var string
      */
-    private $locale = null;
+    protected $locale = null;
 
     /**
      * @param HttpAdapterInterface $adapter An HTTP adapter.
@@ -33,8 +33,8 @@ abstract class AbstractProvider
      */
     public function __construct(HttpAdapterInterface $adapter, $locale = null)
     {
-        $this->adapter = $adapter;
-        $this->locale = $locale;
+        $this->setAdapter($adapter);
+        $this->setLocale($locale);
     }
 
     /**
@@ -42,9 +42,23 @@ abstract class AbstractProvider
      *
      * @return HttpAdapterInterface
      */
-    protected function getAdapter()
+    public function getAdapter()
     {
         return $this->adapter;
+    }
+
+    /**
+     * Sets the HTTP adapter to be used for further requests.
+     *
+     * @param HttpAdapterInterface $adapter
+     *
+     * @return AbstractProvider
+     */
+    public function setAdapter($adapter)
+    {
+        $this->adapter = $adapter;
+
+        return $this;
     }
 
     /**
@@ -52,9 +66,23 @@ abstract class AbstractProvider
      *
      * @return string
      */
-    protected function getLocale()
+    public function getLocale()
     {
         return $this->locale;
+    }
+
+    /**
+     * Sets the locale to be used.
+     *
+     * @param string|null $locale If no locale is set, the provider or service will fallback.
+     *
+     * @return AbstractProvider
+     */
+    public function setLocale($locale = null)
+    {
+        $this->locale = $locale;
+
+        return $this;
     }
 
     /**

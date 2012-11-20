@@ -19,14 +19,14 @@ use Geocoder\Exception\InvalidCredentialsException;
 class ChainProvider implements ProviderInterface
 {
     /**
-     * @var array
+     * @var ProviderInterface[]
      */
     private $providers = array();
 
     /**
      * Constructor
      *
-     * @param array $providers
+     * @param ProviderInterface[] $providers
      */
     public function __construct(array $providers = array())
     {

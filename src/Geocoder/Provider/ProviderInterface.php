@@ -10,6 +10,9 @@
 
 namespace Geocoder\Provider;
 
+use Geocoder\Exception\NoResultException;
+use Geocoder\Exception\InvalidCredentialsException;
+
 /**
  * @author William Durand <william.durand1@gmail.com>
  */

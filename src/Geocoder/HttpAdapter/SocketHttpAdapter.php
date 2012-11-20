@@ -29,11 +29,9 @@ class SocketHttpAdapter implements HttpAdapterInterface
     {
         $info = parse_url($url);
 
-        $scheme   = isset($info['scheme']) ? $info['scheme'] : 'http';
         $hostname = $info['host'];
         $port     = isset($info['port']) ? $info['port'] : 80;
         $path     = isset($info['path']) ? $info['path'] : '/';
-        $query    = isset($info['query']) ? '?'.$info['query'] : '';
 
         $socketHandle = $this->createSocket($hostname, $port, 30);
 

@@ -24,7 +24,7 @@ class Geocoder implements GeocoderInterface
     const VERSION = '1.1.4-dev';
 
     /**
-     * @var array
+     * @var ProviderInterface[]
      */
     private $providers = array();
 
@@ -92,7 +92,7 @@ class Geocoder implements GeocoderInterface
     /**
      * Registers a set of providers.
      *
-     * @param array $providers
+     * @param ProviderInterface[] $providers
      *
      * @return GeocoderInterface
      */
@@ -124,7 +124,7 @@ class Geocoder implements GeocoderInterface
     /**
      * Returns registered providers indexed by name.
      *
-     * @return array
+     * @return ProviderInterface[]
      */
     public function getProviders()
     {
