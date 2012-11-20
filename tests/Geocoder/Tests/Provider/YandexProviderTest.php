@@ -116,12 +116,12 @@ class YandexProviderTest extends TestCase
         $provider = new YandexProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), 'uk-UA');
         $result   = $provider->getGeocodedData('Tagensvej 47, Copenhagen, Denmark');
 
-        $this->assertEquals(55.675682, $result['latitude'], '', 0.0001);
-        $this->assertEquals(12.567602, $result['longitude'], '', 0.0001);
-        $this->assertEquals(55.614999, $result['bounds']['south'], '', 0.0001);
-        $this->assertEquals(12.45295, $result['bounds']['west'], '', 0.0001);
-        $this->assertEquals(55.73259, $result['bounds']['north'], '', 0.0001);
-        $this->assertEquals(12.65075, $result['bounds']['east'], '', 0.0001);
+        $this->assertEquals(55.675682, $result['latitude'], '', 0.01);
+        $this->assertEquals(12.567602, $result['longitude'], '', 0.01);
+        $this->assertEquals(55.614999, $result['bounds']['south'], '', 0.01);
+        $this->assertEquals(12.45295, $result['bounds']['west'], '', 0.01);
+        $this->assertEquals(55.73259, $result['bounds']['north'], '', 0.01);
+        $this->assertEquals(12.65075, $result['bounds']['east'], '', 0.01);
         $this->assertNull($result['streetNumber']);
         $this->assertEquals('Капитал', $result['cityDistrict']);
         $this->assertNull($result['streetName']);
@@ -277,9 +277,9 @@ class YandexProviderTest extends TestCase
         $this->assertEquals(22.254513, $result['bounds']['west'], '', 0.0001);
         $this->assertEquals(60.455474, $result['bounds']['north'], '', 0.0001);
         $this->assertEquals(22.258609, $result['bounds']['east'], '', 0.0001);
-        $this->assertNull($result['streetNumber']);
+        $this->assertEquals(36, $result['streetNumber']);
         $this->assertEquals('Исконная Финляндия', $result['cityDistrict']);
-        $this->assertNull($result['streetName']);
+        $this->assertEquals('Bangårdsgatan', $result['streetName']);
         $this->assertEquals('Фінляндія', $result['country']);
         $this->assertEquals('FI', $result['countryCode']);
 
