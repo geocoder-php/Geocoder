@@ -39,7 +39,7 @@ Currently, there are many providers for the following APIs:
 * ChainProvider is a special provider that takes a list of providers and iterates
   over this list to get information;
 * [MapQuest](http://open.mapquestapi.com/) as Address-Based geocoding and reverse geocoding provider;
-* [OIORest](http://geo.oiorest.dk/) as very accurate Address-Based geocoding provider (exclusively in Denmark);
+* [OIORest](http://geo.oiorest.dk/) as very accurate Address-Based geocoding and reverse geocoding provider (exclusively in Denmark);
 * [GeoCoder.ca](http://geocoder.ca/) as Address-Based geocoding and reverse geocoding provider (exclusively in USA & Canada);
 * [GeoCoder.us](http://geocoder.us/) as Address-Based geocoding provider (exclusively in USA);
 * [IGN OpenLS](http://www.ign.fr/) as Address-Based geocoding provider (exclusively in France);
@@ -177,7 +177,7 @@ The `MapQuestProvider` is able to geocode and reverse geocode **street addresses
 
 ### OIORestProvider ###
 
-The `OIORestProvider` is able to geocode **street addresses** only, exclusively in Denmark.
+The `OIORestProvider` is able to geocode and reverse geocode **street addresses**, exclusively in Denmark.
 
 
 ### GeocoderCaProvider ###
