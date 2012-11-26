@@ -56,7 +56,7 @@ class OIORestProviderTest extends TestCase
         $provider->getGeocodedData('Tagensvej 47, 2200 København N');
     }
 
-    public function testGetGeocodedDataWithRealAddressOne()
+    public function testGetGeocodedDataWithRealAddress()
     {
         $provider = new OIORestProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result   = $provider->getGeocodedData('Tagensvej 47, 2200 København N');
@@ -70,13 +70,13 @@ class OIORestProviderTest extends TestCase
         $this->assertEquals('København N', $result['city']);
         $this->assertEquals('København', $result['cityDistrict']);
         $this->assertEquals('Region Hovedstaden', $result['region']);
-        $this->assertNull($result['regionCode']);
+        $this->assertEquals('1084', $result['regionCode']);
         $this->assertEquals('Denmark', $result['country']);
         $this->assertEquals('DK', $result['countryCode']);
         $this->assertEquals('Europe/Copenhagen', $result['timezone']);
     }
 
-    public function testGetGeocodedDataWithRealAddressTwo()
+    public function testGetGeocodedDataWithRealAddressAalborg()
     {
         $provider = new OIORestProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result   = $provider->getGeocodedData('Lauritzens Plads 1, 9000 Aalborg');
@@ -90,13 +90,13 @@ class OIORestProviderTest extends TestCase
         $this->assertEquals('Aalborg', $result['city']);
         $this->assertEquals('Aalborg', $result['cityDistrict']);
         $this->assertEquals('Region Nordjylland', $result['region']);
-        $this->assertNull($result['regionCode']);
+        $this->assertEquals('1081', $result['regionCode']);
         $this->assertEquals('Denmark', $result['country']);
         $this->assertEquals('DK', $result['countryCode']);
         $this->assertEquals('Europe/Copenhagen', $result['timezone']);
     }
 
-    public function testGetGeocodedDataWithRealAddressThree()
+    public function testGetGeocodedDataWithRealAddressAarhus()
     {
         $provider = new OIORestProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result   = $provider->getGeocodedData('St.Blichers Vej 74, 8210 Århus V');
@@ -110,13 +110,13 @@ class OIORestProviderTest extends TestCase
         $this->assertEquals('Aarhus V', $result['city']);
         $this->assertEquals('Aarhus', $result['cityDistrict']);
         $this->assertEquals('Region Midtjylland', $result['region']);
-        $this->assertNull($result['regionCode']);
+        $this->assertEquals('1082', $result['regionCode']);
         $this->assertEquals('Denmark', $result['country']);
         $this->assertEquals('DK', $result['countryCode']);
         $this->assertEquals('Europe/Copenhagen', $result['timezone']);
     }
 
-    public function testGetGeocodedDataWithRealAddressFour()
+    public function testGetGeocodedDataWithRealAddressCopenhagen()
     {
         $provider = new OIORestProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result   = $provider->getGeocodedData('Århusgade 80, 2100 København Ø');
@@ -130,13 +130,13 @@ class OIORestProviderTest extends TestCase
         $this->assertEquals('København Ø', $result['city']);
         $this->assertEquals('København', $result['cityDistrict']);
         $this->assertEquals('Region Hovedstaden', $result['region']);
-        $this->assertNull($result['regionCode']);
+        $this->assertEquals('1084', $result['regionCode']);
         $this->assertEquals('Denmark', $result['country']);
         $this->assertEquals('DK', $result['countryCode']);
         $this->assertEquals('Europe/Copenhagen', $result['timezone']);
     }
 
-    public function testGetGeocodedDataWithRealAddressFive()
+    public function testGetGeocodedDataWithRealAddressOdense()
     {
         $provider = new OIORestProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result   = $provider->getGeocodedData('Hvenekildeløkken 255, 5240 Odense');
@@ -150,7 +150,7 @@ class OIORestProviderTest extends TestCase
         $this->assertEquals('Odense NØ', $result['city']);
         $this->assertEquals('Odense', $result['cityDistrict']);
         $this->assertEquals('Region Syddanmark', $result['region']);
-        $this->assertNull($result['regionCode']);
+        $this->assertEquals('1083', $result['regionCode']);
         $this->assertEquals('Denmark', $result['country']);
         $this->assertEquals('DK', $result['countryCode']);
         $this->assertEquals('Europe/Copenhagen', $result['timezone']);
@@ -197,12 +197,52 @@ class OIORestProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
-     * @expectedExceptionMessage The OIORestProvider is not able to do reverse geocoding.
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://geo.oiorest.dk/adresser/1.000000,2.000000.json
      */
     public function testGetReverseData()
     {
-        $provider = new OIORestProvider($this->getMockAdapter($this->never()));
+        $provider = new OIORestProvider($this->getMockAdapter());
         $provider->getReversedData(array(1, 2));
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://geo.oiorest.dk/adresser/60.453947,22.256784.json
+     */
+    public function testGetReversedDataWithCoordinatesGetsNullContent()
+    {
+        $provider = new OIORestProvider($this->getMockAdapterReturns(null));
+        $provider->getReversedData(array('60.4539471728726', '22.2567841926781'));
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://geo.oiorest.dk/adresser/60.453947,22.256784.json
+     */
+    public function testGetReversedDataWithCoordinatesGetsEmptyContent()
+    {
+        $provider = new OIORestProvider($this->getMockAdapterReturns(''));
+        $provider->getReversedData(array('60.4539471728726', '22.2567841926781'));
+    }
+
+    public function testGetGeocodedDataWithRealCoordinates()
+    {
+        $provider = new OIORestProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $result = $provider->getReversedData(array(56.5231, 10.0659));
+
+        $this->assertEquals(56.521542795662, $result['latitude'], '', 0.0001);
+        $this->assertEquals(10.0668558607917, $result['longitude'], '', 0.0001);
+        $this->assertNull($result['bounds']);
+        $this->assertEquals(11, $result['streetNumber']);
+        $this->assertEquals('Stabelsvej', $result['streetName']);
+        $this->assertEquals(8981, $result['zipcode']);
+        $this->assertEquals('Spentrup', $result['city']);
+        $this->assertEquals('Randers', $result['cityDistrict']);
+        $this->assertEquals('Region Midtjylland', $result['region']);
+        $this->assertEquals('1082', $result['regionCode']);
+        $this->assertEquals('Denmark', $result['country']);
+        $this->assertEquals('DK', $result['countryCode']);
+        $this->assertEquals('Europe/Copenhagen', $result['timezone']);
     }
 }
