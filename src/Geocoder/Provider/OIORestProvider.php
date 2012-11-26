@@ -21,7 +21,12 @@ class OIORestProvider extends AbstractProvider implements ProviderInterface
     /**
      * @var string
      */
-    const ENDPOINT_URL = 'http://geo.oiorest.dk/adresser/%s.json';
+    const GEOCODE_ENDPOINT_URL = 'http://geo.oiorest.dk/adresser/%s.json';
+
+    /**
+     * @var string
+     */
+    const REVERSE_ENDPOINT_URL = 'http://geo.oiorest.dk/adresser/%F,%F.json';
 
     /**
      * {@inheritDoc}
@@ -37,7 +42,7 @@ class OIORestProvider extends AbstractProvider implements ProviderInterface
         $address = preg_replace('/([a-zæøåÆØÅ]+) (\d+), (\d{4}) ([a-zæøåÆØÅ\ ])+/i', '${1},${2},${3}', $address);
         $address = rawurlencode($address);
 
-        $query = sprintf(self::ENDPOINT_URL, $address);
+        $query = sprintf(self::GEOCODE_ENDPOINT_URL, $address);
 
         return $this->executeQuery($query);
     }
@@ -47,7 +52,9 @@ class OIORestProvider extends AbstractProvider implements ProviderInterface
      */
     public function getReversedData(array $coordinates)
     {
-        throw new UnsupportedException('The OIORestProvider is not able to do reverse geocoding.');
+        $query = sprintf(self::REVERSE_ENDPOINT_URL, $coordinates[0], $coordinates[1]);
+
+        return $this->executeQuery($query);
     }
 
     /**
@@ -86,6 +93,7 @@ class OIORestProvider extends AbstractProvider implements ProviderInterface
             'zipcode'      => isset($data['postnummer']['nr']) ? $data['postnummer']['nr'] : null,
             'cityDistrict' => isset($data['kommune']['navn']) ? $data['kommune']['navn'] : null,
             'region'       => isset($data['region']['navn']) ? $data['region']['navn'] : null,
+            'regionCode'       => isset($data['region']['nr']) ? $data['region']['nr'] : null,
             'country'      => 'Denmark',
             'countryCode'  => 'DK',
             'timezone'     => 'Europe/Copenhagen'
