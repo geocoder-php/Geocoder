@@ -173,6 +173,7 @@ class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
 
             case 'administrative_area_level_2':
                 $resultset['county'] = $values->long_name;
+                $resultset['countyCode'] = $values->short_name;
                 break;
 
             case 'administrative_area_level_1':

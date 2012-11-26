@@ -63,6 +63,11 @@ class Geocoded implements ResultInterface, \ArrayAccess
     /**
      * @var string
      */
+    protected $countyCode = null;
+
+    /**
+     * @var string
+     */
     protected $region = null;
 
     /**
@@ -168,6 +173,14 @@ class Geocoded implements ResultInterface, \ArrayAccess
     /**
      * {@inheritDoc}
      */
+    public function getCountyCode()
+    {
+        return $this->countyCode;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getRegion()
     {
         return $this->region;
@@ -251,6 +264,10 @@ class Geocoded implements ResultInterface, \ArrayAccess
             $this->county = $this->formatString($data['county']);
         }
 
+        if (isset($data['countyCode'])) {
+            $this->countyCode = $this->upperize($data['countyCode']);
+        }
+
         if (isset($data['region'])) {
             $this->region = $this->formatString($data['region']);
         }
@@ -287,6 +304,7 @@ class Geocoded implements ResultInterface, \ArrayAccess
             'city'          => $this->city,
             'cityDistrict'  => $this->cityDistrict,
             'county'        => $this->county,
+            'countyCode'    => $this->countyCode,
             'region'        => $this->region,
             'regionCode'    => $this->regionCode,
             'country'       => $this->country,
