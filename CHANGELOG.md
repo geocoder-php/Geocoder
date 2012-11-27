@@ -1,6 +1,15 @@
 CHANGELOG
 =========
 
+### 1.1.4 (???) ###
+
+* Fixed indentation in OIORestProvider
+* Added countyCode to the Geocoded result object for county short name.
+* Added reverse geocoding to OIORestProvider + test
+* fix tests
+* fix code inspection
+* make adapter and locale mutable within provider
+
 ### 1.1.3 (2012-11-17) ###
 
 * Replace urlencode() by rawurlencode() in GoogleMapsProvider
