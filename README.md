@@ -309,6 +309,7 @@ The `geocode()` method returns a `Geocoded` result object with the following API
 * `getZipcode()` will return the `zipcode`;
 * `getCityDistrict()` will return the `city district`, or `sublocality`;
 * `getCounty()` will return the `county`;
+* `getCountyCode()` will return the `county` code (county short name);
 * `getRegion()` will return the `region`;
 * `getRegionCode()` will return the `region` code (region short name);
 * `getCountry()` will return the `country`;
@@ -432,6 +433,8 @@ Here is the mapping:
 * Zipcode: `%z`
 
 * County: `%P`
+
+* County Code: `%p`
 
 * Region: `%R`
 

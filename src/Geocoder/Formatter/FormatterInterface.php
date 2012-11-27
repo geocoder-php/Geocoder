@@ -27,6 +27,8 @@ interface FormatterInterface
 
     const COUNTY        = '%P';
 
+    const COUNTY_CODE   = '%p';
+
     const REGION        = '%R';
 
     const REGION_CODE   = '%r';

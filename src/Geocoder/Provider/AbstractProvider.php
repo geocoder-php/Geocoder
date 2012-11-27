@@ -102,6 +102,7 @@ abstract class AbstractProvider
             'zipcode'       => null,
             'cityDistrict'  => null,
             'county'        => null,
+            'countyCode'    => null,
             'region'        => null,
             'regionCode'    => null,
             'country'       => null,
