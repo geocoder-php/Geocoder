@@ -55,6 +55,11 @@ class FormatterTest extends TestCase
                 'Collin County'
             ),
             array(
+                array('countyCode' => 'FC'),
+                '%p',
+                'FC'
+            ),
+            array(
                 array('region' => 'Auvergne'),
                 '%R',
                 'Auvergne'

@@ -42,6 +42,7 @@ class Formatter implements FormatterInterface
             FormatterInterface::ZIPCODE         => $this->result->getZipcode(),
             FormatterInterface::CITY_DISTRICT   => $this->result->getCityDistrict(),
             FormatterInterface::COUNTY          => $this->result->getCounty(),
+            FormatterInterface::COUNTY_CODE     => $this->result->getCountyCode(),
             FormatterInterface::REGION          => $this->result->getRegion(),
             FormatterInterface::REGION_CODE     => $this->result->getRegionCode(),
             FormatterInterface::COUNTRY         => $this->result->getCountry(),

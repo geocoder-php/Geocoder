@@ -96,6 +96,13 @@ interface ResultInterface
     public function getCounty();
 
     /**
+     * Returns the county short name.
+     *
+     * @return string
+     */
+    public function getCountyCode();
+
+    /**
      * Returns the region value.
      *
      * @return string
