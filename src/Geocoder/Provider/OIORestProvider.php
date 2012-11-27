@@ -93,7 +93,7 @@ class OIORestProvider extends AbstractProvider implements ProviderInterface
             'zipcode'      => isset($data['postnummer']['nr']) ? $data['postnummer']['nr'] : null,
             'cityDistrict' => isset($data['kommune']['navn']) ? $data['kommune']['navn'] : null,
             'region'       => isset($data['region']['navn']) ? $data['region']['navn'] : null,
-            'regionCode'       => isset($data['region']['nr']) ? $data['region']['nr'] : null,
+            'regionCode'   => isset($data['region']['nr']) ? $data['region']['nr'] : null,
             'country'      => 'Denmark',
             'countryCode'  => 'DK',
             'timezone'     => 'Europe/Copenhagen'
