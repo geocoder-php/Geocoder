@@ -21,7 +21,7 @@ class Geocoder implements GeocoderInterface
     /**
      * Version
      */
-    const VERSION = '1.1.4-dev';
+    const VERSION = '1.1.4';
 
     /**
      * @var ProviderInterface[]

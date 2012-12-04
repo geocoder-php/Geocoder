@@ -1,7 +1,7 @@
 CHANGELOG
 =========
 
-### 1.1.4 (???) ###
+### 1.1.4 (2012-12-04) ###
 
 * Fixed indentation in OIORestProvider
 * Added countyCode to the Geocoded result object for county short name.
