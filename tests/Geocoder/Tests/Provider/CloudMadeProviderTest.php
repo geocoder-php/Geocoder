@@ -82,6 +82,26 @@ class CloudMadeProviderTest extends TestCase
         $provider->getGeocodedData('36 Quai des Orfèvres, Paris, France');
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\InvalidCredentialsException
+     * @expectedExceptionMessage Invalid API Key invalid_key
+     */
+    public function testGetGeocodedDataWithInvalidApiKey()
+    {
+        $provider = new CloudMadeProvider($this->getMockAdapterReturns('Forbidden request'), 'invalid_key');
+        $provider->getGeocodedData('foo');
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\InvalidCredentialsException
+     * @expectedExceptionMessage Invalid API Key invalid_key
+     */
+    public function testGetGeocodedDataWithRealInvalidApiKey()
+    {
+        $provider = new CloudMadeProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), 'invalid_key');
+        $provider->getGeocodedData('foo');
+    }
+
     public function testGetGeocodedDataWithRealAddress()
     {
         if (!isset($_SERVER['CLOUDMADE_API_KEY'])) {
