@@ -96,6 +96,10 @@ class CloudMadeProvider extends AbstractProvider implements ProviderInterface
     {
         $content = $this->getAdapter()->getContent($query);
 
+        if (preg_match('/forbidden/i', $content)) {
+            throw new InvalidCredentialsException(sprintf('Invalid API Key %s', $this->apiKey));
+        }
+
         if (null === $content) {
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
