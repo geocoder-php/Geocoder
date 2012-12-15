@@ -12,6 +12,7 @@ namespace Geocoder\Provider;
 
 use Geocoder\Exception\NoResultException;
 use Geocoder\Exception\InvalidCredentialsException;
+use Geocoder\Exception\UnsupportedException;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -25,6 +26,7 @@ interface ProviderInterface
      *
      * @throws NoResultException           If the address could not be resolved
      * @throws InvalidCredentialsException If the credentials are invalid
+     * @throws UnsupportedException        If IPv4, IPv6 or street is not supported
      *
      * @return array
      */
@@ -37,6 +39,7 @@ interface ProviderInterface
      *
      * @throws NoResultException           If the coordinates could not be resolved
      * @throws InvalidCredentialsException If the credentials are invalid
+     * @throws UnsupportedException        If reverse geocoding is not supported
      *
      * @return array
      */
