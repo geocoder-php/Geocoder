@@ -18,25 +18,25 @@ class OpenStreetMapsProviderTest extends TestCase
         $provider = new OpenStreetMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result   = $provider->getGeocodedData('Läntinen Pitkäkatu 35, Turku');
 
-        $this->assertEquals(60.4539471768582, $result['latitude'], '', 0.0001);
-        $this->assertEquals(22.2567842183875, $result['longitude'], '', 0.0001);
+        $this->assertEquals(60.4539471768582, $result['latitude'], '', 0.01);
+        $this->assertEquals(22.2567842183875, $result['longitude'], '', 0.01);
         $this->assertArrayHasKey('south', $result['bounds']);
         $this->assertArrayHasKey('west', $result['bounds']);
         $this->assertArrayHasKey('north', $result['bounds']);
         $this->assertArrayHasKey('east', $result['bounds']);
-        $this->assertEquals(60.4537582397461, $result['bounds']['south'], '', 0.0001);
-        $this->assertEquals(22.2563400268555, $result['bounds']['west'], '', 0.0001);
-        $this->assertEquals(60.4541320800781, $result['bounds']['north'], '', 0.0001);
-        $this->assertEquals(22.2572231292725, $result['bounds']['east'], '', 0.0001);
+        $this->assertEquals(60.4537582397461, $result['bounds']['south'], '', 0.01);
+        $this->assertEquals(22.2563400268555, $result['bounds']['west'], '', 0.01);
+        $this->assertEquals(60.4541320800781, $result['bounds']['north'], '', 0.01);
+        $this->assertEquals(22.2572231292725, $result['bounds']['east'], '', 0.01);
         $this->assertEquals('20100', $result['zipcode']);
         $this->assertEquals(35, $result['streetNumber']);
         $this->assertEquals('Läntinen Pitkäkatu', $result['streetName']);
         $this->assertEquals('Turku', $result['city']);
         $this->assertEquals('VII', $result['cityDistrict']);
-        $this->assertEquals('Finland Proper', $result['county']);
+        $this->assertEquals('Varsinais-Suomi', $result['county']);
         $this->assertNull($result['region']);
         $this->assertNull($result['regionCode']);
-        $this->assertEquals('Finland', $result['country']);
+        $this->assertEquals('Suomi', $result['country']);
         $this->assertEquals('FI', $result['countryCode']);
     }
 
@@ -45,22 +45,22 @@ class OpenStreetMapsProviderTest extends TestCase
         $provider = new OpenStreetMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), 'fr_FR');
         $result   = $provider->getGeocodedData('10 allée Evariste Galois, Clermont ferrand');
 
-        $this->assertEquals(45.7586841, $result['latitude'], '', 0.0001);
-        $this->assertEquals(3.1354075, $result['longitude'], '', 0.0001);
+        $this->assertEquals(45.7598793, $result['latitude'], '', 0.01);
+        $this->assertEquals(3.1314003, $result['longitude'], '', 0.01);
         $this->assertArrayHasKey('south', $result['bounds']);
         $this->assertArrayHasKey('west', $result['bounds']);
         $this->assertArrayHasKey('north', $result['bounds']);
         $this->assertArrayHasKey('east', $result['bounds']);
-        $this->assertEquals(45.7576484680176, $result['bounds']['south'], '', 0.0001);
-        $this->assertEquals(3.13258004188538, $result['bounds']['west'], '', 0.0001);
-        $this->assertEquals(45.7595367431641, $result['bounds']['north'], '', 0.0001);
-        $this->assertEquals(3.13707232475281, $result['bounds']['east'], '', 0.0001);
+        $this->assertEquals(45.7576484680176, $result['bounds']['south'], '', 0.01);
+        $this->assertEquals(3.13258004188538, $result['bounds']['west'], '', 0.01);
+        $this->assertEquals(45.7595367431641, $result['bounds']['north'], '', 0.01);
+        $this->assertEquals(3.13707232475281, $result['bounds']['east'], '', 0.01);
         $this->assertNull($result['streetNumber']);
         $this->assertEquals('Allée Évariste Galois', $result['streetName']);
         $this->assertEquals('63170', $result['zipcode']);
-        $this->assertEquals('Aubière', $result['city']);
-        $this->assertEquals('Cap Sud', $result['cityDistrict']);
-        $this->assertEquals('Puy-de-Dôme', $result['county']);
+        $this->assertEquals('Clermont-Ferrand', $result['city']);
+        $this->assertEquals('La Pardieu', $result['cityDistrict']);
+        $this->assertEquals('Clermont-Ferrand', $result['county']);
         $this->assertEquals('Auvergne', $result['region']);
         $this->assertNull($result['regionCode']);
         $this->assertEquals('France', $result['country']);
@@ -72,18 +72,18 @@ class OpenStreetMapsProviderTest extends TestCase
         $provider = new OpenStreetMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result   = $provider->getReversedData(array('60.4539471728726', '22.2567841926781'));
 
-        $this->assertEquals(60.4539471768582, $result['latitude'], '', 0.0001);
-        $this->assertEquals(22.2567842183875, $result['longitude'], '', 0.0001);
+        $this->assertEquals(60.4539471768582, $result['latitude'], '', 0.01);
+        $this->assertEquals(22.2567842183875, $result['longitude'], '', 0.01);
         $this->assertNull($result['bounds']);
         $this->assertEquals(35, $result['streetNumber']);
         $this->assertEquals('Läntinen Pitkäkatu', $result['streetName']);
         $this->assertEquals(20100, $result['zipcode']);
         $this->assertEquals('Turku', $result['city']);
         $this->assertEquals('VII', $result['cityDistrict']);
-        $this->assertEquals('Finland Proper', $result['county']);
+        $this->assertEquals('Varsinais-Suomi', $result['county']);
         $this->assertNull($result['region']);
         $this->assertNull($result['regionCode']);
-        $this->assertEquals('Finland', $result['country']);
+        $this->assertEquals('Suomi', $result['country']);
         $this->assertEquals('FI', $result['countryCode']);
     }
 
@@ -102,19 +102,19 @@ class OpenStreetMapsProviderTest extends TestCase
         $provider = new OpenStreetMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), 'de_DE');
         $result   = $provider->getGeocodedData('Kalbacher Hauptstraße, 60437 Frankfurt, Germany');
 
-        $this->assertEquals(50.1856803, $result['latitude'], '', 0.0001);
-        $this->assertEquals(8.6506285, $result['longitude'], '', 0.0001);
+        $this->assertEquals(50.1860976, $result['latitude'], '', 0.01);
+        $this->assertEquals(8.6491271, $result['longitude'], '', 0.01);
         $this->assertArrayHasKey('south', $result['bounds']);
         $this->assertArrayHasKey('west', $result['bounds']);
         $this->assertArrayHasKey('north', $result['bounds']);
         $this->assertArrayHasKey('east', $result['bounds']);
-        $this->assertEquals(50.1851196289062, $result['bounds']['south'], '', 0.0001);
-        $this->assertEquals(8.64984607696533, $result['bounds']['west'], '', 0.0001);
-        $this->assertEquals(50.1860122680664, $result['bounds']['north'], '', 0.0001);
-        $this->assertEquals(8.65207576751709, $result['bounds']['east'], '', 0.0001);
+        $this->assertEquals(50.1851196289062, $result['bounds']['south'], '', 0.01);
+        $this->assertEquals(8.64984607696533, $result['bounds']['west'], '', 0.01);
+        $this->assertEquals(50.1860122680664, $result['bounds']['north'], '', 0.01);
+        $this->assertEquals(8.65207576751709, $result['bounds']['east'], '', 0.01);
         $this->assertNull($result['streetNumber']);
         $this->assertEquals('Kalbacher Hauptstraße', $result['streetName']);
-        $this->assertNull($result['zipcode']);
+        $this->assertEquals(60437, $result['zipcode']);
         $this->assertEquals('Frankfurt am Main', $result['city']);
         $this->assertEquals('Kalbach', $result['cityDistrict']);
         $this->assertEquals('Frankfurt am Main', $result['county']);
@@ -155,25 +155,25 @@ class OpenStreetMapsProviderTest extends TestCase
         $provider = new OpenStreetMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result   = $provider->getGeocodedData('88.188.221.14');
 
-        $this->assertEquals(43.6189768, $result['latitude'], '', 0.0001);
-        $this->assertEquals(1.4564493, $result['longitude'], '', 0.0001);
+        $this->assertEquals(43.6155351, $result['latitude'], '', 0.01);
+        $this->assertEquals(1.4525647, $result['longitude'], '', 0.01);
         $this->assertArrayHasKey('south', $result['bounds']);
         $this->assertArrayHasKey('west', $result['bounds']);
         $this->assertArrayHasKey('north', $result['bounds']);
         $this->assertArrayHasKey('east', $result['bounds']);
-        $this->assertEquals(43.6159553527832, $result['bounds']['south'], '', 0.0001);
-        $this->assertEquals(1.45302963256836, $result['bounds']['west'], '', 0.0001);
-        $this->assertEquals(43.623119354248, $result['bounds']['north'], '', 0.0001);
-        $this->assertEquals(1.45882403850555, $result['bounds']['east'], '', 0.0001);
+        $this->assertEquals(43.6159553527832, $result['bounds']['south'], '', 0.01);
+        $this->assertEquals(1.45302963256836, $result['bounds']['west'], '', 0.01);
+        $this->assertEquals(43.623119354248, $result['bounds']['north'], '', 0.01);
+        $this->assertEquals(1.45882403850555, $result['bounds']['east'], '', 0.01);
         $this->assertNull($result['streetNumber']);
-        $this->assertEquals('Rue du Faubourg Bonnefoy', $result['streetName']);
+        $this->assertEquals('Avenue de Lyon', $result['streetName']);
         $this->assertEquals(31506, $result['zipcode']);
         $this->assertEquals(4, $result['cityDistrict']);
         $this->assertEquals('Toulouse', $result['city']);
-        $this->assertEquals('Haute-Garonne', $result['county']);
+        $this->assertEquals('Toulouse', $result['county']);
         $this->assertEquals('Midi-Pyrénées', $result['region']);
         $this->assertNull($result['regionCode']);
-        $this->assertEquals('France', $result['country']);
+        $this->assertEquals('France métropolitaine', $result['country']);
         $this->assertEquals('FR', $result['countryCode']);
     }
 
@@ -182,22 +182,22 @@ class OpenStreetMapsProviderTest extends TestCase
         $provider = new OpenStreetMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), 'da_DK');
         $result   = $provider->getGeocodedData('88.188.221.14');
 
-        $this->assertEquals(43.6142209, $result['latitude'], '', 0.0001);
-        $this->assertEquals(1.4510706, $result['longitude'], '', 0.0001);
+        $this->assertEquals(43.6142209, $result['latitude'], '', 0.01);
+        $this->assertEquals(1.4510706, $result['longitude'], '', 0.01);
         $this->assertArrayHasKey('south', $result['bounds']);
         $this->assertArrayHasKey('west', $result['bounds']);
         $this->assertArrayHasKey('north', $result['bounds']);
         $this->assertArrayHasKey('east', $result['bounds']);
-        $this->assertEquals(43.6141357421875, $result['bounds']['south'], '', 0.0001);
-        $this->assertEquals(1.45088791847229, $result['bounds']['west'], '', 0.0001);
-        $this->assertEquals(43.6150016784668, $result['bounds']['north'], '', 0.0001);
-        $this->assertEquals(1.45196998119354, $result['bounds']['east'], '', 0.0001);
+        $this->assertEquals(43.6141357421875, $result['bounds']['south'], '', 0.01);
+        $this->assertEquals(1.45088791847229, $result['bounds']['west'], '', 0.01);
+        $this->assertEquals(43.6150016784668, $result['bounds']['north'], '', 0.01);
+        $this->assertEquals(1.45196998119354, $result['bounds']['east'], '', 0.01);
         $this->assertNull($result['streetNumber']);
         $this->assertEquals('Avenue de Lyon', $result['streetName']);
         $this->assertEquals(31506, $result['zipcode']);
         $this->assertEquals(4, $result['cityDistrict']);
         $this->assertEquals('Toulouse', $result['city']);
-        $this->assertEquals('Haute-Garonne', $result['county']);
+        $this->assertEquals('Toulouse', $result['county']);
         $this->assertEquals('Midi-Pyrénées', $result['region']);
         $this->assertNull($result['regionCode']);
         $this->assertEquals('Frankrig', $result['country']);
