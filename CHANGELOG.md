@@ -1,6 +1,13 @@
 CHANGELOG
 =========
 
+### 1.1.5 (????-??-??) ###
+
+* Fix some tests due to data changed
+* Complete exemple's outputs in README
+* Throws InvalidCredentialsException on invalid api key + test
+* Added UnsupportedException to ProviderInterface
+
 ### 1.1.4 (2012-12-04) ###
 
 * Fixed indentation in OIORestProvider
