@@ -270,11 +270,15 @@ $result = $geocoder->geocode('88.188.221.14');
 // }
 // "streetNumber"   => string(0) ""
 // "streetName"     => string(0) ""
+// "cityDistrict"   => string(0) ""
 // "city"           => string(7) "Orleans"
 // "zipcode"        => string(0) ""
 // "county"         => string(6) "Loiret"
+// "countyCode"     => null
 // "region"         => string(6) "Centre"
+// "regionCode"     => null
 // "country"        => string(6) "France"
+// "countryCode"    => string(2) "FR"
 // "timezone"       => string(6) "Europe/Paris"
 
 $result = $geocoder->geocode('10 rue Gambetta, Paris, France');
@@ -289,11 +293,15 @@ $result = $geocoder->geocode('10 rue Gambetta, Paris, France');
 // }
 // "streetNumber"   => string(2) "10"
 // "streetName"     => string(15) "Avenue Gambetta"
+// "cityDistrict"   => string(18) "20E Arrondissement"
 // "city"           => string(5) "Paris"
 // "county"         => string(5) "Paris"
+// "countyCode"     => null
 // "zipcode"        => string(5) "75020"
 // "region"         => string(14) "Ile-de-France"
+// "regionCode"     => null
 // "country"        => string(6) "France"
+// "countryCode"    => string(2) "FR"
 // "timezone"       => string(6) "Europe/Paris"
 ```
 
