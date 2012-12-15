@@ -27,6 +27,15 @@ interface GeocoderInterface
     public function geocode($value);
 
     /**
+     * Geocode a given value through given providers.
+     *
+     * @param string $value A value to geocode.
+     *
+     * @return array An array of Geocoded result object.
+     */
+    public function geocodeBatch($value);
+
+    /**
      * Reverse geocode given latitude and longitude values.
      *
      * @param double $latitude  Latitude.
@@ -35,4 +44,14 @@ interface GeocoderInterface
      * @return Geocoded A Geocoded result object.
      */
     public function reverse($latitude, $longitude);
+
+    /**
+     * Reverse geocode given latitude and longitude values through given providers.
+     *
+     * @param double $latitude  Latitude.
+     * @param double $longitude Longitude.
+     *
+     * @return array An array of Geocoded result object.
+     */
+    public function reverseBatch($latitude, $longitude);
 }
