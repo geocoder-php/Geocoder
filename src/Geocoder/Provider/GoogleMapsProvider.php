@@ -20,22 +20,31 @@ use Geocoder\HttpAdapter\HttpAdapterInterface;
 class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
 {
     const ENDPOINT_URL = 'http://maps.googleapis.com/maps/api/geocode/json?address=%s&sensor=false';
+    
+    const ENDPOINT_URL_SSL = 'https://maps.googleapis.com/maps/api/geocode/json?address=%s&sensor=false';
 
     /**
      * @var string
      */
     private $region = null;
+    
+    /**
+     * @var bool
+     */
+    private $useSsl = false;
 
     /**
      * @param HttpAdapterInterface $adapter An HTTP adapter.
      * @param string               $locale  A locale (optional).
      * @param string               $region  Region biasing (optional).
+     * @param bool                 $useSsl  Whether to use an SSL connection (optional)
      */
-    public function __construct(HttpAdapterInterface $adapter, $locale = null, $region = null)
+    public function __construct(HttpAdapterInterface $adapter, $locale = null, $region = null, $useSsl = false)
     {
         parent::__construct($adapter, $locale);
 
         $this->region = $region;
+        $this->useSssl = $useSsl;
     }
 
     /**
@@ -49,7 +58,11 @@ class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
             throw new UnsupportedException('The GoogleMapsProvider does not support IP addresses.');
         }
 
-        $query = sprintf(self::ENDPOINT_URL, rawurlencode($address));
+        if ($this->useSsl) {
+            $query = sprintf(self::ENDPOINT_URL_SSL, rawurlencode($address));
+        } else {
+            $query = sprintf(self::ENDPOINT_URL, rawurlencode($address));
+        }
 
         return $this->executeQuery($query);
     }
