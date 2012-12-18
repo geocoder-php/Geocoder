@@ -44,7 +44,7 @@ class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
         parent::__construct($adapter, $locale);
 
         $this->region = $region;
-        $this->useSssl = $useSsl;
+        $this->useSsl = $useSsl;
     }
 
     /**
