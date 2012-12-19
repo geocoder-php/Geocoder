@@ -60,6 +60,28 @@ class Geocoder implements GeocoderInterface
     /**
      * {@inheritDoc}
      */
+    public function geocodeBatch($value)
+    {
+        if (empty($value)) {
+            // let's save a request
+            return $this->returnResult(array());
+        }
+
+        foreach ($this->getProviders() as $provider) {
+            try {
+                $data = $provider->getGeocodedData(trim($value));
+                $results[$provider->getName()] = $this->returnResult($data);
+            } catch (\Exception $e) {
+                $results[$provider->getName()] = $this->returnResult(array());
+            }
+        }
+
+        return $results;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function reverse($latitude, $longitude)
     {
         if (empty($latitude) || empty($longitude)) {
@@ -71,6 +93,28 @@ class Geocoder implements GeocoderInterface
         $result = $this->returnResult($data);
 
         return $result;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function reverseBatch($latitude, $longitude)
+    {
+        if (empty($latitude) || empty($longitude)) {
+            // let's save a request
+            return $this->returnResult(array());
+        }
+
+        foreach ($this->getProviders() as $provider) {
+            try {
+                $data = $provider->getReversedData(array($latitude, $longitude));
+                $results[$provider->getName()] = $this->returnResult($data);
+            } catch (\Exception $e) {
+                $results[$provider->getName()] = $this->returnResult(array());
+            }
+        }
+
+        return $results;
     }
 
     /**
