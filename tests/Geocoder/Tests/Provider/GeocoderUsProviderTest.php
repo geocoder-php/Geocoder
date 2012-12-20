@@ -32,12 +32,16 @@ class GeocoderUsProviderTest extends TestCase
      */
     public function testGetGeocodedDataWithWrongAddress()
     {
+        $this->markTestIncomplete('Timeout too long');
+
         $provider = new GeocoderUsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $provider->getGeocodedData('foobar');
     }
 
     public function testGetGeocodedDataWithRealAddress()
     {
+        $this->markTestIncomplete('Timeout too long');
+
         $provider = new GeocoderUsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result   = $provider->getGeocodedData('1600 Pennsylvania Ave, Washington, DC');
 
