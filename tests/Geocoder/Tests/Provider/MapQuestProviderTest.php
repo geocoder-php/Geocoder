@@ -42,13 +42,13 @@ class MapQuestProviderTest extends TestCase
         $result   = $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
 
         $this->assertEquals(48.866205, $result['latitude'], '', 0.01);
-        $this->assertEquals(2.399611, $result['longitude'], '', 0.01);
+        $this->assertEquals(2.389089, $result['longitude'], '', 0.01);
         $this->assertNull($result['bounds']);
         $this->assertNull($result['streetNumber']);
-        $this->assertEquals('Avenue Gambetta', $result['streetName']);
-        $this->assertEmpty($result['zipcode']);
+        $this->assertEquals('10 Avenue Gambetta', $result['streetName']);
+        $this->assertEquals(75011, $result['zipcode']);
         $this->assertEquals('Paris', $result['city']);
-        $this->assertEmpty($result['county']);
+        $this->assertEquals('Paris', $result['county']);
         $this->assertEquals('Île-de-France', $result['region']);
         $this->assertEquals('France', $result['country']);
 
@@ -88,7 +88,7 @@ class MapQuestProviderTest extends TestCase
         $this->assertEquals(-2.7990345, $result['longitude'], '', 0.001);
         $this->assertNull($result['bounds']);
         $this->assertNull($result['streetNumber']);
-        $this->assertEmpty($result['streetName']);
+        $this->assertEquals('Mary Street', $result['streetName']);
         $this->assertEquals('LA1 1LZ', $result['zipcode']);
         $this->assertEquals('Lancaster', $result['city']);
         $this->assertEquals('Lancashire', $result['county']);
