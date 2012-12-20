@@ -20,14 +20,14 @@ use Geocoder\HttpAdapter\HttpAdapterInterface;
 class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
 {
     const ENDPOINT_URL = 'http://maps.googleapis.com/maps/api/geocode/json?address=%s&sensor=false';
-    
+
     const ENDPOINT_URL_SSL = 'https://maps.googleapis.com/maps/api/geocode/json?address=%s&sensor=false';
 
     /**
      * @var string
      */
     private $region = null;
-    
+
     /**
      * @var bool
      */
