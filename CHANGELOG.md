@@ -1,8 +1,11 @@
 CHANGELOG
 =========
 
-### 1.1.5 (????-??-??) ###
+### 1.1.5 (2012-12-29) ###
 
+* Add PHP 5.5 to travis-ci config
+* Correct property reference.
+* Option to use SSL when communicating with end point
 * Fix some tests due to data changed
 * Complete exemple's outputs in README
 * Throws InvalidCredentialsException on invalid api key + test
