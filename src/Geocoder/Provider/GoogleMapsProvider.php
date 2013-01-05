@@ -11,6 +11,7 @@
 namespace Geocoder\Provider;
 
 use Geocoder\Exception\NoResultException;
+use Geocoder\Exception\QuotaExceededException;
 use Geocoder\Exception\UnsupportedException;
 use Geocoder\HttpAdapter\HttpAdapterInterface;
 
@@ -119,12 +120,17 @@ class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
         $json = json_decode($content);
 
         // API error
-        if (!isset($json) || 'OK' !== $json->status) {
+        if (!isset($json)) {
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
+        // you are over your quota
+        if ('OVER_QUERY_LIMIT' === $json->status) {
+            throw new QuotaExceededException(sprintf('Daily quota exceeded %s', $query));
+        }
+
         // no result
-        if (!isset($json->results) || !count($json->results)) {
+        if (!isset($json->results) || !count($json->results) || 'OK' !== $json->status) {
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
