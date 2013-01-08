@@ -94,7 +94,7 @@ class GoogleMapsProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\QuotaExceedException
+     * @expectedException \Geocoder\Exception\QuotaExceededException
      * @expectedExceptionMessage Daily quota exceed http://maps.googleapis.com/maps/api/geocode/json?address=10%20avenue%20Gambetta%2C%20Paris%2C%20France&sensor=false
      */
     public function testGetGeocodedDataWithQuotaExceed()
