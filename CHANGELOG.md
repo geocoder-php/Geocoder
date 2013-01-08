@@ -3,7 +3,7 @@ CHANGELOG
 
 ### 1.2.0 (????-??-??) ###
 
-n/a
+* Added exception for status code = OVER_QUERY_LIMIT
 
 ### 1.1.6 (2013-01-08) ###
 
