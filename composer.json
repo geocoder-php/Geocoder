@@ -26,17 +26,17 @@
         "zendframework/zend-http": "*"
     },
     "suggest": {
-        "kriswallsmith/buzz": "Enabling Buzz allows you to use the BuzzHttpAdapter, it's the recommended HTTP layer.",
+        "kriswallsmith/buzz": "Enabling Buzz allows you to use the BuzzHttpAdapter.",
         "ext-curl": "Enabling the curl extension allows you to use CurlHttpAdapter.",
         "guzzle/guzzle": "Enabling Guzzle allows you to use the GuzzleHttpAdapter.",
-        "zendframework/zend-http": "Enabling Zend_Http allows you to use the ZendHttpAdapter"
+        "zendframework/zend-http": "Enabling Zend_Http allows you to use the ZendHttpAdapter."
     },
     "autoload": {
         "psr-0": { "Geocoder": "src/" }
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.1-dev"
+            "dev-master": "1.2-dev"
         }
     }
 }

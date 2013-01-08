@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+### 1.2.0 (????-??-??) ###
+
+n/a
+
 ### 1.1.6 (2013-01-08) ###
 
 * Restore OIORestProvider tests - fix #169
