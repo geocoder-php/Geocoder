@@ -1,9 +1,10 @@
 CHANGELOG
 =========
 
-### 1.1.6 (????-??-??) ###
+### 1.1.6 (2013-01-08) ###
 
-n/a
+* Restore OIORestProvider tests - fix #169
+* Skip OIORest tests
 
 ### 1.1.5 (2012-12-29) ###
 
