@@ -10,13 +10,6 @@ use Geocoder\Provider\OIORestProvider;
  */
 class OIORestProviderTest extends TestCase
 {
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->markTestSkipped('FIXME: OIO API has changed');
-    }
-
     public function testGetName()
     {
         $provider = new OIORestProvider($this->getMockAdapter($this->never()));
@@ -25,7 +18,7 @@ class OIORestProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResultException
-     * @expectedExceptionMessage Could not execute query http://oiorest.dk/danmark/adresser/.json
+     * @expectedExceptionMessage Could not execute query http://geo.oiorest.dk/adresser/.json
      */
     public function testGetGeocodedDataWithNull()
     {
@@ -35,7 +28,7 @@ class OIORestProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResultException
-     * @expectedExceptionMessage Could not execute query http://oiorest.dk/danmark/adresser/.json
+     * @expectedExceptionMessage Could not execute query http://geo.oiorest.dk/adresser/.json
      */
     public function testGetGeocodedDataWithEmpty()
     {
@@ -45,7 +38,7 @@ class OIORestProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResultException
-     * @expectedExceptionMessage Could not execute query http://oiorest.dk/danmark/adresser/Tagensvej%2C47%2C2200.json
+     * @expectedExceptionMessage Could not execute query http://geo.oiorest.dk/adresser/Tagensvej%2C47%2C2200.json
      */
     public function testGetGeocodedDataWithAddressContentReturnNull()
     {
@@ -55,7 +48,7 @@ class OIORestProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResultException
-     * @expectedExceptionMessage Could not execute query http://oiorest.dk/danmark/adresser/Tagensvej%2C47%2C2200.json
+     * @expectedExceptionMessage Could not execute query http://geo.oiorest.dk/adresser/Tagensvej%2C47%2C2200.json
      */
     public function testGetGeocodedDataWithAddress()
     {
@@ -205,7 +198,7 @@ class OIORestProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResultException
-     * @expectedExceptionMessage Could not execute query http://oiorest.dk/danmark/adresser/1.000000,2.000000.json
+     * @expectedExceptionMessage Could not execute query http://geo.oiorest.dk/adresser/1.000000,2.000000.json
      */
     public function testGetReverseData()
     {
@@ -215,7 +208,7 @@ class OIORestProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResultException
-     * @expectedExceptionMessage Could not execute query http://oiorest.dk/danmark/adresser/60.453947,22.256784.json
+     * @expectedExceptionMessage Could not execute query http://geo.oiorest.dk/adresser/60.453947,22.256784.json
      */
     public function testGetReversedDataWithCoordinatesGetsNullContent()
     {
@@ -225,7 +218,7 @@ class OIORestProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResultException
-     * @expectedExceptionMessage Could not execute query http://oiorest.dk/danmark/adresser/60.453947,22.256784.json
+     * @expectedExceptionMessage Could not execute query http://geo.oiorest.dk/adresser/60.453947,22.256784.json
      */
     public function testGetReversedDataWithCoordinatesGetsEmptyContent()
     {
