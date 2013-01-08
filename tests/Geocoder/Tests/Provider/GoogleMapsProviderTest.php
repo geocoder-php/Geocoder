@@ -93,6 +93,16 @@ class GoogleMapsProviderTest extends TestCase
         $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\QuotaExceededException
+     * @expectedExceptionMessage Daily quota exceed http://maps.googleapis.com/maps/api/geocode/json?address=10%20avenue%20Gambetta%2C%20Paris%2C%20France&sensor=false
+     */
+    public function testGetGeocodedDataWithQuotaExceeded()
+    {
+        $provider = new GoogleMapsProvider($this->getMockAdapterReturns('{"status":"OVER_QUERY_LIMIT"}'));
+        $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
+    }
+
     public function testGetGeocodedDataWithRealAddress()
     {
         $provider = new GoogleMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), 'fr-FR', 'Île-de-France');
