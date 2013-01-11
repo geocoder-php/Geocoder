@@ -98,7 +98,11 @@ class GeoIPsProvider extends AbstractProvider implements ProviderInterface
         }
 
         $json = json_decode($content, true);
-        $response = $json['response'];
+        if (array_key_exists('response', $json)) {
+            $response = $json['response'];
+        } else {
+            $response = $json;
+        } 
 
         if (!is_array($response) || !count($response)) {
             throw new NoResultException(sprintf('Could not execute query %s', $query));
