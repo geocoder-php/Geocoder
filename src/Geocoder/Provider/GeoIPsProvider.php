@@ -102,7 +102,7 @@ class GeoIPsProvider extends AbstractProvider implements ProviderInterface
             $response = $json['response'];
         } else {
             $response = $json;
-        } 
+        }
 
         if (!is_array($response) || !count($response)) {
             throw new NoResultException(sprintf('Could not execute query %s', $query));
