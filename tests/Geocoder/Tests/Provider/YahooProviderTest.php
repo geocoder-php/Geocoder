@@ -89,36 +89,6 @@ class YahooProviderTest extends TestCase
         $provider->getGeocodedData('74.200.247.59');
     }
 
-    public function testGetGeocodedDataWithRealIPv4()
-    {
-        $this->markTestIncomplete('Expected data changed');
-
-        if (!isset($_SERVER['YAHOO_API_KEY'])) {
-            $this->markTestSkipped('You need to configure the YAHOO_API_KEY value in phpunit.xml');
-        }
-
-        $provider = new YahooProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['YAHOO_API_KEY']);
-        $result   = $provider->getGeocodedData('74.200.247.59');
-
-        $this->assertEquals(33.036711, $result['latitude'], '', 0.0001);
-        $this->assertEquals(-96.813541, $result['longitude'], '', 0.0001);
-        $this->assertArrayHasKey('south', $result['bounds']);
-        $this->assertArrayHasKey('west', $result['bounds']);
-        $this->assertArrayHasKey('north', $result['bounds']);
-        $this->assertArrayHasKey('east', $result['bounds']);
-        $this->assertEquals(33.007820, $result['bounds']['south'], '', 0.0001);
-        $this->assertEquals(-96.860229, $result['bounds']['west'], '', 0.0001);
-        $this->assertEquals(33.065601, $result['bounds']['north'], '', 0.0001);
-        $this->assertEquals(-96.766853, $result['bounds']['east'], '', 0.0001);
-        $this->assertEquals(75093, $result['zipcode']);
-        $this->assertEquals('Plano', $result['city']);
-        $this->assertEquals('Collin County', $result['county']);
-        $this->assertEquals('Texas', $result['region']);
-        $this->assertEquals('United States', $result['country']);
-        $this->assertEquals('US', $result['countryCode']);
-        $this->assertEquals('America/Chicago', $result['timezone']);
-    }
-
     /**
      * @expectedException \Geocoder\Exception\UnsupportedException
      * @expectedExceptionMessage The YahooProvider does not support IPv6 addresses.

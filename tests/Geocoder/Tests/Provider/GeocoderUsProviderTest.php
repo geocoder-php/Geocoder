@@ -32,8 +32,6 @@ class GeocoderUsProviderTest extends TestCase
      */
     public function testGetGeocodedDataWithWrongAddress()
     {
-        $this->markTestIncomplete('Timeout too long');
-
         $provider = new GeocoderUsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $provider->getGeocodedData('foobar');
     }
