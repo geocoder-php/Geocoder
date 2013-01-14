@@ -3,6 +3,10 @@ CHANGELOG
 
 ### 1.2.0 (????-??-??) ###
 
+* Fix response interpretation in GeopIPs Provider considering error and ok response.
+* Update tests
+* Change wording from 'splitted' to 'split'
+* Fix response processing in GeoIPsProvider
 * Added exception for status code = OVER_QUERY_LIMIT
 
 ### 1.1.6 (2013-01-08) ###
