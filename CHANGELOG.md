@@ -1,9 +1,11 @@
 CHANGELOG
 =========
 
-### 1.2.0 (????-??-??) ###
+### 1.2.0 (2013-01-15) ###
 
-* Fix response interpretation in GeopIPs Provider considering error and ok response.
+* Fix SocketHttpAdapter which did not take care of query string
+* Fix tests/CS
+* Fix response interpretation in GeopIPs Provider considering error and ok response
 * Update tests
 * Change wording from 'splitted' to 'split'
 * Fix response processing in GeoIPsProvider
@@ -27,7 +29,7 @@ CHANGELOG
 ### 1.1.4 (2012-12-04) ###
 
 * Fixed indentation in OIORestProvider
-* Added countyCode to the Geocoded result object for county short name.
+* Added countyCode to the Geocoded result object for county short name
 * Added reverse geocoding to OIORestProvider + test
 * fix tests
 * fix code inspection
