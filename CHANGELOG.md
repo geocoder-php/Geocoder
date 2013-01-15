@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+### 1.2.1 (????-??-??) ###
+
+n/a
+
 ### 1.2.0 (2013-01-15) ###
 
 * Fix SocketHttpAdapter which did not take care of query string
