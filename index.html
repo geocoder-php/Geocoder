@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Geocoder - The almost missing Geocoder PHP 5.3 library</title>
+    <title>Geocoder by willdurand</title>
 
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
@@ -31,9 +31,9 @@
         <h1>Geocoder</h1>
 
 <p><strong>Geocoder</strong> is a library which helps you build geo-aware applications. It provides an abstraction layer for geocoding manipulations.
-The library is splitted in two parts: <code>HttpAdapter</code> and <code>Provider</code> and is really extensible.</p>
+The library is split in two parts: <code>HttpAdapter</code> and <code>Provider</code> and is really extensible.</p>
 
-<p><a href="http://travis-ci.org/willdurand/Geocoder"><img src="https://secure.travis-ci.org/willdurand/Geocoder.png?branch=master" alt="Build Status"></a></p>
+<p><a href="http://travis-ci.org/willdurand/Geocoder"><img src="https://secure.travis-ci.org/willdurand/Geocoder.png" alt="Build Status"></a></p>
 
 <h3>HttpAdapters</h3>
 
@@ -70,6 +70,8 @@ The library is splitted in two parts: <code>HttpAdapter</code> and <code>Provide
 <li>
 <a href="http://code.google.com/apis/maps/documentation/geocoding/">Google Maps</a> as Address-Based geocoding and reverse geocoding provider;</li>
 <li>
+<a href="https://developers.google.com/maps/documentation/business/webservices">Google Maps for Business</a> as Address-Based geocoding and reverse geocoding provider;</li>
+<li>
 <a href="http://msdn.microsoft.com/en-us/library/ff701715.aspx">Bing Maps</a> as Address-Based geocoding and reverse geocoding provider;</li>
 <li>
 <a href="http://nominatim.openstreetmap.org/">OpenStreetMaps</a> as Address-Based geocoding and reverse geocoding provider;</li>
@@ -82,7 +84,7 @@ over this list to get information;</li>
 <li>
 <a href="http://open.mapquestapi.com/">MapQuest</a> as Address-Based geocoding and reverse geocoding provider;</li>
 <li>
-<a href="http://geo.oiorest.dk/">OIORest</a> as very accurate Address-Based geocoding provider (exclusively in Denmark);</li>
+<a href="http://geo.oiorest.dk/">OIORest</a> as very accurate Address-Based geocoding and reverse geocoding provider (exclusively in Denmark);</li>
 <li>
 <a href="http://geocoder.ca/">GeoCoder.ca</a> as Address-Based geocoding and reverse geocoding provider (exclusively in USA &amp; Canada);</li>
 <li>
@@ -94,9 +96,11 @@ over this list to get information;</li>
 <li>
 <a href="http://api.yandex.com.tr/maps/doc/geocoder/desc/concepts/About.xml">Yandex</a> as Address-Based geocoding and reverse geocoding provider;</li>
 <li>
-<a href="http://www.geoplugin.com/webservices">GeoPlugin</a> as IP-Based geocoding providers;</li>
+<a href="http://www.geoplugin.com/webservices">GeoPlugin</a> as IP-Based geocoding provider;</li>
 <li>
-<a href="http://www.geoips.com/developer/geoips-api">GeoIPs</a> as IP-Based geocoding providers.</li>
+<a href="http://www.geoips.com/developer/geoips-api">GeoIPs</a> as IP-Based geocoding provider;</li>
+<li>
+<a href="http://dev.maxmind.com/geoip/web-services">MaxMind web service</a> as IP-Based geocoding provider.</li>
 </ul><h2>Installation</h2>
 
 <p>The recommended way to install Geocoder is through composer.</p>
@@ -123,7 +127,7 @@ over this list to get information;</li>
 <span class="k">require</span> <span class="s1">'vendor/autoload.php'</span><span class="p">;</span>
 </pre></div>
 
-<p>If you don't use neither <strong>Composer</strong> nor a <em>ClassLoader</em> in your application, just require the provided autoloader:</p>
+<p>If you don't use either <strong>Composer</strong> or a <em>ClassLoader</em> in your application, just require the provided autoloader:</p>
 
 <div class="highlight"><pre><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -203,7 +207,7 @@ See the <a href="http://www.maxmind.com/app/php">MaxMind page</a> for more infor
 
 <h3>OIORestProvider</h3>
 
-<p>The <code>OIORestProvider</code> is able to geocode <strong>street addresses</strong> only, exclusively in Denmark.</p>
+<p>The <code>OIORestProvider</code> is able to geocode and reverse geocode <strong>street addresses</strong>, exclusively in Denmark.</p>
 
 <h3>GeocoderCaProvider</h3>
 
@@ -238,6 +242,11 @@ longitude). It's possible to precise the toponym to get more accurate result:
 <h3>GeoIPsProvider</h3>
 
 <p>The <code>GeoIPsProvider</code> is able to geocode <strong>IPv4 addresses</strong> only.
+A valid api key is required.</p>
+
+<h3>MaxMindProvider</h3>
+
+<p>The <code>MaxMindProvider</code> is able to geocode <strong>IPv4 addresses</strong> only.
 A valid api key is required.</p>
 
 <p>You can use one of them or write your own provider. You can also register all providers and decide later.
@@ -279,11 +288,15 @@ That's we'll do:</p>
 <span class="c1">// }</span>
 <span class="c1">// "streetNumber"   =&gt; string(0) ""</span>
 <span class="c1">// "streetName"     =&gt; string(0) ""</span>
+<span class="c1">// "cityDistrict"   =&gt; string(0) ""</span>
 <span class="c1">// "city"           =&gt; string(7) "Orleans"</span>
 <span class="c1">// "zipcode"        =&gt; string(0) ""</span>
 <span class="c1">// "county"         =&gt; string(6) "Loiret"</span>
+<span class="c1">// "countyCode"     =&gt; null</span>
 <span class="c1">// "region"         =&gt; string(6) "Centre"</span>
+<span class="c1">// "regionCode"     =&gt; null</span>
 <span class="c1">// "country"        =&gt; string(6) "France"</span>
+<span class="c1">// "countryCode"    =&gt; string(2) "FR"</span>
 <span class="c1">// "timezone"       =&gt; string(6) "Europe/Paris"</span>
 
 <span class="nv">$result</span> <span class="o">=</span> <span class="nv">$geocoder</span><span class="o">-&gt;</span><span class="na">geocode</span><span class="p">(</span><span class="s1">'10 rue Gambetta, Paris, France'</span><span class="p">);</span>
@@ -298,11 +311,15 @@ That's we'll do:</p>
 <span class="c1">// }</span>
 <span class="c1">// "streetNumber"   =&gt; string(2) "10"</span>
 <span class="c1">// "streetName"     =&gt; string(15) "Avenue Gambetta"</span>
+<span class="c1">// "cityDistrict"   =&gt; string(18) "20E Arrondissement"</span>
 <span class="c1">// "city"           =&gt; string(5) "Paris"</span>
 <span class="c1">// "county"         =&gt; string(5) "Paris"</span>
+<span class="c1">// "countyCode"     =&gt; null</span>
 <span class="c1">// "zipcode"        =&gt; string(5) "75020"</span>
 <span class="c1">// "region"         =&gt; string(14) "Ile-de-France"</span>
+<span class="c1">// "regionCode"     =&gt; null</span>
 <span class="c1">// "country"        =&gt; string(6) "France"</span>
+<span class="c1">// "countryCode"    =&gt; string(2) "FR"</span>
 <span class="c1">// "timezone"       =&gt; string(6) "Europe/Paris"</span>
 </pre></div>
 
@@ -330,15 +347,17 @@ That's we'll do:</p>
 <li>
 <code>getCounty()</code> will return the <code>county</code>;</li>
 <li>
+<code>getCountyCode()</code> will return the <code>county</code> code (county short name);</li>
+<li>
 <code>getRegion()</code> will return the <code>region</code>;</li>
 <li>
 <code>getRegionCode()</code> will return the <code>region</code> code (region short name);</li>
 <li>
 <code>getCountry()</code> will return the <code>country</code>;</li>
 <li>
-<code>getCountryCode()</code> will return the ISO country code;</li>
+<code>getCountryCode()</code> will return the ISO <code>country</code> code;</li>
 <li>
-<code>getTimezone()</code> will return the timezone.</li>
+<code>getTimezone()</code> will return the <code>timezone</code>.</li>
 </ul><p>The Geocoder's API is fluent, you can write:</p>
 
 <div class="highlight"><pre><span class="o">&lt;?</span><span class="nx">php</span>
@@ -350,7 +369,7 @@ That's we'll do:</p>
     <span class="p">;</span>
 </pre></div>
 
-<p>The <code>using()</code> method allows you to choose the <code>adapter</code> to use. When you deal with multiple adapters, you may want to
+<p>The <code>using()</code> method allows you to choose the <code>provider</code> to use. When you deal with multiple providers, you may want to
 choose one of them. The default behavior is to use the first one but it can be annoying.</p>
 
 <h2>Reverse Geocoding</h2>
@@ -439,6 +458,7 @@ it's really easy to format a <code>ResultInterface</code> object as a string:</p
 <li><p>City: <code>%L</code></p></li>
 <li><p>Zipcode: <code>%z</code></p></li>
 <li><p>County: <code>%P</code></p></li>
+<li><p>County Code: <code>%p</code></p></li>
 <li><p>Region: <code>%R</code></p></li>
 <li><p>Region Code: <code>%r</code></p></li>
 <li><p>Country: <code>%C</code></p></li>
@@ -479,6 +499,7 @@ it's really easy to format a <code>ResultInterface</code> object as a string:</p
     <span class="c">&lt;!-- &lt;server name="CLOUDMADE_API_KEY" value="YOUR_API_KEY" /&gt; --&gt;</span>
     <span class="c">&lt;!-- &lt;server name="IGN_WEB_API_KEY" value="YOUR_API_KEY" /&gt; --&gt;</span>
     <span class="c">&lt;!-- &lt;server name="GEOIPS_API_KEY" value="YOUR_API_KEY" /&gt; --&gt;</span>
+    <span class="c">&lt;!-- &lt;server name="MAXMIND_API_KEY" value="YOUR_API_KEY" /&gt; --&gt;</span>
 <span class="nt">&lt;/php&gt;</span>
 </pre></div>
 
