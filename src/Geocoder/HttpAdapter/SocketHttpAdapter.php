@@ -31,7 +31,10 @@ class SocketHttpAdapter implements HttpAdapterInterface
 
         $hostname = $info['host'];
         $port     = isset($info['port']) ? $info['port'] : 80;
-        $path     = isset($info['path']) ? $info['path'] : '/';
+        $path     = sprintf('%s%s',
+            isset($info['path']) ? $info['path'] : '/',
+            isset($info['query']) ? '?' . $info['query'] : ''
+        );
 
         $socketHandle = $this->createSocket($hostname, $port, 30);
 

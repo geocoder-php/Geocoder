@@ -27,10 +27,26 @@ class SocketHttpAdapterTest extends TestCase
         $this->assertContains('google', $content);
     }
 
+    public function testGetContentHandlesQueryString()
+    {
+        $url     = 'http://example.com/foobar?my=query&string=true';
+        $adapter = new PartialSocketHttpAdapter();
+
+        try {
+            $adapter->getContent($url);
+            $this->fail('It should throw an exception');
+        } catch (\Exception $e) {
+            // expected result
+        }
+
+        $this->assertEquals('/foobar?my=query&string=true', $adapter->path);
+        $this->assertEquals('example.com', $adapter->hostname);
+    }
+
     /**
      * NOTE ON REFLECTION:
-     * Not a great idea but the alternative would be to create a new class for HTTP parsing or set the method public.
-     * I don't like either of these much.
+     * Not a great idea but the alternative would be to create a new class for
+     * HTTP parsing or set the method public. I don't like either of these much.
      */
     public function testBuildRequest()
     {
@@ -38,7 +54,7 @@ class SocketHttpAdapterTest extends TestCase
             $this->adapter, 'buildHttpRequest'
         );
 
-        $method->setAccessible(TRUE);
+        $method->setAccessible(true);
 
         $ex_host = 'www.google.com';
         $ex_path = '/';
@@ -60,7 +76,7 @@ class SocketHttpAdapterTest extends TestCase
         $method = new \ReflectionMethod(
             $this->adapter, 'getParsedHttpResponse'
         );
-        $method->setAccessible(TRUE);
+        $method->setAccessible(true);
 
         //create a file in memory
         $tempFileHandle = fopen('php://memory', 'r+');
@@ -108,7 +124,7 @@ class SocketHttpAdapterTest extends TestCase
         $method = new \ReflectionMethod(
             $this->adapter, 'getParsedHttpResponse'
         );
-        $method->setAccessible(TRUE);
+        $method->setAccessible(true);
 
         $tempFileHandle = fopen('php://memory', 'r+');
 
@@ -131,4 +147,19 @@ class SocketHttpAdapterTest extends TestCase
         $this->assertContains('{"foo":"bar","baz":"cat"}', $httpResponse['content']);
     }
 
+}
+
+class PartialSocketHttpAdapter extends SocketHttpAdapter
+{
+    public $path;
+
+    public $hostname;
+
+    public function buildHttpRequest($path, $hostname)
+    {
+        $this->path     = $path;
+        $this->hostname = $hostname;
+
+        throw new \Exception();
+    }
 }
