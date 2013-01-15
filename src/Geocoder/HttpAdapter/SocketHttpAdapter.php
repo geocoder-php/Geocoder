@@ -18,8 +18,14 @@ use Geocoder\Exception\ExtensionNotLoadedException;
  */
 class SocketHttpAdapter implements HttpAdapterInterface
 {
+    /**
+     * @var integer
+     */
     const MAX_REDIRECTS = 5;
 
+    /**
+     * @var integer
+     */
     private $redirectsRemaining = self::MAX_REDIRECTS;
 
     /**
@@ -32,7 +38,7 @@ class SocketHttpAdapter implements HttpAdapterInterface
         $hostname = $info['host'];
         $port     = isset($info['port']) ? $info['port'] : 80;
         $path     = sprintf('%s%s',
-            isset($info['path']) ? $info['path'] : '/',
+            isset($info['path'])  ? $info['path']        : '/',
             isset($info['query']) ? '?' . $info['query'] : ''
         );
 
@@ -85,6 +91,8 @@ class SocketHttpAdapter implements HttpAdapterInterface
     }
 
     /**
+     * Build the HTTP 1.1 request headers from the given inputs.
+     *
      * @param string $path     The path.
      * @param string $hostname The hostname.
      *
