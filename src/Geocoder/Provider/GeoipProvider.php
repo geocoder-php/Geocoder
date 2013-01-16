@@ -57,17 +57,21 @@ class GeoipProvider extends AbstractProvider implements ProviderInterface
 
         $timezone = @geoip_time_zone_by_country_and_region($results['country_code'], $results['region']) ?: null;
         $region = @geoip_region_name_by_code($results['country_code'], $results['region']) ?: $results['region'];
+        $isp = @geoip_isp_by_name($address);
+        $organization = @geoip_org_by_name($organization);
 
         return array_merge($this->getDefaults(), array(
-            'latitude'    => $results['latitude'],
-            'longitude'   => $results['longitude'],
-            'city'        => $results['city'],
-            'zipcode'     => $results['postal_code'],
-            'region'      => $region,
-            'regionCode'  => $results['region'],
-            'country'     => $results['country_name'],
-            'countryCode' => $results['country_code'],
-            'timezone'    => $timezone,
+            'latitude'      => $results['latitude'],
+            'longitude'     => $results['longitude'],
+            'city'          => $results['city'],
+            'zipcode'       => $results['postal_code'],
+            'region'        => $region,
+            'regionCode'    => $results['region'],
+            'country'       => $results['country_name'],
+            'countryCode'   => $results['country_code'],
+            'timezone'      => $timezone,
+            'isp'           => $isp,
+            'organization'  => $organization,
         ));
     }
 
