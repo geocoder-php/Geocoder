@@ -4,6 +4,7 @@ namespace Geocoder\Tests;
 
 use Geocoder\Geocoder;
 use Geocoder\Provider\ProviderInterface;
+use Geocoder\Result\Geocoded;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -97,10 +98,11 @@ class GeocoderTest extends TestCase
         $this->assertSame($provider1, $this->geocoder->getProvider());
     }
 
-    public function testGeocodeReturnsInstanceOfGeocoded()
+    public function testGeocodeReturnsInstanceOfResultInterface()
     {
         $this->geocoder->registerProvider(new MockProvider('test1'));
-        $this->assertInstanceOf('\Geocoder\Result\Geocoded', $this->geocoder->geocode('foobar'));
+        $this->assertInstanceOf('Geocoder\Result\ResultInterface', $this->geocoder->geocode('foobar'));
+        $this->assertInstanceOf('Geocoder\Result\Geocoded', $this->geocoder->geocode('foobar'));
     }
 
     public function testEmpty()
@@ -110,6 +112,18 @@ class GeocoderTest extends TestCase
         $this->assertEquals(0, $this->geocoder->getProvider('test2')->geocodeCount);
         $this->assertEmptyResult($this->geocoder->geocode(null));
         $this->assertEquals(0, $this->geocoder->getProvider('test2')->geocodeCount);
+    }
+
+    public function testUseCustomResultFactory()
+    {
+        $factoryMock = $this->getMock('Geocoder\Result\ResultFactory');
+        $factoryMock
+            ->expects($this->once())
+            ->method('newInstance')
+            ->will($this->returnValue(new DummyResult()));
+
+        $geocoder = new TestableGeocoder(null, $factoryMock);
+        $this->assertInstanceOf('Geocoder\Tests\DummyResult', $geocoder->returnResult(array()));
     }
 
     protected function assertEmptyResult($result)
@@ -179,4 +193,13 @@ class TestableGeocoder extends Geocoder
 
         return parent::getProvider();
     }
+
+    public function returnResult(array $data = array())
+    {
+        return parent::returnResult($data);
+    }
+}
+
+class DummyResult extends Geocoded
+{
 }

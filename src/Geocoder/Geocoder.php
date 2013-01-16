@@ -11,7 +11,7 @@
 namespace Geocoder;
 
 use Geocoder\Provider\ProviderInterface;
-use Geocoder\Result\Geocoded;
+use Geocoder\Result\ResultFactory;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -31,14 +31,21 @@ class Geocoder implements GeocoderInterface
     /**
      * @var ProviderInterface
      */
-    private $provider = null;
+    private $provider;
+
+    /**
+     * @var ResultFactory
+     */
+    private $resultFactory;
 
     /**
      * @param ProviderInterface $provider
+     * @param ResultFactory     $resultFactory
      */
-    public function __construct(ProviderInterface $provider = null)
+    public function __construct(ProviderInterface $provider = null, ResultFactory $resultFactory = null)
     {
-        $this->provider = $provider;
+        $this->provider      = $provider;
+        $this->resultFactory = $resultFactory ?: new ResultFactory();
     }
 
     /**
@@ -152,13 +159,10 @@ class Geocoder implements GeocoderInterface
     /**
      * @param array $data An array of data.
      *
-     * @return Geocoded
+     * @return ResultInterface
      */
     protected function returnResult(array $data = array())
     {
-        $result = new Geocoded();
-        $result->fromArray($data);
-
-        return $result;
+        return $this->resultFactory->createFromArray($data);
     }
 }
