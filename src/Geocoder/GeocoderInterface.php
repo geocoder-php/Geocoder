@@ -10,8 +10,6 @@
 
 namespace Geocoder;
 
-use Geocoder\Result\Geocoded;
-
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
@@ -22,7 +20,7 @@ interface GeocoderInterface
      *
      * @param string $value A value to geocode.
      *
-     * @return Geocoded A Geocoded result object.
+     * @return ResultInterface A ResultInterface result object.
      */
     public function geocode($value);
 
@@ -32,7 +30,7 @@ interface GeocoderInterface
      * @param double $latitude  Latitude.
      * @param double $longitude Longitude.
      *
-     * @return Geocoded A Geocoded result object.
+     * @return ResultInterface A ResultInterface result object.
      */
     public function reverse($latitude, $longitude);
 }
