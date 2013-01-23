@@ -13,7 +13,7 @@ namespace Geocoder\Result;
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-class Geocoded implements ResultInterface, \ArrayAccess
+class Geocoded extends AbstractResult implements ResultInterface
 {
     /**
      * @var double
@@ -311,73 +311,5 @@ class Geocoded implements ResultInterface, \ArrayAccess
             'countryCode'   => $this->countryCode,
             'timezone'      => $this->timezone,
         );
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function offsetExists($offset)
-    {
-        return property_exists($this, $offset) && null !== $this->$offset;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function offsetGet($offset)
-    {
-        return $this->offsetExists($offset) ? $this->$offset : null;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function offsetSet($offset, $value)
-    {
-        if ($this->offsetExists($offset)) {
-            $this->$offset = $value;
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function offsetUnset($offset)
-    {
-        if ($this->offsetExists($offset)) {
-            $this->$offset = null;
-        }
-    }
-
-    /**
-     * Format a string data.
-     *
-     * @param string $str A string.
-     *
-     * @return string
-     */
-    private function formatString($str)
-    {
-        if (extension_loaded('mbstring')) {
-            $str = mb_convert_case($str, MB_CASE_TITLE, 'UTF-8');
-        } else {
-            $str = $this->lowerize($str);
-            $str = ucwords($str);
-        }
-
-        $str = str_replace('-', '- ', $str);
-        $str = str_replace('- ', '-', $str);
-
-        return $str;
-    }
-
-    private function lowerize($str)
-    {
-        return extension_loaded('mbstring') ? mb_strtolower($str, 'UTF-8') : strtolower($str);
-    }
-
-    private function upperize($str)
-    {
-        return extension_loaded('mbstring') ? mb_strtoupper($str, 'UTF-8') : strtoupper($str);
     }
 }
