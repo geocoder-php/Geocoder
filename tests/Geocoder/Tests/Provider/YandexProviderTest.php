@@ -91,12 +91,12 @@ class YandexProviderTest extends TestCase
         $provider = new YandexProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result   = $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
 
-        $this->assertEquals(48.863277, $result['latitude'], '', 0.0001);
-        $this->assertEquals(2.389016, $result['longitude'], '', 0.0001);
-        $this->assertEquals(48.861926, $result['bounds']['south'], '', 0.0001);
-        $this->assertEquals(2.386967, $result['bounds']['west'], '', 0.0001);
-        $this->assertEquals(48.864629, $result['bounds']['north'], '', 0.0001);
-        $this->assertEquals(2.391064, $result['bounds']['east'], '', 0.0001);
+        $this->assertEquals(48.863277, $result['latitude'], '', 0.01);
+        $this->assertEquals(2.389016, $result['longitude'], '', 0.01);
+        $this->assertEquals(48.861926, $result['bounds']['south'], '', 0.01);
+        $this->assertEquals(2.386967, $result['bounds']['west'], '', 0.01);
+        $this->assertEquals(48.864629, $result['bounds']['north'], '', 0.01);
+        $this->assertEquals(2.391064, $result['bounds']['east'], '', 0.01);
         $this->assertEquals(10, $result['streetNumber']);
         $this->assertEquals('Иль-Де-Франс', $result['cityDistrict']);
         $this->assertEquals('Avenue Gambetta', $result['streetName']);
@@ -141,15 +141,15 @@ class YandexProviderTest extends TestCase
         $provider = new YandexProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), 'en-US');
         $result   = $provider->getGeocodedData('1600 Pennsylvania Ave, Washington');
 
-        $this->assertEquals(39.664402, $result['latitude'], '', 0.0001);
-        $this->assertEquals(-77.568609, $result['longitude'], '', 0.0001);
-        $this->assertEquals(39.655911, $result['bounds']['south'], '', 0.0001);
-        $this->assertEquals(-77.570989, $result['bounds']['west'], '', 0.0001);
-        $this->assertEquals(39.672421, $result['bounds']['north'], '', 0.0001);
-        $this->assertEquals(-77.568483, $result['bounds']['east'], '', 0.0001);
+        $this->assertEquals(39.684978, $result['latitude'], '', 0.01);
+        $this->assertEquals(-77.720720, $result['longitude'], '', 0.01);
+        $this->assertEquals(39.655911, $result['bounds']['south'], '', 0.01);
+        $this->assertEquals(-77.724161, $result['bounds']['west'], '', 0.01);
+        $this->assertEquals(39.721407, $result['bounds']['north'], '', 0.01);
+        $this->assertEquals(-77.717522, $result['bounds']['east'], '', 0.01);
         $this->assertNull($result['streetNumber']);
         $this->assertEquals('Maryland', $result['cityDistrict']);
-        $this->assertNull($result['streetName']);
+        $this->assertEquals('Pennsylvania Ave', $result['streetName']);
         $this->assertEquals('United States', $result['country']);
         $this->assertEquals('US', $result['countryCode']);
 
@@ -166,12 +166,12 @@ class YandexProviderTest extends TestCase
         $provider = new YandexProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), 'be-BY');
         $result   = $provider->getGeocodedData('ул.Ленина, 19, Минск 220030, Республика Беларусь');
 
-        $this->assertEquals(53.898077, $result['latitude'], '', 0.0001);
-        $this->assertEquals(27.563673, $result['longitude'], '', 0.0001);
-        $this->assertEquals(53.896867, $result['bounds']['south'], '', 0.0001);
-        $this->assertEquals(27.561624, $result['bounds']['west'], '', 0.0001);
-        $this->assertEquals(53.899286, $result['bounds']['north'], '', 0.0001);
-        $this->assertEquals(27.565721, $result['bounds']['east'], '', 0.0001);
+        $this->assertEquals(53.898077, $result['latitude'], '', 0.01);
+        $this->assertEquals(27.563673, $result['longitude'], '', 0.01);
+        $this->assertEquals(53.896867, $result['bounds']['south'], '', 0.01);
+        $this->assertEquals(27.561624, $result['bounds']['west'], '', 0.01);
+        $this->assertEquals(53.899286, $result['bounds']['north'], '', 0.01);
+        $this->assertEquals(27.565721, $result['bounds']['east'], '', 0.01);
         $this->assertEquals(19, $result['streetNumber']);
         $this->assertNull($result['cityDistrict']);
         $this->assertEquals('улица Ленина', $result['streetName']);
@@ -221,12 +221,12 @@ class YandexProviderTest extends TestCase
         $provider = new YandexProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result = $provider->getReversedData(array(48.863216489553, 2.388771995902061));
 
-        $this->assertEquals(48.863212, $result['latitude'], '', 0.0001);
-        $this->assertEquals(2.388773, $result['longitude'], '', 0.0001);
-        $this->assertEquals(48.86294, $result['bounds']['south'], '', 0.0001);
-        $this->assertEquals(2.387497, $result['bounds']['west'], '', 0.0001);
-        $this->assertEquals(48.877038, $result['bounds']['north'], '', 0.0001);
-        $this->assertEquals(2.423214, $result['bounds']['east'], '', 0.0001);
+        $this->assertEquals(48.863212, $result['latitude'], '', 0.01);
+        $this->assertEquals(2.388773, $result['longitude'], '', 0.01);
+        $this->assertEquals(48.86294, $result['bounds']['south'], '', 0.01);
+        $this->assertEquals(2.387497, $result['bounds']['west'], '', 0.01);
+        $this->assertEquals(48.877038, $result['bounds']['north'], '', 0.01);
+        $this->assertEquals(2.423214, $result['bounds']['east'], '', 0.01);
         $this->assertNull($result['streetNumber']);
         $this->assertEquals('Иль-Де-Франс', $result['cityDistrict']);
         $this->assertEquals('Avenue Gambetta', $result['streetName']);
@@ -246,12 +246,12 @@ class YandexProviderTest extends TestCase
         $provider = new YandexProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), 'en-US', 'street');
         $result = $provider->getReversedData(array(48.863216489553, 2.388771995902061));
 
-        $this->assertEquals(48.87132, $result['latitude'], '', 0.0001);
-        $this->assertEquals(2.404017, $result['longitude'], '', 0.0001);
-        $this->assertEquals(48.86294, $result['bounds']['south'], '', 0.0001);
-        $this->assertEquals(2.387497, $result['bounds']['west'], '', 0.0001);
-        $this->assertEquals(48.877038, $result['bounds']['north'], '', 0.0001);
-        $this->assertEquals(2.423214, $result['bounds']['east'], '', 0.0001);
+        $this->assertEquals(48.87132, $result['latitude'], '', 0.01);
+        $this->assertEquals(2.404017, $result['longitude'], '', 0.01);
+        $this->assertEquals(48.86294, $result['bounds']['south'], '', 0.01);
+        $this->assertEquals(2.387497, $result['bounds']['west'], '', 0.01);
+        $this->assertEquals(48.877038, $result['bounds']['north'], '', 0.01);
+        $this->assertEquals(2.423214, $result['bounds']['east'], '', 0.01);
         $this->assertNull($result['streetNumber']);
         $this->assertEquals('Ile-de-France', $result['cityDistrict']);
         $this->assertEquals('Avenue Gambetta', $result['streetName']);
@@ -271,12 +271,12 @@ class YandexProviderTest extends TestCase
         $provider = new YandexProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), 'uk-UA', 'house');
         $result = $provider->getReversedData(array(60.4539471768582, 22.2567842183875));
 
-        $this->assertEquals(60.454462, $result['latitude'], '', 0.0001);
-        $this->assertEquals(22.256561, $result['longitude'], '', 0.0001);
-        $this->assertEquals(60.45345, $result['bounds']['south'], '', 0.0001);
-        $this->assertEquals(22.254513, $result['bounds']['west'], '', 0.0001);
-        $this->assertEquals(60.455474, $result['bounds']['north'], '', 0.0001);
-        $this->assertEquals(22.258609, $result['bounds']['east'], '', 0.0001);
+        $this->assertEquals(60.454462, $result['latitude'], '', 0.01);
+        $this->assertEquals(22.256561, $result['longitude'], '', 0.01);
+        $this->assertEquals(60.45345, $result['bounds']['south'], '', 0.01);
+        $this->assertEquals(22.254513, $result['bounds']['west'], '', 0.01);
+        $this->assertEquals(60.455474, $result['bounds']['north'], '', 0.01);
+        $this->assertEquals(22.258609, $result['bounds']['east'], '', 0.01);
         $this->assertEquals(36, $result['streetNumber']);
         $this->assertEquals('Исконная Финляндия', $result['cityDistrict']);
         //$this->assertEquals('Bangårdsgatan', $result['streetName']);
@@ -296,12 +296,12 @@ class YandexProviderTest extends TestCase
         $provider = new YandexProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), 'tr-TR', 'locality');
         $result = $provider->getReversedData(array(40.900640, 29.198184));
 
-        $this->assertEquals(40.909452, $result['latitude'], '', 0.0001);
-        $this->assertEquals(29.052244, $result['longitude'], '', 0.0001);
-        $this->assertEquals(40.903932, $result['bounds']['south'], '', 0.0001);
-        $this->assertEquals(29.041446, $result['bounds']['west'], '', 0.0001);
-        $this->assertEquals(40.913759, $result['bounds']['north'], '', 0.0001);
-        $this->assertEquals(29.056834, $result['bounds']['east'], '', 0.0001);
+        $this->assertEquals(40.909452, $result['latitude'], '', 0.01);
+        $this->assertEquals(29.138608, $result['longitude'], '', 0.01);
+        $this->assertEquals(40.860413, $result['bounds']['south'], '', 0.01);
+        $this->assertEquals(29.072708, $result['bounds']['west'], '', 0.01);
+        $this->assertEquals(40.960403, $result['bounds']['north'], '', 0.01);
+        $this->assertEquals(29.204508, $result['bounds']['east'], '', 0.01);
         $this->assertNull($result['streetNumber']);
         $this->assertEquals('İstanbul', $result['cityDistrict']);
         $this->assertNull($result['streetName']);
