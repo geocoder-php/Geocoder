@@ -138,6 +138,47 @@ interface ResultInterface
     public function getTimezone();
 
     /**
+     * Returns the ISP.
+     *
+     * @return string
+     */
+    public function getIsp();
+
+    /**
+     * Returns the name of the organization.
+     *
+     * @return string
+     */
+    public function getOrganization();
+
+    /**
+     * Returns the domain name of the organization.
+     *
+     * @return string
+     */
+    public function getDomain();
+
+    /**
+     * Returns the type of user
+     *
+     * One of the following values:
+     * business, cafe, cellular, college, contentDeliveryNetwork, government,
+     * hosting, library,  military, residential, router, school, searchEngineSpider, traveler
+     *
+     * @return string
+     */
+    public function getUserType();
+
+    /**
+     * Returns the network speed
+     *
+     * One of the following values: Dialup, Cable/DSL, Corporate, Cellular
+     *
+     * @return string
+     */
+    public function getNetspeed();
+
+    /**
      * Extracts data from an array.
      *
      * @param array $data An array.

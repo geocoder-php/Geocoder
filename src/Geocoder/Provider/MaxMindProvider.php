@@ -21,9 +21,29 @@ use Geocoder\HttpAdapter\HttpAdapterInterface;
 class MaxMindProvider extends AbstractProvider implements ProviderInterface
 {
     /**
+     * @var string Only the Country
+     */
+    const COUNTRY_SERVICE='a';
+
+    /**
+     * @var string Country and City
+     */
+    const CITY_SERVICE='b';
+
+    /**
+     * @var string Country, City, ISP and Organization
+     */
+    const CITY_EXTENDED_SERVICE='f';
+
+    /**
+     * @var string Extended
+     */
+    const OMNI_SERVICE='e';
+
+    /**
      * @var string
      */
-    const GEOCODE_ENDPOINT_URL = 'http://geoip.maxmind.com/f?l=%s&i=%s';
+    const GEOCODE_ENDPOINT_URL = 'http://geoip.maxmind.com/%s?l=%s&i=%s';
 
     /**
      * @var string
@@ -31,14 +51,22 @@ class MaxMindProvider extends AbstractProvider implements ProviderInterface
     private $apiKey = null;
 
     /**
+     * @var string
+     */
+    private $service = null;
+
+
+    /**
      * @param HttpAdapterInterface $adapter An HTTP adapter.
      * @param string               $apiKey  An API key.
+     * @param string               $service  The specific Maxmind service to use.
      */
-    public function __construct(HttpAdapterInterface $adapter, $apiKey)
+    public function __construct(HttpAdapterInterface $adapter, $apiKey, $service=self::CITY_EXTENDED_SERVICE)
     {
         parent::__construct($adapter, null);
 
         $this->apiKey = $apiKey;
+        $this->service = $service;
     }
 
     /**
@@ -54,16 +82,11 @@ class MaxMindProvider extends AbstractProvider implements ProviderInterface
             throw new UnsupportedException('The MaxMindProvider does not support street addresses.');
         }
 
-        // This API does not support IPv6
-        if (filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
-            throw new UnsupportedException('The MaxMindProvider does not support IPv6 addresses.');
-        }
-
-        if ('127.0.0.1' === $address) {
+        if ('127.0.0.1' === $address || '::1' == $address) {
             return $this->getLocalhostDefaults();
         }
 
-        $query = sprintf(self::GEOCODE_ENDPOINT_URL, $this->apiKey, $address);
+        $query = sprintf(self::GEOCODE_ENDPOINT_URL, $this->service, $this->apiKey, $address);
 
         return $this->executeQuery($query);
     }
@@ -80,40 +103,64 @@ class MaxMindProvider extends AbstractProvider implements ProviderInterface
      * @param string $query
      *
      * @return array
+     * @see http://dev.maxmind.com/geoip/web-services
      */
     protected function executeQuery($query)
     {
         $content = $this->getAdapter()->getContent($query);
+        $fields = $this->fieldsForService($this->service);
 
         if (null === $content || '' === $content) {
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
-        $data = explode(',', $content);
+        $data = str_getcsv($content);
 
-        if (11 !== count($data)) {
-            throw new NoResultException(sprintf('Could not execute query %s', $query));
-        }
-
-        if (in_array($data[10], array('INVALID_LICENSE_KEY', 'LICENSE_REQUIRED'))) {
+        if (in_array(end($data), array('INVALID_LICENSE_KEY', 'LICENSE_REQUIRED'))) {
             throw new InvalidCredentialsException('API Key provided is not valid.');
         }
 
-        if ($data[10] == 'IP_NOT_FOUND') {
+        if (end($data) == 'IP_NOT_FOUND') {
             throw new NoResultException('Could not retrieve informations for the ip address provided.');
         }
 
-        $nullValues = array('(null)', '');
+        if (count($fields) !== count($data)) {
+            throw new NoResultException('Invalid result returned by provider.');
+        }
 
-        return array_merge($this->getDefaults(), array(
-            'countryCode' => in_array($data[0], $nullValues) ? null : $data[0],
-            'country'     => in_array($data[0], $nullValues) ? null : $this->countryCodeToCountryName($data[0]),
-            'regionCode'  => in_array($data[1], $nullValues) ? null : $data[1],
-            'city'        => in_array($data[2], $nullValues) ? null : $data[2],
-            'zipcode'     => in_array($data[3], $nullValues) ? null : $data[3],
-            'latitude'    => in_array($data[0], $nullValues) ? null : $data[4],
-            'longitude'   => in_array($data[0], $nullValues) ? null : $data[5],
-        ));
+        // combine with field names and process
+        $data = array_combine($fields, $data);
+
+        if(empty($data['country']) && !empty($data['countryCode'])) {
+            $data['country'] = $this->countryCodeToCountryName($data['countryCode']);
+        }
+
+        return array_merge($this->getDefaults(), $data);
+    }
+
+    protected function fieldsForService($service)
+    {
+        switch($service) {
+            case self::COUNTRY_SERVICE: return array(
+                'countryCode'
+            );
+            case self::CITY_SERVICE: return array(
+                'countryCode','regionCode','city','latitude','longitude'
+            );
+            case self::CITY_EXTENDED_SERVICE: return array(
+                'countryCode','regionCode','city','zipcode','latitude','longitude',
+                'metroCode','areaCode','isp','organization'
+            );
+            case self::OMNI_SERVICE: return array(
+                'countryCode','countryName','regionCode','region','city','latitude','longitude',
+                'metroCode','areaCode','timezone','continentCode',
+                'zipcode','isp','organization','domain','asNumber','netspeed',
+                'userType','accuracyRadius','countryConfidence','cityConfidence',
+                'regionConfidence','postalConfidence','error'
+            );
+            default:
+                throw new NoResultException(sprintf('Unknown MaxMind service %s', $service));
+        }
     }
 
     /**

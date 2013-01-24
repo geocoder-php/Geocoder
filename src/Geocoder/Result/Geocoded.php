@@ -91,6 +91,32 @@ class Geocoded extends AbstractResult implements ResultInterface
     protected $timezone = null;
 
     /**
+     * @var string
+     */
+    protected $isp = null;
+
+    /**
+     * @var string
+     */
+    protected $organization = null;
+
+    /**
+     * @var string
+     */
+    protected $domain = null;
+
+    /**
+     * @var string
+     */
+    protected $userType = null;
+
+    /**
+     * @var string
+     */
+    protected $netspeed = null;
+
+
+    /**
      * {@inheritDoc}
      */
     public function getCoordinates()
@@ -221,6 +247,46 @@ class Geocoded extends AbstractResult implements ResultInterface
     /**
      * {@inheritDoc}
      */
+    public function getIsp()
+    {
+        return $this->isp;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getOrganization()
+    {
+        return $this->organization;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getDomain()
+    {
+        return $this->domain;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getUserType()
+    {
+        return $this->userType;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getNetspeed()
+    {
+        return $this->netspeed;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function fromArray(array $data = array())
     {
         if (isset($data['latitude'])) {
@@ -287,6 +353,26 @@ class Geocoded extends AbstractResult implements ResultInterface
         if (isset($data['timezone'])) {
             $this->timezone = (string) $data['timezone'];
         }
+
+        if (isset($data['isp'])) {
+            $this->isp = $this->formatString($data['isp']);
+        }
+
+        if (isset($data['organization'])) {
+            $this->organization = $this->formatString($data['organization']);
+        }
+
+        if (isset($data['domain'])) {
+            $this->domain = $this->formatString($data['domain']);
+        }
+
+        if (isset($data['userType'])) {
+            $this->userType = $this->formatString($data['userType']);
+        }
+
+        if (isset($data['netspeed'])) {
+            $this->netspeed = $this->formatString($data['netspeed']);
+        }
     }
 
     /**
@@ -310,6 +396,11 @@ class Geocoded extends AbstractResult implements ResultInterface
             'country'       => $this->country,
             'countryCode'   => $this->countryCode,
             'timezone'      => $this->timezone,
+            'isp'           => $this->isp,
+            'organization'  => $this->organization,
+            'domain'        => $this->domain,
+            'userType'      => $this->userType,
+            'netspeed'      => $this->netspeed,
         );
     }
 }
