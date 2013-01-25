@@ -47,7 +47,7 @@ Currently, there are many providers for the following APIs:
 * [Yandex](http://api.yandex.com.tr/maps/doc/geocoder/desc/concepts/About.xml) as Address-Based geocoding and reverse geocoding provider;
 * [GeoPlugin](http://www.geoplugin.com/webservices) as IP-Based geocoding provider;
 * [GeoIPs](http://www.geoips.com/developer/geoips-api) as IP-Based geocoding provider;
-* [MaxMind web service](http://dev.maxmind.com/geoip/web-services) as IP-Based geocoding provider.
+* [MaxMind web service](http://dev.maxmind.com/geoip/web-services) as IP-Based geocoding provider;
 * [Geonames](http://www.geonames.org/) as Place-Based geocoding and reverse geocoding provider.
 
 Installation
