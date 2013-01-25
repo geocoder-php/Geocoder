@@ -33,7 +33,6 @@ class GeonamesProviderTest extends TestCase
         $provider->getReversedData(array(1,2));
     }
 
-
     /**
      * @expectedException \Geocoder\Exception\UnsupportedException
      * @expectedExceptionMessage The GeonamesProvider does not support IP addresses.
@@ -63,7 +62,6 @@ class GeonamesProviderTest extends TestCase
         $provider = new GeonamesProvider($this->getMockAdapter(), 'username');
         $provider->getGeocodedData(null);
     }
-
 
     /**
      * @expectedException \Geocoder\Exception\NoResultException

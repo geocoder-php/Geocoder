@@ -35,11 +35,10 @@ class GeonamesProvider extends AbstractProvider implements ProviderInterface
      */
     private $username = null;
 
-
     /**
-     * @param HttpAdapterInterface $adapter An HTTP adapter.
-     * @param string               $username  Username login (Free registration at http://www.geonames.org/login)
-     * @param string               $locale  A locale (optional).
+     * @param HttpAdapterInterface $adapter  An HTTP adapter.
+     * @param string               $username Username login (Free registration at http://www.geonames.org/login)
+     * @param string               $locale   A locale (optional).
      */
     public function __construct(HttpAdapterInterface $adapter, $username, $locale = null)
     {
@@ -52,8 +51,7 @@ class GeonamesProvider extends AbstractProvider implements ProviderInterface
      */
     public function getGeocodedData($address)
     {
-        if (null === $this->username)
-        {
+        if (null === $this->username) {
             throw new InvalidCredentialsException('No Username provided');
         }
 
@@ -72,8 +70,7 @@ class GeonamesProvider extends AbstractProvider implements ProviderInterface
      */
     public function getReversedData(array $coordinates)
     {
-        if (null === $this->username)
-        {
+        if (null === $this->username) {
             throw new InvalidCredentialsException('No Username provided');
         }
 
@@ -97,36 +94,31 @@ class GeonamesProvider extends AbstractProvider implements ProviderInterface
      */
     protected function executeQuery($query)
     {
-        if (null !== $this->getLocale())
-        {
+        if (null !== $this->getLocale()) {
             // Locale code transformation: for example from it_IT to it
             $query = sprintf('%s&lang=%s', $query, substr($this->getLocale(), 0, 2));
         }
 
         $content = $this->getAdapter()->getContent($query);
 
-        if (null === $content)
-        {
+        if (null === $content) {
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
         $json = json_decode($content);
 
-        if (isset($json->totalResultsCount) && ($json->totalResultsCount === 0))
-        {
+        if (isset($json->totalResultsCount) && ($json->totalResultsCount === 0)) {
             throw new NoResultException(sprintf('No places found for query %s', $query));
         }
 
-        if (isset($json->geonames) && !(empty($json->geonames)))
-        {
+        if (isset($json->geonames) && !(empty($json->geonames))) {
             $data = (array) $json->geonames[0];
         } else {
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
         $bounds = null;
-        if (isset($data['bbox']))
-        {
+        if (isset($data['bbox'])) {
             $bounds = array(
                 'south' => $data['bbox']->south,
                 'west'  => $data['bbox']->west,
