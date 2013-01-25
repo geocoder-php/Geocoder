@@ -48,7 +48,7 @@ Currently, there are many providers for the following APIs:
 * [GeoPlugin](http://www.geoplugin.com/webservices) as IP-Based geocoding provider;
 * [GeoIPs](http://www.geoips.com/developer/geoips-api) as IP-Based geocoding provider;
 * [MaxMind web service](http://dev.maxmind.com/geoip/web-services) as IP-Based geocoding provider.
-
+* [Geonames](http://www.geonames.org/) as Place-Based geocoding and reverse geocoding provider.
 
 Installation
 ------------
@@ -226,6 +226,12 @@ A valid api key is required.
 
 The `MaxMindProvider` is able to geocode **IPv4 addresses** only.
 A valid api key is required.
+
+
+### GeonamesProvider ###
+
+The `GeonamesProvider` is able to geocode and reverse geocode **places**.
+A valid username is required.
 
 
 You can use one of them or write your own provider. You can also register all providers and decide later.
