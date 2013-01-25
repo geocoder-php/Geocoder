@@ -163,6 +163,29 @@ JSON;
 
     }
 
+
+    public function testGetReversedDataWithRealCoordinatesWithLocale()
+    {
+        if (!isset($_SERVER['GEONAMES_USERNAME'])) {
+            $this->markTestSkipped('You need to configure the GEONAMES_USERNAME value in phpunit.xml');
+        }
+
+        $provider = new GeonamesProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['GEONAMES_USERNAME'], "it_IT");
+        $result   = $provider->getReversedData(array(51.50853, -0.12574));
+
+        $this->assertEquals(51.50853, $result['latitude'], '', 0.01);
+        $this->assertEquals(-0.12574, $result['longitude'], '', 0.01);
+        $this->assertEquals('Londra', $result['city']);
+        $this->assertEquals('Greater London', $result['county']);
+        $this->assertEquals('Inghilterra', $result['region']);
+        $this->assertEquals('Regno Unito', $result['country']);
+        $this->assertEquals('GB', $result['countryCode']);
+        $this->assertEquals('Europe/London', $result['timezone']);
+
+    }
+
+
+
     /**
      * @expectedException \Geocoder\Exception\NoResultException
      * @expectedExceptionMessage Could not execute query http://api.geonames.org/findNearbyPlaceNameJSON?lat=-80.000000&lng=-170.000000&style=full&maxRows=1&username=username
