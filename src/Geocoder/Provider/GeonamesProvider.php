@@ -28,7 +28,7 @@ class GeonamesProvider extends AbstractProvider implements ProviderInterface
     /**
      * @var string
      */
-    const REVERSE_ENDPOINT_URL = 'http://api.geonames.org/findNearbyPlaceNameJSON?lat=%F&lng=%F&style=full&username=%s';
+    const REVERSE_ENDPOINT_URL = 'http://api.geonames.org/findNearbyPlaceNameJSON?lat=%F&lng=%F&style=full&maxRows=1&username=%s';
 
     /**
      * @var string
