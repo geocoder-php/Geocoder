@@ -70,18 +70,14 @@ class GeonamesProviderTest extends TestCase
      */
     public function testGetGeocodedDataWithUnknownCity()
     {
-
         $noPlacesFoundResponse = <<<JSON
 {
-
     "totalResultsCount": 0,
     "geonames": [ ]
-
 }
 JSON;
         $provider = new GeonamesProvider($this->getMockAdapterReturns($noPlacesFoundResponse), 'username');
         $provider->getGeocodedData('BlaBlaBla');
-
     }
 
     public function testGetGeocodedDataWithRealPlace()
@@ -111,7 +107,6 @@ JSON;
         $this->assertEquals('Europe/London', $result['timezone']);
     }
 
-
     public function testGetGeocodedDataWithRealPlaceWithLocale()
     {
         if (!isset($_SERVER['GEONAMES_USERNAME'])) {
@@ -139,8 +134,6 @@ JSON;
         $this->assertEquals('Europe/London', $result['timezone']);
     }
 
-
-
     public function testGetReversedDataWithRealCoordinates()
     {
         if (!isset($_SERVER['GEONAMES_USERNAME'])) {
@@ -158,9 +151,7 @@ JSON;
         $this->assertEquals('United Kingdom', $result['country']);
         $this->assertEquals('GB', $result['countryCode']);
         $this->assertEquals('Europe/London', $result['timezone']);
-
     }
-
 
     public function testGetReversedDataWithRealCoordinatesWithLocale()
     {
@@ -179,29 +170,20 @@ JSON;
         $this->assertEquals('Regno Unito', $result['country']);
         $this->assertEquals('GB', $result['countryCode']);
         $this->assertEquals('Europe/London', $result['timezone']);
-
     }
-
-
 
     /**
      * @expectedException \Geocoder\Exception\NoResultException
      * @expectedExceptionMessage Could not execute query http://api.geonames.org/findNearbyPlaceNameJSON?lat=-80.000000&lng=-170.000000&style=full&maxRows=1&username=username
      */
-
     public function testGetReversedDataWithBadCoordinates()
     {
-
-    $badCoordinateResponse = <<<JSON
+        $badCoordinateResponse = <<<JSON
 {
-
     "geonames": [ ]
-
 }
 JSON;
-    $provider = new GeonamesProvider($this->getMockAdapterReturns($badCoordinateResponse), 'username');
-    $provider->getReversedData(array(-80.000000, -170.000000));
-
+        $provider = new GeonamesProvider($this->getMockAdapterReturns($badCoordinateResponse), 'username');
+        $provider->getReversedData(array(-80.000000, -170.000000));
     }
-
 }
