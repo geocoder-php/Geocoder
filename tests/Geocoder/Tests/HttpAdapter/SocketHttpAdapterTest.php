@@ -12,6 +12,10 @@ class SocketHttpAdapterTest extends TestCase
 {
     protected function setUp()
     {
+        if (PHP_VERSION_ID < 50302) {
+            $this->markTestSkipped('Your PHP version should be at least 5.3.2 to use Reflection.');
+        }
+
         $this->adapter = new SocketHttpAdapter();
     }
 
