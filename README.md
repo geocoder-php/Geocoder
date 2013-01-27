@@ -47,7 +47,7 @@ Currently, there are many providers for the following APIs:
 * [Yandex](http://api.yandex.com.tr/maps/doc/geocoder/desc/concepts/About.xml) as Address-Based geocoding and reverse geocoding provider;
 * [GeoPlugin](http://www.geoplugin.com/webservices) as IP-Based geocoding provider;
 * [GeoIPs](http://www.geoips.com/developer/geoips-api) as IP-Based geocoding provider;
-* [MaxMind web service](http://dev.maxmind.com/geoip/web-services) as IP-Based geocoding provider;
+* [MaxMind web service](http://dev.maxmind.com/geoip/web-services) as IP-Based geocoding provider (City/ISP/Org service);
 * [Geonames](http://www.geonames.org/) as Place-Based geocoding and reverse geocoding provider.
 
 Installation
@@ -225,7 +225,7 @@ A valid api key is required.
 ### MaxMindProvider ###
 
 The `MaxMindProvider` is able to geocode **IPv4 addresses** only.
-A valid api key is required.
+A valid City/ISP/Org service's api key is required.
 
 
 ### GeonamesProvider ###
