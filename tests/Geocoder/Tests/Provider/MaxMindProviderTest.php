@@ -110,6 +110,14 @@ class MaxMindProviderTest extends TestCase
         $this->assertNull($result['latitude']);
         $this->assertNull($result['longitude']);
         $this->assertNull($result['zipcode']);
+        $this->assertNull($result['bounds']);
+        $this->assertNull($result['streetNumber']);
+        $this->assertNull($result['streetName']);
+        $this->assertNull($result['cityDistrict']);
+        $this->assertNull($result['county']);
+        $this->assertNull($result['countyCode']);
+        $this->assertNull($result['region']);
+        $this->assertNull($result['timezone']);
     }
 
     public function testGetGeocodedDataWithRealIPv4GetsFakeContent()
@@ -125,6 +133,14 @@ class MaxMindProviderTest extends TestCase
         $this->assertEquals(33.034698486328, $result['latitude'], '', 0.0001);
         $this->assertEquals(-96.813400268555, $result['longitude'], '', 0.0001);
         $this->assertNull($result['timezone']);
+        $this->assertNull($result['bounds']);
+        $this->assertNull($result['streetNumber']);
+        $this->assertNull($result['streetName']);
+        $this->assertNull($result['cityDistrict']);
+        $this->assertNull($result['county']);
+        $this->assertNull($result['countyCode']);
+        $this->assertNull($result['region']);
+        $this->assertNull($result['timezone']);
 
         $provider2 = new MaxMindProvider($this->getMockAdapterReturns('FR,,,,,,,,,,'), 'api_key');
         $result2 = $provider2->getGeocodedData('74.200.247.59');
@@ -133,6 +149,25 @@ class MaxMindProviderTest extends TestCase
         $provider3 = new MaxMindProvider($this->getMockAdapterReturns('GB,,,,,,,,,,'), 'api_key');
         $result3 = $provider3->getGeocodedData('74.200.247.59');
         $this->assertEquals('United Kingdom', $result3['country']);
+
+        $provider4 = new MaxMindProvider($this->getMockAdapterReturns('US,CA,San Francisco,94110,37.748402,-122.415604,807,415,"Layered Technologies","Automattic"'), 'api_key');
+        $result = $provider4->getGeocodedData('74.200.247.59');
+
+        $this->assertEquals('United States', $result['country']);
+        $this->assertEquals('US', $result['countryCode']);
+        $this->assertEquals('CA', $result['regionCode']);
+        $this->assertEquals('San Francisco', $result['city']);
+        $this->assertEquals(94110, $result['zipcode']);
+        $this->assertEquals(37.748402, $result['latitude'], '', 0.0001);
+        $this->assertEquals(-122.415604, $result['longitude'], '', 0.0001);
+        $this->assertNull($result['bounds']);
+        $this->assertNull($result['streetNumber']);
+        $this->assertNull($result['streetName']);
+        $this->assertNull($result['cityDistrict']);
+        $this->assertNull($result['county']);
+        $this->assertNull($result['countyCode']);
+        $this->assertNull($result['region']);
+        $this->assertNull($result['timezone']);
     }
 
     /**
@@ -184,14 +219,21 @@ class MaxMindProviderTest extends TestCase
         $provider = new MaxMindProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['MAXMIND_API_KEY']);
         $result = $provider->getGeocodedData('74.200.247.59');
 
-        $this->assertEquals(33.034698486328, $result['latitude'], '', 0.0001);
-        $this->assertEquals(-96.813400268555, $result['longitude'], '', 0.0001);
-        $this->assertEquals('United States', $result['country']);
-        $this->assertEquals('Plano', $result['city']);
-        $this->assertEquals(75093, $result['zipcode']);
-        $this->assertEquals('TX', $result['regionCode']);
+        $this->assertEquals(37.748402, $result['latitude'], '', 0.001);
+        $this->assertEquals(-122.415604, $result['longitude'], '', 0.001);
+        $this->assertEquals('San Francisco', $result['city']);
+        $this->assertEquals(94110, $result['zipcode']);
+        $this->assertEquals('CA', $result['regionCode']);
         $this->assertEquals('United States', $result['country']);
         $this->assertEquals('US', $result['countryCode']);
+        $this->assertNull($result['bounds']);
+        $this->assertNull($result['streetNumber']);
+        $this->assertNull($result['streetName']);
+        $this->assertNull($result['cityDistrict']);
+        $this->assertNull($result['county']);
+        $this->assertNull($result['countyCode']);
+        $this->assertNull($result['region']);
+        $this->assertNull($result['timezone']);
     }
 
     /**
