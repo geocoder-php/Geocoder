@@ -91,16 +91,20 @@ class MaxMindProvider extends AbstractProvider implements ProviderInterface
 
         $data = explode(',', $content);
 
-        if (11 !== count($data)) {
+        // the size of the split array can 10 or 11 (if an error occured)
+        if (!in_array(count($data), array(10, 11))) {
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
-        if (in_array($data[10], array('INVALID_LICENSE_KEY', 'LICENSE_REQUIRED'))) {
-            throw new InvalidCredentialsException('API Key provided is not valid.');
-        }
+        // if an error occured the 10 th. key exists
+        if (isset($data[10])) {
+            if (in_array($data[10], array('INVALID_LICENSE_KEY', 'LICENSE_REQUIRED'))) {
+                throw new InvalidCredentialsException('API Key provided is not valid.');
+            }
 
-        if ($data[10] == 'IP_NOT_FOUND') {
-            throw new NoResultException('Could not retrieve informations for the ip address provided.');
+            if ('IP_NOT_FOUND' === $data[10]) {
+                throw new NoResultException('Could not retrieve informations for the ip address provided.');
+            }
         }
 
         $nullValues = array('(null)', '');
