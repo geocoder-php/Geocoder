@@ -444,6 +444,8 @@ Here is the mapping:
 
 * City: `%L`
 
+* City District: `%D`
+
 * Zipcode: `%z`
 
 * County: `%P`
