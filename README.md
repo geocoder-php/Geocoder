@@ -224,7 +224,7 @@ A valid api key is required.
 
 ### MaxMindProvider ###
 
-The `MaxMindProvider` is able to geocode **IPv4 addresses** only.
+The `MaxMindProvider` is able to geocode **IPv4 and IPv6 addresses** only.
 A valid City/ISP/Org service's api key is required.
 
 

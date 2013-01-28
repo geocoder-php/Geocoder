@@ -54,12 +54,7 @@ class MaxMindProvider extends AbstractProvider implements ProviderInterface
             throw new UnsupportedException('The MaxMindProvider does not support street addresses.');
         }
 
-        // This API does not support IPv6
-        if (filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
-            throw new UnsupportedException('The MaxMindProvider does not support IPv6 addresses.');
-        }
-
-        if ('127.0.0.1' === $address) {
+        if (in_array($address, array('127.0.0.1', '::1'))) {
             return $this->getLocalhostDefaults();
         }
 
@@ -91,7 +86,7 @@ class MaxMindProvider extends AbstractProvider implements ProviderInterface
 
         $data = explode(',', $content);
 
-        // the size of the split array can 10 or 11 (if an error occured)
+        // the size of the split array can be 10 or 11 (if an error occured)
         if (!in_array(count($data), array(10, 11))) {
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
