@@ -28,7 +28,7 @@ Currently, there are many providers for the following APIs:
 
 * [FreeGeoIp](http://freegeoip.net/static/index.html) as IP-Based geocoding provider;
 * [HostIp](http://www.hostip.info/) as IP-Based geocoding provider;
-* [IpInfoDB](http://www.ipinfodb.com/) as IP-Based geocoding provider;
+* [IpInfoDB](http://www.ipinfodb.com/) as IP-Based geocoding provider (city precision);
 * [Yahoo! PlaceFinder](http://developer.yahoo.com/geo/placefinder/) as Address-Based geocoding and reverse geocoding provider;
 * [Google Maps](http://code.google.com/apis/maps/documentation/geocoding/) as Address-Based geocoding and reverse geocoding provider;
 * [Google Maps for Business](https://developers.google.com/maps/documentation/business/webservices) as Address-Based geocoding and reverse geocoding provider;
@@ -505,6 +505,7 @@ Rename the `phpunit.xml.dist` file to `phpunit.xml`, then uncomment the followin
     <!-- <server name="IGN_WEB_API_KEY" value="YOUR_API_KEY" /> -->
     <!-- <server name="GEOIPS_API_KEY" value="YOUR_API_KEY" /> -->
     <!-- <server name="MAXMIND_API_KEY" value="YOUR_API_KEY" /> -->
+    <!-- <server name="GEONAMES_USERNAME" value="YOUR_USERNAME" /> -->
 </php>
 ```
 
