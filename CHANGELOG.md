@@ -3,7 +3,17 @@ CHANGELOG
 
 ### 1.2.1 (????-??-??) ###
 
-n/a
+* Added: City District in formatter
+* Fixed: MaxMind provider - fix #183
+* Updated: precise which api key works with MaxMind provider
+* Fixed: test to make it compatible against different databse
+* Added missing test
+* Fixed REVERSE_ENDPOINT_URL
+* Added tests for Geonames Provider
+* Added Geonames Provider
+* Added: AbstractResult class
+* Fixed: Yandex provider's tests
+* Add a ResultFactory to easily create ResultInterface instances
 
 ### 1.2.0 (2013-01-15) ###
 
