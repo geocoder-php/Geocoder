@@ -47,7 +47,7 @@ Currently, there are many providers for the following APIs:
 * [Yandex](http://api.yandex.com.tr/maps/doc/geocoder/desc/concepts/About.xml) as Address-Based geocoding and reverse geocoding provider;
 * [GeoPlugin](http://www.geoplugin.com/webservices) as IP-Based geocoding provider;
 * [GeoIPs](http://www.geoips.com/developer/geoips-api) as IP-Based geocoding provider;
-* [MaxMind web service](http://dev.maxmind.com/geoip/web-services) as IP-Based geocoding provider (City/ISP/Org service);
+* [MaxMind web service](http://dev.maxmind.com/geoip/web-services) as IP-Based geocoding provider (City/ISP/Org and Omni services);
 * [Geonames](http://www.geonames.org/) as Place-Based geocoding and reverse geocoding provider.
 
 Installation
@@ -224,8 +224,9 @@ A valid api key is required.
 
 ### MaxMindProvider ###
 
-The `MaxMindProvider` is able to geocode **IPv4 addresses** only.
-A valid City/ISP/Org service's api key is required.
+The `MaxMindProvider` is able to geocode **IPv4 and IPv6 addresses** only.
+A valid `City/ISP/Org` or `Omni` service's api key is required.
+This provider provides two constants `CITY_EXTENDED_SERVICE` by default and `OMNI_SERVICE`.
 
 
 ### GeonamesProvider ###
@@ -248,11 +249,19 @@ $geocoder->registerProviders(array(
     new \Geocoder\Provider\IpInfoDbProvider(
         $adapter, '<IPINFODB_API_KEY>'
     ),
-    new \Geocoder\Provider\HostIpProvider($adapter)
+    new \Geocoder\Provider\HostIpProvider($adapter),
+    new \Geocoder\Provider\YandexProvider(
+        $adapter, $locale, $toponym
+    ),
+    new \Geocoder\Provider\MaxMindProvider(
+        $adapter, '<MAXMIND_API_KEY>', $service
+    ),
 ));
 ```
 
-The `$locale` parameter is available for the `YahooProvider`.
+The `$locale` parameter is available for `YahooProvider` and `YandexProvider`.  
+The `$toponym` parameter is available for `YandexProvider`.  
+The `$service` parameter is available for `MaxMindProvider`.
 
 Everything is ok, enjoy!
 

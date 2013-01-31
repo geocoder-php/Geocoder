@@ -68,14 +68,38 @@ class MaxMindProviderTest extends TestCase
         $this->assertEquals('localhost', $result['country']);
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
-     * @expectedExceptionMessage The MaxMindProvider does not support IPv6 addresses.
-     */
     public function testGetGeocodedDataWithLocalhostIPv6()
     {
         $provider = new MaxMindProvider($this->getMockAdapter($this->never()), 'api_key');
-        $provider->getGeocodedData('::1');
+        $result = $provider->getGeocodedData('::1');
+
+        $this->assertArrayNotHasKey('latitude', $result);
+        $this->assertArrayNotHasKey('longitude', $result);
+        $this->assertArrayNotHasKey('zipcode', $result);
+        $this->assertArrayNotHasKey('timezone', $result);
+
+        $this->assertEquals('localhost', $result['city']);
+        $this->assertEquals('localhost', $result['region']);
+        $this->assertEquals('localhost', $result['county']);
+        $this->assertEquals('localhost', $result['country']);
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedExceptionMessage Unknown MaxMind service foo
+     */
+    public function testGetGeocodedDataWithRealIPv4AndNotSupportedService() {
+        $provider = new MaxMindProvider($this->getMock('Geocoder\HttpAdapter\HttpAdapterInterface'), 'api_key', 'foo');
+        $provider->getGeocodedData('74.200.247.59');
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedExceptionMessage Unknown MaxMind service 12345
+     */
+    public function testGetGeocodedDataWithRealIPv6AndNotSupportedService() {
+        $provider = new MaxMindProvider($this->getMock('Geocoder\HttpAdapter\HttpAdapterInterface'), 'api_key', 12345);
+        $provider->getGeocodedData('::ffff:74.200.247.59');
     }
 
     /**
@@ -100,7 +124,7 @@ class MaxMindProviderTest extends TestCase
 
     public function testGetGeocodedDataWithRealIPv4GetsFakeContentFormattedEmpty()
     {
-        $provider = new MaxMindProvider($this->getMockAdapterReturns(',,,,,,,,,,'), 'api_key');
+        $provider = new MaxMindProvider($this->getMockAdapterReturns(',,,,,,,,,'), 'api_key');
         $result = $provider->getGeocodedData('74.200.247.59');
 
         $this->assertNull($result['country']);
@@ -122,7 +146,8 @@ class MaxMindProviderTest extends TestCase
 
     public function testGetGeocodedDataWithRealIPv4GetsFakeContent()
     {
-        $provider = new MaxMindProvider($this->getMockAdapterReturns('US,TX,Plano,75093,33.034698486328,-96.813400268555,,,,,'), 'api_key');
+        $provider = new MaxMindProvider($this->getMockAdapterReturns(
+            'US,TX,Plano,75093,33.034698486328,-96.813400268555,,,,'), 'api_key');
         $result = $provider->getGeocodedData('74.200.247.59');
 
         $this->assertEquals('United States', $result['country']);
@@ -142,15 +167,16 @@ class MaxMindProviderTest extends TestCase
         $this->assertNull($result['region']);
         $this->assertNull($result['timezone']);
 
-        $provider2 = new MaxMindProvider($this->getMockAdapterReturns('FR,,,,,,,,,,'), 'api_key');
+        $provider2 = new MaxMindProvider($this->getMockAdapterReturns('FR,,,,,,,,,'), 'api_key');
         $result2 = $provider2->getGeocodedData('74.200.247.59');
         $this->assertEquals('France', $result2['country']);
 
-        $provider3 = new MaxMindProvider($this->getMockAdapterReturns('GB,,,,,,,,,,'), 'api_key');
+        $provider3 = new MaxMindProvider($this->getMockAdapterReturns('GB,,,,,,,,,'), 'api_key');
         $result3 = $provider3->getGeocodedData('74.200.247.59');
         $this->assertEquals('United Kingdom', $result3['country']);
 
-        $provider4 = new MaxMindProvider($this->getMockAdapterReturns('US,CA,San Francisco,94110,37.748402,-122.415604,807,415,"Layered Technologies","Automattic"'), 'api_key');
+        $provider4 = new MaxMindProvider($this->getMockAdapterReturns(
+            'US,CA,San Francisco,94110,37.748402,-122.415604,807,415,"Layered Technologies","Automattic"'), 'api_key');
         $result = $provider4->getGeocodedData('74.200.247.59');
 
         $this->assertEquals('United States', $result['country']);
@@ -184,6 +210,16 @@ class MaxMindProviderTest extends TestCase
      * @expectedException \Geocoder\Exception\InvalidCredentialsException
      * @expectedExceptionMessage API Key provided is not valid.
      */
+    public function testGetGeocodedOmniServiceDataWithRealIPv6AndInvalidApiKeyGetsFakeContent() {
+        $provider = new MaxMindProvider($this->getMockAdapterReturns(',,,,,,,,,,,,,,,,,,,,,,,,INVALID_LICENSE_KEY'),
+            'api_key', MaxMindProvider::OMNI_SERVICE);
+        $provider->getGeocodedData('::ffff:74.200.247.59');
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\InvalidCredentialsException
+     * @expectedExceptionMessage API Key provided is not valid.
+     */
     public function testGetGeocodedDataWithRealIPv4AndInvalidApiKey()
     {
         $provider = new MaxMindProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), 'api_key');
@@ -201,23 +237,54 @@ class MaxMindProviderTest extends TestCase
     }
 
     /**
+     * @expectedException \Geocoder\Exception\InvalidCredentialsException
+     * @expectedExceptionMessage API Key provided is not valid.
+     */
+    public function testGetGeocodedOmniServiceDataWithRealIPv6AndInvalidApiKeyGetsFakeContent2() {
+        $provider = new MaxMindProvider($this->getMockAdapterReturns(',,,,,,,,,,,,,,,,,,,,,,,INVALID_LICENSE_KEY'),
+            'api_key', MaxMindProvider::OMNI_SERVICE);
+        $provider->getGeocodedData('::ffff:74.200.247.59');
+    }
+
+    /**
      * @expectedException \Geocoder\Exception\NoResultException
      * @expectedExceptionMessage Could not retrieve informations for the ip address provided.
      */
-    public function testGetGeocodedDataGetsFakeContentWithIpNotFound()
+    public function testGetGeocodedDataWithRealIPv4GetsFakeContentWithIpNotFound()
     {
         $provider = new MaxMindProvider($this->getMockAdapterReturns(',,,,,,,,,,IP_NOT_FOUND'), 'api_key');
         $provider->getGeocodedData('74.200.247.59');
     }
 
-    public function testGetGeocodedDataWithRealIPv4()
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not retrieve informations for the ip address provided.
+     */
+    public function testGetGeocodedOmniServiceDataWithRealIPv6GetsFakeContentWithIpNotFound()
+    {
+        $provider = new MaxMindProvider($this->getMockAdapterReturns(',,,,,,,,,,,,,,,,,,,,,,,IP_NOT_FOUND'),
+            'api_key', MaxMindProvider::OMNI_SERVICE);
+        $provider->getGeocodedData('::fff:74.200.247.59');
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Invalid result returned by provider.
+     */
+    public function testGetGeocodedDataGetsFakeContentWithInvalidData()
+    {
+        $provider = new MaxMindProvider($this->getMockAdapterReturns(',,,,,,,,,,'), 'api_key');
+        $provider->getGeocodedData('74.200.247.59');
+    }
+
+    public function testGetGeocodedServiceWithRealIPv4()
     {
         if (!isset($_SERVER['MAXMIND_API_KEY'])) {
             $this->markTestSkipped('You need to configure the MAXMIND_API_KEY value in phpunit.xml');
         }
 
         $provider = new MaxMindProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['MAXMIND_API_KEY']);
-        $result = $provider->getGeocodedData('74.200.247.59');
+        $result = $provider->getGeocodedData('74.200.247.159');
 
         $this->assertEquals(37.748402, $result['latitude'], '', 0.001);
         $this->assertEquals(-122.415604, $result['longitude'], '', 0.001);
@@ -234,6 +301,86 @@ class MaxMindProviderTest extends TestCase
         $this->assertNull($result['countyCode']);
         $this->assertNull($result['region']);
         $this->assertNull($result['timezone']);
+    }
+
+    public function testGetGeocodedDataOmniServiceWithRealIPv4()
+    {
+        if (!isset($_SERVER['MAXMIND_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the MAXMIND_API_KEY value in phpunit.xml');
+        }
+
+        $provider = new MaxMindProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['MAXMIND_API_KEY'],
+            MaxMindProvider::OMNI_SERVICE);
+        $result = $provider->getGeocodedData('74.200.247.159');
+
+        $this->assertEquals(37.748402, $result['latitude'], '', 0.001);
+        $this->assertEquals(-122.415604, $result['longitude'], '', 0.001);
+        $this->assertEquals('San Francisco', $result['city']);
+        $this->assertEquals(94110, $result['zipcode']);
+        $this->assertEquals('CA', $result['regionCode']);
+        $this->assertEquals('United States', $result['country']);
+        $this->assertEquals('US', $result['countryCode']);
+        $this->assertNull($result['bounds']);
+        $this->assertNull($result['streetNumber']);
+        $this->assertNull($result['streetName']);
+        $this->assertNull($result['cityDistrict']);
+        $this->assertNull($result['county']);
+        $this->assertNull($result['countyCode']);
+        $this->assertEquals('California', $result['region']);
+        $this->assertEquals('America/Los_Angeles', $result['timezone']);
+    }
+
+    public function testGetGeocodedDataWithRealIPv6()
+    {
+        if (!isset($_SERVER['MAXMIND_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the MAXMIND_API_KEY value in phpunit.xml');
+        }
+
+        $provider = new MaxMindProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['MAXMIND_API_KEY']);
+        $result = $provider->getGeocodedData('66.147.244.214');
+
+        $this->assertEquals(40.2181, $result['latitude'], '', 0.001);
+        $this->assertEquals(-111.6133, $result['longitude'], '', 0.001);
+        $this->assertEquals('Provo', $result['city']);
+        $this->assertEquals(84606, $result['zipcode']);
+        $this->assertEquals('UT', $result['regionCode']);
+        $this->assertEquals('United States', $result['country']);
+        $this->assertEquals('US', $result['countryCode']);
+        $this->assertNull($result['bounds']);
+        $this->assertNull($result['streetNumber']);
+        $this->assertNull($result['streetName']);
+        $this->assertNull($result['cityDistrict']);
+        $this->assertNull($result['county']);
+        $this->assertNull($result['countyCode']);
+        $this->assertNull($result['region']);
+        $this->assertNull($result['timezone']);
+    }
+
+    public function testGetGeocodedDataOmniServiceWithRealIPv6()
+    {
+        if (!isset($_SERVER['MAXMIND_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the MAXMIND_API_KEY value in phpunit.xml');
+        }
+
+        $provider = new MaxMindProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['MAXMIND_API_KEY'],
+            MaxMindProvider::OMNI_SERVICE);
+        $result = $provider->getGeocodedData('::ffff:66.147.244.214');
+
+        $this->assertEquals(40.2181, $result['latitude'], '', 0.001);
+        $this->assertEquals(-111.6133, $result['longitude'], '', 0.001);
+        $this->assertEquals('Provo', $result['city']);
+        $this->assertEquals(84606, $result['zipcode']);
+        $this->assertEquals('UT', $result['regionCode']);
+        $this->assertEquals('United States', $result['country']);
+        $this->assertEquals('US', $result['countryCode']);
+        $this->assertNull($result['bounds']);
+        $this->assertNull($result['streetNumber']);
+        $this->assertNull($result['streetName']);
+        $this->assertNull($result['cityDistrict']);
+        $this->assertNull($result['county']);
+        $this->assertNull($result['countyCode']);
+        $this->assertEquals('Utah', $result['region']);
+        $this->assertEquals('America/Denver', $result['timezone']);
     }
 
     /**
