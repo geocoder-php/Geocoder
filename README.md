@@ -142,6 +142,12 @@ A valid api key is required.
 The `GoogleMapsProvider` is able to geocode and reverse geocode **street addresses**.
 
 
+### GoogleMapsBusinessProvider ###
+
+The `GoogleMapsBusinessProvider` is able to geocode and reverse geocode **street addresses**.
+A valid `Client ID` is required. The private key is optional.
+
+
 ### BingMapsProvider ###
 
 The `BingMapsProvider` is able to geocode and reverse geocode **street addresses**.
@@ -246,22 +252,26 @@ $geocoder->registerProviders(array(
     new \Geocoder\Provider\YahooProvider(
         $adapter, '<YAHOO_API_KEY>', $locale
     ),
-    new \Geocoder\Provider\IpInfoDbProvider(
-        $adapter, '<IPINFODB_API_KEY>'
+    new \Geocoder\Provider\GoogleMapsProvider(
+        $adapter, $locale, $region, $useSsl
     ),
-    new \Geocoder\Provider\HostIpProvider($adapter),
+    new \Geocoder\Provider\GoogleMapsBusinessProvider(
+        $adapter, '<CLIENT_ID>', '<PRIVATE_KEY>', $locale, $region, $useSsl
+    ),
     new \Geocoder\Provider\YandexProvider(
         $adapter, $locale, $toponym
     ),
     new \Geocoder\Provider\MaxMindProvider(
-        $adapter, '<MAXMIND_API_KEY>', $service
+        $adapter, '<MAXMIND_API_KEY>', $service, $useSsl
     ),
 ));
 ```
 
 The `$locale` parameter is available for `YahooProvider`, `YandexProvider` and `BingMapsProvider`.  
+The `$region` parameter is available for `GoogleMapsProvider` and `GoogleMapsBusinessProvider`.  
 The `$toponym` parameter is available for `YandexProvider`.  
-The `$service` parameter is available for `MaxMindProvider`.
+The `$service` parameter is available for `MaxMindProvider`.  
+The `$useSsl` parameter is available for `GoogleMapsProvider`, `GoogleMapsBusinessProvider` and `MaxMindProvider`.
 
 Everything is ok, enjoy!
 
