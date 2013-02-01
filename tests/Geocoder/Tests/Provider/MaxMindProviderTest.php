@@ -356,14 +356,14 @@ class MaxMindProviderTest extends TestCase
         $this->assertNull($result['timezone']);
     }
 
-    public function testGetGeocodedDataOmniServiceWithRealIPv6()
+    public function testGetGeocodedDataOmniServiceWithRealIPv6WithSsl()
     {
         if (!isset($_SERVER['MAXMIND_API_KEY'])) {
             $this->markTestSkipped('You need to configure the MAXMIND_API_KEY value in phpunit.xml');
         }
 
         $provider = new MaxMindProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['MAXMIND_API_KEY'],
-            MaxMindProvider::OMNI_SERVICE);
+            MaxMindProvider::OMNI_SERVICE, true);
         $result = $provider->getGeocodedData('::ffff:66.147.244.214');
 
         $this->assertEquals(40.2181, $result['latitude'], '', 0.001);

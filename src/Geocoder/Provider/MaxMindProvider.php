@@ -38,6 +38,11 @@ class MaxMindProvider extends AbstractProvider implements ProviderInterface
     /**
      * @var string
      */
+    const GEOCODE_ENDPOINT_URL_SSL = 'https://geoip.maxmind.com/%s?l=%s&i=%s';
+
+    /**
+     * @var string
+     */
     private $apiKey = null;
 
     /**
@@ -46,16 +51,24 @@ class MaxMindProvider extends AbstractProvider implements ProviderInterface
     private $service = null;
 
     /**
+     * @var bool
+     */
+    private $useSsl = false;
+
+    /**
      * @param HttpAdapterInterface $adapter An HTTP adapter.
      * @param string               $apiKey  An API key.
      * @param string               $service The specific Maxmind service to use.
+     * @param bool                 $useSsl  Whether to use an SSL connection (optional).
      */
-    public function __construct(HttpAdapterInterface $adapter, $apiKey, $service = self::CITY_EXTENDED_SERVICE)
+    public function __construct(HttpAdapterInterface $adapter, $apiKey, $service = self::CITY_EXTENDED_SERVICE,
+        $useSsl = false)
     {
         parent::__construct($adapter, null);
 
         $this->apiKey  = $apiKey;
         $this->service = $service;
+        $this->useSsl  = $useSsl;
     }
 
     /**
@@ -75,7 +88,10 @@ class MaxMindProvider extends AbstractProvider implements ProviderInterface
             return $this->getLocalhostDefaults();
         }
 
-        $query = sprintf(self::GEOCODE_ENDPOINT_URL, $this->service, $this->apiKey, $address);
+        $query = sprintf(
+            $this->useSsl ? self::GEOCODE_ENDPOINT_URL_SSL : self::GEOCODE_ENDPOINT_URL,
+            $this->service, $this->apiKey, $address
+        );
 
         return $this->executeQuery($query);
     }
