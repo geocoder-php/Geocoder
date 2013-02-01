@@ -259,7 +259,7 @@ $geocoder->registerProviders(array(
 ));
 ```
 
-The `$locale` parameter is available for `YahooProvider` and `YandexProvider`.  
+The `$locale` parameter is available for `YahooProvider`, `YandexProvider` and `BingMapsProvider`.  
 The `$toponym` parameter is available for `YandexProvider`.  
 The `$service` parameter is available for `MaxMindProvider`.
 
