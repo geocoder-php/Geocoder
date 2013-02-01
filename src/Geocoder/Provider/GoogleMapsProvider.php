@@ -20,8 +20,14 @@ use Geocoder\HttpAdapter\HttpAdapterInterface;
  */
 class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
 {
+    /**
+     * @var string
+     */
     const ENDPOINT_URL = 'http://maps.googleapis.com/maps/api/geocode/json?address=%s&sensor=false';
 
+    /**
+     * @var string
+     */
     const ENDPOINT_URL_SSL = 'https://maps.googleapis.com/maps/api/geocode/json?address=%s&sensor=false';
 
     /**
@@ -59,11 +65,10 @@ class GoogleMapsProvider extends AbstractProvider implements ProviderInterface
             throw new UnsupportedException('The GoogleMapsProvider does not support IP addresses.');
         }
 
-        if ($this->useSsl) {
-            $query = sprintf(self::ENDPOINT_URL_SSL, rawurlencode($address));
-        } else {
-            $query = sprintf(self::ENDPOINT_URL, rawurlencode($address));
-        }
+        $query = sprintf(
+            $this->useSsl ? self::ENDPOINT_URL_SSL : self::ENDPOINT_URL,
+            rawurlencode($address)
+        );
 
         return $this->executeQuery($query);
     }
