@@ -36,10 +36,12 @@ class GoogleMapsBusinessProvider extends GoogleMapsProvider
      * @param string               $privateKey Your Private Key (optional).
      * @param string               $locale     A locale (optional).
      * @param string               $region     Region biasing (optional).
+     * @param bool                 $useSsl     Whether to use an SSL connection (optional)
      */
-    public function __construct(HttpAdapterInterface $adapter, $clientId, $privateKey = null, $locale = null, $region = null)
+    public function __construct(HttpAdapterInterface $adapter, $clientId, $privateKey = null, $locale = null,
+        $region = null, $useSsl = false)
     {
-        parent::__construct($adapter, $locale, $region);
+        parent::__construct($adapter, $locale, $region, $useSsl);
 
         $this->clientId   = $clientId;
         $this->privateKey = $privateKey;
