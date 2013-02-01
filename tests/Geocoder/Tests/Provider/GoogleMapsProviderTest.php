@@ -131,6 +131,34 @@ class GoogleMapsProviderTest extends TestCase
         $this->assertNull($result['timezone']);
     }
 
+    public function testGetGeocodedDataWithRealAddressWithSsl()
+    {
+        $provider = new GoogleMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), null, null, true);
+        $result   = $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
+
+        $this->assertEquals(48.8630462, $result['latitude'], '', 0.001);
+        $this->assertEquals(2.3882487, $result['longitude'], '', 0.001);
+        $this->assertArrayHasKey('south', $result['bounds']);
+        $this->assertArrayHasKey('west', $result['bounds']);
+        $this->assertArrayHasKey('north', $result['bounds']);
+        $this->assertArrayHasKey('east', $result['bounds']);
+        $this->assertEquals(48.8630462, $result['bounds']['south'], '', 0.001);
+        $this->assertEquals(2.3882487, $result['bounds']['west'], '', 0.001);
+        $this->assertEquals(48.8630462, $result['bounds']['north'], '', 0.001);
+        $this->assertEquals(2.3882487, $result['bounds']['east'], '', 0.001);
+        $this->assertEquals(10, $result['streetNumber']);
+        $this->assertEquals('Avenue Gambetta', $result['streetName']);
+        $this->assertEquals(75020, $result['zipcode']);
+        $this->assertEquals('Paris', $result['city']);
+        $this->assertEquals('Paris', $result['county']);
+        $this->assertEquals('Île-de-France', $result['region']);
+        $this->assertEquals('France', $result['country']);
+        $this->assertEquals('FR', $result['countryCode']);
+
+        // not provided
+        $this->assertNull($result['timezone']);
+    }
+
     public function testGetGeocodedDataBoundsWithRealAddressForNonRooftopLocation()
     {
         $provider = new GoogleMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
