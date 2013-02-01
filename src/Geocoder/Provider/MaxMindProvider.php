@@ -163,6 +163,9 @@ class MaxMindProvider extends AbstractProvider implements ProviderInterface
     }
 
     /**
+     * We do not support Country and City services because they do not return much fields.
+     * @see http://dev.maxmind.com/geoip/web-services
+     *
      * @param string $service
      *
      * @return array
