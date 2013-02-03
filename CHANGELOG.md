@@ -1,8 +1,15 @@
 CHANGELOG
 =========
 
-### 1.2.1 (????-??-??) ###
+### 1.2.1 (2013-02-03) ###
 
+* Updated: documentation - Google Maps Business and MaxMind providers
+* Added: SSL support to Google Maps Business provider + test
+* Added: SSL support to MaxMind provider
+* Added: locale parameter test to Yahoo provider
+* Updated: BingMaps provider has a locale parameter
+* Added: Omni service + tests - thanks @lox
+* Added: MaxMind provider support IPv6 + tests
 * Added: City District in formatter
 * Fixed: MaxMind provider - fix #183
 * Updated: precise which api key works with MaxMind provider
