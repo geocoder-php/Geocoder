@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+### 1.2.2 (????-??-??) ###
+
+n/a
+
 ### 1.2.1 (2013-02-03) ###
 
 * Updated: documentation - Google Maps Business and MaxMind providers
