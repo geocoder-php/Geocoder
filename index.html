@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Geocoder - The almost missing Geocoder PHP library</title>
+    <title>Geocoder by willdurand</title>
 
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
@@ -16,7 +16,7 @@
     <div class="wrapper">
       <header>
         <h1>Geocoder</h1>
-        <p>The almost missing Geocoder PHP library</p>
+        <p>The almost missing Geocoder PHP 5.3 library</p>
 
         <p class="view"><a href="https://github.com/willdurand/Geocoder">View the Project on GitHub <small>willdurand/Geocoder</small></a></p>
 
@@ -64,7 +64,7 @@ The library is split in two parts: <code>HttpAdapter</code> and <code>Provider</
 <li>
 <a href="http://www.hostip.info/">HostIp</a> as IP-Based geocoding provider;</li>
 <li>
-<a href="http://www.ipinfodb.com/">IpInfoDB</a> as IP-Based geocoding provider;</li>
+<a href="http://www.ipinfodb.com/">IpInfoDB</a> as IP-Based geocoding provider (city precision);</li>
 <li>
 <a href="http://developer.yahoo.com/geo/placefinder/">Yahoo! PlaceFinder</a> as Address-Based geocoding and reverse geocoding provider;</li>
 <li>
@@ -100,7 +100,9 @@ over this list to get information;</li>
 <li>
 <a href="http://www.geoips.com/developer/geoips-api">GeoIPs</a> as IP-Based geocoding provider;</li>
 <li>
-<a href="http://dev.maxmind.com/geoip/web-services">MaxMind web service</a> as IP-Based geocoding provider.</li>
+<a href="http://dev.maxmind.com/geoip/web-services">MaxMind web service</a> as IP-Based geocoding provider (City/ISP/Org and Omni services);</li>
+<li>
+<a href="http://www.geonames.org/">Geonames</a> as Place-Based geocoding and reverse geocoding provider.</li>
 </ul><h2>Installation</h2>
 
 <p>The recommended way to install Geocoder is through composer.</p>
@@ -178,6 +180,11 @@ A valid api key is required.</p>
 
 <p>The <code>GoogleMapsProvider</code> is able to geocode and reverse geocode <strong>street addresses</strong>.</p>
 
+<h3>GoogleMapsBusinessProvider</h3>
+
+<p>The <code>GoogleMapsBusinessProvider</code> is able to geocode and reverse geocode <strong>street addresses</strong>.
+A valid <code>Client ID</code> is required. The private key is optional.</p>
+
 <h3>BingMapsProvider</h3>
 
 <p>The <code>BingMapsProvider</code> is able to geocode and reverse geocode <strong>street addresses</strong>.
@@ -246,8 +253,14 @@ A valid api key is required.</p>
 
 <h3>MaxMindProvider</h3>
 
-<p>The <code>MaxMindProvider</code> is able to geocode <strong>IPv4 addresses</strong> only.
-A valid api key is required.</p>
+<p>The <code>MaxMindProvider</code> is able to geocode <strong>IPv4 and IPv6 addresses</strong> only.
+A valid <code>City/ISP/Org</code> or <code>Omni</code> service's api key is required.
+This provider provides two constants <code>CITY_EXTENDED_SERVICE</code> by default and <code>OMNI_SERVICE</code>.</p>
+
+<h3>GeonamesProvider</h3>
+
+<p>The <code>GeonamesProvider</code> is able to geocode and reverse geocode <strong>places</strong>.
+A valid username is required.</p>
 
 <p>You can use one of them or write your own provider. You can also register all providers and decide later.
 That's we'll do:</p>
@@ -259,14 +272,26 @@ That's we'll do:</p>
     <span class="k">new</span> <span class="nx">\Geocoder\Provider\YahooProvider</span><span class="p">(</span>
         <span class="nv">$adapter</span><span class="p">,</span> <span class="s1">'&lt;YAHOO_API_KEY&gt;'</span><span class="p">,</span> <span class="nv">$locale</span>
     <span class="p">),</span>
-    <span class="k">new</span> <span class="nx">\Geocoder\Provider\IpInfoDbProvider</span><span class="p">(</span>
-        <span class="nv">$adapter</span><span class="p">,</span> <span class="s1">'&lt;IPINFODB_API_KEY&gt;'</span>
+    <span class="k">new</span> <span class="nx">\Geocoder\Provider\GoogleMapsProvider</span><span class="p">(</span>
+        <span class="nv">$adapter</span><span class="p">,</span> <span class="nv">$locale</span><span class="p">,</span> <span class="nv">$region</span><span class="p">,</span> <span class="nv">$useSsl</span>
     <span class="p">),</span>
-    <span class="k">new</span> <span class="nx">\Geocoder\Provider\HostIpProvider</span><span class="p">(</span><span class="nv">$adapter</span><span class="p">)</span>
+    <span class="k">new</span> <span class="nx">\Geocoder\Provider\GoogleMapsBusinessProvider</span><span class="p">(</span>
+        <span class="nv">$adapter</span><span class="p">,</span> <span class="s1">'&lt;CLIENT_ID&gt;'</span><span class="p">,</span> <span class="s1">'&lt;PRIVATE_KEY&gt;'</span><span class="p">,</span> <span class="nv">$locale</span><span class="p">,</span> <span class="nv">$region</span><span class="p">,</span> <span class="nv">$useSsl</span>
+    <span class="p">),</span>
+    <span class="k">new</span> <span class="nx">\Geocoder\Provider\YandexProvider</span><span class="p">(</span>
+        <span class="nv">$adapter</span><span class="p">,</span> <span class="nv">$locale</span><span class="p">,</span> <span class="nv">$toponym</span>
+    <span class="p">),</span>
+    <span class="k">new</span> <span class="nx">\Geocoder\Provider\MaxMindProvider</span><span class="p">(</span>
+        <span class="nv">$adapter</span><span class="p">,</span> <span class="s1">'&lt;MAXMIND_API_KEY&gt;'</span><span class="p">,</span> <span class="nv">$service</span><span class="p">,</span> <span class="nv">$useSsl</span>
+    <span class="p">),</span>
 <span class="p">));</span>
 </pre></div>
 
-<p>The <code>$locale</code> parameter is available for the <code>YahooProvider</code>.</p>
+<p>The <code>$locale</code> parameter is available for <code>YahooProvider</code>, <code>YandexProvider</code> and <code>BingMapsProvider</code>.<br>
+The <code>$region</code> parameter is available for <code>GoogleMapsProvider</code> and <code>GoogleMapsBusinessProvider</code>.<br>
+The <code>$toponym</code> parameter is available for <code>YandexProvider</code>.<br>
+The <code>$service</code> parameter is available for <code>MaxMindProvider</code>.<br>
+The <code>$useSsl</code> parameter is available for <code>GoogleMapsProvider</code>, <code>GoogleMapsBusinessProvider</code> and <code>MaxMindProvider</code>.</p>
 
 <p>Everything is ok, enjoy!</p>
 
@@ -456,6 +481,7 @@ it's really easy to format a <code>ResultInterface</code> object as a string:</p
 <li><p>Street Number: <code>%n</code></p></li>
 <li><p>Street Name: <code>%S</code></p></li>
 <li><p>City: <code>%L</code></p></li>
+<li><p>City District: <code>%D</code></p></li>
 <li><p>Zipcode: <code>%z</code></p></li>
 <li><p>County: <code>%P</code></p></li>
 <li><p>County Code: <code>%p</code></p></li>
@@ -500,6 +526,7 @@ it's really easy to format a <code>ResultInterface</code> object as a string:</p
     <span class="c">&lt;!-- &lt;server name="IGN_WEB_API_KEY" value="YOUR_API_KEY" /&gt; --&gt;</span>
     <span class="c">&lt;!-- &lt;server name="GEOIPS_API_KEY" value="YOUR_API_KEY" /&gt; --&gt;</span>
     <span class="c">&lt;!-- &lt;server name="MAXMIND_API_KEY" value="YOUR_API_KEY" /&gt; --&gt;</span>
+    <span class="c">&lt;!-- &lt;server name="GEONAMES_USERNAME" value="YOUR_USERNAME" /&gt; --&gt;</span>
 <span class="nt">&lt;/php&gt;</span>
 </pre></div>
 
