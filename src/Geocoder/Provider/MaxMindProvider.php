@@ -135,7 +135,7 @@ class MaxMindProvider extends AbstractProvider implements ProviderInterface
         $data = array_combine($fields, $data);
         $data = array_map(function($value) { return '' === $value ? null : $value; }, $data);
 
-        if(empty($data['country']) && !empty($data['countryCode'])) {
+        if (empty($data['country']) && !empty($data['countryCode'])) {
             $data['country'] = $this->countryCodeToCountryName($data['countryCode']);
         }
 
@@ -172,7 +172,7 @@ class MaxMindProvider extends AbstractProvider implements ProviderInterface
      */
     protected function fieldsForService($service)
     {
-        switch($service) {
+        switch ($service) {
             case self::CITY_EXTENDED_SERVICE:
                 return array(
                     'countryCode',

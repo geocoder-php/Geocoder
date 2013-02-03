@@ -88,7 +88,8 @@ class MaxMindProviderTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedException
      * @expectedExceptionMessage Unknown MaxMind service foo
      */
-    public function testGetGeocodedDataWithRealIPv4AndNotSupportedService() {
+    public function testGetGeocodedDataWithRealIPv4AndNotSupportedService()
+    {
         $provider = new MaxMindProvider($this->getMock('Geocoder\HttpAdapter\HttpAdapterInterface'), 'api_key', 'foo');
         $provider->getGeocodedData('74.200.247.59');
     }
@@ -97,7 +98,8 @@ class MaxMindProviderTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedException
      * @expectedExceptionMessage Unknown MaxMind service 12345
      */
-    public function testGetGeocodedDataWithRealIPv6AndNotSupportedService() {
+    public function testGetGeocodedDataWithRealIPv6AndNotSupportedService()
+    {
         $provider = new MaxMindProvider($this->getMock('Geocoder\HttpAdapter\HttpAdapterInterface'), 'api_key', 12345);
         $provider->getGeocodedData('::ffff:74.200.247.59');
     }
@@ -210,7 +212,8 @@ class MaxMindProviderTest extends TestCase
      * @expectedException \Geocoder\Exception\InvalidCredentialsException
      * @expectedExceptionMessage API Key provided is not valid.
      */
-    public function testGetGeocodedOmniServiceDataWithRealIPv6AndInvalidApiKeyGetsFakeContent() {
+    public function testGetGeocodedOmniServiceDataWithRealIPv6AndInvalidApiKeyGetsFakeContent()
+    {
         $provider = new MaxMindProvider($this->getMockAdapterReturns(',,,,,,,,,,,,,,,,,,,,,,,,INVALID_LICENSE_KEY'),
             'api_key', MaxMindProvider::OMNI_SERVICE);
         $provider->getGeocodedData('::ffff:74.200.247.59');
@@ -240,7 +243,8 @@ class MaxMindProviderTest extends TestCase
      * @expectedException \Geocoder\Exception\InvalidCredentialsException
      * @expectedExceptionMessage API Key provided is not valid.
      */
-    public function testGetGeocodedOmniServiceDataWithRealIPv6AndInvalidApiKeyGetsFakeContent2() {
+    public function testGetGeocodedOmniServiceDataWithRealIPv6AndInvalidApiKeyGetsFakeContent2()
+    {
         $provider = new MaxMindProvider($this->getMockAdapterReturns(',,,,,,,,,,,,,,,,,,,,,,,INVALID_LICENSE_KEY'),
             'api_key', MaxMindProvider::OMNI_SERVICE);
         $provider->getGeocodedData('::ffff:74.200.247.59');
