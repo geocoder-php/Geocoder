@@ -116,100 +116,99 @@ Now, you have to choose a `provider` which is closed to what you want to get.
 
 ### FreeGeoIpProvider ###
 
-The `FreeGeoIpProvider` is able to geocode **IPv4 and IPv6 addresses** only.
+The `FreeGeoIpProvider` named `free_geo_ip` is able to geocode **IPv4 and IPv6 addresses** only.
 
 
 ### HostIpProvider ###
 
-The `HostIpProvider` is able to geocode **IPv4 addresses** only.
+The `HostIpProvider` named `host_ip` is able to geocode **IPv4 addresses** only.
 
 
 ### IpInfoDbProvider ###
 
-The `IpInfoDbProvider` is able to geocode **IPv4 addresses** only.
+The `IpInfoDbProvider` named `ip_info_db` is able to geocode **IPv4 addresses** only.
 A valid api key is required.
 
 
 ### YahooProvider ###
 
-The `YahooProvider` is able to geocode both **IPv4 addresses** and **street addresses**.
-This provider can also reverse information based on coordinates (latitude, longitude).
+The `YahooProvider` named `yahoo` is able to geocode both **IPv4 addresses** and **street addresses**. This provider can also reverse information based on coordinates (latitude, longitude).
 A valid api key is required.
 
 
 ### GoogleMapsProvider ###
 
-The `GoogleMapsProvider` is able to geocode and reverse geocode **street addresses**.
+The `GoogleMapsProvider` named `google_maps` is able to geocode and reverse geocode **street addresses**.
 
 
 ### GoogleMapsBusinessProvider ###
 
-The `GoogleMapsBusinessProvider` is able to geocode and reverse geocode **street addresses**.
+The `GoogleMapsBusinessProvider` named `google_maps_business` is able to geocode and reverse geocode **street addresses**.
 A valid `Client ID` is required. The private key is optional.
 
 
 ### BingMapsProvider ###
 
-The `BingMapsProvider` is able to geocode and reverse geocode **street addresses**.
+The `BingMapsProvider` named `bing_maps` is able to geocode and reverse geocode **street addresses**.
 A valid api key is required.
 
 
 ### OpenStreetMapsProvider ###
 
-The `OpenStreetMapsProvider` is able to geocode and reverse geocode **street addresses**.
+The `OpenStreetMapsProvider` named `openstreetmaps` is able to geocode and reverse geocode **street addresses**.
 
 
 ### CloudMadeProvider ###
 
-The `CloudMadeProvider` is able to geocode and reverse geocode **street addresses**.
+The `CloudMadeProvider` named `cloudmade` is able to geocode and reverse geocode **street addresses**.
 A valid api key is required.
 
 
 ### GeoipProvider ###
 
-The `GeoipProvider` is able to geocode **IPv4 and IPv6 addresses** only. No need to use an `HttpAdapter` as it uses a local database.
+The `GeoipProvider` named `geoip` is able to geocode **IPv4 and IPv6 addresses** only. No need to use an `HttpAdapter` as it uses a local database.
 See the [MaxMind page](http://www.maxmind.com/app/php) for more information.
 
 
 ### ChainProvider ###
 
-The `ChainProvider` is a special provider that takes a list of providers and iterates over this list to get information.
+The `ChainProvider` named `chain` is a special provider that takes a list of providers and iterates over this list to get information.
 
 
 ### MapQuestProvider ###
 
-The `MapQuestProvider` is able to geocode and reverse geocode **street addresses**.
+The `MapQuestProvider` named `map_quest` is able to geocode and reverse geocode **street addresses**.
 
 
 ### OIORestProvider ###
 
-The `OIORestProvider` is able to geocode and reverse geocode **street addresses**, exclusively in Denmark.
+The `OIORestProvider` named `oio_rest` is able to geocode and reverse geocode **street addresses**, exclusively in Denmark.
 
 
 ### GeocoderCaProvider ###
 
-The `GeocoderCaProvider` is able to geocode and reverse geocode **street addresses**, exclusively in USA & Canada.
+The `GeocoderCaProvider` named `geocoder_ca` is able to geocode and reverse geocode **street addresses**, exclusively in USA & Canada.
 
 
 ### GeocoderUsProvider ###
 
-The `GeocoderUsProvider` is able to geocode **street addresses** only, exclusively in USA.
+The `GeocoderUsProvider` named `geocoder_us` is able to geocode **street addresses** only, exclusively in USA.
 
 
 ### IGNOpenLSProvider ###
 
-The `IGNOpenLSProvider` is able to geocode **street addresses** only, exclusively in France.
-A valid api key is required.
+The `IGNOpenLSProvider` named `ign_openls` is able to geocode **street addresses** only, exclusively in France.
+A valid OpenLS api key is required.
 
 
 ### DataScienceToolkitProvider ###
 
-The `DataScienceToolkitProvider` is able to geocode **IPv4 addresses** only.
+The `DataScienceToolkitProvider` named `data_science_toolkit` is able to geocode **IPv4 addresses** only.
 
 
 ### YandexProvider ###
 
-The `YandexProvider` is able to geocode and reverse geocode **street addresses**.
+The `YandexProvider` named `yandex` is able to geocode and reverse geocode **street addresses**.
 The default langage-locale is `ru-RU`, you can choose between `uk-UA`, `be-BY`,
 `en-US`, `en-BR` and `tr-TR`.
 This provider can also reverse information based on coordinates (latitude,
@@ -219,25 +218,25 @@ longitude). It's possible to precise the toponym to get more accurate result:
 
 ### GeoPluginProvider ###
 
-The `GeoPluginProvider` is able to geocode **IPv4 addresses and IPv6 addresses** only.
+The `GeoPluginProvider` named `geo_plugin` is able to geocode **IPv4 addresses and IPv6 addresses** only.
 
 
 ### GeoIPsProvider ###
 
-The `GeoIPsProvider` is able to geocode **IPv4 addresses** only.
+The `GeoIPsProvider` named `geo_ips` is able to geocode **IPv4 addresses** only.
 A valid api key is required.
 
 
 ### MaxMindProvider ###
 
-The `MaxMindProvider` is able to geocode **IPv4 and IPv6 addresses** only.
+The `MaxMindProvider` named `maxmind` is able to geocode **IPv4 and IPv6 addresses** only.
 A valid `City/ISP/Org` or `Omni` service's api key is required.
 This provider provides two constants `CITY_EXTENDED_SERVICE` by default and `OMNI_SERVICE`.
 
 
 ### GeonamesProvider ###
 
-The `GeonamesProvider` is able to geocode and reverse geocode **places**.
+The `GeonamesProvider` named `geonames` is able to geocode and reverse geocode **places**.
 A valid username is required.
 
 
@@ -361,9 +360,9 @@ $result = $geocoder
     ;
 ```
 
-The `using()` method allows you to choose the `provider` to use. When you deal with multiple providers, you may want to
-choose one of them. The default behavior is to use the first one but it can be annoying.
-
+The `using()` method allows you to choose the `provider` to use by its name.
+When you deal with multiple providers, you may want to choose one of them.
+The default behavior is to use the first one but it can be annoying.
 
 Reverse Geocoding
 -----------------
