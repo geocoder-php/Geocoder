@@ -100,11 +100,11 @@ class FreeGeoIpProviderTest extends TestCase
         $provider = new FreeGeoIpProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result = $provider->getGeocodedData('74.200.247.59');
 
-        $this->assertEquals(33.0347, $result['latitude'], '', 0.0001);
-        $this->assertEquals(-96.8134, $result['longitude'], '', 0.0001);
-        $this->assertEquals(75093, $result['zipcode']);
-        $this->assertEquals('Plano', $result['city']);
-        $this->assertEquals('Texas', $result['region']);
+        $this->assertEquals(37.7484, $result['latitude'], '', 0.01);
+        $this->assertEquals(-122.4156, $result['longitude'], '', 0.01);
+        $this->assertEquals(94110, $result['zipcode']);
+        $this->assertEquals('San Francisco', $result['city']);
+        $this->assertEquals('California', $result['region']);
         $this->assertEquals('United States', $result['country']);
         $this->assertEquals('US', $result['countryCode']);
     }
@@ -114,11 +114,11 @@ class FreeGeoIpProviderTest extends TestCase
         $provider = new FreeGeoIpProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result = $provider->getGeocodedData('::ffff:74.200.247.59');
 
-        $this->assertEquals(33.0347, $result['latitude'], '', 0.0001);
-        $this->assertEquals(-96.8134, $result['longitude'], '', 0.0001);
-        $this->assertEquals(75093, $result['zipcode']);
-        $this->assertEquals('Plano', $result['city']);
-        $this->assertEquals('Texas', $result['region']);
+        $this->assertEquals(37.7484, $result['latitude'], '', 0.01);
+        $this->assertEquals(-122.4156, $result['longitude'], '', 0.01);
+        $this->assertEquals(94110, $result['zipcode']);
+        $this->assertEquals('San Francisco', $result['city']);
+        $this->assertEquals('California', $result['region']);
         $this->assertEquals('United States', $result['country']);
         $this->assertEquals('US', $result['countryCode']);
     }
@@ -138,7 +138,7 @@ class FreeGeoIpProviderTest extends TestCase
         $provider = new FreeGeoIpProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result   = $provider->getGeocodedData('74.200.247.59');
 
-        $this->assertEquals('48', $result['regionCode']);
+        $this->assertEquals('6', $result['regionCode']);
     }
 
     public function testGetGeocodedDataWithUSIPv6()
@@ -146,7 +146,7 @@ class FreeGeoIpProviderTest extends TestCase
         $provider = new FreeGeoIpProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result = $provider->getGeocodedData('::ffff:74.200.247.59');
 
-        $this->assertEquals('48', $result['regionCode']);
+        $this->assertEquals('6', $result['regionCode']);
     }
 
     public function testGetGeocodedDataWithUKIPv4()
