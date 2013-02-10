@@ -21,26 +21,37 @@ class DataScienceToolkitProvider extends AbstractProvider implements ProviderInt
     /**
      * @var string
      */
-    const ENDPOINT_URL = 'http://www.datasciencetoolkit.org/ip2coordinates/%s';
+    const ENDPOINT_IP_URL = 'http://www.datasciencetoolkit.org/ip2coordinates/%s';
+
+    /**
+     * @var string
+     */
+    const ENDPOINT_ADRESS_URL = 'http://www.datasciencetoolkit.org/street2coordinates/%s';
 
     /**
      * {@inheritDoc}
      */
     public function getGeocodedData($address)
     {
-        if (!filter_var($address, FILTER_VALIDATE_IP)) {
-            throw new UnsupportedException('The DataScienceToolkitProvider does not support Street addresses.');
+        if (empty($address)) {
+            throw new UnsupportedException('The DataScienceToolkitProvider does not support empty addresses.');
         }
 
         if (filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
             throw new UnsupportedException('The DataScienceToolkitProvider does not support IPv6 addresses.');
         }
 
+        if (!filter_var($address, FILTER_VALIDATE_IP)) {
+            $endpoint = self::ENDPOINT_ADRESS_URL;
+        } else {
+            $endpoint = self::ENDPOINT_IP_URL;
+        }
+
         if ('127.0.0.1' === $address) {
             return $this->getLocalhostDefaults();
         }
 
-        $query = sprintf(self::ENDPOINT_URL, $address);
+        $query = sprintf($endpoint, urlencode($address));
 
         return $this->executeQuery($query);
     }
@@ -78,12 +89,14 @@ class DataScienceToolkitProvider extends AbstractProvider implements ProviderInt
         $result = array_shift($result);
 
         return array_merge($this->getDefaults(), array(
-            'latitude'    => $result['latitude'],
-            'longitude'   => $result['longitude'],
-            'city'        => $result['locality'],
-            'country'     => $result['country_name'],
-            'countryCode' => $result['country_code'],
-            'zipcode'	  => $result['postal_code'],
+            'latitude'     => isset($result['latitude']) ? $result['latitude'] : null,
+            'longitude'    => isset($result['longitude']) ? $result['longitude'] : null,
+            'city'         => isset($result['locality']) ? $result['locality'] : null,
+            'country'      => isset($result['country_name']) ? $result['country_name'] : null,
+            'countryCode'  => isset($result['country_code']) ? $result['country_code'] : null,
+            'zipcode'	   => isset($result['postal_code']) ? $result['postal_code'] : null,
+            'streetName'   => isset($result['street_name']) ? $result['street_name'] : null,
+            'streetNumber' => isset($result['street_number']) ? $result['street_number'] : null,
         ));
     }
 }

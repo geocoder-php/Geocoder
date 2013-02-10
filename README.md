@@ -43,7 +43,7 @@ Currently, there are many providers for the following APIs:
 * [GeoCoder.ca](http://geocoder.ca/) as Address-Based geocoding and reverse geocoding provider (exclusively in USA & Canada);
 * [GeoCoder.us](http://geocoder.us/) as Address-Based geocoding provider (exclusively in USA);
 * [IGN OpenLS](http://www.ign.fr/) as Address-Based geocoding provider (exclusively in France);
-* [DataScienceToolkit](http://www.datasciencetoolkit.org/) as IP-Based geocoding provider;
+* [DataScienceToolkit](http://www.datasciencetoolkit.org/) as IP-Based geocoding provider or an Address-Based provider(exclusively in USA & Canada);
 * [Yandex](http://api.yandex.com.tr/maps/doc/geocoder/desc/concepts/About.xml) as Address-Based geocoding and reverse geocoding provider;
 * [GeoPlugin](http://www.geoplugin.com/webservices) as IP-Based geocoding provider;
 * [GeoIPs](http://www.geoips.com/developer/geoips-api) as IP-Based geocoding provider;
@@ -203,7 +203,7 @@ A valid OpenLS api key is required.
 
 ### DataScienceToolkitProvider ###
 
-The `DataScienceToolkitProvider` named `data_science_toolkit` is able to geocode **IPv4 addresses** only.
+The `DataScienceToolkitProvider` named `data_science_toolkit` is able to geocode **IPv4 addresses** and **street adresses**, exclusively in USA & Canada.
 
 
 ### YandexProvider ###
@@ -266,10 +266,10 @@ $geocoder->registerProviders(array(
 ));
 ```
 
-The `$locale` parameter is available for `YahooProvider`, `YandexProvider` and `BingMapsProvider`.  
-The `$region` parameter is available for `GoogleMapsProvider` and `GoogleMapsBusinessProvider`.  
-The `$toponym` parameter is available for `YandexProvider`.  
-The `$service` parameter is available for `MaxMindProvider`.  
+The `$locale` parameter is available for `YahooProvider`, `YandexProvider` and `BingMapsProvider`.
+The `$region` parameter is available for `GoogleMapsProvider` and `GoogleMapsBusinessProvider`.
+The `$toponym` parameter is available for `YandexProvider`.
+The `$service` parameter is available for `MaxMindProvider`.
 The `$useSsl` parameter is available for `GoogleMapsProvider`, `GoogleMapsBusinessProvider` and `MaxMindProvider`.
 
 Everything is ok, enjoy!

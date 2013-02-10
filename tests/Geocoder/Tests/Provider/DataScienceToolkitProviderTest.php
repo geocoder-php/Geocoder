@@ -15,7 +15,7 @@ class DataScienceToolkitProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedException
-     * @expectedExceptionMessage The DataScienceToolkitProvider does not support Street addresses.
+     * @expectedExceptionMessage The DataScienceToolkitProvider does not support empty addresses.
      */
     public function testGetGeocodedDataWithNull()
     {
@@ -25,7 +25,7 @@ class DataScienceToolkitProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedException
-     * @expectedExceptionMessage The DataScienceToolkitProvider does not support Street addresses.
+     * @expectedExceptionMessage The DataScienceToolkitProvider does not support empty addresses.
      */
     public function testGetGeocodedDataWithEmpty()
     {
@@ -34,12 +34,12 @@ class DataScienceToolkitProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
-     * @expectedExceptionMessage The DataScienceToolkitProvider does not support Street addresses.
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not execute query http://www.datasciencetoolkit.org/street2coordinates/10+rue+de+baraban+lyon
      */
-    public function testGetGeocodedDataWithAddress()
+    public function testGetGeocodedDataWithFrenchAddress()
     {
-        $provider = new DataScienceToolkitProvider($this->getMockAdapter($this->never()));
+        $provider = new DataScienceToolkitProvider($this->getMockAdapterReturns(null));
         $provider->getGeocodedData('10 rue de baraban lyon');
     }
 
@@ -99,6 +99,18 @@ class DataScienceToolkitProviderTest extends TestCase
         $this->assertEquals('Lyon', $result['city']);
         $this->assertEquals('France', $result['country']);
         $this->assertEquals('FR', $result['countryCode']);
+    }
+
+    public function testGetGeocodedDataWithRealAdress()
+    {
+        $provider = new DataScienceToolkitProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $result   = $provider->getGeocodedData('2543 Graystone Place, Simi Valley, CA 93065');
+
+        $this->assertEquals(34.281016 , $result['latitude'], '', 0.0001);
+        $this->assertEquals(-118.766282, $result['longitude'], '', 0.0001);
+        $this->assertEquals('Simi Valley', $result['city']);
+        $this->assertEquals('United States', $result['country']);
+        $this->assertEquals('US', $result['countryCode']);
     }
 
     /**
