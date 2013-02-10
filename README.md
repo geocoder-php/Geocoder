@@ -43,7 +43,7 @@ Currently, there are many providers for the following APIs:
 * [GeoCoder.ca](http://geocoder.ca/) as Address-Based geocoding and reverse geocoding provider (exclusively in USA & Canada);
 * [GeoCoder.us](http://geocoder.us/) as Address-Based geocoding provider (exclusively in USA);
 * [IGN OpenLS](http://www.ign.fr/) as Address-Based geocoding provider (exclusively in France);
-* [DataScienceToolkit](http://www.datasciencetoolkit.org/) as IP-Based geocoding provider or an Address-Based provider(exclusively in USA & Canada);
+* [DataScienceToolkit](http://www.datasciencetoolkit.org/) as IP-Based geocoding provider or an Address-Based provider (exclusively in USA & Canada);
 * [Yandex](http://api.yandex.com.tr/maps/doc/geocoder/desc/concepts/About.xml) as Address-Based geocoding and reverse geocoding provider;
 * [GeoPlugin](http://www.geoplugin.com/webservices) as IP-Based geocoding provider;
 * [GeoIPs](http://www.geoips.com/developer/geoips-api) as IP-Based geocoding provider;
