@@ -7,6 +7,6 @@ php:
 
 before_script:
     - curl -s http://getcomposer.org/installer | php
-    - php composer.phar install --dev --prefer-source
+    - php composer.phar install --dev --prefer-dist
 
 script: phpunit --coverage-text
