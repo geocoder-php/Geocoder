@@ -212,7 +212,7 @@ The `YandexProvider` named `yandex` is able to geocode and reverse geocode **str
 The default langage-locale is `ru-RU`, you can choose between `uk-UA`, `be-BY`,
 `en-US`, `en-BR` and `tr-TR`.
 This provider can also reverse information based on coordinates (latitude,
-longitude). It's possible to precise the toponym to get more accurate result:
+longitude). It's possible to precise the toponym to get more accurate result for reverse geocoding:
 `house`, `street`, `metro`, `district` and `locality`.
 
 
@@ -266,11 +266,12 @@ $geocoder->registerProviders(array(
 ));
 ```
 
-The `$locale` parameter is available for `YahooProvider`, `YandexProvider` and `BingMapsProvider`.
-The `$region` parameter is available for `GoogleMapsProvider` and `GoogleMapsBusinessProvider`.
-The `$toponym` parameter is available for `YandexProvider`.
-The `$service` parameter is available for `MaxMindProvider`.
-The `$useSsl` parameter is available for `GoogleMapsProvider`, `GoogleMapsBusinessProvider` and `MaxMindProvider`.
+Parameters:
+* `$locale` is available for `YahooProvider`, `YandexProvider` and `BingMapsProvider`.
+* `$region` is available for `GoogleMapsProvider` and `GoogleMapsBusinessProvider`.
+* `$toponym` is available for `YandexProvider`.
+* `$service` is available for `MaxMindProvider`.
+* `$useSsl` is available for `GoogleMapsProvider`, `GoogleMapsBusinessProvider` and `MaxMindProvider`.
 
 Everything is ok, enjoy!
 
