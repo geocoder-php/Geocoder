@@ -48,7 +48,8 @@ Currently, there are many providers for the following APIs:
 * [GeoPlugin](http://www.geoplugin.com/webservices) as IP-Based geocoding provider;
 * [GeoIPs](http://www.geoips.com/developer/geoips-api) as IP-Based geocoding provider;
 * [MaxMind web service](http://dev.maxmind.com/geoip/web-services) as IP-Based geocoding provider (City/ISP/Org and Omni services);
-* [Geonames](http://www.geonames.org/) as Place-Based geocoding and reverse geocoding provider.
+* [Geonames](http://www.geonames.org/) as Place-Based geocoding and reverse geocoding provider;
+* [IpGeoBase](http://ip_geo_base) as IP-Based geocoding provider (very accurate in Russia).
 
 Installation
 ------------
@@ -238,6 +239,11 @@ This provider provides two constants `CITY_EXTENDED_SERVICE` by default and `OMN
 
 The `GeonamesProvider` named `geonames` is able to geocode and reverse geocode **places**.
 A valid username is required.
+
+
+### IpGeoBaseProvider ###
+
+The `IpGeoBaseProvider` named `ip_geo_base` is able to geocode **IPv4 addresses** only, very accurate in Russia.
 
 
 You can use one of them or write your own provider. You can also register all providers and decide later.
