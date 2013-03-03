@@ -48,7 +48,8 @@ Currently, there are many providers for the following APIs:
 * [GeoPlugin](http://www.geoplugin.com/webservices) as IP-Based geocoding provider;
 * [GeoIPs](http://www.geoips.com/developer/geoips-api) as IP-Based geocoding provider;
 * [MaxMind web service](http://dev.maxmind.com/geoip/web-services) as IP-Based geocoding provider (City/ISP/Org and Omni services);
-* [Geonames](http://www.geonames.org/) as Place-Based geocoding and reverse geocoding provider.
+* [Geonames](http://www.geonames.org/) as Place-Based geocoding and reverse geocoding provider;
+* [Baidu](http://developer.baidu.com/map/geocoding-api.htm) as Address-Based geocoding and reverse geocoding provider (exclusively in China).
 
 Installation
 ------------
@@ -238,6 +239,12 @@ This provider provides two constants `CITY_EXTENDED_SERVICE` by default and `OMN
 
 The `GeonamesProvider` named `geonames` is able to geocode and reverse geocode **places**.
 A valid username is required.
+
+
+### BaiduProvider ###
+
+The `BaiduProvider` named `baidu` is able to geocode and reverse geocode **street addresses**, exclusively in China.
+A valid api key is required.
 
 
 You can use one of them or write your own provider. You can also register all providers and decide later.
@@ -524,6 +531,7 @@ Rename the `phpunit.xml.dist` file to `phpunit.xml`, then uncomment the followin
     <!-- <server name="GEOIPS_API_KEY" value="YOUR_API_KEY" /> -->
     <!-- <server name="MAXMIND_API_KEY" value="YOUR_API_KEY" /> -->
     <!-- <server name="GEONAMES_USERNAME" value="YOUR_USERNAME" /> -->
+    <!-- <server name="BAIDU_API_KEY" value="YOUR_API_KEY" /> -->
 </php>
 ```
 
