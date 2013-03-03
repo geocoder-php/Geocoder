@@ -49,7 +49,7 @@ Currently, there are many providers for the following APIs:
 * [GeoIPs](http://www.geoips.com/developer/geoips-api) as IP-Based geocoding provider;
 * [MaxMind web service](http://dev.maxmind.com/geoip/web-services) as IP-Based geocoding provider (City/ISP/Org and Omni services);
 * [Geonames](http://www.geonames.org/) as Place-Based geocoding and reverse geocoding provider;
-* [IpGeoBase](http://ip_geo_base) as IP-Based geocoding provider (very accurate in Russia).
+* [IpGeoBase](http://ipgeobase.ru/) as IP-Based geocoding provider (very accurate in Russia).
 
 Installation
 ------------
