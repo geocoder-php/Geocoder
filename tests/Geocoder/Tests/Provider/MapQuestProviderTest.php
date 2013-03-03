@@ -48,7 +48,7 @@ class MapQuestProviderTest extends TestCase
         $this->assertEquals('10 Avenue Gambetta', $result['streetName']);
         $this->assertEquals(75011, $result['zipcode']);
         $this->assertEquals('Paris', $result['city']);
-        $this->assertEquals('Arrondissement de Paris', $result['county']);
+        $this->assertEquals('Paris', $result['county']);
         $this->assertEquals('Île-de-France', $result['region']);
         $this->assertEquals('France', $result['country']);
 
