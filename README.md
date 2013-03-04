@@ -253,7 +253,7 @@ The `BaiduProvider` named `baidu` is able to geocode and reverse geocode **stree
 A valid api key is required.
 
 
-### Using Providers ###
+### Using The Providers ###
 
 You can use one of them or write your own provider. You can also register all providers and decide later.
 That's we'll do:
