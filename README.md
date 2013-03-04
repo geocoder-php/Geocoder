@@ -49,7 +49,8 @@ Currently, there are many providers for the following APIs:
 * [GeoIPs](http://www.geoips.com/developer/geoips-api) as IP-Based geocoding provider;
 * [MaxMind web service](http://dev.maxmind.com/geoip/web-services) as IP-Based geocoding provider (City/ISP/Org and Omni services);
 * [Geonames](http://www.geonames.org/) as Place-Based geocoding and reverse geocoding provider;
-* [IpGeoBase](http://ipgeobase.ru/) as IP-Based geocoding provider (very accurate in Russia).
+* [IpGeoBase](http://ipgeobase.ru/) as IP-Based geocoding provider (very accurate in Russia);
+* [Baidu](http://developer.baidu.com/map/geocoding-api.htm) as Address-Based geocoding and reverse geocoding provider (exclusively in China).
 
 Installation
 ------------
@@ -246,6 +247,14 @@ A valid username is required.
 The `IpGeoBaseProvider` named `ip_geo_base` is able to geocode **IPv4 addresses** only, very accurate in Russia.
 
 
+### BaiduProvider ###
+
+The `BaiduProvider` named `baidu` is able to geocode and reverse geocode **street addresses**, exclusively in China.
+A valid api key is required.
+
+
+### Using Providers ###
+
 You can use one of them or write your own provider. You can also register all providers and decide later.
 That's we'll do:
 
@@ -273,6 +282,7 @@ $geocoder->registerProviders(array(
 ```
 
 Parameters:
+
 * `$locale` is available for `YahooProvider`, `YandexProvider` and `BingMapsProvider`.
 * `$region` is available for `GoogleMapsProvider` and `GoogleMapsBusinessProvider`.
 * `$toponym` is available for `YandexProvider`.
@@ -531,6 +541,7 @@ Rename the `phpunit.xml.dist` file to `phpunit.xml`, then uncomment the followin
     <!-- <server name="GEOIPS_API_KEY" value="YOUR_API_KEY" /> -->
     <!-- <server name="MAXMIND_API_KEY" value="YOUR_API_KEY" /> -->
     <!-- <server name="GEONAMES_USERNAME" value="YOUR_USERNAME" /> -->
+    <!-- <server name="BAIDU_API_KEY" value="YOUR_API_KEY" /> -->
 </php>
 ```
 
