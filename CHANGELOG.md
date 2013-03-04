@@ -1,9 +1,17 @@
 CHANGELOG
 =========
 
-### 1.2.2 (????-??-??) ###
+### 1.3.0 (2013-03-04) ###
 
-n/a
+* Fixed: ipgeobase url
+* Fixed: MapQuest test
+* Added: BaiduProvider + test
+* Fixed: OpenStreetMaps test
+* Added: IpGeoBase-ru as a provider + test
+* Fixed: travis-ci config
+* Added: adress support for datascience
+* Fixed: FreeGeoIp provider's tests
+* Updated: documentation about Geocoder::using()
 
 ### 1.2.1 (2013-02-03) ###
 
