@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Geocoder - The almost missing Geocoder PHP library</title>
+    <title>Geocoder by willdurand</title>
 
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
@@ -16,7 +16,7 @@
     <div class="wrapper">
       <header>
         <h1>Geocoder</h1>
-        <p>The almost missing Geocoder PHP library</p>
+        <p>The almost missing Geocoder PHP 5.3 library</p>
 
         <p class="view"><a href="https://github.com/willdurand/Geocoder">View the Project on GitHub <small>willdurand/Geocoder</small></a></p>
 
@@ -92,7 +92,7 @@ over this list to get information;</li>
 <li>
 <a href="http://www.ign.fr/">IGN OpenLS</a> as Address-Based geocoding provider (exclusively in France);</li>
 <li>
-<a href="http://www.datasciencetoolkit.org/">DataScienceToolkit</a> as IP-Based geocoding provider;</li>
+<a href="http://www.datasciencetoolkit.org/">DataScienceToolkit</a> as IP-Based geocoding provider or an Address-Based provider (exclusively in USA &amp; Canada);</li>
 <li>
 <a href="http://api.yandex.com.tr/maps/doc/geocoder/desc/concepts/About.xml">Yandex</a> as Address-Based geocoding and reverse geocoding provider;</li>
 <li>
@@ -102,7 +102,11 @@ over this list to get information;</li>
 <li>
 <a href="http://dev.maxmind.com/geoip/web-services">MaxMind web service</a> as IP-Based geocoding provider (City/ISP/Org and Omni services);</li>
 <li>
-<a href="http://www.geonames.org/">Geonames</a> as Place-Based geocoding and reverse geocoding provider.</li>
+<a href="http://www.geonames.org/">Geonames</a> as Place-Based geocoding and reverse geocoding provider;</li>
+<li>
+<a href="http://ipgeobase.ru/">IpGeoBase</a> as IP-Based geocoding provider (very accurate in Russia);</li>
+<li>
+<a href="http://developer.baidu.com/map/geocoding-api.htm">Baidu</a> as Address-Based geocoding and reverse geocoding provider (exclusively in China).</li>
 </ul><h2>Installation</h2>
 
 <p>The recommended way to install Geocoder is through composer.</p>
@@ -159,108 +163,118 @@ over this list to get information;</li>
 
 <h3>FreeGeoIpProvider</h3>
 
-<p>The <code>FreeGeoIpProvider</code> is able to geocode <strong>IPv4 and IPv6 addresses</strong> only.</p>
+<p>The <code>FreeGeoIpProvider</code> named <code>free_geo_ip</code> is able to geocode <strong>IPv4 and IPv6 addresses</strong> only.</p>
 
 <h3>HostIpProvider</h3>
 
-<p>The <code>HostIpProvider</code> is able to geocode <strong>IPv4 addresses</strong> only.</p>
+<p>The <code>HostIpProvider</code> named <code>host_ip</code> is able to geocode <strong>IPv4 addresses</strong> only.</p>
 
 <h3>IpInfoDbProvider</h3>
 
-<p>The <code>IpInfoDbProvider</code> is able to geocode <strong>IPv4 addresses</strong> only.
+<p>The <code>IpInfoDbProvider</code> named <code>ip_info_db</code> is able to geocode <strong>IPv4 addresses</strong> only.
 A valid api key is required.</p>
 
 <h3>YahooProvider</h3>
 
-<p>The <code>YahooProvider</code> is able to geocode both <strong>IPv4 addresses</strong> and <strong>street addresses</strong>.
-This provider can also reverse information based on coordinates (latitude, longitude).
+<p>The <code>YahooProvider</code> named <code>yahoo</code> is able to geocode both <strong>IPv4 addresses</strong> and <strong>street addresses</strong>. This provider can also reverse information based on coordinates (latitude, longitude).
 A valid api key is required.</p>
 
 <h3>GoogleMapsProvider</h3>
 
-<p>The <code>GoogleMapsProvider</code> is able to geocode and reverse geocode <strong>street addresses</strong>.</p>
+<p>The <code>GoogleMapsProvider</code> named <code>google_maps</code> is able to geocode and reverse geocode <strong>street addresses</strong>.</p>
 
 <h3>GoogleMapsBusinessProvider</h3>
 
-<p>The <code>GoogleMapsBusinessProvider</code> is able to geocode and reverse geocode <strong>street addresses</strong>.
+<p>The <code>GoogleMapsBusinessProvider</code> named <code>google_maps_business</code> is able to geocode and reverse geocode <strong>street addresses</strong>.
 A valid <code>Client ID</code> is required. The private key is optional.</p>
 
 <h3>BingMapsProvider</h3>
 
-<p>The <code>BingMapsProvider</code> is able to geocode and reverse geocode <strong>street addresses</strong>.
+<p>The <code>BingMapsProvider</code> named <code>bing_maps</code> is able to geocode and reverse geocode <strong>street addresses</strong>.
 A valid api key is required.</p>
 
 <h3>OpenStreetMapsProvider</h3>
 
-<p>The <code>OpenStreetMapsProvider</code> is able to geocode and reverse geocode <strong>street addresses</strong>.</p>
+<p>The <code>OpenStreetMapsProvider</code> named <code>openstreetmaps</code> is able to geocode and reverse geocode <strong>street addresses</strong>.</p>
 
 <h3>CloudMadeProvider</h3>
 
-<p>The <code>CloudMadeProvider</code> is able to geocode and reverse geocode <strong>street addresses</strong>.
+<p>The <code>CloudMadeProvider</code> named <code>cloudmade</code> is able to geocode and reverse geocode <strong>street addresses</strong>.
 A valid api key is required.</p>
 
 <h3>GeoipProvider</h3>
 
-<p>The <code>GeoipProvider</code> is able to geocode <strong>IPv4 and IPv6 addresses</strong> only. No need to use an <code>HttpAdapter</code> as it uses a local database.
+<p>The <code>GeoipProvider</code> named <code>geoip</code> is able to geocode <strong>IPv4 and IPv6 addresses</strong> only. No need to use an <code>HttpAdapter</code> as it uses a local database.
 See the <a href="http://www.maxmind.com/app/php">MaxMind page</a> for more information.</p>
 
 <h3>ChainProvider</h3>
 
-<p>The <code>ChainProvider</code> is a special provider that takes a list of providers and iterates over this list to get information.</p>
+<p>The <code>ChainProvider</code> named <code>chain</code> is a special provider that takes a list of providers and iterates over this list to get information.</p>
 
 <h3>MapQuestProvider</h3>
 
-<p>The <code>MapQuestProvider</code> is able to geocode and reverse geocode <strong>street addresses</strong>.</p>
+<p>The <code>MapQuestProvider</code> named <code>map_quest</code> is able to geocode and reverse geocode <strong>street addresses</strong>.</p>
 
 <h3>OIORestProvider</h3>
 
-<p>The <code>OIORestProvider</code> is able to geocode and reverse geocode <strong>street addresses</strong>, exclusively in Denmark.</p>
+<p>The <code>OIORestProvider</code> named <code>oio_rest</code> is able to geocode and reverse geocode <strong>street addresses</strong>, exclusively in Denmark.</p>
 
 <h3>GeocoderCaProvider</h3>
 
-<p>The <code>GeocoderCaProvider</code> is able to geocode and reverse geocode <strong>street addresses</strong>, exclusively in USA &amp; Canada.</p>
+<p>The <code>GeocoderCaProvider</code> named <code>geocoder_ca</code> is able to geocode and reverse geocode <strong>street addresses</strong>, exclusively in USA &amp; Canada.</p>
 
 <h3>GeocoderUsProvider</h3>
 
-<p>The <code>GeocoderUsProvider</code> is able to geocode <strong>street addresses</strong> only, exclusively in USA.</p>
+<p>The <code>GeocoderUsProvider</code> named <code>geocoder_us</code> is able to geocode <strong>street addresses</strong> only, exclusively in USA.</p>
 
 <h3>IGNOpenLSProvider</h3>
 
-<p>The <code>IGNOpenLSProvider</code> is able to geocode <strong>street addresses</strong> only, exclusively in France.
-A valid api key is required.</p>
+<p>The <code>IGNOpenLSProvider</code> named <code>ign_openls</code> is able to geocode <strong>street addresses</strong> only, exclusively in France.
+A valid OpenLS api key is required.</p>
 
 <h3>DataScienceToolkitProvider</h3>
 
-<p>The <code>DataScienceToolkitProvider</code> is able to geocode <strong>IPv4 addresses</strong> only.</p>
+<p>The <code>DataScienceToolkitProvider</code> named <code>data_science_toolkit</code> is able to geocode <strong>IPv4 addresses</strong> and <strong>street adresses</strong>, exclusively in USA &amp; Canada.</p>
 
 <h3>YandexProvider</h3>
 
-<p>The <code>YandexProvider</code> is able to geocode and reverse geocode <strong>street addresses</strong>.
+<p>The <code>YandexProvider</code> named <code>yandex</code> is able to geocode and reverse geocode <strong>street addresses</strong>.
 The default langage-locale is <code>ru-RU</code>, you can choose between <code>uk-UA</code>, <code>be-BY</code>,
 <code>en-US</code>, <code>en-BR</code> and <code>tr-TR</code>.
 This provider can also reverse information based on coordinates (latitude,
-longitude). It's possible to precise the toponym to get more accurate result:
+longitude). It's possible to precise the toponym to get more accurate result for reverse geocoding:
 <code>house</code>, <code>street</code>, <code>metro</code>, <code>district</code> and <code>locality</code>.</p>
 
 <h3>GeoPluginProvider</h3>
 
-<p>The <code>GeoPluginProvider</code> is able to geocode <strong>IPv4 addresses and IPv6 addresses</strong> only.</p>
+<p>The <code>GeoPluginProvider</code> named <code>geo_plugin</code> is able to geocode <strong>IPv4 addresses and IPv6 addresses</strong> only.</p>
 
 <h3>GeoIPsProvider</h3>
 
-<p>The <code>GeoIPsProvider</code> is able to geocode <strong>IPv4 addresses</strong> only.
+<p>The <code>GeoIPsProvider</code> named <code>geo_ips</code> is able to geocode <strong>IPv4 addresses</strong> only.
 A valid api key is required.</p>
 
 <h3>MaxMindProvider</h3>
 
-<p>The <code>MaxMindProvider</code> is able to geocode <strong>IPv4 and IPv6 addresses</strong> only.
+<p>The <code>MaxMindProvider</code> named <code>maxmind</code> is able to geocode <strong>IPv4 and IPv6 addresses</strong> only.
 A valid <code>City/ISP/Org</code> or <code>Omni</code> service's api key is required.
 This provider provides two constants <code>CITY_EXTENDED_SERVICE</code> by default and <code>OMNI_SERVICE</code>.</p>
 
 <h3>GeonamesProvider</h3>
 
-<p>The <code>GeonamesProvider</code> is able to geocode and reverse geocode <strong>places</strong>.
+<p>The <code>GeonamesProvider</code> named <code>geonames</code> is able to geocode and reverse geocode <strong>places</strong>.
 A valid username is required.</p>
+
+<h3>IpGeoBaseProvider</h3>
+
+<p>The <code>IpGeoBaseProvider</code> named <code>ip_geo_base</code> is able to geocode <strong>IPv4 addresses</strong> only, very accurate in Russia.</p>
+
+<h3>BaiduProvider</h3>
+
+<p>The <code>BaiduProvider</code> named <code>baidu</code> is able to geocode and reverse geocode <strong>street addresses</strong>, exclusively in China.
+A valid api key is required.</p>
+
+<h3>Using The Providers</h3>
 
 <p>You can use one of them or write your own provider. You can also register all providers and decide later.
 That's we'll do:</p>
@@ -287,13 +301,20 @@ That's we'll do:</p>
 <span class="p">));</span>
 </pre></div>
 
-<p>The <code>$locale</code> parameter is available for <code>YahooProvider</code>, <code>YandexProvider</code> and <code>BingMapsProvider</code>.<br>
-The <code>$region</code> parameter is available for <code>GoogleMapsProvider</code> and <code>GoogleMapsBusinessProvider</code>.<br>
-The <code>$toponym</code> parameter is available for <code>YandexProvider</code>.<br>
-The <code>$service</code> parameter is available for <code>MaxMindProvider</code>.<br>
-The <code>$useSsl</code> parameter is available for <code>GoogleMapsProvider</code>, <code>GoogleMapsBusinessProvider</code> and <code>MaxMindProvider</code>.</p>
+<p>Parameters:</p>
 
-<p>Everything is ok, enjoy!</p>
+<ul>
+<li>
+<code>$locale</code> is available for <code>YahooProvider</code>, <code>YandexProvider</code> and <code>BingMapsProvider</code>.</li>
+<li>
+<code>$region</code> is available for <code>GoogleMapsProvider</code> and <code>GoogleMapsBusinessProvider</code>.</li>
+<li>
+<code>$toponym</code> is available for <code>YandexProvider</code>.</li>
+<li>
+<code>$service</code> is available for <code>MaxMindProvider</code>.</li>
+<li>
+<code>$useSsl</code> is available for <code>GoogleMapsProvider</code>, <code>GoogleMapsBusinessProvider</code> and <code>MaxMindProvider</code>.</li>
+</ul><p>Everything is ok, enjoy!</p>
 
 <h2>API</h2>
 
@@ -394,8 +415,9 @@ The <code>$useSsl</code> parameter is available for <code>GoogleMapsProvider</co
     <span class="p">;</span>
 </pre></div>
 
-<p>The <code>using()</code> method allows you to choose the <code>provider</code> to use. When you deal with multiple providers, you may want to
-choose one of them. The default behavior is to use the first one but it can be annoying.</p>
+<p>The <code>using()</code> method allows you to choose the <code>provider</code> to use by its name.
+When you deal with multiple providers, you may want to choose one of them.
+The default behavior is to use the first one but it can be annoying.</p>
 
 <h2>Reverse Geocoding</h2>
 
@@ -527,6 +549,7 @@ it's really easy to format a <code>ResultInterface</code> object as a string:</p
     <span class="c">&lt;!-- &lt;server name="GEOIPS_API_KEY" value="YOUR_API_KEY" /&gt; --&gt;</span>
     <span class="c">&lt;!-- &lt;server name="MAXMIND_API_KEY" value="YOUR_API_KEY" /&gt; --&gt;</span>
     <span class="c">&lt;!-- &lt;server name="GEONAMES_USERNAME" value="YOUR_USERNAME" /&gt; --&gt;</span>
+    <span class="c">&lt;!-- &lt;server name="BAIDU_API_KEY" value="YOUR_API_KEY" /&gt; --&gt;</span>
 <span class="nt">&lt;/php&gt;</span>
 </pre></div>
 
