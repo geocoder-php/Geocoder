@@ -114,7 +114,7 @@ class YandexProviderTest extends TestCase
     public function testGetGeocodedDataWithRealAddressWithUALocale()
     {
         $provider = new YandexProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), 'uk-UA');
-        $result   = $provider->getGeocodedData('Tagensvej 47, Copenhagen, Denmark');
+        $result   = $provider->getGeocodedData('Copenhagen, Denmark');
 
         $this->assertEquals(55.675682, $result['latitude'], '', 0.01);
         $this->assertEquals(12.567602, $result['longitude'], '', 0.01);
