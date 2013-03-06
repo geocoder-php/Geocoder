@@ -109,12 +109,14 @@ class TomTomProvider extends AbstractProvider implements ProviderInterface
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
-        if (isset($xml->attributes()['count']) && 0 === (int) $xml->attributes()['count']) {
+        $attributes = $xml->attributes();
+
+        if (isset($attributes['count']) && 0 === (int) $attributes['count']) {
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
-        if (isset($xml->attributes()['errorCode'])) {
-            if ('403' === (string) $xml->attributes()['errorCode']) {
+        if (isset($attributes['errorCode'])) {
+            if ('403' === (string) $attributes['errorCode']) {
                 throw new InvalidCredentialsException('Map API Key provided is not valid.');
             }
 
