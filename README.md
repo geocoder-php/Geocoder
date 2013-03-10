@@ -50,7 +50,8 @@ Currently, there are many providers for the following APIs:
 * [MaxMind web service](http://dev.maxmind.com/geoip/web-services) as IP-Based geocoding provider (City/ISP/Org and Omni services);
 * [Geonames](http://www.geonames.org/) as Place-Based geocoding and reverse geocoding provider;
 * [IpGeoBase](http://ipgeobase.ru/) as IP-Based geocoding provider (very accurate in Russia);
-* [Baidu](http://developer.baidu.com/map/geocoding-api.htm) as Address-Based geocoding and reverse geocoding provider (exclusively in China).
+* [Baidu](http://developer.baidu.com/map/geocoding-api.htm) as Address-Based geocoding and reverse geocoding provider (exclusively in China);
+* [TomTom](http://developer.tomtom.com/docs/read/Geocoding) as Address-Based geocoding and reverse geocoding provider.
 
 Installation
 ------------
@@ -253,6 +254,13 @@ The `BaiduProvider` named `baidu` is able to geocode and reverse geocode **stree
 A valid api key is required.
 
 
+### TomTomProvider ###
+
+The `TomTomProvider` named `tomtom` is able to geocode and reverse geocode **street addresses**.
+The default langage-locale is `en`, you can choose between `de`, `es`, `fr`, `it`, `nl`, `pl`, `pt` and `sv`.
+A valid api key is required.
+
+
 ### Using The Providers ###
 
 You can use one of them or write your own provider. You can also register all providers and decide later.
@@ -283,7 +291,7 @@ $geocoder->registerProviders(array(
 
 Parameters:
 
-* `$locale` is available for `YahooProvider`, `YandexProvider` and `BingMapsProvider`.
+* `$locale` is available for `YahooProvider`, `YandexProvider`, `BingMapsProvider` and `TomTomProvider`.
 * `$region` is available for `GoogleMapsProvider` and `GoogleMapsBusinessProvider`.
 * `$toponym` is available for `YandexProvider`.
 * `$service` is available for `MaxMindProvider`.
@@ -542,6 +550,8 @@ Rename the `phpunit.xml.dist` file to `phpunit.xml`, then uncomment the followin
     <!-- <server name="MAXMIND_API_KEY" value="YOUR_API_KEY" /> -->
     <!-- <server name="GEONAMES_USERNAME" value="YOUR_USERNAME" /> -->
     <!-- <server name="BAIDU_API_KEY" value="YOUR_API_KEY" /> -->
+    <!-- <server name="TOMTOM_GEOCODING_KEY" value="YOUR_GEOCODING_KEY" /> -->
+    <!-- <server name="TOMTOM_MAP_KEY" value="YOUR_MAP_KEY" /> -->
 </php>
 ```
 
