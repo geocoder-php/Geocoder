@@ -126,6 +126,19 @@ class GeocoderTest extends TestCase
         $this->assertInstanceOf('Geocoder\Tests\DummyResult', $geocoder->returnResult(array()));
     }
 
+    public function testSetAndUseCustomResultFactory()
+    {
+        $factoryMock = $this->getMock('Geocoder\Result\ResultFactory');
+        $factoryMock
+            ->expects($this->once())
+            ->method('newInstance')
+            ->will($this->returnValue(new DummyResult()));
+
+        $geocoder = new TestableGeocoder(null);
+        $geocoder->setResultFactory($factoryMock);
+        $this->assertInstanceOf('Geocoder\Tests\DummyResult', $geocoder->returnResult(array()));
+    }
+
     protected function assertEmptyResult($result)
     {
         $this->assertEquals(0, $result->getLatitude());
