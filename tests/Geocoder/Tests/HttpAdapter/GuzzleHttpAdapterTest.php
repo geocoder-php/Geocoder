@@ -21,10 +21,7 @@ class GuzzleHttpAdapterTest extends \Geocoder\Tests\TestCase
         }
     }
 
-    /**
-     * @covers Geocoder\HttpAdapter\GuzzleHttpAdapter::__construct
-     */
-    public function testCreatesDefaultClient()
+    public function testGetName()
     {
         $adapter = new GuzzleHttpAdapter();
         $this->assertEquals('guzzle', $adapter->getName());
