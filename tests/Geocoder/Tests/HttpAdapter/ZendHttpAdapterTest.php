@@ -12,23 +12,30 @@ use Zend\Http\Client;
  */
 class ZendHttpAdapterTest extends TestCase
 {
+    protected $zend;
+
     protected function setUp()
     {
         if (!class_exists('Zend\Http\Client')) {
             $this->markTestSkipped('Zend library has to be installed');
         }
+
+        $this->zend = new ZendHttpAdapter();
     }
 
     public function testGetNullContent()
     {
-        $zend = new ZendHttpAdapter();
-        $this->assertNull($zend->getContent(null));
+        $this->assertNull($this->zend->getContent(null));
     }
 
     public function testGetFalseContent()
     {
-        $zend = new ZendHttpAdapter();
-        $this->assertNull($zend->getContent(false));
+        $this->assertNull($this->zend->getContent(false));
+    }
+
+    public function testGetName()
+    {
+        $this->assertEquals('zend', $this->zend->getName());
     }
 
     public function testGetContentWithCustomAdapter()
