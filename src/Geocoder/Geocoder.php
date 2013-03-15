@@ -44,7 +44,16 @@ class Geocoder implements GeocoderInterface
      */
     public function __construct(ProviderInterface $provider = null, ResultFactory $resultFactory = null)
     {
-        $this->provider      = $provider;
+        $this->provider = $provider;
+
+        $this->setResultFactory($resultFactory);
+    }
+
+    /**
+     * @param ResultFactory $resultFactory
+     */
+    public function setResultFactory(ResultFactory $resultFactory = null)
+    {
         $this->resultFactory = $resultFactory ?: new ResultFactory();
     }
 
