@@ -308,6 +308,33 @@ Parameters:
 * `$useSsl` is available for `GoogleMapsProvider`, `GoogleMapsBusinessProvider`, `MaxMindProvider` and `ArcGISOnlineProvider`.
 * `$sourceCountry` is available for `ArcGISOnlineProvider`.
 
+
+### Using The ChainProvider ###
+
+As said it's a special provider that takes a list of providers and iterates over this list to get information. Note
+that it **stops** its iteration when a provider returns a result. The result is returned by `GoogleMapsProvider`
+because `FreeGeoIpProvider` and `HostIpProvider` cannot geocode street addresses. `YahooProvider` is ignored.
+
+``` php
+$geocoder = new \Geocoder\Geocoder();
+$adapter  = new \Geocoder\HttpAdapter\CurlHttpAdapter();
+$chain    = new \Geocoder\Provider\ChainProvider(array(
+    new \Geocoder\Provider\FreeGeoIpProvider($adapter),
+    new \Geocoder\Provider\HostIpProvider($adapter),
+    new \Geocoder\Provider\GoogleMapsProvider($adapter, 'fr_FR', 'France', true),
+    new \Geocoder\Provider\YahooProvider($adapter, '<API_KEY>', 'fr_FR'),
+    // ...
+));
+$geocoder->registerProvider($chain);
+
+try {
+    $geocode = $geocoder->geocode('10 rue Gambetta, Paris, France');
+    var_export($geocode);
+} catch (Exception $e) {
+    echo $e->getMessage();
+}
+```
+
 Everything is ok, enjoy!
 
 API
@@ -526,7 +553,7 @@ You can also write your own `provider` by implementing the `ProviderInterface`.
 
 You can provide your own `result` by extending `ResultFactory` and implementing `ResultInterface` if your provider returns more informations than the default one.
 
-Note, `AbstractProvider` and `AbstractResult` clasess can help you by providing useful features.
+Note, `AbstractProvider` and `AbstractResult` classes can help you by providing useful features.
 
 You can provide your own `dumper` by implementing the `DumperInterface`.
 
