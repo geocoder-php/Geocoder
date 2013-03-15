@@ -37,12 +37,7 @@ class ZendHttpAdapter implements HttpAdapterInterface
     {
         try {
             $response = $this->client->setUri($url)->send();
-
-            if ($response->isSuccess()) {
-                $content = $response->getBody();
-            } else {
-                $content = null;
-            }
+            $content  = $response->isSuccess() ? $response->getBody() : null;
         } catch (\Exception $e) {
             $content = null;
         }
