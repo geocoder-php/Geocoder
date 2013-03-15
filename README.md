@@ -51,7 +51,8 @@ Currently, there are many providers for the following APIs:
 * [Geonames](http://www.geonames.org/) as Place-Based geocoding and reverse geocoding provider;
 * [IpGeoBase](http://ipgeobase.ru/) as IP-Based geocoding provider (very accurate in Russia);
 * [Baidu](http://developer.baidu.com/map/geocoding-api.htm) as Address-Based geocoding and reverse geocoding provider (exclusively in China);
-* [TomTom](http://developer.tomtom.com/docs/read/Geocoding) as Address-Based geocoding and reverse geocoding provider.
+* [TomTom](http://developer.tomtom.com/docs/read/Geocoding) as Address-Based geocoding and reverse geocoding provider;
+* [ArcGIS Online](http://resources.arcgis.com/en/help/arcgis-online-geocoding-rest-api/) as Address-Based geocoding and reverse geocoding provider.
 
 Installation
 ------------
@@ -260,6 +261,12 @@ The `TomTomProvider` named `tomtom` is able to geocode and reverse geocode **str
 The default langage-locale is `en`, you can choose between `de`, `es`, `fr`, `it`, `nl`, `pl`, `pt` and `sv`.
 A valid api key is required.
 
+### ArcGISOnlineProvider ###
+
+The `ArcGISOnlineProvider` named `arcgis_online` is able to geocode and reverse geocode **street addresses**.
+It's possible to specify a sourceCountry to restrict result to this specific country thus reducing
+request time (note that this doesn't work on reverse geocoding). This provider also supports SSL.
+
 
 ### Using The Providers ###
 
@@ -286,6 +293,9 @@ $geocoder->registerProviders(array(
     new \Geocoder\Provider\MaxMindProvider(
         $adapter, '<MAXMIND_API_KEY>', $service, $useSsl
     ),
+    new \Geocoder\Provider\ArcGISOnlineProvider(
+        $adapter, $sourceCountry, $useSsl
+    ),
 ));
 ```
 
@@ -295,7 +305,8 @@ Parameters:
 * `$region` is available for `GoogleMapsProvider` and `GoogleMapsBusinessProvider`.
 * `$toponym` is available for `YandexProvider`.
 * `$service` is available for `MaxMindProvider`.
-* `$useSsl` is available for `GoogleMapsProvider`, `GoogleMapsBusinessProvider` and `MaxMindProvider`.
+* `$useSsl` is available for `GoogleMapsProvider`, `GoogleMapsBusinessProvider`, `MaxMindProvider` and `ArcGISOnlineProvider`.
+* `$sourceCountry` is available for `ArcGISOnlineProvider`.
 
 Everything is ok, enjoy!
 
