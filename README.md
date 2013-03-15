@@ -524,7 +524,9 @@ You can provide your own `adapter`, you just need to create a new class which im
 
 You can also write your own `provider` by implementing the `ProviderInterface`.
 
-Note, the `AbstractProvider` class can help you by providing useful features.
+You can provide your own `result` by extending `ResultFactory` and implementing `ResultInterface` if your provider returns more informations than the default one.
+
+Note, `AbstractProvider` and `AbstractResult` clasess can help you by providing useful features.
 
 You can provide your own `dumper` by implementing the `DumperInterface`.
 
