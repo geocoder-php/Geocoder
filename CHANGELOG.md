@@ -1,9 +1,18 @@
 CHANGELOG
 =========
 
-### 1.3.1 (????-??-??) ###
+### 1.4.0 (2013-03-16) ###
 
-n/a
+* Updated: doc with an exemple of the ChainProvider
+* Updated: doc about result object
+* Refactored: adapters and its tests
+* Updated: readme for new ArcGIS Online Provider
+* Added: ArcGIS Online provider
+* Fixed: OpenStreetMaps test
+* Updated: Set a custom result factory via a setter
+* Fixed: compatibility php 5.3
+* Fixed: Yandex test
+* Added: TomTom Provider
 
 ### 1.3.0 (2013-03-04) ###
 
