@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+### 1.4.1 (????-??-??) ###
+
+n/a
+
 ### 1.4.0 (2013-03-16) ###
 
 * Updated: doc with an exemple of the ChainProvider
