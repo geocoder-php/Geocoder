@@ -105,12 +105,28 @@ class GeocoderTest extends TestCase
         $this->assertInstanceOf('Geocoder\Result\Geocoded', $this->geocoder->geocode('foobar'));
     }
 
-    public function testEmpty()
+    public function testGeocodeEmpty()
     {
         $this->geocoder->registerProvider(new MockProviderWithRequestCount('test2'));
         $this->assertEmptyResult($this->geocoder->geocode(''));
         $this->assertEquals(0, $this->geocoder->getProvider('test2')->geocodeCount);
         $this->assertEmptyResult($this->geocoder->geocode(null));
+        $this->assertEquals(0, $this->geocoder->getProvider('test2')->geocodeCount);
+    }
+
+    public function testReverseReturnsInstanceOfResultInterface()
+    {
+        $this->geocoder->registerProvider(new MockProvider('test1'));
+        $this->assertInstanceOf('Geocoder\Result\ResultInterface', $this->geocoder->reverse(1, 2));
+        $this->assertInstanceOf('Geocoder\Result\Geocoded', $this->geocoder->reverse(1, 2));
+    }
+
+    public function testReverseEmpty()
+    {
+        $this->geocoder->registerProvider(new MockProviderWithRequestCount('test2'));
+        $this->assertEmptyResult($this->geocoder->reverse('', ''));
+        $this->assertEquals(0, $this->geocoder->getProvider('test2')->geocodeCount);
+        $this->assertEmptyResult($this->geocoder->reverse(null, null));
         $this->assertEquals(0, $this->geocoder->getProvider('test2')->geocodeCount);
     }
 

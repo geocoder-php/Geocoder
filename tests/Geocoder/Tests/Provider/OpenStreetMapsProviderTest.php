@@ -193,7 +193,7 @@ class OpenStreetMapsProviderTest extends TestCase
         $this->assertEquals(43.6156005859375, $result['bounds']['north'], '', 0.01);
         $this->assertEquals(1.45262920856476, $result['bounds']['east'], '', 0.01);
         $this->assertNull($result['streetNumber']);
-        $this->assertEquals('Avenue de Lyon', $result['streetName']);
+        $this->assertEquals('Rue du Faubourg Bonnefoy', $result['streetName']);
         $this->assertEquals(31506, $result['zipcode']);
         $this->assertEquals(4, $result['cityDistrict']);
         $this->assertEquals('Toulouse', $result['city']);
