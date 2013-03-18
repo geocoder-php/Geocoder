@@ -29,17 +29,26 @@ class GeocodedTest extends TestCase
                 'east'  => 0.1
             ),
             'city'          => 'FOo CITY',
+            'cityDistrict'  => 'fOo city District',
+            'streetName'    => 'foo bar street',
             'zipcode'       => '65943',
             'region'        => 'FOO region',
+            'county'        => 'foo county',
+            'countyCode'    => 'foo',
             'regionCode'    => 'FOO',
             'country'       => 'FOO Country',
+            'countryCode'   => 'foo',
             'timezone'      => 'FOO/Timezone'
         );
 
         $this->geocoded->fromArray($array);
 
+        $coordinates = $this->geocoded->getCoordinates();
         $bounds = $this->geocoded->getBounds();
 
+        $this->assertTrue(is_array($coordinates));
+        $this->assertEquals(0.001, $coordinates[0]);
+        $this->assertEquals(1, $coordinates[1]);
         $this->assertEquals(0.001, $this->geocoded->getLatitude());
         $this->assertEquals(1, $this->geocoded->getLongitude());
         $this->assertArrayHasKey('south', $bounds);
@@ -51,9 +60,14 @@ class GeocodedTest extends TestCase
         $this->assertEquals(3, $bounds['north']);
         $this->assertEquals(0.1, $bounds['east']);
         $this->assertEquals('Foo City', $this->geocoded->getCity());
+        $this->assertEquals('Foo City District', $this->geocoded->getCityDistrict());
+        $this->assertEquals('Foo Bar Street', $this->geocoded->getStreetName());
         $this->assertEquals('65943', $this->geocoded->getZipcode());
         $this->assertEquals('Foo Region', $this->geocoded->getRegion());
+        $this->assertEquals('Foo County', $this->geocoded->getCounty());
+        $this->assertEquals('FOO', $this->geocoded->getCountyCode());
         $this->assertEquals('Foo Country', $this->geocoded->getCountry());
+        $this->assertEquals('FOO', $this->geocoded->getCountryCode());
         $this->assertEquals('FOO/Timezone', $this->geocoded->getTimezone());
         $this->assertEquals('FOO', $this->geocoded->getRegionCode());
     }
@@ -234,5 +248,25 @@ class GeocodedTest extends TestCase
 
         $this->geocoded->fromArray($array);
         $this->assertEquals('1A', $this->geocoded->getStreetNumber());
+    }
+
+    public function testLowerizeViaReflection()
+    {
+        $method = new \ReflectionMethod(
+            $this->geocoded, 'lowerize'
+        );
+        $method->setAccessible(true);
+
+        $this->assertEquals('foo', $method->invoke($this->geocoded, 'FOO'));
+    }
+
+    public function testUpperizeViaReflection()
+    {
+        $method = new \ReflectionMethod(
+            $this->geocoded, 'upperize'
+        );
+        $method->setAccessible(true);
+
+        $this->assertEquals('FOO', $method->invoke($this->geocoded, 'foo'));
     }
 }
