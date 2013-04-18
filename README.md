@@ -34,10 +34,10 @@ Currently, there are many providers for the following APIs:
 * [Google Maps for Business](https://developers.google.com/maps/documentation/business/webservices) as Address-Based geocoding and reverse geocoding provider;
 * [Bing Maps](http://msdn.microsoft.com/en-us/library/ff701715.aspx) as Address-Based geocoding and reverse geocoding provider;
 * [OpenStreetMaps](http://nominatim.openstreetmap.org/) as Address-Based geocoding and reverse geocoding provider;
+* CacheProvider is a special provider that takes a Doctrine cache and caches geocoding results;
 * [CloudMade](http://developers.cloudmade.com/projects/show/geocoding-http-api) as Address-Based geocoding and reverse geocoding provider;
 * [Geoip](http://php.net/manual/book.geoip.php), the PHP extension, as IP-Based geocoding provider;
-* ChainProvider is a special provider that takes a list of providers and iterates
-  over this list to get information;
+* ChainProvider is a special provider that takes a list of providers and iterates over this list to get information;
 * [MapQuest](http://open.mapquestapi.com/) as Address-Based geocoding and reverse geocoding provider;
 * [OIORest](http://geo.oiorest.dk/) as very accurate Address-Based geocoding and reverse geocoding provider (exclusively in Denmark);
 * [GeoCoder.ca](http://geocoder.ca/) as Address-Based geocoding and reverse geocoding provider (exclusively in USA & Canada);

@@ -17,12 +17,14 @@
     "require-dev": {
         "kriswallsmith/buzz": "@stable",
         "guzzle/guzzle": "@stable",
+        "doctrine/cache": "~1.0",
         "zendframework/zendframework": "~2.1"
     },
     "suggest": {
         "kriswallsmith/buzz": "Enabling Buzz allows you to use the BuzzHttpAdapter.",
         "ext-curl": "Enabling the curl extension allows you to use CurlHttpAdapter.",
         "guzzle/guzzle": "Enabling Guzzle allows you to use the GuzzleHttpAdapter.",
+        "doctrine/cache": "Enabling Cache allows you to cache geocoding results.",
         "zendframework/zend-http": "Enabling Zend Http allows you to use the ZendHttpAdapter."
     },
     "autoload": {
