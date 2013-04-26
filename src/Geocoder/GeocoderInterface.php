@@ -10,6 +10,8 @@
 
 namespace Geocoder;
 
+use Geocoder\Result\ResultInterface;
+
 /**
  * @author William Durand <william.durand1@gmail.com>
  */

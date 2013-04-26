@@ -176,7 +176,7 @@ class ArcGISOnlineProvider extends AbstractProvider implements ProviderInterface
      *
      * @throws NoResultException
      *
-     * @return stdClass json object representing the query result
+     * @return \stdClass json object representing the query result
      */
     protected function executeQuery($query)
     {
