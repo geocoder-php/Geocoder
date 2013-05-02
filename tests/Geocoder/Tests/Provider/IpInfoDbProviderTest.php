@@ -117,14 +117,14 @@ class IpInfoDbProviderTest extends TestCase
         $provider = new IpInfoDbProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['IPINFODB_API_KEY']);
         $result   = $provider->getGeocodedData('74.125.45.100');
 
-        $this->assertEquals(37.3861, $result['latitude'], '', 0.0001);
-        $this->assertEquals(-122.084, $result['longitude'], '', 0.0001);
+        $this->assertEquals(37.406, $result['latitude'], '', 0.001);
+        $this->assertEquals(-122.079, $result['longitude'], '', 0.001);
         $this->assertEquals(94043, $result['zipcode']);
         $this->assertEquals('MOUNTAIN VIEW', $result['city']);
         $this->assertEquals('CALIFORNIA', $result['region']);
         $this->assertEquals('UNITED STATES', $result['country']);
         $this->assertEquals('US', $result['countryCode']);
-        $this->assertEquals('America/Los_Angeles', $result['timezone']);
+        $this->assertEquals('America/Denver', $result['timezone']);
     }
 
     /**
