@@ -1,9 +1,14 @@
 CHANGELOG
 =========
 
-### 1.4.1 (????-??-??) ###
+### 1.5.0 (2013-05-03) ###
 
-n/a
+* Added: DefaultResultFactory and MultipleResultFactory classes - Fix #223
+* Fixed: provider's tests
+* Fixed: encoding for geoip provider
+* fixed: inspection values
+* Fixed: tests and enhanced test cover
+* Fixed: branch-alias (composer)
 
 ### 1.4.0 (2013-03-16) ###
 
