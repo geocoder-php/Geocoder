@@ -166,13 +166,22 @@ class Geocoder implements GeocoderInterface
         return $this->provider;
     }
 
+
     /**
      * @param array $data An array of data.
      *
-     * @return ResultInterface
+     * @return array|ResultInterface
      */
     protected function returnResult(array $data = array())
     {
-        return $this->resultFactory->createFromArray($data);
+        if (is_array(reset($data))) {
+            foreach ($data as $index => $datum) {
+                $data[$index] = $this->resultFactory->createFromArray($datum);
+            }
+            
+            return $data;
+        } else {
+            return $this->resultFactory->createFromArray($data);
+        }
     }
 }
