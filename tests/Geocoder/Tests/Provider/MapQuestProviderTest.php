@@ -50,7 +50,7 @@ class MapQuestProviderTest extends TestCase
         $this->assertEquals('Paris', $result['city']);
         $this->assertEquals('Paris', $result['county']);
         $this->assertEquals('Île-de-France', $result['region']);
-        $this->assertEquals('France', $result['country']);
+        $this->assertEquals('FR', $result['country']);
 
         $this->assertNull($result['countryCode']);
         $this->assertNull($result['timezone']);
@@ -93,7 +93,7 @@ class MapQuestProviderTest extends TestCase
         $this->assertEquals('Lancaster', $result['city']);
         $this->assertEquals('Lancashire', $result['county']);
         $this->assertEquals('England', $result['region']);
-        $this->assertEquals('United Kingdom', $result['country']);
+        $this->assertEquals('GB', $result['country']);
 
         $this->assertNull($result['countryCode']);
         $this->assertNull($result['timezone']);
@@ -108,14 +108,25 @@ class MapQuestProviderTest extends TestCase
         $this->assertNull($result['timezone']);
     }
 
-    /**
-     * @expectedException Geocoder\Exception\NoResultException
-     * @expectedExceptionMessage Could not find results for given query: http://open.mapquestapi.com/geocoding/v1/address?location=Kalbacher+Hauptstra%C3%9Fe+10%2C+60437+Frankfurt%2C+Germany&outFormat=json&maxResults=1&thumbMaps=false
-     */
     public function testGetGeocodedDataWithCityDistrict()
     {
         $provider = new MapQuestProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
-        $provider->getGeocodedData('Kalbacher Hauptstraße 10, 60437 Frankfurt, Germany');
+        $result = $provider->getGeocodedData('Kalbacher Hauptstraße 10, 60437 Frankfurt, Germany');
+
+        $this->assertEquals(50.189062, $result['latitude'], '', 0.01);
+        $this->assertEquals(8.636567, $result['longitude'], '', 0.01);
+        $this->assertNull($result['bounds']);
+        $this->assertNull($result['streetNumber']);
+        $this->assertEquals('Kalbacher Hauptstraße 10', $result['streetName']);
+        $this->assertEquals(60437, $result['zipcode']);
+        $this->assertEquals('Frankfurt am Main', $result['city']);
+        $this->assertEquals('Frankfurt am Main', $result['county']);
+        $this->assertEquals('Hesse', $result['region']);
+        $this->assertEquals('DE', $result['country']);
+
+        $this->assertNull($result['countryCode']);
+        $this->assertNull($result['regionCode']);
+        $this->assertNull($result['timezone']);
     }
 
     /**
