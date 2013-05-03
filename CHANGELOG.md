@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+### 1.5.1 (????-??-??) ###
+
+n/a
+
 ### 1.5.0 (2013-05-03) ###
 
 * Added: DefaultResultFactory and MultipleResultFactory classes - Fix #223
