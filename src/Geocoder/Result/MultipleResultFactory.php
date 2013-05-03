@@ -11,25 +11,27 @@
 namespace Geocoder\Result;
 
 /**
- * @author William Durand <william.durand1@gmail.com>
+ * @author Markus Bachmann <markus.bachmann@bachi.biz>
  */
-class ResultFactory
+class MultipleResultFactory implements ResultFactoryInterface
 {
     /**
-     * @param array $data An array of data.
-     *
-     * @return ResultInterface
+     * {@inheritDoc}
      */
     final public function createFromArray(array $data)
     {
-        $result = $this->newInstance();
-        $result->fromArray($data);
+        $result = new \SplObjectStorage();
+        foreach ($data as $row) {
+            $instance = $this->newInstance();
+            $instance->fromArray($row);
+            $result->attach($instance);
+        }
 
         return $result;
     }
 
     /**
-     * @return ResultInterface
+     * {@inheritDoc}
      */
     public function newInstance()
     {

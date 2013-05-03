@@ -551,7 +551,11 @@ You can provide your own `adapter`, you just need to create a new class which im
 
 You can also write your own `provider` by implementing the `ProviderInterface`.
 
-You can provide your own `result` by extending `ResultFactory` and implementing `ResultInterface` if your provider returns more informations than the default one.
+You can provide your own `result` by extending `DefaultResultFactory` or `MultipleResultFactory` and implementing
+`ResultInterface` if your provider returns one or multiple results and more informations than the default one.
+Please note that the method `createFromArray` is marked `final` in these factories.
+
+If you need your own `ResultFactory`, just implement `ResultFactoryInterface`.
 
 Note, `AbstractProvider` and `AbstractResult` classes can help you by providing useful features.
 

@@ -130,9 +130,9 @@ class GeocoderTest extends TestCase
         $this->assertEquals(0, $this->geocoder->getProvider('test2')->geocodeCount);
     }
 
-    public function testUseCustomResultFactory()
+    public function testUseCustomDefaultResultFactory()
     {
-        $factoryMock = $this->getMock('Geocoder\Result\ResultFactory');
+        $factoryMock = $this->getMock('Geocoder\Result\DefaultResultFactory');
         $factoryMock
             ->expects($this->once())
             ->method('newInstance')
@@ -142,17 +142,62 @@ class GeocoderTest extends TestCase
         $this->assertInstanceOf('Geocoder\Tests\DummyResult', $geocoder->returnResult(array()));
     }
 
-    public function testSetAndUseCustomResultFactory()
+    public function testSetAndUseCustomDefaultResultFactory()
     {
-        $factoryMock = $this->getMock('Geocoder\Result\ResultFactory');
+        $factoryMock = $this->getMock('Geocoder\Result\DefaultResultFactory');
         $factoryMock
             ->expects($this->once())
             ->method('newInstance')
             ->will($this->returnValue(new DummyResult()));
 
-        $geocoder = new TestableGeocoder(null);
+        $geocoder = new TestableGeocoder();
         $geocoder->setResultFactory($factoryMock);
         $this->assertInstanceOf('Geocoder\Tests\DummyResult', $geocoder->returnResult(array()));
+    }
+
+    public function testUseCustomMultipleResultFactory()
+    {
+        $factoryMock = $this->getMock('Geocoder\Result\MultipleResultFactory');
+        $factoryMock->expects($this->at(0))->method('newInstance')->will($this->returnValue(new DummyResult()));
+        $factoryMock->expects($this->at(1))->method('newInstance')->will($this->returnValue(new DummyResult()));
+        $factoryMock->expects($this->at(2))->method('newInstance')->will($this->returnValue(new DummyResult()));
+
+        $geocoder = new TestableGeocoder(null, $factoryMock);
+        $results = $geocoder->returnResult(array(
+            array(),
+            array(),
+            array(),
+        ));
+
+        $this->assertInstanceOf('\SplObjectStorage', $results);
+        $this->assertCount(3, $results);
+        foreach ($results as $result) {
+            $this->assertInstanceOf('Geocoder\Tests\DummyResult', $result);
+            $this->assertInstanceOf('Geocoder\Result\ResultInterface', $result);
+        }
+    }
+
+    public function testSetAndUseCustomMultipleResultFactory()
+    {
+        $factoryMock = $this->getMock('Geocoder\Result\MultipleResultFactory');
+        $factoryMock->expects($this->at(0))->method('newInstance')->will($this->returnValue(new DummyResult()));
+        $factoryMock->expects($this->at(1))->method('newInstance')->will($this->returnValue(new DummyResult()));
+        $factoryMock->expects($this->at(2))->method('newInstance')->will($this->returnValue(new DummyResult()));
+
+        $geocoder = new TestableGeocoder();
+        $geocoder->setResultFactory($factoryMock);
+        $results = $geocoder->returnResult(array(
+            array(),
+            array(),
+            array(),
+        ));
+
+        $this->assertInstanceOf('\SplObjectStorage', $results);
+        $this->assertCount(3, $results);
+        foreach ($results as $result) {
+            $this->assertInstanceOf('Geocoder\Tests\DummyResult', $result);
+            $this->assertInstanceOf('Geocoder\Result\ResultInterface', $result);
+        }
     }
 
     protected function assertEmptyResult($result)
