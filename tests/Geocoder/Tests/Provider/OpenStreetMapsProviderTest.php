@@ -116,7 +116,7 @@ class OpenStreetMapsProviderTest extends TestCase
         $this->assertEquals('Kalbacher Hauptstraße', $result['streetName']);
         $this->assertEquals(60437, $result['zipcode']);
         $this->assertEquals('Frankfurt am Main', $result['city']);
-        $this->assertEquals('Bonames', $result['cityDistrict']);
+        $this->assertEquals('Kalbach', $result['cityDistrict']);
         $this->assertEquals('Frankfurt am Main', $result['county']);
         $this->assertEquals('Hessen', $result['region']);
         $this->assertNull($result['regionCode']);
