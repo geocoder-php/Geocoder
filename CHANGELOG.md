@@ -3,7 +3,7 @@ CHANGELOG
 
 ### 1.5.1 (????-??-??) ###
 
-n/a
+* Added: MaxMind's binary provider
 
 ### 1.5.0 (2013-05-03) ###
 
