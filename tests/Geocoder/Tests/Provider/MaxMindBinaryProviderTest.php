@@ -34,7 +34,7 @@ class MaxMindBinaryProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\InvalidArgumentException
-     * @expectedExceptionMessage Given MaxMind dat file  is not exist.
+     * @expectedExceptionMessage Given MaxMind dat file "not_exist.dat" does not exist.
      */
     public function testThrowIfNotExistBinaryFileGiven()
     {
