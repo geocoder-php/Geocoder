@@ -46,11 +46,11 @@ class MaxMindBinaryProvider extends AbstractProvider implements ProviderInterfac
         }
 
         if (false === is_file($datFile)) {
-            throw new InvalidArgumentException(sprintf('Given MaxMind dat file "%s" does not exist.', $this->datFile));
+            throw new InvalidArgumentException(sprintf('Given MaxMind dat file "%s" does not exist.', $datFile));
         }
 
         if (false === is_readable($datFile)) {
-            throw new InvalidArgumentException(sprintf('Given MaxMind dat file "%s" does not readable.', $this->datFile));
+            throw new InvalidArgumentException(sprintf('Given MaxMind dat file "%s" does not readable.', $datFile));
         }
 
         $this->datFile  = $datFile;
