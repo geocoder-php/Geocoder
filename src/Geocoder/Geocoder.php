@@ -25,6 +25,11 @@ class Geocoder implements GeocoderInterface
     const VERSION = '1.5.2-dev';
 
     /**
+     * @var integer
+     */
+    const MAX_RESULTS = 5;
+
+    /**
      * @var ProviderInterface[]
      */
     private $providers = array();
@@ -40,14 +45,22 @@ class Geocoder implements GeocoderInterface
     private $resultFactory;
 
     /**
+     * @var integer
+     */
+    private $maxResults;
+
+    /**
      * @param ProviderInterface      $provider
      * @param ResultFactoryInterface $resultFactory
+     * @param integer                $maxResults
      */
-    public function __construct(ProviderInterface $provider = null, ResultFactoryInterface $resultFactory = null)
+    public function __construct(ProviderInterface $provider = null, ResultFactoryInterface $resultFactory = null,
+        $maxResults = self::MAX_RESULTS)
     {
         $this->provider = $provider;
 
         $this->setResultFactory($resultFactory);
+        $this->setMaxResults($maxResults);
     }
 
     /**
@@ -56,6 +69,26 @@ class Geocoder implements GeocoderInterface
     public function setResultFactory(ResultFactoryInterface $resultFactory = null)
     {
         $this->resultFactory = $resultFactory ?: new DefaultResultFactory();
+    }
+
+    /**
+     * @param integer $maxResults
+     *
+     * @return GeocoderInterface
+     */
+    public function setMaxResults($maxResults)
+    {
+        $this->maxResults = $maxResults;
+
+        return $this;
+    }
+
+    /**
+     * @return integer $maxResults
+     */
+    public function getMaxResults()
+    {
+        return $this->maxResults;
     }
 
     /**
@@ -68,8 +101,9 @@ class Geocoder implements GeocoderInterface
             return $this->returnResult(array());
         }
 
-        $data   = $this->getProvider()->getGeocodedData(trim($value));
-        $result = $this->returnResult($data);
+        $provider = $this->getProvider()->setMaxResults($this->getMaxResults());
+        $data     = $provider->getGeocodedData(trim($value));
+        $result   = $this->returnResult($data);
 
         return $result;
     }
@@ -84,8 +118,9 @@ class Geocoder implements GeocoderInterface
             return $this->returnResult(array());
         }
 
-        $data   = $this->getProvider()->getReversedData(array($latitude, $longitude));
-        $result = $this->returnResult($data);
+        $provider = $this->getProvider()->setMaxResults($this->getMaxResults());
+        $data     = $provider->getReversedData(array($latitude, $longitude));
+        $result   = $this->returnResult($data);
 
         return $result;
     }

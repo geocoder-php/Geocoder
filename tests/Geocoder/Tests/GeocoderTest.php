@@ -200,6 +200,17 @@ class GeocoderTest extends TestCase
         }
     }
 
+    public function testSetMaxResults()
+    {
+        $this->geocoder->setMaxResults(3);
+        $this->assertSame(3, $this->geocoder->getMaxResults());
+    }
+
+    public function testDefaultMaxResults()
+    {
+        $this->assertSame(Geocoder::MAX_RESULTS, $this->geocoder->getMaxResults());
+    }
+
     protected function assertEmptyResult($result)
     {
         $this->assertEquals(0, $result->getLatitude());
@@ -233,6 +244,11 @@ class MockProvider implements ProviderInterface
     public function getName()
     {
         return $this->name;
+    }
+
+    public function setMaxResults($maxResults)
+    {
+        return $this;
     }
 }
 

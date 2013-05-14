@@ -106,8 +106,13 @@ class GoogleMapsProviderTest extends TestCase
     public function testGetGeocodedDataWithRealAddress()
     {
         $provider = new GoogleMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), 'fr-FR', 'Île-de-France');
-        $result   = $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
+        $results  = $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
 
+        $this->assertInternalType('array', $results);
+        $this->assertCount(1, $results);
+
+        $result = $results[0];
+        $this->assertInternalType('array', $result);
         $this->assertEquals(48.8630462, $result['latitude'], '', 0.001);
         $this->assertEquals(2.3882487, $result['longitude'], '', 0.001);
         $this->assertArrayHasKey('south', $result['bounds']);
@@ -134,8 +139,13 @@ class GoogleMapsProviderTest extends TestCase
     public function testGetGeocodedDataWithRealAddressWithSsl()
     {
         $provider = new GoogleMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), null, null, true);
-        $result   = $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
+        $results  = $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
 
+        $this->assertInternalType('array', $results);
+        $this->assertCount(1, $results);
+
+        $result = $results[0];
+        $this->assertInternalType('array', $result);
         $this->assertEquals(48.8630462, $result['latitude'], '', 0.001);
         $this->assertEquals(2.3882487, $result['longitude'], '', 0.001);
         $this->assertArrayHasKey('south', $result['bounds']);
@@ -162,8 +172,13 @@ class GoogleMapsProviderTest extends TestCase
     public function testGetGeocodedDataBoundsWithRealAddressForNonRooftopLocation()
     {
         $provider = new GoogleMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
-        $result   = $provider->getGeocodedData('Paris, France');
+        $results  = $provider->getGeocodedData('Paris, France');
 
+        $this->assertInternalType('array', $results);
+        $this->assertCount(1, $results);
+
+        $result = $results[0];
+        $this->assertInternalType('array', $result);
         $this->assertNotNull($result['bounds']);
         $this->assertArrayHasKey('south', $result['bounds']);
         $this->assertArrayHasKey('west', $result['bounds']);
@@ -173,6 +188,50 @@ class GoogleMapsProviderTest extends TestCase
         $this->assertEquals(2.224199, $result['bounds']['west'], '', 0.0001);
         $this->assertEquals(48.902145, $result['bounds']['north'], '', 0.0001);
         $this->assertEquals(2.4699209, $result['bounds']['east'], '', 0.0001);
+    }
+
+    public function testGetGeocodedDataWithRealAddressReturnsMultipleResults()
+    {
+        $provider = new GoogleMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $results  = $provider->getGeocodedData('Paris');
+
+        $this->assertInternalType('array', $results);
+        $this->assertCount(5, $results);
+
+        $this->assertInternalType('array', $results[0]);
+        $this->assertEquals(48.856614, $results[0]['latitude'], '', 0.001);
+        $this->assertEquals(2.3522219, $results[0]['longitude'], '', 0.001);
+        $this->assertEquals('Paris', $results[0]['city']);
+        $this->assertEquals('France', $results[0]['country']);
+        $this->assertEquals('FR', $results[0]['countryCode']);
+
+        $this->assertInternalType('array', $results[1]);
+        $this->assertEquals(33.6609389, $results[1]['latitude'], '', 0.001);
+        $this->assertEquals(-95.555513, $results[1]['longitude'], '', 0.001);
+        $this->assertEquals('Paris', $results[1]['city']);
+        $this->assertEquals('United States', $results[1]['country']);
+        $this->assertEquals('US', $results[1]['countryCode']);
+
+        $this->assertInternalType('array', $results[2]);
+        $this->assertEquals(36.3020023, $results[2]['latitude'], '', 0.001);
+        $this->assertEquals(-88.3267107, $results[2]['longitude'], '', 0.001);
+        $this->assertEquals('Paris', $results[2]['city']);
+        $this->assertEquals('United States', $results[2]['country']);
+        $this->assertEquals('US', $results[2]['countryCode']);
+
+        $this->assertInternalType('array', $results[3]);
+        $this->assertEquals(39.611146, $results[3]['latitude'], '', 0.001);
+        $this->assertEquals(-87.6961374, $results[3]['longitude'], '', 0.001);
+        $this->assertEquals('Paris', $results[3]['city']);
+        $this->assertEquals('United States', $results[3]['country']);
+        $this->assertEquals('US', $results[3]['countryCode']);
+
+        $this->assertInternalType('array', $results[4]);
+        $this->assertEquals(38.2097987, $results[4]['latitude'], '', 0.001);
+        $this->assertEquals(-84.2529869, $results[4]['longitude'], '', 0.001);
+        $this->assertEquals('Paris', $results[4]['city']);
+        $this->assertEquals('United States', $results[4]['country']);
+        $this->assertEquals('US', $results[4]['countryCode']);
     }
 
     /**
@@ -190,6 +249,11 @@ class GoogleMapsProviderTest extends TestCase
         $provider = new GoogleMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result   = $provider->getReversedData(array(48.8631507, 2.388911));
 
+        $this->assertInternalType('array', $result);
+        $this->assertCount(1, $result);
+
+        $result = $result[0];
+        $this->assertInternalType('array', $result);
         $this->assertEquals(10, $result['streetNumber']);
         $this->assertEquals('Avenue Gambetta', $result['streetName']);
         $this->assertEquals(75020, $result['zipcode']);
@@ -213,8 +277,13 @@ class GoogleMapsProviderTest extends TestCase
     public function testGetGeocodedDataWithCityDistrict()
     {
         $provider = new GoogleMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
-        $result   = $provider->getGeocodedData('Kalbacher Hauptstraße 10, 60437 Frankfurt, Germany');
+        $results  = $provider->getGeocodedData('Kalbacher Hauptstraße 10, 60437 Frankfurt, Germany');
 
+        $this->assertInternalType('array', $results);
+        $this->assertCount(1, $results);
+
+        $result = $results[0];
+        $this->assertInternalType('array', $result);
         $this->assertEquals('Kalbach-Riedberg', $result['cityDistrict']);
     }
 }

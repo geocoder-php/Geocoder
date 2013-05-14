@@ -21,7 +21,7 @@ class HostIpProvider extends AbstractProvider implements ProviderInterface
     /**
      * @var string
      */
-    const ENDPOINT_URL = 'http://api.hostip.info/get_xml.php?ip=%s&position=true';
+    const ENDPOINT_URL = 'http://api.hostip.info/get_json.php?ip=%s&position=true';
 
     /**
      * {@inheritDoc}
@@ -38,7 +38,7 @@ class HostIpProvider extends AbstractProvider implements ProviderInterface
         }
 
         if ('127.0.0.1' === $address) {
-            return $this->getLocalhostDefaults();
+            return array($this->getLocalhostDefaults());
         }
 
         $query = sprintf(self::ENDPOINT_URL, $address);
@@ -71,46 +71,18 @@ class HostIpProvider extends AbstractProvider implements ProviderInterface
     {
         $content = $this->getAdapter()->getContent($query);
 
-        try {
-            $xml = new \SimpleXmlElement($content);
-        } catch (\Exception $e) {
+        $data = json_decode($content, true);
+
+        if (!$data) {
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
-        $dataNode = $xml
-            ->children('gml', true)
-            ->featureMember
-            ->children('', true)
-            ->Hostip;
-
-        if (isset($dataNode->ipLocation)) {
-            $lngLat = explode(',', (string) $dataNode
-                ->ipLocation
-                ->children('gml', true)
-                ->pointProperty
-                ->Point
-                ->coordinates
-            );
-        } else {
-            $lngLat = array(null, null);
-        }
-
-        $city = (string) $dataNode
-            ->children('gml', true)
-            ->name;
-
-        $country = (string) $dataNode
-            ->countryName;
-
-        $countryCode = (string) $dataNode
-            ->countryAbbrev;
-
-        return array_merge($this->getDefaults(), array(
-            'latitude'    => $lngLat[1],
-            'longitude'   => $lngLat[0],
-            'city'        => $city,
-            'country'     => $country,
-            'countryCode' => $countryCode,
-        ));
+        return array(array_merge($this->getDefaults(), array(
+            'latitude'    => $data['lat'],
+            'longitude'   => $data['lng'],
+            'city'        => $data['city'],
+            'country'     => $data['country_name'],
+            'countryCode' => $data['country_code'],
+        )));
     }
 }

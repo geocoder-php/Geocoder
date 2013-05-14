@@ -58,7 +58,7 @@ class MaxMindProvider extends AbstractProvider implements ProviderInterface
     /**
      * @param HttpAdapterInterface $adapter An HTTP adapter.
      * @param string               $apiKey  An API key.
-     * @param string               $service The specific Maxmind service to use.
+     * @param string               $service The specific Maxmind service to use (optional).
      * @param bool                 $useSsl  Whether to use an SSL connection (optional).
      */
     public function __construct(HttpAdapterInterface $adapter, $apiKey, $service = self::CITY_EXTENDED_SERVICE,
@@ -85,7 +85,7 @@ class MaxMindProvider extends AbstractProvider implements ProviderInterface
         }
 
         if (in_array($address, array('127.0.0.1', '::1'))) {
-            return $this->getLocalhostDefaults();
+            return array($this->getLocalhostDefaults());
         }
 
         $query = sprintf(
@@ -139,7 +139,7 @@ class MaxMindProvider extends AbstractProvider implements ProviderInterface
             $data['country'] = $this->countryCodeToCountryName($data['countryCode']);
         }
 
-        return array_merge($this->getDefaults(), $data);
+        return array(array_merge($this->getDefaults(), $data));
     }
 
     /**

@@ -60,7 +60,7 @@ class GeoIPsProvider extends AbstractProvider implements ProviderInterface
         }
 
         if ('127.0.0.1' === $address) {
-            return $this->getLocalhostDefaults();
+            return array($this->getLocalhostDefaults());
         }
 
         $query = sprintf(self::GEOCODE_ENDPOINT_URL, $address, $this->apiKey);
@@ -98,11 +98,8 @@ class GeoIPsProvider extends AbstractProvider implements ProviderInterface
         }
 
         $json = json_decode($content, true);
-        if (array_key_exists('response', $json)) {
-            $response = $json['response'];
-        } else {
-            $response = $json;
-        }
+
+        $response = array_key_exists('response', $json) ? $json['response'] : $json;
 
         if (!is_array($response) || !count($response)) {
             throw new NoResultException(sprintf('Could not execute query %s', $query));
@@ -120,7 +117,7 @@ class GeoIPsProvider extends AbstractProvider implements ProviderInterface
             throw new InvalidCredentialsException('API Key provided is not valid.');
         }
 
-        return array_merge($this->getDefaults(), array(
+        return array(array_merge($this->getDefaults(), array(
             'country'     => '' === $response['country_name'] ? null : $response['country_name'],
             'countryCode' => '' === $response['country_code'] ? null : $response['country_code'],
             'region'      => '' === $response['region_name']  ? null : $response['region_name'],
@@ -130,6 +127,6 @@ class GeoIPsProvider extends AbstractProvider implements ProviderInterface
             'latitude'    => '' === $response['latitude']     ? null : $response['latitude'],
             'longitude'   => '' === $response['longitude']    ? null : $response['longitude'],
             'timezone'    => '' === $response['timezone']     ? null : $response['timezone'],
-        ));
+        )));
     }
 }

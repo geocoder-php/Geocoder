@@ -50,6 +50,10 @@ class MaxMindBinaryProviderTest extends TestCase
         $result   = $provider->getGeocodedData($ip);
 
         $this->assertInternalType('array', $result);
+        $this->assertCount(1, $result);
+
+        $result = $result[0];
+        $this->assertInternalType('array', $result);
 
         $this->assertArrayHasKey('country', $result);
         $this->assertArrayHasKey('countryCode', $result);
@@ -77,10 +81,13 @@ class MaxMindBinaryProviderTest extends TestCase
         $result   = $provider->getGeocodedData($ip);
 
         $this->assertInternalType('array', $result);
+        $this->assertCount(1, $result);
+
+        $result = $result[0];
+        $this->assertInternalType('array', $result);
 
         $this->assertArrayHasKey('city', $result);
         $this->assertEquals($expectedCity, $result['city']);
-
         $this->assertArrayHasKey('country', $result);
         $this->assertEquals($expectedCountry, $result['country']);
     }

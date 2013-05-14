@@ -67,6 +67,11 @@ class IpInfoDbProviderTest extends TestCase
         $provider = new IpInfoDbProvider($this->getMockAdapter($this->never()), 'api_key');
         $result   = $provider->getGeocodedData('127.0.0.1');
 
+        $this->assertInternalType('array', $result);
+        $this->assertCount(1, $result);
+
+        $result = $result[0];
+        $this->assertInternalType('array', $result);
         $this->assertArrayNotHasKey('latitude', $result);
         $this->assertArrayNotHasKey('longitude', $result);
         $this->assertArrayNotHasKey('zipcode', $result);
@@ -117,6 +122,11 @@ class IpInfoDbProviderTest extends TestCase
         $provider = new IpInfoDbProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['IPINFODB_API_KEY']);
         $result   = $provider->getGeocodedData('74.125.45.100');
 
+        $this->assertInternalType('array', $result);
+        $this->assertCount(1, $result);
+
+        $result = $result[0];
+        $this->assertInternalType('array', $result);
         $this->assertEquals(37.406, $result['latitude'], '', 0.001);
         $this->assertEquals(-122.079, $result['longitude'], '', 0.001);
         $this->assertEquals(94043, $result['zipcode']);
