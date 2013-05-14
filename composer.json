@@ -18,7 +18,7 @@
         "kriswallsmith/buzz": "@stable",
         "guzzle/guzzle": "@stable",
         "zendframework/zendframework": "~2.1",
-        "maxromanovsky/php-maxmind-geoip": "~1.12.1"
+        "maxromanovsky/php-maxmind-geoip": "~1.12"
     },
     "suggest": {
         "kriswallsmith/buzz": "Enabling Buzz allows you to use the BuzzHttpAdapter.",
