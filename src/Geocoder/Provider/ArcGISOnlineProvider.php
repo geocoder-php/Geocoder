@@ -20,6 +20,11 @@ use Geocoder\HttpAdapter\HttpAdapterInterface;
 class ArcGISOnlineProvider extends AbstractProvider implements ProviderInterface
 {
     /**
+     * @var integer
+     */
+    const MAX_RESULTS = 5;
+
+    /**
      * @var string
      */
     const ENDPOINT_URL = '%s://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find?text=%s';
@@ -42,7 +47,7 @@ class ArcGISOnlineProvider extends AbstractProvider implements ProviderInterface
     /**
      * @param HttpAdapterInterface $adapter       An HTTP adapter.
      * @param string               $sourceCountry Country biasing (optional).
-     * @param bool                 $useSsl        Whether to use an SSL connection (optional)
+     * @param bool                 $useSsl        Whether to use an SSL connection (optional).
      */
     public function __construct(HttpAdapterInterface $adapter, $sourceCountry = null, $useSsl = false)
     {
@@ -66,11 +71,7 @@ class ArcGISOnlineProvider extends AbstractProvider implements ProviderInterface
             throw new NoResultException('Invalid address.');
         }
 
-        $query = sprintf(
-            static::ENDPOINT_URL,
-            $this->protocol,
-            urlencode($address)
-        );
+        $query = sprintf(self::ENDPOINT_URL, $this->protocol, urlencode($address));
 
         $json = $this->executeQuery($query);
 
@@ -79,29 +80,34 @@ class ArcGISOnlineProvider extends AbstractProvider implements ProviderInterface
             throw new NoResultException(sprintf('No results found for query %s', $query));
         }
 
-        $location = reset($json->locations);
-        $data = $location->feature->attributes;
+        $results = array();
 
-        $coordinates  = (array) $location->feature->geometry;
-        $streetName   = !empty($data->Match_addr) ? $data->Match_addr : null;
-        $streetNumber = !empty($data->AddNum) ? $data->AddNum : null;
-        $city         = !empty($data->City) ? $data->City : null;
-        $zipcode      = !empty($data->Postal) ? $data->Postal : null;
-        $region       = !empty($data->Region) ? $data->Region : null;
-        $county       = !empty($data->Subregion) ? $data->Subregion : null;
-        $countryCode  = !empty($data->Country) ? $data->Country : null;
+        foreach ($json->locations as $location) {
+            $data = $location->feature->attributes;
 
-        return array_merge($this->getDefaults(), array(
-            'latitude'     => $coordinates['y'],
-            'longitude'    => $coordinates['x'],
-            'streetNumber' => $streetNumber,
-            'streetName'   => $streetName,
-            'city'         => $city,
-            'zipcode'      => $zipcode,
-            'region'       => $region,
-            'countryCode'  => $countryCode,
-            'county'       => $county,
-        ));
+            $coordinates  = (array) $location->feature->geometry;
+            $streetName   = !empty($data->Match_addr) ? $data->Match_addr : null;
+            $streetNumber = !empty($data->AddNum) ? $data->AddNum : null;
+            $city         = !empty($data->City) ? $data->City : null;
+            $zipcode      = !empty($data->Postal) ? $data->Postal : null;
+            $region       = !empty($data->Region) ? $data->Region : null;
+            $county       = !empty($data->Subregion) ? $data->Subregion : null;
+            $countryCode  = !empty($data->Country) ? $data->Country : null;
+
+            $results[] = array_merge($this->getDefaults(), array(
+                'latitude'     => $coordinates['y'],
+                'longitude'    => $coordinates['x'],
+                'streetNumber' => $streetNumber,
+                'streetName'   => $streetName,
+                'city'         => $city,
+                'zipcode'      => $zipcode,
+                'region'       => $region,
+                'countryCode'  => $countryCode,
+                'county'       => $county,
+            ));
+        }
+
+        return $results;
     }
 
     /**
@@ -109,12 +115,7 @@ class ArcGISOnlineProvider extends AbstractProvider implements ProviderInterface
      */
     public function getReversedData(array $coordinates)
     {
-        $query = sprintf(
-            static::REVERSE_ENDPOINT_URL,
-            $this->protocol,
-            $coordinates[1],
-            $coordinates[0]
-        );
+        $query = sprintf(self::REVERSE_ENDPOINT_URL, $this->protocol, $coordinates[1], $coordinates[0]);
 
         $json = $this->executeQuery($query);
 
@@ -131,7 +132,7 @@ class ArcGISOnlineProvider extends AbstractProvider implements ProviderInterface
         $county       = !empty($data->Subregion) ? $data->Subregion : null;
         $countryCode  = !empty($data->CountryCode) ? $data->CountryCode : null;
 
-        return array_merge($this->getDefaults(), array(
+        return array(array_merge($this->getDefaults(), array(
             'latitude'     => $coordinates[0],
             'longitude'    => $coordinates[1],
             'streetName'   => $streetName,
@@ -140,7 +141,7 @@ class ArcGISOnlineProvider extends AbstractProvider implements ProviderInterface
             'region'       => $region,
             'countryCode'  => $countryCode,
             'county'       => $county,
-        ));
+        )));
     }
 
     /**
@@ -162,7 +163,7 @@ class ArcGISOnlineProvider extends AbstractProvider implements ProviderInterface
             $query = sprintf('%s&sourceCountry=%s', $query, $this->getSourceCountry());
         }
 
-        $query = sprintf('%s&maxLocations=%d', $query, 1); // Limit results to 1
+        $query = sprintf('%s&maxLocations=%d', $query, self::MAX_RESULTS);
         $query = sprintf('%s&f=%s', $query, 'json'); // set format to json
         $query = sprintf('%s&outFields=*', $query); // Get all result fields
 

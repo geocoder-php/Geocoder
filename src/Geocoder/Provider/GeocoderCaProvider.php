@@ -46,10 +46,10 @@ class GeocoderCaProvider extends AbstractProvider implements ProviderInterface
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
-        return array_merge($this->getDefaults(), array(
+        return array(array_merge($this->getDefaults(), array(
             'latitude'  => $this->getNodeValue($doc->getElementsByTagName('latt')),
             'longitude' => $this->getNodeValue($doc->getElementsByTagName('longt'))
-        ));
+        )));
     }
 
     /**
@@ -65,7 +65,7 @@ class GeocoderCaProvider extends AbstractProvider implements ProviderInterface
             throw new NoResultException(sprintf('Could not resolve coordinates %s', implode(', ', $coordinates)));
         }
 
-        return array_merge($this->getDefaults(), array(
+        return array(array_merge($this->getDefaults(), array(
             'latitude'     => $this->getNodeValue($doc->getElementsByTagName('latt')),
             'longitude'    => $this->getNodeValue($doc->getElementsByTagName('longt')),
             'streetNumber' => $this->getNodeValue($doc->getElementsByTagName('stnumber')),
@@ -73,7 +73,7 @@ class GeocoderCaProvider extends AbstractProvider implements ProviderInterface
             'city'         => $this->getNodeValue($doc->getElementsByTagName('city')),
             'zipcode'      => $this->getNodeValue($doc->getElementsByTagName('postal')),
             'cityDistrict' => $this->getNodeValue($doc->getElementsByTagName('prov')),
-        ));
+        )));
     }
 
     /**
@@ -84,7 +84,12 @@ class GeocoderCaProvider extends AbstractProvider implements ProviderInterface
         return 'geocoder_ca';
     }
 
-    private function getNodeValue($element)
+    /**
+     * @param \DOMNodeList
+     *
+     * @return string
+     */
+    private function getNodeValue(\DOMNodeList $element)
     {
         return $element->length ? $element->item(0)->nodeValue : null;
     }

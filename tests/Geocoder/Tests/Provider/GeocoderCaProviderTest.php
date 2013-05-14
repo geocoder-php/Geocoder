@@ -41,6 +41,10 @@ class GeocoderCaProviderTest extends TestCase
         $provider = new GeocoderCaProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result   = $provider->getGeocodedData('1600 Pennsylvania Ave, Washington, DC');
 
+        $this->assertTrue(is_array($result));
+        $this->assertCount(1, $result);
+
+        $result = $result[0];
         $this->assertEquals(38.898748, $result['latitude'], '', 0.0001);
         $this->assertEquals(-77.037684, $result['longitude'], '', 0.0001);
         $this->assertNull($result['bounds']);
@@ -61,6 +65,10 @@ class GeocoderCaProviderTest extends TestCase
         $provider = new GeocoderCaProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result   = $provider->getGeocodedData('4208 Gallaghers, Kelowna, BC');
 
+        $this->assertTrue(is_array($result));
+        $this->assertCount(1, $result);
+
+        $result = $result[0];
         $this->assertEquals(49.831515, $result['latitude'], '', 0.0001);
         $this->assertEquals(-119.381857, $result['longitude'], '', 0.0001);
         $this->assertNull($result['bounds']);
@@ -131,6 +139,10 @@ class GeocoderCaProviderTest extends TestCase
         $provider = new GeocoderCaProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result   = $provider->getReversedData(array('40.707507', '-74.011255'));
 
+        $this->assertTrue(is_array($result));
+        $this->assertCount(1, $result);
+
+        $result = $result[0];
         $this->assertEquals(40.707507, $result['latitude'], '', 0.0001);
         $this->assertEquals(-74.011255, $result['longitude'], '', 0.0001);
         $this->assertEquals(2, $result['streetNumber']);

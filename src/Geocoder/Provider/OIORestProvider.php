@@ -21,7 +21,7 @@ class OIORestProvider extends AbstractProvider implements ProviderInterface
     /**
      * @var string
      */
-    const GEOCODE_ENDPOINT_URL = 'http://geo.oiorest.dk/adresser/%s.json';
+    const GEOCODE_ENDPOINT_URL = 'http://geo.oiorest.dk/adresser.json?q=%s';
 
     /**
      * @var string
@@ -38,13 +38,19 @@ class OIORestProvider extends AbstractProvider implements ProviderInterface
             throw new UnsupportedException('The OIORestProvider does not support IP addresses.');
         }
 
-        // format address
-        $address = preg_replace('/([a-zæøåÆØÅ]+) (\d+), (\d{4}) ([a-zæøåÆØÅ\ ])+/i', '${1},${2},${3}', $address);
         $address = rawurlencode($address);
 
         $query = sprintf(self::GEOCODE_ENDPOINT_URL, $address);
 
-        return $this->executeQuery($query);
+        $data = $this->executeQuery($query);
+
+        $results = array();
+
+        foreach ($data as $item) {
+            $results[] = $this->getResultArray($item);
+        }
+
+        return $results;
     }
 
     /**
@@ -54,7 +60,9 @@ class OIORestProvider extends AbstractProvider implements ProviderInterface
     {
         $query = sprintf(self::REVERSE_ENDPOINT_URL, $coordinates[0], $coordinates[1]);
 
-        return $this->executeQuery($query);
+        $data = $this->executeQuery($query);
+
+        return array($this->getResultArray($data));
     }
 
     /**
@@ -84,6 +92,16 @@ class OIORestProvider extends AbstractProvider implements ProviderInterface
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
+        return $data;
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return array
+     */
+    protected function getResultArray(array $data)
+    {
         return array_merge($this->getDefaults(), array(
             'latitude'     => isset($data['wgs84koordinat']['bredde']) ? $data['wgs84koordinat']['bredde'] : null,
             'longitude'    => isset($data['wgs84koordinat']['længde']) ? $data['wgs84koordinat']['længde'] : null,

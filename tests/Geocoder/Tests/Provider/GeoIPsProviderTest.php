@@ -57,6 +57,11 @@ class GeoIPsProviderTest extends TestCase
         $provider = new GeoIPsProvider($this->getMockAdapter($this->never()), 'api_key');
         $result   = $provider->getGeocodedData('127.0.0.1');
 
+        $this->assertTrue(is_array($result));
+        $this->assertCount(1, $result);
+
+        $result = $result[0];
+        $this->assertTrue(is_array($result));
         $this->assertArrayNotHasKey('latitude', $result);
         $this->assertArrayNotHasKey('longitude', $result);
         $this->assertArrayNotHasKey('zipcode', $result);
@@ -121,6 +126,11 @@ class GeoIPsProviderTest extends TestCase
         $provider = new GeoIPsProvider($this->getMockAdapterReturns($json), 'api_key');
         $result   = $provider->getGeocodedData('66.147.244.214');
 
+        $this->assertTrue(is_array($result));
+        $this->assertCount(1, $result);
+
+        $result = $result[0];
+        $this->assertTrue(is_array($result));
         $this->assertNull($result['country']);
         $this->assertNull($result['countryCode']);
         $this->assertNull($result['regionCode']);
@@ -154,6 +164,11 @@ class GeoIPsProviderTest extends TestCase
         $provider = new GeoIPsProvider($this->getMockAdapterReturns($json), 'api_key');
         $result   = $provider->getGeocodedData('66.147.244.214');
 
+        $this->assertTrue(is_array($result));
+        $this->assertCount(1, $result);
+
+        $result = $result[0];
+        $this->assertTrue(is_array($result));
         $this->assertEquals('UNITED STATES', $result['country']);
         $this->assertEquals('US', $result['countryCode']);
         $this->assertEquals('UTAH', $result['region']);
@@ -206,13 +221,18 @@ class GeoIPsProviderTest extends TestCase
         $provider = new GeoIPsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['GEOIPS_API_KEY']);
         $result   = $provider->getGeocodedData('66.147.244.214');
 
+        $this->assertTrue(is_array($result));
+        $this->assertCount(1, $result);
+
+        $result = $result[0];
+        $this->assertTrue(is_array($result));
         $this->assertEquals('UNITED STATES', $result['country']);
         $this->assertEquals('US', $result['countryCode']);
         $this->assertEquals('UTAH', $result['region']);
         $this->assertEquals('UT', $result['regionCode']);
         $this->assertEquals('UTAH', $result['county']);
         $this->assertEquals('PROVO', $result['city']);
-        $this->assertEquals(75093, $result['zipcode']);
+        $this->assertNull($result['zipcode']);
         $this->assertEquals(40.3402, $result['latitude'], '', 0.0001);
         $this->assertEquals(-111.6073, $result['longitude'], '', 0.0001);
         $this->assertEquals('MST', $result['timezone']);

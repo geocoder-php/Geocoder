@@ -46,8 +46,13 @@ class FreeGeoIpProviderTest extends TestCase
     public function testGetGeocodedDataWithLocalhostIPv4()
     {
         $provider = new FreeGeoIpProvider($this->getMockAdapter($this->never()));
-        $result = $provider->getGeocodedData('127.0.0.1');
+        $result   = $provider->getGeocodedData('127.0.0.1');
 
+        $this->assertTrue(is_array($result));
+        $this->assertCount(1, $result);
+
+        $result = $result[0];
+        $this->assertTrue(is_array($result));
         $this->assertArrayNotHasKey('latitude', $result);
         $this->assertArrayNotHasKey('longitude', $result);
         $this->assertArrayNotHasKey('zipcode', $result);
@@ -62,8 +67,13 @@ class FreeGeoIpProviderTest extends TestCase
     public function testGetGeocodedDataWithLocalhostIPv6()
     {
         $provider = new FreeGeoIpProvider($this->getMockAdapter($this->never()));
-        $result = $provider->getGeocodedData('::1');
+        $result   = $provider->getGeocodedData('::1');
 
+        $this->assertTrue(is_array($result));
+        $this->assertCount(1, $result);
+
+        $result = $result[0];
+        $this->assertTrue(is_array($result));
         $this->assertArrayNotHasKey('latitude', $result);
         $this->assertArrayNotHasKey('longitude', $result);
         $this->assertArrayNotHasKey('zipcode', $result);
@@ -98,8 +108,13 @@ class FreeGeoIpProviderTest extends TestCase
     public function testGetGeocodedDataWithRealIPv4()
     {
         $provider = new FreeGeoIpProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
-        $result = $provider->getGeocodedData('74.200.247.59');
+        $result   = $provider->getGeocodedData('74.200.247.59');
 
+        $this->assertTrue(is_array($result));
+        $this->assertCount(1, $result);
+
+        $result = $result[0];
+        $this->assertTrue(is_array($result));
         $this->assertEquals(37.7484, $result['latitude'], '', 0.01);
         $this->assertEquals(-122.4156, $result['longitude'], '', 0.01);
         $this->assertEquals(94110, $result['zipcode']);
@@ -112,8 +127,13 @@ class FreeGeoIpProviderTest extends TestCase
     public function testGetGeocodedDataWithRealIPv6()
     {
         $provider = new FreeGeoIpProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
-        $result = $provider->getGeocodedData('::ffff:74.200.247.59');
+        $result   = $provider->getGeocodedData('::ffff:74.200.247.59');
 
+        $this->assertTrue(is_array($result));
+        $this->assertCount(1, $result);
+
+        $result = $result[0];
+        $this->assertTrue(is_array($result));
         $this->assertEquals(37.7484, $result['latitude'], '', 0.01);
         $this->assertEquals(-122.4156, $result['longitude'], '', 0.01);
         $this->assertEquals(94110, $result['zipcode']);
@@ -138,30 +158,50 @@ class FreeGeoIpProviderTest extends TestCase
         $provider = new FreeGeoIpProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result   = $provider->getGeocodedData('74.200.247.59');
 
+        $this->assertTrue(is_array($result));
+        $this->assertCount(1, $result);
+
+        $result = $result[0];
+        $this->assertTrue(is_array($result));
         $this->assertEquals('6', $result['regionCode']);
     }
 
     public function testGetGeocodedDataWithUSIPv6()
     {
         $provider = new FreeGeoIpProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
-        $result = $provider->getGeocodedData('::ffff:74.200.247.59');
+        $result   = $provider->getGeocodedData('::ffff:74.200.247.59');
 
+        $this->assertTrue(is_array($result));
+        $this->assertCount(1, $result);
+
+        $result = $result[0];
+        $this->assertTrue(is_array($result));
         $this->assertEquals('6', $result['regionCode']);
     }
 
     public function testGetGeocodedDataWithUKIPv4()
     {
         $provider = new FreeGeoIpProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
-        $result = $provider->getGeocodedData('132.185.255.60');
+        $result   = $provider->getGeocodedData('132.185.255.60');
 
+        $this->assertTrue(is_array($result));
+        $this->assertCount(1, $result);
+
+        $result = $result[0];
+        $this->assertTrue(is_array($result));
         $this->assertEquals('H9', $result['regionCode']);
     }
 
     public function testGetGeocodedDataWithUKIPv6()
     {
         $provider = new FreeGeoIpProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
-        $result = $provider->getGeocodedData('::ffff:132.185.255.60');
+        $result   = $provider->getGeocodedData('::ffff:132.185.255.60');
 
+        $this->assertTrue(is_array($result));
+        $this->assertCount(1, $result);
+
+        $result = $result[0];
+        $this->assertTrue(is_array($result));
         $this->assertEquals('H9', $result['regionCode']);
     }
 

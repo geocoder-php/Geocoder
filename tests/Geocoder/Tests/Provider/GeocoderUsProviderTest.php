@@ -43,6 +43,10 @@ class GeocoderUsProviderTest extends TestCase
         $provider = new GeocoderUsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result   = $provider->getGeocodedData('1600 Pennsylvania Ave, Washington, DC');
 
+        $this->assertTrue(is_array($result));
+        $this->assertCount(1, $result);
+
+        $result = $result[0];
         $this->assertEquals(38.898748, $result['latitude'], '', 0.0001);
         $this->assertEquals(-77.037684, $result['longitude'], '', 0.0001);
         $this->assertNull($result['bounds']);

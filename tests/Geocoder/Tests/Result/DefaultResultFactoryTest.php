@@ -19,17 +19,33 @@ class DefaultResultFactoryTest extends TestCase
         $this->assertInstanceOf('Geocoder\Result\ResultInterface', $result);
     }
 
-    public function testCreateFromArray()
+    /**
+     * @dataProvider arrayProvider
+     */
+    public function testCreateFromArray($array, $expected)
     {
         $factory = new DefaultResultFactory();
-        $result  = $factory->createFromArray(array(
-            'latitude'  => 123,
-            'longitude' => 456,
-        ));
+        $result  = $factory->createFromArray($array);
 
         $this->assertInstanceOf('Geocoder\Result\Geocoded', $result);
         $this->assertInstanceOf('Geocoder\Result\ResultInterface', $result);
-        $this->assertEquals(123, $result->getLatitude());
-        $this->assertEquals(456, $result->getLongitude());
+        $this->assertEquals($expected['latitude'], $result->getLatitude());
+        $this->assertEquals($expected['longitude'], $result->getLongitude());
+    }
+
+    public function arrayProvider()
+    {
+        return array(
+            array(
+                array(
+                    array('latitude' => 123, 'longitude' => 456)
+                ),
+                array('latitude' => 123, 'longitude' => 456),
+            ),
+            array(
+                array('latitude' => 123, 'longitude' => 456),
+                array('latitude' => 123, 'longitude' => 456),
+            ),
+        );
     }
 }

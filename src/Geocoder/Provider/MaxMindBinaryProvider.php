@@ -32,8 +32,8 @@ class MaxMindBinaryProvider extends AbstractProvider implements ProviderInterfac
      * @param string   $datFile
      * @param int|null $openFlag
      *
-     * @throws RuntimeException         if maxmind's lib not installed.
-     * @throws InvalidArgumentException if dat file is not correct.
+     * @throws RuntimeException         If maxmind's lib not installed.
+     * @throws InvalidArgumentException If dat file is not correct (optional).
      */
     public function __construct($datFile, $openFlag = null)
     {
@@ -75,14 +75,14 @@ class MaxMindBinaryProvider extends AbstractProvider implements ProviderInterfac
             throw new NoResultException(sprintf('No results found for IP address %s', $address));
         }
 
-        return array_merge($this->getDefaults(), array(
+        return array(array_merge($this->getDefaults(), array(
             'countryCode' => $geoIpRecord->country_code,
             'country'     => $geoIpRecord->country_name,
             'region'      => $geoIpRecord->region,
             'city'        => $geoIpRecord->city,
             'latitude'    => $geoIpRecord->latitude,
             'longitude'   => $geoIpRecord->longitude,
-        ));
+        )));
     }
 
     /**

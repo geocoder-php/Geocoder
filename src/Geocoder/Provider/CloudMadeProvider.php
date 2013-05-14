@@ -21,14 +21,19 @@ use Geocoder\Exception\UnsupportedException;
 class CloudMadeProvider extends AbstractProvider implements ProviderInterface
 {
     /**
-     * @var string
+     * @var integer
      */
-    const GEOCODE_ENDPOINT_URL = 'http://geocoding.cloudmade.com/%s/geocoding/v2/find.js?query=%s&distance=closest&return_location=true&results=1';
+    const MAX_RESULTS = 5;
 
     /**
      * @var string
      */
-    const REVERSE_ENDPOINT_URL = 'http://geocoding.cloudmade.com/%s/geocoding/v2/find.js?around=%F,%F&object_type=address&return_location=true&results=1';
+    const GEOCODE_ENDPOINT_URL = 'http://geocoding.cloudmade.com/%s/geocoding/v2/find.js?query=%s&distance=closest&return_location=true&results=%d';
+
+    /**
+     * @var string
+     */
+    const REVERSE_ENDPOINT_URL = 'http://geocoding.cloudmade.com/%s/geocoding/v2/find.js?around=%F,%F&object_type=address&return_location=true&results=%d';
 
     /**
      * @var string
@@ -60,7 +65,7 @@ class CloudMadeProvider extends AbstractProvider implements ProviderInterface
             throw new UnsupportedException('The CloudMadeProvider does not support IP addresses.');
         }
 
-        $query = sprintf(self::GEOCODE_ENDPOINT_URL, $this->apiKey, urlencode($address));
+        $query = sprintf(self::GEOCODE_ENDPOINT_URL, $this->apiKey, urlencode($address), self::MAX_RESULTS);
 
         return $this->executeQuery($query);
     }
@@ -74,7 +79,7 @@ class CloudMadeProvider extends AbstractProvider implements ProviderInterface
             throw new InvalidCredentialsException('No API Key provided');
         }
 
-        $query = sprintf(self::REVERSE_ENDPOINT_URL, $this->apiKey, $coordinates[0], $coordinates[1]);
+        $query = sprintf(self::REVERSE_ENDPOINT_URL, $this->apiKey, $coordinates[0], $coordinates[1], self::MAX_RESULTS);
 
         return $this->executeQuery($query);
     }
@@ -104,52 +109,59 @@ class CloudMadeProvider extends AbstractProvider implements ProviderInterface
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
-        $json = json_decode($content);
-        if (isset($json->found) && $json->found > 0) {
-            $data = (array) $json->features[0];
+        $json = json_decode($content, true);
+
+        if (isset($json['found']) && $json['found'] > 0) {
+            $data = (array) $json['features'];
         } else {
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
-        $coordinates = (array) $data['centroid']->coordinates;
+        $results = array();
 
-        $bounds = null;
-        if (isset($data['bounds']) && is_array($data['bounds']) && count($data['bounds']) > 0) {
-            $bounds = array(
-                'south' => $data['bounds'][0][0],
-                'west'  => $data['bounds'][0][1],
-                'north' => $data['bounds'][1][0],
-                'east'  => $data['bounds'][1][1]
-            );
+        foreach ($data as $item) {
+            $coordinates = (array) $item['centroid']['coordinates'];
+
+            $bounds = null;
+            if (isset($item['bounds']) && is_array($item['bounds']) && count($item['bounds']) > 0) {
+                $bounds = array(
+                    'south' => $item['bounds'][0][0],
+                    'west'  => $item['bounds'][0][1],
+                    'north' => $item['bounds'][1][0],
+                    'east'  => $item['bounds'][1][1]
+                );
+            }
+
+            $properties = (array) $item['properties'];
+
+            $streetNumber = null;
+            if (isset($properties['addr:housenumber'])) {
+                $streetNumber = $properties['addr:housenumber'];
+            }
+
+            $streetName = null;
+            if (isset($properties['addr:street'])) {
+                $streetName = $properties['addr:street'];
+            } elseif (isset($properties['name'])) {
+                $streetName = $properties['name'];
+            } elseif (isset($item['location']['road'])) {
+                $streetName = $item['location']['road'];
+            }
+
+            $results[] = array_merge($this->getDefaults(), array(
+                'latitude'     => $coordinates[0],
+                'longitude'    => $coordinates[1],
+                'bounds'       => $bounds,
+                'streetNumber' => $streetNumber,
+                'streetName'   => $streetName,
+                'city'         => isset($item['location']['city']) ? $item['location']['city'] : null,
+                'zipcode'      => isset($item['location']['zipcode']) ? $item['location']['zipcode'] : null,
+                'region'       => isset($item['location']['county']) ? $item['location']['county'] : null,
+                'county'       => isset($item['location']['county']) ? $item['location']['county'] : null,
+                'country'      => isset($item['location']['country']) ? $item['location']['country'] : null,
+            ));
         }
 
-        $properties = (array) $data['properties'];
-
-        $streetNumber = null;
-        if (isset($properties['addr:housenumber'])) {
-            $streetNumber = $properties['addr:housenumber'];
-        }
-
-        $streetName = null;
-        if (isset($properties['addr:street'])) {
-            $streetName = $properties['addr:street'];
-        } elseif (isset($properties['name'])) {
-            $streetName = $properties['name'];
-        } elseif (isset($data['location']->road)) {
-            $streetName = $data['location']->road;
-        }
-
-        return array_merge($this->getDefaults(), array(
-            'latitude'     => $coordinates[0],
-            'longitude'    => $coordinates[1],
-            'bounds'       => $bounds,
-            'streetNumber' => $streetNumber,
-            'streetName'   => $streetName,
-            'city'         => isset($data['location']->city) ? $data['location']->city : null,
-            'zipcode'      => isset($data['location']->zipcode) ? $data['location']->zipcode : null,
-            'region'       => isset($data['location']->county) ? $data['location']->county : null,
-            'county'       => isset($data['location']->county) ? $data['location']->county : null,
-            'country'      => isset($data['location']->country) ? $data['location']->country : null,
-        ));
+        return $results;
     }
 }
