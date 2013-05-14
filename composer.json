@@ -17,13 +17,15 @@
     "require-dev": {
         "kriswallsmith/buzz": "@stable",
         "guzzle/guzzle": "@stable",
-        "zendframework/zendframework": "~2.1"
+        "zendframework/zendframework": "~2.1",
+        "maxromanovsky/php-maxmind-geoip": "~1.12"
     },
     "suggest": {
         "kriswallsmith/buzz": "Enabling Buzz allows you to use the BuzzHttpAdapter.",
         "ext-curl": "Enabling the curl extension allows you to use CurlHttpAdapter.",
         "guzzle/guzzle": "Enabling Guzzle allows you to use the GuzzleHttpAdapter.",
-        "zendframework/zend-http": "Enabling Zend Http allows you to use the ZendHttpAdapter."
+        "zendframework/zend-http": "Enabling Zend Http allows you to use the ZendHttpAdapter.",
+        "maxromanovsky/php-maxmind-geoip": "If you are going to use MaxMindBinaryProvider."
     },
     "autoload": {
         "psr-0": { "Geocoder": "src/" }
