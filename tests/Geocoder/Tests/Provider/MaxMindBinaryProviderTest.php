@@ -1,15 +1,24 @@
 <?php
 namespace Geocoder\Tests\Provider;
 
+use Geocoder\Tests\TestCase;
 use Geocoder\Provider\MaxMindBinaryProvider;
 
-class MaxMindBinaryProviderTest extends \PHPUnit_Framework_TestCase
+class MaxMindBinaryProviderTest extends TestCase
 {
+    private $binaryFile;
+
+    public function setUp()
+    {
+        $this->binaryFile = __DIR__ . '/fixtures/GeoLiteCity.dat';
+    }
+
     public static function setUpBeforeClass()
     {
         if (false == function_exists('geoip_open')) {
             throw new \PHPUnit_Framework_SkippedTestError('The maxmind\'s official lib required to run these tests.');
         }
+
         if (false == function_exists('GeoIP_record_by_addr')) {
             throw new \PHPUnit_Framework_SkippedTestError('The maxmind\'s official lib required to run these tests.');
         }
@@ -37,11 +46,8 @@ class MaxMindBinaryProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testLocationResultContainsExpectedFields($ip)
     {
-        $binaryFile = __DIR__.'/fixtures/GeoLiteCity.dat';
-
-        $provider = new MaxMindBinaryProvider($binaryFile);
-
-        $result = $provider->getGeocodedData($ip);
+        $provider = new MaxMindBinaryProvider($this->binaryFile);
+        $result   = $provider->getGeocodedData($ip);
 
         $this->assertInternalType('array', $result);
 
@@ -67,11 +73,8 @@ class MaxMindBinaryProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testFindLocationByIp($ip, $expectedCity, $expectedCountry)
     {
-        $binaryFile = __DIR__.'/fixtures/GeoLiteCity.dat';
-
-        $provider = new MaxMindBinaryProvider($binaryFile);
-
-        $result = $provider->getGeocodedData($ip);
+        $provider = new MaxMindBinaryProvider($this->binaryFile);
+        $result   = $provider->getGeocodedData($ip);
 
         $this->assertInternalType('array', $result);
 
@@ -84,9 +87,7 @@ class MaxMindBinaryProviderTest extends \PHPUnit_Framework_TestCase
 
     public function testGetName()
     {
-        $binaryFile = __DIR__.'/fixtures/GeoLiteCity.dat';
-
-        $provider = new MaxMindBinaryProvider($binaryFile);
+        $provider = new MaxMindBinaryProvider($this->binaryFile);
 
         $this->assertEquals('maxmind_binary', $provider->getName());
     }
@@ -97,9 +98,7 @@ class MaxMindBinaryProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testThrowIfIpAddressCouldNotBeLocated()
     {
-        $binaryFile = __DIR__.'/fixtures/GeoLiteCity.dat';
-
-        $provider = new MaxMindBinaryProvider($binaryFile);
+        $provider = new MaxMindBinaryProvider($this->binaryFile);
 
         $provider->getGeocodedData('127.0.0.1');
     }
@@ -110,9 +109,7 @@ class MaxMindBinaryProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testThrowIfInvalidIpAddressGiven()
     {
-        $binaryFile = __DIR__.'/fixtures/GeoLiteCity.dat';
-
-        $provider = new MaxMindBinaryProvider($binaryFile);
+        $provider = new MaxMindBinaryProvider($this->binaryFile);
 
         $provider->getGeocodedData('invalidIp');
     }
@@ -123,11 +120,8 @@ class MaxMindBinaryProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testThrowOnReversedDataMethodUsage()
     {
-        $binaryFile = __DIR__.'/fixtures/GeoLiteCity.dat';
-
-        $provider = new MaxMindBinaryProvider($binaryFile);
+        $provider = new MaxMindBinaryProvider($this->binaryFile);
 
         $provider->getReversedData(array());
     }
-    
 }

@@ -31,7 +31,7 @@ class MaxMindBinaryProvider extends AbstractProvider implements ProviderInterfac
     /**
      * @param string   $datFile
      * @param int|null $openFlag
-     * 
+     *
      * @throws RuntimeException         if maxmind's lib not installed.
      * @throws InvalidArgumentException if dat file is not correct.
      */
@@ -40,18 +40,20 @@ class MaxMindBinaryProvider extends AbstractProvider implements ProviderInterfac
         if (false === function_exists('geoip_open')) {
             throw new RuntimeException('The MaxMindBinaryProvider requires maxmind\'s lib to be installed and loaded. Have you included geoip.inc file?');
         }
+
         if (false === function_exists('GeoIP_record_by_addr')) {
             throw new RuntimeException('The MaxMindBinaryProvider requires maxmind\'s lib to be installed and loaded. Have you included geoipcity.inc file?');
         }
-        
+
         if (false === is_file($datFile)) {
-            throw new InvalidArgumentException(sprintf('Given MaxMind dat file %s is not exist.', $this->datFile));
+            throw new InvalidArgumentException(sprintf('Given MaxMind dat file "%s" does not exist.', $this->datFile));
         }
+
         if (false === is_readable($datFile)) {
-            throw new InvalidArgumentException(sprintf('Given MaxMind dat file %s is not readable.', $this->datFile));
+            throw new InvalidArgumentException(sprintf('Given MaxMind dat file "%s" does not readable.', $this->datFile));
         }
-        $this->datFile = $datFile;
-        
+
+        $this->datFile  = $datFile;
         $this->openFlag = null === $openFlag ? GEOIP_STANDARD : $openFlag;
     }
 
@@ -64,23 +66,22 @@ class MaxMindBinaryProvider extends AbstractProvider implements ProviderInterfac
             throw new UnsupportedException('The MaxMindBinaryProvider does not support street addresses.');
         }
 
-        $geoIp = geoip_open($this->datFile, $this->openFlag);
-
+        $geoIp       = geoip_open($this->datFile, $this->openFlag);
         $geoIpRecord = GeoIP_record_by_addr($geoIp, $address);
 
         geoip_close($geoIp);
-        
+
         if (false === $geoIpRecord instanceof \geoiprecord) {
             throw new NoResultException(sprintf('No results found for IP address %s', $address));
         }
-        
+
         return array_merge($this->getDefaults(), array(
             'countryCode' => $geoIpRecord->country_code,
-            'country' => $geoIpRecord->country_name,
-            'region' => $geoIpRecord->region,
-            'city' => $geoIpRecord->city,
-            'latitude' => $geoIpRecord->latitude,
-            'longitude' => $geoIpRecord->longitude,
+            'country'     => $geoIpRecord->country_name,
+            'region'      => $geoIpRecord->region,
+            'city'        => $geoIpRecord->city,
+            'latitude'    => $geoIpRecord->latitude,
+            'longitude'   => $geoIpRecord->longitude,
         ));
     }
 
