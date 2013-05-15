@@ -27,7 +27,7 @@ class MapQuestProvider extends AbstractProvider implements ProviderInterface
     /**
      * @var string
      */
-    const GEOCODE_ENDPOINT_URL = 'http://www.mapquestapi.com/geocoding/v1/address?location=%s&outFormat=json&maxResults=1&key=%s';//Fmjtd|luub2d6tl9%2C2s%3Do5-9u22lr';
+    const GEOCODE_ENDPOINT_URL = 'http://www.mapquestapi.com/geocoding/v1/address?location=%s&outFormat=json&maxResults=1&key=%s';
 
     /**
      * @var string
