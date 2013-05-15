@@ -32,7 +32,7 @@ class MapQuestProviderTest extends TestCase
      */
     public function testGetGeocodedDataWithApiKey()
     {
-        $provider = new MapQuestProvider($this->getMockAdapter(), 'my-api-key');
+        $provider = new MapQuestProvider($this->getMockAdapter(), $apiKey = 'my-api-key');
         $provider->getGeocodedData('foobar');
     }
 
