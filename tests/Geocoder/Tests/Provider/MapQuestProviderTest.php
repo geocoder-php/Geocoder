@@ -27,6 +27,16 @@ class MapQuestProviderTest extends TestCase
     }
 
     /**
+     * @expectedException Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not find results for given query: http://www.mapquestapi.com/geocoding/v1/address?location=foobar&outFormat=json&maxResults=1&key=my-api-key
+     */
+    public function testGetGeocodedDataWithApiKey()
+    {
+        $provider = new MapQuestProvider($this->getMockAdapter(), null, $apiKey = 'my-api-key');
+        $provider->getGeocodedData('foobar');
+    }
+
+    /**
      * @expectedException \Geocoder\Exception\NoResultException
      * @expectedExceptionMessage Could not execute query http://open.mapquestapi.com/geocoding/v1/address?location=10+avenue+Gambetta%2C+Paris%2C+France&outFormat=json&maxResults=1&thumbMaps=false
      */
