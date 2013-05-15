@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+### 1.5.2 (????-??-??) ###
+
+n/a
+
 ### 1.5.1 (2013-05-15) ###
 
 * Fixed: BC break by reintroducing the ResultFactory class
