@@ -1,8 +1,9 @@
 CHANGELOG
 =========
 
-### 1.5.1 (????-??-??) ###
+### 1.5.1 (2013-05-15) ###
 
+* Fixed: BC break by reintroducing the ResultFactory class
 * Added: MaxMind's binary provider
 
 ### 1.5.0 (2013-05-03) ###
