@@ -38,7 +38,7 @@ class IpGeoBaseProvider extends AbstractProvider implements ProviderInterface
         }
 
         if ('127.0.0.1' === $address) {
-            return $this->getLocalhostDefaults();
+            return array($this->getLocalhostDefaults());
         }
 
         $query = sprintf(self::ENDPOINT_URL, $address);
@@ -53,14 +53,14 @@ class IpGeoBaseProvider extends AbstractProvider implements ProviderInterface
 
         $result = $xml->ip;
 
-        return array_merge($this->getDefaults(), array(
+        return array(array_merge($this->getDefaults(), array(
             'latitude'     => (double) $result->lat,
             'longitude'    => (double) $result->lng,
             'city'         => (string) $result->city,
             'cityDistrict' => (string) $result->district,
             'region'       => (string) $result->region,
             'countryCode'  => (string) $result->country,
-        ));
+        )));
     }
 
     /**

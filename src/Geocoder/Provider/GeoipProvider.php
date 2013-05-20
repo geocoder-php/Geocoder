@@ -46,7 +46,7 @@ class GeoipProvider extends AbstractProvider implements ProviderInterface
         }
 
         if ('127.0.0.1' === $address) {
-            return $this->getLocalhostDefaults();
+            return array($this->getLocalhostDefaults());
         }
 
         $results = @geoip_record_by_name($address);
@@ -70,11 +70,9 @@ class GeoipProvider extends AbstractProvider implements ProviderInterface
             'timezone'    => $timezone,
         ));
 
-        $results = array_map(function($value) {
+        return array(array_map(function($value) {
             return is_string($value) ? utf8_encode($value) : $value;
-        }, $results);
-
-        return $results;
+        }, $results));
     }
 
     /**

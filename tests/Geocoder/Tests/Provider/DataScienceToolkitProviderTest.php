@@ -46,8 +46,13 @@ class DataScienceToolkitProviderTest extends TestCase
     public function testGetGeocodedDataWithLocalhostIPv4()
     {
         $provider = new DataScienceToolkitProvider($this->getMockAdapter($this->never()));
-        $result = $provider->getGeocodedData('127.0.0.1');
+        $result   = $provider->getGeocodedData('127.0.0.1');
 
+        $this->assertTrue(is_array($result));
+        $this->assertCount(1, $result);
+
+        $result = $result[0];
+        $this->assertTrue(is_array($result));
         $this->assertArrayNotHasKey('latitude', $result);
         $this->assertArrayNotHasKey('longitude', $result);
         $this->assertArrayNotHasKey('zipcode', $result);
@@ -94,8 +99,13 @@ class DataScienceToolkitProviderTest extends TestCase
         $provider = new DataScienceToolkitProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result   = $provider->getGeocodedData('81.220.239.218');
 
-        $this->assertEquals(45.75 , $result['latitude'], '', 0.0001);
-        $this->assertEquals(4.8499999046326, $result['longitude'], '', 0.0001);
+        $this->assertTrue(is_array($result));
+        $this->assertCount(1, $result);
+
+        $result = $result[0];
+        $this->assertTrue(is_array($result));
+        $this->assertEquals(45.75, $result['latitude'], '', 0.01);
+        $this->assertEquals(4.8499999046326, $result['longitude'], '', 0.01);
         $this->assertEquals('Lyon', $result['city']);
         $this->assertEquals('France', $result['country']);
         $this->assertEquals('FR', $result['countryCode']);
@@ -106,8 +116,13 @@ class DataScienceToolkitProviderTest extends TestCase
         $provider = new DataScienceToolkitProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result   = $provider->getGeocodedData('2543 Graystone Place, Simi Valley, CA 93065');
 
-        $this->assertEquals(34.281016 , $result['latitude'], '', 0.0001);
-        $this->assertEquals(-118.766282, $result['longitude'], '', 0.0001);
+        $this->assertTrue(is_array($result));
+        $this->assertCount(1, $result);
+
+        $result = $result[0];
+        $this->assertTrue(is_array($result));
+        $this->assertEquals(34.280874, $result['latitude'], '', 0.01);
+        $this->assertEquals(-118.766282, $result['longitude'], '', 0.01);
         $this->assertEquals('Simi Valley', $result['city']);
         $this->assertEquals('United States', $result['country']);
         $this->assertEquals('US', $result['countryCode']);

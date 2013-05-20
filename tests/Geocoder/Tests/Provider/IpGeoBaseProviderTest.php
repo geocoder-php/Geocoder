@@ -49,8 +49,12 @@ class IpGeoBaseProviderTest extends TestCase
     public function testGetGeocodedDataWithLocalhostIPv4()
     {
         $provider = new IpGeoBaseProvider($this->getMockAdapter($this->never()));
-        $result = $provider->getGeocodedData('127.0.0.1');
+        $result   = $provider->getGeocodedData('127.0.0.1');
 
+        $this->assertTrue(is_array($result));
+        $this->assertCount(1, $result);
+
+        $result = $result[0];
         $this->assertArrayNotHasKey('latitude', $result);
         $this->assertArrayNotHasKey('longitude', $result);
         $this->assertArrayNotHasKey('zipcode', $result);
@@ -97,6 +101,10 @@ class IpGeoBaseProviderTest extends TestCase
         $provider = new IpGeoBaseProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result   = $provider->getGeocodedData('144.206.192.6');
 
+        $this->assertTrue(is_array($result));
+        $this->assertCount(1, $result);
+
+        $result = $result[0];
         $this->assertEquals(55.755787, $result['latitude'], '', 0.001);
         $this->assertEquals(37.617634, $result['longitude'], '', 0.001);
         $this->assertNull($result['streetNumber']);
@@ -116,6 +124,10 @@ class IpGeoBaseProviderTest extends TestCase
         $provider = new IpGeoBaseProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result   = $provider->getGeocodedData('2.56.176.1');
 
+        $this->assertTrue(is_array($result));
+        $this->assertCount(1, $result);
+
+        $result = $result[0];
         $this->assertEquals(50.450001, $result['latitude'], '', 0.001);
         $this->assertEquals(30.523333, $result['longitude'], '', 0.001);
         $this->assertNull($result['streetNumber']);
@@ -137,7 +149,7 @@ class IpGeoBaseProviderTest extends TestCase
     public function testGetGeocodedDataWithRealIPv6()
     {
         $provider = new IpGeoBaseProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
-        $result = $provider->getGeocodedData('::ffff:88.188.221.14');
+        $provider->getGeocodedData('::ffff:88.188.221.14');
     }
 
     /**

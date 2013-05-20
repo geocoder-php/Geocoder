@@ -57,6 +57,11 @@ class GeoipProviderTest extends TestCase
         $provider = new GeoipProvider();
         $result   = $provider->getGeocodedData('127.0.0.1');
 
+        $this->assertTrue(is_array($result));
+        $this->assertCount(1, $result);
+
+        $result = $result[0];
+        $this->assertTrue(is_array($result));
         $this->assertArrayNotHasKey('latitude', $result);
         $this->assertArrayNotHasKey('longitude', $result);
         $this->assertArrayNotHasKey('zipcode', $result);
@@ -83,6 +88,11 @@ class GeoipProviderTest extends TestCase
         $provider = new GeoipProvider();
         $result   = $provider->getGeocodedData('74.200.247.59');
 
+        $this->assertTrue(is_array($result));
+        $this->assertCount(1, $result);
+
+        $result = $result[0];
+        $this->assertTrue(is_array($result));
         $this->assertNotNull($result['latitude']);
         $this->assertNotNull($result['longitude']);
         $this->assertNotNull($result['zipcode']);

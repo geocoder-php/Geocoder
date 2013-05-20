@@ -60,7 +60,7 @@ class IpInfoDbProvider extends AbstractProvider implements ProviderInterface
         }
 
         if ('127.0.0.1' === $address) {
-            return $this->getLocalhostDefaults();
+            return array($this->getLocalhostDefaults());
         }
 
         $query = sprintf(self::ENDPOINT_URL, $this->apiKey, $address);
@@ -108,7 +108,7 @@ class IpInfoDbProvider extends AbstractProvider implements ProviderInterface
             $timezone = timezone_name_from_abbr("", (int) substr($data['timeZone'], 0, strpos($data['timeZone'], ':')) * 3600, 0);
         }
 
-        return array_merge($this->getDefaults(), array(
+        return array(array_merge($this->getDefaults(), array(
             'latitude'    => isset($data['latitude']) ? $data['latitude'] : null,
             'longitude'   => isset($data['longitude']) ? $data['longitude'] : null,
             'city'        => isset($data['cityName']) ? $data['cityName'] : null,
@@ -117,6 +117,6 @@ class IpInfoDbProvider extends AbstractProvider implements ProviderInterface
             'country'     => isset($data['countryName']) ? $data['countryName'] : null,
             'countryCode' => isset($data['countryName']) ? $data['countryCode'] : null,
             'timezone'    => $timezone,
-        ));
+        )));
     }
 }

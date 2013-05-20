@@ -26,7 +26,7 @@ class TomTomProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResultException
-     * @expectedExceptionMessage Could not execute query https://api.tomtom.com/lbs/geocoding/geocode?key=api_key&maxResults=1&query=
+     * @expectedExceptionMessage Could not execute query https://api.tomtom.com/lbs/geocoding/geocode?key=api_key&query=&maxResults=5
      */
     public function testGetGeocodedDataWithNull()
     {
@@ -36,7 +36,7 @@ class TomTomProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResultException
-     * @expectedExceptionMessage Could not execute query https://api.tomtom.com/lbs/geocoding/geocode?key=api_key&maxResults=1&query=
+     * @expectedExceptionMessage Could not execute query https://api.tomtom.com/lbs/geocoding/geocode?key=api_key&query=&maxResults=5
      */
     public function testGetGeocodedDataWithEmpty()
     {
@@ -46,7 +46,7 @@ class TomTomProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResultException
-     * @expectedExceptionMessage Could not execute query https://api.tomtom.com/lbs/geocoding/geocode?key=api_key&maxResults=1&query=Tagensvej%2047%2C%202200%20K%C3%B8benhavn%20N
+     * @expectedExceptionMessage Could not execute query https://api.tomtom.com/lbs/geocoding/geocode?key=api_key&query=Tagensvej%2047%2C%202200%20K%C3%B8benhavn%20N&maxResults=5
      */
     public function testGetGeocodedDataWithAddressContentReturnNull()
     {
@@ -56,7 +56,7 @@ class TomTomProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResultException
-     * @expectedExceptionMessage Could not execute query https://api.tomtom.com/lbs/geocoding/geocode?key=api_key&maxResults=1&query=Tagensvej%2047%2C%202200%20K%C3%B8benhavn%20N
+     * @expectedExceptionMessage Could not execute query https://api.tomtom.com/lbs/geocoding/geocode?key=api_key&query=Tagensvej%2047%2C%202200%20K%C3%B8benhavn%20N&maxResults=5
      */
     public function testGetGeocodedDataWithAddress()
     {
@@ -66,7 +66,7 @@ class TomTomProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResultException
-     * @expectedExceptionMessage Could not execute query https://api.tomtom.com/lbs/geocoding/geocode?key=api_key&maxResults=1&query=foo
+     * @expectedExceptionMessage Could not execute query https://api.tomtom.com/lbs/geocoding/geocode?key=api_key&query=foo&maxResults=5
      */
     public function testGetGeocodedDataNoResult()
     {
@@ -87,6 +87,11 @@ XML;
         $provider = new TomTomProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['TOMTOM_GEOCODING_KEY']);
         $result   = $provider->getGeocodedData('Tagensvej 47, 2200 København N');
 
+        $this->assertTrue(is_array($result));
+        $this->assertCount(1, $result);
+
+        $result = $result[0];
+        $this->assertTrue(is_array($result));
         $this->assertEquals(55.704389, $result['latitude'], '', 0.0001);
         $this->assertEquals(12.546129, $result['longitude'], '', 0.0001);
         $this->assertNull($result['bounds']);
@@ -111,6 +116,11 @@ XML;
         $provider = new TomTomProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['TOMTOM_GEOCODING_KEY'], 'fr_FR');
         $result   = $provider->getGeocodedData('Tagensvej 47, 2200 København N');
 
+        $this->assertTrue(is_array($result));
+        $this->assertCount(1, $result);
+
+        $result = $result[0];
+        $this->assertTrue(is_array($result));
         $this->assertEquals(55.704389, $result['latitude'], '', 0.0001);
         $this->assertEquals(12.546129, $result['longitude'], '', 0.0001);
         $this->assertNull($result['bounds']);
@@ -135,6 +145,11 @@ XML;
         $provider = new TomTomProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['TOMTOM_GEOCODING_KEY'], 'sv-SE');
         $result   = $provider->getGeocodedData('Tagensvej 47, 2200 København N');
 
+        $this->assertTrue(is_array($result));
+        $this->assertCount(1, $result);
+
+        $result = $result[0];
+        $this->assertTrue(is_array($result));
         $this->assertEquals(55.704389, $result['latitude'], '', 0.0001);
         $this->assertEquals(12.546129, $result['longitude'], '', 0.0001);
         $this->assertNull($result['bounds']);
@@ -148,6 +163,66 @@ XML;
         $this->assertEquals('Dania', $result['country']);
         $this->assertEquals('DNK', $result['countryCode']);
         $this->assertNull($result['timezone']);
+    }
+
+    public function testGetGeocodedDataWithRealAddressReturnsMultipleResults()
+    {
+        if (!isset($_SERVER['TOMTOM_GEOCODING_KEY'])) {
+            $this->markTestSkipped('You need to configure the TOMTOM_GEOCODING_KEY value in phpunit.xml');
+        }
+
+        $provider = new TomTomProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['TOMTOM_GEOCODING_KEY']);
+        $results  = $provider->getGeocodedData('Paris');
+
+        $this->assertTrue(is_array($results));
+        $this->assertCount(TomTomProvider::MAX_RESULTS, $results);
+
+        $this->assertTrue(is_array($results[0]));
+        $this->assertEquals(48.856898, $results[0]['latitude'], '', 0.0001);
+        $this->assertEquals(2.350844, $results[0]['longitude'], '', 0.0001);
+        $this->assertNull($results[0]['bounds']);
+        $this->assertNull($results[0]['streetNumber']);
+        $this->assertNull($results[0]['streetName']);
+        $this->assertNull($results[0]['zipcode']);
+        $this->assertEquals('Paris', $results[0]['city']);
+        $this->assertNull($results[0]['cityDistrict']);
+        $this->assertEquals('Ile-de-France', $results[0]['region']);
+        $this->assertNull($results[0]['regionCode']);
+        $this->assertEquals('France', $results[0]['country']);
+        $this->assertEquals('FRA', $results[0]['countryCode']);
+        $this->assertNull($results[0]['timezone']);
+
+        $this->assertTrue(is_array($results[1]));
+        $this->assertEquals(33.661426, $results[1]['latitude'], '', 0.0001);
+        $this->assertEquals(-95.556321, $results[1]['longitude'], '', 0.0001);
+        $this->assertEquals('Paris', $results[1]['city']);
+        $this->assertEquals('Texas', $results[1]['region']);
+        $this->assertEquals('United States', $results[1]['country']);
+        $this->assertEquals('USA', $results[1]['countryCode']);
+
+        $this->assertTrue(is_array($results[2]));
+        $this->assertEquals(36.302754, $results[2]['latitude'], '', 0.0001);
+        $this->assertEquals(-88.326359, $results[2]['longitude'], '', 0.0001);
+        $this->assertEquals('Paris', $results[2]['city']);
+        $this->assertEquals('Tennessee', $results[2]['region']);
+        $this->assertEquals('United States', $results[2]['country']);
+        $this->assertEquals('USA', $results[2]['countryCode']);
+
+        $this->assertTrue(is_array($results[3]));
+        $this->assertEquals(-19.039448, $results[3]['latitude'], '', 0.0001);
+        $this->assertEquals(29.560445, $results[3]['longitude'], '', 0.0001);
+        $this->assertEquals('Paris', $results[3]['city']);
+        $this->assertEquals('Midlands', $results[3]['region']);
+        $this->assertEquals('Zimbabwe', $results[3]['country']);
+        $this->assertEquals('ZWE', $results[3]['countryCode']);
+
+        $this->assertTrue(is_array($results[4]));
+        $this->assertEquals(35.292105, $results[4]['latitude'], '', 0.0001);
+        $this->assertEquals(-93.729922, $results[4]['longitude'], '', 0.0001);
+        $this->assertEquals('Paris', $results[4]['city']);
+        $this->assertEquals('Arkansas', $results[4]['region']);
+        $this->assertEquals('United States', $results[4]['country']);
+        $this->assertEquals('USA', $results[4]['countryCode']);
     }
 
     /**
@@ -265,8 +340,13 @@ XML;
         }
 
         $provider = new TomTomProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['TOMTOM_MAP_KEY']);
-        $result = $provider->getReversedData(array(48.86321648955345, 2.3887719959020615));
+        $result   = $provider->getReversedData(array(48.86321648955345, 2.3887719959020615));
 
+        $this->assertTrue(is_array($result));
+        $this->assertCount(1, $result);
+
+        $result = $result[0];
+        $this->assertTrue(is_array($result));
         $this->assertEquals(48.86323, $result['latitude'], '', 0.001);
         $this->assertEquals(2.38877, $result['longitude'], '', 0.001);
         $this->assertNull($result['bounds']);
@@ -289,8 +369,13 @@ XML;
         }
 
         $provider = new TomTomProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(),  $_SERVER['TOMTOM_MAP_KEY']);
-        $result = $provider->getReversedData(array(56.5231, 10.0659));
+        $result   = $provider->getReversedData(array(56.5231, 10.0659));
 
+        $this->assertTrue(is_array($result));
+        $this->assertCount(1, $result);
+
+        $result = $result[0];
+        $this->assertTrue(is_array($result));
         $this->assertEquals(56.52435, $result['latitude'], '', 0.001);
         $this->assertEquals(10.06744, $result['longitude'], '', 0.001);
         $this->assertNull($result['bounds']);

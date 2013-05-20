@@ -21,9 +21,14 @@ use Geocoder\Exception\UnsupportedException;
 class TomTomProvider extends AbstractProvider implements ProviderInterface
 {
     /**
+     * @var integer
+     */
+    const MAX_RESULTS = 5;
+
+    /**
      * @var string
      */
-    const GEOCODE_ENDPOINT_URL = 'https://api.tomtom.com/lbs/geocoding/geocode?key=%s&maxResults=1&query=%s';
+    const GEOCODE_ENDPOINT_URL = 'https://api.tomtom.com/lbs/geocoding/geocode?key=%s&query=%s';
 
     /**
      * @var string
@@ -62,6 +67,7 @@ class TomTomProvider extends AbstractProvider implements ProviderInterface
         }
 
         $query = sprintf(self::GEOCODE_ENDPOINT_URL, $this->apiKey, rawurlencode($address));
+        $query = sprintf('%s&maxResults=%d', $query, self::MAX_RESULTS);
 
         return $this->executeQuery($query);
     }
@@ -123,16 +129,37 @@ class TomTomProvider extends AbstractProvider implements ProviderInterface
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
-        $result = isset($xml->geoResult) ? $xml->geoResult : $xml->reverseGeoResult;
+        $data = isset($xml->geoResult) ? $xml->geoResult : $xml->reverseGeoResult;
 
+
+        if (0 === count($data)) {
+            return array($this->getResultArray($data));
+        }
+
+        $results = array();
+
+        foreach ($data as $item) {
+            $results[] = $this->getResultArray($item);
+        }
+
+        return $results;
+    }
+
+    /**
+     * @param \Traversable $data
+     *
+     * @return array
+     */
+    protected function getResultArray(\Traversable $data)
+    {
         return array_merge($this->getDefaults(), array(
-            'latitude'    => isset($result->latitude) ? (double) $result->latitude : null,
-            'longitude'   => isset($result->longitude) ? (double) $result->longitude : null,
-            'streetName'  => isset($result->street) ? (string) $result->street : null,
-            'city'        => isset($result->city) ? (string) $result->city : null,
-            'region'      => isset($result->state) ? (string) $result->state : null,
-            'country'     => isset($result->country) ? (string) $result->country : null,
-            'countryCode' => isset($result->countryISO3) ? (string) $result->countryISO3 : null,
+            'latitude'    => isset($data->latitude) ? (double) $data->latitude : null,
+            'longitude'   => isset($data->longitude) ? (double) $data->longitude : null,
+            'streetName'  => isset($data->street) ? (string) $data->street : null,
+            'city'        => isset($data->city) ? (string) $data->city : null,
+            'region'      => isset($data->state) ? (string) $data->state : null,
+            'country'     => isset($data->country) ? (string) $data->country : null,
+            'countryCode' => isset($data->countryISO3) ? (string) $data->countryISO3 : null,
         ));
     }
 }

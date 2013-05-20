@@ -18,7 +18,7 @@ class OIORestProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResultException
-     * @expectedExceptionMessage Could not execute query http://geo.oiorest.dk/adresser/.json
+     * @expectedExceptionMessage Could not execute query http://geo.oiorest.dk/adresser.json?q=
      */
     public function testGetGeocodedDataWithNull()
     {
@@ -28,7 +28,7 @@ class OIORestProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResultException
-     * @expectedExceptionMessage Could not execute query http://geo.oiorest.dk/adresser/.json
+     * @expectedExceptionMessage Could not execute query http://geo.oiorest.dk/adresser.json?q=
      */
     public function testGetGeocodedDataWithEmpty()
     {
@@ -38,7 +38,7 @@ class OIORestProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResultException
-     * @expectedExceptionMessage Could not execute query http://geo.oiorest.dk/adresser/Tagensvej%2C47%2C2200.json
+     * @expectedExceptionMessage Could not execute query http://geo.oiorest.dk/adresser.json?q=Tagensvej%2047%2C%202200%20K%C3%B8benhavn%20N
      */
     public function testGetGeocodedDataWithAddressContentReturnNull()
     {
@@ -48,7 +48,7 @@ class OIORestProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResultException
-     * @expectedExceptionMessage Could not execute query http://geo.oiorest.dk/adresser/Tagensvej%2C47%2C2200.json
+     * @expectedExceptionMessage Could not execute query http://geo.oiorest.dk/adresser.json?q=Tagensvej%2047%2C%202200%20K%C3%B8benhavn%20N
      */
     public function testGetGeocodedDataWithAddress()
     {
@@ -59,8 +59,12 @@ class OIORestProviderTest extends TestCase
     public function testGetGeocodedDataWithRealAddress()
     {
         $provider = new OIORestProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
-        $result   = $provider->getGeocodedData('Tagensvej 47, 2200 København N');
+        $result   = $provider->getGeocodedData('Tagensvej 47 2200 København');
 
+        $this->assertTrue(is_array($result));
+        $this->assertCount(1, $result);
+
+        $result = $result[0];
         $this->assertEquals(55.6999, $result['latitude'], '', 0.0001);
         $this->assertEquals(12.5527, $result['longitude'], '', 0.0001);
         $this->assertNull($result['bounds']);
@@ -79,8 +83,12 @@ class OIORestProviderTest extends TestCase
     public function testGetGeocodedDataWithRealAddressAalborg()
     {
         $provider = new OIORestProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
-        $result   = $provider->getGeocodedData('Lauritzens Plads 1, 9000 Aalborg');
+        $result   = $provider->getGeocodedData('Lauritzens Plads 1 9000 Aalborg');
 
+        $this->assertTrue(is_array($result));
+        $this->assertCount(1, $result);
+
+        $result = $result[0];
         $this->assertEquals(57.0489, $result['latitude'], '', 0.0001);
         $this->assertEquals(9.94566, $result['longitude'], '', 0.0001);
         $this->assertNull($result['bounds']);
@@ -99,8 +107,12 @@ class OIORestProviderTest extends TestCase
     public function testGetGeocodedDataWithRealAddressAarhus()
     {
         $provider = new OIORestProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
-        $result   = $provider->getGeocodedData('St.Blichers Vej 74, 8210 Århus V');
+        $result   = $provider->getGeocodedData('St.Blichers Vej 74 8210 AArhus');
 
+        $this->assertTrue(is_array($result));
+        $this->assertCount(1, $result);
+
+        $result = $result[0];
         $this->assertEquals(56.1623, $result['latitude'], '', 0.0001);
         $this->assertEquals(10.1501, $result['longitude'], '', 0.0001);
         $this->assertNull($result['bounds']);
@@ -119,8 +131,12 @@ class OIORestProviderTest extends TestCase
     public function testGetGeocodedDataWithRealAddressCopenhagen()
     {
         $provider = new OIORestProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
-        $result   = $provider->getGeocodedData('Århusgade 80, 2100 København Ø');
+        $result   = $provider->getGeocodedData('Århusgade 80 2100 København');
 
+        $this->assertTrue(is_array($result));
+        $this->assertCount(1, $result);
+
+        $result = $result[0];
         $this->assertEquals(55.7063, $result['latitude'], '', 0.0001);
         $this->assertEquals(12.5837, $result['longitude'], '', 0.0001);
         $this->assertNull($result['bounds']);
@@ -139,8 +155,12 @@ class OIORestProviderTest extends TestCase
     public function testGetGeocodedDataWithRealAddressOdense()
     {
         $provider = new OIORestProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
-        $result   = $provider->getGeocodedData('Hvenekildeløkken 255, 5240 Odense');
+        $result   = $provider->getGeocodedData('Hvenekildeløkken 255 5240 Odense');
 
+        $this->assertTrue(is_array($result));
+        $this->assertCount(1, $result);
+
+        $result = $result[0];
         $this->assertEquals(55.4221, $result['latitude'], '', 0.0001);
         $this->assertEquals(10.4588, $result['longitude'], '', 0.0001);
         $this->assertNull($result['bounds']);
@@ -154,6 +174,111 @@ class OIORestProviderTest extends TestCase
         $this->assertEquals('Denmark', $result['country']);
         $this->assertEquals('DK', $result['countryCode']);
         $this->assertEquals('Europe/Copenhagen', $result['timezone']);
+    }
+
+    public function testGetGeocodedDataWithRealAddressReturnsMultipleResults()
+    {
+        $provider = new OIORestProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $results  = $provider->getGeocodedData('Tagensvej 47');
+
+        $this->assertTrue(is_array($results));
+        $this->assertCount(10, $results);
+
+        $this->assertTrue(is_array($results[0]));
+        $this->assertEquals(55.6999504950464, $results[0]['latitude'], '', 0.0001);
+        $this->assertEquals(12.552780016775, $results[0]['longitude'], '', 0.0001);
+        $this->assertNull($results[0]['bounds']);
+        $this->assertEquals(47, $results[0]['streetNumber']);
+        $this->assertEquals('Tagensvej', $results[0]['streetName']);
+        $this->assertEquals(2200, $results[0]['zipcode']);
+        $this->assertEquals('København N', $results[0]['city']);
+        $this->assertEquals('København', $results[0]['cityDistrict']);
+        $this->assertEquals('Region Hovedstaden', $results[0]['region']);
+        $this->assertEquals('1084', $results[0]['regionCode']);
+        $this->assertEquals('Denmark', $results[0]['country']);
+        $this->assertEquals('DK', $results[0]['countryCode']);
+        $this->assertEquals('Europe/Copenhagen', $results[0]['timezone']);
+
+        $this->assertTrue(is_array($results[1]));
+        $this->assertEquals(55.2272287041871, $results[1]['latitude'], '', 0.000001);
+        $this->assertEquals(11.7695695592728, $results[1]['longitude'], '', 0.000001);
+        $this->assertEquals(1, $results[1]['streetNumber']);
+        $this->assertEquals('Tagensvej', $results[1]['streetName']);
+        $this->assertEquals(4700, $results[1]['zipcode']);
+        $this->assertEquals('Næstved', $results[1]['city']);
+        $this->assertEquals('Region Sjælland', $results[1]['region']);
+
+        $this->assertTrue(is_array($results[2]));
+        $this->assertEquals(55.2271757871039, $results[2]['latitude'], '', 0.000001);
+        $this->assertEquals(11.7691129123425, $results[2]['longitude'], '', 0.000001);
+        $this->assertEquals(2, $results[2]['streetNumber']);
+        $this->assertEquals('Tagensvej', $results[2]['streetName']);
+        $this->assertEquals(4700, $results[2]['zipcode']);
+        $this->assertEquals('Næstved', $results[2]['city']);
+        $this->assertEquals('Region Sjælland', $results[2]['region']);
+
+        $this->assertTrue(is_array($results[3]));
+        $this->assertEquals(55.2271205312374, $results[3]['latitude'], '', 0.000001);
+        $this->assertEquals(11.7695192586423, $results[3]['longitude'], '', 0.000001);
+        $this->assertEquals(3, $results[3]['streetNumber']);
+        $this->assertEquals('Tagensvej', $results[3]['streetName']);
+        $this->assertEquals(4700, $results[3]['zipcode']);
+        $this->assertEquals('Næstved', $results[3]['city']);
+        $this->assertEquals('Region Sjælland', $results[3]['region']);
+
+        $this->assertTrue(is_array($results[4]));
+        $this->assertEquals(55.2270592164468, $results[4]['latitude'], '', 0.000001);
+        $this->assertEquals(11.7691790457091, $results[4]['longitude'], '', 0.000001);
+        $this->assertEquals(4, $results[4]['streetNumber']);
+        $this->assertEquals('Tagensvej', $results[4]['streetName']);
+        $this->assertEquals(4700, $results[4]['zipcode']);
+        $this->assertEquals('Næstved', $results[4]['city']);
+        $this->assertEquals('Region Sjælland', $results[4]['region']);
+
+        $this->assertTrue(is_array($results[5]));
+        $this->assertEquals(55.2269838646556, $results[5]['latitude'], '', 0.000001);
+        $this->assertEquals(11.7694569115436, $results[5]['longitude'], '', 0.000001);
+        $this->assertEquals(5, $results[5]['streetNumber']);
+        $this->assertEquals('Tagensvej', $results[5]['streetName']);
+        $this->assertEquals(4700, $results[5]['zipcode']);
+        $this->assertEquals('Næstved', $results[5]['city']);
+        $this->assertEquals('Region Sjælland', $results[5]['region']);
+
+        $this->assertTrue(is_array($results[6]));
+        $this->assertEquals(55.2269514141865, $results[6]['latitude'], '', 0.000001);
+        $this->assertEquals(11.7691124150561, $results[6]['longitude'], '', 0.000001);
+        $this->assertEquals(6, $results[6]['streetNumber']);
+        $this->assertEquals('Tagensvej', $results[6]['streetName']);
+        $this->assertEquals(4700, $results[6]['zipcode']);
+        $this->assertEquals('Næstved', $results[6]['city']);
+        $this->assertEquals('Region Sjælland', $results[6]['region']);
+
+        $this->assertTrue(is_array($results[7]));
+        $this->assertEquals(55.2268810365838, $results[7]['latitude'], '', 0.000001);
+        $this->assertEquals(11.7694245984061, $results[7]['longitude'], '', 0.000001);
+        $this->assertEquals(7, $results[7]['streetNumber']);
+        $this->assertEquals('Tagensvej', $results[7]['streetName']);
+        $this->assertEquals(4700, $results[7]['zipcode']);
+        $this->assertEquals('Næstved', $results[7]['city']);
+        $this->assertEquals('Region Sjælland', $results[7]['region']);
+
+        $this->assertTrue(is_array($results[8]));
+        $this->assertEquals(55.2268597609547, $results[8]['latitude'], '', 0.000001);
+        $this->assertEquals(11.7690947201688, $results[8]['longitude'], '', 0.000001);
+        $this->assertEquals(8, $results[8]['streetNumber']);
+        $this->assertEquals('Tagensvej', $results[8]['streetName']);
+        $this->assertEquals(4700, $results[8]['zipcode']);
+        $this->assertEquals('Næstved', $results[8]['city']);
+        $this->assertEquals('Region Sjælland', $results[8]['region']);
+
+        $this->assertTrue(is_array($results[9]));
+        $this->assertEquals(55.2267671191869, $results[9]['latitude'], '', 0.000001);
+        $this->assertEquals(11.7693738993126, $results[9]['longitude'], '', 0.000001);
+        $this->assertEquals(9, $results[9]['streetNumber']);
+        $this->assertEquals('Tagensvej', $results[9]['streetName']);
+        $this->assertEquals(4700, $results[9]['zipcode']);
+        $this->assertEquals('Næstved', $results[9]['city']);
+        $this->assertEquals('Region Sjælland', $results[9]['region']);
     }
 
     /**
@@ -231,6 +356,10 @@ class OIORestProviderTest extends TestCase
         $provider = new OIORestProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result = $provider->getReversedData(array(56.5231, 10.0659));
 
+        $this->assertTrue(is_array($result));
+        $this->assertCount(1, $result);
+
+        $result = $result[0];
         $this->assertEquals(56.521542795662, $result['latitude'], '', 0.0001);
         $this->assertEquals(10.0668558607917, $result['longitude'], '', 0.0001);
         $this->assertNull($result['bounds']);

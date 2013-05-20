@@ -46,8 +46,12 @@ class HostIpProviderTest extends TestCase
     public function testGetGeocodedDataWithLocalhostIPv4()
     {
         $provider = new HostIpProvider($this->getMockAdapter($this->never()));
-        $result = $provider->getGeocodedData('127.0.0.1');
+        $result   = $provider->getGeocodedData('127.0.0.1');
 
+        $this->assertTrue(is_array($result));
+        $this->assertCount(1, $result);
+
+        $result = $result[0];
         $this->assertArrayNotHasKey('latitude', $result);
         $this->assertArrayNotHasKey('longitude', $result);
         $this->assertArrayNotHasKey('zipcode', $result);
@@ -66,12 +70,12 @@ class HostIpProviderTest extends TestCase
     public function testGetGeocodedDataWithLocalhostIPv6()
     {
         $provider = new HostIpProvider($this->getMockAdapter($this->never()));
-        $result = $provider->getGeocodedData('::1');
+        $provider->getGeocodedData('::1');
     }
 
     /**
      * @expectedException \Geocoder\Exception\NoResultException
-     * @expectedExceptionMessage Could not execute query http://api.hostip.info/get_xml.php?ip=88.188.221.14&position=true
+     * @expectedExceptionMessage Could not execute query http://api.hostip.info/get_json.php?ip=88.188.221.14&position=true
      */
     public function testGetGeocodedDataWithRealIPv4GetsNullContent()
     {
@@ -81,7 +85,7 @@ class HostIpProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResultException
-     * @expectedExceptionMessage Could not execute query http://api.hostip.info/get_xml.php?ip=88.188.221.14&position=true
+     * @expectedExceptionMessage Could not execute query http://api.hostip.info/get_json.php?ip=88.188.221.14&position=true
      */
     public function testGetGeocodedDataWithRealIPv4GetsEmptyContent()
     {
@@ -94,6 +98,11 @@ class HostIpProviderTest extends TestCase
         $provider = new HostIpProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result   = $provider->getGeocodedData('88.188.221.14');
 
+        $this->assertTrue(is_array($result));
+        $this->assertCount(1, $result);
+
+        $result = $result[0];
+        $this->assertTrue(is_array($result));
         $this->assertEquals(45.5333, $result['latitude'], '', 0.0001);
         $this->assertEquals(2.6167, $result['longitude'], '', 0.0001);
         $this->assertNull($result['zipcode']);
@@ -110,7 +119,7 @@ class HostIpProviderTest extends TestCase
     public function testGetGeocodedDataWithRealIPv6()
     {
         $provider = new HostIpProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
-        $result = $provider->getGeocodedData('::ffff:88.188.221.14');
+        $provider->getGeocodedData('::ffff:88.188.221.14');
     }
 
     /**
@@ -126,8 +135,13 @@ class HostIpProviderTest extends TestCase
     public function testGetGeocodedDataWithAnotherIp()
     {
         $provider = new HostIpProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
-        $result = $provider->getGeocodedData('33.33.33.22');
+        $result   = $provider->getGeocodedData('33.33.33.22');
 
+        $this->assertTrue(is_array($result));
+        $this->assertCount(1, $result);
+
+        $result = $result[0];
+        $this->assertTrue(is_array($result));
         $this->assertNull($result['latitude']);
         $this->assertNull($result['longitude']);
     }

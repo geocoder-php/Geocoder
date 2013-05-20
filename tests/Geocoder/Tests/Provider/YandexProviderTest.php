@@ -38,7 +38,7 @@ class YandexProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResultException
-     * @expectedExceptionMessage Could not execute query http://geocode-maps.yandex.ru/1.x/?results=1&format=json&geocode=
+     * @expectedExceptionMessage Could not execute query http://geocode-maps.yandex.ru/1.x/?format=json&geocode=&results=5
      */
     public function testGetGeocodedDataWithNull()
     {
@@ -48,7 +48,7 @@ class YandexProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResultException
-     * @expectedExceptionMessage Could not execute query http://geocode-maps.yandex.ru/1.x/?results=1&format=json&geocode=
+     * @expectedExceptionMessage Could not execute query http://geocode-maps.yandex.ru/1.x/?format=json&geocode=&results=5
      */
     public function testGetGeocodedDataWithEmpty()
     {
@@ -58,7 +58,7 @@ class YandexProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResultException
-     * @expectedExceptionMessage Could not execute query http://geocode-maps.yandex.ru/1.x/?results=1&format=json&geocode=foobar
+     * @expectedExceptionMessage Could not execute query http://geocode-maps.yandex.ru/1.x/?format=json&geocode=foobar&results=5
      */
     public function testGetGeocodedDataWithInvalidData()
     {
@@ -68,7 +68,7 @@ class YandexProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResultException
-     * @expectedExceptionMessage Could not execute query http://geocode-maps.yandex.ru/1.x/?results=1&format=json&geocode=Kabasakal+Caddesi%2C+Istanbul%2C+Turkey
+     * @expectedExceptionMessage Could not execute query http://geocode-maps.yandex.ru/1.x/?format=json&geocode=Kabasakal+Caddesi%2C+Istanbul%2C+Turkey&results=5
      */
     public function testGetGeocodedDataWithAddressGetsNullContent()
     {
@@ -78,7 +78,7 @@ class YandexProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResultException
-     * @expectedExceptionMessage Could not execute query http://geocode-maps.yandex.ru/1.x/?results=1&format=json&geocode=foobar
+     * @expectedExceptionMessage Could not execute query http://geocode-maps.yandex.ru/1.x/?format=json&geocode=foobar&results=5
      */
     public function testGetGeocodedDataWithFakeAddress()
     {
@@ -89,76 +89,136 @@ class YandexProviderTest extends TestCase
     public function testGetGeocodedDataWithRealAddress()
     {
         $provider = new YandexProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
-        $result   = $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
+        $results  = $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
 
-        $this->assertEquals(48.863277, $result['latitude'], '', 0.01);
-        $this->assertEquals(2.389016, $result['longitude'], '', 0.01);
-        $this->assertEquals(48.861926, $result['bounds']['south'], '', 0.01);
-        $this->assertEquals(2.386967, $result['bounds']['west'], '', 0.01);
-        $this->assertEquals(48.864629, $result['bounds']['north'], '', 0.01);
-        $this->assertEquals(2.391064, $result['bounds']['east'], '', 0.01);
-        $this->assertEquals(10, $result['streetNumber']);
-        $this->assertEquals('Иль-Де-Франс', $result['cityDistrict']);
-        $this->assertEquals('Avenue Gambetta', $result['streetName']);
-        $this->assertEquals('Франция', $result['country']);
-        $this->assertEquals('FR', $result['countryCode']);
+        $this->assertTrue(is_array($results));
+        $this->assertCount(YandexProvider::MAX_RESULTS, $results);
+
+        $this->assertTrue(is_array($results[0]));
+        $this->assertEquals(48.863277, $results[0]['latitude'], '', 0.01);
+        $this->assertEquals(2.389016, $results[0]['longitude'], '', 0.01);
+        $this->assertEquals(48.861926, $results[0]['bounds']['south'], '', 0.01);
+        $this->assertEquals(2.386967, $results[0]['bounds']['west'], '', 0.01);
+        $this->assertEquals(48.864629, $results[0]['bounds']['north'], '', 0.01);
+        $this->assertEquals(2.391064, $results[0]['bounds']['east'], '', 0.01);
+        $this->assertEquals(10, $results[0]['streetNumber']);
+        $this->assertEquals('Иль-Де-Франс', $results[0]['cityDistrict']);
+        $this->assertEquals('Avenue Gambetta', $results[0]['streetName']);
+        $this->assertEquals('Франция', $results[0]['country']);
+        $this->assertEquals('FR', $results[0]['countryCode']);
 
         // not provided
-        $this->assertNull($result['zipcode']);
-        $this->assertNull($result['city']);
-        $this->assertNull($result['region']);
-        $this->assertNull($result['regionCode']);
-        $this->assertNull($result['timezone']);
+        $this->assertNull($results[0]['zipcode']);
+        $this->assertNull($results[0]['city']);
+        $this->assertNull($results[0]['region']);
+        $this->assertNull($results[0]['regionCode']);
+        $this->assertNull($results[0]['timezone']);
+
+        $this->assertTrue(is_array($results[1]));
+        $this->assertEquals(48.810138, $results[1]['latitude'], '', 0.01);
+        $this->assertEquals(2.435926, $results[1]['longitude'], '', 0.01);
+
+        $this->assertTrue(is_array($results[2]));
+        $this->assertEquals(48.892773, $results[2]['latitude'], '', 0.01);
+        $this->assertEquals(2.246174, $results[2]['longitude'], '', 0.01);
+
+        $this->assertTrue(is_array($results[3]));
+        $this->assertEquals(48.844640, $results[3]['latitude'], '', 0.01);
+        $this->assertEquals(2.420493, $results[3]['longitude'], '', 0.01);
+
+        $this->assertTrue(is_array($results[4]));
+        $this->assertEquals(48.813520, $results[4]['latitude'], '', 0.01);
+        $this->assertEquals(2.324642, $results[4]['longitude'], '', 0.01);
     }
 
     public function testGetGeocodedDataWithRealAddressWithUALocale()
     {
         $provider = new YandexProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), 'uk-UA');
-        $result   = $provider->getGeocodedData('Copenhagen, Denmark');
+        $results  = $provider->getGeocodedData('Copenhagen, Denmark');
 
-        $this->assertEquals(55.675682, $result['latitude'], '', 0.01);
-        $this->assertEquals(12.567602, $result['longitude'], '', 0.01);
-        $this->assertEquals(55.614999, $result['bounds']['south'], '', 0.01);
-        $this->assertEquals(12.45295, $result['bounds']['west'], '', 0.01);
-        $this->assertEquals(55.73259, $result['bounds']['north'], '', 0.01);
-        $this->assertEquals(12.65075, $result['bounds']['east'], '', 0.01);
-        $this->assertNull($result['streetNumber']);
-        $this->assertEquals('Капитал', $result['cityDistrict']);
-        $this->assertNull($result['streetName']);
-        $this->assertEquals('Данія', $result['country']);
-        $this->assertEquals('DK', $result['countryCode']);
+        $this->assertTrue(is_array($results));
+        $this->assertCount(YandexProvider::MAX_RESULTS, $results);
+
+        $this->assertTrue(is_array($results[0]));
+        $this->assertEquals(55.675682, $results[0]['latitude'], '', 0.01);
+        $this->assertEquals(12.567602, $results[0]['longitude'], '', 0.01);
+        $this->assertEquals(55.614999, $results[0]['bounds']['south'], '', 0.01);
+        $this->assertEquals(12.45295, $results[0]['bounds']['west'], '', 0.01);
+        $this->assertEquals(55.73259, $results[0]['bounds']['north'], '', 0.01);
+        $this->assertEquals(12.65075, $results[0]['bounds']['east'], '', 0.01);
+        $this->assertNull($results[0]['streetNumber']);
+        $this->assertEquals('Капитал', $results[0]['cityDistrict']);
+        $this->assertNull($results[0]['streetName']);
+        $this->assertEquals('Данія', $results[0]['country']);
+        $this->assertEquals('DK', $results[0]['countryCode']);
 
         // not provided
-        $this->assertNull($result['zipcode']);
-        $this->assertNull($result['city']);
-        $this->assertNull($result['region']);
-        $this->assertNull($result['regionCode']);
-        $this->assertNull($result['timezone']);
+        $this->assertNull($results[0]['zipcode']);
+        $this->assertNull($results[0]['city']);
+        $this->assertNull($results[0]['region']);
+        $this->assertNull($results[0]['regionCode']);
+        $this->assertNull($results[0]['timezone']);
+
+        $this->assertTrue(is_array($results[1]));
+        $this->assertEquals(55.614439, $results[1]['latitude'], '', 0.01);
+        $this->assertEquals(12.645351, $results[1]['longitude'], '', 0.01);
+
+        $this->assertTrue(is_array($results[2]));
+        $this->assertEquals(55.713258, $results[2]['latitude'], '', 0.01);
+        $this->assertEquals(12.534930, $results[2]['longitude'], '', 0.01);
+
+        $this->assertTrue(is_array($results[3]));
+        $this->assertEquals(55.698878, $results[3]['latitude'], '', 0.01);
+        $this->assertEquals(12.578211, $results[3]['longitude'], '', 0.01);
+
+        $this->assertTrue(is_array($results[4]));
+        $this->assertEquals(55.690380, $results[4]['latitude'], '', 0.01);
+        $this->assertEquals(12.554827, $results[4]['longitude'], '', 0.01);
     }
 
     public function testGetGeocodedDataWithRealAddressWithUSLocale()
     {
         $provider = new YandexProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), 'en-US');
-        $result   = $provider->getGeocodedData('1600 Pennsylvania Ave, Washington');
+        $results  = $provider->getGeocodedData('1600 Pennsylvania Ave, Washington');
 
-        $this->assertEquals(38.898720, $result['latitude'], '', 0.01);
-        $this->assertEquals(-77.036384, $result['longitude'], '', 0.01);
-        $this->assertEquals(38.897119, $result['bounds']['south'], '', 0.01);
-        $this->assertEquals(-77.038432, $result['bounds']['west'], '', 0.01);
-        $this->assertEquals(38.90032, $result['bounds']['north'], '', 0.01);
-        $this->assertEquals(-77.034335, $result['bounds']['east'], '', 0.01);
-        $this->assertEquals(1600, $result['streetNumber']);
-        $this->assertEquals('District of Columbia', $result['cityDistrict']);
-        $this->assertEquals('Pennsylvania Ave NW', $result['streetName']);
-        $this->assertEquals('United States', $result['country']);
-        $this->assertEquals('US', $result['countryCode']);
+        $this->assertTrue(is_array($results));
+        $this->assertCount(YandexProvider::MAX_RESULTS, $results);
+
+        $this->assertTrue(is_array($results[0]));
+        $this->assertEquals(38.898720, $results[0]['latitude'], '', 0.01);
+        $this->assertEquals(-77.036384, $results[0]['longitude'], '', 0.01);
+        $this->assertEquals(38.897119, $results[0]['bounds']['south'], '', 0.01);
+        $this->assertEquals(-77.038432, $results[0]['bounds']['west'], '', 0.01);
+        $this->assertEquals(38.90032, $results[0]['bounds']['north'], '', 0.01);
+        $this->assertEquals(-77.034335, $results[0]['bounds']['east'], '', 0.01);
+        $this->assertEquals(1600, $results[0]['streetNumber']);
+        $this->assertEquals('District of Columbia', $results[0]['cityDistrict']);
+        $this->assertEquals('Pennsylvania Ave NW', $results[0]['streetName']);
+        $this->assertEquals('United States', $results[0]['country']);
+        $this->assertEquals('US', $results[0]['countryCode']);
 
         // not provided
-        $this->assertNull($result['zipcode']);
-        $this->assertNull($result['city']);
-        $this->assertNull($result['region']);
-        $this->assertNull($result['regionCode']);
-        $this->assertNull($result['timezone']);
+        $this->assertNull($results[0]['zipcode']);
+        $this->assertNull($results[0]['city']);
+        $this->assertNull($results[0]['region']);
+        $this->assertNull($results[0]['regionCode']);
+        $this->assertNull($results[0]['timezone']);
+
+        $this->assertTrue(is_array($results[1]));
+        $this->assertEquals(38.875642, $results[1]['latitude'], '', 0.01);
+        $this->assertEquals(-76.975442, $results[1]['longitude'], '', 0.01);
+
+        $this->assertTrue(is_array($results[2]));
+        $this->assertEquals(39.684978, $results[2]['latitude'], '', 0.01);
+        $this->assertEquals(-77.720720, $results[2]['longitude'], '', 0.01);
+
+        $this->assertTrue(is_array($results[3]));
+        $this->assertEquals(47.572849, $results[3]['latitude'], '', 0.01);
+        $this->assertEquals(-122.642072, $results[3]['longitude'], '', 0.01);
+
+        $this->assertTrue(is_array($results[4]));
+        $this->assertEquals(40.061443, $results[4]['latitude'], '', 0.01);
+        $this->assertEquals(-79.892317, $results[4]['longitude'], '', 0.01);
     }
 
     public function testGetGeocodedDataWithRealAddressWithBYLocale()
@@ -166,6 +226,11 @@ class YandexProviderTest extends TestCase
         $provider = new YandexProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), 'be-BY');
         $result   = $provider->getGeocodedData('ул.Ленина, 19, Минск 220030, Республика Беларусь');
 
+        $this->assertTrue(is_array($result));
+        $this->assertCount(1, $result); // only one result from the provider
+
+        $result = $result[0];
+        $this->assertTrue(is_array($result));
         $this->assertEquals(53.898077, $result['latitude'], '', 0.01);
         $this->assertEquals(27.563673, $result['longitude'], '', 0.01);
         $this->assertEquals(53.896867, $result['bounds']['south'], '', 0.01);
@@ -188,7 +253,7 @@ class YandexProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResultException
-     * @expectedExceptionMessage Could not execute query http://geocode-maps.yandex.ru/1.x/?results=1&format=json&geocode=2.000000,1.000000
+     * @expectedExceptionMessage Could not execute query http://geocode-maps.yandex.ru/1.x/?format=json&geocode=2.000000,1.000000&results=5
      */
     public function testGetReversedData()
     {
@@ -198,7 +263,7 @@ class YandexProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResultException
-     * @expectedExceptionMessage Could not execute query http://geocode-maps.yandex.ru/1.x/?results=1&format=json&geocode=0.000000,0.000000
+     * @expectedExceptionMessage Could not execute query http://geocode-maps.yandex.ru/1.x/?format=json&geocode=0.000000,0.000000&results=5
      */
     public function testGetReversedDataWithInvalidData()
     {
@@ -208,7 +273,7 @@ class YandexProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResultException
-     * @expectedExceptionMessage Could not execute query http://geocode-maps.yandex.ru/1.x/?results=1&format=json&geocode=2.388772,48.863216
+     * @expectedExceptionMessage Could not execute query http://geocode-maps.yandex.ru/1.x/?format=json&geocode=2.388772,48.863216&results=5
      */
     public function testGetReversedDataWithAddressGetsNullContent()
     {
@@ -219,100 +284,140 @@ class YandexProviderTest extends TestCase
     public function testGetReversedDataWithRealCoordinates()
     {
         $provider = new YandexProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
-        $result = $provider->getReversedData(array(48.863216489553, 2.388771995902061));
+        $results  = $provider->getReversedData(array(48.863216489553, 2.388771995902061));
 
-        $this->assertEquals(48.863212, $result['latitude'], '', 0.01);
-        $this->assertEquals(2.388773, $result['longitude'], '', 0.01);
-        $this->assertEquals(48.86294, $result['bounds']['south'], '', 0.01);
-        $this->assertEquals(2.387497, $result['bounds']['west'], '', 0.01);
-        $this->assertEquals(48.877038, $result['bounds']['north'], '', 0.01);
-        $this->assertEquals(2.423214, $result['bounds']['east'], '', 0.01);
-        $this->assertNull($result['streetNumber']);
-        $this->assertEquals('Иль-Де-Франс', $result['cityDistrict']);
-        $this->assertEquals('Avenue Gambetta', $result['streetName']);
-        $this->assertEquals('Франция', $result['country']);
-        $this->assertEquals('FR', $result['countryCode']);
+        $this->assertTrue(is_array($results));
+        $this->assertCount(3, $results); // only 3 results from the provider
+
+        $this->assertTrue(is_array($results[0]));
+        $this->assertEquals(48.863212, $results[0]['latitude'], '', 0.01);
+        $this->assertEquals(2.388773, $results[0]['longitude'], '', 0.01);
+        $this->assertEquals(48.86294, $results[0]['bounds']['south'], '', 0.01);
+        $this->assertEquals(2.387497, $results[0]['bounds']['west'], '', 0.01);
+        $this->assertEquals(48.877038, $results[0]['bounds']['north'], '', 0.01);
+        $this->assertEquals(2.423214, $results[0]['bounds']['east'], '', 0.01);
+        $this->assertNull($results[0]['streetNumber']);
+        $this->assertEquals('Иль-Де-Франс', $results[0]['cityDistrict']);
+        $this->assertEquals('Avenue Gambetta', $results[0]['streetName']);
+        $this->assertEquals('Франция', $results[0]['country']);
+        $this->assertEquals('FR', $results[0]['countryCode']);
 
         // not provided
-        $this->assertNull($result['zipcode']);
-        $this->assertNull($result['city']);
-        $this->assertNull($result['region']);
-        $this->assertNull($result['regionCode']);
-        $this->assertNull($result['timezone']);
+        $this->assertNull($results[0]['zipcode']);
+        $this->assertNull($results[0]['city']);
+        $this->assertNull($results[0]['region']);
+        $this->assertNull($results[0]['regionCode']);
+        $this->assertNull($results[0]['timezone']);
+
+        $this->assertTrue(is_array($results[1]));
+        $this->assertEquals(48.709273, $results[1]['latitude'], '', 0.01);
+        $this->assertEquals(2.503371, $results[1]['longitude'], '', 0.01);
+
+        $this->assertTrue(is_array($results[2]));
+        $this->assertEquals(46.621810, $results[2]['latitude'], '', 0.01);
+        $this->assertEquals(2.452113, $results[2]['longitude'], '', 0.01);
     }
 
     public function testGetReversedDataWithRealCoordinatesWithUSLocaleAndStreeToponym()
     {
         $provider = new YandexProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), 'en-US', 'street');
-        $result = $provider->getReversedData(array(48.863216489553, 2.388771995902061));
+        $results  = $provider->getReversedData(array(48.863216489553, 2.388771995902061));
 
-        $this->assertEquals(48.87132, $result['latitude'], '', 0.01);
-        $this->assertEquals(2.404017, $result['longitude'], '', 0.01);
-        $this->assertEquals(48.86294, $result['bounds']['south'], '', 0.01);
-        $this->assertEquals(2.387497, $result['bounds']['west'], '', 0.01);
-        $this->assertEquals(48.877038, $result['bounds']['north'], '', 0.01);
-        $this->assertEquals(2.423214, $result['bounds']['east'], '', 0.01);
-        $this->assertNull($result['streetNumber']);
-        $this->assertEquals('Ile-de-France', $result['cityDistrict']);
-        $this->assertEquals('Avenue Gambetta', $result['streetName']);
-        $this->assertEquals('France', $result['country']);
-        $this->assertEquals('FR', $result['countryCode']);
+        $this->assertTrue(is_array($results));
+        $this->assertCount(YandexProvider::MAX_RESULTS, $results);
+
+        $this->assertTrue(is_array($results[0]));
+        $this->assertEquals(48.87132, $results[0]['latitude'], '', 0.01);
+        $this->assertEquals(2.404017, $results[0]['longitude'], '', 0.01);
+        $this->assertEquals(48.86294, $results[0]['bounds']['south'], '', 0.01);
+        $this->assertEquals(2.387497, $results[0]['bounds']['west'], '', 0.01);
+        $this->assertEquals(48.877038, $results[0]['bounds']['north'], '', 0.01);
+        $this->assertEquals(2.423214, $results[0]['bounds']['east'], '', 0.01);
+        $this->assertNull($results[0]['streetNumber']);
+        $this->assertEquals('Ile-de-France', $results[0]['cityDistrict']);
+        $this->assertEquals('Avenue Gambetta', $results[0]['streetName']);
+        $this->assertEquals('France', $results[0]['country']);
+        $this->assertEquals('FR', $results[0]['countryCode']);
 
         // not provided
-        $this->assertNull($result['zipcode']);
-        $this->assertNull($result['city']);
-        $this->assertNull($result['region']);
-        $this->assertNull($result['regionCode']);
-        $this->assertNull($result['timezone']);
+        $this->assertNull($results[0]['zipcode']);
+        $this->assertNull($results[0]['city']);
+        $this->assertNull($results[0]['region']);
+        $this->assertNull($results[0]['regionCode']);
+        $this->assertNull($results[0]['timezone']);
+
+        $this->assertTrue(is_array($results[1]));
+        $this->assertEquals(48.863230, $results[1]['latitude'], '', 0.01);
+        $this->assertEquals(2.388261, $results[1]['longitude'], '', 0.01);
+
+        $this->assertTrue(is_array($results[2]));
+        $this->assertEquals(48.866022, $results[2]['latitude'], '', 0.01);
+        $this->assertEquals(2.389662, $results[2]['longitude'], '', 0.01);
+
+        $this->assertTrue(is_array($results[3]));
+        $this->assertEquals(48.863918, $results[3]['latitude'], '', 0.01);
+        $this->assertEquals(2.387767, $results[3]['longitude'], '', 0.01);
+
+        $this->assertTrue(is_array($results[4]));
+        $this->assertEquals(48.863787, $results[4]['latitude'], '', 0.01);
+        $this->assertEquals(2.389600, $results[4]['longitude'], '', 0.01);
     }
 
     public function testGetReversedDataWithRealCoordinatesWithUALocaleAndHouseToponym()
     {
         $provider = new YandexProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), 'uk-UA', 'house');
-        $result = $provider->getReversedData(array(60.4539471768582, 22.2567842183875));
+        $results  = $provider->getReversedData(array(60.4539471768582, 22.2567842183875));
 
-        $this->assertEquals(60.454462, $result['latitude'], '', 0.01);
-        $this->assertEquals(22.256561, $result['longitude'], '', 0.01);
-        $this->assertEquals(60.45345, $result['bounds']['south'], '', 0.01);
-        $this->assertEquals(22.254513, $result['bounds']['west'], '', 0.01);
-        $this->assertEquals(60.455474, $result['bounds']['north'], '', 0.01);
-        $this->assertEquals(22.258609, $result['bounds']['east'], '', 0.01);
-        $this->assertEquals(36, $result['streetNumber']);
-        $this->assertEquals('Исконная Финляндия', $result['cityDistrict']);
-        //$this->assertEquals('Bangårdsgatan', $result['streetName']);
-        $this->assertEquals('Фінляндія', $result['country']);
-        $this->assertEquals('FI', $result['countryCode']);
+        $this->assertTrue(is_array($results));
+        $this->assertCount(YandexProvider::MAX_RESULTS, $results);
+
+        $this->assertTrue(is_array($results[0]));
+        $this->assertEquals(60.454462, $results[0]['latitude'], '', 0.01);
+        $this->assertEquals(22.256561, $results[0]['longitude'], '', 0.01);
+        $this->assertEquals(60.45345, $results[0]['bounds']['south'], '', 0.01);
+        $this->assertEquals(22.254513, $results[0]['bounds']['west'], '', 0.01);
+        $this->assertEquals(60.455474, $results[0]['bounds']['north'], '', 0.01);
+        $this->assertEquals(22.258609, $results[0]['bounds']['east'], '', 0.01);
+        $this->assertEquals(36, $results[0]['streetNumber']);
+        $this->assertEquals('Исконная Финляндия', $results[0]['cityDistrict']);
+        //$this->assertEquals('Bangårdsgatan', $results[0]['streetName']);
+        $this->assertEquals('Фінляндія', $results[0]['country']);
+        $this->assertEquals('FI', $results[0]['countryCode']);
 
         // not provided
-        $this->assertNull($result['zipcode']);
-        $this->assertNull($result['city']);
-        $this->assertNull($result['region']);
-        $this->assertNull($result['regionCode']);
-        $this->assertNull($result['timezone']);
+        $this->assertNull($results[0]['zipcode']);
+        $this->assertNull($results[0]['city']);
+        $this->assertNull($results[0]['region']);
+        $this->assertNull($results[0]['regionCode']);
+        $this->assertNull($results[0]['timezone']);
     }
 
     public function testGetReversedDataWithRealCoordinatesWithTRLocaleAndLocalityToponym()
     {
         $provider = new YandexProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), 'tr-TR', 'locality');
-        $result = $provider->getReversedData(array(40.900640, 29.198184));
+        $results  = $provider->getReversedData(array(40.900640, 29.198184));
 
-        $this->assertEquals(40.909452, $result['latitude'], '', 0.01);
-        $this->assertEquals(29.138608, $result['longitude'], '', 0.01);
-        $this->assertEquals(40.860413, $result['bounds']['south'], '', 0.01);
-        $this->assertEquals(29.072708, $result['bounds']['west'], '', 0.01);
-        $this->assertEquals(40.960403, $result['bounds']['north'], '', 0.01);
-        $this->assertEquals(29.204508, $result['bounds']['east'], '', 0.01);
-        $this->assertNull($result['streetNumber']);
-        $this->assertEquals('İstanbul', $result['cityDistrict']);
-        $this->assertNull($result['streetName']);
-        $this->assertEquals('Türkiye', $result['country']);
-        $this->assertEquals('TR', $result['countryCode']);
+        $this->assertTrue(is_array($results));
+        $this->assertCount(YandexProvider::MAX_RESULTS, $results);
+
+        $this->assertTrue(is_array($results[0]));
+        $this->assertEquals(40.909452, $results[0]['latitude'], '', 0.01);
+        $this->assertEquals(29.138608, $results[0]['longitude'], '', 0.01);
+        $this->assertEquals(40.860413, $results[0]['bounds']['south'], '', 0.01);
+        $this->assertEquals(29.072708, $results[0]['bounds']['west'], '', 0.01);
+        $this->assertEquals(40.960403, $results[0]['bounds']['north'], '', 0.01);
+        $this->assertEquals(29.204508, $results[0]['bounds']['east'], '', 0.01);
+        $this->assertNull($results[0]['streetNumber']);
+        $this->assertEquals('İstanbul', $results[0]['cityDistrict']);
+        $this->assertNull($results[0]['streetName']);
+        $this->assertEquals('Türkiye', $results[0]['country']);
+        $this->assertEquals('TR', $results[0]['countryCode']);
 
         // not provided
-        $this->assertNull($result['zipcode']);
-        $this->assertNull($result['city']);
-        $this->assertNull($result['region']);
-        $this->assertNull($result['regionCode']);
-        $this->assertNull($result['timezone']);
+        $this->assertNull($results[0]['zipcode']);
+        $this->assertNull($results[0]['city']);
+        $this->assertNull($results[0]['region']);
+        $this->assertNull($results[0]['regionCode']);
+        $this->assertNull($results[0]['timezone']);
     }
 }

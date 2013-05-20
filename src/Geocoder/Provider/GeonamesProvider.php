@@ -21,14 +21,19 @@ use Geocoder\HttpAdapter\HttpAdapterInterface;
 class GeonamesProvider extends AbstractProvider implements ProviderInterface
 {
     /**
-     * @var string
+     * @var integer
      */
-    const GEOCODE_ENDPOINT_URL = 'http://api.geonames.org/searchJSON?q=%s&maxRows=1&style=full&username=%s';
+    const MAX_RESULTS = 5;
 
     /**
      * @var string
      */
-    const REVERSE_ENDPOINT_URL = 'http://api.geonames.org/findNearbyPlaceNameJSON?lat=%F&lng=%F&style=full&maxRows=1&username=%s';
+    const GEOCODE_ENDPOINT_URL = 'http://api.geonames.org/searchJSON?q=%s&maxRows=%d&style=full&username=%s';
+
+    /**
+     * @var string
+     */
+    const REVERSE_ENDPOINT_URL = 'http://api.geonames.org/findNearbyPlaceNameJSON?lat=%F&lng=%F&style=full&maxRows=%d&username=%s';
 
     /**
      * @var string
@@ -60,7 +65,7 @@ class GeonamesProvider extends AbstractProvider implements ProviderInterface
             throw new UnsupportedException('The GeonamesProvider does not support IP addresses.');
         }
 
-        $query = sprintf(self::GEOCODE_ENDPOINT_URL, urlencode($address), $this->username);
+        $query = sprintf(self::GEOCODE_ENDPOINT_URL, urlencode($address), self::MAX_RESULTS, $this->username);
 
         return $this->executeQuery($query);
     }
@@ -74,7 +79,7 @@ class GeonamesProvider extends AbstractProvider implements ProviderInterface
             throw new InvalidCredentialsException('No Username provided');
         }
 
-        $query = sprintf(self::REVERSE_ENDPOINT_URL, $coordinates[0], $coordinates[1], $this->username);
+        $query = sprintf(self::REVERSE_ENDPOINT_URL, $coordinates[0], $coordinates[1], self::MAX_RESULTS, $this->username);
 
         return $this->executeQuery($query);
     }
@@ -105,38 +110,46 @@ class GeonamesProvider extends AbstractProvider implements ProviderInterface
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
-        $json = json_decode($content);
-
-        if (isset($json->totalResultsCount) && ($json->totalResultsCount === 0)) {
-            throw new NoResultException(sprintf('No places found for query %s', $query));
-        }
-
-        if (isset($json->geonames) && !(empty($json->geonames))) {
-            $data = (array) $json->geonames[0];
-        } else {
+        if (null === $json = json_decode($content)) {
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
-        $bounds = null;
-        if (isset($data['bbox'])) {
-            $bounds = array(
-                'south' => $data['bbox']->south,
-                'west'  => $data['bbox']->west,
-                'north' => $data['bbox']->north,
-                'east'  => $data['bbox']->east
-            );
+        if (isset($json->totalResultsCount) && empty($json->totalResultsCount)) {
+            throw new NoResultException(sprintf('No places found for query %s', $query));
         }
 
-        return array_merge($this->getDefaults(), array(
-            'latitude'      => isset($data['lat']) ? $data['lat'] : null,
-            'longitude'     => isset($data['lng']) ? $data['lng'] : null,
-            'bounds'        => $bounds,
-            'city'          => isset($data['name']) ? $data['name'] : null,
-            'county'        => isset($data['adminName2']) ? $data['adminName2'] : null,
-            'region'        => isset($data['adminName1']) ? $data['adminName1'] : null,
-            'country'       => isset($data['countryName']) ? $data['countryName'] : null,
-            'countryCode'   => isset($data['countryCode']) ? $data['countryCode'] : null,
-            'timezone'      => isset($data['timezone']->timeZoneId)  ? $data['timezone']->timeZoneId : null,
-        ));
+        $data = $json->geonames;
+
+        if (!isset($data) || empty($data)) {
+            throw new NoResultException(sprintf('Could not execute query %s', $query));
+        }
+
+        $results = array();
+
+        foreach ($data as $item) {
+            $bounds = null;
+            if (isset($item->bbox)) {
+                $bounds = array(
+                    'south' => $item->bbox->south,
+                    'west'  => $item->bbox->west,
+                    'north' => $item->bbox->north,
+                    'east'  => $item->bbox->east
+                );
+            }
+
+            $results[] = array_merge($this->getDefaults(), array(
+                'latitude'    => isset($item->lat) ? $item->lat : null,
+                'longitude'   => isset($item->lng) ? $item->lng : null,
+                'bounds'      => $bounds,
+                'city'        => isset($item->name) ? $item->name : null,
+                'county'      => isset($item->adminName2) ? $item->adminName2 : null,
+                'region'      => isset($item->adminName1) ? $item->adminName1 : null,
+                'country'     => isset($item->countryName) ? $item->countryName : null,
+                'countryCode' => isset($item->countryCode) ? $item->countryCode : null,
+                'timezone'    => isset($item->timezone->timeZoneId)  ? $item->timezone->timeZoneId : null,
+            ));
+        }
+
+        return $results;
     }
 }

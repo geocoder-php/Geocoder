@@ -73,9 +73,9 @@ class GeocoderUsProvider extends AbstractProvider implements ProviderInterface
         $lat  = $xpath->xpath('//geo:lat');
         $long = $xpath->xpath('//geo:long');
 
-        return array_merge($this->getDefaults(), array(
+        return array(array_merge($this->getDefaults(), array(
             'latitude'  => isset($lat[0]) ? (double) $lat[0] : null,
             'longitude' => isset($long[0]) ? (double) $long[0] : null,
-        ));
+        )));
     }
 }

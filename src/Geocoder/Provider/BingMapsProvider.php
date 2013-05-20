@@ -21,9 +21,14 @@ use Geocoder\Exception\UnsupportedException;
 class BingMapsProvider extends AbstractProvider implements ProviderInterface
 {
     /**
+     * @var integer
+     */
+    const MAX_RESULTS = 5;
+
+    /**
      * @var string
      */
-    const GEOCODE_ENDPOINT_URL = 'http://dev.virtualearth.net/REST/v1/Locations/?q=%s&key=%s';
+    const GEOCODE_ENDPOINT_URL = 'http://dev.virtualearth.net/REST/v1/Locations/?maxResults=%d&q=%s&key=%s';
 
     /**
      * @var string
@@ -61,7 +66,7 @@ class BingMapsProvider extends AbstractProvider implements ProviderInterface
             throw new UnsupportedException('The BingMapsProvider does not support IP addresses.');
         }
 
-        $query = sprintf(self::GEOCODE_ENDPOINT_URL, urlencode($address), $this->apiKey);
+        $query = sprintf(self::GEOCODE_ENDPOINT_URL, self::MAX_RESULTS, urlencode($address), $this->apiKey);
 
         return $this->executeQuery($query);
     }
@@ -107,43 +112,49 @@ class BingMapsProvider extends AbstractProvider implements ProviderInterface
 
         $json = json_decode($content);
 
-        if (isset($json->resourceSets[0]) && isset($json->resourceSets[0]->resources[0])) {
-            $data = (array) $json->resourceSets[0]->resources[0];
-        } else {
+        if (!isset($json->resourceSets[0]) || !isset($json->resourceSets[0]->resources)) {
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
-        $coordinates = (array) $data['geocodePoints'][0]->coordinates;
+        $data = (array) $json->resourceSets[0]->resources;
 
-        $bounds = null;
-        if (isset($data['bbox']) && is_array($data['bbox']) && count($data['bbox']) > 0) {
-            $bounds = array(
-                'south' => $data['bbox'][0],
-                'west'  => $data['bbox'][1],
-                'north' => $data['bbox'][2],
-                'east'  => $data['bbox'][3]
-            );
+        $results = array();
+
+        foreach ($data as $item) {
+            $coordinates = (array) $item->geocodePoints[0]->coordinates;
+
+            $bounds = null;
+            if (isset($item->bbox) && is_array($item->bbox) && count($item->bbox) > 0) {
+                $bounds = array(
+                    'south' => $item->bbox[0],
+                    'west'  => $item->bbox[1],
+                    'north' => $item->bbox[2],
+                    'east'  => $item->bbox[3]
+                );
+            }
+
+            $streetNumber = null;
+            $streetName   = property_exists($item->address, 'addressLine') ? (string) $item->address->addressLine : '';
+            $zipcode      = property_exists($item->address, 'postalCode') ? (string) $item->address->postalCode : '';
+            $city         = property_exists($item->address, 'locality') ? (string) $item->address->locality: '';
+            $county       = property_exists($item->address, 'adminDistrict2') ? (string) $item->address->adminDistrict2 : '';
+            $region       = property_exists($item->address, 'adminDistrict') ? (string) $item->address->adminDistrict: '';
+            $country      = property_exists($item->address, 'countryRegion') ? (string) $item->address->countryRegion: '';
+
+            $results[] = array_merge($this->getDefaults(), array(
+                'latitude'     => $coordinates[0],
+                'longitude'    => $coordinates[1],
+                'bounds'       => $bounds,
+                'streetNumber' => $streetNumber,
+                'streetName'   => $streetName,
+                'city'         => empty($city) ? null : $city,
+                'zipcode'      => empty($zipcode) ? null : $zipcode,
+                'county'       => empty($county) ? null : $county,
+                'region'       => empty($region) ? null : $region,
+                'country'      => empty($country) ? null : $country,
+            ));
         }
 
-        $streetNumber = null;
-        $streetName   = property_exists($data['address'], 'addressLine') ? (string) $data['address']->addressLine : '';
-        $zipcode      = property_exists($data['address'], 'postalCode') ? (string) $data['address']->postalCode : '';
-        $city         = property_exists($data['address'], 'locality') ? (string) $data['address']->locality: '';
-        $county       = property_exists($data['address'], 'adminDistrict2') ? (string) $data['address']->adminDistrict2 : '';
-        $region       = property_exists($data['address'], 'adminDistrict') ? (string) $data['address']->adminDistrict: '';
-        $country      = property_exists($data['address'], 'countryRegion') ? (string) $data['address']->countryRegion: '';
-
-        return array_merge($this->getDefaults(), array(
-            'latitude'     => $coordinates[0],
-            'longitude'    => $coordinates[1],
-            'bounds'       => $bounds,
-            'streetNumber' => $streetNumber,
-            'streetName'   => $streetName,
-            'city'         => empty($city) ? null : $city,
-            'zipcode'      => empty($zipcode) ? null : $zipcode,
-            'county'       => empty($county) ? null : $county,
-            'region'       => empty($region) ? null : $region,
-            'country'      => empty($country) ? null : $country,
-        ));
+        return $results;
     }
 }
