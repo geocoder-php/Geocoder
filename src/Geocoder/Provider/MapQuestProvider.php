@@ -10,6 +10,7 @@
 
 namespace Geocoder\Provider;
 
+use Geocoder\HttpAdapter\HttpAdapterInterface;
 use Geocoder\Exception\NoResultException;
 use Geocoder\Exception\UnsupportedException;
 
@@ -21,12 +22,24 @@ class MapQuestProvider extends AbstractProvider implements ProviderInterface
     /**
      * @var string
      */
-    const GEOCODE_ENDPOINT_URL = 'http://open.mapquestapi.com/geocoding/v1/address?location=%s&outFormat=json&maxResults=1&thumbMaps=false';
+    const GEOCODE_ENDPOINT_NOKEY_URL = 'http://open.mapquestapi.com/geocoding/v1/address?location=%s&outFormat=json&maxResults=1&thumbMaps=false';
+
+    /**
+     * @var string
+     */
+    const GEOCODE_ENDPOINT_URL = 'http://www.mapquestapi.com/geocoding/v1/address?location=%s&outFormat=json&maxResults=1&key=%s';
 
     /**
      * @var string
      */
     const REVERSE_ENDPOINT_URL = 'http://open.mapquestapi.com/geocoding/v1/reverse?lat=%F&lng=%F';
+
+    public function __construct(HttpAdapterInterface $adapter, $locale = null, $apiKey = null)
+    {
+        parent::__construct($adapter, $locale);
+
+        $this->apiKey = $apiKey;
+    }
 
     /**
      * {@inheritDoc}
@@ -38,7 +51,11 @@ class MapQuestProvider extends AbstractProvider implements ProviderInterface
             throw new UnsupportedException('The MapQuestProvider does not support IP addresses.');
         }
 
-        $query = sprintf(self::GEOCODE_ENDPOINT_URL, urlencode($address));
+        if (null === $this->apiKey) {
+            $query = sprintf(self::GEOCODE_ENDPOINT_NOKEY_URL, urlencode($address));
+        } else {
+            $query = sprintf(self::GEOCODE_ENDPOINT_URL, urlencode($address), $this->apiKey);
+        }
 
         return $this->executeQuery($query);
     }
