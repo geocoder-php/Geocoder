@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+### 2.0.0 (????-??-??) ###
+
+n/a
+
 ### 1.6.0 (2013-05-22) ###
 
 * Added: API key to MapQuestProvider
