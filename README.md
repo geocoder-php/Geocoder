@@ -29,7 +29,6 @@ Currently, there are many providers for the following APIs:
 * [FreeGeoIp](http://freegeoip.net/static/index.html) as IP-Based geocoding provider;
 * [HostIp](http://www.hostip.info/) as IP-Based geocoding provider;
 * [IpInfoDB](http://www.ipinfodb.com/) as IP-Based geocoding provider (city precision);
-* [Yahoo! PlaceFinder](http://developer.yahoo.com/geo/placefinder/) as Address-Based geocoding and reverse geocoding provider;
 * [Google Maps](http://code.google.com/apis/maps/documentation/geocoding/) as Address-Based geocoding and reverse geocoding provider;
 * [Google Maps for Business](https://developers.google.com/maps/documentation/business/webservices) as Address-Based geocoding and reverse geocoding provider;
 * [Bing Maps](http://msdn.microsoft.com/en-us/library/ff701715.aspx) as Address-Based geocoding and reverse geocoding provider;
@@ -132,12 +131,6 @@ The `HostIpProvider` named `host_ip` is able to geocode **IPv4 addresses** only.
 ### IpInfoDbProvider ###
 
 The `IpInfoDbProvider` named `ip_info_db` is able to geocode **IPv4 addresses** only.
-A valid api key is required.
-
-
-### YahooProvider ###
-
-The `YahooProvider` named `yahoo` is able to geocode both **IPv4 addresses** and **street addresses**. This provider can also reverse information based on coordinates (latitude, longitude).
 A valid api key is required.
 
 
@@ -279,9 +272,6 @@ That's we'll do:
 
 $geocoder = new \Geocoder\Geocoder();
 $geocoder->registerProviders(array(
-    new \Geocoder\Provider\YahooProvider(
-        $adapter, '<YAHOO_API_KEY>', $locale
-    ),
     new \Geocoder\Provider\GoogleMapsProvider(
         $adapter, $locale, $region, $useSsl
     ),
@@ -302,7 +292,7 @@ $geocoder->registerProviders(array(
 
 Parameters:
 
-* `$locale` is available for `YahooProvider`, `YandexProvider`, `BingMapsProvider` and `TomTomProvider`.
+* `$locale` is available for `YandexProvider`, `BingMapsProvider` and `TomTomProvider`.
 * `$region` is available for `GoogleMapsProvider` and `GoogleMapsBusinessProvider`.
 * `$toponym` is available for `YandexProvider`.
 * `$service` is available for `MaxMindProvider`.
@@ -314,7 +304,7 @@ Parameters:
 
 As said it's a special provider that takes a list of providers and iterates over this list to get information. Note
 that it **stops** its iteration when a provider returns a result. The result is returned by `GoogleMapsProvider`
-because `FreeGeoIpProvider` and `HostIpProvider` cannot geocode street addresses. `YahooProvider` is ignored.
+because `FreeGeoIpProvider` and `HostIpProvider` cannot geocode street addresses. `BingMapsProvider` is ignored.
 
 ``` php
 $geocoder = new \Geocoder\Geocoder();
@@ -323,7 +313,7 @@ $chain    = new \Geocoder\Provider\ChainProvider(array(
     new \Geocoder\Provider\FreeGeoIpProvider($adapter),
     new \Geocoder\Provider\HostIpProvider($adapter),
     new \Geocoder\Provider\GoogleMapsProvider($adapter, 'fr_FR', 'France', true),
-    new \Geocoder\Provider\YahooProvider($adapter, '<API_KEY>', 'fr_FR'),
+    new \Geocoder\Provider\BingMapsProvider($adapter, '<API_KEY>'),
     // ...
 ));
 $geocoder->registerProvider($chain);
@@ -587,7 +577,6 @@ Rename the `phpunit.xml.dist` file to `phpunit.xml`, then uncomment the followin
 ``` xml
 <php>
     <!-- <server name="IPINFODB_API_KEY" value="YOUR_API_KEY" /> -->
-    <!-- <server name="YAHOO_API_KEY" value="YOUR_API_KEY" /> -->
     <!-- <server name="BINGMAPS_API_KEY" value="YOUR_API_KEY" /> -->
     <!-- <server name="CLOUDMADE_API_KEY" value="YOUR_API_KEY" /> -->
     <!-- <server name="IGN_WEB_API_KEY" value="YOUR_API_KEY" /> -->
