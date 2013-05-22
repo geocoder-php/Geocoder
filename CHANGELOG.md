@@ -1,9 +1,10 @@
 CHANGELOG
 =========
 
-### 1.5.2 (????-??-??) ###
+### 1.6.0 (2013-05-22) ###
 
-n/a
+* Added: API key to MapQuestProvider
+* Fixed: DataScienceToolkitProvider test
 
 ### 1.5.1 (2013-05-15) ###
 
