@@ -18,7 +18,7 @@ use Geocoder\Exception\UnsupportedException;
 /**
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class TomTomProvider extends AbstractProvider implements ProviderInterface
+class TomTomProvider extends AbstractProvider implements LocaleAwareProviderInterface
 {
     /**
      * @var string
