@@ -18,7 +18,7 @@ use Geocoder\HttpAdapter\HttpAdapterInterface;
 /**
  * @author Giovanni Pirrotta <giovanni.pirrotta@gmail.com>
  */
-class GeonamesProvider extends AbstractProvider implements ProviderInterface
+class GeonamesProvider extends AbstractProvider implements LocaleAwareProviderInterface
 {
     /**
      * @var string

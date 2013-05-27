@@ -16,7 +16,7 @@ use Geocoder\Exception\UnsupportedException;
 /**
  * @author Niklas Närhinen <niklas@narhinen.net>
  */
-class OpenStreetMapsProvider extends AbstractProvider implements ProviderInterface
+class OpenStreetMapsProvider extends AbstractProvider implements LocaleAwareProviderInterface
 {
     /**
      * @var string
