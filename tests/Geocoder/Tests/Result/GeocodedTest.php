@@ -46,7 +46,7 @@ class GeocodedTest extends TestCase
         $coordinates = $this->geocoded->getCoordinates();
         $bounds = $this->geocoded->getBounds();
 
-        $this->assertTrue(is_array($coordinates));
+        $this->assertInternalType('array', $coordinates);
         $this->assertEquals(0.001, $coordinates[0]);
         $this->assertEquals(1, $coordinates[1]);
         $this->assertEquals(0.001, $this->geocoded->getLatitude());

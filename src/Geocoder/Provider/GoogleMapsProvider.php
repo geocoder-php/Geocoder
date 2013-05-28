@@ -139,40 +139,45 @@ class GoogleMapsProvider extends AbstractProvider implements LocaleAwareProvider
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
-        $result = $json->results[0];
-        $resultset = $this->getDefaults();
+        $results = array();
 
-        // update address components
-        foreach ($result->address_components as $component) {
-            foreach ($component->types as $type) {
-                $this->updateAddressComponent($resultset, $type, $component);
+        foreach ($json->results as $result) {
+            $resultset = $this->getDefaults();
+
+            // update address components
+            foreach ($result->address_components as $component) {
+                foreach ($component->types as $type) {
+                    $this->updateAddressComponent($resultset, $type, $component);
+                }
             }
+
+            // update coordinates
+            $coordinates = $result->geometry->location;
+            $resultset['latitude']  = $coordinates->lat;
+            $resultset['longitude'] = $coordinates->lng;
+
+            $resultset['bounds'] = null;
+            if (isset($result->geometry->bounds)) {
+                $resultset['bounds'] = array(
+                    'south' => $result->geometry->bounds->southwest->lat,
+                    'west'  => $result->geometry->bounds->southwest->lng,
+                    'north' => $result->geometry->bounds->northeast->lat,
+                    'east'  => $result->geometry->bounds->northeast->lng
+                );
+            } elseif ('ROOFTOP' === $result->geometry->location_type) {
+                // Fake bounds
+                $resultset['bounds'] = array(
+                    'south' => $coordinates->lat,
+                    'west'  => $coordinates->lng,
+                    'north' => $coordinates->lat,
+                    'east'  => $coordinates->lng
+                );
+            }
+
+            $results[] = array_merge($this->getDefaults(), $resultset);
         }
 
-        // update coordinates
-        $coordinates = $result->geometry->location;
-        $resultset['latitude']  = $coordinates->lat;
-        $resultset['longitude'] = $coordinates->lng;
-
-        $resultset['bounds'] = null;
-        if (isset($result->geometry->bounds)) {
-            $resultset['bounds'] = array(
-                'south' => $result->geometry->bounds->southwest->lat,
-                'west'  => $result->geometry->bounds->southwest->lng,
-                'north' => $result->geometry->bounds->northeast->lat,
-                'east'  => $result->geometry->bounds->northeast->lng
-            );
-        } elseif ('ROOFTOP' === $result->geometry->location_type) {
-            // Fake bounds
-            $resultset['bounds'] = array(
-                'south' => $coordinates->lat,
-                'west'  => $coordinates->lng,
-                'north' => $coordinates->lat,
-                'east'  => $coordinates->lng
-            );
-        }
-
-        return array_merge($this->getDefaults(), $resultset);
+        return $results;
     }
 
     /**

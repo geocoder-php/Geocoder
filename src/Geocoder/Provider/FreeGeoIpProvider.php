@@ -33,7 +33,7 @@ class FreeGeoIpProvider extends AbstractProvider implements ProviderInterface
         }
 
         if (in_array($address, array('127.0.0.1', '::1'))) {
-            return $this->getLocalhostDefaults();
+            return array($this->getLocalhostDefaults());
         }
 
         $query = sprintf(self::ENDPOINT_URL, $address);
@@ -79,15 +79,10 @@ class FreeGeoIpProvider extends AbstractProvider implements ProviderInterface
         //it appears that for US states the region code is not returning the FIPS standard
         if ('US' === $data['country_code'] && isset($data['region_code']) && !is_numeric($data['region_code'])) {
             $newRegionCode = $this->stateToRegionCode($data['region_code']);
-
-            if (is_numeric($newRegionCode)) {
-                $data['region_code'] = $newRegionCode;
-            } else {
-                $data['region_code'] = null;
-            }
+            $data['region_code'] = is_numeric($newRegionCode) ? $newRegionCode : null;
         }
 
-        return array_merge($this->getDefaults(), array(
+        return array(array_merge($this->getDefaults(), array(
             'latitude'    => isset($data['latitude']) ? $data['latitude'] : null,
             'longitude'   => isset($data['longitude']) ? $data['longitude'] : null,
             'city'        => isset($data['city']) ? $data['city'] : null,
@@ -96,7 +91,7 @@ class FreeGeoIpProvider extends AbstractProvider implements ProviderInterface
             'regionCode'  => isset($data['region_code']) ? $data['region_code'] : null,
             'country'     => isset($data['country_name']) ? $data['country_name'] : null,
             'countryCode' => isset($data['country_code']) ? $data['country_code'] : null,
-        ));
+        )));
     }
 
     /**

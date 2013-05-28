@@ -48,6 +48,11 @@ class GeoPluginProviderTest extends TestCase
         $provider = new GeoPluginProvider($this->getMockAdapter($this->never()));
         $result   = $provider->getGeocodedData('127.0.0.1');
 
+        $this->assertInternalType('array', $result);
+        $this->assertCount(1, $result);
+
+        $result = $result[0];
+        $this->assertInternalType('array', $result);
         $this->assertArrayNotHasKey('latitude', $result);
         $this->assertArrayNotHasKey('longitude', $result);
         $this->assertArrayNotHasKey('zipcode', $result);
@@ -64,6 +69,11 @@ class GeoPluginProviderTest extends TestCase
         $provider = new GeoPluginProvider($this->getMockAdapter($this->never()));
         $result   = $provider->getGeocodedData('::1');
 
+        $this->assertInternalType('array', $result);
+        $this->assertCount(1, $result);
+
+        $result = $result[0];
+        $this->assertInternalType('array', $result);
         $this->assertArrayNotHasKey('latitude', $result);
         $this->assertArrayNotHasKey('longitude', $result);
         $this->assertArrayNotHasKey('zipcode', $result);
@@ -100,6 +110,11 @@ class GeoPluginProviderTest extends TestCase
         $provider = new GeoPluginProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result   = $provider->getGeocodedData('66.147.244.214');
 
+        $this->assertInternalType('array', $result);
+        $this->assertCount(1, $result);
+
+        $result = $result[0];
+        $this->assertInternalType('array', $result);
         $this->assertEquals('Provo', $result['city']);
         $this->assertEquals(40.218102, $result['latitude'], '', 0.0001);
         $this->assertEquals(-111.613297, $result['longitude'], '', 0.0001);

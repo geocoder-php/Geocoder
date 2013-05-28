@@ -23,12 +23,12 @@ class IGNOpenLSProvider extends AbstractProvider implements ProviderInterface
     /**
      * @var string
      */
-    const ENDPOINT_URL = 'http://gpp3-wxs.ign.fr/%s/geoportail/ols?output=json&xls=';
+    const ENDPOINT_URL = 'http://gpp3-wxs.ign.fr/%s/geoportail/ols?output=xml&xls=';
 
     /**
      * @var string
      */
-    const ENDPOINT_QUERY = '<xls:XLS xmlns:xls="http://www.opengis.net/xls" version="1.2"><xls:RequestHeader/><xls:Request methodName="LocationUtilityService" version="1.2" maximumResponses="1"><xls:GeocodeRequest returnFreeForm="false"><xls:Address countryCode="StreetAddress"><xls:freeFormAddress>%s</xls:freeFormAddress></xls:Address></xls:GeocodeRequest></xls:Request></xls:XLS>';
+    const ENDPOINT_QUERY = '<xls:XLS xmlns:xls="http://www.opengis.net/xls" version="1.2"><xls:RequestHeader/><xls:Request methodName="LocationUtilityService" version="1.2" maximumResponses="%d"><xls:GeocodeRequest returnFreeForm="false"><xls:Address countryCode="StreetAddress"><xls:freeFormAddress>%s</xls:freeFormAddress></xls:Address></xls:GeocodeRequest></xls:Request></xls:XLS>';
 
     /**
      * @var string
@@ -60,41 +60,64 @@ class IGNOpenLSProvider extends AbstractProvider implements ProviderInterface
             throw new UnsupportedException('The IGNOpenLSProvider does not support IP addresses.');
         }
 
-        $query   = sprintf(self::ENDPOINT_URL, $this->apiKey) . urlencode(sprintf(self::ENDPOINT_QUERY, $address));
+        $query   = sprintf('%s%s',
+            sprintf(self::ENDPOINT_URL, $this->apiKey),
+            urlencode(sprintf(self::ENDPOINT_QUERY, $this->getMaxResults(), $address))
+        );
         $content = $this->getAdapter()->getContent($query);
-        $data    = (array) json_decode($content, true);
 
-        if (empty($data) || null === $data['xml']) {
+        $doc = new \DOMDocument;
+        if (!@$doc->loadXML($content)) {
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
-        if (200 !== $data['http']['status'] || null !== $data['http']['error']) {
+        $xml = new \SimpleXMLElement($content);
+
+        if (isset($xml->ErrorList->Error)) {
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
-        $xpath = new \SimpleXMLElement($data['xml']);
-        $xpath->registerXPathNamespace('gml', 'http://www.opengis.net/gml');
-        $positions = $xpath->xpath('//gml:pos');
-        $positions = explode(' ', $positions[0]);
+        $numberOfGeocodedAddresses = (int) $xml->Response->GeocodeResponse->GeocodeResponseList['numberOfGeocodedAddresses'];
 
-        $xpath->registerXPathNamespace('xls', 'http://www.opengis.net/xls');
-        $zipcode      = $xpath->xpath('//xls:PostalCode');
-        $city         = $xpath->xpath('//xls:Place[@type="Municipality"]');
-        $streetNumber = $xpath->xpath('//xls:Building');
-        $cityDistrict = $xpath->xpath('//xls:Street');
+        if (isset($numberOfGeocodedAddresses) && 0 === $numberOfGeocodedAddresses) {
+            throw new NoResultException(sprintf('Could not execute query %s', $query));
+        }
 
-        return array_merge($this->getDefaults(), array(
-            'latitude'     => isset($positions[0]) ? (float) $positions[0] : null,
-            'longitude'    => isset($positions[1]) ? (float) $positions[1] : null,
-            'streetNumber' => isset($streetNumber[0]) ? (string) $streetNumber[0]->attributes() : null,
-            'streetName'   => isset($cityDistrict[0]) ? (string) $cityDistrict[0] : null,
-            'city'         => isset($city[0]) ? (string) $city[0] : null,
-            'zipcode'      => isset($zipcode[0]) ? (string) $zipcode[0] : null,
-            'cityDistrict' => isset($cityDistrict[0]) ? (string) $cityDistrict[0] : null,
-            'country'      => 'France',
-            'countryCode'  => 'FR',
-            'timezone'     => 'Europe/Paris'
-        ));
+        $results = array();
+
+        $xml->registerXPathNamespace('gml', 'http://www.opengis.net/gml');
+
+        for ($i = 0; $i < $numberOfGeocodedAddresses; $i++) {
+            $positions = $xml->xpath('//gml:pos');
+            $positions = explode(' ', $positions[$i]);
+
+            $zipcode      = $xml->xpath('//xls:PostalCode');
+            $city         = $xml->xpath('//xls:Place[@type="Municipality"]');
+            $bbox         = $xml->xpath('//xls:Place[@type="Bbox"]');
+            $streetNumber = $xml->xpath('//xls:Building');
+            $cityDistrict = $xml->xpath('//xls:Street');
+
+            $bounds = null;
+            if (isset($bbox[$i])) {
+                list($bounds['west'], $bounds['south'], $bounds['east'], $bounds['north']) = explode(';', $bbox[$i]);
+            }
+
+            $results[] = array_merge($this->getDefaults(), array(
+                'latitude'     => isset($positions[0]) ? (float) $positions[0] : null,
+                'longitude'    => isset($positions[1]) ? (float) $positions[1] : null,
+                'bounds'       => $bounds,
+                'streetNumber' => isset($streetNumber[$i]) ? (string) $streetNumber[$i]->attributes() : null,
+                'streetName'   => isset($cityDistrict[$i]) ? (string) $cityDistrict[$i] : null,
+                'city'         => isset($city[$i]) ? (string) $city[$i] : null,
+                'zipcode'      => isset($zipcode[$i]) ? (string) $zipcode[$i] : null,
+                'cityDistrict' => isset($cityDistrict[$i]) ? (string) $cityDistrict[$i] : null,
+                'country'      => 'France',
+                'countryCode'  => 'FR',
+                'timezone'     => 'Europe/Paris'
+            ));
+        }
+
+        return $results;
     }
 
     /**

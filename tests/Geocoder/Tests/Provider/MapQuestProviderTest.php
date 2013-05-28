@@ -18,7 +18,7 @@ class MapQuestProviderTest extends TestCase
 
     /**
      * @expectedException Geocoder\Exception\NoResultException
-     * @expectedExceptionMessage Could not find results for given query: http://open.mapquestapi.com/geocoding/v1/address?location=foobar&outFormat=json&maxResults=1&thumbMaps=fals
+     * @expectedExceptionMessage Could not find results for given query: http://open.mapquestapi.com/geocoding/v1/address?location=foobar&outFormat=json&maxResults=5&thumbMaps=fals
      */
     public function testGetGeocodedData()
     {
@@ -38,7 +38,7 @@ class MapQuestProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResultException
-     * @expectedExceptionMessage Could not execute query http://open.mapquestapi.com/geocoding/v1/address?location=10+avenue+Gambetta%2C+Paris%2C+France&outFormat=json&maxResults=1&thumbMaps=false
+     * @expectedExceptionMessage Could not execute query http://open.mapquestapi.com/geocoding/v1/address?location=10+avenue+Gambetta%2C+Paris%2C+France&outFormat=json&maxResults=5&thumbMaps=false
      */
     public function testGetGeocodedDataWithAddressGetsNullContent()
     {
@@ -49,8 +49,13 @@ class MapQuestProviderTest extends TestCase
     public function testGetGeocodedDataWithRealAddress()
     {
         $provider = new MapQuestProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
-        $result   = $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
+        $results  = $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
 
+        $this->assertInternalType('array', $results);
+        $this->assertCount(1, $results);
+
+        $result = $results[0];
+        $this->assertInternalType('array', $result);
         $this->assertEquals(48.866205, $result['latitude'], '', 0.01);
         $this->assertEquals(2.389089, $result['longitude'], '', 0.01);
         $this->assertNull($result['bounds']);
@@ -73,20 +78,7 @@ class MapQuestProviderTest extends TestCase
     public function testGetReversedData()
     {
         $provider = new MapQuestProvider($this->getMockAdapter());
-        $result   = $provider->getReversedData(array(1, 2));
-
-        $this->assertNull($result['latitude']);
-        $this->assertNull($result['longitude']);
-        $this->assertNull($result['bounds']);
-        $this->assertNull($result['streetNumber']);
-        $this->assertNull($result['streetName']);
-        $this->assertNull($result['city']);
-        $this->assertNull($result['zipcode']);
-        $this->assertNull($result['county']);
-        $this->assertNull($result['region']);
-        $this->assertNull($result['country']);
-        $this->assertNull($result['countryCode']);
-        $this->assertNull($result['timezone']);
+        $provider->getReversedData(array(1, 2));
     }
 
     public function testGetReversedDataWithRealCoordinates()
@@ -94,6 +86,11 @@ class MapQuestProviderTest extends TestCase
         $provider = new MapQuestProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
         $result   = $provider->getReversedData(array(54.0484068, -2.7990345));
 
+        $this->assertInternalType('array', $result);
+        $this->assertCount(1, $result);
+
+        $result = $result[0];
+        $this->assertInternalType('array', $result);
         $this->assertEquals(54.0484068, $result['latitude'], '', 0.001);
         $this->assertEquals(-2.7990345, $result['longitude'], '', 0.001);
         $this->assertNull($result['bounds']);
@@ -112,17 +109,62 @@ class MapQuestProviderTest extends TestCase
     public function testGetGeocodedDataWithCity()
     {
         $provider = new MapQuestProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
-        $result   = $provider->getGeocodedData('Hannover');
+        $results  = $provider->getGeocodedData('Hanover');
 
-        $this->assertNull($result['zipcode']);
-        $this->assertNull($result['timezone']);
+        $this->assertInternalType('array', $results);
+        $this->assertCount(5, $results);
+
+        $this->assertInternalType('array', $results[0]);
+        $this->assertEquals(52.374478, $results[0]['latitude'], '', 0.01);
+        $this->assertEquals(9.738553, $results[0]['longitude'], '', 0.01);
+        $this->assertEquals('Hanover', $results[0]['city']);
+        $this->assertEquals('Region Hannover', $results[0]['county']);
+        $this->assertEquals('Niedersachsen (Landmasse)', $results[0]['region']);
+        $this->assertEquals('DE', $results[0]['country']);
+
+        $this->assertInternalType('array', $results[1]);
+        $this->assertEquals(37.744783, $results[1]['latitude'], '', 0.01);
+        $this->assertEquals(-77.446416, $results[1]['longitude'], '', 0.01);
+        $this->assertNull($results[1]['city']);
+        $this->assertEquals('Hanover', $results[1]['county']);
+        $this->assertEquals('Virginia', $results[1]['region']);
+        $this->assertEquals('US', $results[1]['country']);
+
+        $this->assertInternalType('array', $results[2]);
+        $this->assertEquals(18.383715, $results[2]['latitude'], '', 0.01);
+        $this->assertEquals(-78.131484, $results[2]['longitude'], '', 0.01);
+        $this->assertNull($results[2]['city']);
+        $this->assertEquals('Hanover', $results[2]['county']);
+        $this->assertNull($results[2]['region']);
+        $this->assertEquals('JM', $results[2]['country']);
+
+        $this->assertInternalType('array', $results[3]);
+        $this->assertEquals(43.703307, $results[3]['latitude'], '', 0.01);
+        $this->assertEquals(-72.288566, $results[3]['longitude'], '', 0.01);
+        $this->assertEquals('Hanover', $results[3]['city']);
+        $this->assertEquals('Grafton County', $results[3]['county']);
+        $this->assertEquals('New Hampshire', $results[3]['region']);
+        $this->assertEquals('US', $results[3]['country']);
+
+        $this->assertInternalType('array', $results[4]);
+        $this->assertEquals(39.806325, $results[4]['latitude'], '', 0.01);
+        $this->assertEquals(-76.984274, $results[4]['longitude'], '', 0.01);
+        $this->assertEquals('Hanover', $results[4]['city']);
+        $this->assertEquals('York County', $results[4]['county']);
+        $this->assertEquals('Pennsylvania', $results[4]['region']);
+        $this->assertEquals('US', $results[4]['country']);
     }
 
     public function testGetGeocodedDataWithCityDistrict()
     {
         $provider = new MapQuestProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
-        $result = $provider->getGeocodedData('Kalbacher Hauptstraße 10, 60437 Frankfurt, Germany');
+        $result   = $provider->getGeocodedData('Kalbacher Hauptstraße 10, 60437 Frankfurt, Germany');
 
+        $this->assertInternalType('array', $result);
+        $this->assertCount(1, $result);
+
+        $result = $result[0];
+        $this->assertInternalType('array', $result);
         $this->assertEquals(50.189062, $result['latitude'], '', 0.01);
         $this->assertEquals(8.636567, $result['longitude'], '', 0.01);
         $this->assertNull($result['bounds']);

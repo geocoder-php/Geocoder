@@ -94,6 +94,10 @@ class BaiduProviderTest extends TestCase
         $provider = new BaiduProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['BAIDU_API_KEY'], 'fr-FR');
         $result   = $provider->getGeocodedData('上地十街10号 北京市'); // Beijing
 
+        $this->assertInternalType('array', $result);
+        $this->assertCount(1, $result);
+
+        $result = $result[0];
         $this->assertEquals(40.056885, $result['latitude'], '', 0.01);
         $this->assertEquals(116.30815, $result['longitude'], '', 0.01);
         $this->assertNull($result['bounds']);
@@ -148,8 +152,12 @@ class BaiduProviderTest extends TestCase
         }
 
         $provider = new BaiduProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['BAIDU_API_KEY']);
-        $result = $provider->getReversedData(array(39.983424, 116.322987));
+        $result   = $provider->getReversedData(array(39.983424, 116.322987));
 
+        $this->assertInternalType('array', $result);
+        $this->assertCount(1, $result);
+
+        $result = $result[0];
         $this->assertEquals(39.983424, $result['latitude'], '', 0.01);
         $this->assertEquals(116.322987, $result['longitude'], '', 0.01);
         $this->assertNull($result['bounds']);
@@ -178,7 +186,7 @@ class BaiduProviderTest extends TestCase
         }
 
         $provider = new BaiduProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['BAIDU_API_KEY']);
-        $result = $provider->getGeocodedData('88.188.221.14');
+        $provider->getGeocodedData('88.188.221.14');
     }
 
     /**
@@ -192,7 +200,7 @@ class BaiduProviderTest extends TestCase
         }
 
         $provider = new BaiduProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['BAIDU_API_KEY']);
-        $result = $provider->getGeocodedData('::ffff:88.188.221.14');
+        $provider->getGeocodedData('::ffff:88.188.221.14');
     }
 
     /**

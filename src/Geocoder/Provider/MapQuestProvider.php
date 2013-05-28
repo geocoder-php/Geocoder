@@ -93,27 +93,31 @@ class MapQuestProvider extends AbstractProvider implements ProviderInterface
 
         $json = json_decode($content, true);
 
-        if (isset($json['results']) && !empty($json['results'])) {
-            $result = current($json['results']);
-
-            if (isset($result['locations']) && !empty($result['locations'])) {
-                $location = current($result['locations']);
-
-                // TODO: maybe add more information using the link below:
-                // http://open.mapquestapi.com/geocoding/
-                return array_merge($this->getDefaults(), array(
-                    'latitude'      => $location['latLng']['lat'],
-                    'longitude'     => $location['latLng']['lng'],
-                    'streetName'    => $location['street'] ?: null,
-                    'city'          => $location['adminArea5'] ?: null,
-                    'zipcode'       => $location['postalCode'] ?: null,
-                    'county'        => $location['adminArea4'] ?: null,
-                    'region'        => $location['adminArea3'] ?: null,
-                    'country'       => $location['adminArea1'] ?: null,
-                ));
-            }
+        if (!isset($json['results']) || empty($json['results'])) {
+            throw new NoResultException(sprintf('Could not find results for given query: %s', $query));
         }
 
-        throw new NoResultException(sprintf('Could not find results for given query: %s', $query));
+        $locations = $json['results'][0]['locations'];
+
+        if (empty($locations)) {
+            throw new NoResultException(sprintf('Could not find results for given query: %s', $query));
+        }
+
+        $results = array();
+
+        foreach ($locations as $location) {
+            $results[] = array_merge($this->getDefaults(), array(
+                'latitude'      => $location['latLng']['lat'],
+                'longitude'     => $location['latLng']['lng'],
+                'streetName'    => $location['street'] ?: null,
+                'city'          => $location['adminArea5'] ?: null,
+                'zipcode'       => $location['postalCode'] ?: null,
+                'county'        => $location['adminArea4'] ?: null,
+                'region'        => $location['adminArea3'] ?: null,
+                'country'       => $location['adminArea1'] ?: null,
+            ));
+        }
+
+        return $results;
     }
 }

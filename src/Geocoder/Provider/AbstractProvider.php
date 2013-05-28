@@ -10,6 +10,7 @@
 
 namespace Geocoder\Provider;
 
+use Geocoder\Geocoder;
 use Geocoder\HttpAdapter\HttpAdapterInterface;
 
 /**
@@ -26,6 +27,11 @@ abstract class AbstractProvider
      * @var string
      */
     protected $locale = null;
+
+    /**
+     * @var integer
+     */
+    protected $maxResults = Geocoder::MAX_RESULTS;
 
     /**
      * @param HttpAdapterInterface $adapter An HTTP adapter.
@@ -83,6 +89,30 @@ abstract class AbstractProvider
         $this->locale = $locale;
 
         return $this;
+    }
+
+    /**
+     * Sets the maximum of returned results.
+     *
+     * @param integer $maxResults
+     *
+     * @return AbstractProvider
+     */
+    public function setMaxResults($maxResults)
+    {
+        $this->maxResults = $maxResults;
+
+        return $this;
+    }
+
+    /**
+     * Returns the maximum of wished results.
+     *
+     * @return integer
+     */
+    public function getMaxResults()
+    {
+        return $this->maxResults;
     }
 
     /**
