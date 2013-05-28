@@ -73,11 +73,13 @@ class IGNOpenLSProvider extends AbstractProvider implements ProviderInterface
 
         $xml = new \SimpleXMLElement($content);
 
-        if (isset($xml->ErrorList->Error)) {
+        if (isset($xml->ErrorList->Error) || null === $xml->Response->GeocodeResponse) {
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
-        $numberOfGeocodedAddresses = (int) $xml->Response->GeocodeResponse->GeocodeResponseList['numberOfGeocodedAddresses'];
+        $numberOfGeocodedAddresses = (int) $xml->Response
+            ->GeocodeResponse
+            ->GeocodeResponseList['numberOfGeocodedAddresses'];
 
         if (isset($numberOfGeocodedAddresses) && 0 === $numberOfGeocodedAddresses) {
             throw new NoResultException(sprintf('Could not execute query %s', $query));

@@ -28,7 +28,7 @@ class MapQuestProviderTest extends TestCase
 
     /**
      * @expectedException Geocoder\Exception\NoResultException
-     * @expectedExceptionMessage Could not find results for given query: http://www.mapquestapi.com/geocoding/v1/address?location=foobar&outFormat=json&maxResults=1&key=my-api-key
+     * @expectedExceptionMessage Could not find results for given query: http://www.mapquestapi.com/geocoding/v1/address?location=foobar&outFormat=json&maxResults=5&key=my-api-key
      */
     public function testGetGeocodedDataWithApiKey()
     {

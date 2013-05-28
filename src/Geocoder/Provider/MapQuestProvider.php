@@ -22,12 +22,12 @@ class MapQuestProvider extends AbstractProvider implements ProviderInterface
     /**
      * @var string
      */
-    const GEOCODE_ENDPOINT_NOKEY_URL = 'http://open.mapquestapi.com/geocoding/v1/address?location=%s&outFormat=json&maxResults=1&thumbMaps=false';
+    const GEOCODE_ENDPOINT_NOKEY_URL = 'http://open.mapquestapi.com/geocoding/v1/address?location=%s&outFormat=json&maxResults=%d&thumbMaps=false';
 
     /**
      * @var string
      */
-    const GEOCODE_ENDPOINT_URL = 'http://www.mapquestapi.com/geocoding/v1/address?location=%s&outFormat=json&maxResults=1&key=%s';
+    const GEOCODE_ENDPOINT_URL = 'http://www.mapquestapi.com/geocoding/v1/address?location=%s&outFormat=json&maxResults=%d&key=%s';
 
     /**
      * @var string
@@ -52,9 +52,9 @@ class MapQuestProvider extends AbstractProvider implements ProviderInterface
         }
 
         if (null === $this->apiKey) {
-            $query = sprintf(self::GEOCODE_ENDPOINT_NOKEY_URL, urlencode($address));
+            $query = sprintf(self::GEOCODE_ENDPOINT_NOKEY_URL, urlencode($address), $this->getMaxResults());
         } else {
-            $query = sprintf(self::GEOCODE_ENDPOINT_URL, urlencode($address), $this->apiKey);
+            $query = sprintf(self::GEOCODE_ENDPOINT_URL, urlencode($address), $this->getMaxResults(), $this->apiKey);
         }
 
         return $this->executeQuery($query);
