@@ -18,7 +18,7 @@ use Geocoder\Exception\UnsupportedException;
 /**
  * @author David Guyon <dguyon@gmail.com>
  */
-class BingMapsProvider extends AbstractProvider implements ProviderInterface
+class BingMapsProvider extends AbstractProvider implements LocaleAwareProviderInterface
 {
     /**
      * @var string

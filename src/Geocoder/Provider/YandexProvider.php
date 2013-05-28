@@ -17,7 +17,7 @@ use Geocoder\Exception\NoResultException;
 /**
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class YandexProvider extends AbstractProvider implements ProviderInterface
+class YandexProvider extends AbstractProvider implements LocaleAwareProviderInterface
 {
     /**
      * @var string

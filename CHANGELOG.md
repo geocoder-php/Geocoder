@@ -5,6 +5,11 @@ CHANGELOG
 
 n/a
 
+### 1.7.0 (2013-05-28) ###
+
+* Updated: Geocoder now uses the official geoip library
+* Added: LocaleAwareProviderInterface
+
 ### 1.6.0 (2013-05-22) ###
 
 * Added: API key to MapQuestProvider
