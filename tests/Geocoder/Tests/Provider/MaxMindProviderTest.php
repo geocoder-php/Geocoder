@@ -320,11 +320,11 @@ class MaxMindProviderTest extends TestCase
 
         $result = $result[0];
         $this->assertInternalType('array', $result);
-        $this->assertEquals(37.748402, $result['latitude'], '', 0.001);
-        $this->assertEquals(-122.415604, $result['longitude'], '', 0.001);
-        $this->assertEquals('San Francisco', $result['city']);
-        $this->assertEquals(94110, $result['zipcode']);
-        $this->assertEquals('CA', $result['regionCode']);
+        $this->assertEquals(33.034698, $result['latitude'], '', 0.1);
+        $this->assertEquals(-96.813400, $result['longitude'], '', 0.1);
+        $this->assertEquals('Plano', $result['city']);
+        $this->assertEquals(75093, $result['zipcode']);
+        $this->assertEquals('TX', $result['regionCode']);
         $this->assertEquals('United States', $result['country']);
         $this->assertEquals('US', $result['countryCode']);
         $this->assertNull($result['bounds']);
@@ -352,11 +352,11 @@ class MaxMindProviderTest extends TestCase
 
         $result = $result[0];
         $this->assertInternalType('array', $result);
-        $this->assertEquals(37.748402, $result['latitude'], '', 0.001);
-        $this->assertEquals(-122.415604, $result['longitude'], '', 0.001);
-        $this->assertEquals('San Francisco', $result['city']);
-        $this->assertEquals(94110, $result['zipcode']);
-        $this->assertEquals('CA', $result['regionCode']);
+        $this->assertEquals(33.0347, $result['latitude'], '', 0.1);
+        $this->assertEquals(-96.8134, $result['longitude'], '', 0.1);
+        $this->assertEquals('Plano', $result['city']);
+        $this->assertEquals(75093, $result['zipcode']);
+        $this->assertEquals('TX', $result['regionCode']);
         $this->assertEquals('United States', $result['country']);
         $this->assertEquals('US', $result['countryCode']);
         $this->assertNull($result['bounds']);
@@ -365,8 +365,8 @@ class MaxMindProviderTest extends TestCase
         $this->assertNull($result['cityDistrict']);
         $this->assertNull($result['county']);
         $this->assertNull($result['countyCode']);
-        $this->assertEquals('California', $result['region']);
-        $this->assertEquals('America/Los_Angeles', $result['timezone']);
+        $this->assertEquals('Texas', $result['region']);
+        $this->assertEquals('America/Chicago', $result['timezone']);
     }
 
     public function testGetGeocodedDataWithRealIPv6()
@@ -383,8 +383,8 @@ class MaxMindProviderTest extends TestCase
 
         $result = $result[0];
         $this->assertInternalType('array', $result);
-        $this->assertEquals(40.2181, $result['latitude'], '', 0.001);
-        $this->assertEquals(-111.6133, $result['longitude'], '', 0.001);
+        $this->assertEquals(40.2181, $result['latitude'], '', 0.1);
+        $this->assertEquals(-111.6133, $result['longitude'], '', 0.1);
         $this->assertEquals('Provo', $result['city']);
         $this->assertEquals(84606, $result['zipcode']);
         $this->assertEquals('UT', $result['regionCode']);
@@ -415,8 +415,8 @@ class MaxMindProviderTest extends TestCase
 
         $result = $result[0];
         $this->assertInternalType('array', $result);
-        $this->assertEquals(40.2181, $result['latitude'], '', 0.001);
-        $this->assertEquals(-111.6133, $result['longitude'], '', 0.001);
+        $this->assertEquals(40.2181, $result['latitude'], '', 0.1);
+        $this->assertEquals(-111.6133, $result['longitude'], '', 0.1);
         $this->assertEquals('Provo', $result['city']);
         $this->assertEquals(84606, $result['zipcode']);
         $this->assertEquals('UT', $result['regionCode']);
