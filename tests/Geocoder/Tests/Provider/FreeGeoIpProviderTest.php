@@ -115,11 +115,11 @@ class FreeGeoIpProviderTest extends TestCase
 
         $result = $result[0];
         $this->assertInternalType('array', $result);
-        $this->assertEquals(37.7484, $result['latitude'], '', 0.01);
-        $this->assertEquals(-122.4156, $result['longitude'], '', 0.01);
-        $this->assertEquals(94110, $result['zipcode']);
-        $this->assertEquals('San Francisco', $result['city']);
-        $this->assertEquals('California', $result['region']);
+        $this->assertEquals(33.0347, $result['latitude'], '', 0.01);
+        $this->assertEquals(-96.8134, $result['longitude'], '', 0.01);
+        $this->assertEquals(75093, $result['zipcode']);
+        $this->assertEquals('Plano', $result['city']);
+        $this->assertEquals('Texas', $result['region']);
         $this->assertEquals('United States', $result['country']);
         $this->assertEquals('US', $result['countryCode']);
     }
@@ -134,11 +134,11 @@ class FreeGeoIpProviderTest extends TestCase
 
         $result = $result[0];
         $this->assertInternalType('array', $result);
-        $this->assertEquals(37.7484, $result['latitude'], '', 0.01);
-        $this->assertEquals(-122.4156, $result['longitude'], '', 0.01);
-        $this->assertEquals(94110, $result['zipcode']);
-        $this->assertEquals('San Francisco', $result['city']);
-        $this->assertEquals('California', $result['region']);
+        $this->assertEquals(33.0347, $result['latitude'], '', 0.01);
+        $this->assertEquals(-96.8134, $result['longitude'], '', 0.01);
+        $this->assertEquals(75093, $result['zipcode']);
+        $this->assertEquals('Plano', $result['city']);
+        $this->assertEquals('Texas', $result['region']);
         $this->assertEquals('United States', $result['country']);
         $this->assertEquals('US', $result['countryCode']);
     }
@@ -163,7 +163,7 @@ class FreeGeoIpProviderTest extends TestCase
 
         $result = $result[0];
         $this->assertInternalType('array', $result);
-        $this->assertEquals('6', $result['regionCode']);
+        $this->assertEquals('48', $result['regionCode']);
     }
 
     public function testGetGeocodedDataWithUSIPv6()
@@ -176,7 +176,7 @@ class FreeGeoIpProviderTest extends TestCase
 
         $result = $result[0];
         $this->assertInternalType('array', $result);
-        $this->assertEquals('6', $result['regionCode']);
+        $this->assertEquals('48', $result['regionCode']);
     }
 
     public function testGetGeocodedDataWithUKIPv4()

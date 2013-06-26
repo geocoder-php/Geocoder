@@ -171,7 +171,7 @@ class MapQuestProviderTest extends TestCase
         $this->assertNull($result['streetNumber']);
         $this->assertEquals('Kalbacher Hauptstraße 10', $result['streetName']);
         $this->assertEquals(60437, $result['zipcode']);
-        $this->assertEquals('Frankfurt am Main', $result['city']);
+        $this->assertEquals('Frankfurt', $result['city']);
         $this->assertEquals('Frankfurt am Main', $result['county']);
         $this->assertEquals('Hesse', $result['region']);
         $this->assertEquals('DE', $result['country']);
