@@ -28,7 +28,7 @@ class GoogleMapsBusinessProviderTest extends TestCase
 
         $query = 'http://maps.googleapis.com/maps/api/geocode/json?address=blah&sensor=false';
 
-        $this->assertEquals($query.'&client=foo', $method->invoke($provider, $query));
+        $this->assertEquals($query.'&client_id=foo', $method->invoke($provider, $query));
     }
 
     public function testBuildQueryWithPrivateKey()
@@ -47,7 +47,7 @@ class GoogleMapsBusinessProviderTest extends TestCase
 
         $query = 'http://maps.googleapis.com/maps/api/geocode/json?address=blah&sensor=false';
 
-        $this->assertEquals($query.'&client=foo&signature=JY4upbd7fi76C-bMGYk410gmB5g=', $method->invoke($provider, $query));
+        $this->assertEquals($query.'&client_id=foo&signature=jIGtKeuAW-UjGrj9Mfcclww0rmc=', $method->invoke($provider, $query));
     }
 
     public function testSignQuery()
