@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+### 2.0.1 (????-??-??) ###
+
+n/a
+
 ### 2.0.0 (2013-07-08) ###
 
 * Fixed: tests due to data changes
