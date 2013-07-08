@@ -92,11 +92,7 @@ abstract class AbstractProvider
     }
 
     /**
-     * Sets the maximum of returned results.
-     *
-     * @param integer $maxResults
-     *
-     * @return AbstractProvider
+     * {@inheritDoc}
      */
     public function setMaxResults($maxResults)
     {
