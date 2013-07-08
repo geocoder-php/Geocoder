@@ -48,6 +48,7 @@ Currently, there are many providers for the following APIs:
 * [GeoIPs](http://www.geoips.com/developer/geoips-api) as IP-Based geocoding provider;
 * [MaxMind web service](http://dev.maxmind.com/geoip/legacy/web-services) as IP-Based geocoding provider (City/ISP/Org and Omni services);
 * [MaxMind binary file](http://dev.maxmind.com/geoip/legacy/downloadable) as IP-Based geocoding provider;
+* [Sypex Geo](https://github.com/Koc/Sypexgeo/) as IP-Based geocoding provider which uses local file (also can return results on Russian);
 * [Geonames](http://www.geonames.org/) as Place-Based geocoding and reverse geocoding provider;
 * [IpGeoBase](http://ipgeobase.ru/) as IP-Based geocoding provider (very accurate in Russia);
 * [Baidu](http://developer.baidu.com/map/geocoding-api.htm) as Address-Based geocoding and reverse geocoding provider (exclusively in China);
