@@ -10,6 +10,7 @@
 
 namespace Geocoder\Provider;
 
+use Geocoder\Exception\InvalidCredentialsException;
 use Geocoder\Exception\UnsupportedException;
 use Geocoder\Exception\NoResultException;
 
@@ -17,7 +18,7 @@ use Geocoder\Exception\NoResultException;
  *
  * @author Konstantin Myakshin <koc-dp@yandex.ru>
  */
-class SypexGeoProvider extends AbstractProvider
+class SypexGeoProvider extends AbstractProvider implements ProviderInterface
 {
     private $sypex;
 
@@ -70,6 +71,14 @@ class SypexGeoProvider extends AbstractProvider
         $result = array_merge($this->getDefaults(), array_filter($result));
 
         return array($result);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getReversedData(array $coordinates)
+    {
+        throw new UnsupportedException('The Sypex Geo supports only IP addresses.');
     }
 
     /**
