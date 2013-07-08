@@ -202,7 +202,7 @@ class GeocoderTest extends TestCase
 
     public function testSetMaxResults()
     {
-        $this->geocoder->setMaxResults(3);
+        $this->geocoder->limit(3);
         $this->assertSame(3, $this->geocoder->getMaxResults());
     }
 

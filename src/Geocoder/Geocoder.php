@@ -60,7 +60,7 @@ class Geocoder implements GeocoderInterface
         $this->provider = $provider;
 
         $this->setResultFactory($resultFactory);
-        $this->setMaxResults($maxResults);
+        $this->limit($maxResults);
     }
 
     /**
