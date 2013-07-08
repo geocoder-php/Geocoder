@@ -111,7 +111,8 @@ class YandexProvider extends AbstractProvider implements LocaleAwareProviderInte
             $item           = $item['GeoObject'];
             $country        = $item['metaDataProperty']['GeocoderMetaData']['AddressDetails']['Country'];
             $addressDetails = isset($country['AdministrativeArea']) ? $country['AdministrativeArea'] : $country;
-            $locality       = isset($addressDetails['Locality']['Thoroughfare']) ? $addressDetails['Locality']['Thoroughfare'] : null;
+            $locality       = isset($addressDetails['Locality']) ? $addressDetails['Locality'] : null;
+            $thoroughfare   = isset($locality['Thoroughfare']) ? $locality['Thoroughfare'] : null;
             $coordinates    = explode(' ', $item['Point']['pos']);
             $bounds         = null;
             $lowerCorner    = explode(' ', $item['boundedBy']['Envelope']['lowerCorner']);
@@ -127,8 +128,9 @@ class YandexProvider extends AbstractProvider implements LocaleAwareProviderInte
                 'latitude'      => isset($coordinates[1]) ? $coordinates[1] : null,
                 'longitude'     => isset($coordinates[0]) ? $coordinates[0] : null,
                 'bounds'        => $bounds,
-                'streetNumber'  => isset($locality['Premise']['PremiseNumber']) ? $locality['Premise']['PremiseNumber'] : null,
-                'streetName'    => isset($locality['ThoroughfareName']) ? $locality['ThoroughfareName'] : null,
+                'streetNumber'  => isset($thoroughfare['Premise']['PremiseNumber']) ? $thoroughfare['Premise']['PremiseNumber'] : null,
+                'streetName'    => isset($thoroughfare['ThoroughfareName']) ? $thoroughfare['ThoroughfareName'] : null,
+                'city'          => isset($locality['LocalityName']) ? $locality['LocalityName'] : null,
                 'cityDistrict'  => isset($addressDetails['AdministrativeAreaName']) ? $addressDetails['AdministrativeAreaName'] : null,
                 'country'       => isset($country['CountryName']) ? $country['CountryName'] : null,
                 'countryCode'   => isset($country['CountryNameCode']) ? $country['CountryNameCode'] : null,
