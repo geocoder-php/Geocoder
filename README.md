@@ -410,6 +410,7 @@ The Geocoder's API is fluent, you can write:
 $result = $geocoder
     ->registerProvider(new \My\Provider\Custom($adapter))
     ->using('custom')
+    ->limit(10)
     ->geocode('68.145.37.34')
     ;
 ```
@@ -417,6 +418,11 @@ $result = $geocoder
 The `using()` method allows you to choose the `provider` to use by its name.
 When you deal with multiple providers, you may want to choose one of them.
 The default behavior is to use the first one but it can be annoying.
+
+The `limit()` method allows you to configure the maximum number of results
+being returned. Depending on the provider you may not get as many results as
+expected, it is a maximum limit, not the expected number of results.
+
 
 Reverse Geocoding
 -----------------
@@ -553,6 +559,12 @@ Note, `AbstractProvider` and `AbstractResult` classes can help you by providing 
 You can provide your own `dumper` by implementing the `DumperInterface`.
 
 Write your own `formatter` by implementing the `FormatterInterface`.
+
+
+Contributing
+------------
+
+See CONTRIBUTING file.
 
 
 Unit Tests
