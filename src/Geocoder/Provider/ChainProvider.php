@@ -80,6 +80,18 @@ class ChainProvider implements ProviderInterface
     /**
      * {@inheritDoc}
      */
+    public function setMaxResults($limit)
+    {
+        foreach ($this->providers as $provider) {
+            $provider->setMaxResults($limit);
+        }
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getName()
     {
         return 'chain';
