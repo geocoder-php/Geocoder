@@ -1,9 +1,14 @@
 CHANGELOG
 =========
 
-### 2.0.0 (????-??-??) ###
+### 2.0.0 (2013-07-08) ###
 
-n/a
+* Fixed: tests due to data changes
+* Added: more doc. Fix #242
+* Added: setMaxResults method
+* Added support for cities in Yandex Provider
+* Fixed: GoogleMapsBusinessProvider provider (`client_id`)
+* Refactored: providers to leverage ResultFactories - fix #232 - POTENTIAL BC BREAK
 
 ### 1.7.0 (2013-05-28) ###
 
