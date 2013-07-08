@@ -84,7 +84,7 @@ class ArcGISOnlineProviderTest extends TestCase
         $this->assertInternalType('array', $result);
         $this->assertEquals(48.863279997000461, $result['latitude'], '', 0.0001);
         $this->assertEquals(2.3890199980004354, $result['longitude'], '', 0.0001);
-        $this->assertEquals('10 Avenue Gambetta, 75020, 20e Arrondissement, Paris', $result['streetName']);
+        $this->assertEquals('10 Avenue Gambetta, 75020, Paris', $result['streetName']);
         $this->assertEquals(75020, $result['zipcode']);
         $this->assertEquals('Paris', $result['city']);
         $this->assertEquals('Paris', $result['county']);
@@ -112,7 +112,7 @@ class ArcGISOnlineProviderTest extends TestCase
         $this->assertInternalType('array', $result);
         $this->assertEquals(48.863279997000461, $result['latitude'], '', 0.0001);
         $this->assertEquals(2.3890199980004354, $result['longitude'], '', 0.0001);
-        $this->assertEquals('10 Avenue Gambetta, 75020, 20e Arrondissement, Paris', $result['streetName']);
+        $this->assertEquals('10 Avenue Gambetta, 75020, Paris', $result['streetName']);
         $this->assertEquals(75020, $result['zipcode']);
         $this->assertEquals('Paris', $result['city']);
         $this->assertEquals('Paris', $result['county']);
@@ -179,7 +179,7 @@ class ArcGISOnlineProviderTest extends TestCase
         $result = $result[0];
         $this->assertEquals(48.863279997000461, $result['latitude'], '', 0.0001);
         $this->assertEquals(2.3890199980004354, $result['longitude'], '', 0.0001);
-        $this->assertEquals('10 Avenue Gambetta', $result['streetName']);
+        $this->assertEquals('3 Avenue Gambetta', $result['streetName']);
         $this->assertEquals(75020, $result['zipcode']);
         $this->assertEquals('Paris', $result['city']);
         $this->assertEquals('Paris', $result['county']);
@@ -206,7 +206,7 @@ class ArcGISOnlineProviderTest extends TestCase
         $result = $result[0];
         $this->assertEquals(48.863279997000461, $result['latitude'], '', 0.0001);
         $this->assertEquals(2.3890199980004354, $result['longitude'], '', 0.0001);
-        $this->assertEquals('10 Avenue Gambetta', $result['streetName']);
+        $this->assertEquals('3 Avenue Gambetta', $result['streetName']);
         $this->assertEquals(75020, $result['zipcode']);
         $this->assertEquals('Paris', $result['city']);
         $this->assertEquals('Paris', $result['county']);
@@ -257,27 +257,27 @@ class ArcGISOnlineProviderTest extends TestCase
         $this->assertEquals('DEU', $results[1]['countryCode']);
 
         $this->assertInternalType('array', $results[2]);
-        $this->assertEquals(52.860295779, $results[2]['latitude'], '', 0.0001);
-        $this->assertEquals(9.5946585670005, $results[2]['longitude'], '', 0.0001);
-        $this->assertEquals('Hannover', $results[2]['streetName']);
-        $this->assertEquals('Walsrode', $results[2]['city']);
-        $this->assertEquals('Niedersachsen', $results[2]['region']);
-        $this->assertEquals('DEU', $results[2]['countryCode']);
+        $this->assertEquals(47.111386795, $results[2]['latitude'], '', 0.0001);
+        $this->assertEquals(-101.426539157, $results[2]['longitude'], '', 0.0001);
+        $this->assertEquals('Hannover, North Dakota, United States', $results[2]['streetName']);
+        $this->assertNull($results[2]['city']);
+        $this->assertEquals('North Dakota', $results[2]['region']);
+        $this->assertEquals('USA', $results[2]['countryCode']);
 
         $this->assertInternalType('array', $results[3]);
-        $this->assertEquals(52.461059225, $results[3]['latitude'], '', 0.0001);
-        $this->assertEquals(9.6850777290005, $results[3]['longitude'], '', 0.0001);
-        $this->assertEquals('Hannover', $results[3]['streetName']);
-        $this->assertEquals('Lower Saxony', $results[3]['region']);
-        $this->assertEquals('DEU', $results[3]['countryCode']);
+        $this->assertEquals(39.391768472, $results[3]['latitude'], '', 0.0001);
+        $this->assertEquals(-77.440257129, $results[3]['longitude'], '', 0.0001);
+        $this->assertEquals('Hannover, Maryland, United States', $results[3]['streetName']);
+        $this->assertEquals('Maryland', $results[3]['region']);
+        $this->assertEquals('USA', $results[3]['countryCode']);
 
         $this->assertInternalType('array', $results[4]);
-        $this->assertEquals(53.285176744, $results[4]['latitude'], '', 0.0001);
-        $this->assertEquals(10.929027428, $results[4]['longitude'], '', 0.0001);
-        $this->assertEquals('Hannover', $results[4]['streetName']);
-        $this->assertEquals('Neuhaus (Elbe)', $results[4]['city']);
-        $this->assertEquals('Niedersachsen', $results[4]['region']);
-        $this->assertEquals('Amt Neuhaus', $results[4]['county']);
+        $this->assertEquals(53.174198173, $results[4]['latitude'], '', 0.0001);
+        $this->assertEquals(8.5069383810005, $results[4]['longitude'], '', 0.0001);
+        $this->assertEquals('Hannöver, Lower Saxony, Germany', $results[4]['streetName']);
+        $this->assertNull($results[4]['city']);
+        $this->assertEquals('Lower Saxony', $results[4]['region']);
+        $this->assertNull($results[4]['county']);
         $this->assertEquals('DEU', $results[4]['countryCode']);
     }
 
