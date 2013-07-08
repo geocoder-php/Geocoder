@@ -51,4 +51,13 @@ interface ProviderInterface
      * @return string
      */
     public function getName();
+
+    /**
+     * Sets the maximum of returned results.
+     *
+     * @param integer $limit
+     *
+     * @return ProviderInterface
+     */
+    public function setMaxResults($limit);
 }
