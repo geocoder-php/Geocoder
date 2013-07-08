@@ -149,12 +149,12 @@ class YandexProviderTest extends TestCase
         $this->assertNull($results[0]['streetNumber']);
         $this->assertEquals('Столичная область', $results[0]['cityDistrict']);
         $this->assertNull($results[0]['streetName']);
+        $this->assertEquals('Копенгаген', $results[0]['city']);
         $this->assertEquals('Данія', $results[0]['country']);
         $this->assertEquals('DK', $results[0]['countryCode']);
 
         // not provided
         $this->assertNull($results[0]['zipcode']);
-        $this->assertNull($results[0]['city']);
         $this->assertNull($results[0]['region']);
         $this->assertNull($results[0]['regionCode']);
         $this->assertNull($results[0]['timezone']);
@@ -193,12 +193,12 @@ class YandexProviderTest extends TestCase
         $this->assertEquals(-77.012453, $results[0]['bounds']['east'], '', 0.01);
         $this->assertEquals('District of Columbia', $results[0]['cityDistrict']);
         $this->assertEquals('Pennsylvania Ave NW', $results[0]['streetName']);
+        $this->assertEquals('Washington', $results[0]['city']);
         $this->assertEquals('United States', $results[0]['country']);
         $this->assertEquals('US', $results[0]['countryCode']);
 
         // not provided
         $this->assertNull($results[0]['zipcode']);
-        $this->assertNull($results[0]['city']);
         $this->assertNull($results[0]['region']);
         $this->assertNull($results[0]['regionCode']);
         $this->assertNull($results[0]['timezone']);
@@ -239,12 +239,12 @@ class YandexProviderTest extends TestCase
         $this->assertEquals(19, $result['streetNumber']);
         $this->assertNull($result['cityDistrict']);
         $this->assertEquals('улица Ленина', $result['streetName']);
+        $this->assertEquals('Минск', $result['city']);
         $this->assertEquals('Беларусь', $result['country']);
         $this->assertEquals('BY', $result['countryCode']);
 
         // not provided
         $this->assertNull($result['zipcode']);
-        $this->assertNull($result['city']);
         $this->assertNull($result['region']);
         $this->assertNull($result['regionCode']);
         $this->assertNull($result['timezone']);
@@ -380,12 +380,12 @@ class YandexProviderTest extends TestCase
         $this->assertEquals(36, $results[0]['streetNumber']);
         $this->assertEquals('Исконная Финляндия', $results[0]['cityDistrict']);
         //$this->assertEquals('Bangårdsgatan', $results[0]['streetName']);
+        $this->assertEquals('Турку', $results[0]['city']);
         $this->assertEquals('Фінляндія', $results[0]['country']);
         $this->assertEquals('FI', $results[0]['countryCode']);
 
         // not provided
         $this->assertNull($results[0]['zipcode']);
-        $this->assertNull($results[0]['city']);
         $this->assertNull($results[0]['region']);
         $this->assertNull($results[0]['regionCode']);
         $this->assertNull($results[0]['timezone']);
