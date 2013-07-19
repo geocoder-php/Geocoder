@@ -124,35 +124,26 @@ class MapQuestProviderTest extends TestCase
 
         $this->assertInternalType('array', $results[1]);
         $this->assertEquals(18.383715, $results[1]['latitude'], '', 0.01);
-        $this->assertEquals(-77.446416, $results[1]['longitude'], '', 0.01);
+        $this->assertEquals(-78.131484, $results[1]['longitude'], '', 0.01);
         $this->assertNull($results[1]['city']);
         $this->assertEquals('Hanover', $results[1]['county']);
-        $this->assertEquals('Virginia', $results[1]['region']);
-        $this->assertEquals('US', $results[1]['country']);
+        $this->assertEquals('JM', $results[1]['country']);
 
         $this->assertInternalType('array', $results[2]);
-        $this->assertEquals(18.383715, $results[2]['latitude'], '', 0.01);
-        $this->assertEquals(-78.131484, $results[2]['longitude'], '', 0.01);
-        $this->assertNull($results[2]['city']);
-        $this->assertEquals('Hanover', $results[2]['county']);
-        $this->assertNull($results[2]['region']);
-        $this->assertEquals('JM', $results[2]['country']);
+        $this->assertEquals(43.703307, $results[2]['latitude'], '', 0.01);
+        $this->assertEquals(-72.288566, $results[2]['longitude'], '', 0.01);
+        $this->assertEquals('Hanover', $results[2]['city']);
+        $this->assertEquals('Grafton County', $results[2]['county']);
+        $this->assertEquals('NH', $results[2]['region']);
+        $this->assertEquals('US', $results[2]['country']);
 
         $this->assertInternalType('array', $results[3]);
-        $this->assertEquals(43.703307, $results[3]['latitude'], '', 0.01);
-        $this->assertEquals(-72.288566, $results[3]['longitude'], '', 0.01);
+        $this->assertEquals(39.806325, $results[3]['latitude'], '', 0.01);
+        $this->assertEquals(-76.984274, $results[3]['longitude'], '', 0.01);
         $this->assertEquals('Hanover', $results[3]['city']);
-        $this->assertEquals('Grafton County', $results[3]['county']);
-        $this->assertEquals('New Hampshire', $results[3]['region']);
+        $this->assertEquals('York County', $results[3]['county']);
+        $this->assertEquals('PA', $results[3]['region']);
         $this->assertEquals('US', $results[3]['country']);
-
-        $this->assertInternalType('array', $results[4]);
-        $this->assertEquals(39.806325, $results[4]['latitude'], '', 0.01);
-        $this->assertEquals(-76.984274, $results[4]['longitude'], '', 0.01);
-        $this->assertEquals('Hanover', $results[4]['city']);
-        $this->assertEquals('York County', $results[4]['county']);
-        $this->assertEquals('Pennsylvania', $results[4]['region']);
-        $this->assertEquals('US', $results[4]['country']);
     }
 
     public function testGetGeocodedDataWithCityDistrict()
