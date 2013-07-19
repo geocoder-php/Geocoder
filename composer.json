@@ -18,7 +18,8 @@
         "kriswallsmith/buzz": "@stable",
         "guzzle/guzzle": "@stable",
         "zendframework/zendframework": "~2.1",
-        "geoip/geoip": "~1.13"
+        "geoip/geoip": "~1.13",
+        "zapimir/sypexgeo": "3.0.*@dev"
     },
     "suggest": {
         "kriswallsmith/buzz": "Enabling Buzz allows you to use the BuzzHttpAdapter.",
