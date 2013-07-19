@@ -123,7 +123,7 @@ class MapQuestProviderTest extends TestCase
         $this->assertEquals('DE', $results[0]['country']);
 
         $this->assertInternalType('array', $results[1]);
-        $this->assertEquals(37.744783, $results[1]['latitude'], '', 0.01);
+        $this->assertEquals(18.383715, $results[1]['latitude'], '', 0.01);
         $this->assertEquals(-77.446416, $results[1]['longitude'], '', 0.01);
         $this->assertNull($results[1]['city']);
         $this->assertEquals('Hanover', $results[1]['county']);
