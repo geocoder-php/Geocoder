@@ -4,6 +4,7 @@ namespace Geocoder\Tests\Provider;
 
 use Geocoder\Tests\TestCase;
 use Geocoder\Provider\SypexGeoProvider;
+use SxGeo\Geocoder;
 
 /**
  *
@@ -18,7 +19,7 @@ class SypexGeoProviderTest extends TestCase
             $this->markTestSkipped('No city file found.');
         }
 
-        $provider = new SypexGeoProvider($dbFile);
+        $provider = new SypexGeoProvider(new Geocoder($dbFile));
         $results = $provider->getGeocodedData('46.98.43.114');
 
         $this->assertCount(1, $results);
@@ -36,7 +37,7 @@ class SypexGeoProviderTest extends TestCase
             $this->markTestSkipped('No country file found.');
         }
 
-        $provider = new SypexGeoProvider($dbFile, null, true);
+        $provider = new SypexGeoProvider(new Geocoder($dbFile));
         $results = $provider->getGeocodedData('46.98.43.114');
 
         $this->assertCount(1, $results);

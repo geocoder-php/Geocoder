@@ -10,9 +10,10 @@
 
 namespace Geocoder\Provider;
 
-use Geocoder\Exception\InvalidCredentialsException;
 use Geocoder\Exception\UnsupportedException;
 use Geocoder\Exception\NoResultException;
+
+use SxGeo\Geocoder;
 
 /**
  *
@@ -22,17 +23,9 @@ class SypexGeoProvider extends AbstractProvider implements ProviderInterface
 {
     private $sypex;
 
-    private $countryOnly;
-
-    public function __construct($dbFile, $flags = null, $countryOnly = false)
+    public function __construct(Geocoder $sypex)
     {
-        // trigger autoload
-        class_exists('SxGeo');
-        if (null === $flags) {
-            $flags = SXGEO_FILE;
-        }
-        $this->sypex = new \SxGeo($dbFile, $flags);
-        $this->countryOnly = $countryOnly;
+        $this->sypex = $sypex;
     }
 
     /**
@@ -44,13 +37,13 @@ class SypexGeoProvider extends AbstractProvider implements ProviderInterface
             throw new UnsupportedException('The Sypex Geo supports only IP addresses.');
         }
 
-        if ($this->countryOnly) {
-            $data = $this->sypex->getCountry($address);
+        if ($this->sypex->supportsCityGeocoding()) {
+            $data = $this->sypex->getCity($address);
+        } else {
+            $data = $this->sypex->getCountryIsoCode($address);
             if ($data) {
                 $data = array('country' => $data);
             }
-        } else {
-            $data = $this->sypex->getCityFull($address);
         }
 
         if (!$data) {
@@ -58,7 +51,7 @@ class SypexGeoProvider extends AbstractProvider implements ProviderInterface
         }
 
         $result = array('countryCode' => $data['country']);
-        if (!$this->countryOnly) {
+        if ($this->sypex->supportsCityGeocoding()) {
             $result += array(
                 'region'    => $data['region_name'],
                 'city'      => $data['city'],
