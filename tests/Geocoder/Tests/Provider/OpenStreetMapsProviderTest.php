@@ -498,4 +498,12 @@ XML;
         $provider = new OpenStreetMapsProvider($this->getMockAdapterReturns($errorXml));
         $provider->getReversedData(array('-80.000000', '-170.000000'));
     }
+
+    public function testGetNodeStreetName()
+    {
+        $provider = new OpenStreetMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), 'fr_FR');
+        $results  = $provider->getReversedData(array(48.86, 2.35));
+
+        $this->assertEquals('Rue Quincampoix', $results[0]['streetName']);
+    }
 }
