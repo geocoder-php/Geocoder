@@ -64,7 +64,7 @@ class MapQuestProviderTest extends TestCase
         $this->assertEquals(75011, $result['zipcode']);
         $this->assertEquals('Paris', $result['city']);
         $this->assertEquals('Paris', $result['county']);
-        $this->assertEquals('Île-de-France', $result['region']);
+        $this->assertEquals('Ile-de-France', $result['region']);
         $this->assertEquals('FR', $result['country']);
 
         $this->assertNull($result['countryCode']);

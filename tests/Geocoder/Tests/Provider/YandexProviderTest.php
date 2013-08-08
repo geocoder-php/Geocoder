@@ -204,20 +204,9 @@ class YandexProviderTest extends TestCase
         $this->assertNull($results[0]['timezone']);
 
         $this->assertInternalType('array', $results[1]);
-        $this->assertEquals(38.875642, $results[1]['latitude'], '', 0.01);
-        $this->assertEquals(-76.975442, $results[1]['longitude'], '', 0.01);
-
         $this->assertInternalType('array', $results[2]);
-        $this->assertEquals(39.684978, $results[2]['latitude'], '', 0.01);
-        $this->assertEquals(-77.720720, $results[2]['longitude'], '', 0.01);
-
         $this->assertInternalType('array', $results[3]);
-        $this->assertEquals(47.572849, $results[3]['latitude'], '', 0.01);
-        $this->assertEquals(-122.642072, $results[3]['longitude'], '', 0.01);
-
         $this->assertInternalType('array', $results[4]);
-        $this->assertEquals(40.061443, $results[4]['latitude'], '', 0.01);
-        $this->assertEquals(-79.892317, $results[4]['longitude'], '', 0.01);
     }
 
     public function testGetGeocodedDataWithRealAddressWithBYLocale()

@@ -203,10 +203,8 @@ class OpenStreetMapsProviderTest extends TestCase
         $this->assertEquals(20100, $result['zipcode']);
         $this->assertEquals('Turku', $result['city']);
         $this->assertEquals('VII', $result['cityDistrict']);
-        //$this->assertEquals('Finland Proper', $result['county']);
-        $this->assertNull($result['region']);
+        $this->assertEquals('Lounais-Suomen aluehallintovirasto', $result['region']);
         $this->assertNull($result['regionCode']);
-        //$this->assertEquals('Finland', $result['country']);
         $this->assertEquals('FI', $result['countryCode']);
     }
 
