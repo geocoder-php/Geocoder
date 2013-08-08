@@ -1,9 +1,11 @@
 CHANGELOG
 =========
 
-### 2.0.1 (????-??-??) ###
+### 2.0.1 (2013-08-08) ###
 
-n/a
+* Fixed: tests due to data changes
+* Fixed: use OpenStreetMap pedestrian tag for street name if road tag is not available
+* Updated: replace zendframework with zend-http
 
 ### 2.0.0 (2013-07-08) ###
 
