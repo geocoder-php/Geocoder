@@ -32,7 +32,8 @@ Currently, there are many providers for the following APIs:
 * [Google Maps](http://code.google.com/apis/maps/documentation/geocoding/) as Address-Based geocoding and reverse geocoding provider;
 * [Google Maps for Business](https://developers.google.com/maps/documentation/business/webservices) as Address-Based geocoding and reverse geocoding provider;
 * [Bing Maps](http://msdn.microsoft.com/en-us/library/ff701715.aspx) as Address-Based geocoding and reverse geocoding provider;
-* [OpenStreetMaps](http://nominatim.openstreetmap.org/) as Address-Based geocoding and reverse geocoding provider;
+* [OpenStreetMaps](http://nominatim.openstreetmap.org/) as Address-Based geocoding and reverse geocoding provider (based on the Nominatim provider);
+* [Nominatim](http://wiki.openstreetmap.org/wiki/Nominatim) as Address-Based geocoding and reverse geocoding provider;
 * [CloudMade](http://developers.cloudmade.com/projects/show/geocoding-http-api) as Address-Based geocoding and reverse geocoding provider;
 * [Geoip](http://php.net/manual/book.geoip.php), the PHP extension, as IP-Based geocoding provider;
 * ChainProvider is a special provider that takes a list of providers and iterates
@@ -155,6 +156,11 @@ A valid api key is required.
 
 The `OpenStreetMapsProvider` named `openstreetmaps` is able to geocode and reverse geocode **street addresses**.
 
+### NominatimProvider ###
+
+The `NominatimProvider` named `nominatim` is able to geocode and reverse geocode **street addresses**.
+Access to a Nominatim server is required. See the [Nominatim
+Wiki Page](http://wiki.openstreetmap.org/wiki/Nominatim) for more information.
 
 ### CloudMadeProvider ###
 
@@ -287,6 +293,9 @@ $geocoder->registerProviders(array(
     new \Geocoder\Provider\ArcGISOnlineProvider(
         $adapter, $sourceCountry, $useSsl
     ),
+    new \Geocoder\Provider\NominatimProvider(
+        $adapter, 'http://your.nominatim.server', $locale
+    ),
 ));
 ```
 
@@ -298,7 +307,7 @@ Parameters:
 * `$service` is available for `MaxMindProvider`.
 * `$useSsl` is available for `GoogleMapsProvider`, `GoogleMapsBusinessProvider`, `MaxMindProvider` and `ArcGISOnlineProvider`.
 * `$sourceCountry` is available for `ArcGISOnlineProvider`.
-
+* `$rootUrl` is available for `NominatimProvider`.
 
 ### Using The ChainProvider ###
 
