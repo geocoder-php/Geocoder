@@ -61,7 +61,7 @@ class GoogleMapsBusinessProvider extends GoogleMapsProvider
     protected function buildQuery($query)
     {
         $query = parent::buildQuery($query);
-        $query = sprintf('%s&client_id=%s', $query, $this->clientId);
+        $query = sprintf('%s&client=%s', $query, $this->clientId);
 
         if (null !== $this->privateKey) {
             $query = $this->signQuery($query);
