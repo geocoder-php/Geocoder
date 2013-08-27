@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+### 2.1.1 (????-??-??) ###
+
+n/a
+
 ### 2.1.0 (2013-08-27) ###
 
 * Added: Generic NominatimProvider
