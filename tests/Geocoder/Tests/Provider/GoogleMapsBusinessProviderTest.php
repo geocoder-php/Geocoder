@@ -28,7 +28,6 @@ class GoogleMapsBusinessProviderTest extends TestCase
 
         $query = 'http://maps.googleapis.com/maps/api/geocode/json?address=blah&sensor=false';
 
-
         $this->assertEquals($query.'&client=foo', $method->invoke($provider, $query));
     }
 
