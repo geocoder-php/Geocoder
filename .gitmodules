@@ -1,0 +1,3 @@
+[submodule "geocoder-php.github.io"]
+	path = geocoder-php.github.io
+    url = https://github.com/geocoder-php/geocoder-php.github.io
