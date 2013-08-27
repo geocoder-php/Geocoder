@@ -159,7 +159,7 @@ class OpenStreetMapsProviderTest extends TestCase
         $this->assertEquals('Clermont-Ferrand', $results[0]['county']);
         $this->assertEquals('Auvergne', $results[0]['region']);
         $this->assertNull($results[0]['regionCode']);
-        $this->assertEquals('France métropolitaine', $results[0]['country']);
+        $this->assertEquals('France', $results[0]['country']);
         $this->assertEquals('FR', $results[0]['countryCode']);
 
         $this->assertInternalType('array', $results[1]);
@@ -181,7 +181,7 @@ class OpenStreetMapsProviderTest extends TestCase
         $this->assertEquals('Clermont-Ferrand', $results[1]['county']);
         $this->assertEquals('Auvergne', $results[1]['region']);
         $this->assertNull($results[1]['regionCode']);
-        $this->assertEquals('France métropolitaine', $results[1]['country']);
+        $this->assertEquals('France', $results[1]['country']);
         $this->assertEquals('FR', $results[1]['countryCode']);
     }
 

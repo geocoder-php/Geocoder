@@ -250,7 +250,7 @@ class GoogleMapsProviderTest extends TestCase
         $result   = $provider->getReversedData(array(48.8631507, 2.388911));
 
         $this->assertInternalType('array', $result);
-        $this->assertCount(1, $result);
+        $this->assertTrue(is_array($result[0]));
 
         $result = $result[0];
         $this->assertInternalType('array', $result);

@@ -151,7 +151,7 @@ class GeocoderCaProviderTest extends TestCase
         $this->assertEquals(1, $result['streetNumber']);
         $this->assertEquals('New St', $result['streetName']);
         $this->assertEquals(10005, $result['zipcode']);
-        $this->assertEquals('YORK', $result['city']);
+        $this->assertEquals('NEW YORK', $result['city']);
         $this->assertEquals('NY', $result['cityDistrict']);
         $this->assertNull($result['region']);
         $this->assertNull($result['regionCode']);
