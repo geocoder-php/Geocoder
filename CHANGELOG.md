@@ -1,9 +1,11 @@
 CHANGELOG
 =========
 
-### 2.0.2 (????-??-??) ###
+### 2.1.0 (2013-08-27) ###
 
-n/a
+* Added: Generic NominatimProvider
+* Fixed: GoogleBusinessProvider "client_id" parameter back to just "client".
+  This reverts commit 532345bbd41221d2460591844dfffb04194c66
 
 ### 2.0.1 (2013-08-08) ###
 
