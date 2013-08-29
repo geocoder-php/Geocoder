@@ -353,7 +353,7 @@ XML;
         $this->assertNull($result['streetNumber']);
         $this->assertEquals('Avenue Gambetta', $result['streetName']);
         $this->assertNull($result['zipcode']);
-        $this->assertEquals('20ème Arrondissement Paris', $result['city']);
+        $this->assertEquals('20e Arrondissement Paris', $result['city']);
         $this->assertNull($result['cityDistrict']);
         $this->assertNull($result['region']);
         $this->assertNull($result['regionCode']);
