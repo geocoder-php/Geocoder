@@ -2,10 +2,12 @@
 
 namespace Geocoder\Tests;
 
+use Geocoder\HttpAdapter\CurlHttpAdapter;
+
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-class TestCase extends \PHPUnit_Framework_TestCase
+abstract class TestCase extends \PHPUnit_Framework_TestCase
 {
     /**
      * @return HttpAdapterInterface
@@ -16,7 +18,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
             $expects = $this->once();
         }
 
-        $mock = $this->getMock('\Geocoder\HttpAdapter\HttpAdapterInterface');
+        $mock = $this->getMock('Geocoder\HttpAdapter\HttpAdapterInterface');
         $mock
             ->expects($expects)
             ->method('getContent')
@@ -30,12 +32,25 @@ class TestCase extends \PHPUnit_Framework_TestCase
      */
     protected function getMockAdapterReturns($returnValue)
     {
-        $mock = $this->getMock('\Geocoder\HttpAdapter\HttpAdapterInterface');
+        $mock = $this->getMock('Geocoder\HttpAdapter\HttpAdapterInterface');
         $mock
             ->expects($this->once())
             ->method('getContent')
             ->will($this->returnValue($returnValue));
 
         return $mock;
+    }
+
+    /**
+     * Because I was bored to fix the test suite because of
+     * a change in a third-party API...
+     *
+     * @return HttpAdapterInterface
+     */
+    protected function getAdapter()
+    {
+        return new CachedResponseAdapter(
+            new CurlHttpAdapter()
+        );
     }
 }

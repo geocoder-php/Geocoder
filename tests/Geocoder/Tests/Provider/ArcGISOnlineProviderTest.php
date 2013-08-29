@@ -74,7 +74,7 @@ class ArcGISOnlineProviderTest extends TestCase
 
     public function testGetGeocodedDataWithRealAddress()
     {
-        $provider = new ArcGISOnlineProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new ArcGISOnlineProvider($this->getAdapter());
         $results  = $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
 
         $this->assertInternalType('array', $results);
@@ -102,7 +102,7 @@ class ArcGISOnlineProviderTest extends TestCase
 
     public function testGetGeocodedDataWithRealAddressAndHttps()
     {
-        $provider = new ArcGISOnlineProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), null, true);
+        $provider = new ArcGISOnlineProvider($this->getAdapter(), null, true);
         $results  = $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
 
         $this->assertInternalType('array', $results);
@@ -134,7 +134,7 @@ class ArcGISOnlineProviderTest extends TestCase
      */
     public function testGetGeocodedDataWithInvalidAddressForSourceCountry()
     {
-        $provider = new ArcGISOnlineProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), 'USA');
+        $provider = new ArcGISOnlineProvider($this->getAdapter(), 'USA');
         $result   = $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
     }
 
@@ -144,7 +144,7 @@ class ArcGISOnlineProviderTest extends TestCase
      */
     public function testGetGeocodedDataWithInvalidAddressWithHttpsForSourceCountry()
     {
-        $provider = new ArcGISOnlineProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), 'USA', true);
+        $provider = new ArcGISOnlineProvider($this->getAdapter(), 'USA', true);
         $result   = $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
     }
 
@@ -170,7 +170,7 @@ class ArcGISOnlineProviderTest extends TestCase
 
     public function testGetReversedDataWithRealCoordinates()
     {
-        $provider = new ArcGISOnlineProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new ArcGISOnlineProvider($this->getAdapter());
         $result   = $provider->getReversedData(array(48.863279997000461, 2.3890199980004354));
 
         $this->assertInternalType('array', $result);
@@ -197,7 +197,7 @@ class ArcGISOnlineProviderTest extends TestCase
 
     public function testGetReversedDataWithRealCoordinatesWithHttps()
     {
-        $provider = new ArcGISOnlineProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), null, true);
+        $provider = new ArcGISOnlineProvider($this->getAdapter(), null, true);
         $result   = $provider->getReversedData(array(48.863279997000461, 2.3890199980004354));
 
         $this->assertInternalType('array', $result);
@@ -224,7 +224,7 @@ class ArcGISOnlineProviderTest extends TestCase
 
     public function testGetGeocodedDataWithCity()
     {
-        $provider = new ArcGISOnlineProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new ArcGISOnlineProvider($this->getAdapter());
         $results  = $provider->getGeocodedData('Hannover');
 
         $this->assertInternalType('array', $results);

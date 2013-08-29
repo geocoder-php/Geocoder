@@ -218,7 +218,7 @@ class GeoIPsProviderTest extends TestCase
             $this->markTestSkipped('You need to configure the GEOIPS_API_KEY value in phpunit.xml');
         }
 
-        $provider = new GeoIPsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['GEOIPS_API_KEY']);
+        $provider = new GeoIPsProvider($this->getAdapter(), $_SERVER['GEOIPS_API_KEY']);
         $result   = $provider->getGeocodedData('66.147.244.214');
 
         $this->assertInternalType('array', $result);

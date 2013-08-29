@@ -48,7 +48,7 @@ class MapQuestProviderTest extends TestCase
 
     public function testGetGeocodedDataWithRealAddress()
     {
-        $provider = new MapQuestProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new MapQuestProvider($this->getAdapter());
         $results  = $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
 
         $this->assertInternalType('array', $results);
@@ -83,7 +83,7 @@ class MapQuestProviderTest extends TestCase
 
     public function testGetReversedDataWithRealCoordinates()
     {
-        $provider = new MapQuestProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new MapQuestProvider($this->getAdapter());
         $result   = $provider->getReversedData(array(54.0484068, -2.7990345));
 
         $this->assertInternalType('array', $result);
@@ -108,7 +108,7 @@ class MapQuestProviderTest extends TestCase
 
     public function testGetGeocodedDataWithCity()
     {
-        $provider = new MapQuestProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new MapQuestProvider($this->getAdapter());
         $results  = $provider->getGeocodedData('Hanover');
 
         $this->assertInternalType('array', $results);
@@ -148,7 +148,7 @@ class MapQuestProviderTest extends TestCase
 
     public function testGetGeocodedDataWithCityDistrict()
     {
-        $provider = new MapQuestProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new MapQuestProvider($this->getAdapter());
         $result   = $provider->getGeocodedData('Kalbacher Hauptstraße 10, 60437 Frankfurt, Germany');
 
         $this->assertInternalType('array', $result);
@@ -198,7 +198,7 @@ class MapQuestProviderTest extends TestCase
      */
     public function testGetGeocodedDataWithRealIPv4()
     {
-        $provider = new MapQuestProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new MapQuestProvider($this->getAdapter());
         $provider->getGeocodedData('74.200.247.59');
     }
 
@@ -208,7 +208,7 @@ class MapQuestProviderTest extends TestCase
      */
     public function testGetGeocodedDataWithRealIPv6()
     {
-        $provider = new MapQuestProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new MapQuestProvider($this->getAdapter());
         $provider->getGeocodedData('::ffff:74.200.247.59');
     }
 }

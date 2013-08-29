@@ -86,7 +86,7 @@ JSON;
             $this->markTestSkipped('You need to configure the GEONAMES_USERNAME value in phpunit.xml');
         }
 
-        $provider = new GeonamesProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['GEONAMES_USERNAME']);
+        $provider = new GeonamesProvider($this->getAdapter(), $_SERVER['GEONAMES_USERNAME']);
         $results  = $provider->getGeocodedData('London');
 
         $this->assertInternalType('array', $results);
@@ -189,7 +189,7 @@ JSON;
             $this->markTestSkipped('You need to configure the GEONAMES_USERNAME value in phpunit.xml');
         }
 
-        $provider = new GeonamesProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['GEONAMES_USERNAME'], 'it_IT');
+        $provider = new GeonamesProvider($this->getAdapter(), $_SERVER['GEONAMES_USERNAME'], 'it_IT');
         $results  = $provider->getGeocodedData('London');
 
         $this->assertInternalType('array', $results);
@@ -292,7 +292,7 @@ JSON;
             $this->markTestSkipped('You need to configure the GEONAMES_USERNAME value in phpunit.xml');
         }
 
-        $provider = new GeonamesProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['GEONAMES_USERNAME']);
+        $provider = new GeonamesProvider($this->getAdapter(), $_SERVER['GEONAMES_USERNAME']);
         $results  = $provider->getReversedData(array(51.50853, -0.12574));
 
         $this->assertInternalType('array', $results);
@@ -316,7 +316,7 @@ JSON;
             $this->markTestSkipped('You need to configure the GEONAMES_USERNAME value in phpunit.xml');
         }
 
-        $provider = new GeonamesProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['GEONAMES_USERNAME'], 'it_IT');
+        $provider = new GeonamesProvider($this->getAdapter(), $_SERVER['GEONAMES_USERNAME'], 'it_IT');
         $results  = $provider->getReversedData(array(51.50853, -0.12574));
 
         $this->assertInternalType('array', $results);

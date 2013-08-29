@@ -69,7 +69,7 @@ class GoogleMapsProviderTest extends TestCase
      */
     public function testGetGeocodedDataWithRealIp()
     {
-        $provider = new GoogleMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new GoogleMapsProvider($this->getAdapter());
         $provider->getGeocodedData('74.200.247.59');
     }
 
@@ -105,7 +105,7 @@ class GoogleMapsProviderTest extends TestCase
 
     public function testGetGeocodedDataWithRealAddress()
     {
-        $provider = new GoogleMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), 'fr-FR', 'Île-de-France');
+        $provider = new GoogleMapsProvider($this->getAdapter(), 'fr-FR', 'Île-de-France');
         $results  = $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
 
         $this->assertInternalType('array', $results);
@@ -138,7 +138,7 @@ class GoogleMapsProviderTest extends TestCase
 
     public function testGetGeocodedDataWithRealAddressWithSsl()
     {
-        $provider = new GoogleMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), null, null, true);
+        $provider = new GoogleMapsProvider($this->getAdapter(), null, null, true);
         $results  = $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
 
         $this->assertInternalType('array', $results);
@@ -171,7 +171,7 @@ class GoogleMapsProviderTest extends TestCase
 
     public function testGetGeocodedDataBoundsWithRealAddressForNonRooftopLocation()
     {
-        $provider = new GoogleMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new GoogleMapsProvider($this->getAdapter());
         $results  = $provider->getGeocodedData('Paris, France');
 
         $this->assertInternalType('array', $results);
@@ -192,7 +192,7 @@ class GoogleMapsProviderTest extends TestCase
 
     public function testGetGeocodedDataWithRealAddressReturnsMultipleResults()
     {
-        $provider = new GoogleMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new GoogleMapsProvider($this->getAdapter());
         $results  = $provider->getGeocodedData('Paris');
 
         $this->assertInternalType('array', $results);
@@ -246,7 +246,7 @@ class GoogleMapsProviderTest extends TestCase
 
     public function testGetReversedDataWithRealCoordinates()
     {
-        $provider = new GoogleMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new GoogleMapsProvider($this->getAdapter());
         $result   = $provider->getReversedData(array(48.8631507, 2.388911));
 
         $this->assertInternalType('array', $result);
@@ -276,7 +276,7 @@ class GoogleMapsProviderTest extends TestCase
 
     public function testGetGeocodedDataWithCityDistrict()
     {
-        $provider = new GoogleMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new GoogleMapsProvider($this->getAdapter());
         $results  = $provider->getGeocodedData('Kalbacher Hauptstraße 10, 60437 Frankfurt, Germany');
 
         $this->assertInternalType('array', $results);

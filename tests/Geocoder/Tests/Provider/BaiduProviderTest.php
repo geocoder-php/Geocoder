@@ -91,7 +91,7 @@ class BaiduProviderTest extends TestCase
             $this->markTestSkipped('You need to configure the BAIDU_API_KEY value in phpunit.xml');
         }
 
-        $provider = new BaiduProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['BAIDU_API_KEY'], 'fr-FR');
+        $provider = new BaiduProvider($this->getAdapter(), $_SERVER['BAIDU_API_KEY'], 'fr-FR');
         $result   = $provider->getGeocodedData('上地十街10号 北京市'); // Beijing
 
         $this->assertInternalType('array', $result);
@@ -151,7 +151,7 @@ class BaiduProviderTest extends TestCase
             $this->markTestSkipped('You need to configure the BAIDU_API_KEY value in phpunit.xml');
         }
 
-        $provider = new BaiduProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['BAIDU_API_KEY']);
+        $provider = new BaiduProvider($this->getAdapter(), $_SERVER['BAIDU_API_KEY']);
         $result   = $provider->getReversedData(array(39.983424, 116.322987));
 
         $this->assertInternalType('array', $result);
@@ -185,7 +185,7 @@ class BaiduProviderTest extends TestCase
             $this->markTestSkipped('You need to configure the BAIDU_API_KEY value in phpunit.xml');
         }
 
-        $provider = new BaiduProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['BAIDU_API_KEY']);
+        $provider = new BaiduProvider($this->getAdapter(), $_SERVER['BAIDU_API_KEY']);
         $provider->getGeocodedData('88.188.221.14');
     }
 
@@ -199,7 +199,7 @@ class BaiduProviderTest extends TestCase
             $this->markTestSkipped('You need to configure the BAIDU_API_KEY value in phpunit.xml');
         }
 
-        $provider = new BaiduProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['BAIDU_API_KEY']);
+        $provider = new BaiduProvider($this->getAdapter(), $_SERVER['BAIDU_API_KEY']);
         $provider->getGeocodedData('::ffff:88.188.221.14');
     }
 

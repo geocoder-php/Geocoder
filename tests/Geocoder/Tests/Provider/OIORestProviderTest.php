@@ -58,7 +58,7 @@ class OIORestProviderTest extends TestCase
 
     public function testGetGeocodedDataWithRealAddress()
     {
-        $provider = new OIORestProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new OIORestProvider($this->getAdapter());
         $result   = $provider->getGeocodedData('Tagensvej 47 2200 København');
 
         $this->assertInternalType('array', $result);
@@ -83,7 +83,7 @@ class OIORestProviderTest extends TestCase
 
     public function testGetGeocodedDataWithRealAddressAalborg()
     {
-        $provider = new OIORestProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new OIORestProvider($this->getAdapter());
         $result   = $provider->getGeocodedData('Lauritzens Plads 1 9000 Aalborg');
 
         $this->assertInternalType('array', $result);
@@ -108,7 +108,7 @@ class OIORestProviderTest extends TestCase
 
     public function testGetGeocodedDataWithRealAddressAarhus()
     {
-        $provider = new OIORestProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new OIORestProvider($this->getAdapter());
         $result   = $provider->getGeocodedData('St.Blichers Vej 74 8210 AArhus');
 
         $this->assertInternalType('array', $result);
@@ -133,7 +133,7 @@ class OIORestProviderTest extends TestCase
 
     public function testGetGeocodedDataWithRealAddressCopenhagen()
     {
-        $provider = new OIORestProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new OIORestProvider($this->getAdapter());
         $result   = $provider->getGeocodedData('Århusgade 80 2100 København');
 
         $this->assertInternalType('array', $result);
@@ -158,7 +158,7 @@ class OIORestProviderTest extends TestCase
 
     public function testGetGeocodedDataWithRealAddressOdense()
     {
-        $provider = new OIORestProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new OIORestProvider($this->getAdapter());
         $result   = $provider->getGeocodedData('Hvenekildeløkken 255 5240 Odense');
 
         $this->assertInternalType('array', $result);
@@ -183,7 +183,7 @@ class OIORestProviderTest extends TestCase
 
     public function testGetGeocodedDataWithRealAddressReturnsMultipleResults()
     {
-        $provider = new OIORestProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new OIORestProvider($this->getAdapter());
         $results  = $provider->getGeocodedData('Tagensvej 47');
 
         $this->assertInternalType('array', $results);
@@ -312,7 +312,7 @@ class OIORestProviderTest extends TestCase
      */
     public function testGetGeocodedDataWithIPv4()
     {
-        $provider = new OIORestProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new OIORestProvider($this->getAdapter());
         $provider->getGeocodedData('74.200.247.59');
     }
 
@@ -322,7 +322,7 @@ class OIORestProviderTest extends TestCase
      */
     public function testGetGeocodedDataWithIPv6()
     {
-        $provider = new OIORestProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new OIORestProvider($this->getAdapter());
         $provider->getGeocodedData('::ffff:74.200.247.59');
     }
 
@@ -358,7 +358,7 @@ class OIORestProviderTest extends TestCase
 
     public function testGetGeocodedDataWithRealCoordinates()
     {
-        $provider = new OIORestProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new OIORestProvider($this->getAdapter());
         $result = $provider->getReversedData(array(56.5231, 10.0659));
 
         $this->assertInternalType('array', $result);

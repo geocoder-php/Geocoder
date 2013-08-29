@@ -48,7 +48,7 @@ class BuzzHttpAdapterTest extends TestCase
 
     protected function getBrowserMock($content)
     {
-        $mock = $this->getMock('\Buzz\Browser');
+        $mock = $this->getMock('Buzz\Browser');
         $mock
             ->expects($this->once())
             ->method('get')
@@ -60,7 +60,7 @@ class BuzzHttpAdapterTest extends TestCase
 
     protected function getResponseMock($content)
     {
-        $mock = $this->getMock('\Buzz\Message\Response');
+        $mock = $this->getMock('Buzz\Message\Response');
         $mock
             ->expects($this->once())
             ->method('getContent')

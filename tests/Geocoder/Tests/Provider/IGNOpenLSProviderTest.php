@@ -348,7 +348,7 @@ XML;
             $this->markTestSkipped('You need to configure the IGN_WEB_API_KEY value in phpunit.xml');
         }
 
-        $provider = new IGNOpenLSProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['IGN_WEB_API_KEY']);
+        $provider = new IGNOpenLSProvider($this->getAdapter(), $_SERVER['IGN_WEB_API_KEY']);
         $results  = $provider->getGeocodedData('36 Quai des Orfèvres, 75001 Paris, France');
 
         $this->assertInternalType('array', $results);
@@ -441,7 +441,7 @@ XML;
             $this->markTestSkipped('You need to configure the IGN_WEB_API_KEY value in phpunit.xml');
         }
 
-        $provider = new IGNOpenLSProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['IGN_WEB_API_KEY']);
+        $provider = new IGNOpenLSProvider($this->getAdapter(), $_SERVER['IGN_WEB_API_KEY']);
         $results  = $provider->getGeocodedData('Rue Marconi 57000 Metz');
 
         $this->assertInternalType('array', $results);
@@ -500,7 +500,7 @@ XML;
      */
     public function testGetGeocodedDataWithIPv4()
     {
-        $provider = new IGNOpenLSProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), 'api_key');
+        $provider = new IGNOpenLSProvider($this->getAdapter(), 'api_key');
         $provider->getGeocodedData('74.200.247.59');
     }
 
@@ -510,7 +510,7 @@ XML;
      */
     public function testGetGeocodedDataWithIPv6()
     {
-        $provider = new IGNOpenLSProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), 'api_key');
+        $provider = new IGNOpenLSProvider($this->getAdapter(), 'api_key');
         $provider->getGeocodedData('::ffff:74.200.247.59');
     }
 

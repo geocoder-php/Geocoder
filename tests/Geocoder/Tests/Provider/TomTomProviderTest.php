@@ -84,7 +84,7 @@ XML;
             $this->markTestSkipped('You need to configure the TOMTOM_GEOCODING_KEY value in phpunit.xml');
         }
 
-        $provider = new TomTomProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['TOMTOM_GEOCODING_KEY']);
+        $provider = new TomTomProvider($this->getAdapter(), $_SERVER['TOMTOM_GEOCODING_KEY']);
         $result   = $provider->getGeocodedData('Tagensvej 47, 2200 København N');
 
         $this->assertInternalType('array', $result);
@@ -113,7 +113,7 @@ XML;
             $this->markTestSkipped('You need to configure the TOMTOM_GEOCODING_KEY value in phpunit.xml');
         }
 
-        $provider = new TomTomProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['TOMTOM_GEOCODING_KEY'], 'fr_FR');
+        $provider = new TomTomProvider($this->getAdapter(), $_SERVER['TOMTOM_GEOCODING_KEY'], 'fr_FR');
         $result   = $provider->getGeocodedData('Tagensvej 47, 2200 København N');
 
         $this->assertInternalType('array', $result);
@@ -142,7 +142,7 @@ XML;
             $this->markTestSkipped('You need to configure the TOMTOM_GEOCODING_KEY value in phpunit.xml');
         }
 
-        $provider = new TomTomProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['TOMTOM_GEOCODING_KEY'], 'sv-SE');
+        $provider = new TomTomProvider($this->getAdapter(), $_SERVER['TOMTOM_GEOCODING_KEY'], 'sv-SE');
         $result   = $provider->getGeocodedData('Tagensvej 47, 2200 København N');
 
         $this->assertInternalType('array', $result);
@@ -171,7 +171,7 @@ XML;
             $this->markTestSkipped('You need to configure the TOMTOM_GEOCODING_KEY value in phpunit.xml');
         }
 
-        $provider = new TomTomProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['TOMTOM_GEOCODING_KEY']);
+        $provider = new TomTomProvider($this->getAdapter(), $_SERVER['TOMTOM_GEOCODING_KEY']);
         $results  = $provider->getGeocodedData('Paris');
 
         $this->assertInternalType('array', $results);
@@ -251,7 +251,7 @@ XML;
      */
     public function testGetGeocodedDataWithIPv4()
     {
-        $provider = new TomTomProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), 'api_key');
+        $provider = new TomTomProvider($this->getAdapter(), 'api_key');
         $provider->getGeocodedData('74.200.247.59');
     }
 
@@ -261,7 +261,7 @@ XML;
      */
     public function testGetGeocodedDataWithIPv6()
     {
-        $provider = new TomTomProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), 'api_key');
+        $provider = new TomTomProvider($this->getAdapter(), 'api_key');
         $provider->getGeocodedData('::ffff:74.200.247.59');
     }
 
@@ -339,7 +339,7 @@ XML;
             $this->markTestSkipped('You need to configure the TOMTOM_MAP_KEY value in phpunit.xml');
         }
 
-        $provider = new TomTomProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['TOMTOM_MAP_KEY']);
+        $provider = new TomTomProvider($this->getAdapter(), $_SERVER['TOMTOM_MAP_KEY']);
         $result   = $provider->getReversedData(array(48.86321648955345, 2.3887719959020615));
 
         $this->assertInternalType('array', $result);
@@ -368,7 +368,7 @@ XML;
             $this->markTestSkipped('You need to configure the TOMTOM_MAP_KEY value in phpunit.xml');
         }
 
-        $provider = new TomTomProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(),  $_SERVER['TOMTOM_MAP_KEY']);
+        $provider = new TomTomProvider($this->getAdapter(),  $_SERVER['TOMTOM_MAP_KEY']);
         $result   = $provider->getReversedData(array(56.5231, 10.0659));
 
         $this->assertInternalType('array', $result);

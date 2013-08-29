@@ -32,13 +32,13 @@ class GeocoderCaProviderTest extends TestCase
      */
     public function testGetGeocodedDataWithWrongAddress()
     {
-        $provider = new GeocoderCaProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new GeocoderCaProvider($this->getAdapter());
         $provider->getGeocodedData('foobar');
     }
 
     public function testGetGeocodedDataWithRealAddressUS()
     {
-        $provider = new GeocoderCaProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new GeocoderCaProvider($this->getAdapter());
         $result   = $provider->getGeocodedData('1600 Pennsylvania Ave, Washington, DC');
 
         $this->assertInternalType('array', $result);
@@ -63,7 +63,7 @@ class GeocoderCaProviderTest extends TestCase
 
     public function testGetGeocodedDataWithRealAddressCA()
     {
-        $provider = new GeocoderCaProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new GeocoderCaProvider($this->getAdapter());
         $result   = $provider->getGeocodedData('4208 Gallaghers, Kelowna, BC');
 
         $this->assertInternalType('array', $result);
@@ -112,7 +112,7 @@ class GeocoderCaProviderTest extends TestCase
      */
     public function testGetGeocodedDataWithIPv4()
     {
-        $provider = new GeocoderCaProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new GeocoderCaProvider($this->getAdapter());
         $provider->getGeocodedData('74.200.247.59');
     }
 
@@ -122,7 +122,7 @@ class GeocoderCaProviderTest extends TestCase
      */
     public function testGetGeocodedDataWithIPv6()
     {
-        $provider = new GeocoderCaProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new GeocoderCaProvider($this->getAdapter());
         $provider->getGeocodedData('::ffff:74.200.247.59');
     }
 
@@ -132,13 +132,13 @@ class GeocoderCaProviderTest extends TestCase
      */
     public function testGetReverseDataWithWrongCoordinate()
     {
-        $provider = new GeocoderCaProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new GeocoderCaProvider($this->getAdapter());
         $provider->getReversedData(array(1, 2));
     }
 
     public function testGetReversedDataWithRealCoordinates()
     {
-        $provider = new GeocoderCaProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new GeocoderCaProvider($this->getAdapter());
         $result   = $provider->getReversedData(array('40.707507', '-74.011255'));
 
         $this->assertInternalType('array', $result);

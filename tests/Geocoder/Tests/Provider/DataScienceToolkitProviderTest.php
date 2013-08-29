@@ -90,13 +90,13 @@ class DataScienceToolkitProviderTest extends TestCase
      */
     public function testGetGeocodedDataWithRealIPv6()
     {
-        $provider = new DataScienceToolkitProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new DataScienceToolkitProvider($this->getAdapter());
         $result = $provider->getGeocodedData('::ffff:88.188.221.14');
     }
 
     public function testGetGeocodedDataWithRealIPv4()
     {
-        $provider = new DataScienceToolkitProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new DataScienceToolkitProvider($this->getAdapter());
         $result   = $provider->getGeocodedData('81.220.239.218');
 
         $this->assertInternalType('array', $result);
@@ -113,7 +113,7 @@ class DataScienceToolkitProviderTest extends TestCase
 
     public function testGetGeocodedDataWithRealAdress()
     {
-        $provider = new DataScienceToolkitProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new DataScienceToolkitProvider($this->getAdapter());
         $result   = $provider->getGeocodedData('2543 Graystone Place, Simi Valley, CA 93065');
 
         $this->assertInternalType('array', $result);

@@ -1,0 +1,20 @@
+s:753:"{
+  "geoplugin_request":"66.147.244.214",
+  "geoplugin_status":200,
+  "geoplugin_credit":"Some of the returned data includes GeoLite data created by MaxMind, available from <a href=\\'http:\/\/www.maxmind.com\\'>http:\/\/www.maxmind.com<\/a>.",
+  "geoplugin_city":"Provo",
+  "geoplugin_region":"UT",
+  "geoplugin_areaCode":"801",
+  "geoplugin_dmaCode":"770",
+  "geoplugin_countryCode":"US",
+  "geoplugin_countryName":"United States",
+  "geoplugin_continentCode":"NA",
+  "geoplugin_latitude":"40.218102",
+  "geoplugin_longitude":"-111.613297",
+  "geoplugin_regionCode":"UT",
+  "geoplugin_regionName":"Utah",
+  "geoplugin_currencyCode":"USD",
+  "geoplugin_currencySymbol":"&#36;",
+  "geoplugin_currencySymbol_UTF8":"$",
+  "geoplugin_currencyConverter":1
+}";

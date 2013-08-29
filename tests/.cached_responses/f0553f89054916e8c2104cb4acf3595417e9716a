@@ -1,0 +1,14 @@
+s:276:"{
+  "81.220.239.218": {
+    "dma_code": 0,
+    "latitude": 45.75,
+    "country_code3": "FRA",
+    "area_code": 0,
+    "longitude": 4.84999990463257,
+    "country_name": "France",
+    "postal_code": "",
+    "region": "B9",
+    "locality": "Lyon",
+    "country_code": "FR"
+  }
+}";

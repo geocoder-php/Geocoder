@@ -1,0 +1,16 @@
+s:414:"{
+  "2543 Graystone Place, Simi Valley, CA 93065": {
+    "country_code3": "USA",
+    "latitude": 34.280874,
+    "country_name": "United States",
+    "longitude": -118.766282,
+    "street_address": "2543 Graystone Pl",
+    "region": "CA",
+    "confidence": 1.0,
+    "street_number": "2543",
+    "locality": "Simi Valley",
+    "street_name": "Graystone Pl",
+    "fips_county": "06111",
+    "country_code": "US"
+  }
+}";

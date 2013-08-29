@@ -250,7 +250,7 @@ class MaxMindProviderTest extends TestCase
      */
     public function testGetGeocodedDataWithRealIPv4AndInvalidApiKey()
     {
-        $provider = new MaxMindProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), 'api_key');
+        $provider = new MaxMindProvider($this->getAdapter(), 'api_key');
         $provider->getGeocodedData('74.200.247.59');
     }
 
@@ -312,7 +312,7 @@ class MaxMindProviderTest extends TestCase
             $this->markTestSkipped('You need to configure the MAXMIND_API_KEY value in phpunit.xml');
         }
 
-        $provider = new MaxMindProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['MAXMIND_API_KEY']);
+        $provider = new MaxMindProvider($this->getAdapter(), $_SERVER['MAXMIND_API_KEY']);
         $result   = $provider->getGeocodedData('74.200.247.159');
 
         $this->assertInternalType('array', $result);
@@ -343,7 +343,7 @@ class MaxMindProviderTest extends TestCase
             $this->markTestSkipped('You need to configure the MAXMIND_API_KEY value in phpunit.xml');
         }
 
-        $provider = new MaxMindProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['MAXMIND_API_KEY'],
+        $provider = new MaxMindProvider($this->getAdapter(), $_SERVER['MAXMIND_API_KEY'],
             MaxMindProvider::OMNI_SERVICE);
         $result   = $provider->getGeocodedData('74.200.247.159');
 
@@ -375,7 +375,7 @@ class MaxMindProviderTest extends TestCase
             $this->markTestSkipped('You need to configure the MAXMIND_API_KEY value in phpunit.xml');
         }
 
-        $provider = new MaxMindProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['MAXMIND_API_KEY']);
+        $provider = new MaxMindProvider($this->getAdapter(), $_SERVER['MAXMIND_API_KEY']);
         $result   = $provider->getGeocodedData('66.147.244.214');
 
         $this->assertInternalType('array', $result);
@@ -406,7 +406,7 @@ class MaxMindProviderTest extends TestCase
             $this->markTestSkipped('You need to configure the MAXMIND_API_KEY value in phpunit.xml');
         }
 
-        $provider = new MaxMindProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['MAXMIND_API_KEY'],
+        $provider = new MaxMindProvider($this->getAdapter(), $_SERVER['MAXMIND_API_KEY'],
             MaxMindProvider::OMNI_SERVICE, true);
         $result   = $provider->getGeocodedData('::ffff:66.147.244.214');
 

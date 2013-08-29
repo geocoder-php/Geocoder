@@ -12,8 +12,7 @@ class ChainProviderTest extends TestCase
 {
     public function testAddProvider()
     {
-        $mock = $this->getMock('Geocoder\\Provider\\ProviderInterface');
-
+        $mock  = $this->getMock('Geocoder\Provider\ProviderInterface');
         $chain = new ChainProvider();
 
         $chain->addProvider($mock);

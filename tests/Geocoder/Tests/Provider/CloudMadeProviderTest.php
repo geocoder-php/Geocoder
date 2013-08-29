@@ -98,7 +98,7 @@ class CloudMadeProviderTest extends TestCase
      */
     public function testGetGeocodedDataWithRealInvalidApiKey()
     {
-        $provider = new CloudMadeProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), 'invalid_key');
+        $provider = new CloudMadeProvider($this->getAdapter(), 'invalid_key');
         $provider->getGeocodedData('foo');
     }
 
@@ -108,7 +108,7 @@ class CloudMadeProviderTest extends TestCase
             $this->markTestSkipped('You need to configure the CLOUDMADE_API_KEY value in phpunit.xml');
         }
 
-        $provider = new CloudMadeProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['CLOUDMADE_API_KEY']);
+        $provider = new CloudMadeProvider($this->getAdapter(), $_SERVER['CLOUDMADE_API_KEY']);
         $result   = $provider->getGeocodedData('36 Quai des Orfèvres, Paris, France');
 
         $this->assertInternalType('array', $result);
@@ -165,7 +165,7 @@ class CloudMadeProviderTest extends TestCase
             $this->markTestSkipped('You need to configure the CLOUDMADE_API_KEY value in phpunit.xml');
         }
 
-        $provider = new CloudMadeProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['CLOUDMADE_API_KEY']);
+        $provider = new CloudMadeProvider($this->getAdapter(), $_SERVER['CLOUDMADE_API_KEY']);
         $results  = $provider->getReversedData(array(48.85657, 2.35325));
 
         $this->assertInternalType('array', $results);
@@ -222,7 +222,7 @@ class CloudMadeProviderTest extends TestCase
             $this->markTestSkipped('You need to configure the CLOUDMADE_API_KEY value in phpunit.xml');
         }
 
-        $provider = new CloudMadeProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['CLOUDMADE_API_KEY']);
+        $provider = new CloudMadeProvider($this->getAdapter(), $_SERVER['CLOUDMADE_API_KEY']);
         $results  = $provider->getGeocodedData('73 Boulevard Schuman');
 
         $this->assertInternalType('array', $results);
@@ -338,7 +338,7 @@ class CloudMadeProviderTest extends TestCase
             $this->markTestSkipped('You need to configure the CLOUDMADE_API_KEY value in phpunit.xml');
         }
 
-        $provider = new CloudMadeProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['CLOUDMADE_API_KEY']);
+        $provider = new CloudMadeProvider($this->getAdapter(), $_SERVER['CLOUDMADE_API_KEY']);
         $provider->getGeocodedData('88.188.221.14');
     }
 
@@ -352,7 +352,7 @@ class CloudMadeProviderTest extends TestCase
             $this->markTestSkipped('You need to configure the CLOUDMADE_API_KEY value in phpunit.xml');
         }
 
-        $provider = new CloudMadeProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['CLOUDMADE_API_KEY']);
+        $provider = new CloudMadeProvider($this->getAdapter(), $_SERVER['CLOUDMADE_API_KEY']);
         $provider->getGeocodedData('::ffff:88.188.221.14');
     }
 }

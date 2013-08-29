@@ -1,0 +1,69 @@
+s:2040:"{
+   "results" : [
+      {
+         "address_components" : [
+            {
+               "long_name" : "10",
+               "short_name" : "10",
+               "types" : [ "street_number" ]
+            },
+            {
+               "long_name" : "Avenue Gambetta",
+               "short_name" : "Av. Gambetta",
+               "types" : [ "route" ]
+            },
+            {
+               "long_name" : "20e Arrondissement",
+               "short_name" : "20e Arrondissement",
+               "types" : [ "sublocality", "political" ]
+            },
+            {
+               "long_name" : "Paris",
+               "short_name" : "Paris",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "Paris",
+               "short_name" : "75",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "Île-de-France",
+               "short_name" : "IDF",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "France",
+               "short_name" : "FR",
+               "types" : [ "country", "political" ]
+            },
+            {
+               "long_name" : "75020",
+               "short_name" : "75020",
+               "types" : [ "postal_code" ]
+            }
+         ],
+         "formatted_address" : "10 Avenue Gambetta, 75020 Paris, France",
+         "geometry" : {
+            "location" : {
+               "lat" : 48.8631203,
+               "lng" : 2.3887918
+            },
+            "location_type" : "ROOFTOP",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 48.86446928029149,
+                  "lng" : 2.390140780291502
+               },
+               "southwest" : {
+                  "lat" : 48.8617713197085,
+                  "lng" : 2.387442819708498
+               }
+            }
+         },
+         "types" : [ "street_address" ]
+      }
+   ],
+   "status" : "OK"
+}
+";

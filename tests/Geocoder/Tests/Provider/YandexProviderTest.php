@@ -82,13 +82,13 @@ class YandexProviderTest extends TestCase
      */
     public function testGetGeocodedDataWithFakeAddress()
     {
-        $provider = new YandexProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new YandexProvider($this->getAdapter());
         $provider->getGeocodedData('foobar');
     }
 
     public function testGetGeocodedDataWithRealAddress()
     {
-        $provider = new YandexProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new YandexProvider($this->getAdapter());
         $results  = $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
 
         $this->assertInternalType('array', $results);
@@ -133,7 +133,7 @@ class YandexProviderTest extends TestCase
 
     public function testGetGeocodedDataWithRealAddressWithUALocale()
     {
-        $provider = new YandexProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), 'uk-UA');
+        $provider = new YandexProvider($this->getAdapter(), 'uk-UA');
         $results  = $provider->getGeocodedData('Copenhagen, Denmark');
 
         $this->assertInternalType('array', $results);
@@ -178,7 +178,7 @@ class YandexProviderTest extends TestCase
 
     public function testGetGeocodedDataWithRealAddressWithUSLocale()
     {
-        $provider = new YandexProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), 'en-US');
+        $provider = new YandexProvider($this->getAdapter(), 'en-US');
         $results  = $provider->getGeocodedData('1600 Pennsylvania Ave, Washington');
 
         $this->assertInternalType('array', $results);
@@ -211,7 +211,7 @@ class YandexProviderTest extends TestCase
 
     public function testGetGeocodedDataWithRealAddressWithBYLocale()
     {
-        $provider = new YandexProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), 'be-BY');
+        $provider = new YandexProvider($this->getAdapter(), 'be-BY');
         $result   = $provider->getGeocodedData('ул.Ленина, 19, Минск 220030, Республика Беларусь');
 
         $this->assertInternalType('array', $result);
@@ -271,7 +271,7 @@ class YandexProviderTest extends TestCase
 
     public function testGetReversedDataWithRealCoordinates()
     {
-        $provider = new YandexProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new YandexProvider($this->getAdapter());
         $results  = $provider->getReversedData(array(48.863216489553, 2.388771995902061));
 
         $this->assertInternalType('array', $results);
@@ -308,7 +308,7 @@ class YandexProviderTest extends TestCase
 
     public function testGetReversedDataWithRealCoordinatesWithUSLocaleAndStreeToponym()
     {
-        $provider = new YandexProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), 'en-US', 'street');
+        $provider = new YandexProvider($this->getAdapter(), 'en-US', 'street');
         $results  = $provider->getReversedData(array(48.863216489553, 2.388771995902061));
 
         $this->assertInternalType('array', $results);
@@ -353,7 +353,7 @@ class YandexProviderTest extends TestCase
 
     public function testGetReversedDataWithRealCoordinatesWithUALocaleAndHouseToponym()
     {
-        $provider = new YandexProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), 'uk-UA', 'house');
+        $provider = new YandexProvider($this->getAdapter(), 'uk-UA', 'house');
         $results  = $provider->getReversedData(array(60.4539471768582, 22.2567842183875));
 
         $this->assertInternalType('array', $results);
@@ -382,7 +382,7 @@ class YandexProviderTest extends TestCase
 
     public function testGetReversedDataWithRealCoordinatesWithTRLocaleAndLocalityToponym()
     {
-        $provider = new YandexProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), 'tr-TR', 'locality');
+        $provider = new YandexProvider($this->getAdapter(), 'tr-TR', 'locality');
         $results  = $provider->getReversedData(array(40.900640, 29.198184));
 
         $this->assertInternalType('array', $results);

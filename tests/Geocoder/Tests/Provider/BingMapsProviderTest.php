@@ -198,7 +198,7 @@ JSON;
             $this->markTestSkipped('You need to configure the BINGMAPS_API_KEY value in phpunit.xml');
         }
 
-        $provider = new BingMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['BINGMAPS_API_KEY'], 'fr-FR');
+        $provider = new BingMapsProvider($this->getAdapter(), $_SERVER['BINGMAPS_API_KEY'], 'fr-FR');
         $results  = $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
 
         $this->assertInternalType('array', $results);
@@ -291,7 +291,7 @@ JSON;
             $this->markTestSkipped('You need to configure the BINGMAPS_API_KEY value in phpunit.xml');
         }
 
-        $provider = new BingMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['BINGMAPS_API_KEY']);
+        $provider = new BingMapsProvider($this->getAdapter(), $_SERVER['BINGMAPS_API_KEY']);
         $results  = $provider->getReversedData(array(48.86321648955345, 2.3887719959020615));
 
         $this->assertInternalType('array', $results);
@@ -332,7 +332,7 @@ JSON;
             $this->markTestSkipped('You need to configure the BINGMAPS_API_KEY value in phpunit.xml');
         }
 
-        $provider = new BingMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['BINGMAPS_API_KEY']);
+        $provider = new BingMapsProvider($this->getAdapter(), $_SERVER['BINGMAPS_API_KEY']);
         $provider->getGeocodedData('88.188.221.14');
     }
 
@@ -346,7 +346,7 @@ JSON;
             $this->markTestSkipped('You need to configure the BINGMAPS_API_KEY value in phpunit.xml');
         }
 
-        $provider = new BingMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['BINGMAPS_API_KEY']);
+        $provider = new BingMapsProvider($this->getAdapter(), $_SERVER['BINGMAPS_API_KEY']);
         $provider->getGeocodedData('::ffff:88.188.221.14');
     }
 }

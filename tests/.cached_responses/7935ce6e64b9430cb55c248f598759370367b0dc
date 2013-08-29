@@ -1,0 +1,9 @@
+s:252:"<?xml version="1.0" encoding="UTF-8" ?>
+<geodata>
+        <latt>38.898748</latt>
+        <longt>-77.037684</longt>
+
+<standard>
+<stnumber>1600</stnumber><staddress>Pennsylvania Ave</staddress><city>WASHINGTON</city><prov>DC</prov></standard>
+</geodata>
+";

@@ -96,7 +96,7 @@ class HostIpProviderTest extends TestCase
 
     public function testGetGeocodedDataWithRealIPv4()
     {
-        $provider = new HostIpProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new HostIpProvider($this->getAdapter());
         $result   = $provider->getGeocodedData('88.188.221.14');
 
         $this->assertInternalType('array', $result);
@@ -119,7 +119,7 @@ class HostIpProviderTest extends TestCase
      */
     public function testGetGeocodedDataWithRealIPv6()
     {
-        $provider = new HostIpProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new HostIpProvider($this->getAdapter());
         $provider->getGeocodedData('::ffff:88.188.221.14');
     }
 
@@ -135,7 +135,7 @@ class HostIpProviderTest extends TestCase
 
     public function testGetGeocodedDataWithAnotherIp()
     {
-        $provider = new HostIpProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new HostIpProvider($this->getAdapter());
         $result   = $provider->getGeocodedData('33.33.33.22');
 
         $this->assertInternalType('array', $result);

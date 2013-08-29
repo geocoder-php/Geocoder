@@ -119,7 +119,7 @@ class IpInfoDbProviderTest extends TestCase
             $this->markTestSkipped('You need to configure the IPINFODB_API_KEY value in phpunit.xml');
         }
 
-        $provider = new IpInfoDbProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['IPINFODB_API_KEY']);
+        $provider = new IpInfoDbProvider($this->getAdapter(), $_SERVER['IPINFODB_API_KEY']);
         $result   = $provider->getGeocodedData('74.125.45.100');
 
         $this->assertInternalType('array', $result);
@@ -147,7 +147,7 @@ class IpInfoDbProviderTest extends TestCase
             $this->markTestSkipped('You need to configure the IPINFODB_API_KEY value in phpunit.xml');
         }
 
-        $provider = new IpInfoDbProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), $_SERVER['IPINFODB_API_KEY']);
+        $provider = new IpInfoDbProvider($this->getAdapter(), $_SERVER['IPINFODB_API_KEY']);
         $provider->getGeocodedData('::ffff:74.125.45.100');
     }
 

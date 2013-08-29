@@ -15,7 +15,7 @@ class OpenStreetMapsProviderTest extends TestCase
 
     public function testGetGeocodedDataWithRealAddress()
     {
-        $provider = new OpenStreetMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new OpenStreetMapsProvider($this->getAdapter());
         $results  = $provider->getGeocodedData('Paris');
 
         $this->assertInternalType('array', $results);
@@ -134,7 +134,7 @@ class OpenStreetMapsProviderTest extends TestCase
 
     public function testGetGeocodedDataWithRealAddressWithLocale()
     {
-        $provider = new OpenStreetMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), 'fr_FR');
+        $provider = new OpenStreetMapsProvider($this->getAdapter(), 'fr_FR');
         $results  = $provider->getGeocodedData('10 allée Evariste Galois, Clermont ferrand');
 
         $this->assertInternalType('array', $results);
@@ -187,7 +187,7 @@ class OpenStreetMapsProviderTest extends TestCase
 
     public function testGetReversedDataWithRealCoordinates()
     {
-        $provider = new OpenStreetMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new OpenStreetMapsProvider($this->getAdapter());
         $results  = $provider->getReversedData(array('60.4539471728726', '22.2567841926781'));
 
         $this->assertInternalType('array', $results);
@@ -214,13 +214,13 @@ class OpenStreetMapsProviderTest extends TestCase
      */
     public function testGetGeocodedDataWithUnknownCity()
     {
-        $provider = new OpenStreetMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new OpenStreetMapsProvider($this->getAdapter());
         $provider->getGeocodedData('Hammm');
     }
 
     public function testGetReversedDataWithRealCoordinatesWithLocale()
     {
-        $provider = new OpenStreetMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), 'de_DE');
+        $provider = new OpenStreetMapsProvider($this->getAdapter(), 'de_DE');
         $results  = $provider->getGeocodedData('Kalbacher Hauptstraße, 60437 Frankfurt, Germany');
 
         $this->assertInternalType('array', $results);
@@ -348,7 +348,7 @@ class OpenStreetMapsProviderTest extends TestCase
 
     public function testGetGeocodedDataWithRealIPv4()
     {
-        $provider = new OpenStreetMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new OpenStreetMapsProvider($this->getAdapter());
         $results  = $provider->getGeocodedData('88.188.221.14');
 
         $this->assertInternalType('array', $results);
@@ -384,7 +384,7 @@ class OpenStreetMapsProviderTest extends TestCase
 
     public function testGetGeocodedDataWithRealIPv4WithLocale()
     {
-        $provider = new OpenStreetMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), 'da_DK');
+        $provider = new OpenStreetMapsProvider($this->getAdapter(), 'da_DK');
         $results  = $provider->getGeocodedData('88.188.221.14');
 
         $this->assertInternalType('array', $results);
@@ -424,7 +424,7 @@ class OpenStreetMapsProviderTest extends TestCase
      */
     public function testGetGeocodedDataWithRealIPv6()
     {
-        $provider = new OpenStreetMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new OpenStreetMapsProvider($this->getAdapter());
         $provider->getGeocodedData('::ffff:88.188.221.14');
     }
 
@@ -499,7 +499,7 @@ XML;
 
     public function testGetNodeStreetName()
     {
-        $provider = new OpenStreetMapsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter(), 'fr_FR');
+        $provider = new OpenStreetMapsProvider($this->getAdapter(), 'fr_FR');
         $results  = $provider->getReversedData(array(48.86, 2.35));
 
         $this->assertEquals('Rue Quincampoix', $results[0]['streetName']);

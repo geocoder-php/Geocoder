@@ -99,7 +99,7 @@ class IpGeoBaseProviderTest extends TestCase
 
     public function testGetGeocodedDataWithRealIPv4Moscow()
     {
-        $provider = new IpGeoBaseProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new IpGeoBaseProvider($this->getAdapter());
         $result   = $provider->getGeocodedData('144.206.192.6');
 
         $this->assertInternalType('array', $result);
@@ -123,7 +123,7 @@ class IpGeoBaseProviderTest extends TestCase
 
     public function testGetGeocodedDataWithRealIPv4Kiev()
     {
-        $provider = new IpGeoBaseProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new IpGeoBaseProvider($this->getAdapter());
         $result   = $provider->getGeocodedData('2.56.176.1');
 
         $this->assertInternalType('array', $result);
@@ -151,7 +151,7 @@ class IpGeoBaseProviderTest extends TestCase
      */
     public function testGetGeocodedDataWithRealIPv6()
     {
-        $provider = new IpGeoBaseProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new IpGeoBaseProvider($this->getAdapter());
         $provider->getGeocodedData('::ffff:88.188.221.14');
     }
 

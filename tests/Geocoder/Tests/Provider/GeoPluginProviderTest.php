@@ -107,7 +107,7 @@ class GeoPluginProviderTest extends TestCase
 
     public function testGetGeocodedDataWithRealIPv4()
     {
-        $provider = new GeoPluginProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new GeoPluginProvider($this->getAdapter());
         $result   = $provider->getGeocodedData('66.147.244.214');
 
         $this->assertInternalType('array', $result);

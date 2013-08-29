@@ -32,7 +32,7 @@ class GeocoderUsProviderTest extends TestCase
      */
     public function testGetGeocodedDataWithWrongAddress()
     {
-        $provider = new GeocoderUsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new GeocoderUsProvider($this->getAdapter());
         $provider->getGeocodedData('foobar');
     }
 
@@ -40,7 +40,7 @@ class GeocoderUsProviderTest extends TestCase
     {
         $this->markTestIncomplete('Timeout too long');
 
-        $provider = new GeocoderUsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new GeocoderUsProvider($this->getAdapter());
         $result   = $provider->getGeocodedData('1600 Pennsylvania Ave, Washington, DC');
 
         $this->assertInternalType('array', $result);
@@ -89,7 +89,7 @@ class GeocoderUsProviderTest extends TestCase
      */
     public function testGetGeocodedDataWithIPv4()
     {
-        $provider = new GeocoderUsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new GeocoderUsProvider($this->getAdapter());
         $provider->getGeocodedData('74.200.247.59');
     }
 
@@ -99,7 +99,7 @@ class GeocoderUsProviderTest extends TestCase
      */
     public function testGetGeocodedDataWithIPv6()
     {
-        $provider = new GeocoderUsProvider(new \Geocoder\HttpAdapter\CurlHttpAdapter());
+        $provider = new GeocoderUsProvider($this->getAdapter());
         $provider->getGeocodedData('::ffff:74.200.247.59');
     }
 
