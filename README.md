@@ -73,8 +73,8 @@ Just create a `composer.json` file for your project:
 And run these two commands to install it:
 
 ``` bash
-$ wget http://getcomposer.org/composer.phar
-$ php composer.phar install
+$ curl -sS https://getcomposer.org/installer | php
+$ composer install
 ```
 
 Now you can add the autoloader, and you will have access to the library:
