@@ -11,6 +11,13 @@
     bootstrap="tests/bootstrap.php"
     >
     <php>
+        <!--
+        Turn this parameter to 'false' or comment it to bypass
+        the caching layer. See the `CachedResponseAdapter` class.
+        -->
+        <server name="USE_CACHED_RESPONSES" value="true" />
+
+        <!-- API Keys -->
         <!-- <server name="IPINFODB_API_KEY" value="YOUR_API_KEY" /> -->
         <!-- <server name="BINGMAPS_API_KEY" value="YOUR_API_KEY" /> -->
         <!-- <server name="CLOUDMADE_API_KEY" value="YOUR_API_KEY" /> -->

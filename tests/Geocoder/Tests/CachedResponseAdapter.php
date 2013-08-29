@@ -21,9 +21,10 @@ class CachedResponseAdapter implements HttpAdapterInterface
      */
     public function getContent($url)
     {
-        $file = sprintf('%s/%s/%s', realpath(__DIR__ . '/../../'), $this->cacheDir, sha1($url));
+        $useCache = isset($_SERVER['USE_CACHED_RESPONSES']) && true === $_SERVER['USE_CACHED_RESPONSES'];
+        $file     = sprintf('%s/%s/%s', realpath(__DIR__ . '/../../'), $this->cacheDir, sha1($url));
 
-        if (is_file($file) && is_readable($file)) {
+        if ($useCache && is_file($file) && is_readable($file)) {
             $response = unserialize(file_get_contents($file));
 
             if (!empty($response)) {
@@ -32,7 +33,10 @@ class CachedResponseAdapter implements HttpAdapterInterface
         }
 
         $response = $this->adapter->getContent($url);
-        file_put_contents($file, serialize($response));
+
+        if ($useCache) {
+            file_put_contents($file, serialize($response));
+        }
 
         return $response;
     }

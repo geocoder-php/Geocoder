@@ -1,0 +1,13 @@
+s:387:"<?xml version="1.0"?>
+<rdf:RDF
+xmlns:dc="http://purl.org/dc/elements/1.1/"
+xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#"
+xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+>
+<geo:Point rdf:nodeID="aid12215090">
+<dc:description>1600 Pennsylvania Ave NW, Washington DC 20502</dc:description>
+<geo:long>-77.037684</geo:long>
+<geo:lat>38.898748</geo:lat>
+</geo:Point>
+</rdf:RDF>
+";

@@ -38,8 +38,6 @@ class GeocoderUsProviderTest extends TestCase
 
     public function testGetGeocodedDataWithRealAddress()
     {
-        $this->markTestIncomplete('Timeout too long');
-
         $provider = new GeocoderUsProvider($this->getAdapter());
         $result   = $provider->getGeocodedData('1600 Pennsylvania Ave, Washington, DC');
 
