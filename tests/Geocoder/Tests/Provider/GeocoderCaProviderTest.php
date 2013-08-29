@@ -148,7 +148,7 @@ class GeocoderCaProviderTest extends TestCase
         $this->assertInternalType('array', $result);
         $this->assertEquals(40.707507, $result['latitude'], '', 0.0001);
         $this->assertEquals(-74.011255, $result['longitude'], '', 0.0001);
-        $this->assertEquals(2, $result['streetNumber']);
+        $this->assertEquals(1, $result['streetNumber']);
         $this->assertEquals('New St', $result['streetName']);
         $this->assertEquals(10005, $result['zipcode']);
         $this->assertEquals('NEW YORK', $result['city']);
