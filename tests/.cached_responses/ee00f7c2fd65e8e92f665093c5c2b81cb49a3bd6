@@ -1,0 +1,19 @@
+s:521:"{
+    "status":"OK",
+    "result":{
+        "location":{
+            "lng":116.322987,
+            "lat":39.983424
+        },
+        "formatted_address":"北京市海淀区中关村大街27号1101-08室",
+        "business":"人民大学,中关村,苏州街",
+        "addressComponent":{
+            "city":"北京市",
+            "district":"海淀区",
+            "province":"北京市",
+            "street":"中关村大街",
+            "street_number":"27号1101-08室"
+        },
+        "cityCode":131
+    }
+}";
