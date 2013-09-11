@@ -8,6 +8,10 @@ Geocoder
 ========
 
 [![Build Status](https://secure.travis-ci.org/geocoder-php/Geocoder.png)](http://travis-ci.org/geocoder-php/Geocoder)
+[![Latest Stable
+Version](https://poser.pugx.org/willdurand/geocoder/v/stable.png)](https://packagist.org/packages/willdurand/geocoder)
+[![Total
+Downloads](https://poser.pugx.org/willdurand/geocoder/downloads.png)](https://packagist.org/packages/willdurand/geocoder)
 
 **Geocoder** is a library which helps you build geo-aware applications. It provides an abstraction layer for geocoding manipulations.
 The library is split in two parts: `HttpAdapter` and `Provider` and is really extensible.
