@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+### 2.2.1 (????-??-??) ###
+
+n/a
+
 ### 2.2.0 (2013-09-16) ###
 
 * Added: ChainNoResultException for aggregating ChainProvider exceptions.
