@@ -17,62 +17,30 @@ class ChainNoResultException extends NoResultException
 {
 
     /**
-     * Constructor
-     * 
-     * @param string $message 
-     * @param array $exceptions Array of Exception instances
-     * @access public
-     * @return void
-     */
-    public function __construct($message = "", array $exceptions = array())
-    {
-        parent::__construct($message);
-        $this->setExceptions($exceptions);
-    }
-
-    /**
-     * exceptions 
+     * Exceptions from chained providers
      * 
      * @var array
-     * @access private
      */
     private $exceptions = array();
 
     /**
-     * Get the exceptions
+     * Constructor
      * 
-     * @access public
-     * @return void
+     * @param string $message 
+     * @param array $exceptions Array of Exception instances
+     */
+    public function __construct($message = "", array $exceptions = array())
+    {
+        parent::__construct($message);
+        $this->exceptions = $exceptions;
+    }
+
+    /**
+     * Get the exceptions from chained providers
      */
     public function getExceptions()
     {
         return $this->exceptions;
-    }
-
-    /**
-     * Set the exceptions
-     * 
-     * @param array $exceptions Array of Exception instances
-     * @access public
-     * @return void
-     */
-    public function setExceptions(array $exceptions)
-    {
-        foreach ($exceptions as $exception) {
-            $this->addException($exception);
-        }
-    }
-
-    /**
-     * Add an exception
-     * 
-     * @param Exception $exception 
-     * @access public
-     * @return void
-     */
-    public function addException(\Exception $exception)
-    {
-        $this->exceptions[] = $exception;
     }
 
 }
