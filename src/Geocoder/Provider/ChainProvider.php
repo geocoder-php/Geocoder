@@ -10,8 +10,8 @@
 
 namespace Geocoder\Provider;
 
-use Geocoder\Exception\NoResultException;
 use Geocoder\Exception\InvalidCredentialsException;
+use Geocoder\Exception\ChainNoResultException;
 
 /**
  * @author Markus Bachmann <markus.bachmann@bachi.biz>
@@ -48,16 +48,19 @@ class ChainProvider implements ProviderInterface
      */
     public function getGeocodedData($address)
     {
+        $exceptions = array();
+
         foreach ($this->providers as $provider) {
             try {
                 return $provider->getGeocodedData($address);
             } catch (InvalidCredentialsException $e) {
                 throw $e;
             } catch (\Exception $e) {
+                $exceptions[] = $e;
             }
         }
 
-        throw new NoResultException(sprintf('No provider could provide the address "%s"', $address));
+        throw new ChainNoResultException(sprintf('No provider could provide the address "%s"', $address), $exceptions);
     }
 
     /**
@@ -65,16 +68,19 @@ class ChainProvider implements ProviderInterface
      */
     public function getReversedData(array $coordinates)
     {
+        $exceptions = array();
+
         foreach ($this->providers as $provider) {
             try {
                 return $provider->getReversedData($coordinates);
             } catch (InvalidCredentialsException $e) {
                 throw $e;
             } catch (\Exception $e) {
+                $exceptions[] = $e;
             }
         }
 
-        throw new NoResultException(sprintf('No provider could provide the coordinated %s', json_encode($coordinates)));
+        throw new ChainNoResultException(sprintf('No provider could provide the coordinated %s', json_encode($coordinates)), $exceptions);
     }
 
     /**
