@@ -1,9 +1,12 @@
 CHANGELOG
 =========
 
-### 2.1.1 (????-??-??) ###
+### 2.2.0 (2013-09-16) ###
 
-n/a
+* Added: ChainNoResultException for aggregating ChainProvider exceptions.
+* Added: CachedResponseAdapter for the test suite + cached responses
+* Updated: composer installation to the current recommendation from
+  http://getcomposer.org/download/
 
 ### 2.1.0 (2013-08-27) ###
 
