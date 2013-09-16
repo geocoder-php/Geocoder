@@ -15,32 +15,33 @@ namespace Geocoder\Exception;
  */
 class ChainNoResultException extends NoResultException
 {
-
     /**
      * Exceptions from chained providers
-     * 
+     *
      * @var array
      */
     private $exceptions = array();
 
     /**
      * Constructor
-     * 
-     * @param string $message 
-     * @param array $exceptions Array of Exception instances
+     *
+     * @param string $message
+     * @param array  $exceptions Array of Exception instances
      */
-    public function __construct($message = "", array $exceptions = array())
+    public function __construct($message = '', array $exceptions = array())
     {
         parent::__construct($message);
+
         $this->exceptions = $exceptions;
     }
 
     /**
      * Get the exceptions from chained providers
+     *
+     * @return array
      */
     public function getExceptions()
     {
         return $this->exceptions;
     }
-
 }
