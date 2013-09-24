@@ -108,32 +108,39 @@ class YandexProvider extends AbstractProvider implements LocaleAwareProviderInte
         $results = array();
 
         foreach ($data as $item) {
-            $item           = $item['GeoObject'];
-            $country        = $item['metaDataProperty']['GeocoderMetaData']['AddressDetails']['Country'];
-            $addressDetails = isset($country['AdministrativeArea']) ? $country['AdministrativeArea'] : $country;
-            $locality       = isset($addressDetails['Locality']) ? $addressDetails['Locality'] : null;
-            $thoroughfare   = isset($locality['Thoroughfare']) ? $locality['Thoroughfare'] : null;
-            $coordinates    = explode(' ', $item['Point']['pos']);
-            $bounds         = null;
-            $lowerCorner    = explode(' ', $item['boundedBy']['Envelope']['lowerCorner']);
-            $upperCorner    = explode(' ', $item['boundedBy']['Envelope']['upperCorner']);
-            $bounds         = array(
-                'south' => isset($lowerCorner[1]) ? $lowerCorner[1] : null,
-                'west'  => isset($lowerCorner[0]) ? $lowerCorner[0] : null,
-                'north' => isset($upperCorner[1]) ? $upperCorner[1] : null,
-                'east'  => isset($upperCorner[0]) ? $upperCorner[0] : null
+            $bounds = null;
+            $details = array('pos' => ' ');
+
+            array_walk_recursive(
+                $item['GeoObject'],
+                function($value, $key) use (&$details) {$details[$key] = $value;}
             );
 
+            if (! empty($details['lowerCorner'])) {
+                $coordinates = explode(' ', $details['lowerCorner']);
+                $bounds['south'] = $coordinates[1];
+                $bounds['west']  = $coordinates[0];
+            }
+
+            if (! empty($details['upperCorner'])) {
+                $coordinates = explode(' ', $details['upperCorner']);
+                $bounds['north'] = $coordinates[1];
+                $bounds['east']  = $coordinates[0];
+            }
+
+            $coordinates = explode(' ', $details['pos']);
+
             $results[] = array_merge($this->getDefaults(), array(
-                'latitude'      => isset($coordinates[1]) ? $coordinates[1] : null,
-                'longitude'     => isset($coordinates[0]) ? $coordinates[0] : null,
+                'latitude'      => $coordinates[1],
+                'longitude'     => $coordinates[0],
                 'bounds'        => $bounds,
-                'streetNumber'  => isset($thoroughfare['Premise']['PremiseNumber']) ? $thoroughfare['Premise']['PremiseNumber'] : null,
-                'streetName'    => isset($thoroughfare['ThoroughfareName']) ? $thoroughfare['ThoroughfareName'] : null,
-                'city'          => isset($locality['LocalityName']) ? $locality['LocalityName'] : null,
-                'cityDistrict'  => isset($addressDetails['AdministrativeAreaName']) ? $addressDetails['AdministrativeAreaName'] : null,
-                'country'       => isset($country['CountryName']) ? $country['CountryName'] : null,
-                'countryCode'   => isset($country['CountryNameCode']) ? $country['CountryNameCode'] : null,
+                'streetNumber'  => isset($details['PremiseNumber']) ? $details['PremiseNumber'] : null,
+                'streetName'    => isset($details['ThoroughfareName']) ? $details['ThoroughfareName'] : null,
+                'cityDistrict'  => isset($details['DependentLocalityName']) ? $details['DependentLocalityName'] : null,
+                'city'          => isset($details['LocalityName']) ? $details['LocalityName'] : null,
+                'region'        => isset($details['AdministrativeAreaName']) ? $details['AdministrativeAreaName'] : null,
+                'country'       => isset($details['CountryName']) ? $details['CountryName'] : null,
+                'countryCode'   => isset($details['CountryNameCode']) ? $details['CountryNameCode'] : null,
             ));
         }
 
