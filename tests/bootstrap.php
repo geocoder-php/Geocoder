@@ -1,6 +1,6 @@
 <?php
 
-if (!extension_loaded('curl') || !function_exists('curl_init')) {
+if (!function_exists('curl_init')) {
     die(<<<EOT
 cURL has to be enabled!
 EOT
