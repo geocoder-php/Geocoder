@@ -60,7 +60,7 @@ abstract class AbstractResult implements \ArrayAccess
      */
     protected function formatString($str)
     {
-        if (extension_loaded('mbstring')) {
+        if (function_exists('mb_convert_case')) {
             $str = mb_convert_case($str, MB_CASE_TITLE, 'UTF-8');
         } else {
             $str = $this->lowerize($str);
@@ -82,7 +82,7 @@ abstract class AbstractResult implements \ArrayAccess
      */
     protected function lowerize($str)
     {
-        return extension_loaded('mbstring') ? mb_strtolower($str, 'UTF-8') : strtolower($str);
+        return function_exists('mb_strtolower') ? mb_strtolower($str, 'UTF-8') : strtolower($str);
     }
 
     /**
@@ -94,6 +94,6 @@ abstract class AbstractResult implements \ArrayAccess
      */
     protected function upperize($str)
     {
-        return extension_loaded('mbstring') ? mb_strtoupper($str, 'UTF-8') : strtoupper($str);
+        return function_exists('mb_strtoupper') ? mb_strtoupper($str, 'UTF-8') : strtoupper($str);
     }
 }
