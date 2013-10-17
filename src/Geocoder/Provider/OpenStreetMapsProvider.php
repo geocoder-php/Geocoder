@@ -15,7 +15,7 @@ use Geocoder\HttpAdapter\HttpAdapterInterface;
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-class OpenStreetMapsProvider extends OpenStreetMapsProvider
+class OpenStreetMapsProvider extends OpenStreetMapProvider
 {
     /**
      * @param HttpAdapterInterface $adapter An HTTP adapter.
