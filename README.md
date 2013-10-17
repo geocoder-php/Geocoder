@@ -32,7 +32,7 @@ Currently, there are many providers for the following APIs:
 * [Google Maps](http://code.google.com/apis/maps/documentation/geocoding/) as Address-Based geocoding and reverse geocoding provider;
 * [Google Maps for Business](https://developers.google.com/maps/documentation/business/webservices) as Address-Based geocoding and reverse geocoding provider;
 * [Bing Maps](http://msdn.microsoft.com/en-us/library/ff701715.aspx) as Address-Based geocoding and reverse geocoding provider;
-* [OpenStreetMaps](http://nominatim.openstreetmap.org/) as Address-Based geocoding and reverse geocoding provider (based on the Nominatim provider);
+* [OpenStreetMap](http://nominatim.openstreetmap.org/) as Address-Based geocoding and reverse geocoding provider (based on the Nominatim provider);
 * [Nominatim](http://wiki.openstreetmap.org/wiki/Nominatim) as Address-Based geocoding and reverse geocoding provider;
 * [CloudMade](http://developers.cloudmade.com/projects/show/geocoding-http-api) as Address-Based geocoding and reverse geocoding provider;
 * [Geoip](http://php.net/manual/book.geoip.php), the PHP extension, as IP-Based geocoding provider;
@@ -152,9 +152,9 @@ The `BingMapsProvider` named `bing_maps` is able to geocode and reverse geocode 
 A valid api key is required.
 
 
-### OpenStreetMapsProvider ###
+### OpenStreetMapProvider ###
 
-The `OpenStreetMapsProvider` named `openstreetmaps` is able to geocode and reverse geocode **street addresses**.
+The `OpenStreetMapProvider` named `openstreetmap` is able to geocode and reverse geocode **street addresses**.
 
 ### NominatimProvider ###
 

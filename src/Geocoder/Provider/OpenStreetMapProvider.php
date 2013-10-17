@@ -15,7 +15,7 @@ use Geocoder\HttpAdapter\HttpAdapterInterface;
 /**
  * @author Niklas Närhinen <niklas@narhinen.net>
  */
-class OpenStreetMapsProvider extends NominatimProvider
+class OpenStreetMapProvider extends NominatimProvider
 {
     /**
      * @var string

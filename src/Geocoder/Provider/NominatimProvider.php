@@ -132,7 +132,7 @@ class NominatimProvider extends AbstractProvider implements LocaleAwareProviderI
      */
     public function getName()
     {
-        return 'openstreetmaps';
+        return 'openstreetmap';
     }
 
     /**
