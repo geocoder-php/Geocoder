@@ -1,9 +1,13 @@
 CHANGELOG
 =========
 
-### 2.2.1 (????-??-??) ###
+### 2.3.0 (2013-10-17) ###
 
-n/a
+* Added: Reintroduce OpenStreetMapsProvider for BC purpose
+* Fixed: Rename OpenStreetMaps => OpenStreetMap
+         The `OpenStreetMapsProvider` is now **deprecated**, use the
+         `OpenStreetMapProvider` instead.
+* Fixed: replace extension_exists() by function_exists() for mbstring
 
 ### 2.2.0 (2013-09-16) ###
 
