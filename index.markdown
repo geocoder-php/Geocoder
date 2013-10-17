@@ -42,7 +42,7 @@ Currently, there are many providers for the following APIs:
 * [Google Maps](http://code.google.com/apis/maps/documentation/geocoding/) as Address-Based geocoding and reverse geocoding provider;
 * [Google Maps for Business](https://developers.google.com/maps/documentation/business/webservices) as Address-Based geocoding and reverse geocoding provider;
 * [Bing Maps](http://msdn.microsoft.com/en-us/library/ff701715.aspx) as Address-Based geocoding and reverse geocoding provider;
-* [OpenStreetMaps](http://nominatim.openstreetmap.org/) as Address-Based geocoding and reverse geocoding provider;
+* [OpenStreetMap](http://nominatim.openstreetmap.org/) as Address-Based geocoding and reverse geocoding provider;
 * [CloudMade](http://developers.cloudmade.com/projects/show/geocoding-http-api) as Address-Based geocoding and reverse geocoding provider;
 * [Geoip](http://php.net/manual/book.geoip.php), the PHP extension, as IP-Based geocoding provider;
 * ChainProvider is a special provider that takes a list of providers and iterates
@@ -161,9 +161,13 @@ The `BingMapsProvider` named `bing_maps` is able to geocode and reverse geocode 
 A valid api key is required.
 
 
-### OpenStreetMapsProvider ###
+### OpenStreetMapProvider ###
 
-The `OpenStreetMapsProvider` named `openstreetmaps` is able to geocode and reverse geocode **street addresses**.
+The `OpenStreetMapProvider` named `openstreetmap` is able to geocode and reverse geocode **street addresses**.
+
+**Warning:** The `OpenStreetMapsProvider` is now **deprecated**, and you should
+rather use the `OpenStreetMapProvider`. See issue
+[#269](https://github.com/geocoder-php/Geocoder/issues/269).
 
 
 ### CloudMadeProvider ###
