@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+### 2.3.1 (????-??-??) ###
+
+n/a
+
 ### 2.3.0 (2013-10-17) ###
 
 * Added: Reintroduce OpenStreetMapsProvider for BC purpose
