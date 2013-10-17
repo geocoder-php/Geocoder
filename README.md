@@ -154,7 +154,12 @@ A valid api key is required.
 
 ### OpenStreetMapProvider ###
 
-The `OpenStreetMapProvider` named `openstreetmap` is able to geocode and reverse geocode **street addresses**.
+The `OpenStreetMapProvider` named `openstreetmap` is able to geocode and reverse
+geocode **street addresses**.
+
+**Warning:** The `OpenStreetMapsProvider` is **deprecated**, and you should
+rather use the `OpenStreetMapProvider`. See issue
+[#269](https://github.com/geocoder-php/Geocoder/issues/269).
 
 ### NominatimProvider ###
 
