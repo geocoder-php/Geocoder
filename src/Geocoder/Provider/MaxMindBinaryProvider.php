@@ -75,20 +75,14 @@ class MaxMindBinaryProvider extends AbstractProvider implements ProviderInterfac
             throw new NoResultException(sprintf('No results found for IP address %s', $address));
         }
 
-        $results = array_merge($this->getDefaults(), array(
+        return $this->fixEncoding(array_merge($this->getDefaults(), array(
             'countryCode' => $geoIpRecord->country_code,
             'country'     => $geoIpRecord->country_name,
             'region'      => $geoIpRecord->region,
             'city'        => $geoIpRecord->city,
             'latitude'    => $geoIpRecord->latitude,
             'longitude'   => $geoIpRecord->longitude,
-        ));
-
-        $results = array_map(function($value) {
-            return is_string($value) ? utf8_encode($value) : $value;
-        }, $results);
-
-        return $results;
+        )));
     }
 
     /**
