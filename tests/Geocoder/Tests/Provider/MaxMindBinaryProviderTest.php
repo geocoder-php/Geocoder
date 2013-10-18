@@ -85,6 +85,14 @@ class MaxMindBinaryProviderTest extends TestCase
         $this->assertEquals($expectedCountry, $result['country']);
     }
 
+    public function testShouldReturnResultsAsUtf8Encoded()
+    {
+        $provider = new MaxMindBinaryProvider($this->binaryFile);
+        $result   = $provider->getGeocodedData('212.51.181.237');
+
+        $this->assertSame('Châlette-sur-loing', $result['city']);
+    }
+
     public function testGetName()
     {
         $provider = new MaxMindBinaryProvider($this->binaryFile);
