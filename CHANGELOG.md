@@ -1,9 +1,10 @@
 CHANGELOG
 =========
 
-### 2.3.1 (????-??-??) ###
+### 2.3.1 (2013-10-22) ###
 
-n/a
+* Fixed: GeoipProvider and MaxMindBinaryProvider now return a result set
+* Added: fixEncoding() method in AbstractProvider (merged from 1.7)
 
 ### 2.3.0 (2013-10-17) ###
 
