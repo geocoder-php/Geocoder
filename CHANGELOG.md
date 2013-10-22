@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+### 2.3.2 (????-??-??) ###
+
+n/a
+
 ### 2.3.1 (2013-10-22) ###
 
 * Fixed: GeoipProvider and MaxMindBinaryProvider now return a result set
