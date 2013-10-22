@@ -133,7 +133,7 @@ class MaxMindProvider extends AbstractProvider implements ProviderInterface
         }
 
         $data = array_combine($fields, $data);
-        $data = array_map(function($value) { return '' === $value ? null : $value; }, $data);
+        $data = array_map(function ($value) { return '' === $value ? null : $value; }, $data);
 
         if (empty($data['country']) && !empty($data['countryCode'])) {
             $data['country'] = $this->countryCodeToCountryName($data['countryCode']);

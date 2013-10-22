@@ -113,7 +113,7 @@ class YandexProvider extends AbstractProvider implements LocaleAwareProviderInte
 
             array_walk_recursive(
                 $item['GeoObject'],
-                function($value, $key) use (&$details) {$details[$key] = $value;}
+                function ($value, $key) use (&$details) {$details[$key] = $value;}
             );
 
             if (! empty($details['lowerCorner'])) {

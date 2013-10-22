@@ -30,7 +30,7 @@ class ChainProviderTest extends TestCase
         $mockOne = $this->getMock('Geocoder\\Provider\\ProviderInterface');
         $mockOne->expects($this->once())
             ->method('getReversedData')
-            ->will($this->returnCallback(function() { throw new \Exception; }));
+            ->will($this->returnCallback(function () { throw new \Exception; }));
 
         $mockTwo = $this->getMock('Geocoder\\Provider\\ProviderInterface');
         $mockTwo->expects($this->once())
@@ -48,7 +48,7 @@ class ChainProviderTest extends TestCase
         $mockOne = $this->getMock('Geocoder\\Provider\\ProviderInterface');
         $mockOne->expects($this->exactly(2))
             ->method('getReversedData')
-            ->will($this->returnCallback(function() { throw new \Exception; }));
+            ->will($this->returnCallback(function () { throw new \Exception; }));
 
         $chain = new ChainProvider(array($mockOne, $mockOne));
 
@@ -64,7 +64,7 @@ class ChainProviderTest extends TestCase
         $mockOne = $this->getMock('Geocoder\\Provider\\ProviderInterface');
         $mockOne->expects($this->once())
             ->method('getGeocodedData')
-            ->will($this->returnCallback(function() { throw new \Exception; }));
+            ->will($this->returnCallback(function () { throw new \Exception; }));
 
         $mockTwo = $this->getMock('Geocoder\\Provider\\ProviderInterface');
         $mockTwo->expects($this->once())
@@ -82,7 +82,7 @@ class ChainProviderTest extends TestCase
         $mockOne = $this->getMock('Geocoder\\Provider\\ProviderInterface');
         $mockOne->expects($this->exactly(2))
             ->method('getGeocodedData')
-            ->will($this->returnCallback(function() { throw new \Exception; }));
+            ->will($this->returnCallback(function () { throw new \Exception; }));
 
         $chain = new ChainProvider(array($mockOne, $mockOne));
 

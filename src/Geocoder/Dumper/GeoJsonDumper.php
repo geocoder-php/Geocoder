@@ -24,7 +24,7 @@ class GeoJsonDumper implements DumperInterface
      */
     public function dump(ResultInterface $result)
     {
-        $properties = array_filter($result->toArray(), function($val) {
+        $properties = array_filter($result->toArray(), function ($val) {
             return $val !== null;
         });
 
