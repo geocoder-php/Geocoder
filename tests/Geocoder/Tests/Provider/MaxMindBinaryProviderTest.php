@@ -47,12 +47,12 @@ class MaxMindBinaryProviderTest extends TestCase
     public function testLocationResultContainsExpectedFields($ip)
     {
         $provider = new MaxMindBinaryProvider($this->binaryFile);
-        $result   = $provider->getGeocodedData($ip);
+        $results  = $provider->getGeocodedData($ip);
 
-        $this->assertInternalType('array', $result);
-        $this->assertCount(1, $result);
+        $this->assertInternalType('array', $results);
+        $this->assertCount(1, $results);
 
-        $result = $result[0];
+        $result = $results[0];
         $this->assertInternalType('array', $result);
 
         $this->assertArrayHasKey('country', $result);
@@ -95,9 +95,9 @@ class MaxMindBinaryProviderTest extends TestCase
     public function testShouldReturnResultsAsUtf8Encoded()
     {
         $provider = new MaxMindBinaryProvider($this->binaryFile);
-        $result   = $provider->getGeocodedData('212.51.181.237');
+        $results  = $provider->getGeocodedData('212.51.181.237');
 
-        $this->assertSame('Châlette-sur-loing', $result['city']);
+        $this->assertSame('Châlette-sur-loing', $results[0]['city']);
     }
 
     public function testGetName()

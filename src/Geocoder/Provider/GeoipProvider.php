@@ -56,9 +56,9 @@ class GeoipProvider extends AbstractProvider implements ProviderInterface
         }
 
         $timezone = @geoip_time_zone_by_country_and_region($results['country_code'], $results['region']) ?: null;
-        $region = @geoip_region_name_by_code($results['country_code'], $results['region']) ?: $results['region'];
+        $region   = @geoip_region_name_by_code($results['country_code'], $results['region']) ?: $results['region'];
 
-        return $this->fixEncoding(array_merge($this->getDefaults(), array(
+        return array($this->fixEncoding(array_merge($this->getDefaults(), array(
             'latitude'    => $results['latitude'],
             'longitude'   => $results['longitude'],
             'city'        => $results['city'],
@@ -68,7 +68,7 @@ class GeoipProvider extends AbstractProvider implements ProviderInterface
             'country'     => $results['country_name'],
             'countryCode' => $results['country_code'],
             'timezone'    => $timezone,
-        )));
+        ))));
     }
 
     /**

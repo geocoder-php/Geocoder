@@ -55,12 +55,12 @@ class GeoipProviderTest extends TestCase
     public function testGetGeocodedDataWithLocalhostIPv4()
     {
         $provider = new GeoipProvider();
-        $result   = $provider->getGeocodedData('127.0.0.1');
+        $results  = $provider->getGeocodedData('127.0.0.1');
 
-        $this->assertInternalType('array', $result);
-        $this->assertCount(1, $result);
+        $this->assertInternalType('array', $results);
+        $this->assertCount(1, $results);
 
-        $result = $result[0];
+        $result = $results[0];
         $this->assertInternalType('array', $result);
         $this->assertArrayNotHasKey('latitude', $result);
         $this->assertArrayNotHasKey('longitude', $result);
@@ -86,12 +86,12 @@ class GeoipProviderTest extends TestCase
     public function testGetGeocodedDataWithRealIPv4()
     {
         $provider = new GeoipProvider();
-        $result   = $provider->getGeocodedData('74.200.247.59');
+        $results  = $provider->getGeocodedData('74.200.247.59');
 
-        $this->assertInternalType('array', $result);
-        $this->assertCount(1, $result);
+        $this->assertInternalType('array', $results);
+        $this->assertCount(1, $results);
 
-        $result = $result[0];
+        $result = $results[0];
         $this->assertInternalType('array', $result);
         $this->assertNotNull($result['latitude']);
         $this->assertNotNull($result['longitude']);
