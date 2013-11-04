@@ -79,7 +79,7 @@ Just create a `composer.json` file for your project:
 }
 ```
 
-**Protip:** you should browse the [willdurand/geocoder](https://packagist.org/packages/willdurand/geocoder)
+**Protip:** you should browse the [`willdurand/geocoder`](https://packagist.org/packages/willdurand/geocoder)
 page to choose a stable version to use, avoid the `@stable` meta constraint.
 
 And run these two commands to install it:
