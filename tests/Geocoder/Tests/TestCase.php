@@ -3,6 +3,7 @@
 namespace Geocoder\Tests;
 
 use Geocoder\HttpAdapter\CurlHttpAdapter;
+use Geocoder\HttpAdapter\HttpAdapterInterface;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -10,6 +11,7 @@ use Geocoder\HttpAdapter\CurlHttpAdapter;
 abstract class TestCase extends \PHPUnit_Framework_TestCase
 {
     /**
+     * @param null|object $expects
      * @return HttpAdapterInterface
      */
     protected function getMockAdapter($expects = null)
@@ -28,6 +30,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param $returnValue
      * @return HttpAdapterInterface
      */
     protected function getMockAdapterReturns($returnValue)
