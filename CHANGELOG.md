@@ -1,9 +1,10 @@
 CHANGELOG
 =========
 
-### 2.3.2 (????-??-??) ###
+### 2.3.2 (2013-11-06) ###
 
-n/a
+* Fixed: GeoIPs provider stopped working due to api changes (#267)
+* Fixed: installation guidelines
 
 ### 2.3.1 (2013-10-22) ###
 
