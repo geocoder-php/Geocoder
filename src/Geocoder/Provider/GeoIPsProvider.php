@@ -13,10 +13,15 @@ namespace Geocoder\Provider;
 use Geocoder\Exception\InvalidCredentialsException;
 use Geocoder\Exception\NoResultException;
 use Geocoder\Exception\UnsupportedException;
+use Geocoder\Exception\InvalidArgumentException;
+use Geocoder\Exception\QuotaExceededException;
 use Geocoder\HttpAdapter\HttpAdapterInterface;
 
 /**
  * @author Andrea Cristaudo <andrea.cristaudo@gmail.com>
+ * @author Arthur Bodera <abodera@thinkscape.pro>
+ *
+ * @link http://www.geoips.com/en/developer/api-guide
  */
 class GeoIPsProvider extends AbstractProvider implements ProviderInterface
 {
@@ -24,6 +29,14 @@ class GeoIPsProvider extends AbstractProvider implements ProviderInterface
      * @var string
      */
     const GEOCODE_ENDPOINT_URL = 'http://api.geoips.com/ip/%s/key/%s/output/json/timezone/true/';
+
+    const CODE_SUCCESS          = '200_1'; // The following results has been returned.
+    const CODE_NOT_FOUND        = '200_2'; // No result set has been returned.
+    const CODE_BAD_KEY          = '400_1'; // Error in the URI - The API call should include a API key parameter.
+    const CODE_BAD_IP           = '400_2'; // Error in the URI - The API call should include a valid IP address.
+    const CODE_NOT_AUTHORIZED   = '403_1'; // The API key associated with your request was not recognized.
+    const CODE_ACCOUNT_INACTIVE = '403_2'; // The API key has not been approved or has been disabled.
+    const CODE_LIMIT_EXCEEDED   = '403_3'; // The service you have requested is over capacity.
 
     /**
      * @var string
@@ -85,8 +98,7 @@ class GeoIPsProvider extends AbstractProvider implements ProviderInterface
     }
 
     /**
-     * @param string $query
-     *
+     * @param  string $query
      * @return array
      */
     protected function executeQuery($query)
@@ -94,39 +106,77 @@ class GeoIPsProvider extends AbstractProvider implements ProviderInterface
         $content = $this->getAdapter()->getContent($query);
 
         if (null === $content || '' === $content) {
-            throw new NoResultException(sprintf('Could not execute query %s', $query));
+            throw new NoResultException(sprintf('Invalid response from GeoIPs server for query %s', $query));
         }
 
         $json = json_decode($content, true);
 
-        $response = array_key_exists('response', $json) ? $json['response'] : $json;
-
-        if (!is_array($response) || !count($response)) {
-            throw new NoResultException(sprintf('Could not execute query %s', $query));
-        }
-
-        if (!isset($response['status']) || 'Bad Request' == $response['status']) {
-            throw new NoResultException(sprintf('Could not execute query %s', $query));
-        }
-
-        if ('Forbidden' === $response['status']) {
-            if ('Limit Exceeded' === $response['message']) {
-                throw new NoResultException(sprintf('Could not execute query %s', $query));
+        if (isset($json['error'])) {
+            switch ($json['error']['code']) {
+                case static::CODE_BAD_IP:
+                    throw new InvalidArgumentException('The API call should include a valid IP address.');
+                case static::CODE_BAD_KEY:
+                    throw new InvalidCredentialsException('The API call should include a API key parameter.');
+                case static::CODE_NOT_AUTHORIZED:
+                    throw new InvalidCredentialsException('The API key associated with your request was not recognized.');
+                case static::CODE_ACCOUNT_INACTIVE:
+                    throw new InvalidCredentialsException('The API key has not been approved or has been disabled.');
+                case static::CODE_LIMIT_EXCEEDED:
+                    throw new QuotaExceededException('The service you have requested is over capacity.');
+                default:
+                    throw new NoResultException(sprintf(
+                        'GeoIPs error %s%s%s%s - query: %s',
+                        $json['error']['code'],
+                        isset($json['error']['status']) ? ', ' . $json['error']['status'] : '',
+                        isset($json['error']['message']) ? ', ' . $json['error']['message'] : '',
+                        isset($json['error']['notes']) ? ', ' . $json['error']['notes'] : '',
+                        $query
+                    ));
             }
-
-            throw new InvalidCredentialsException('API Key provided is not valid.');
         }
 
-        return array(array_merge($this->getDefaults(), array(
-            'country'     => '' === $response['country_name'] ? null : $response['country_name'],
-            'countryCode' => '' === $response['country_code'] ? null : $response['country_code'],
-            'region'      => '' === $response['region_name']  ? null : $response['region_name'],
-            'regionCode'  => '' === $response['region_code']  ? null : $response['region_code'],
-            'county'      => '' === $response['county_name']  ? null : $response['county_name'],
-            'city'        => '' === $response['city_name']    ? null : $response['city_name'],
-            'latitude'    => '' === $response['latitude']     ? null : $response['latitude'],
-            'longitude'   => '' === $response['longitude']    ? null : $response['longitude'],
-            'timezone'    => '' === $response['timezone']     ? null : $response['timezone'],
-        )));
+        if (!is_array($json) || empty($json) || empty($json['response']) || empty($json['response']['code'])) {
+            throw new NoResultException(sprintf('Invalid response from GeoIPs server for query %s', $query));
+        }
+
+        $response = $json['response'];
+
+        // Check response code
+        switch ($response['code']) {
+            case static::CODE_NOT_FOUND:
+                throw new NoResultException();
+            case static::CODE_SUCCESS;
+                // everything is ok
+                break;
+            default:
+                throw new NoResultException(sprintf(
+                    'GeoIPs returned unknown result code %s for query: %s',
+                    $response['code'],
+                    $query
+                ));
+        }
+
+        // Make sure that we do have proper result array
+        if (empty($response['locations']) || !is_array($response['locations']) || empty($response['locations'][0])) {
+            throw new NoResultException(sprintf('Invalid response from GeoIPs server for query %s', $query));
+        }
+
+        // Pick the first location from the response
+        $locations = array();
+        foreach ($response['locations'] as $location) {
+            $locations[] = array_merge($this->getDefaults(), array(
+                'country'     => '' === $location['country_name'] ? null : $location['country_name'],
+                'countryCode' => '' === $location['country_code'] ? null : $location['country_code'],
+                'region'      => '' === $location['region_name']  ? null : $location['region_name'],
+                'regionCode'  => '' === $location['region_code']  ? null : $location['region_code'],
+                'county'      => '' === $location['county_name']  ? null : $location['county_name'],
+                'city'        => '' === $location['city_name']    ? null : $location['city_name'],
+                'latitude'    => '' === $location['latitude']     ? null : $location['latitude'],
+                'longitude'   => '' === $location['longitude']    ? null : $location['longitude'],
+                'timezone'    => '' === $location['timezone']     ? null : $location['timezone'],
+            ));
+        }
+
+        return $locations;
     }
 }
