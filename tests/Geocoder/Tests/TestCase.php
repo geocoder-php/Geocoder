@@ -11,7 +11,7 @@ use Geocoder\HttpAdapter\HttpAdapterInterface;
 abstract class TestCase extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @param null|object $expects
+     * @param  null|object          $expects
      * @return HttpAdapterInterface
      */
     protected function getMockAdapter($expects = null)
