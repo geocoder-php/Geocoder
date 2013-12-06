@@ -221,7 +221,7 @@ The `DataScienceToolkitProvider` named `data_science_toolkit` is able to geocode
 ### YandexProvider ###
 
 The `YandexProvider` named `yandex` is able to geocode and reverse geocode **street addresses**.
-The default langage-locale is `ru-RU`, you can choose between `uk-UA`, `be-BY`,
+The default language-locale is `ru-RU`, you can choose between `uk-UA`, `be-BY`,
 `en-US`, `en-BR` and `tr-TR`.
 This provider can also reverse information based on coordinates (latitude,
 longitude). It's possible to precise the toponym to get more accurate result for reverse geocoding:
