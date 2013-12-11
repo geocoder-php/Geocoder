@@ -20,16 +20,6 @@ class OpenStreetMapProvider extends NominatimProvider
     /**
      * @var string
      */
-    const GEOCODE_ENDPOINT_URL = 'http://nominatim.openstreetmap.org/search?q=%s&format=xml&addressdetails=1&limit=%d';
-
-    /**
-     * @var string
-     */
-    const REVERSE_ENDPOINT_URL = 'http://nominatim.openstreetmap.org/reverse?format=xml&lat=%F&lon=%F&addressdetails=1&zoom=18';
-
-    /**
-     * @var string
-     */
     const ROOT_URL = 'http://nominatim.openstreetmap.org';
 
     /**
