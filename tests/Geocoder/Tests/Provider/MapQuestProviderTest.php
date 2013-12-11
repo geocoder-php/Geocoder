@@ -67,13 +67,13 @@ class MapQuestProviderTest extends TestCase
      */
     public function testGetReversedData()
     {
-        $provider = new MapQuestProvider($this->getMockAdapter(), $apiKey = 'my-api-key');
+        $provider = new MapQuestProvider($this->getMockAdapter(), null, $apiKey = 'my-api-key');
         $provider->getReversedData(array(1, 2));
     }
 
     public function testGetReversedDataWithRealCoordinates()
     {
-        $provider = new MapQuestProvider($this->getAdapter(), $apiKey = 'my-api-key');
+        $provider = new MapQuestProvider($this->getAdapter(), null, $apiKey = 'my-api-key');
         $result   = $provider->getReversedData(array(54.0484068, -2.7990345));
 
         $this->assertInternalType('array', $result);

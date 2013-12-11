@@ -20,7 +20,6 @@ use Geocoder\Exception\UnsupportedException;
  */
 class MapQuestProvider extends AbstractProvider implements ProviderInterface
 {
-
     /**
      * @var string
      */
@@ -52,7 +51,7 @@ class MapQuestProvider extends AbstractProvider implements ProviderInterface
         if (filter_var($address, FILTER_VALIDATE_IP)) {
             throw new UnsupportedException('The MapQuestProvider does not support IP addresses.');
         }
-        
+
         if (null === $this->apiKey) {
             throw new InvalidCredentialsException('No API Key provided.');
         }
