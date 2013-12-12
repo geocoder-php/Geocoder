@@ -38,7 +38,11 @@ class MapQuestProviderTest extends TestCase
 
     public function testGetGeocodedDataWithRealAddress()
     {
-        $provider = new MapQuestProvider($this->getAdapter(), null, $apiKey = 'my-api-key');
+        if (!isset($_SERVER['MAPQUEST_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the CLOUDMADE_API_KEY value in phpunit.xml');
+        }
+
+        $provider = new MapQuestProvider($this->getAdapter(), null, $_SERVER['MAPQUEST_API_KEY']);
         $results  = $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
 
         $this->assertInternalType('array', $results);
@@ -73,7 +77,11 @@ class MapQuestProviderTest extends TestCase
 
     public function testGetReversedDataWithRealCoordinates()
     {
-        $provider = new MapQuestProvider($this->getAdapter(), null, $apiKey = 'my-api-key');
+        if (!isset($_SERVER['MAPQUEST_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the CLOUDMADE_API_KEY value in phpunit.xml');
+        }
+
+        $provider = new MapQuestProvider($this->getAdapter(), null, $_SERVER['MAPQUEST_API_KEY']);
         $result   = $provider->getReversedData(array(54.0484068, -2.7990345));
 
         $this->assertInternalType('array', $result);
@@ -98,7 +106,11 @@ class MapQuestProviderTest extends TestCase
 
     public function testGetGeocodedDataWithCity()
     {
-        $provider = new MapQuestProvider($this->getAdapter(), null, $apiKey = 'my-api-key');
+        if (!isset($_SERVER['MAPQUEST_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the CLOUDMADE_API_KEY value in phpunit.xml');
+        }
+
+        $provider = new MapQuestProvider($this->getAdapter(), null, $_SERVER['MAPQUEST_API_KEY']);
         $results  = $provider->getGeocodedData('Hanover');
 
         $this->assertInternalType('array', $results);
@@ -138,7 +150,11 @@ class MapQuestProviderTest extends TestCase
 
     public function testGetGeocodedDataWithCityDistrict()
     {
-        $provider = new MapQuestProvider($this->getAdapter(), null, $apiKey = 'my-api-key');
+        if (!isset($_SERVER['MAPQUEST_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the CLOUDMADE_API_KEY value in phpunit.xml');
+        }
+
+        $provider = new MapQuestProvider($this->getAdapter(), null, $_SERVER['MAPQUEST_API_KEY']);
         $result   = $provider->getGeocodedData('Kalbacher Hauptstraße 10, 60437 Frankfurt, Germany');
 
         $this->assertInternalType('array', $result);
