@@ -22,7 +22,11 @@ class MapQuestProviderTest extends TestCase
      */
     public function testGetGeocodedData()
     {
-        $provider = new MapQuestProvider($this->getMockAdapter(), null, $apiKey = 'my-api-key');
+        if (!isset($_SERVER['MAPQUEST_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the CLOUDMADE_API_KEY value in phpunit.xml');
+        }
+
+        $provider = new MapQuestProvider($this->getMockAdapter(), null, $_SERVER['MAPQUEST_API_KEY']);
         $provider->getGeocodedData('foobar');
     }
 
@@ -32,7 +36,11 @@ class MapQuestProviderTest extends TestCase
      */
     public function testGetGeocodedDataWithAddressGetsNullContent()
     {
-        $provider = new MapQuestProvider($this->getMockAdapterReturns(null), null, $apiKey = 'my-api-key');
+        if (!isset($_SERVER['MAPQUEST_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the CLOUDMADE_API_KEY value in phpunit.xml');
+        }
+
+        $provider = new MapQuestProvider($this->getMockAdapterReturns(null), null, $_SERVER['MAPQUEST_API_KEY']);
         $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
     }
 
@@ -71,7 +79,11 @@ class MapQuestProviderTest extends TestCase
      */
     public function testGetReversedData()
     {
-        $provider = new MapQuestProvider($this->getMockAdapter(), null, $apiKey = 'my-api-key');
+        if (!isset($_SERVER['MAPQUEST_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the CLOUDMADE_API_KEY value in phpunit.xml');
+        }
+
+        $provider = new MapQuestProvider($this->getMockAdapter(), null, $_SERVER['MAPQUEST_API_KEY']);
         $provider->getReversedData(array(1, 2));
     }
 
