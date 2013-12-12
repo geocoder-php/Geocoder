@@ -190,6 +190,7 @@ The `ChainProvider` named `chain` is a special provider that takes a list of pro
 ### MapQuestProvider ###
 
 The `MapQuestProvider` named `map_quest` is able to geocode and reverse geocode **street addresses**.
+A valid api key is required.
 
 
 ### OIORestProvider ###
