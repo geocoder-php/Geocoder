@@ -10,6 +10,7 @@
 
 namespace Geocoder\Provider;
 
+use Geocoder\Exception\InvalidCredentialsException;
 use Geocoder\HttpAdapter\HttpAdapterInterface;
 use Geocoder\Exception\NoResultException;
 use Geocoder\Exception\UnsupportedException;
@@ -22,17 +23,17 @@ class MapQuestProvider extends AbstractProvider implements ProviderInterface
     /**
      * @var string
      */
-    const GEOCODE_ENDPOINT_NOKEY_URL = 'http://open.mapquestapi.com/geocoding/v1/address?location=%s&outFormat=json&maxResults=%d&thumbMaps=false';
+    const GEOCODE_ENDPOINT_URL = 'http://open.mapquestapi.com/geocoding/v1/address?location=%s&outFormat=json&maxResults=%d&key=%s&thumbMaps=false';
 
     /**
      * @var string
      */
-    const GEOCODE_ENDPOINT_URL = 'http://www.mapquestapi.com/geocoding/v1/address?location=%s&outFormat=json&maxResults=%d&key=%s';
+    const REVERSE_ENDPOINT_URL = 'http://open.mapquestapi.com/geocoding/v1/reverse?key=%s&lat=%F&lng=%F';
 
     /**
      * @var string
      */
-    const REVERSE_ENDPOINT_URL = 'http://open.mapquestapi.com/geocoding/v1/reverse?lat=%F&lng=%F';
+    private $apiKey = null;
 
     public function __construct(HttpAdapterInterface $adapter, $locale = null, $apiKey = null)
     {
@@ -52,10 +53,10 @@ class MapQuestProvider extends AbstractProvider implements ProviderInterface
         }
 
         if (null === $this->apiKey) {
-            $query = sprintf(self::GEOCODE_ENDPOINT_NOKEY_URL, urlencode($address), $this->getMaxResults());
-        } else {
-            $query = sprintf(self::GEOCODE_ENDPOINT_URL, urlencode($address), $this->getMaxResults(), $this->apiKey);
+            throw new InvalidCredentialsException('No API Key provided.');
         }
+
+        $query = sprintf(self::GEOCODE_ENDPOINT_URL, urlencode($address), $this->getMaxResults(), $this->apiKey);
 
         return $this->executeQuery($query);
     }
@@ -65,7 +66,11 @@ class MapQuestProvider extends AbstractProvider implements ProviderInterface
      */
     public function getReversedData(array $coordinates)
     {
-        $query = sprintf(self::REVERSE_ENDPOINT_URL, $coordinates[0], $coordinates[1]);
+        if (null === $this->apiKey) {
+            throw new InvalidCredentialsException('No API Key provided.');
+        }
+
+        $query = sprintf(self::REVERSE_ENDPOINT_URL, $this->apiKey, $coordinates[0], $coordinates[1]);
 
         return $this->executeQuery($query);
     }
