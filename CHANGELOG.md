@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+### 2.4.1 (????-??-??) ###
+
+n/a
+
 ### 2.4.0 (2013-12-12) ###
 
 * Added: MapQuest ApiKey required for open services
