@@ -1,9 +1,11 @@
 CHANGELOG
 =========
 
-### 2.3.3 (????-??-??) ###
+### 2.4.0 (2013-12-12) ###
 
-n/a
+* Added: MapQuest ApiKey required for open services
+* Removed: unused class constants
+* Removed: deprecated class that is not used anymore since 2.0.0
 
 ### 2.3.2 (2013-11-06) ###
 
