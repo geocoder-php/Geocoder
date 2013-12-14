@@ -53,11 +53,11 @@ interface ProviderInterface
     public function getName();
 
     /**
-     * Sets the maximum of returned results.
+     * Sets the maximum number of returned results.
      *
-     * @param integer $limit
+     * @param integer $maxResults
      *
      * @return ProviderInterface
      */
-    public function setMaxResults($limit);
+    public function setMaxResults($maxResults);
 }
