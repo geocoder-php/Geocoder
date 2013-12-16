@@ -11,7 +11,7 @@ matrix:
         - php: hhvm
 
 before_script:
-    - curl -s http://getcomposer.org/installer | php
-    - php composer.phar install --dev --prefer-dist --no-interaction
+    - composer self-update
+    - composer install --dev --prefer-dist --no-interaction
 
 script: phpunit --coverage-text
