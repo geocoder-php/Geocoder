@@ -53,7 +53,9 @@ Currently, there are many providers for the following APIs:
 * [IpGeoBase](http://ipgeobase.ru/) as IP-Based geocoding provider (very accurate in Russia);
 * [Baidu](http://developer.baidu.com/map/geocoding-api.htm) as Address-Based geocoding and reverse geocoding provider (exclusively in China);
 * [TomTom](http://developer.tomtom.com/docs/read/Geocoding) as Address-Based geocoding and reverse geocoding provider;
-* [ArcGIS Online](http://resources.arcgis.com/en/help/arcgis-online-geocoding-rest-api/) as Address-Based geocoding and reverse geocoding provider.
+* [ArcGIS Online](http://resources.arcgis.com/en/help/arcgis-online-geocoding-rest-api/) as Address-Based geocoding and reverse geocoding provider;
+* [OGD Vienna](https://open.wien.at/site/datensatz/?id=c223b93a-2634-4f06-ac73-8709b9e16888) as Address-Based geocoding provider (exclusively in Vienna / Austria).
+
 
 Installation
 ------------
@@ -276,6 +278,9 @@ The `ArcGISOnlineProvider` named `arcgis_online` is able to geocode and reverse 
 It's possible to specify a sourceCountry to restrict result to this specific country thus reducing
 request time (note that this doesn't work on reverse geocoding). This provider also supports SSL.
 
+### OGDViennaAustriaProvider ###
+
+The `OGDViennaAustriaProvider` named `ogdvienna_at` is able to geocode **street addresses only**, exclusively in Vienna / Austria.
 
 ### Using The Providers ###
 
