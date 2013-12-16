@@ -35,7 +35,12 @@ class MapQuestProvider extends AbstractProvider implements ProviderInterface
      */
     private $apiKey = null;
 
-    public function __construct(HttpAdapterInterface $adapter, $locale = null, $apiKey = null)
+    /**
+     * @param HttpAdapterInterface $adapter An HTTP adapter.
+     * @param string               $apiKey  An API key.
+     * @param string               $locale  A locale (optional).
+     */
+    public function __construct(HttpAdapterInterface $adapter, $apiKey, $locale = null)
     {
         parent::__construct($adapter, $locale);
 
@@ -93,7 +98,7 @@ class MapQuestProvider extends AbstractProvider implements ProviderInterface
         $content = $this->getAdapter()->getContent($query);
 
         if (null === $content) {
-            throw new NoResultException(sprintf('Could not execute query %s', $query));
+            throw new NoResultException(sprintf('Could not execute query: %s', $query));
         }
 
         $json = json_decode($content, true);
