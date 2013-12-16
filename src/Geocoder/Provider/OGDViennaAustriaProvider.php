@@ -74,14 +74,14 @@ class OGDViennaAustriaProvider extends AbstractProvider implements ProviderInter
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
-		$bounds = array(
+        $bounds = array(
             'south' => isset($data['features'][0]['bbox'][0]) ? $data['features'][0]['bbox'][0] : null,
             'west'  => isset($data['features'][0]['bbox'][1]) ? $data['features'][0]['bbox'][1] : null,
             'north' => isset($data['features'][0]['bbox'][2]) ? $data['features'][0]['bbox'][3] : null,
             'east'  => isset($data['features'][0]['bbox'][3]) ? $data['features'][0]['bbox'][2] : null,
-		);
+        );
 
-		return array(array_merge($this->getDefaults(), array(
+        return array(array_merge($this->getDefaults(), array(
             'longitude'    => isset($data['features'][0]['geometry']['coordinates'][0]) ? $data['features'][0]['geometry']['coordinates'][0] : null,
             'latitude'     => isset($data['features'][0]['geometry']['coordinates'][1]) ? $data['features'][0]['geometry']['coordinates'][1] : null,
             'bounds'       => $bounds,
@@ -97,7 +97,6 @@ class OGDViennaAustriaProvider extends AbstractProvider implements ProviderInter
             'country'      => isset($data['features'][0]['geometry']['coordinates'][0]) ? 'Austria' : null,
             'countryCode'  => isset($data['features'][0]['geometry']['coordinates'][0]) ? 'AT' : null,
             'timezone'     => isset($data['features'][0]['geometry']['coordinates'][0]) ? 'Europe/Vienna' : null,
-            )));
+        )));
     }
 }
-?>
