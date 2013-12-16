@@ -86,17 +86,17 @@ class OGDViennaAustriaProvider extends AbstractProvider implements ProviderInter
 			'latitude'     => isset($data['features'][0]['geometry']['coordinates'][1]) ? $data['features'][0]['geometry']['coordinates'][1] : null,
 			'bounds'       => $bounds,
 			'streetNumber' => NULL, //info: zB 1/a - not available yet
-			'streetName' => isset($data['features'][0]['properties']['Adresse']) ? $data['features'][0]['properties']['Adresse'] : null,
+			'streetName'   => isset($data['features'][0]['properties']['Adresse']) ? $data['features'][0]['properties']['Adresse'] : null,
 			'cityDistrict' => NULL, //info: z.B. Donaustadt - not available yet
 			'city'         => isset($data['features'][0]['geometry']['coordinates'][0]) ? 'Vienna' : null,
-			'zipcode' => isset($data['features'][0]['properties']['PLZ']) ? $data['features'][0]['properties']['PLZ'] : null,
-			'county' => NULL, //info: ??? - not available yet
-			'countyCode' => isset($data['features'][0]['properties']['Zaehlbezirk']) ? $data['features'][0]['properties']['Zaehlbezirk'] : null,
-			'region' => isset($data['features'][0]['geometry']['coordinates'][0]) ? 'VIENNA' : null,
-			'regionCode' => isset($data['features'][0]['geometry']['coordinates'][0]) ? 'VIENNA' : null,
+			'zipcode'      => isset($data['features'][0]['properties']['PLZ']) ? $data['features'][0]['properties']['PLZ'] : null,
+			'county'       => NULL, //info: ??? - not available yet
+			'countyCode'   => isset($data['features'][0]['properties']['Zaehlbezirk']) ? $data['features'][0]['properties']['Zaehlbezirk'] : null,
+			'region'       => isset($data['features'][0]['geometry']['coordinates'][0]) ? 'VIENNA' : null,
+			'regionCode'   => isset($data['features'][0]['geometry']['coordinates'][0]) ? 'VIENNA' : null,
 			'country'      => isset($data['features'][0]['geometry']['coordinates'][0]) ? 'Austria' : null,
 			'countryCode'  => isset($data['features'][0]['geometry']['coordinates'][0]) ? 'AT' : null,
-			'timezone'  => isset($data['features'][0]['geometry']['coordinates'][0]) ? 'Europe/Vienna' : null,
+			'timezone'     => isset($data['features'][0]['geometry']['coordinates'][0]) ? 'Europe/Vienna' : null,
 			)));
     }
 }
