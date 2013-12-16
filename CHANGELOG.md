@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+### 2.4.2 (????-??-??) ###
+
+n/a
+
 ### 2.4.1 (2013-12-16) ###
 
 * Fixed: MapQuestProvider now works with API keys
