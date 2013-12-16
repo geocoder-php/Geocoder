@@ -75,29 +75,29 @@ class OGDViennaAustriaProvider extends AbstractProvider implements ProviderInter
         }
 
 		$bounds = array(
-			'south' => isset($data['features'][0]['bbox'][0]) ? $data['features'][0]['bbox'][0] : null,
-			'west'  => isset($data['features'][0]['bbox'][1]) ? $data['features'][0]['bbox'][1] : null,
-			'north' => isset($data['features'][0]['bbox'][2]) ? $data['features'][0]['bbox'][3] : null,
-			'east'  => isset($data['features'][0]['bbox'][3]) ? $data['features'][0]['bbox'][2] : null,
+            'south' => isset($data['features'][0]['bbox'][0]) ? $data['features'][0]['bbox'][0] : null,
+            'west'  => isset($data['features'][0]['bbox'][1]) ? $data['features'][0]['bbox'][1] : null,
+            'north' => isset($data['features'][0]['bbox'][2]) ? $data['features'][0]['bbox'][3] : null,
+            'east'  => isset($data['features'][0]['bbox'][3]) ? $data['features'][0]['bbox'][2] : null,
 		);
 
 		return array(array_merge($this->getDefaults(), array(
-			'longitude'    => isset($data['features'][0]['geometry']['coordinates'][0]) ? $data['features'][0]['geometry']['coordinates'][0] : null,
-			'latitude'     => isset($data['features'][0]['geometry']['coordinates'][1]) ? $data['features'][0]['geometry']['coordinates'][1] : null,
-			'bounds'       => $bounds,
-			'streetNumber' => NULL, //info: zB 1/a - not available yet
-			'streetName'   => isset($data['features'][0]['properties']['Adresse']) ? $data['features'][0]['properties']['Adresse'] : null,
-			'cityDistrict' => NULL, //info: z.B. Donaustadt - not available yet
-			'city'         => isset($data['features'][0]['geometry']['coordinates'][0]) ? 'Vienna' : null,
-			'zipcode'      => isset($data['features'][0]['properties']['PLZ']) ? $data['features'][0]['properties']['PLZ'] : null,
-			'county'       => NULL, //info: ??? - not available yet
-			'countyCode'   => isset($data['features'][0]['properties']['Zaehlbezirk']) ? $data['features'][0]['properties']['Zaehlbezirk'] : null,
-			'region'       => isset($data['features'][0]['geometry']['coordinates'][0]) ? 'VIENNA' : null,
-			'regionCode'   => isset($data['features'][0]['geometry']['coordinates'][0]) ? 'VIENNA' : null,
-			'country'      => isset($data['features'][0]['geometry']['coordinates'][0]) ? 'Austria' : null,
-			'countryCode'  => isset($data['features'][0]['geometry']['coordinates'][0]) ? 'AT' : null,
-			'timezone'     => isset($data['features'][0]['geometry']['coordinates'][0]) ? 'Europe/Vienna' : null,
-			)));
+            'longitude'    => isset($data['features'][0]['geometry']['coordinates'][0]) ? $data['features'][0]['geometry']['coordinates'][0] : null,
+            'latitude'     => isset($data['features'][0]['geometry']['coordinates'][1]) ? $data['features'][0]['geometry']['coordinates'][1] : null,
+            'bounds'       => $bounds,
+            'streetNumber' => NULL, //info: zB 1/a - not available yet
+            'streetName'   => isset($data['features'][0]['properties']['Adresse']) ? $data['features'][0]['properties']['Adresse'] : null,
+            'cityDistrict' => NULL, //info: z.B. Donaustadt - not available yet
+            'city'         => isset($data['features'][0]['geometry']['coordinates'][0]) ? 'Vienna' : null,
+            'zipcode'      => isset($data['features'][0]['properties']['PLZ']) ? $data['features'][0]['properties']['PLZ'] : null,
+            'county'       => NULL, //info: ??? - not available yet
+            'countyCode'   => isset($data['features'][0]['properties']['Zaehlbezirk']) ? $data['features'][0]['properties']['Zaehlbezirk'] : null,
+            'region'       => isset($data['features'][0]['geometry']['coordinates'][0]) ? 'VIENNA' : null,
+            'regionCode'   => isset($data['features'][0]['geometry']['coordinates'][0]) ? 'VIENNA' : null,
+            'country'      => isset($data['features'][0]['geometry']['coordinates'][0]) ? 'Austria' : null,
+            'countryCode'  => isset($data['features'][0]['geometry']['coordinates'][0]) ? 'AT' : null,
+            'timezone'     => isset($data['features'][0]['geometry']['coordinates'][0]) ? 'Europe/Vienna' : null,
+            )));
     }
 }
 ?>
