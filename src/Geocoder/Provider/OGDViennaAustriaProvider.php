@@ -64,11 +64,11 @@ class OGDViennaAustriaProvider extends AbstractProvider implements ProviderInter
     {
         $content = $this->getAdapter()->getContent($query);
 
-        if (null === $content) {
+        if (!$data) {
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
-        $data = (array) json_decode($content, true);
+        $data = json_decode($content, true);
 
         if (empty($data) || false === $data) {
             throw new NoResultException(sprintf('Could not execute query %s', $query));
