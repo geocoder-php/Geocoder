@@ -9,12 +9,12 @@ use Geocoder\Provider\OGDViennaAustriaProvider;
  * @author Robert Harm <www.harm.co.at>
  * Data source: City of Vienna, http://data.wien.gv.at
  */
-class OGDViennaAustriaProvider extends TestCase
+class OGDViennaAustriaProviderTest extends TestCase
 {
     public function testGetName()
     {
         $provider = new OGDViennaAustriaProvider($this->getMockAdapter($this->never()));
-        $this->assertEquals('ogdvienna_at', $provider->getName());
+        $this->assertEquals('ogd_vienna_austria', $provider->getName());
     }
 
     /**

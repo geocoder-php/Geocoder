@@ -280,7 +280,7 @@ request time (note that this doesn't work on reverse geocoding). This provider a
 
 ### OGDViennaAustriaProvider ###
 
-The `OGDViennaAustriaProvider` named `ogdvienna_at` is able to geocode **street addresses only**, exclusively in Vienna / Austria.
+The `OGDViennaAustriaProvider` named `ogd_vienna_austria` is able to geocode **street addresses only**, exclusively in Vienna / Austria.
 
 ### Using The Providers ###
 

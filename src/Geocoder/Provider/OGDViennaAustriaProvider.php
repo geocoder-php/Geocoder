@@ -14,8 +14,9 @@ use Geocoder\Exception\UnsupportedException;
 use Geocoder\Exception\NoResultException;
 
 /**
- * @author Robert Harm <www.harm.co.at>
  * Data source: City of Vienna, http://data.wien.gv.at
+ *
+ * @author Robert Harm <www.harm.co.at>
  */
 class OGDViennaAustriaProvider extends AbstractProvider implements ProviderInterface
 {
@@ -52,7 +53,7 @@ class OGDViennaAustriaProvider extends AbstractProvider implements ProviderInter
      */
     public function getName()
     {
-        return 'ogdvienna_at';
+        return 'ogd_vienna_austria';
     }
 
     /**
