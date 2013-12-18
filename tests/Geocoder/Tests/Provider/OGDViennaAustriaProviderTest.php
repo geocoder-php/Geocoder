@@ -24,7 +24,7 @@ class OGDViennaAustriaProviderTest extends TestCase
     public function testGetGeocodedDataWithAddress()
     {
         $provider = new OGDViennaAustriaProvider($this->getMockAdapter());
-        $provider->OGDViennaAustriaProvider('Stephansplatz');
+        $provider->getGeocodedData('Stephansplatz');
     }
 
     /**
@@ -34,7 +34,7 @@ class OGDViennaAustriaProviderTest extends TestCase
     public function testGetGeocodedDataWithWrongAddress()
     {
         $provider = new OGDViennaAustriaProvider($this->getAdapter());
-        $provider->OGDViennaAustriaProvider('yyyyyyy');
+        $provider->getGeocodedData('yyyyyyy');
     }
 
     public function testGetGeocodedDataWithRealAddress()
