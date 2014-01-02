@@ -157,25 +157,23 @@ class GeoIPsProvider extends AbstractProvider implements ProviderInterface
         }
 
         // Make sure that we do have proper result array
-        if (empty($response['locations']) || !is_array($response['locations']) || empty($response['locations'][0])) {
+        if (empty($response['location']) || !is_array($response['location'])) {
             throw new NoResultException(sprintf('Invalid response from GeoIPs server for query %s', $query));
         }
 
-        // Pick the first location from the response
         $locations = array();
-        foreach ($response['locations'] as $location) {
-            $locations[] = array_merge($this->getDefaults(), array(
-                'country'     => '' === $location['country_name'] ? null : $location['country_name'],
-                'countryCode' => '' === $location['country_code'] ? null : $location['country_code'],
-                'region'      => '' === $location['region_name']  ? null : $location['region_name'],
-                'regionCode'  => '' === $location['region_code']  ? null : $location['region_code'],
-                'county'      => '' === $location['county_name']  ? null : $location['county_name'],
-                'city'        => '' === $location['city_name']    ? null : $location['city_name'],
-                'latitude'    => '' === $location['latitude']     ? null : $location['latitude'],
-                'longitude'   => '' === $location['longitude']    ? null : $location['longitude'],
-                'timezone'    => '' === $location['timezone']     ? null : $location['timezone'],
-            ));
-        }
+        $location = $response['location'];
+        $locations[] = array_merge($this->getDefaults(), array(
+            'country'     => '' === $location['country_name'] ? null : $location['country_name'],
+            'countryCode' => '' === $location['country_code'] ? null : $location['country_code'],
+            'region'      => '' === $location['region_name']  ? null : $location['region_name'],
+            'regionCode'  => '' === $location['region_code']  ? null : $location['region_code'],
+            'county'      => '' === $location['county_name']  ? null : $location['county_name'],
+            'city'        => '' === $location['city_name']    ? null : $location['city_name'],
+            'latitude'    => '' === $location['latitude']     ? null : $location['latitude'],
+            'longitude'   => '' === $location['longitude']    ? null : $location['longitude'],
+            'timezone'    => '' === $location['timezone']     ? null : $location['timezone'],
+        ));
 
         return $locations;
     }
