@@ -55,6 +55,9 @@ Currently, there are many providers for the following APIs:
 * [TomTom](http://developer.tomtom.com/docs/read/Geocoding) as Address-Based geocoding and reverse geocoding provider;
 * [ArcGIS Online](http://resources.arcgis.com/en/help/arcgis-online-geocoding-rest-api/) as Address-Based geocoding and reverse geocoding provider.
 
+the [Geocoder Extra](https://github.com/geocoder-php/geocoder-extra) library contains even more providers!
+
+
 Installation
 ------------
 
