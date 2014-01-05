@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+### 2.4.3 (????-??-??) ###
+
+n/a
+
 ### 2.4.2 (2014-01-05) ###
 
 * Fixed: GeoIPs provider expects a single location response due to recent API
