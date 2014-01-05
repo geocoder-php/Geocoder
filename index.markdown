@@ -7,7 +7,8 @@ project_name: Geocoder
 Geocoder
 ========
 
-[![Build Status](https://secure.travis-ci.org/geocoder-php/Geocoder.png)](http://travis-ci.org/geocoder-php/Geocoder)
+[![Build
+Status](https://secure.travis-ci.org/geocoder-php/Geocoder.png)](http://travis-ci.org/geocoder-php/Geocoder)
 [![Latest Stable
 Version](https://poser.pugx.org/willdurand/geocoder/v/stable.png)](https://packagist.org/packages/willdurand/geocoder)
 [![Total
@@ -42,7 +43,8 @@ Currently, there are many providers for the following APIs:
 * [Google Maps](http://code.google.com/apis/maps/documentation/geocoding/) as Address-Based geocoding and reverse geocoding provider;
 * [Google Maps for Business](https://developers.google.com/maps/documentation/business/webservices) as Address-Based geocoding and reverse geocoding provider;
 * [Bing Maps](http://msdn.microsoft.com/en-us/library/ff701715.aspx) as Address-Based geocoding and reverse geocoding provider;
-* [OpenStreetMap](http://nominatim.openstreetmap.org/) as Address-Based geocoding and reverse geocoding provider;
+* [OpenStreetMap](http://nominatim.openstreetmap.org/) as Address-Based geocoding and reverse geocoding provider (based on the Nominatim provider);
+* [Nominatim](http://wiki.openstreetmap.org/wiki/Nominatim) as Address-Based geocoding and reverse geocoding provider;
 * [CloudMade](http://developers.cloudmade.com/projects/show/geocoding-http-api) as Address-Based geocoding and reverse geocoding provider;
 * [Geoip](http://php.net/manual/book.geoip.php), the PHP extension, as IP-Based geocoding provider;
 * ChainProvider is a special provider that takes a list of providers and iterates
@@ -63,6 +65,9 @@ Currently, there are many providers for the following APIs:
 * [Baidu](http://developer.baidu.com/map/geocoding-api.htm) as Address-Based geocoding and reverse geocoding provider (exclusively in China);
 * [TomTom](http://developer.tomtom.com/docs/read/Geocoding) as Address-Based geocoding and reverse geocoding provider;
 * [ArcGIS Online](http://resources.arcgis.com/en/help/arcgis-online-geocoding-rest-api/) as Address-Based geocoding and reverse geocoding provider.
+
+The [Geocoder Extra](https://github.com/geocoder-php/geocoder-extra) library contains even more providers!
+
 
 Installation
 ------------
@@ -85,8 +90,8 @@ page to choose a stable version to use, avoid the `@stable` meta constraint.
 And run these two commands to install it:
 
 ``` bash
-$ wget http://getcomposer.org/composer.phar
-$ php composer.phar install
+$ curl -sS https://getcomposer.org/installer | php
+$ composer install
 ```
 
 Now you can add the autoloader, and you will have access to the library:
@@ -166,12 +171,18 @@ A valid api key is required.
 
 ### OpenStreetMapProvider ###
 
-The `OpenStreetMapProvider` named `openstreetmap` is able to geocode and reverse geocode **street addresses**.
+The `OpenStreetMapProvider` named `openstreetmap` is able to geocode and reverse
+geocode **street addresses**.
 
-**Warning:** The `OpenStreetMapsProvider` is now **deprecated**, and you should
+**Warning:** The `OpenStreetMapsProvider` is **deprecated**, and you should
 rather use the `OpenStreetMapProvider`. See issue
 [#269](https://github.com/geocoder-php/Geocoder/issues/269).
 
+### NominatimProvider ###
+
+The `NominatimProvider` named `nominatim` is able to geocode and reverse geocode **street addresses**.
+Access to a Nominatim server is required. See the [Nominatim
+Wiki Page](http://wiki.openstreetmap.org/wiki/Nominatim) for more information.
 
 ### CloudMadeProvider ###
 
@@ -193,6 +204,7 @@ The `ChainProvider` named `chain` is a special provider that takes a list of pro
 ### MapQuestProvider ###
 
 The `MapQuestProvider` named `map_quest` is able to geocode and reverse geocode **street addresses**.
+A valid api key is required.
 
 
 ### OIORestProvider ###
@@ -224,7 +236,7 @@ The `DataScienceToolkitProvider` named `data_science_toolkit` is able to geocode
 ### YandexProvider ###
 
 The `YandexProvider` named `yandex` is able to geocode and reverse geocode **street addresses**.
-The default langage-locale is `ru-RU`, you can choose between `uk-UA`, `be-BY`,
+The default language-locale is `ru-RU`, you can choose between `uk-UA`, `be-BY`,
 `en-US`, `en-BR` and `tr-TR`.
 This provider can also reverse information based on coordinates (latitude,
 longitude). It's possible to precise the toponym to get more accurate result for reverse geocoding:
@@ -304,6 +316,9 @@ $geocoder->registerProviders(array(
     new \Geocoder\Provider\ArcGISOnlineProvider(
         $adapter, $sourceCountry, $useSsl
     ),
+    new \Geocoder\Provider\NominatimProvider(
+        $adapter, 'http://your.nominatim.server', $locale
+    ),
 ));
 ```
 
@@ -315,7 +330,7 @@ Parameters:
 * `$service` is available for `MaxMindProvider`.
 * `$useSsl` is available for `GoogleMapsProvider`, `GoogleMapsBusinessProvider`, `MaxMindProvider` and `ArcGISOnlineProvider`.
 * `$sourceCountry` is available for `ArcGISOnlineProvider`.
-
+* `$rootUrl` is available for `NominatimProvider`.
 
 ### Using The ChainProvider ###
 
@@ -590,7 +605,7 @@ Unit Tests
 To run unit tests, you'll need `cURL` and a set of dependencies you can install using Composer:
 
 ```
-php composer.phar install --dev
+composer install --dev
 ```
 
 Once installed, just launch the following command:
