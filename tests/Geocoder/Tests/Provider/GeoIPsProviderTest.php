@@ -110,7 +110,7 @@ class GeoIPsProviderTest extends TestCase
             "message": "Success",
             "notes": "The following results has been returned",
             "code": "200_1",
-            "locations": [{
+            "location": {
                 "ip" : "66.147.244.214",
                 "owner" : "",
                 "continent_name" : "",
@@ -124,7 +124,7 @@ class GeoIPsProviderTest extends TestCase
                 "latitude" : "",
                 "longitude" : "",
                 "timezone" : ""
-            }],
+            },
             "unit_test": {
                 "elapsed_time": "0.0676",
                 "memory_usage": "2.2MB"
@@ -156,7 +156,7 @@ class GeoIPsProviderTest extends TestCase
             "message": "Success",
             "notes": "The following results has been returned",
             "code": "200_1",
-            "locations": [{
+            "location": {
                 "ip" : "66.147.244.214",
                 "owner" : "BLUEHOST INC.",
                 "continent_name" : "NORTH AMERICA",
@@ -170,7 +170,7 @@ class GeoIPsProviderTest extends TestCase
                 "latitude" : "40.3402",
                 "longitude" : "-111.6073",
                 "timezone" : "MST"
-            }]
+            }
         }}';
 
         $provider = new GeoIPsProvider($this->getMockAdapterReturns($json), 'api_key');
