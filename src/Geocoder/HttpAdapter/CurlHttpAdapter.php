@@ -17,6 +17,16 @@ use Geocoder\Exception\ExtensionNotLoadedException;
  */
 class CurlHttpAdapter implements HttpAdapterInterface
 {
+    private $timeout;
+
+    private $connectTimeout;
+
+    public function __construct($timeout = null, $connectTimeout = null)
+    {
+        $this->timeout = $timeout;
+        $this->connectTimeout = $connectTimeout;
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -29,6 +39,15 @@ class CurlHttpAdapter implements HttpAdapterInterface
         $c = curl_init();
         curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($c, CURLOPT_URL, $url);
+
+        if ($this->timeout) {
+            curl_setopt($c, CURLOPT_TIMEOUT, $this->timeout);
+        }
+
+        if ($this->connectTimeout) {
+            curl_setopt($c, CURLOPT_CONNECTTIMEOUT, $this->connectTimeout);
+        }
+
         $content = curl_exec($c);
         curl_close($c);
 
