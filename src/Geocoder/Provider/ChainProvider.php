@@ -24,6 +24,11 @@ class ChainProvider implements ProviderInterface
     private $providers = array();
 
     /**
+     * @var string
+     */
+	private $lastResultProvider;
+
+    /**
      * Constructor
      *
      * @param ProviderInterface[] $providers
@@ -52,7 +57,10 @@ class ChainProvider implements ProviderInterface
 
         foreach ($this->providers as $provider) {
             try {
-                return $provider->getGeocodedData($address);
+                $result = $provider->getGeocodedData($address);
+                $this->setLastResultProvider($provider->getName());
+
+                return $result;
             } catch (InvalidCredentialsException $e) {
                 throw $e;
             } catch (\Exception $e) {
@@ -72,7 +80,10 @@ class ChainProvider implements ProviderInterface
 
         foreach ($this->providers as $provider) {
             try {
-                return $provider->getReversedData($coordinates);
+                $result = $provider->getReversedData($coordinates);
+                $this->setLastResultProvider($provider->getName());
+				
+                return $result;
             } catch (InvalidCredentialsException $e) {
                 throw $e;
             } catch (\Exception $e) {
@@ -101,5 +112,28 @@ class ChainProvider implements ProviderInterface
     public function getName()
     {
         return 'chain';
+    }
+
+    /**
+     * Set which provider successfully did the last result
+     * 
+     * @param string $provider The name of the provider
+     * @return ProviderInterface
+     */
+    private function setLastResultProvider($provider)
+    {
+    	$this->lastResultProvider = $provider;
+
+        return $this;
+    }
+
+    /**
+     * Get which provider successfully did the last result
+     * 
+     * @return string The name of the provider
+     */
+    public function getLastResultProvider()
+    {
+        return $this->lastResultProvider;
     }
 }
