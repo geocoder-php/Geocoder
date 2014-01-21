@@ -45,6 +45,11 @@ class FormatterTest extends TestCase
                 'Zuerich'
             ),
             array(
+                array('neighborhood' => 'East Village'),
+                '%N',
+                'East Village'
+            ),
+            array(
                 array('zipcode' => '8001'),
                 '%z',
                 '8001'
@@ -111,13 +116,19 @@ class FormatterTest extends TestCase
             ),
             array(
                 array(
-                    'streetNumber'  => 120,
-                    'streetName'    => 'Badenerstrasse',
-                    'zipcode'       => 8001,
-                    'city'          => 'Zuerich',
+                    'streetNumber'  => '236',
+                    'streetName'    => 'W 46th St',
+                    'zipcode'       => '10036',
+                    'neighborhood'  => 'Times Square',
+                    'cityDistrict'  => 'Manhattan',
+                    'city'          => 'New York',
+                    'region'        => 'New York',
+                    'regionCode'    => 'NY',
+                    'country'       => 'United States',
+                    'countryCode'   => 'US',
                 ),
-                '<p>%S %n, %z <a href="#%L">%L</a></p><p>%P</p>',
-                '<p>Badenerstrasse 120, 8001 <a href="#Zuerich">Zuerich</a></p><p></p>'
+                '%n %S, %N, %D, %L, %z, %R (%r), %C (%c)',
+                '236 W 46th St, Times Square, Manhattan, New York, 10036, New York (NY), United States (US)'
             ),
         );
     }
