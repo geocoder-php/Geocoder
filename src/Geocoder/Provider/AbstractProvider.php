@@ -34,6 +34,11 @@ abstract class AbstractProvider
     protected $maxResults = Geocoder::MAX_RESULTS;
 
     /**
+     * @var bool
+     */
+    protected $returnNeighborhood = false;
+
+    /**
      * @param HttpAdapterInterface $adapter An HTTP adapter.
      * @param string               $locale  A locale (optional).
      */
@@ -151,6 +156,19 @@ abstract class AbstractProvider
             'county'    => 'localhost',
             'country'   => 'localhost',
         );
+    }
+
+    /**
+     * Sets whether the neighborhood should be in the results
+	 * 
+     * @param bool $bool
+     * @return AbstractProvider
+     */
+    public function setReturnNeighborhood($bool)
+    {
+        $this->returnNeighborhood = (bool) $bool;
+
+        return $this;
     }
 
     /**
