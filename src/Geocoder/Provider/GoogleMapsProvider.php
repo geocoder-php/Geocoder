@@ -227,6 +227,10 @@ class GoogleMapsProvider extends AbstractProvider implements LocaleAwareProvider
                 $resultset['cityDistrict'] = $values->long_name;
                 break;
 
+            case 'neighborhood':
+                $resultset['neighborhood'] = $values->long_name;
+                break;
+
             default:
         }
 

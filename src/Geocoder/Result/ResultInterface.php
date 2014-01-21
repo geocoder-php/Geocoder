@@ -67,6 +67,13 @@ interface ResultInterface
     public function getStreetName();
 
     /**
+     * Returns the neighborhood.
+     *
+     * @return string
+     */
+    public function getNeighborhood();
+
+    /**
      * Returns the city value.
      *
      * @return string
