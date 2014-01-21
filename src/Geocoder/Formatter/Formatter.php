@@ -38,6 +38,7 @@ class Formatter implements FormatterInterface
         return strtr($format, array(
             FormatterInterface::STREET_NUMBER   => $this->result->getStreetNumber(),
             FormatterInterface::STREET_NAME     => $this->result->getStreetName(),
+            FormatterInterface::NEIGHBORHOOD    => $this->result->getNeighborhood(),
             FormatterInterface::CITY            => $this->result->getCity(),
             FormatterInterface::ZIPCODE         => $this->result->getZipcode(),
             FormatterInterface::CITY_DISTRICT   => $this->result->getCityDistrict(),

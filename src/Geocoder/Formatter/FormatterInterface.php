@@ -19,6 +19,8 @@ interface FormatterInterface
 
     const STREET_NAME   = '%S';
 
+    const NEIGHBORHOOD  = '%N';
+
     const CITY          = '%L';
 
     const ZIPCODE       = '%z';
