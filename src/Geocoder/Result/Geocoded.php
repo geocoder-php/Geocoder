@@ -43,6 +43,11 @@ class Geocoded extends AbstractResult implements ResultInterface
     /**
      * @var string
      */
+    protected $neighborhood = null;
+
+    /**
+     * @var string
+     */
     protected $cityDistrict = null;
 
     /**
@@ -134,6 +139,14 @@ class Geocoded extends AbstractResult implements ResultInterface
      * {@inheritDoc}
      */
     public function getStreetName()
+    {
+        return $this->streetName;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getNeighborhood()
     {
         return $this->streetName;
     }
