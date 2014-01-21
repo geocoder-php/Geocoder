@@ -96,7 +96,7 @@ class BingMapsProvider extends AbstractProvider implements LocaleAwareProviderIn
     protected function executeQuery($query)
     {
         if (null !== $this->getLocale()) {
-            $query = sprintf('%s&culture=%s', $query, str_replace('_', '-', $this->getLocale()));
+            $query = sprintf('%s&inclnb=' . ((int) $this->returnNeighborhood) . '&culture=%s', $query, str_replace('_', '-', $this->getLocale()));
         }
 
         $content = $this->getAdapter()->getContent($query);
@@ -131,6 +131,7 @@ class BingMapsProvider extends AbstractProvider implements LocaleAwareProviderIn
             $streetNumber = null;
             $streetName   = property_exists($item->address, 'addressLine') ? (string) $item->address->addressLine : '';
             $zipcode      = property_exists($item->address, 'postalCode') ? (string) $item->address->postalCode : '';
+            $neighborhood = $this->returnNeighborhood && property_exists($item->address, 'neighborhood') ? (string) $item->address->neighborhood : '';
             $city         = property_exists($item->address, 'locality') ? (string) $item->address->locality: '';
             $county       = property_exists($item->address, 'adminDistrict2') ? (string) $item->address->adminDistrict2 : '';
             $region       = property_exists($item->address, 'adminDistrict') ? (string) $item->address->adminDistrict: '';
@@ -142,6 +143,7 @@ class BingMapsProvider extends AbstractProvider implements LocaleAwareProviderIn
                 'bounds'       => $bounds,
                 'streetNumber' => $streetNumber,
                 'streetName'   => $streetName,
+                'neighborhood' => empty($neighborhood) ? null : $neighborhood,
                 'city'         => empty($city) ? null : $city,
                 'zipcode'      => empty($zipcode) ? null : $zipcode,
                 'county'       => empty($county) ? null : $county,
