@@ -124,6 +124,7 @@ abstract class AbstractProvider
             'bounds'        => null,
             'streetNumber'  => null,
             'streetName'    => null,
+            'neighborhood'  => null,
             'city'          => null,
             'zipcode'       => null,
             'cityDistrict'  => null,
