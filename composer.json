@@ -29,7 +29,7 @@
         "geoip/geoip": "If you are going to use the MaxMindBinaryProvider (conflict with geoip extension)."
     },
     "autoload": {
-        "psr-0": { "Geocoder": "src/" }
+        "psr-0": { "Geocoder": ["src/", "tests/"] }
     },
     "extra": {
         "branch-alias": {
