@@ -46,7 +46,7 @@ class GeocodioProvider extends AbstractProvider implements ProviderInterface
 
         $this->apiKey = $apiKey;
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -87,7 +87,7 @@ class GeocodioProvider extends AbstractProvider implements ProviderInterface
 
         return $this->executeQuery($query);
     }
-    
+
     /**
      * @param string $query
      *
@@ -103,48 +103,50 @@ class GeocodioProvider extends AbstractProvider implements ProviderInterface
 
         $json = json_decode($content, true);
 
-        if (!isset($json['results']) || empty($json['results'])) {
+        if (!empty($json['error']) && strtolower($json['error']) == 'invalid api key') {
+            throw new InvalidCredentialsException('Invalid API Key');
+        } elseif (!empty($json['error'])) {
+            throw new NoResultException(sprintf('Error returned from api: %s', $json['error']));
+        }
+
+        if (empty($json['results'])) {
             throw new NoResultException(sprintf('Could not find results for given query: %s', $query));
         }
 
-		$locations = $json['results'];
+        $locations = $json['results'];
 
-        if (empty($locations)) {
-            throw new NoResultException(sprintf('Could not find results for given query: %s', $query));
+        $results = array();
+
+        $ctr = 0;
+
+        foreach ($locations as $location) {
+            $ctr++;
+
+            if ($ctr <= $this->getMaxResults()) {
+
+                $coordinates = $location['location'];
+                $address = $location['address_components'];
+                $street = $address['street'] ?: null;
+
+                if (!empty($address['suffix'])) {
+                    $address['street'] .= ' ' . $address['suffix'];
+                }
+
+                $results[] = array_merge($this->getDefaults(), array(
+
+                        'latitude'      => $coordinates['lat'] ?: null,
+                        'longitude'     => $coordinates['lng'] ?: null,
+                        'streetNumber'  => $address['number'] ?: null,
+                        'streetName'    => $address['street'] ?: null,
+                        'city'          => $address['city'] ?: null,
+                        'zipcode'       => $address['zip'] ?: null,
+                        'county'        => $address['county'] ?: null,
+                        'region'        => $address['state'] ?: null,
+                        'country'       => 'US'
+                    ));
+            }
         }
 
-		$results = array();
-		
-		$ctr = 0;
-		
-		foreach ($locations as $location) {
-			$ctr++;
-
-			if ($ctr <= $this->getMaxResults()) {
-
-				$coordinates = $location['location'];
-				$address = $location['address_components'];
-				$street = $address['street'] ?: null;
-				
-				if (!empty($address['suffix'])) {
-					$address['street'] .= ' ' . $address['suffix'];
-				}
-				
-				$results[] = array_merge($this->getDefaults(), array(
-					
-		                'latitude'      => $coordinates['lat'] ?: null,
-		                'longitude'     => $coordinates['lng'] ?: null,
-		                'streetNumber'	=> $address['number'] ?: null,
-		                'streetName'    => $address['street'] ?: null,
-		                'city'          => $address['city'] ?: null,
-		                'zipcode'       => $address['zip'] ?: null,
-		                'county'        => $address['county'] ?: null,
-		                'region'        => $address['state'] ?: null,
-		                'country'		=> 'US'
-		            ));
-			}
-		}
-		
-		return $results;
+        return $results;
     }
 }

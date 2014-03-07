@@ -54,6 +54,7 @@ Currently, there are many providers for the following APIs:
 * [Baidu](http://developer.baidu.com/map/geocoding-api.htm) as Address-Based geocoding and reverse geocoding provider (exclusively in China);
 * [TomTom](http://developer.tomtom.com/docs/read/Geocoding) as Address-Based geocoding and reverse geocoding provider;
 * [ArcGIS Online](http://resources.arcgis.com/en/help/arcgis-online-geocoding-rest-api/) as Address-Based geocoding and reverse geocoding provider.
+* [Geocodio](http://geocod.io/) as Address-Based geocoding and reverse geocoding provider.
 
 The [Geocoder Extra](https://github.com/geocoder-php/geocoder-extra) library contains even more providers!
 
@@ -279,6 +280,10 @@ The `ArcGISOnlineProvider` named `arcgis_online` is able to geocode and reverse 
 It's possible to specify a sourceCountry to restrict result to this specific country thus reducing
 request time (note that this doesn't work on reverse geocoding). This provider also supports SSL.
 
+### GeocodioProvider ###
+
+The `GeocodioProvider` named `geocodio` is able to geocode and reverse geocode **street addresses**, exclusively in USA.
+A valid api key is required.
 
 ### Using The Providers ###
 

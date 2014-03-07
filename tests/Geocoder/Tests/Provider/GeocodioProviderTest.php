@@ -33,6 +33,16 @@ class GeocodioProviderTest extends TestCase
         $provider->getGeocodedData('1 Infinite Loop Cupertino, CA 95014');
     }
 
+	/**
+	 * @expectedException \Geocoder\Exception\InvalidCredentialsException
+	 * @expectedExceptionMessage Invalid API Key
+	 */
+	public function testGetGeocodedDataWithBadAPIKeyThrowsException()
+	{
+        $provider = new GeocodioProvider($this->getAdapter(), '9999');
+        $results  = $provider->getGeocodedData('1 Infinite Loop Cupertino, CA 95014');
+	}
+	
     public function testGetGeocodedDataWithRealAddress()
     {
         $api_key = $_SERVER['GEOCODIO_API_KEY'];
