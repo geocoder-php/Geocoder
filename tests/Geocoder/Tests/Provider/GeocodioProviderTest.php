@@ -7,6 +7,8 @@ use Geocoder\Provider\GeocodioProvider;
 
 class GeocodioProviderTest extends TestCase
 {
+    const MISSING_API_KEY = 'You need to configure the GEOCODIO_API_KEY value in phpunit.xml';
+
     public function testGetName()
     {
         $provider = new GeocodioProvider($this->getMockAdapter($this->never()), 'api_key');
@@ -33,27 +35,27 @@ class GeocodioProviderTest extends TestCase
         $provider->getGeocodedData('1 Infinite Loop Cupertino, CA 95014');
     }
 
-	/**
-	 * @expectedException \Geocoder\Exception\InvalidCredentialsException
-	 * @expectedExceptionMessage Invalid API Key
-	 */
-	public function testGetGeocodedDataWithBadAPIKeyThrowsException()
-	{
+    /**
+     * @expectedException \Geocoder\Exception\InvalidCredentialsException
+     * @expectedExceptionMessage Invalid API Key
+     */
+    public function testGetGeocodedDataWithBadAPIKeyThrowsException()
+    {
         $provider = new GeocodioProvider($this->getAdapter(), '9999');
         $results  = $provider->getGeocodedData('1 Infinite Loop Cupertino, CA 95014');
-	}
-	
+    }
+
     public function testGetGeocodedDataWithRealAddress()
     {
-        $api_key = $_SERVER['GEOCODIO_API_KEY'];
+        $api_key = $this->getApiKey('GEOCODIO_API_KEY');
 
-        if (empty($api_key)) {
-            $this->markTestSkipped('You need to configure the GEOCODIO_API_KEY value in phpunit.xml');
+        if ($api_key === false) {
+            $this->markTestSkipped(self::MISSING_API_KEY);
         }
 
         $provider = new GeocodioProvider($this->getAdapter(), $api_key);
         $results  = $provider->getGeocodedData('1 Infinite Loop Cupertino, CA 95014');
-        
+
         $this->assertInternalType('array', $results);
 
         $result = $results[0];
@@ -76,21 +78,25 @@ class GeocodioProviderTest extends TestCase
      */
     public function testGetReversedData()
     {
-        if (!isset($_SERVER['GEOCODIO_API_KEY'])) {
-            $this->markTestSkipped('You need to configure the GEOCODIO_API_KEY value in phpunit.xml');
+        $api_key = $this->getApiKey('GEOCODIO_API_KEY');
+
+        if ($api_key === false) {
+            $this->markTestSkipped(self::MISSING_API_KEY);
         }
 
-        $provider = new GeocodioProvider($this->getMockAdapter(), $_SERVER['GEOCODIO_API_KEY']);
+        $provider = new GeocodioProvider($this->getMockAdapter(), $api_key);
         $provider->getReversedData(array(1, 2));
     }
 
     public function testGetReversedDataWithRealCoordinates()
     {
-        if (!isset($_SERVER['GEOCODIO_API_KEY'])) {
-            $this->markTestSkipped('You need to configure the GEOCODIO_API_KEY value in phpunit.xml');
+        $api_key = $this->getApiKey('GEOCODIO_API_KEY');
+
+        if ($api_key === false) {
+            $this->markTestSkipped(self::MISSING_API_KEY);
         }
 
-        $provider = new GeocodioProvider($this->getAdapter(), $_SERVER['GEOCODIO_API_KEY']);
+        $provider = new GeocodioProvider($this->getAdapter(), $api_key);
         $result   = $provider->getReversedData(array(37.331551291667, -122.03057125));
 
         $this->assertInternalType('array', $result);
@@ -107,5 +113,10 @@ class GeocodioProviderTest extends TestCase
         $this->assertEquals('US', $result['country']);
         $this->assertNull($result['countryCode']);
         $this->assertNull($result['timezone']);
+    }
+
+    protected function getApiKey($key = null)
+    {
+        return (!empty($key) && isset($_SERVER[$key])) ? $_SERVER[$key] : false;
     }
 }
