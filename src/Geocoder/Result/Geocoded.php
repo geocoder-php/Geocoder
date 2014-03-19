@@ -303,8 +303,6 @@ class Geocoded extends AbstractResult implements ResultInterface
             'zipcode'       => $this->zipcode,
             'city'          => $this->city,
             'cityDistrict'  => $this->cityDistrict,
-            'county'        => $this->county,
-            'countyCode'    => $this->countyCode,
             'region'        => $this->region,
             'regionCode'    => $this->regionCode,
             'country'       => $this->country,
