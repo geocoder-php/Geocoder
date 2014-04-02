@@ -250,6 +250,16 @@ A valid `City/ISP/Org` or `Omni` service's api key is required.
 This provider provides two constants `CITY_EXTENDED_SERVICE` by default and `OMNI_SERVICE`.
 
 
+### MaxMindBinaryProvider ###
+
+The `MaxMindBinaryProvider` named `maxmind_binary` is able to geocode **IPv4 and IPv6 addresses**
+only. It requires a data file, and the [geoip/geoip](https://packagist.org/packages/geoip/geoip)
+package must be installed.
+
+It is worth mentioning that this provider has **serious performance issues**, and should **not**
+be used in production. For more information, please read [issue #301](https://github.com/geocoder-php/Geocoder/issues/301).
+
+
 ### GeonamesProvider ###
 
 The `GeonamesProvider` named `geonames` is able to geocode and reverse geocode **places**.
