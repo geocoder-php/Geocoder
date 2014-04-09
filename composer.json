@@ -18,7 +18,9 @@
         "kriswallsmith/buzz": "@stable",
         "guzzle/guzzle": "@stable",
         "zendframework/zend-http": "~2.1",
-        "geoip/geoip": "~1.13"
+        "geoip/geoip": "~1.13",
+        "geoip2/geoip2": "~0.6",
+        "mikey179/vfsStream": "v1.2.0"
     },
     "suggest": {
         "kriswallsmith/buzz": "Enabling Buzz allows you to use the BuzzHttpAdapter.",
@@ -26,7 +28,8 @@
         "ext-geoip": "Enabling the geoip extension allows you to use the MaxMindProvider.",
         "guzzle/guzzle": "Enabling Guzzle allows you to use the GuzzleHttpAdapter.",
         "zendframework/zend-http": "Enabling Zend Http allows you to use the ZendHttpAdapter.",
-        "geoip/geoip": "If you are going to use the MaxMindBinaryProvider (conflict with geoip extension)."
+        "geoip/geoip": "If you are going to use the MaxMindBinaryProvider (conflict with geoip extension).",
+        "geoip2/geoip2": "If you are going to use the GeoIP2DatabaseProvider."
     },
     "autoload": {
         "psr-0": { "Geocoder": "src/" }
