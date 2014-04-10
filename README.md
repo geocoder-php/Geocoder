@@ -270,6 +270,14 @@ It requires the [database file](http://dev.maxmind.com/geoip/geoip2/geolite2/), 
 
 This provider will only work with the corresponding `GeoIP2DatabaseAdapter`.
 
+**Usage:**
+
+    $adapter = new \Geocoder\HttpAdapter\GeoIP2DatabaseAdapter('/path/to/database');
+    $provider = new \Geocoder\Provider\GeoIP2DatabaseProvider($adapter);
+    $geocoder = new \Geocoder\Geocoder($provider);
+
+    $result = $geocoder->geocode('74.200.247.59');
+
 ### GeonamesProvider ###
 
 The `GeonamesProvider` named `geonames` is able to geocode and reverse geocode **places**.

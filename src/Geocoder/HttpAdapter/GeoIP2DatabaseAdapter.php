@@ -131,7 +131,7 @@ class GeoIP2DatabaseAdapter implements HttpAdapterInterface
 
         switch ($this->dbType) {
             case self::GEOIP2_CITY:
-                $result = $this->getDbReader()->city($ipAddress);
+                $result = $this->getDbReader()->city($ipAddress)->jsonSerialize();
                 break;
             default:
                 throw new UnsupportedException(

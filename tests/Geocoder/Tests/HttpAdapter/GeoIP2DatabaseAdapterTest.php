@@ -14,7 +14,6 @@ use Geocoder\HttpAdapter\GeoIP2DatabaseAdapter;
 use Geocoder\Tests\TestCase;
 use Geocoder\Exception\RuntimeException;
 use GeoIp2\Database\Reader;
-use GeoIp2\Model\City;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamFile;
 
@@ -94,12 +93,15 @@ class GeoIP2DatabaseAdapterTest extends TestCase
 
     public function testIpAddressIsPassedCorrectToReader()
     {
-        $url = 'file://database?127.0.0.1 ';
         $dbReader = $this->getDbReaderMock();
-        $dbReader->expects($this->once())->method('city')->with('127.0.0.1');
+        $dbReader
+            ->expects($this->once())
+            ->method('city')->with('127.0.0.1')
+            ->will($this->returnValue($this->getCityModelMock()));
+
         $this->adapter->setDbReader($dbReader);
 
-        $this->adapter->getContent($url);
+        $this->adapter->getContent('file://database?127.0.0.1');
     }
 
     public function testSettingLocaleIsCorrect()
@@ -125,10 +127,14 @@ class GeoIP2DatabaseAdapterTest extends TestCase
 
     public function testReaderResponseIsJsonEncoded()
     {
-        $city = new City(array('city' => 'Hamburg'));
+        $cityModel = $this->getCityModelMock();
 
         $dbReader = $this->getDbReaderMock();
-        $dbReader->expects($this->once())->method('city')->will($this->returnValue($city));
+        $dbReader
+            ->expects($this->any())
+            ->method('city')
+            ->will($this->returnValue($cityModel));
+
         $this->adapter->setDbReader($dbReader);
 
         $result = $this->adapter->getContent('file://database?127.0.0.1');
@@ -144,6 +150,36 @@ class GeoIP2DatabaseAdapterTest extends TestCase
     protected function getDbReaderMock()
     {
         $mock = $this->getMockBuilder('\GeoIp2\Database\Reader')->disableOriginalConstructor()->getMock();
+
+        return $mock;
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function getCityModelMock()
+    {
+        $mock = $this->getMockBuilder('\GeoIp2\Model\City')->disableOriginalConstructor()->getMock();
+        $mock
+            ->expects($this->any())
+            ->method('jsonSerialize')
+            ->will($this->returnValue(
+                array(
+                    'city' => array(
+                        'geoname_id' => 2911298,
+                        'names' => array(
+                              'de' => 'Hamburg',
+                              'en' => 'Hamburg',
+                              'es' => 'Hamburgo',
+                              'fr' => 'Hambourg',
+                              'ja' => 'ハンブルク',
+                              'pt-BR' => 'Hamburgo',
+                              'ru' => 'Гамбург',
+                              'zh-CN' => '汉堡市',
+                        )
+                    )
+                )
+            ));
 
         return $mock;
     }
