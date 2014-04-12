@@ -286,4 +286,14 @@ class GoogleMapsProviderTest extends TestCase
         $this->assertInternalType('array', $result);
         $this->assertEquals('Kalbach-Riedberg', $result['cityDistrict']);
     }
+
+    /**
+     * @expectedException \Geocoder\Exception\InvalidCredentialsException
+     * @expectedExceptionMessage API key is invalid http://maps.googleapis.com/maps/api/geocode/json?address=10%20avenue%20Gambetta%2C%20Paris%2C%20France&sensor=false
+     */
+    public function testGetGeocodedDataWithInavlidApiKey()
+    {
+        $provider = new GoogleMapsProvider($this->getMockAdapterReturns('{"error_message":"The provided API key is invalid.", "status":"REQUEST_DENIED"}'));
+        $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
+    }
 }
