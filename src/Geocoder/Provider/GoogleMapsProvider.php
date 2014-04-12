@@ -13,6 +13,7 @@ namespace Geocoder\Provider;
 use Geocoder\Exception\NoResultException;
 use Geocoder\Exception\QuotaExceededException;
 use Geocoder\Exception\UnsupportedException;
+use Geocoder\Exception\InvalidCredentialsException;
 use Geocoder\HttpAdapter\HttpAdapterInterface;
 
 /**
@@ -39,19 +40,26 @@ class GoogleMapsProvider extends AbstractProvider implements LocaleAwareProvider
      * @var bool
      */
     private $useSsl = false;
+    
+    /**
+     * @var string
+     */
+    private $key = null;
 
     /**
      * @param HttpAdapterInterface $adapter An HTTP adapter.
      * @param string               $locale  A locale (optional).
      * @param string               $region  Region biasing (optional).
      * @param bool                 $useSsl  Whether to use an SSL connection (optional)
+     * @param string               $key     Google Geocoding API key (optional)
      */
-    public function __construct(HttpAdapterInterface $adapter, $locale = null, $region = null, $useSsl = false)
+    public function __construct(HttpAdapterInterface $adapter, $locale = null, $region = null, $useSsl = false, $key = null)
     {
         parent::__construct($adapter, $locale);
 
         $this->region = $region;
         $this->useSsl = $useSsl;
+        $this->key = $key;
     }
 
     /**
@@ -103,6 +111,10 @@ class GoogleMapsProvider extends AbstractProvider implements LocaleAwareProvider
         if (null !== $this->getRegion()) {
             $query = sprintf('%s&region=%s', $query, $this->getRegion());
         }
+        
+        if (null !== $this->getKey()) {
+            $query = sprintf('%s&key=%s', $query, $this->getKey());
+        }
 
         return $query;
     }
@@ -127,6 +139,10 @@ class GoogleMapsProvider extends AbstractProvider implements LocaleAwareProvider
         // API error
         if (!isset($json)) {
             throw new NoResultException(sprintf('Could not execute query %s', $query));
+        }
+
+        if('REQUEST_DENIED' === $json->status && 'The provided API key is invalid.' == $json->error_message) {
+            throw new InvalidCredentialsException(sprintf('API key is invalid %s', $query));
         }
 
         // you are over your quota
@@ -241,5 +257,15 @@ class GoogleMapsProvider extends AbstractProvider implements LocaleAwareProvider
     protected function getRegion()
     {
         return $this->region;
+    }
+    
+    /**
+     * Returns the configured key or null.
+     *
+     * @return string|null
+     */
+    protected function getKey()
+    {
+        return $this->key;
     }
 }
