@@ -10,17 +10,16 @@
 
 namespace Geocoder\Tests\HttpAdapter;
 
-use Geocoder\HttpAdapter\GeoIP2DatabaseAdapter;
+use Geocoder\HttpAdapter\GeoIP2Adapter;
 use Geocoder\Tests\TestCase;
 use Geocoder\Exception\RuntimeException;
 use GeoIp2\Database\Reader;
-use org\bovigo\vfs\vfsStream;
-use org\bovigo\vfs\vfsStreamFile;
+use GeoIp2\WebService\Client;
 
 /**
  * @author Jens Wiese <jens@howtrueisfalse.de>
  */
-class GeoIP2DatabaseAdapterTest extends TestCase
+class GeoIP2AdapterTest extends TestCase
 {
     /**
      * @var GeoIP2DatabaseAdapter
@@ -40,34 +39,12 @@ class GeoIP2DatabaseAdapterTest extends TestCase
 
     public function setUp()
     {
-        $this->adapter = new GeoIP2DatabaseAdapter($this->getDbFile()->url());
-        $this->adapter->setDbReader($this->getDbReaderMock());
-    }
-
-    /**
-     * @expectedException \Geocoder\Exception\InvalidArgumentException
-     * @expectedExceptionMessage Given MaxMind database file "/tmp" is not a file.
-     */
-    public function testDatabaseFileMustBeFile()
-    {
-        $this->adapter = new GeoIP2DatabaseAdapter('/tmp');
-        $this->adapter->setDbReader($this->getDbReaderMock());
-    }
-
-    /**
-     * @depends testDatabaseFileMustBeFile
-     * @expectedException \Geocoder\Exception\InvalidArgumentException
-     * @expectedExceptionMessage Given MaxMind database file "vfs://tmpdir/database.mmdb" is not readable.
-     */
-    public function testDatabaseFileMustBeReadable()
-    {
-        $this->adapter = new GeoIP2DatabaseAdapter($this->getDbFile()->chmod(0)->url());
-        $this->adapter->setDbReader($this->getDbReaderMock());
+        $this->adapter = new GeoIP2Adapter($this->getGeoIP2ProviderMock());
     }
 
     public function testGetName()
     {
-        $expectedName = 'maxmind_database';
+        $expectedName = 'maxmind_geoip2';
         $this->assertEquals($expectedName, $this->adapter->getName());
     }
 
@@ -83,7 +60,7 @@ class GeoIP2DatabaseAdapterTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\InvalidArgumentException
-     * @expectedExceptionMessage URL must contain a valid query-string (a IP address, 127.0.0.1 for instance)
+     * @expectedExceptionMessage URL must contain a valid query-string (an IP address, 127.0.0.1 for instance)
      */
     public function testAddressPassedToReaderMustBeIpAddress()
     {
@@ -91,17 +68,39 @@ class GeoIP2DatabaseAdapterTest extends TestCase
         $this->adapter->getContent($url);
     }
 
-    public function testIpAddressIsPassedCorrectToReader()
+    public static function provideDataForSwitchingRequestMethods()
     {
-        $dbReader = $this->getDbReaderMock();
-        $dbReader
-            ->expects($this->once())
-            ->method('city')->with('127.0.0.1')
-            ->will($this->returnValue($this->getCityModelMock()));
+        return array(
+            array(GeoIP2Adapter::GEOIP2_MODEL_CITY),
+            array(GeoIP2Adapter::GEOIP2_MODEL_COUNTRY),
+            array(GeoIP2Adapter::GEOIP2_MODEL_OMNI),
+        );
+    }
 
-        $this->adapter->setDbReader($dbReader);
+    /**
+     * @dataProvider provideDataForSwitchingRequestMethods
+     */
+    public function testIpAddressIsPassedCorrectToReader($geoIp2Model)
+    {
+        $geoIp2Provider = $this->getGeoIP2ProviderMock();
+        $geoIp2Provider
+            ->expects($this->any())
+            ->method($geoIp2Model)->with('127.0.0.1')
+            ->will(
+                $this->returnValue($this->getGeoIP2ModelMock($geoIp2Model))
+            );
 
-        $this->adapter->getContent('file://database?127.0.0.1');
+        $adapter = new GeoIP2Adapter($geoIp2Provider, $geoIp2Model);
+        $adapter->getContent('file://geoip?127.0.0.1');
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedExceptionMessage Model "unsupported_model" is not available.
+     */
+    public function testNotSupportedGeoIP2ModelLeadsToException()
+    {
+        new GeoIP2Adapter($this->getGeoIP2ProviderMock(), 'unsupported_model');
     }
 
     public function testSettingLocaleIsCorrect()
@@ -114,30 +113,19 @@ class GeoIP2DatabaseAdapterTest extends TestCase
         $this->assertEquals($expectedLocale, $this->adapter->getLocale());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
-     * @expectedExceptionMessage Database type "geoip2_does_not_exist" not implemented yet.
-     */
-    public function testUsingNonExistantDatabaseTypesLeadsToException()
-    {
-        $this->adapter = new GeoIP2DatabaseAdapter($this->getDbFile()->url(), 'geoip2_does_not_exist');
-        $this->adapter->setDbReader($this->getDbReaderMock());
-        $this->adapter->getContent('file://database?127.0.0.1');
-    }
-
     public function testReaderResponseIsJsonEncoded()
     {
-        $cityModel = $this->getCityModelMock();
+        $cityModel = $this->getGeoIP2ModelMock(GeoIP2Adapter::GEOIP2_MODEL_CITY);
 
-        $dbReader = $this->getDbReaderMock();
-        $dbReader
+        $geoIp2Provider = $this->getGeoIP2ProviderMock();
+        $geoIp2Provider
             ->expects($this->any())
             ->method('city')
             ->will($this->returnValue($cityModel));
 
-        $this->adapter->setDbReader($dbReader);
+        $adapter = new GeoIP2Adapter($geoIp2Provider);
 
-        $result = $this->adapter->getContent('file://database?127.0.0.1');
+        $result = $adapter->getContent('file://database?127.0.0.1');
         $this->assertJson($result);
 
         $decodedResult = json_decode($result);
@@ -147,19 +135,22 @@ class GeoIP2DatabaseAdapterTest extends TestCase
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject
      */
-    protected function getDbReaderMock()
+    protected function getGeoIP2ProviderMock()
     {
-        $mock = $this->getMockBuilder('\GeoIp2\Database\Reader')->disableOriginalConstructor()->getMock();
+        $mock = $this->getMockBuilder('\GeoIp2\ProviderInterface')->getMock();
 
         return $mock;
     }
 
     /**
+     * @param int $geoIP2Model (e.g. GeoIP2Adapter::GEOIP2_MODEL_
      * @return \PHPUnit_Framework_MockObject_MockObject
      */
-    protected function getCityModelMock()
+    protected function getGeoIP2ModelMock($geoIP2Model)
     {
-        $mock = $this->getMockBuilder('\GeoIp2\Model\City')->disableOriginalConstructor()->getMock();
+        $mockClass = '\\GeoIp2\\Model\\' . ucfirst($geoIP2Model);
+
+        $mock = $this->getMockBuilder($mockClass)->disableOriginalConstructor()->getMock();
         $mock
             ->expects($this->any())
             ->method('jsonSerialize')
@@ -183,20 +174,5 @@ class GeoIP2DatabaseAdapterTest extends TestCase
 
         return $mock;
     }
-
-    /**
-     * Returns virtual db-file
-     *
-     * @return vfsStreamFile
-     */
-    protected function getDbFile()
-    {
-        $filesystem = vfsStream::setup('tmpdir');
-        $dbFile = new vfsStreamFile('database.mmdb', 0600);
-        $filesystem->addChild($dbFile);
-
-        return $dbFile;
-    }
-
 }
  

@@ -12,43 +12,42 @@ namespace Geocoder\Tests\Provider;
 
 use Geocoder\Exception\NoResultException;
 use Geocoder\HttpAdapter\CurlHttpAdapter;
-use Geocoder\HttpAdapter\GeoIP2DatabaseAdapter;
-use Geocoder\Provider\GeoIP2DatabaseProvider;
+use Geocoder\Provider\GeoIP2Provider;
 use Geocoder\Tests\TestCase;
 
 /**
  * @author Jens Wiese <jens@howtrueisfalse.de>
  */
-class GeoIP2DatabaseProviderTest extends TestCase
+class GeoIP2ProviderTest extends TestCase
 {
     /**
-     * @var GeoIP2DatabaseProvider
+     * @var GeoIP2Provider
      */
     protected $provider;
 
     public function setUp()
     {
-        $this->provider = new GeoIP2DatabaseProvider($this->getDatabaseAdapterMock());
+        $this->provider = new GeoIP2Provider($this->getGeoIP2AdapterMock());
     }
 
     /**
      * @expectedException \Geocoder\Exception\InvalidArgumentException
-     * @expectedExceptionMessage GeoIP2DatabaseAdapter is needed in order to access the GeoIP2 databases.
+     * @expectedExceptionMessage GeoIP2Adapter is needed in order to access the GeoIP2 service.
      */
     public function testWrongAdapterLeadsToException()
     {
-        new GeoIP2DatabaseProvider(new CurlHttpAdapter());
+        new GeoIP2Provider(new CurlHttpAdapter());
     }
 
     public function testGetName()
     {
-        $expectedName = 'geoip2_database';
+        $expectedName = 'maxmind_geoip2';
         $this->assertEquals($expectedName, $this->provider->getName());
     }
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedException
-     * @expectedExceptionMessage The Geocoder\Provider\GeoIP2DatabaseProvider is not able to do reverse geocoding.
+     * @expectedExceptionMessage The Geocoder\Provider\GeoIP2Provider is not able to do reverse geocoding.
      */
     public function testQueryingReversedDataLeadToException()
     {
@@ -71,7 +70,7 @@ class GeoIP2DatabaseProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedException
-     * @expectedExceptionMessage The Geocoder\Provider\GeoIP2DatabaseProvider does not support street addresses.
+     * @expectedExceptionMessage The Geocoder\Provider\GeoIP2Provider does not support street addresses.
      */
     public function testOnlyIpAddressesCouldBeResolved()
     {
@@ -141,8 +140,8 @@ class GeoIP2DatabaseProviderTest extends TestCase
      */
     public function testRetrievingGeodata($address, $adapterResponse, $expectedGeodata)
     {
-        $adapter = $this->getDatabaseAdapterMock($adapterResponse);
-        $provider = new GeoIP2DatabaseProvider($adapter);
+        $adapter = $this->getGeoIP2AdapterMock($adapterResponse);
+        $provider = new GeoIP2Provider($adapter);
 
         $actualGeodata = $provider->getGeocodedData($address);
 
@@ -156,9 +155,9 @@ class GeoIP2DatabaseProviderTest extends TestCase
     public function testRetrievingGeodataNotExistingLocation()
     {
         $adapterReturn = new NoResultException('No results found for IP address 74.200.247.59');
-        $adapter = $this->getDatabaseAdapterMock($adapterReturn);
+        $adapter = $this->getGeoIP2AdapterMock($adapterReturn);
 
-        $provider = new GeoIP2DatabaseProvider($adapter);
+        $provider = new GeoIP2Provider($adapter);
 
         $provider->getGeocodedData('74.200.247.59');
     }
@@ -167,9 +166,9 @@ class GeoIP2DatabaseProviderTest extends TestCase
      * @param mixed $returnValue
      * @return \PHPUnit_Framework_MockObject_MockObject | GeoIP2DatabaseAdapter
      */
-    public function getDatabaseAdapterMock($returnValue = '')
+    public function getGeoIP2AdapterMock($returnValue = '')
     {
-        $mock = $this->getMockBuilder('\Geocoder\HttpAdapter\GeoIP2DatabaseAdapter')->disableOriginalConstructor()->getMock();
+        $mock = $this->getMockBuilder('\Geocoder\HttpAdapter\GeoIP2Adapter')->disableOriginalConstructor()->getMock();
 
         if ($returnValue instanceof \Exception) {
             $returnValue = $this->throwException($returnValue);

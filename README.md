@@ -18,7 +18,7 @@ Currently, there are the following adapters:
 * `GuzzleHttpAdapter` to use [Guzzle](https://github.com/guzzle/guzzle), PHP 5.3+ HTTP client and framework for building RESTful web service clients;
 * `SocketHttpAdapter` to use a [socket](http://www.php.net/manual/function.fsockopen.php);
 * `ZendHttpAdapter` to use [Zend Http Client](http://framework.zend.com/manual/2.0/en/modules/zend.http.client.html).
-* `GeoIP2DatabaseAdapter` to use [GeoIP2 Database Reader by MaxMind](https://github.com/maxmind/GeoIP2-php#database-reader).
+* `GeoIP2Adapter` to use [GeoIP2 Database Reader](https://github.com/maxmind/GeoIP2-php#database-reader) or the [Webservice Client](https://github.com/maxmind/GeoIP2-php#web-service-client) by MaxMind.
 
 
 ### Providers ###
@@ -50,7 +50,7 @@ Currently, there are many providers for the following APIs:
 * [GeoIPs](http://www.geoips.com/developer/geoips-api) as IP-Based geocoding provider;
 * [MaxMind web service](http://dev.maxmind.com/geoip/legacy/web-services) as IP-Based geocoding provider (City/ISP/Org and Omni services);
 * [MaxMind binary file](http://dev.maxmind.com/geoip/legacy/downloadable) as IP-Based geocoding provider;
-* [MaxMind GeoIP2 database file](http://www.maxmind.com/en/city) as IP-Based geocoding provider;
+* [MaxMind GeoIP2](http://www.maxmind.com/en/city) as IP-Based geocoding provider;
 * [Geonames](http://www.geonames.org/) as Place-Based geocoding and reverse geocoding provider;
 * [IpGeoBase](http://ipgeobase.ru/) as IP-Based geocoding provider (very accurate in Russia);
 * [Baidu](http://developer.baidu.com/map/geocoding-api.htm) as Address-Based geocoding and reverse geocoding provider (exclusively in China);
@@ -263,17 +263,20 @@ be used in production. For more information, please read [issue #301](https://gi
 
 ### GeoIP2DatabaseProvider ###
 
-The `GeoIP2DatabaseProvider` named `geoip2_database` is able to geocode **IPv4 and IPv6 addresses**
-only - it makes use of the MaxMind GeoIP2 databases.
+The `GeoIP2Provider` named `maxmind_geoip2` is able to geocode **IPv4 and IPv6 addresses**
+only - it makes use of the MaxMind GeoIP2 databases or the webservice.
 
-It requires the [database file](http://dev.maxmind.com/geoip/geoip2/geolite2/), and the [geoip2/geoip2](https://packagist.org/packages/geoip2/geoip2) package must be installed.
+It requires either the [database file](http://dev.maxmind.com/geoip/geoip2/geolite2/), or the [webservice](http://dev.maxmind.com/geoip/geoip2/web-services/) - represented by the GeoIP2 Provider, which is injected to the `GeoIP2Adapter`. The [geoip2/geoip2](https://packagist.org/packages/geoip2/geoip2) package must be installed.
 
-This provider will only work with the corresponding `GeoIP2DatabaseAdapter`.
+This provider will only work with the corresponding `GeoIP2Adapter`.
 
 **Usage:**
 
-    $adapter = new \Geocoder\HttpAdapter\GeoIP2DatabaseAdapter('/path/to/database');
-    $provider = new \Geocoder\Provider\GeoIP2DatabaseProvider($adapter);
+	// Maxmind GeoIP2 Provider: e.g. the database reader
+	$reader = new \GeoIp2\Database\Reader('/path/to/database'); 
+
+    $adapter = new \Geocoder\HttpAdapter\GeoIP2Adapter($reader);
+    $provider = new \Geocoder\Provider\GeoIP2Provider($adapter);
     $geocoder = new \Geocoder\Geocoder($provider);
 
     $result = $geocoder->geocode('74.200.247.59');
