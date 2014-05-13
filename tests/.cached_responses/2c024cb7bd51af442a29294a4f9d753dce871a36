@@ -1,0 +1,11 @@
+s:259:"<?xml version="1.0" encoding="UTF-8" ?>
+<geodata>
+        <error>
+                <code>005</code>
+                <description>Postal Code is not in the proper Format.</description>
+        </error>
+        <latt></latt>
+        <longt>-</longt>
+
+</geodata>
+";

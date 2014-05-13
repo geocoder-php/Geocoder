@@ -1,0 +1,11 @@
+s:296:"<?xml version="1.0" encoding="UTF-8" ?>
+<geodata>
+        <error>
+                <code>009</code>
+                <description>The latitude and longitude you provided are not in the valid range.</description>
+        </error>
+        <inlatt>1</inlatt>
+        <inlongt>-2</inlongt>
+
+</geodata>
+";

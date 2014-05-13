@@ -1,0 +1,35 @@
+s:754:"<?xml version="1.0" encoding="UTF-8" ?>
+<result>
+<geodata>
+
+        <latt>40.707507</latt>
+        <longt>-74.011255</longt>
+        <city>New York</city>
+        <prov>NY</prov>
+        <postal>10005</postal>
+        <stnumber>2</stnumber>
+        <staddress>New St</staddress>
+        <inlatt>40.707507</inlatt>
+        <inlongt>-74.011255</inlongt>
+        <distance>0</distance>
+
+
+
+<usa>
+        <latt>40.707507</latt>
+        <longt>-74.011255</longt>
+        <uscity>New York</uscity>
+        <state>NY</state>
+        <zip>10005</zip>
+        <usstnumber>2</usstnumber>
+        <usstaddress>New St</usstaddress>
+        <inlatt>40.707507</inlatt>
+        <inlongt>-74.011255</inlongt>
+        <distance>0</distance>
+
+</usa>
+
+
+</geodata>
+</result>
+";

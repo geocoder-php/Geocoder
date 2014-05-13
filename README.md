@@ -204,6 +204,7 @@ The `OIORestProvider` named `oio_rest` is able to geocode and reverse geocode **
 ### GeocoderCaProvider ###
 
 The `GeocoderCaProvider` named `geocoder_ca` is able to geocode and reverse geocode **street addresses**, exclusively in USA & Canada.
+An optional api key can be provided. This provider also supports SSL.
 
 
 ### GeocoderUsProvider ###

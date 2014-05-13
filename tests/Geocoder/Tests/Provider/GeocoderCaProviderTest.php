@@ -36,6 +36,40 @@ class GeocoderCaProviderTest extends TestCase
         $provider->getGeocodedData('foobar');
     }
 
+    public function testGetGeocodedDataUsingSSL()
+    {
+        $provider = new GeocoderCaProvider($this->getAdapter(), true);
+        $provider->getGeocodedData('1600 Pennsylvania Ave, Washington, DC');
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\InvalidCredentialsException
+     * @expectedExceptionMessage Invalid authentification token https://geocoder.ca/?geoit=xml&locate=foobar&auth=bad-api-key
+     */
+    public function testGetGeocodedDataWithWrongInvalidApiKey()
+    {
+        $provider = new GeocoderCaProvider($this->getAdapter(), true, 'bad-api-key');
+        $provider->getGeocodedData('foobar');
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\QuotaExceededException
+     * @expectedExceptionMessage Account ran out of credits https://geocoder.ca/?geoit=xml&locate=foobar&auth=api-key
+     */
+    public function testGetGeocodedDataRanOutCredits()
+    {
+        $xml = <<<XML
+<geodata>
+    <error>
+        <code>002</code>
+        <description> auth has ran out of credits. (in case you have used over 100 credits over your total balance)</description>
+    </error>
+</geodata>
+XML;
+        $provider = new GeocoderCaProvider($this->getMockAdapterReturns($xml), true, 'api-key');
+        $provider->getGeocodedData('foobar');
+    }
+
     public function testGetGeocodedDataWithRealAddressUS()
     {
         $provider = new GeocoderCaProvider($this->getAdapter());
@@ -136,6 +170,40 @@ class GeocoderCaProviderTest extends TestCase
         $provider->getReversedData(array(1, 2));
     }
 
+    public function testGetReversedDataUsingSSL()
+    {
+        $provider = new GeocoderCaProvider($this->getAdapter(), true);
+        $provider->getReversedData(array('40.707507', '-74.011255'));
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\InvalidCredentialsException
+     * @expectedExceptionMessage Invalid authentification token https://geocoder.ca/?geoit=xml&reverse=1&latt=40.707507&longt=-74.011255&auth=bad-api-key
+     */
+    public function testGetReversedDataWithWrongInvalidApiKey()
+    {
+        $provider = new GeocoderCaProvider($this->getAdapter(), true, 'bad-api-key');
+        $provider->getReversedData(array('40.707507', '-74.011255'));
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\QuotaExceededException
+     * @expectedExceptionMessage Account ran out of credits https://geocoder.ca/?geoit=xml&reverse=1&latt=40.707507&longt=-74.011255&auth=api-key
+     */
+    public function testGetReversedDataRanOutCredits()
+    {
+        $xml = <<<XML
+<geodata>
+    <error>
+        <code>002</code>
+        <description> auth has ran out of credits. (in case you have used over 100 credits over your total balance)</description>
+    </error>
+</geodata>
+XML;
+        $provider = new GeocoderCaProvider($this->getMockAdapterReturns($xml), true, 'api-key');
+        $provider->getReversedData(array('40.707507', '-74.011255'));
+    }
+
     public function testGetReversedDataWithRealCoordinates()
     {
         $provider = new GeocoderCaProvider($this->getAdapter());
@@ -148,10 +216,10 @@ class GeocoderCaProviderTest extends TestCase
         $this->assertInternalType('array', $result);
         $this->assertEquals(40.707507, $result['latitude'], '', 0.0001);
         $this->assertEquals(-74.011255, $result['longitude'], '', 0.0001);
-        $this->assertEquals(1, $result['streetNumber']);
+        $this->assertEquals(2, $result['streetNumber']);
         $this->assertEquals('New St', $result['streetName']);
         $this->assertEquals(10005, $result['zipcode']);
-        $this->assertEquals('NEW YORK', $result['city']);
+        $this->assertEquals('New York', $result['city']);
         $this->assertEquals('NY', $result['cityDistrict']);
         $this->assertNull($result['region']);
         $this->assertNull($result['regionCode']);

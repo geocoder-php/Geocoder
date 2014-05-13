@@ -1,0 +1,11 @@
+s:263:"<?xml version="1.0" encoding="UTF-8" ?>
+<geodata>
+        <error>
+                <code>003</code>
+                <description>Authentication token: bad-api-key not found.</description>
+        </error>
+        <latt></latt>
+        <longt>-</longt>
+
+</geodata>
+";
