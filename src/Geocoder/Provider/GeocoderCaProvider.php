@@ -12,6 +12,9 @@ namespace Geocoder\Provider;
 
 use Geocoder\Exception\UnsupportedException;
 use Geocoder\Exception\NoResultException;
+use Geocoder\Exception\QuotaExceededException;
+use Geocoder\Exception\InvalidCredentialsException;
+use Geocoder\HttpAdapter\HttpAdapterInterface;
 
 /**
  * @author Antoine Corcy <contact@sbin.dk>
@@ -21,12 +24,35 @@ class GeocoderCaProvider extends AbstractProvider implements ProviderInterface
     /**
      * @var string
      */
-    const GEOCODE_ENDPOINT_URL = 'http://geocoder.ca/?geoit=xml&locate=%s';
+    const GEOCODE_ENDPOINT_URL = '%s://geocoder.ca/?geoit=xml&locate=%s&auth=%s';
 
     /**
      * @var string
      */
-    const REVERSE_ENDPOINT_URL = 'http://geocoder.ca/?geoit=xml&reverse=1&latt=%F&longt=%F';
+    const REVERSE_ENDPOINT_URL = '%s://geocoder.ca/?geoit=xml&reverse=1&latt=%F&longt=%F&auth=%s';
+
+    /**
+     * @var string
+     */
+    private $scheme = 'http';
+
+    /**
+     * @var string
+     */
+    private $apiKey = null;
+
+    /**
+     * @param HttpAdapterInterface $adapter An HTTP adapter.
+     * @param bool                 $useSsl  Whether to use an SSL connection (optional).
+     * @param string               $apiKey  An API key (optional).
+     */
+    public function __construct(HttpAdapterInterface $adapter, $useSsl = false, $apiKey = null)
+    {
+        parent::__construct($adapter);
+
+        $this->scheme = $useSsl ? 'https' : $this->scheme;
+        $this->apiKey = $apiKey;
+    }
 
     /**
      * {@inheritDoc}
@@ -38,17 +64,21 @@ class GeocoderCaProvider extends AbstractProvider implements ProviderInterface
             throw new UnsupportedException('The GeocoderCaProvider does not support IP addresses.');
         }
 
-        $query   = sprintf(self::GEOCODE_ENDPOINT_URL, urlencode($address));
-        $content = $this->getAdapter()->getContent($query);
+        $query = sprintf(self::GEOCODE_ENDPOINT_URL, $this->scheme, urlencode($address), $this->apiKey);
 
-        $doc = new \DOMDocument();
-        if (!@$doc->loadXML($content) || $doc->getElementsByTagName('error')->length) {
+        try {
+            $content = $this->handleQuery($query);
+        } catch (InvalidCredentialsException $e) {
+            throw $e;
+        } catch (QuotaExceededException $e) {
+            throw $e;
+        } catch (NoResultException $e) {
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
         return array(array_merge($this->getDefaults(), array(
-            'latitude'  => $this->getNodeValue($doc->getElementsByTagName('latt')),
-            'longitude' => $this->getNodeValue($doc->getElementsByTagName('longt'))
+            'latitude'  => $this->getNodeValue($content->getElementsByTagName('latt')),
+            'longitude' => $this->getNodeValue($content->getElementsByTagName('longt'))
         )));
     }
 
@@ -57,22 +87,26 @@ class GeocoderCaProvider extends AbstractProvider implements ProviderInterface
      */
     public function getReversedData(array $coordinates)
     {
-        $query   = sprintf(self::REVERSE_ENDPOINT_URL, $coordinates[0], $coordinates[1]);
-        $content = $this->getAdapter()->getContent($query);
+        $query = sprintf(self::REVERSE_ENDPOINT_URL, $this->scheme, $coordinates[0], $coordinates[1], $this->apiKey);
 
-        $doc = new \DOMDocument();
-        if (!@$doc->loadXML($content) || $doc->getElementsByTagName('error')->length) {
+        try {
+            $content = $this->handleQuery($query);
+        } catch (InvalidCredentialsException $e) {
+            throw $e;
+        } catch (QuotaExceededException $e) {
+            throw $e;
+        } catch (NoResultException $e) {
             throw new NoResultException(sprintf('Could not resolve coordinates %s', implode(', ', $coordinates)));
         }
 
         return array(array_merge($this->getDefaults(), array(
-            'latitude'     => $this->getNodeValue($doc->getElementsByTagName('latt')),
-            'longitude'    => $this->getNodeValue($doc->getElementsByTagName('longt')),
-            'streetNumber' => $this->getNodeValue($doc->getElementsByTagName('stnumber')),
-            'streetName'   => $this->getNodeValue($doc->getElementsByTagName('staddress')),
-            'city'         => $this->getNodeValue($doc->getElementsByTagName('city')),
-            'zipcode'      => $this->getNodeValue($doc->getElementsByTagName('postal')),
-            'cityDistrict' => $this->getNodeValue($doc->getElementsByTagName('prov')),
+            'latitude'     => $this->getNodeValue($content->getElementsByTagName('latt')),
+            'longitude'    => $this->getNodeValue($content->getElementsByTagName('longt')),
+            'streetNumber' => $this->getNodeValue($content->getElementsByTagName('stnumber')),
+            'streetName'   => $this->getNodeValue($content->getElementsByTagName('staddress')),
+            'city'         => $this->getNodeValue($content->getElementsByTagName('city')),
+            'zipcode'      => $this->getNodeValue($content->getElementsByTagName('postal')),
+            'cityDistrict' => $this->getNodeValue($content->getElementsByTagName('prov')),
         )));
     }
 
@@ -92,5 +126,32 @@ class GeocoderCaProvider extends AbstractProvider implements ProviderInterface
     private function getNodeValue(\DOMNodeList $element)
     {
         return $element->length ? $element->item(0)->nodeValue : null;
+    }
+
+    /**
+     * @param  string                      $query
+     * @throws InvalidCredentialsException
+     * @throws QuotaExceededException
+     * @throws NoResultException
+     * @return \DOMDocument
+     */
+    private function handleQuery($query)
+    {
+        $content = $this->getAdapter()->getContent($query);
+
+        $doc = new \DOMDocument;
+        if (!@$doc->loadXML($content) || $doc->getElementsByTagName('error')->length) {
+            switch ($this->getNodeValue($doc->getElementsByTagName('code'))) {
+                case '001':
+                case '003':
+                    throw new InvalidCredentialsException(sprintf('Invalid authentification token %s', $query));
+                case '002':
+                    throw new QuotaExceededException(sprintf('Account ran out of credits %s', $query));
+                default:
+                    throw new NoResultException;
+            }
+        }
+
+        return $doc;
     }
 }
