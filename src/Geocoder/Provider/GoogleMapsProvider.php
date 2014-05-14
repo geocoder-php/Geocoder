@@ -13,6 +13,7 @@ namespace Geocoder\Provider;
 use Geocoder\Exception\NoResultException;
 use Geocoder\Exception\QuotaExceededException;
 use Geocoder\Exception\UnsupportedException;
+use Geocoder\Exception\InvalidCredentialsException;
 use Geocoder\HttpAdapter\HttpAdapterInterface;
 
 /**
@@ -41,17 +42,24 @@ class GoogleMapsProvider extends AbstractProvider implements LocaleAwareProvider
     private $useSsl = false;
 
     /**
+     * @var string
+     */
+    private $apiKey = null;
+
+    /**
      * @param HttpAdapterInterface $adapter An HTTP adapter.
      * @param string               $locale  A locale (optional).
      * @param string               $region  Region biasing (optional).
      * @param bool                 $useSsl  Whether to use an SSL connection (optional)
+     * @param string               $apiKey  Google Geocoding API key (optional)
      */
-    public function __construct(HttpAdapterInterface $adapter, $locale = null, $region = null, $useSsl = false)
+    public function __construct(HttpAdapterInterface $adapter, $locale = null, $region = null, $useSsl = false, $apiKey = null)
     {
         parent::__construct($adapter, $locale);
 
         $this->region = $region;
         $this->useSsl = $useSsl;
+        $this->apiKey = $apiKey;
     }
 
     /**
@@ -104,6 +112,10 @@ class GoogleMapsProvider extends AbstractProvider implements LocaleAwareProvider
             $query = sprintf('%s&region=%s', $query, $this->getRegion());
         }
 
+        if (null !== $this->apiKey) {
+            $query = sprintf('%s&key=%s', $query, $this->apiKey);
+        }
+
         return $query;
     }
 
@@ -127,6 +139,10 @@ class GoogleMapsProvider extends AbstractProvider implements LocaleAwareProvider
         // API error
         if (!isset($json)) {
             throw new NoResultException(sprintf('Could not execute query %s', $query));
+        }
+
+        if('REQUEST_DENIED' === $json->status && 'The provided API key is invalid.' === $json->error_message) {
+            throw new InvalidCredentialsException(sprintf('API key is invalid %s', $query));
         }
 
         // you are over your quota

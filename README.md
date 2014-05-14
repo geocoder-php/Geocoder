@@ -144,12 +144,13 @@ A valid api key is required.
 ### GoogleMapsProvider ###
 
 The `GoogleMapsProvider` named `google_maps` is able to geocode and reverse geocode **street addresses**.
+A locale and a region can be set as well as an optional api key. This provider also supports SSL.
 
 
 ### GoogleMapsBusinessProvider ###
 
 The `GoogleMapsBusinessProvider` named `google_maps_business` is able to geocode and reverse geocode **street addresses**.
-A valid `Client ID` is required. The private key is optional.
+A valid `Client ID` is required. The private key is optional. This provider also supports SSL.
 
 
 ### BingMapsProvider ###
