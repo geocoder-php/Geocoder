@@ -1,9 +1,13 @@
 CHANGELOG
 =========
 
-### 2.4.3 (????-??-??) ###
+### 2.5.0 (2014-05-16) ###
 
-n/a
+* Added: ability to set timeouts for `CurlHttpAdapter`
+* Added: support for a Google Maps API key
+* Added: premium support to `GeocoderCaProvider` + tests
+* Added: test against `hhvm-nightly` on Travis-CI
+* Updated: documentation
 
 ### 2.4.2 (2014-01-05) ###
 
