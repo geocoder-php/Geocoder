@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+### 2.5.1 (????-??-??) ###
+
+n/a
+
 ### 2.5.0 (2014-05-16) ###
 
 * Added: ability to set timeouts for `CurlHttpAdapter`
