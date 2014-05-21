@@ -7,6 +7,11 @@ use Geocoder\Provider\GoogleMapsProvider;
 
 class GoogleMapsProviderTest extends TestCase
 {
+    /**
+     * @var string
+     */
+    private $testAPIKey = 'fake_key';
+
     public function testGetName()
     {
         $provider = new GoogleMapsProvider($this->getMockAdapter($this->never()));
@@ -295,5 +300,38 @@ class GoogleMapsProviderTest extends TestCase
     {
         $provider = new GoogleMapsProvider($this->getMockAdapterReturns('{"error_message":"The provided API key is invalid.", "status":"REQUEST_DENIED"}'));
         $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
+    }
+
+    public function testGetGeocodedDataWithRealValidApiKey()
+    {
+        if (!isset($_SERVER['GOOGLE_GEOCODING_KEY'])) {
+            $this->markTestSkipped('You need to configure the GOOGLE_GEOCODING_KEY value in phpunit.xml');
+        }
+
+        $provider = new GoogleMapsProvider($this->getAdapter(), null, null, true, $_SERVER['GOOGLE_GEOCODING_KEY']);
+
+        $data = $provider->getGeocodedData('Columbia University');
+        $data = $data[0];
+
+        $this->assertNotNull($data['latitude']);
+        $this->assertNotNull($data['longitude']);
+        $this->assertNotNull($data['bounds']['south']);
+        $this->assertNotNull($data['bounds']['west']);
+        $this->assertNotNull($data['bounds']['north']);
+        $this->assertNotNull($data['bounds']['east']);
+        $this->assertEquals('New York', $data['city']);
+        $this->assertEquals('Manhattan', $data['cityDistrict']);
+        $this->assertEquals('New York', $data['region']);
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\InvalidCredentialsException
+     * @expectedExceptionMessage API key is invalid https://maps.googleapis.com/maps/api/geocode/json?address=Columbia%20University&sensor=false&key=fake_key
+     */
+    public function testGetGeocodedDataWithRealInvalidApiKey()
+    {
+        $provider = new GoogleMapsProvider($this->getAdapter(), null, null, true, $this->testAPIKey);
+
+        $provider->getGeocodedData('Columbia University');
     }
 }

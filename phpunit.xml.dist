@@ -29,6 +29,7 @@
         <!-- <server name="BAIDU_API_KEY" value="YOUR_API_KEY" /> -->
         <!-- <server name="TOMTOM_GEOCODING_KEY" value="YOUR_GEOCODING_KEY" /> -->
         <!-- <server name="TOMTOM_MAP_KEY" value="YOUR_MAP_KEY" /> -->
+        <!-- <server name="GOOGLE_GEOCODING_KEY" value="YOUR_GEOCODING_KEY" /> -->
     </php>
     <testsuites>
         <testsuite name="Geocoder Test Suite">
