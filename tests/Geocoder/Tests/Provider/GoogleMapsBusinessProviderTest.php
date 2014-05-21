@@ -68,4 +68,26 @@ class GoogleMapsBusinessProviderTest extends TestCase
 
         $this->assertEquals($query.'&signature=yd07DufNspPyDE-Vj6nTeI5Fk-o=', $method->invoke($provider, $query));
     }
+
+    /**
+     * @expectedException Geocoder\Exception\InvalidCredentialsException
+     * @expectedExceptionMessage Invalid client ID / API Key https://maps.googleapis.com/maps/api/geocode/json?address=Columbia%20University&sensor=false&client=foo&signature=xhvnqoQoLos6iqijCu3b1Odmqr0=
+     */
+    public function testGetGeocodedDataWithInvalidClientIdAndKey()
+    {
+        $provider = new GoogleMapsBusinessProvider($this->getAdapter(), $this->testClientId, $this->testPrivateKey, null, null, true);
+
+        $provider->getGeocodedData('Columbia University');
+    }
+
+    /**
+     * @expectedException Geocoder\Exception\InvalidCredentialsException
+     * @expectedExceptionMessage Invalid client ID / API Key http://maps.googleapis.com/maps/api/geocode/json?address=Columbia%20University&sensor=false&client=foo&signature=xhvnqoQoLos6iqijCu3b1Odmqr0=
+     */
+    public function testGetGeocodedDataWithINvalidClientIdAndKeyNoSsl()
+    {
+        $provider = new GoogleMapsBusinessProvider($this->getAdapter(), $this->testClientId, $this->testPrivateKey, null, null, false);
+
+        $provider->getGeocodedData('Columbia University', true);
+    }
 }

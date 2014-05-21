@@ -130,6 +130,11 @@ class GoogleMapsProvider extends AbstractProvider implements LocaleAwareProvider
 
         $content = $this->getAdapter()->getContent($query);
 
+        // Throw exception if invalid clientID and/or privateKey used with GoogleMapsBusinessProvider
+        if (strpos($content, "Provided 'signature' is not valid for the provided client ID") !== false) {
+            throw new InvalidCredentialsException(sprintf('Invalid client ID / API Key %s', $query));
+        }
+
         if (null === $content) {
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
