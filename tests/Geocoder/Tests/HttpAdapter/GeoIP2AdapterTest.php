@@ -14,7 +14,6 @@ use Geocoder\HttpAdapter\GeoIP2Adapter;
 use Geocoder\Tests\TestCase;
 use Geocoder\Exception\RuntimeException;
 use GeoIp2\Database\Reader;
-use GeoIp2\WebService\Client;
 
 /**
  * @author Jens Wiese <jens@howtrueisfalse.de>
@@ -143,7 +142,7 @@ class GeoIP2AdapterTest extends TestCase
     }
 
     /**
-     * @param int $geoIP2Model (e.g. GeoIP2Adapter::GEOIP2_MODEL_
+     * @param  int                                      $geoIP2Model (e.g. GeoIP2Adapter::GEOIP2_MODEL_
      * @return \PHPUnit_Framework_MockObject_MockObject
      */
     protected function getGeoIP2ModelMock($geoIP2Model)
@@ -175,4 +174,3 @@ class GeoIP2AdapterTest extends TestCase
         return $mock;
     }
 }
- 

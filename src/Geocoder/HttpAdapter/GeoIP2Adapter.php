@@ -42,8 +42,8 @@ class GeoIP2Adapter implements HttpAdapterInterface
     protected $locale;
 
     /**
-     * @param \GeoIp2\ProviderInterface $geoIpProvider
-     * @param string $geoIP2Model (e.g. self::GEOIP2_MODEL_CITY)
+     * @param  \GeoIp2\ProviderInterface                $geoIpProvider
+     * @param  string                                   $geoIP2Model   (e.g. self::GEOIP2_MODEL_CITY)
      * @throws \Geocoder\Exception\UnsupportedException
      * @internal param string $dbFile
      */
@@ -61,7 +61,7 @@ class GeoIP2Adapter implements HttpAdapterInterface
     }
 
     /**
-     * @param string $locale
+     * @param  string $locale
      * @return $this
      */
     public function setLocale($locale)
@@ -82,7 +82,7 @@ class GeoIP2Adapter implements HttpAdapterInterface
     /**
      * Returns the content fetched from a given resource.
      *
-     * @param string $url (e.g. file://database?127.0.0.1)
+     * @param  string                                       $url (e.g. file://database?127.0.0.1)
      * @throws \Geocoder\Exception\UnsupportedException
      * @throws \Geocoder\Exception\InvalidArgumentException
      * @return string
@@ -121,7 +121,7 @@ class GeoIP2Adapter implements HttpAdapterInterface
     /**
      * Returns whether method is supported by GeoIP2
      *
-     * @param string $method
+     * @param  string $method
      * @return bool
      */
     protected function isSupportedGeoIP2Model($method)

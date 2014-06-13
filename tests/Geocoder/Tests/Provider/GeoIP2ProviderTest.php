@@ -163,7 +163,7 @@ class GeoIP2ProviderTest extends TestCase
     }
 
     /**
-     * @param mixed $returnValue
+     * @param  mixed                                    $returnValue
      * @return \PHPUnit_Framework_MockObject_MockObject | GeoIP2DatabaseAdapter
      */
     public function getGeoIP2AdapterMock($returnValue = '')

@@ -146,7 +146,7 @@ class GoogleMapsProvider extends AbstractProvider implements LocaleAwareProvider
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
-        if('REQUEST_DENIED' === $json->status && 'The provided API key is invalid.' === $json->error_message) {
+        if ('REQUEST_DENIED' === $json->status && 'The provided API key is invalid.' === $json->error_message) {
             throw new InvalidCredentialsException(sprintf('API key is invalid %s', $query));
         }
 

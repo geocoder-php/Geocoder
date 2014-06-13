@@ -80,7 +80,7 @@ class GeoIP2Provider extends AbstractProvider implements ProviderInterface
     }
 
     /**
-     * @param string $address
+     * @param  string                                $address
      * @throws \Geocoder\Exception\NoResultException
      * @return City
      */

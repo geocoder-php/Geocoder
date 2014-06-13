@@ -10,7 +10,6 @@
 
 namespace Geocoder\Provider;
 
-use Geocoder\Provider\ProviderInterface;
 use Geocoder\Exception\NoResultException;
 use Geocoder\Exception\InvalidArgumentException;
 use Geocoder\Exception\RuntimeException;
