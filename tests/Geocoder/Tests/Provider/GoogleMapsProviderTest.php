@@ -20,7 +20,7 @@ class GoogleMapsProviderTest extends TestCase
 
     /**
      * @expectedException Geocoder\Exception\NoResultException
-     * @expectedExceptionMessage Could not execute query http://maps.googleapis.com/maps/api/geocode/json?address=foobar&sensor=false
+     * @expectedExceptionMessage Could not execute query http://maps.googleapis.com/maps/api/geocode/json?address=foobar
      */
     public function testGetGeocodedData()
     {
@@ -30,7 +30,7 @@ class GoogleMapsProviderTest extends TestCase
 
     /**
      * @expectedException Geocoder\Exception\NoResultException
-     * @expectedExceptionMessage Could not execute query http://maps.googleapis.com/maps/api/geocode/json?address=&sensor=false
+     * @expectedExceptionMessage Could not execute query http://maps.googleapis.com/maps/api/geocode/json?address=
      */
     public function testGetGeocodedDataWithNull()
     {
@@ -40,7 +40,7 @@ class GoogleMapsProviderTest extends TestCase
 
     /**
      * @expectedException Geocoder\Exception\NoResultException
-     * @expectedExceptionMessage Could not execute query http://maps.googleapis.com/maps/api/geocode/json?address=&sensor=false
+     * @expectedExceptionMessage Could not execute query http://maps.googleapis.com/maps/api/geocode/json?address=
      */
     public function testGetGeocodedDataWithEmpty()
     {
@@ -80,7 +80,7 @@ class GoogleMapsProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResultException
-     * @expectedExceptionMessage Could not execute query http://maps.googleapis.com/maps/api/geocode/json?address=10%20avenue%20Gambetta%2C%20Paris%2C%20France&sensor=false
+     * @expectedExceptionMessage Could not execute query http://maps.googleapis.com/maps/api/geocode/json?address=10%20avenue%20Gambetta%2C%20Paris%2C%20France
      */
     public function testGetGeocodedDataWithAddressGetsNullContent()
     {
@@ -90,7 +90,7 @@ class GoogleMapsProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResultException
-     * @expectedExceptionMessage Could not execute query http://maps.googleapis.com/maps/api/geocode/json?address=10%20avenue%20Gambetta%2C%20Paris%2C%20France&sensor=false
+     * @expectedExceptionMessage Could not execute query http://maps.googleapis.com/maps/api/geocode/json?address=10%20avenue%20Gambetta%2C%20Paris%2C%20France
      */
     public function testGetGeocodedDataWithAddressGetsEmptyContent()
     {
@@ -100,7 +100,7 @@ class GoogleMapsProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\QuotaExceededException
-     * @expectedExceptionMessage Daily quota exceeded http://maps.googleapis.com/maps/api/geocode/json?address=10%20avenue%20Gambetta%2C%20Paris%2C%20France&sensor=false
+     * @expectedExceptionMessage Daily quota exceeded http://maps.googleapis.com/maps/api/geocode/json?address=10%20avenue%20Gambetta%2C%20Paris%2C%20France
      */
     public function testGetGeocodedDataWithQuotaExceeded()
     {
@@ -241,7 +241,7 @@ class GoogleMapsProviderTest extends TestCase
 
     /**
      * @expectedException Geocoder\Exception\NoResultException
-     * @expectedExceptionMessage Could not execute query http://maps.googleapis.com/maps/api/geocode/json?address=1.000000%2C2.000000&sensor=false
+     * @expectedExceptionMessage Could not execute query http://maps.googleapis.com/maps/api/geocode/json?address=1.000000%2C2.000000
      */
     public function testGetReversedData()
     {
@@ -271,7 +271,7 @@ class GoogleMapsProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResultException
-     * @expectedExceptionMessage Could not execute query http://maps.googleapis.com/maps/api/geocode/json?address=48.863151%2C2.388911&sensor=false
+     * @expectedExceptionMessage Could not execute query http://maps.googleapis.com/maps/api/geocode/json?address=48.863151%2C2.388911
      */
     public function testGetReversedDataWithCoordinatesGetsNullContent()
     {
@@ -294,7 +294,7 @@ class GoogleMapsProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\InvalidCredentialsException
-     * @expectedExceptionMessage API key is invalid http://maps.googleapis.com/maps/api/geocode/json?address=10%20avenue%20Gambetta%2C%20Paris%2C%20France&sensor=false
+     * @expectedExceptionMessage API key is invalid http://maps.googleapis.com/maps/api/geocode/json?address=10%20avenue%20Gambetta%2C%20Paris%2C%20France
      */
     public function testGetGeocodedDataWithInavlidApiKey()
     {
@@ -326,7 +326,7 @@ class GoogleMapsProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\InvalidCredentialsException
-     * @expectedExceptionMessage API key is invalid https://maps.googleapis.com/maps/api/geocode/json?address=Columbia%20University&sensor=false&key=fake_key
+     * @expectedExceptionMessage API key is invalid https://maps.googleapis.com/maps/api/geocode/json?address=Columbia%20University&key=fake_key
      */
     public function testGetGeocodedDataWithRealInvalidApiKey()
     {
