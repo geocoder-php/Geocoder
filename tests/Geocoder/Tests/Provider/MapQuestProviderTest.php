@@ -39,7 +39,7 @@ class MapQuestProviderTest extends TestCase
     public function testGetGeocodedDataWithRealAddress()
     {
         if (!isset($_SERVER['MAPQUEST_API_KEY'])) {
-            $this->markTestSkipped('You need to configure the CLOUDMADE_API_KEY value in phpunit.xml');
+            $this->markTestSkipped('You need to configure the MAPQUEST_API_KEY value in phpunit.xml');
         }
 
         $provider = new MapQuestProvider($this->getAdapter(), $_SERVER['MAPQUEST_API_KEY']);
@@ -71,7 +71,7 @@ class MapQuestProviderTest extends TestCase
     public function testGetReversedData()
     {
         if (!isset($_SERVER['MAPQUEST_API_KEY'])) {
-            $this->markTestSkipped('You need to configure the CLOUDMADE_API_KEY value in phpunit.xml');
+            $this->markTestSkipped('You need to configure the MAPQUEST_API_KEY value in phpunit.xml');
         }
 
         $provider = new MapQuestProvider($this->getMockAdapter(), $_SERVER['MAPQUEST_API_KEY']);
@@ -81,7 +81,7 @@ class MapQuestProviderTest extends TestCase
     public function testGetReversedDataWithRealCoordinates()
     {
         if (!isset($_SERVER['MAPQUEST_API_KEY'])) {
-            $this->markTestSkipped('You need to configure the CLOUDMADE_API_KEY value in phpunit.xml');
+            $this->markTestSkipped('You need to configure the MAPQUEST_API_KEY value in phpunit.xml');
         }
 
         $provider = new MapQuestProvider($this->getAdapter(), $_SERVER['MAPQUEST_API_KEY']);
@@ -110,7 +110,7 @@ class MapQuestProviderTest extends TestCase
     public function testGetGeocodedDataWithCity()
     {
         if (!isset($_SERVER['MAPQUEST_API_KEY'])) {
-            $this->markTestSkipped('You need to configure the CLOUDMADE_API_KEY value in phpunit.xml');
+            $this->markTestSkipped('You need to configure the MAPQUEST_API_KEY value in phpunit.xml');
         }
 
         $provider = new MapQuestProvider($this->getAdapter(), $_SERVER['MAPQUEST_API_KEY']);
@@ -154,7 +154,7 @@ class MapQuestProviderTest extends TestCase
     public function testGetGeocodedDataWithCityDistrict()
     {
         if (!isset($_SERVER['MAPQUEST_API_KEY'])) {
-            $this->markTestSkipped('You need to configure the CLOUDMADE_API_KEY value in phpunit.xml');
+            $this->markTestSkipped('You need to configure the MAPQUEST_API_KEY value in phpunit.xml');
         }
 
         $provider = new MapQuestProvider($this->getAdapter(), $_SERVER['MAPQUEST_API_KEY']);
@@ -219,5 +219,43 @@ class MapQuestProviderTest extends TestCase
     {
         $provider = new MapQuestProvider($this->getAdapter(), 'api_key');
         $provider->getGeocodedData('::ffff:74.200.247.59');
+    }
+
+    public function testLicensedVsOpenGeocodeEndpoints()
+    {
+        $licensed = false;
+        $provider = new MockMapQuestProvider($this->getAdapter(), 'api_key', null, $licensed);
+        $queryUrl = $provider->getGeocodedData('Hanover');
+        $this->assertContains('http://open.', $queryUrl);
+
+        $licensed = true;
+        $provider = new MockMapQuestProvider($this->getAdapter(), 'api_key', null, $licensed);
+        $queryUrl = $provider->getGeocodedData('Hanover');
+        $this->assertContains('http://www.', $queryUrl);
+    }
+
+    public function testLicensedVsOpenReverseGeocodeEndpoints()
+    {
+        $licensed = false;
+        $provider = new MockMapQuestProvider($this->getAdapter(), 'api_key', null, $licensed);
+        $queryUrl = $provider->getReversedData(array(54.0484068, -2.7990345));
+        $this->assertContains('http://open.', $queryUrl);
+
+        $licensed = true;
+        $provider = new MockMapQuestProvider($this->getAdapter(), 'api_key', null, $licensed);
+        $queryUrl = $provider->getReversedData(array(54.0484068, -2.7990345));
+        $this->assertContains('http://www.', $queryUrl);
+    }
+}
+
+class MockMapQuestProvider extends MapQuestProvider
+{
+    /**
+     * Short circuits so assertions can inspect the
+     * executed query URL
+     */
+    protected function executeQuery($query)
+    {
+        return $query;
     }
 }
