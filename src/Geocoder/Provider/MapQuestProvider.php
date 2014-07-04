@@ -23,12 +23,30 @@ class MapQuestProvider extends AbstractProvider implements ProviderInterface
     /**
      * @var string
      */
-    const GEOCODE_ENDPOINT_URL = 'http://open.mapquestapi.com/geocoding/v1/address?location=%s&outFormat=json&maxResults=%d&key=%s&thumbMaps=false';
+    const OPEN_GEOCODE_ENDPOINT_URL = 'http://open.mapquestapi.com/geocoding/v1/address?location=%s&outFormat=json&maxResults=%d&key=%s&thumbMaps=false';
 
     /**
      * @var string
      */
-    const REVERSE_ENDPOINT_URL = 'http://open.mapquestapi.com/geocoding/v1/reverse?key=%s&lat=%F&lng=%F';
+    const OPEN_REVERSE_ENDPOINT_URL = 'http://open.mapquestapi.com/geocoding/v1/reverse?key=%s&lat=%F&lng=%F';
+
+    /**
+     * @var string
+     */
+    const LICENSED_GEOCODE_ENDPOINT_URL = 'http://www.mapquestapi.com/geocoding/v1/address?location=%s&outFormat=json&maxResults=%d&key=%s&thumbMaps=false';
+
+    /**
+     * @var string
+     */
+    const LICENSED_REVERSE_ENDPOINT_URL = 'http://www.mapquestapi.com/geocoding/v1/reverse?key=%s&lat=%F&lng=%F';
+
+    /**
+     * MapQuest offers two geocoding endpoints one commercial (true) and one open (false)
+     * More information: http://developer.mapquest.com/web/tools/getting-started/platform/licensed-vs-open
+     *
+     * @var bool
+     */
+    protected $licensed = false;
 
     /**
      * @var string
@@ -36,15 +54,17 @@ class MapQuestProvider extends AbstractProvider implements ProviderInterface
     private $apiKey = null;
 
     /**
-     * @param HttpAdapterInterface $adapter An HTTP adapter.
-     * @param string               $apiKey  An API key.
-     * @param string               $locale  A locale (optional).
+     * @param HttpAdapterInterface $adapter  An HTTP adapter.
+     * @param string               $apiKey   An API key.
+     * @param string|null          $locale   A locale (optional).
+     * @param bool                 $licensed True to use MapQuest's licensed endpoints, default is false to use the open endpoints (optional).
      */
-    public function __construct(HttpAdapterInterface $adapter, $apiKey, $locale = null)
+    public function __construct(HttpAdapterInterface $adapter, $apiKey, $locale = null, $licensed = false)
     {
         parent::__construct($adapter, $locale);
 
         $this->apiKey = $apiKey;
+        $this->licensed = $licensed;
     }
 
     /**
@@ -61,7 +81,11 @@ class MapQuestProvider extends AbstractProvider implements ProviderInterface
             throw new InvalidCredentialsException('No API Key provided.');
         }
 
-        $query = sprintf(self::GEOCODE_ENDPOINT_URL, urlencode($address), $this->getMaxResults(), $this->apiKey);
+        if ($this->licensed) {
+            $query = sprintf(self::LICENSED_GEOCODE_ENDPOINT_URL, urlencode($address), $this->getMaxResults(), $this->apiKey);
+        } else {
+            $query = sprintf(self::OPEN_GEOCODE_ENDPOINT_URL, urlencode($address), $this->getMaxResults(), $this->apiKey);
+        }
 
         return $this->executeQuery($query);
     }
@@ -75,7 +99,11 @@ class MapQuestProvider extends AbstractProvider implements ProviderInterface
             throw new InvalidCredentialsException('No API Key provided.');
         }
 
-        $query = sprintf(self::REVERSE_ENDPOINT_URL, $this->apiKey, $coordinates[0], $coordinates[1]);
+        if ($this->licensed) {
+            $query = sprintf(self::LICENSED_REVERSE_ENDPOINT_URL, $this->apiKey, $coordinates[0], $coordinates[1]);
+        } else {
+            $query = sprintf(self::OPEN_REVERSE_ENDPOINT_URL, $this->apiKey, $coordinates[0], $coordinates[1]);
+        }
 
         return $this->executeQuery($query);
     }
