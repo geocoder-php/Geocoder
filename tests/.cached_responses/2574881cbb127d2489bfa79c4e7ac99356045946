@@ -1,0 +1,74 @@
+s:2146:"{
+   "results" : [
+      {
+         "address_components" : [
+            {
+               "long_name" : "10",
+               "short_name" : "10",
+               "types" : [ "street_number" ]
+            },
+            {
+               "long_name" : "Avenue Gambetta",
+               "short_name" : "Av. Gambetta",
+               "types" : [ "route" ]
+            },
+            {
+               "long_name" : "Paris",
+               "short_name" : "Paris",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "Paris",
+               "short_name" : "75",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "Île-de-France",
+               "short_name" : "IDF",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "France",
+               "short_name" : "FR",
+               "types" : [ "country", "political" ]
+            },
+            {
+               "long_name" : "75020",
+               "short_name" : "75020",
+               "types" : [ "postal_code" ]
+            }
+         ],
+         "formatted_address" : "10 Avenue Gambetta, 75020 Paris, France",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : 48.8630494,
+                  "lng" : 2.3882478
+               },
+               "southwest" : {
+                  "lat" : 48.863038,
+                  "lng" : 2.3882414
+               }
+            },
+            "location" : {
+               "lat" : 48.863038,
+               "lng" : 2.3882478
+            },
+            "location_type" : "RANGE_INTERPOLATED",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 48.86439268029149,
+                  "lng" : 2.389593580291502
+               },
+               "southwest" : {
+                  "lat" : 48.8616947197085,
+                  "lng" : 2.386895619708498
+               }
+            }
+         },
+         "types" : [ "street_address" ]
+      }
+   ],
+   "status" : "OK"
+}
+";
