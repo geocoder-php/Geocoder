@@ -128,6 +128,11 @@ class BingMapsProvider extends AbstractProvider implements LocaleAwareProviderIn
                 );
             }
 
+            $precision = null;
+            if (isset($item->confidence)) {
+                $precision = strtolower($item->confidence);
+            }
+
             $streetNumber = null;
             $streetName   = property_exists($item->address, 'addressLine') ? (string) $item->address->addressLine : '';
             $zipcode      = property_exists($item->address, 'postalCode') ? (string) $item->address->postalCode : '';
@@ -147,6 +152,7 @@ class BingMapsProvider extends AbstractProvider implements LocaleAwareProviderIn
                 'county'       => empty($county) ? null : $county,
                 'region'       => empty($region) ? null : $region,
                 'country'      => empty($country) ? null : $country,
+                'precision'    => $precision,
             ));
         }
 

@@ -24,6 +24,41 @@ class GoogleMapsProvider extends AbstractProvider implements LocaleAwareProvider
     /**
      * @var string
      */
+    const PRECISION_ROOFTOP = 'ROOFTOP';
+
+    /**
+     * @var string
+     */
+    const PRECISION_RANGE_INTERPOLATED = 'RANGE_INTERPOLATED';
+
+    /**
+     * @var string
+     */
+    const PRECISION_GEOMETRIC_CENTER = 'GEOMETRIC_CENTER';
+
+    /**
+     * @var string
+     */
+    const PRECISION_APPROXIMATE = 'approximate';
+
+    /**
+     * @var string
+     */
+    const PRECISION_LEVEL_HIGH = 'high';
+
+    /**
+     * @var string
+     */
+    const PRECISION_LEVEL_MEDIUM = 'medium';
+
+    /**
+     * @var string
+     */
+    const PRECISION_LEVEL_LOW = 'low';
+
+    /**
+     * @var string
+     */
     const ENDPOINT_URL = 'http://maps.googleapis.com/maps/api/geocode/json?address=%s';
 
     /**
@@ -161,7 +196,6 @@ class GoogleMapsProvider extends AbstractProvider implements LocaleAwareProvider
         }
 
         $results = array();
-
         foreach ($json->results as $result) {
             $resultset = $this->getDefaults();
 
@@ -176,6 +210,26 @@ class GoogleMapsProvider extends AbstractProvider implements LocaleAwareProvider
             $coordinates = $result->geometry->location;
             $resultset['latitude']  = $coordinates->lat;
             $resultset['longitude'] = $coordinates->lng;
+
+            // precision
+            $precision = null;
+            switch ($result->geometry->location_type) {
+                case self::PRECISION_ROOFTOP:
+                    $precision = 'high';
+                    break;
+                case self::PRECISION_RANGE_INTERPOLATED:
+                    // no break;
+                case self::PRECISION_GEOMETRIC_CENTER:
+                    $precision = 'medium';
+                    break;
+                case self::PRECISION_APPROXIMATE:
+                    $precision = 'low';
+                    break;
+                default:
+                    $precision = null;
+                    break;
+            }
+            $resultset['precision'] = $precision;
 
             $resultset['bounds'] = null;
             if (isset($result->geometry->bounds)) {
@@ -194,7 +248,6 @@ class GoogleMapsProvider extends AbstractProvider implements LocaleAwareProvider
                     'east'  => $coordinates->lng
                 );
             }
-
             $results[] = array_merge($this->getDefaults(), $resultset);
         }
 

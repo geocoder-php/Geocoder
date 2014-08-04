@@ -138,6 +138,13 @@ interface ResultInterface
     public function getTimezone();
 
     /**
+     * Returns the precision as string "high", "medium", "low".
+     *
+     * @return string
+     */
+    public function getPrecision();
+
+    /**
      * Extracts data from an array.
      *
      * @param array $data An array.
