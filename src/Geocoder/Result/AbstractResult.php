@@ -60,8 +60,27 @@ abstract class AbstractResult implements \ArrayAccess
      */
     protected function formatString($str)
     {
-        if (function_exists('mb_convert_case')) {
+        if (extension_loaded('mbstring')) {
+            $originalStr = $str;
             $str = mb_convert_case($str, MB_CASE_TITLE, 'UTF-8');
+
+            // Correct for MB_TITLE_CASE's insistence on uppercasing letters
+            // immediately preceded by numerals, eg: 1st -> 1St
+            $originalEncoding = mb_regex_encoding();
+            mb_regex_encoding('UTF-8');
+
+            // matches an upper case letter character immediately preceded by a numeral
+            mb_ereg_search_init($str, '[0-9]\p{Lu}');
+
+            while($match = mb_ereg_search_pos()) {
+                $charPos = $match[0] + 1;
+                // Only swap it back to lowercase if it was lowercase to begin with
+                if (mb_ereg_match('\p{Ll}', $originalStr[$charPos])) {
+                    $str[$charPos] = mb_strtolower($str[$charPos]);
+                }
+            }
+
+            mb_regex_encoding($originalEncoding);
         } else {
             $str = $this->lowerize($str);
             $str = ucwords($str);
@@ -82,7 +101,7 @@ abstract class AbstractResult implements \ArrayAccess
      */
     protected function lowerize($str)
     {
-        return function_exists('mb_strtolower') ? mb_strtolower($str, 'UTF-8') : strtolower($str);
+        return extension_loaded('mbstring') ? mb_strtolower($str, 'UTF-8') : strtolower($str);
     }
 
     /**
@@ -94,6 +113,6 @@ abstract class AbstractResult implements \ArrayAccess
      */
     protected function upperize($str)
     {
-        return function_exists('mb_strtoupper') ? mb_strtoupper($str, 'UTF-8') : strtoupper($str);
+        return extension_loaded('mbstring') ? mb_strtoupper($str, 'UTF-8') : strtoupper($str);
     }
 }

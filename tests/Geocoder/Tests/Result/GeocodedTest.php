@@ -269,4 +269,19 @@ class GeocodedTest extends TestCase
 
         $this->assertEquals('FOO', $method->invoke($this->geocoded, 'foo'));
     }
+
+    public function testResultFormattingWithLeadingNumeral()
+    {
+        if (version_compare(phpversion(), '5.5.16', '<')) {
+            $this->markTestSkipped("Character property matching for mb_ereg doesn't work for PHP < 5.5");
+        }
+        // MB_TITLE_CASE Will turn this into 1St so let's test to ensure we are correcting that
+        // We do not want to "correct" 5C, however, as it is part of the original string
+        $array = array(
+            'streetName' => '1st ave 1A',
+        );
+
+        $this->geocoded->fromArray($array);
+        $this->assertEquals('1st Ave 1A', $this->geocoded->getStreetName());
+    }
 }
