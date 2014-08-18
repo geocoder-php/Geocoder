@@ -95,13 +95,17 @@ class Geocoder implements GeocoderInterface
      */
     public function geocode($value)
     {
+        if (is_string($value)) {
+            $value = trim($value);
+        }
+
         if (empty($value)) {
             // let's save a request
             return $this->returnResult(array());
         }
 
         $provider = $this->getProvider()->setMaxResults($this->getMaxResults());
-        $data     = $provider->getGeocodedData(trim($value));
+        $data     = $provider->getGeocodedData($value);
         $result   = $this->returnResult($data);
 
         return $result;
