@@ -21,10 +21,13 @@ class CurlHttpAdapter implements HttpAdapterInterface
 
     private $connectTimeout;
 
-    public function __construct($timeout = null, $connectTimeout = null)
+    private $userAgent;
+
+    public function __construct($timeout = null, $connectTimeout = null, $userAgent = null)
     {
         $this->timeout = $timeout;
         $this->connectTimeout = $connectTimeout;
+        $this->userAgent = $userAgent;
     }
 
     /**
@@ -46,6 +49,10 @@ class CurlHttpAdapter implements HttpAdapterInterface
 
         if ($this->connectTimeout) {
             curl_setopt($c, CURLOPT_CONNECTTIMEOUT, $this->connectTimeout);
+        }
+        
+        if ($this->userAgent) {
+            curl_setopt($c, CURLOPT_USERAGENT, $this->userAgent);
         }
 
         $content = curl_exec($c);
