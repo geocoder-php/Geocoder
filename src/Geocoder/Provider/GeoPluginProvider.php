@@ -76,7 +76,7 @@ class GeoPluginProvider extends AbstractProvider implements ProviderInterface
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
-        if (!array_key_exists('geoplugin_status', $json) || (200 !== $json['geoplugin_status'])) {
+        if (!array_key_exists('geoplugin_status', $json) || (200 !== $json['geoplugin_status'] && 206 !== $json['geoplugin_status'])) {
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
 
