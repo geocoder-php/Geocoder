@@ -52,6 +52,16 @@ class GeoIP2Provider extends AbstractProvider implements ProviderInterface
 
         $result = json_decode($this->executeQuery($address));
 
+        //Try to extract the region name and code
+        $region = null;
+        $regionCode = null;
+        if (isset($result->subdivisions) && is_array($result->subdivisions) && !empty($result->subdivisions)) {
+            $lastSubdivision = array_pop($result->subdivisions);
+            
+            $region = (isset($lastSubdivision->names->{$this->locale}) ? $lastSubdivision->names->{$this->locale} : null);
+            $regionCode = (isset($lastSubdivision->iso_code) ? $lastSubdivision->iso_code : null);            
+        }
+
         return array($this->fixEncoding(array_merge($this->getDefaults(), array(
             'countryCode' => (isset($result->country->iso_code) ? $result->country->iso_code : null),
             'country'     => (isset($result->country->names->{$this->locale}) ? $result->country->names->{$this->locale} : null),
@@ -60,6 +70,8 @@ class GeoIP2Provider extends AbstractProvider implements ProviderInterface
             'longitude'   => (isset($result->location->longitude) ? $result->location->longitude : null),
             'timezone'    => (isset($result->location->timezone) ? $result->location->timezone : null),
             'zipcode'     => (isset($result->location->postalcode) ? $result->location->postalcode : null),
+            'region'      => $region,
+            'regionCode'  => $regionCode
         ))));
     }
 
