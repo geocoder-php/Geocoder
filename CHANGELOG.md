@@ -1,9 +1,16 @@
 CHANGELOG
 =========
 
-### 2.5.1 (????-??-??) ###
+### 2.6.0 (2014-09-02) ###
 
-n/a
+* Added: `region` and `regionCode` to GeoIP2Provider
+* Added: throw `InvalidCredentialsException` with GoogleMapsBusinessProvider
+* Added: support in MapQuestProvider for licensed endpoints (#318)
+* Added: it is now possible to set the user agent in `CurlHttpAdapter`
+* Fixed: google maps provider test
+* Fixed: GeoPlugin returns 206 for anonymous proxies
+* Removed: Google's sensor parameter
+* Updated: Travis-CI config, doc, tests
 
 ### 2.5.0 (2014-05-16) ###
 

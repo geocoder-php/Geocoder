@@ -22,7 +22,7 @@ class Geocoder implements GeocoderInterface
     /**
      * Version
      */
-    const VERSION = '2.5.1-dev';
+    const VERSION = '2.6.0';
 
     /**
      * @var integer
