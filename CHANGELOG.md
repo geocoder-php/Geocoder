@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+### 2.6.1 (????-??-??) ###
+
+n/a
+
 ### 2.6.0 (2014-09-02) ###
 
 * Added: `region` and `regionCode` to GeoIP2Provider
