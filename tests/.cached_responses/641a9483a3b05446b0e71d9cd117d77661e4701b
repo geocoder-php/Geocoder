@@ -1,0 +1,219 @@
+s:6403:"{
+   "licenses" : [
+      {
+         "name" : "CC-BY-SA",
+         "url" : "http://creativecommons.org/licenses/by-sa/3.0/"
+      },
+      {
+         "name" : "ODbL",
+         "url" : "http://opendatacommons.org/licenses/odbl/summary/"
+      }
+   ],
+   "rate" : {
+      "limit" : 2500,
+      "remaining" : 2447,
+      "reset" : 1410393600
+   },
+   "results" : [
+      {
+         "annotations" : {
+            "OSM" : {
+               "url" : "http://www.openstreetmap.org/?mlat=52.37448&mlon=9.73855#map=17/52.37448/9.73855"
+            },
+            "geohash" : "u1qcvw7rkwrd4tdd9ej3",
+            "timezone" : {
+               "name" : "Europe/Berlin",
+               "now_in_dst" : 1,
+               "offset_sec" : 7200,
+               "offset_string" : 200,
+               "short_name" : "CEST"
+            }
+         },
+         "bounds" : {
+            "northeast" : {
+               "lat" : 52.4543349,
+               "lng" : 9.9186208
+            },
+            "southwest" : {
+               "lat" : 52.3051373,
+               "lng" : 9.60443
+            }
+         },
+         "components" : {
+            "city" : "Hanover",
+            "country" : "Germany",
+            "country_code" : "de",
+            "county" : "Region Hannover",
+            "state" : "Lower Saxony"
+         },
+         "confidence" : 5,
+         "formatted" : "Hanover, Germany",
+         "geometry" : {
+            "lat" : 52.3744779,
+            "lng" : 9.7385532
+         }
+      },
+      {
+         "annotations" : {
+            "OSM" : {
+               "url" : "http://www.openstreetmap.org/?mlat=37.74478&mlon=-77.44642#map=17/37.74478/-77.44642"
+            },
+            "geohash" : "dq8ytxjpr9w2ccu2qg42",
+            "timezone" : {
+               "name" : "America/New_York",
+               "now_in_dst" : 1,
+               "offset_sec" : -14400,
+               "offset_string" : -400,
+               "short_name" : "EDT"
+            }
+         },
+         "bounds" : {
+            "northeast" : {
+               "lat" : 38.384783,
+               "lng" : -76.8064165
+            },
+            "southwest" : {
+               "lat" : 37.104783,
+               "lng" : -78.0864165
+            }
+         },
+         "components" : {
+            "country" : "United States of America",
+            "country_code" : "US",
+            "county" : "Hanover",
+            "state" : "Virginia"
+         },
+         "confidence" : 1,
+         "formatted" : "Hanover, Virginia, United States of America",
+         "geometry" : {
+            "lat" : 37.744783,
+            "lng" : -77.4464165
+         }
+      },
+      {
+         "annotations" : {
+            "OSM" : {
+               "url" : "http://www.openstreetmap.org/?mlat=18.38405&mlon=-78.13149#map=17/18.38405/-78.13149"
+            },
+            "geohash" : "d722w4dqu7n5263h1jy1",
+            "timezone" : {
+               "name" : "America/Jamaica",
+               "now_in_dst" : 0,
+               "offset_sec" : -18000,
+               "offset_string" : -500,
+               "short_name" : "EST"
+            }
+         },
+         "bounds" : {
+            "northeast" : {
+               "lat" : 18.4629985,
+               "lng" : -77.9203782
+            },
+            "southwest" : {
+               "lat" : 18.3044313,
+               "lng" : -78.3450397
+            }
+         },
+         "components" : {
+            "country" : "Jamaica",
+            "country_code" : "JM",
+            "county" : "Hanover",
+            "state_district" : "Cornwall County"
+         },
+         "confidence" : 3,
+         "formatted" : "Hanover, Cornwall County, Jamaica",
+         "geometry" : {
+            "lat" : 18.3840489,
+            "lng" : -78.131485271539
+         }
+      },
+      {
+         "annotations" : {
+            "OSM" : {
+               "url" : "http://www.openstreetmap.org/?mlat=43.70331&mlon=-72.28857#map=17/43.70331/-72.28857"
+            },
+            "geohash" : "dru8e5cn4qfnv2p2v8kr",
+            "timezone" : {
+               "name" : "America/New_York",
+               "now_in_dst" : 1,
+               "offset_sec" : -14400,
+               "offset_string" : -400,
+               "short_name" : "EDT"
+            }
+         },
+         "bounds" : {
+            "northeast" : {
+               "lat" : 43.7709495,
+               "lng" : -72.075688
+            },
+            "southwest" : {
+               "lat" : 43.658591,
+               "lng" : -72.3051329
+            }
+         },
+         "components" : {
+            "city" : "Hanover",
+            "country" : "United States of America",
+            "country_code" : "US",
+            "county" : "Grafton County",
+            "state" : "New Hampshire"
+         },
+         "confidence" : 5,
+         "formatted" : "Hanover, Grafton County, New Hampshire, United States of America",
+         "geometry" : {
+            "lat" : 43.7033073,
+            "lng" : -72.2885663
+         }
+      },
+      {
+         "annotations" : {
+            "OSM" : {
+               "url" : "http://www.openstreetmap.org/?mlat=39.80632&mlon=-76.98427#map=17/39.80632/-76.98427"
+            },
+            "geohash" : "dr162ntb8kv053u9scnp",
+            "timezone" : {
+               "name" : "America/New_York",
+               "now_in_dst" : 1,
+               "offset_sec" : -14400,
+               "offset_string" : -400,
+               "short_name" : "EDT"
+            }
+         },
+         "bounds" : {
+            "northeast" : {
+               "lat" : 39.832415,
+               "lng" : -76.9634509
+            },
+            "southwest" : {
+               "lat" : 39.791036,
+               "lng" : -76.9999439
+            }
+         },
+         "components" : {
+            "city" : "Hanover",
+            "country" : "United States of America",
+            "country_code" : "US",
+            "county" : "York County",
+            "state" : "Pennsylvania"
+         },
+         "confidence" : 7,
+         "formatted" : "Hanover, York County, Pennsylvania, United States of America",
+         "geometry" : {
+            "lat" : 39.8063247,
+            "lng" : -76.9842735
+         }
+      }
+   ],
+   "status" : {
+      "code" : 200,
+      "message" : "OK"
+   },
+   "thanks" : "For using an OpenCage Data API",
+   "timestamp" : {
+      "created_http" : "Wed, 10 Sep 2014 21:41:48 GMT",
+      "created_unix" : 1410385308
+   },
+   "total_results" : 5,
+   "we_are_hiring" : "http://lokku.com/#jobs"
+}
+";
