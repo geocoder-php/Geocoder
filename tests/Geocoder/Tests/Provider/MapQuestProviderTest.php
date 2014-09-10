@@ -36,6 +36,18 @@ class MapQuestProviderTest extends TestCase
         $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedExceptionMessage Could not find results for given query: http://open.mapquestapi.com/geocoding/v1/reverse?key=api_key&lat=123.000000&lng=456.000000
+     */
+    public function testGetNotRelevantData()
+    {
+        $json = '{"results":[{"locations":[{"street":"","postalCode":"","adminArea5":"","adminArea4":"","adminArea3":"","adminArea1":""}]}]}';
+
+        $provider = new MapQuestProvider($this->getMockAdapterReturns($json), 'api_key');
+        $provider->getReversedData(array(123, 456));
+    }
+
     public function testGetGeocodedDataWithRealAddress()
     {
         if (!isset($_SERVER['MAPQUEST_API_KEY'])) {

@@ -160,8 +160,8 @@ class MapQuestProvider extends AbstractProvider implements ProviderInterface
 
         if (empty($results)) {
             throw new NoResultException(sprintf('Could not find results for given query: %s', $query));
-        } else {
-            return $results;
         }
+
+        return $results;
     }
 }
