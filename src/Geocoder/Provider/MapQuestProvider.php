@@ -144,16 +144,22 @@ class MapQuestProvider extends AbstractProvider implements ProviderInterface
         $results = array();
 
         foreach ($locations as $location) {
-            $results[] = array_merge($this->getDefaults(), array(
-                'latitude'      => $location['latLng']['lat'],
-                'longitude'     => $location['latLng']['lng'],
-                'streetName'    => $location['street'] ?: null,
-                'city'          => $location['adminArea5'] ?: null,
-                'zipcode'       => $location['postalCode'] ?: null,
-                'county'        => $location['adminArea4'] ?: null,
-                'region'        => $location['adminArea3'] ?: null,
-                'country'       => $location['adminArea1'] ?: null,
-            ));
+            if ($location['street'] || $location['postalCode'] || $location['adminArea5'] || $location['adminArea4'] || $location['adminArea3'] || $location['adminArea1']) {
+                $results[] = array_merge($this->getDefaults(), array(
+                    'latitude'      => $location['latLng']['lat'],
+                    'longitude'     => $location['latLng']['lng'],
+                    'streetName'    => $location['street'] ?: null,
+                    'city'          => $location['adminArea5'] ?: null,
+                    'zipcode'       => $location['postalCode'] ?: null,
+                    'county'        => $location['adminArea4'] ?: null,
+                    'region'        => $location['adminArea3'] ?: null,
+                    'country'       => $location['adminArea1'] ?: null,
+                ));
+            }
+        }
+
+        if (empty($results)) {
+            throw new NoResultException(sprintf('Could not find results for given query: %s', $query));
         }
 
         return $results;
