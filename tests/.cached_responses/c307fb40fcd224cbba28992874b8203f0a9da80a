@@ -1,0 +1,100 @@
+s:2807:"{
+   "licenses" : [
+      {
+         "name" : "CC-BY-SA",
+         "url" : "http://creativecommons.org/licenses/by-sa/3.0/"
+      },
+      {
+         "name" : "ODbL",
+         "url" : "http://opendatacommons.org/licenses/odbl/summary/"
+      }
+   ],
+   "rate" : {
+      "limit" : 2500,
+      "remaining" : 2446,
+      "reset" : 1410393600
+   },
+   "results" : [
+      {
+         "annotations" : {
+            "OSM" : {
+               "url" : "http://www.openstreetmap.org/?mlat=50.18906&mlon=8.63657#map=17/50.18906/8.63657"
+            },
+            "geohash" : "u0yjs88uqx70ec4w60ur",
+            "timezone" : {
+               "name" : "Europe/Berlin",
+               "now_in_dst" : 1,
+               "offset_sec" : 7200,
+               "offset_string" : 200,
+               "short_name" : "CEST"
+            }
+         },
+         "bounds" : {
+            "northeast" : {
+               "lat" : 50.1891212,
+               "lng" : 8.6366633
+            },
+            "southwest" : {
+               "lat" : 50.1890027,
+               "lng" : 8.6364707
+            }
+         },
+         "components" : {
+            "city" : "Frankfurt",
+            "city_district" : "Kalbach",
+            "country" : "Germany",
+            "country_code" : "de",
+            "county" : "Frankfurt",
+            "house_number" : 10,
+            "postcode" : 60437,
+            "road" : "Kalbacher Hauptstra\u00dfe",
+            "state" : "Hesse",
+            "state_district" : "Regierungsbezirk Darmstadt",
+            "suburb" : "Kalbach"
+         },
+         "confidence" : 10,
+         "formatted" : "Kalbacher Hauptstra\u00dfe 10, 60437 Frankfurt, Germany",
+         "geometry" : {
+            "lat" : 50.189062,
+            "lng" : 8.63656700808489
+         }
+      },
+      {
+         "annotations" : {
+            "OSM" : {
+               "url" : "http://www.openstreetmap.org/?mlat=50.18780&mlon=8.66320#map=17/50.18780/8.66320"
+            },
+            "geohash" : "u0yjt0km5hn07v28j4fu",
+            "timezone" : {
+               "name" : "Europe/Berlin",
+               "now_in_dst" : 1,
+               "offset_sec" : 7200,
+               "offset_string" : 200,
+               "short_name" : "CEST"
+            }
+         },
+         "components" : {
+            "country" : "Germany",
+            "postal code" : 60437
+         },
+         "confidence" : 0,
+         "formatted" : "Germany, 60437",
+         "geometry" : {
+            "lat" : 50.1878,
+            "lng" : 8.6632
+         }
+      }
+   ],
+   "status" : {
+      "code" : 200,
+      "message" : "OK"
+   },
+   "thanks" : "For using an OpenCage Data API",
+   "timestamp" : {
+      "created_http" : "Wed, 10 Sep 2014 21:51:40 GMT",
+      "created_unix" : 1410385900
+   },
+   "total_results" : 2,
+   "we_are_hiring" : "http://lokku.com/#jobs"
+}
+";

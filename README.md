@@ -40,6 +40,7 @@ Currently, there are many providers for the following APIs:
 * ChainProvider is a special provider that takes a list of providers and iterates
   over this list to get information;
 * [MapQuest](http://open.mapquestapi.com/) as Address-Based geocoding and reverse geocoding provider;
+* [OpenCage](http://geocoder.opencagedata.com/) as Address-Based geocoding and reverse geocoding provider;
 * [OIORest](http://geo.oiorest.dk/) as very accurate Address-Based geocoding and reverse geocoding provider (exclusively in Denmark);
 * [GeoCoder.ca](http://geocoder.ca/) as Address-Based geocoding and reverse geocoding provider (exclusively in USA & Canada);
 * [GeoCoder.us](http://geocoder.us/) as Address-Based geocoding provider (exclusively in USA);
@@ -197,7 +198,13 @@ The `ChainProvider` named `chain` is a special provider that takes a list of pro
 
 The `MapQuestProvider` named `map_quest` is able to geocode and reverse geocode **street addresses**.
 A valid api key is required. Access to [MapQuest's licensed endpoints](http://developer.mapquest.com/web/tools/getting-started/platform/licensed-vs-open)
-is provided via constructor agrument.
+is provided via constructor argument.
+
+
+### OpenCageProvider ###
+
+The `OpenCageProvider` named `opencage` is able to geocode and reverse geocode **street addresses**.
+A valid api key is required.
 
 
 ### OIORestProvider ###
@@ -357,11 +364,11 @@ $geocoder->registerProviders(array(
 
 Parameters:
 
-* `$locale` is available for `YandexProvider`, `BingMapsProvider` and `TomTomProvider`.
+* `$locale` is available for `YandexProvider`, `BingMapsProvider`, `OpenCageProvider` and `TomTomProvider`.
 * `$region` is available for `GoogleMapsProvider` and `GoogleMapsBusinessProvider`.
 * `$toponym` is available for `YandexProvider`.
 * `$service` is available for `MaxMindProvider`.
-* `$useSsl` is available for `GoogleMapsProvider`, `GoogleMapsBusinessProvider`, `MaxMindProvider` and `ArcGISOnlineProvider`.
+* `$useSsl` is available for `GoogleMapsProvider`, `GoogleMapsBusinessProvider`, `OpenCageProvider`, `MaxMindProvider` and `ArcGISOnlineProvider`.
 * `$sourceCountry` is available for `ArcGISOnlineProvider`.
 * `$rootUrl` is available for `NominatimProvider`.
 
@@ -664,6 +671,7 @@ Rename the `phpunit.xml.dist` file to `phpunit.xml`, then uncomment the followin
     <!-- <server name="TOMTOM_GEOCODING_KEY" value="YOUR_GEOCODING_KEY" /> -->
     <!-- <server name="TOMTOM_MAP_KEY" value="YOUR_MAP_KEY" /> -->
     <!-- <server name="GOOGLE_GEOCODING_KEY" value="YOUR_GEOCODING_KEY" /> -->
+    <!-- <server name="OPENCAGE_API_KEY" value="YOUR_API_KEY" /> -->
 </php>
 ```
 

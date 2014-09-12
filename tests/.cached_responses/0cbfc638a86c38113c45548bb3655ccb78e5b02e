@@ -1,0 +1,78 @@
+s:2133:"{
+   "licenses" : [
+      {
+         "name" : "CC-BY-SA",
+         "url" : "http://creativecommons.org/licenses/by-sa/3.0/"
+      },
+      {
+         "name" : "ODbL",
+         "url" : "http://opendatacommons.org/licenses/odbl/summary/"
+      }
+   ],
+   "rate" : {
+      "limit" : 2500,
+      "remaining" : 2448,
+      "reset" : 1410393600
+   },
+   "results" : [
+      {
+         "annotations" : {
+            "OSGB" : {
+               "easting" : 347696.195,
+               "gridref" : "SD 476 617",
+               "northing" : 461750.824
+            },
+            "OSM" : {
+               "url" : "http://www.openstreetmap.org/?mlat=54.04888&mlon=-2.79895#map=17/54.04888/-2.79895"
+            },
+            "geohash" : "gcw52r3cec2m35vkre86",
+            "timezone" : {
+               "name" : "Europe/London",
+               "now_in_dst" : 1,
+               "offset_sec" : 3600,
+               "offset_string" : 100,
+               "short_name" : "BST"
+            }
+         },
+         "bounds" : {
+            "northeast" : {
+               "lat" : 54.0494992,
+               "lng" : -2.79813
+            },
+            "southwest" : {
+               "lat" : 54.0482731,
+               "lng" : -2.7998815
+            }
+         },
+         "components" : {
+            "building" : "St Nicholas Arcades",
+            "city" : "Lancaster",
+            "country" : "United Kingdom",
+            "country_code" : "gb",
+            "county" : "Lancashire",
+            "pedestrian" : "Lancaster Gate",
+            "state" : "England",
+            "state_district" : "North West England",
+            "suburb" : "Vale"
+         },
+         "confidence" : 10,
+         "formatted" : "Lancaster, United Kingdom",
+         "geometry" : {
+            "lat" : 54.0488796,
+            "lng" : -2.79894909568771
+         }
+      }
+   ],
+   "status" : {
+      "code" : 200,
+      "message" : "OK"
+   },
+   "thanks" : "For using an OpenCage Data API",
+   "timestamp" : {
+      "created_http" : "Wed, 10 Sep 2014 21:12:51 GMT",
+      "created_unix" : 1410383571
+   },
+   "total_results" : 1,
+   "we_are_hiring" : "http://lokku.com/#jobs"
+}
+";

@@ -1,0 +1,226 @@
+s:6642:"{
+   "licenses" : [
+      {
+         "name" : "CC-BY-SA",
+         "url" : "http://creativecommons.org/licenses/by-sa/3.0/"
+      },
+      {
+         "name" : "ODbL",
+         "url" : "http://opendatacommons.org/licenses/odbl/summary/"
+      }
+   ],
+   "rate" : {
+      "limit" : 2500,
+      "remaining" : 2444,
+      "reset" : 1410393600
+   },
+   "results" : [
+      {
+         "annotations" : {
+            "OSGB" : {
+               "easting" : 529926.637,
+               "gridref" : "TQ 299 804",
+               "northing" : 180425.581
+            },
+            "OSM" : {
+               "url" : "http://www.openstreetmap.org/?mlat=51.50732&mlon=-0.12765#map=17/51.50732/-0.12765"
+            },
+            "geohash" : "gcpvj0e5csepnkstrhwy",
+            "timezone" : {
+               "name" : "Europe/London",
+               "now_in_dst" : 1,
+               "offset_sec" : 3600,
+               "offset_string" : 100,
+               "short_name" : "BST"
+            }
+         },
+         "bounds" : {
+            "northeast" : {
+               "lat" : 51.6918741,
+               "lng" : 0.3340155
+            },
+            "southwest" : {
+               "lat" : 51.2867602,
+               "lng" : -0.510375
+            }
+         },
+         "components" : {
+            "city" : "Londres",
+            "country" : "Reino Unido",
+            "country_code" : "gb",
+            "county" : "Londres",
+            "state" : "Inglaterra",
+            "state_district" : "Greater London"
+         },
+         "confidence" : 1,
+         "formatted" : "Londres, Reino Unido",
+         "geometry" : {
+            "lat" : 51.5073219,
+            "lng" : -0.1276474
+         }
+      },
+      {
+         "annotations" : {
+            "OSM" : {
+               "url" : "http://www.openstreetmap.org/?mlat=42.98810&mlon=-81.24603#map=17/42.98810/-81.24603"
+            },
+            "geohash" : "dpwhx1wry61e0k07ppd4",
+            "timezone" : {
+               "name" : "America/Toronto",
+               "now_in_dst" : 1,
+               "offset_sec" : -14400,
+               "offset_string" : -400,
+               "short_name" : "EDT"
+            }
+         },
+         "bounds" : {
+            "northeast" : {
+               "lat" : 43.148097,
+               "lng" : -81.0860295
+            },
+            "southwest" : {
+               "lat" : 42.828097,
+               "lng" : -81.4060295
+            }
+         },
+         "components" : {
+            "city" : "London",
+            "country" : "Canad\u00e1",
+            "country_code" : "CA",
+            "state" : "Ontario"
+         },
+         "confidence" : 3,
+         "formatted" : "London, Ontario, Canad\u00e1",
+         "geometry" : {
+            "lat" : 42.988097,
+            "lng" : -81.2460295
+         }
+      },
+      {
+         "annotations" : {
+            "OSM" : {
+               "url" : "http://www.openstreetmap.org/?mlat=37.12898&mlon=-84.08326#map=17/37.12898/-84.08326"
+            },
+            "geohash" : "dns5nxh7vyvxtbc60qcu",
+            "timezone" : {
+               "name" : "America/New_York",
+               "now_in_dst" : 1,
+               "offset_sec" : -14400,
+               "offset_string" : -400,
+               "short_name" : "EDT"
+            }
+         },
+         "bounds" : {
+            "northeast" : {
+               "lat" : 37.15226,
+               "lng" : -84.0359569
+            },
+            "southwest" : {
+               "lat" : 37.079759,
+               "lng" : -84.1262619
+            }
+         },
+         "components" : {
+            "city" : "London",
+            "country" : "Estados Unidos de Am\u00e9rica",
+            "country_code" : "US",
+            "county" : "Laurel County",
+            "state" : "Kentucky"
+         },
+         "confidence" : 7,
+         "formatted" : "London, Laurel County, Kentucky, Estados Unidos de Am\u00e9rica",
+         "geometry" : {
+            "lat" : 37.1289771,
+            "lng" : -84.0832646
+         }
+      },
+      {
+         "annotations" : {
+            "OSM" : {
+               "url" : "http://www.openstreetmap.org/?mlat=43.04778&mlon=-89.01289#map=17/43.04778/-89.01289"
+            },
+            "geohash" : "dp8sykwg3r7gpmsn4b9x",
+            "timezone" : {
+               "name" : "America/Chicago",
+               "now_in_dst" : 1,
+               "offset_sec" : -18000,
+               "offset_string" : -500,
+               "short_name" : "CDT"
+            }
+         },
+         "bounds" : {
+            "northeast" : {
+               "lat" : 43.0677775,
+               "lng" : -88.9928881
+            },
+            "southwest" : {
+               "lat" : 43.0277775,
+               "lng" : -89.0328881
+            }
+         },
+         "components" : {
+            "country" : "Estados Unidos de Am\u00e9rica",
+            "country_code" : "US",
+            "county" : "Dane County",
+            "hamlet" : "London",
+            "state" : "Wisconsin"
+         },
+         "confidence" : 7,
+         "formatted" : "London, Dane County, Wisconsin, Estados Unidos de Am\u00e9rica",
+         "geometry" : {
+            "lat" : 43.0477775,
+            "lng" : -89.0128881
+         }
+      },
+      {
+         "annotations" : {
+            "OSM" : {
+               "url" : "http://www.openstreetmap.org/?mlat=39.88645&mlon=-83.44825#map=17/39.88645/-83.44825"
+            },
+            "geohash" : "dphdvj4g6v09uv0q3rxk",
+            "timezone" : {
+               "name" : "America/New_York",
+               "now_in_dst" : 1,
+               "offset_sec" : -14400,
+               "offset_string" : -400,
+               "short_name" : "EDT"
+            }
+         },
+         "bounds" : {
+            "northeast" : {
+               "lat" : 39.921786,
+               "lng" : -83.3899969
+            },
+            "southwest" : {
+               "lat" : 39.85928,
+               "lng" : -83.4789229
+            }
+         },
+         "components" : {
+            "city" : "London",
+            "country" : "Estados Unidos de Am\u00e9rica",
+            "country_code" : "US",
+            "county" : "Madison County",
+            "state" : "Ohio"
+         },
+         "confidence" : 7,
+         "formatted" : "London, Madison County, Ohio, Estados Unidos de Am\u00e9rica",
+         "geometry" : {
+            "lat" : 39.8864493,
+            "lng" : -83.448253
+         }
+      }
+   ],
+   "status" : {
+      "code" : 200,
+      "message" : "OK"
+   },
+   "thanks" : "For using an OpenCage Data API",
+   "timestamp" : {
+      "created_http" : "Wed, 10 Sep 2014 22:32:58 GMT",
+      "created_unix" : 1410388378
+   },
+   "total_results" : 5,
+   "we_are_hiring" : "http://lokku.com/#jobs"
+}
+";
