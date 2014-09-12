@@ -72,7 +72,6 @@ class GeoIP2AdapterTest extends TestCase
         return array(
             array(GeoIP2Adapter::GEOIP2_MODEL_CITY),
             array(GeoIP2Adapter::GEOIP2_MODEL_COUNTRY),
-            array(GeoIP2Adapter::GEOIP2_MODEL_OMNI),
         );
     }
 
@@ -81,8 +80,6 @@ class GeoIP2AdapterTest extends TestCase
      */
     public function testIpAddressIsPassedCorrectToReader($geoIp2Model)
     {
-        $this->markTestSkipped('FIXME: issue with jsonSerialize() method...');
-
         $geoIp2Provider = $this->getGeoIP2ProviderMock();
         $geoIp2Provider
             ->expects($this->any())
