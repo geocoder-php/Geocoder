@@ -50,7 +50,7 @@ class CurlHttpAdapter implements HttpAdapterInterface
         if ($this->connectTimeout) {
             curl_setopt($c, CURLOPT_CONNECTTIMEOUT, $this->connectTimeout);
         }
-        
+
         if ($this->userAgent) {
             curl_setopt($c, CURLOPT_USERAGENT, $this->userAgent);
         }

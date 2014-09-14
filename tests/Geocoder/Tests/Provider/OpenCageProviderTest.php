@@ -26,7 +26,6 @@ class OpenCageProviderTest extends TestCase
         $provider->getGeocodedData('foobar');
     }
 
-
     /**
      * @expectedException Geocoder\Exception\NoResultException
      * @expectedExceptionMessage Could not find results for given query: https://api.opencagedata.com/geocode/v1/json?key=api_key&query=foobar&limit=5
@@ -36,7 +35,6 @@ class OpenCageProviderTest extends TestCase
         $provider = new OpenCageProvider($this->getMockAdapter(), 'api_key', true);
         $provider->getGeocodedData('foobar');
     }
-
 
     /**
      * @expectedException \Geocoder\Exception\NoResultException
@@ -193,7 +191,6 @@ class OpenCageProviderTest extends TestCase
         $this->assertEquals(        'Europe/Berlin', $result['timezone']);
         $this->assertNull($result['regionCode']);
     }
-
 
     public function testGetGeocodedDataWithLocale()
     {

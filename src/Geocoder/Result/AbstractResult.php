@@ -72,7 +72,7 @@ abstract class AbstractResult implements \ArrayAccess
             // matches an upper case letter character immediately preceded by a numeral
             mb_ereg_search_init($str, '[0-9]\p{Lu}');
 
-            while($match = mb_ereg_search_pos()) {
+            while ($match = mb_ereg_search_pos()) {
                 $charPos = $match[0] + 1;
                 // Only swap it back to lowercase if it was lowercase to begin with
                 if (mb_ereg_match('\p{Ll}', $originalStr[$charPos])) {

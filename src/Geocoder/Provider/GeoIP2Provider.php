@@ -57,9 +57,9 @@ class GeoIP2Provider extends AbstractProvider implements ProviderInterface
         $regionCode = null;
         if (isset($result->subdivisions) && is_array($result->subdivisions) && !empty($result->subdivisions)) {
             $lastSubdivision = array_pop($result->subdivisions);
-            
+
             $region = (isset($lastSubdivision->names->{$this->locale}) ? $lastSubdivision->names->{$this->locale} : null);
-            $regionCode = (isset($lastSubdivision->iso_code) ? $lastSubdivision->iso_code : null);            
+            $regionCode = (isset($lastSubdivision->iso_code) ? $lastSubdivision->iso_code : null);
         }
 
         return array($this->fixEncoding(array_merge($this->getDefaults(), array(

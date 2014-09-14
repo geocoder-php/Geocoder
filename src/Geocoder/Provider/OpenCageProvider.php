@@ -36,10 +36,10 @@ class OpenCageProvider extends AbstractProvider implements ProviderInterface
     private $apiKey = null;
 
     /**
-     * @param HttpAdapterInterface $adapter  An HTTP adapter.
-     * @param string               $apiKey   An API key.
-     * @param bool                 $useSsl   Whether to use an SSL connection (optional).
-     * @param string|null          $locale   A locale (optional).
+     * @param HttpAdapterInterface $adapter An HTTP adapter.
+     * @param string               $apiKey  An API key.
+     * @param bool                 $useSsl  Whether to use an SSL connection (optional).
+     * @param string|null          $locale  A locale (optional).
      */
     public function __construct(HttpAdapterInterface $adapter, $apiKey, $useSsl = false, $locale = null)
     {
