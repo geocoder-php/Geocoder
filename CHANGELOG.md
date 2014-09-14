@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+### 2.7.1 (????-??-??) ###
+
+n/a
+
 ### 2.7.0 (2014-09-14) ###
 
 * Added: **new** provider: `OpenCageProvider`
