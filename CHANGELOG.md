@@ -1,9 +1,13 @@
 CHANGELOG
 =========
 
-### 2.6.1 (????-??-??) ###
+### 2.7.0 (2014-09-14) ###
 
-n/a
+* Added: **new** provider: `OpenCageProvider`
+  [geocoder.opencagedata.com](http://geocoder.opencagedata.com/)
+* Fixed: `MapQuestProvider` when no relevant data are fetched
+* Fixed: Ensure mb `formatString` is congruent to standard `ucwords()`
+  functionality
 
 ### 2.6.0 (2014-09-02) ###
 
