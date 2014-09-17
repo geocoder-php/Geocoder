@@ -35,7 +35,6 @@ Currently, there are many providers for the following APIs:
 * [Bing Maps](http://msdn.microsoft.com/en-us/library/ff701715.aspx) as Address-Based geocoding and reverse geocoding provider;
 * [OpenStreetMap](http://nominatim.openstreetmap.org/) as Address-Based geocoding and reverse geocoding provider (based on the Nominatim provider);
 * [Nominatim](http://wiki.openstreetmap.org/wiki/Nominatim) as Address-Based geocoding and reverse geocoding provider;
-* [CloudMade](http://developers.cloudmade.com/projects/show/geocoding-http-api) as Address-Based geocoding and reverse geocoding provider;
 * [Geoip](http://php.net/manual/book.geoip.php), the PHP extension, as IP-Based geocoding provider;
 * ChainProvider is a special provider that takes a list of providers and iterates
   over this list to get information;
@@ -177,10 +176,6 @@ The `NominatimProvider` named `nominatim` is able to geocode and reverse geocode
 Access to a Nominatim server is required. See the [Nominatim
 Wiki Page](http://wiki.openstreetmap.org/wiki/Nominatim) for more information.
 
-### CloudMadeProvider ###
-
-The `CloudMadeProvider` named `cloudmade` is able to geocode and reverse geocode **street addresses**.
-A valid api key is required.
 
 
 ### GeoipProvider ###
@@ -662,7 +657,6 @@ Rename the `phpunit.xml.dist` file to `phpunit.xml`, then uncomment the followin
 <php>
     <!-- <server name="IPINFODB_API_KEY" value="YOUR_API_KEY" /> -->
     <!-- <server name="BINGMAPS_API_KEY" value="YOUR_API_KEY" /> -->
-    <!-- <server name="CLOUDMADE_API_KEY" value="YOUR_API_KEY" /> -->
     <!-- <server name="IGN_WEB_API_KEY" value="YOUR_API_KEY" /> -->
     <!-- <server name="GEOIPS_API_KEY" value="YOUR_API_KEY" /> -->
     <!-- <server name="MAXMIND_API_KEY" value="YOUR_API_KEY" /> -->
