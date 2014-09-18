@@ -3,7 +3,7 @@ CHANGELOG
 
 ### 2.7.1 (????-??-??) ###
 
-n/a
+* Removed: Cloudmade provider. They discontinued their service Apr/2014
 
 ### 2.7.0 (2014-09-14) ###
 
