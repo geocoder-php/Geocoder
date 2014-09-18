@@ -24,7 +24,6 @@ class GeoIP2Adapter implements HttpAdapterInterface
      */
     const GEOIP2_MODEL_CITY    = 'city';
     const GEOIP2_MODEL_COUNTRY = 'country';
-    const GEOIP2_MODEL_OMNI    = 'omni';
 
     /**
      * @var ProviderInterface
@@ -129,7 +128,6 @@ class GeoIP2Adapter implements HttpAdapterInterface
         $availableMethods = array(
             self::GEOIP2_MODEL_CITY,
             self::GEOIP2_MODEL_COUNTRY,
-            self::GEOIP2_MODEL_OMNI
         );
 
         return in_array($method, $availableMethods);
