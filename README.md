@@ -27,35 +27,48 @@ _Providers_ contain the logic to extract useful information.
 
 Currently, there are many providers for the following APIs:
 
-* [FreeGeoIp](http://freegeoip.net/static/index.html) as IP-Based geocoding provider;
-* [HostIp](http://www.hostip.info/) as IP-Based geocoding provider;
-* [IpInfoDB](http://www.ipinfodb.com/) as IP-Based geocoding provider (city precision);
-* [Google Maps](http://code.google.com/apis/maps/documentation/geocoding/) as Address-Based geocoding and reverse geocoding provider;
-* [Google Maps for Business](https://developers.google.com/maps/documentation/business/webservices) as Address-Based geocoding and reverse geocoding provider;
-* [Bing Maps](http://msdn.microsoft.com/en-us/library/ff701715.aspx) as Address-Based geocoding and reverse geocoding provider;
-* [OpenStreetMap](http://nominatim.openstreetmap.org/) as Address-Based geocoding and reverse geocoding provider (based on the Nominatim provider);
-* [Nominatim](http://wiki.openstreetmap.org/wiki/Nominatim) as Address-Based geocoding and reverse geocoding provider;
-* [Geoip](http://php.net/manual/book.geoip.php), the PHP extension, as IP-Based geocoding provider;
-* ChainProvider is a special provider that takes a list of providers and iterates
-  over this list to get information;
-* [MapQuest](http://open.mapquestapi.com/) as Address-Based geocoding and reverse geocoding provider;
-* [OpenCage](http://geocoder.opencagedata.com/) as Address-Based geocoding and reverse geocoding provider;
-* [OIORest](http://geo.oiorest.dk/) as very accurate Address-Based geocoding and reverse geocoding provider (exclusively in Denmark);
-* [GeoCoder.ca](http://geocoder.ca/) as Address-Based geocoding and reverse geocoding provider (exclusively in USA & Canada);
-* [GeoCoder.us](http://geocoder.us/) as Address-Based geocoding provider (exclusively in USA);
-* [IGN OpenLS](http://www.ign.fr/) as Address-Based geocoding provider (exclusively in France);
-* [DataScienceToolkit](http://www.datasciencetoolkit.org/) as IP-Based geocoding provider or an Address-Based provider (exclusively in USA & Canada);
-* [Yandex](http://api.yandex.com.tr/maps/doc/geocoder/desc/concepts/About.xml) as Address-Based geocoding and reverse geocoding provider;
-* [GeoPlugin](http://www.geoplugin.com/webservices) as IP-Based geocoding provider;
-* [GeoIPs](http://www.geoips.com/developer/geoips-api) as IP-Based geocoding provider;
-* [MaxMind web service](http://dev.maxmind.com/geoip/legacy/web-services) as IP-Based geocoding provider (City/ISP/Org and Omni services);
-* [MaxMind binary file](http://dev.maxmind.com/geoip/legacy/downloadable) as IP-Based geocoding provider;
-* [MaxMind GeoIP2](http://www.maxmind.com/en/city) as IP-Based geocoding provider;
-* [Geonames](http://www.geonames.org/) as Place-Based geocoding and reverse geocoding provider;
-* [IpGeoBase](http://ipgeobase.ru/) as IP-Based geocoding provider (very accurate in Russia);
-* [Baidu](http://developer.baidu.com/map/geocoding-api.htm) as Address-Based geocoding and reverse geocoding provider (exclusively in China);
-* [TomTom](http://developer.tomtom.com/docs/read/Geocoding) as Address-Based geocoding and reverse geocoding provider;
-* [ArcGIS Online](http://resources.arcgis.com/en/help/arcgis-online-geocoding-rest-api/) as Address-Based geocoding and reverse geocoding provider.
+Address-based geocoding
+
+
+provider      | reverse | SSL | coverage | terms
+:------------- |:--------- |:--------- |:--------- |:-----
+[Google Maps](https://developers.google.com/maps/documentation/geocoding/) | yes | no | worldwide | requires API key. Limit 2500 requests per day
+[Google Maps for Business](https://developers.google.com/maps/documentation/business/) | yes | no | worldwide | requires API key. Limit 100,000 requests per day
+[Bing Maps](http://msdn.microsoft.com/en-us/library/ff701713.aspx) | yes | no | worldwide | requires API key. Limit 10,000 requests per month.
+[OpenStreetMap](http://wiki.openstreetmap.org/wiki/Nominatim) | yes | no | worldwide | heavy users (>1q/s) get banned
+Nominatim    | yes | supported | worldwide | requires a domain name (e.g. local installation)
+[MapQuest](http://developer.mapquest.com/web/products/dev-services/geocoding-ws)  | yes | no | worldwide | both open and [commercial service](http://platform.mapquest.com/geocoding/) require API key
+[OpenCage](http://geocoder.opencagedata.com/)  | yes | supported | worldwide | requires API key. 2500 requests/day free
+[OIORest](http://geo.oiorest.dk/)    | yes | | Denmark
+[GeoCoder.ca](http://geocoder.ca/)  | yes | supported | USA, Canada | requires API key. $1 CAD for 400 lookups
+[GeoCoder.us](http://geocoder.us/)  | no  | no | USA | free throttled service. $50 USD for 20000 requests for paid service
+[IGN OpenLS](http://api.ign.fr/accueil)   | no  | no | France | requires API key
+[DataScienceToolkit](http://www.datasciencetoolkit.org/) | no | no | USA, Canada
+[Yandex](http://api.yandex.com/maps/)  | yes | no | worldwide
+[Geonames](http://www.geonames.org/commercial-webservices.html)  | yes |no | worldwide | requires registration, no free tier
+[Baidu](http://developer.baidu.com/map/geocoding-api.htm)  | yes | no | China | requires API key
+[TomTom](https://geocoder.tomtom.com/app/view/index)  | yes | required | worldwide | requires API key. First 2500 requests or 30 days free
+[ArcGIS Online](https://developers.arcgis.com/en/features/geocoding/) | yes | supported | worldwide | requires API key. 1250 requests free
+ChainProvider | | | | meta provider which iterates over a list of providers
+
+
+
+
+IP-based geocoding
+
+provider      | IPv6 | terms | notes
+:------------- |:--------- |:--------- |:---------
+[DataScienceToolkit](http://www.datasciencetoolkit.org/) | no
+[FreeGeoIp](http://freegeoip.net/) | yes
+[HostIp](http://www.hostip.info/use.html) | no
+[IpGeoBase](http://ipgeobase.ru/) | no | | very accurate in Russia
+[IpInfoDB](http://ipinfodb.com/) | no | city precision
+Geoip| ? | | wrapper around the [PHP extension](http://php.net/manual/en/book.geoip.php)
+[GeoPlugin](http://www.geoplugin.com/) | yes
+[GeoIPs](http://www.geoips.com/en/) | no | requires API key
+[MaxMind](https://www.maxmind.com/) web service | yes | requires Omni API key | City/ISP/Org and Omni services, IPv6 on country level
+MaxMind binary file | yes | | needs locally installed database files
+MaxMind [GeoIP2](https://www.maxmind.com/en/geoip2-databases) | yes |
 
 The [Geocoder Extra](https://github.com/geocoder-php/geocoder-extra) library contains even more providers!
 
