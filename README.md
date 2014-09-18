@@ -29,8 +29,9 @@ Currently, there are many providers for the following APIs:
 
 Address-based geocoding
 
+
 provider      | reverse | SSL | coverage | terms 
-:------------- |:--------- |:--------- |:--------- 
+:------------- |:--------- |:--------- |:--------- |:-----
 [Google Maps](https://developers.google.com/maps/documentation/geocoding/) | yes | no | worldwide | requires API key. Limit 2500 requests per day
 [Google Maps for Business](https://developers.google.com/maps/documentation/business/) | yes | no | worldwide | requires API key. Limit 100,000 requests per day
 [Bing Maps](http://msdn.microsoft.com/en-us/library/ff701713.aspx) | yes | no | worldwide | requires API key. Limit 10,000 requests per month.
@@ -49,6 +50,8 @@ Nominatim    | yes | supported | worldwide | requires a domain name (e.g. local 
 [TomTom](https://geocoder.tomtom.com/app/view/index)  | yes | required | worldwide | requires API key. First 2500 requests or 30 days free
 [ArcGIS Online](https://developers.arcgis.com/en/features/geocoding/) | yes | supported | worldwide | requires API key. 1250 requests free
 ChainProvider | | | | meta provider which iterates over a list of providers
+
+
 
 
 IP-based geocoding
