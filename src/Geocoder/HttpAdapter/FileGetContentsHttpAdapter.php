@@ -17,12 +17,6 @@ class FileGetContentsHttpAdapter implements HttpAdapterInterface
 {
 
     /**
-     */
-    public function __construct(Browser $browser = null)
-    {
-    }
-
-    /**
      * {@inheritDoc}
      */
     public function getContent($url)
