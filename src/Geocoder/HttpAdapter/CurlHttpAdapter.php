@@ -22,7 +22,7 @@ class CurlHttpAdapter implements HttpAdapterInterface
     private $connectTimeout;
 
     private $userAgent;
-    
+
     /**
      * Array for bulk setting of curl options
      * @see http://php.net/manual/en/curl.constants.php
