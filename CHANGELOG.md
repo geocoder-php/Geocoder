@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+### 2.8.1 (????-??-??)
+
+n/a
+
 ### 2.8.0 (2014-10-03)
 
 * Added: Allow for greater flexibility in setting curl parameters by passing in
