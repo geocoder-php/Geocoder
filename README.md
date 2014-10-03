@@ -39,7 +39,6 @@ Nominatim    | yes | supported | worldwide | requires a domain name (e.g. local 
 [MapQuest](http://developer.mapquest.com/web/products/dev-services/geocoding-ws)  | yes | no | worldwide | both open and [commercial service](http://platform.mapquest.com/geocoding/) require API key
 [OpenCage](http://geocoder.opencagedata.com/)  | yes | supported | worldwide | requires API key. 2500 requests/day free
 [OIORest](http://geo.oiorest.dk/)    | yes | | Denmark
-[GeoCoder.us](http://geocoder.us/)  | no  | no | USA | free throttled service. $50 USD for 20000 requests for paid service
 [IGN OpenLS](http://api.ign.fr/accueil)   | no  | no | France | requires API key
 [Yandex](http://api.yandex.com/maps/)  | yes | no | worldwide
 [Geonames](http://www.geonames.org/commercial-webservices.html)  | yes |no | worldwide | requires registration, no free tier
@@ -206,11 +205,6 @@ A valid api key is required.
 ### OIORestProvider ###
 
 The `OIORestProvider` named `oio_rest` is able to geocode and reverse geocode **street addresses**, exclusively in Denmark.
-
-
-### GeocoderUsProvider ###
-
-The `GeocoderUsProvider` named `geocoder_us` is able to geocode **street addresses** only, exclusively in USA.
 
 
 ### IGNOpenLSProvider ###
