@@ -38,7 +38,6 @@ provider      | reverse | SSL | coverage | terms
 Nominatim    | yes | supported | worldwide | requires a domain name (e.g. local installation)
 [MapQuest](http://developer.mapquest.com/web/products/dev-services/geocoding-ws)  | yes | no | worldwide | both open and [commercial service](http://platform.mapquest.com/geocoding/) require API key
 [OpenCage](http://geocoder.opencagedata.com/)  | yes | supported | worldwide | requires API key. 2500 requests/day free
-[IGN OpenLS](http://api.ign.fr/accueil)   | no  | no | France | requires API key
 [Yandex](http://api.yandex.com/maps/)  | yes | no | worldwide
 [Geonames](http://www.geonames.org/commercial-webservices.html)  | yes |no | worldwide | requires registration, no free tier
 [TomTom](https://geocoder.tomtom.com/app/view/index)  | yes | required | worldwide | requires API key. First 2500 requests or 30 days free
@@ -199,12 +198,6 @@ is provided via constructor argument.
 
 The `OpenCageProvider` named `opencage` is able to geocode and reverse geocode **street addresses**.
 A valid api key is required.
-
-
-### IGNOpenLSProvider ###
-
-The `IGNOpenLSProvider` named `ign_openls` is able to geocode **street addresses** only, exclusively in France.
-A valid OpenLS api key is required.
 
 
 ### YandexProvider ###
@@ -623,11 +616,9 @@ Rename the `phpunit.xml.dist` file to `phpunit.xml`, then uncomment the followin
 <php>
     <!-- <server name="IPINFODB_API_KEY" value="YOUR_API_KEY" /> -->
     <!-- <server name="BINGMAPS_API_KEY" value="YOUR_API_KEY" /> -->
-    <!-- <server name="IGN_WEB_API_KEY" value="YOUR_API_KEY" /> -->
     <!-- <server name="GEOIPS_API_KEY" value="YOUR_API_KEY" /> -->
     <!-- <server name="MAXMIND_API_KEY" value="YOUR_API_KEY" /> -->
     <!-- <server name="GEONAMES_USERNAME" value="YOUR_USERNAME" /> -->
-    <!-- <server name="BAIDU_API_KEY" value="YOUR_API_KEY" /> -->
     <!-- <server name="TOMTOM_GEOCODING_KEY" value="YOUR_GEOCODING_KEY" /> -->
     <!-- <server name="TOMTOM_MAP_KEY" value="YOUR_MAP_KEY" /> -->
     <!-- <server name="GOOGLE_GEOCODING_KEY" value="YOUR_GEOCODING_KEY" /> -->
