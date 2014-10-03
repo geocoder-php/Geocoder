@@ -46,7 +46,6 @@ Nominatim    | yes | supported | worldwide | requires a domain name (e.g. local 
 [DataScienceToolkit](http://www.datasciencetoolkit.org/) | no | no | USA, Canada
 [Yandex](http://api.yandex.com/maps/)  | yes | no | worldwide
 [Geonames](http://www.geonames.org/commercial-webservices.html)  | yes |no | worldwide | requires registration, no free tier
-[Baidu](http://developer.baidu.com/map/geocoding-api.htm)  | yes | no | China | requires API key
 [TomTom](https://geocoder.tomtom.com/app/view/index)  | yes | required | worldwide | requires API key. First 2500 requests or 30 days free
 [ArcGIS Online](https://developers.arcgis.com/en/features/geocoding/) | yes | supported | worldwide | requires API key. 1250 requests free
 ChainProvider | | | | meta provider which iterates over a list of providers
@@ -312,13 +311,6 @@ $result   = $geocoder->geocode('74.200.247.59');
 
 The `GeonamesProvider` named `geonames` is able to geocode and reverse geocode **places**.
 A valid username is required.
-
-
-### BaiduProvider ###
-
-The `BaiduProvider` named `baidu` is able to geocode and reverse geocode **street addresses**, exclusively in China.
-A valid api key is required.
-
 
 ### TomTomProvider ###
 
