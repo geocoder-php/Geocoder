@@ -61,7 +61,6 @@ provider      | IPv6 | terms | notes
 [DataScienceToolkit](http://www.datasciencetoolkit.org/) | no
 [FreeGeoIp](http://freegeoip.net/) | yes
 [HostIp](http://www.hostip.info/use.html) | no
-[IpGeoBase](http://ipgeobase.ru/) | no | | very accurate in Russia
 [IpInfoDB](http://ipinfodb.com/) | no | city precision
 Geoip| ? | | wrapper around the [PHP extension](http://php.net/manual/en/book.geoip.php)
 [GeoPlugin](http://www.geoplugin.com/) | yes
@@ -313,11 +312,6 @@ $result   = $geocoder->geocode('74.200.247.59');
 
 The `GeonamesProvider` named `geonames` is able to geocode and reverse geocode **places**.
 A valid username is required.
-
-
-### IpGeoBaseProvider ###
-
-The `IpGeoBaseProvider` named `ip_geo_base` is able to geocode **IPv4 addresses** only, very accurate in Russia.
 
 
 ### BaiduProvider ###
