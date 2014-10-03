@@ -1,8 +1,11 @@
 CHANGELOG
 =========
 
-### 2.7.1 (????-??-??) ###
+### 2.8.0 (2014-10-03)
 
+* Added: Allow for greater flexibility in setting curl parameters by passing in
+  an array.
+* Removed: GeoIP2 Omni support
 * Removed: Cloudmade provider. They discontinued their service Apr/2014
 
 ### 2.7.0 (2014-09-14) ###
