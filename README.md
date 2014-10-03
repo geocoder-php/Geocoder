@@ -29,7 +29,6 @@ Currently, there are many providers for the following APIs:
 
 Address-based geocoding
 
-
 provider      | reverse | SSL | coverage | terms
 :------------- |:--------- |:--------- |:--------- |:-----
 [Google Maps](https://developers.google.com/maps/documentation/geocoding/) | yes | no | worldwide | requires API key. Limit 2500 requests per day
@@ -43,7 +42,6 @@ Nominatim    | yes | supported | worldwide | requires a domain name (e.g. local 
 [GeoCoder.ca](http://geocoder.ca/)  | yes | supported | USA, Canada | requires API key. $1 CAD for 400 lookups
 [GeoCoder.us](http://geocoder.us/)  | no  | no | USA | free throttled service. $50 USD for 20000 requests for paid service
 [IGN OpenLS](http://api.ign.fr/accueil)   | no  | no | France | requires API key
-[DataScienceToolkit](http://www.datasciencetoolkit.org/) | no | no | USA, Canada
 [Yandex](http://api.yandex.com/maps/)  | yes | no | worldwide
 [Geonames](http://www.geonames.org/commercial-webservices.html)  | yes |no | worldwide | requires registration, no free tier
 [TomTom](https://geocoder.tomtom.com/app/view/index)  | yes | required | worldwide | requires API key. First 2500 requests or 30 days free
@@ -51,13 +49,10 @@ Nominatim    | yes | supported | worldwide | requires a domain name (e.g. local 
 ChainProvider | | | | meta provider which iterates over a list of providers
 
 
-
-
 IP-based geocoding
 
 provider      | IPv6 | terms | notes
 :------------- |:--------- |:--------- |:---------
-[DataScienceToolkit](http://www.datasciencetoolkit.org/) | no
 [FreeGeoIp](http://freegeoip.net/) | yes
 [HostIp](http://www.hostip.info/use.html) | no
 [IpInfoDB](http://ipinfodb.com/) | no | city precision
@@ -233,11 +228,6 @@ The `GeocoderUsProvider` named `geocoder_us` is able to geocode **street address
 
 The `IGNOpenLSProvider` named `ign_openls` is able to geocode **street addresses** only, exclusively in France.
 A valid OpenLS api key is required.
-
-
-### DataScienceToolkitProvider ###
-
-The `DataScienceToolkitProvider` named `data_science_toolkit` is able to geocode **IPv4 addresses** and **street adresses**, exclusively in USA & Canada.
 
 
 ### YandexProvider ###
