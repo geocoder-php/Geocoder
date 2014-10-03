@@ -172,16 +172,12 @@ A valid api key is required.
 The `OpenStreetMapProvider` named `openstreetmap` is able to geocode and reverse
 geocode **street addresses**.
 
-**Warning:** The `OpenStreetMapsProvider` is **deprecated**, and you should
-rather use the `OpenStreetMapProvider`. See issue
-[#269](https://github.com/geocoder-php/Geocoder/issues/269).
 
 ### NominatimProvider ###
 
 The `NominatimProvider` named `nominatim` is able to geocode and reverse geocode **street addresses**.
 Access to a Nominatim server is required. See the [Nominatim
 Wiki Page](http://wiki.openstreetmap.org/wiki/Nominatim) for more information.
-
 
 
 ### GeoipProvider ###
