@@ -10,6 +10,7 @@
 
 namespace Geocoder;
 
+use Geocoder\Exception\ProviderNotRegistered;
 use Geocoder\Provider\ProviderInterface;
 use Geocoder\Result\ResultFactoryInterface;
 use Geocoder\Result\DefaultResultFactory;
@@ -165,9 +166,11 @@ class Geocoder implements GeocoderInterface
      */
     public function using($name)
     {
-        if (isset($this->providers[$name])) {
-            $this->provider = $this->providers[$name];
+        if (!isset($this->providers[$name])) {
+            throw new ProviderNotRegistered($name);
         }
+
+        $this->provider = $this->providers[$name];
 
         return $this;
     }
@@ -192,9 +195,9 @@ class Geocoder implements GeocoderInterface
         if (null === $this->provider) {
             if (0 === count($this->providers)) {
                 throw new \RuntimeException('No provider registered.');
-            } else {
-                $this->provider = $this->providers[key($this->providers)];
             }
+
+            $this->using(key($this->providers));
         }
 
         return $this->provider;

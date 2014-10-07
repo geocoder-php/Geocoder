@@ -50,15 +50,30 @@ class GeocoderTest extends TestCase
 
         $this->geocoder->using('test1');
         $this->assertSame($provider1, $this->geocoder->getProvider());
+    }
 
+    /**
+     * @expectedException \Geocoder\Exception\ProviderNotRegistered
+     */
+    public function testUsingNonExistantProviderShouldThrowAnException()
+    {
         $this->geocoder->using('non_existant');
-        $this->assertSame($provider1, $this->geocoder->getProvider());
+    }
 
+    /**
+     * @expectedException \Geocoder\Exception\ProviderNotRegistered
+     */
+    public function testUsingNullShouldThrowAnException()
+    {
         $this->geocoder->using(null);
-        $this->assertSame($provider1, $this->geocoder->getProvider());
+    }
 
+    /**
+     * @expectedException \Geocoder\Exception\ProviderNotRegistered
+     */
+    public function testUsingAnEmptyProviderNameShouldThrowAnException()
+    {
         $this->geocoder->using('');
-        $this->assertSame($provider1, $this->geocoder->getProvider());
     }
 
     public function testGetProviders()
