@@ -17,7 +17,7 @@ class OpenCageProviderTest extends TestCase
     }
 
     /**
-     * @expectedException Geocoder\Exception\NoResultException
+     * @expectedException Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not find results for given query: http://api.opencagedata.com/geocode/v1/json?key=api_key&query=foobar&limit=5
      */
     public function testGetGeocodedData()
@@ -27,7 +27,7 @@ class OpenCageProviderTest extends TestCase
     }
 
     /**
-     * @expectedException Geocoder\Exception\NoResultException
+     * @expectedException Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not find results for given query: https://api.opencagedata.com/geocode/v1/json?key=api_key&query=foobar&limit=5
      */
     public function testSslSchema()
@@ -37,7 +37,7 @@ class OpenCageProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query: http://api.opencagedata.com/geocode/v1/json?key=api_key&query=10+avenue+Gambetta%2C+Paris%2C+France&limit=5
      */
     public function testGetGeocodedDataWithAddressGetsNullContent()
@@ -64,8 +64,8 @@ class OpenCageProviderTest extends TestCase
         $this->assertEquals(         2.389089, $result['longitude'], '', 0.01);
         $this->assertEquals(               10, $result['streetNumber']);
         $this->assertEquals('Avenue Gambetta', $result['streetName']);
-        $this->assertEquals(            75020, $result['zipcode']);
-        $this->assertEquals(          'Paris', $result['city']);
+        $this->assertEquals(            75020, $result['postalCode']);
+        $this->assertEquals(          'Paris', $result['locality']);
         $this->assertEquals(          'Paris', $result['county']);
         $this->assertEquals(  'Ile-de-France', $result['region']);
         $this->assertEquals(         'France', $result['country']);
@@ -78,7 +78,7 @@ class OpenCageProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      */
     public function testGetReversedData()
     {
@@ -108,8 +108,8 @@ class OpenCageProviderTest extends TestCase
         $this->assertEquals(      -2.7990345, $result['longitude'], '', 0.001);
         $this->assertNull(                    $result['streetNumber']);
         $this->assertNull(                    $result['streetName']);
-        $this->assertNull(                    $result['zipcode']);
-        $this->assertEquals(     'Lancaster', $result['city']);
+        $this->assertNull(                    $result['postalCode']);
+        $this->assertEquals(     'Lancaster', $result['locality']);
         $this->assertEquals(    'Lancashire', $result['county']);
         $this->assertEquals(       'England', $result['region']);
         $this->assertEquals('United Kingdom', $result['country']);
@@ -136,7 +136,7 @@ class OpenCageProviderTest extends TestCase
         $this->assertInternalType('array', $results[0]);
         $this->assertEquals(                 52.374478, $results[0]['latitude'], '', 0.01);
         $this->assertEquals(                  9.738553, $results[0]['longitude'], '', 0.01);
-        $this->assertEquals(                 'Hanover', $results[0]['city']);
+        $this->assertEquals(                 'Hanover', $results[0]['locality']);
         $this->assertEquals(         'Region Hannover', $results[0]['county']);
         $this->assertEquals(            'Lower Saxony', $results[0]['region']);
         $this->assertEquals(                 'Germany', $results[0]['country']);
@@ -144,21 +144,21 @@ class OpenCageProviderTest extends TestCase
         $this->assertInternalType('array', $results[1]);
         $this->assertEquals(                 37.744783, $results[1]['latitude'], '', 0.01);
         $this->assertEquals(               -77.4464165, $results[1]['longitude'], '', 0.01);
-        $this->assertNull(                              $results[1]['city']);
+        $this->assertNull(                              $results[1]['locality']);
         $this->assertEquals(                 'Hanover', $results[1]['county']);
         $this->assertEquals('United States of America', $results[1]['country']);
 
         $this->assertInternalType('array', $results[2]);
         $this->assertEquals(                18.3840489, $results[2]['latitude'], '', 0.01);
         $this->assertEquals(                -78.131485, $results[2]['longitude'], '', 0.01);
-        $this->assertNull(                              $results[2]['city']);
+        $this->assertNull(                              $results[2]['locality']);
         $this->assertEquals(                 'Hanover', $results[2]['county']);
         $this->assertEquals(                 'Jamaica', $results[2]['country']);
 
         $this->assertInternalType('array', $results[3]);
         $this->assertEquals(                43.7033073, $results[3]['latitude'], '', 0.01);
         $this->assertEquals(               -72.2885663, $results[3]['longitude'], '', 0.01);
-        $this->assertEquals(                 'Hanover', $results[3]['city']);
+        $this->assertEquals(                 'Hanover', $results[3]['locality']);
         $this->assertEquals(          'Grafton County', $results[3]['county']);
         $this->assertEquals(           'New Hampshire', $results[3]['region']);
         $this->assertEquals('United States of America', $results[3]['country']);
@@ -182,8 +182,8 @@ class OpenCageProviderTest extends TestCase
         $this->assertEquals(               8.636567, $result['longitude'], '', 0.01);
         $this->assertEquals(                     10,$result['streetNumber']);
         $this->assertEquals('Kalbacher Hauptstraße', $result['streetName']);
-        $this->assertEquals(                  60437, $result['zipcode']);
-        $this->assertEquals(            'Frankfurt', $result['city']);
+        $this->assertEquals(                  60437, $result['postalCode']);
+        $this->assertEquals(            'Frankfurt', $result['locality']);
         $this->assertEquals(            'Frankfurt', $result['county']);
         $this->assertEquals(                'Hesse', $result['region']);
         $this->assertEquals(              'Germany', $result['country']);
@@ -206,7 +206,7 @@ class OpenCageProviderTest extends TestCase
 
         $result = $result[0];
         $this->assertInternalType('array', $result);
-        $this->assertEquals(            'Londres', $result['city']);
+        $this->assertEquals(            'Londres', $result['locality']);
         $this->assertEquals(            'Londres', $result['county']);
         $this->assertEquals(         'Inglaterra', $result['region']);
         $this->assertEquals(        'Reino Unido', $result['country']);
@@ -214,7 +214,7 @@ class OpenCageProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The OpenCageProvider does not support IP addresses.
      */
     public function testGetGeocodedDataWithLocalhostIPv4()
@@ -224,7 +224,7 @@ class OpenCageProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The OpenCageProvider does not support IP addresses.
      */
     public function testGetGeocodedDataWithLocalhostIPv6()
@@ -234,7 +234,7 @@ class OpenCageProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The OpenCageProvider does not support IP addresses.
      */
     public function testGetGeocodedDataWithRealIPv4()
@@ -244,7 +244,7 @@ class OpenCageProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The OpenCageProvider does not support IP addresses.
      */
     public function testGetGeocodedDataWithRealIPv6()

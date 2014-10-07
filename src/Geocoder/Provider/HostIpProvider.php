@@ -10,13 +10,13 @@
 
 namespace Geocoder\Provider;
 
-use Geocoder\Exception\NoResultException;
-use Geocoder\Exception\UnsupportedException;
+use Geocoder\Exception\NoResult;
+use Geocoder\Exception\UnsupportedOperation;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-class HostIpProvider extends AbstractProvider implements ProviderInterface
+class HostIpProvider extends AbstractProvider implements Provider
 {
     /**
      * @var string
@@ -29,12 +29,12 @@ class HostIpProvider extends AbstractProvider implements ProviderInterface
     public function getGeocodedData($address)
     {
         if (!filter_var($address, FILTER_VALIDATE_IP)) {
-            throw new UnsupportedException('The HostIpProvider does not support Street addresses.');
+            throw new UnsupportedOperation('The HostIpProvider does not support Street addresses.');
         }
 
         // This API does not support IPv6
         if (filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
-            throw new UnsupportedException('The HostIpProvider does not support IPv6 addresses.');
+            throw new UnsupportedOperation('The HostIpProvider does not support IPv6 addresses.');
         }
 
         if ('127.0.0.1' === $address) {
@@ -51,7 +51,7 @@ class HostIpProvider extends AbstractProvider implements ProviderInterface
      */
     public function getReversedData(array $coordinates)
     {
-        throw new UnsupportedException('The HostIpProvider is not able to do reverse geocoding.');
+        throw new UnsupportedOperation('The HostIpProvider is not able to do reverse geocoding.');
     }
 
     /**
@@ -67,20 +67,20 @@ class HostIpProvider extends AbstractProvider implements ProviderInterface
      *
      * @return array
      */
-    protected function executeQuery($query)
+    private function executeQuery($query)
     {
         $content = $this->getAdapter()->getContent($query);
 
         $data = json_decode($content, true);
 
         if (!$data) {
-            throw new NoResultException(sprintf('Could not execute query %s', $query));
+            throw new NoResult(sprintf('Could not execute query %s', $query));
         }
 
         return array(array_merge($this->getDefaults(), array(
             'latitude'    => $data['lat'],
             'longitude'   => $data['lng'],
-            'city'        => $data['city'],
+            'locality'    => $data['city'],
             'country'     => $data['country_name'],
             'countryCode' => $data['country_code'],
         )));

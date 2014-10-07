@@ -10,44 +10,45 @@
 
 namespace Geocoder\Dumper;
 
-use Geocoder\Result\ResultInterface;
+use Geocoder\Result\Address;
 
 /**
  * @author Jan Sorgalla <jsorgalla@googlemail.com>
  */
-class GeoJsonDumper implements DumperInterface
+class GeoJsonDumper implements Dumper
 {
     /**
-     * @param ResultInterface $result
-     *
-     * @return string
+     * {@inheritDoc}
      */
-    public function dump(ResultInterface $result)
+    public function dump(Address $address)
     {
-        $properties = array_filter($result->toArray(), function ($val) {
-            return $val !== null;
+        $properties = array_filter($address->toArray(), function ($value) {
+            return !empty($value);
         });
 
-        unset($properties['latitude'], $properties['longitude'], $properties['bounds']);
+        unset(
+            $properties['latitude'],
+            $properties['longitude'],
+            $properties['bounds']
+        );
 
-        if (count($properties) === 0) {
+        if (0 === count($properties)) {
             $properties = null;
         }
 
-        $json = array(
+        $json = [
             'type' => 'Feature',
-            'geometry' => array(
-                'type' => 'Point',
-                'coordinates' => array($result->getLongitude(), $result->getLatitude())
-            ),
-            'properties' => $properties
-        );
+            'geometry' => [
+                'type'          => 'Point',
+                'coordinates'   => [ $address->getLongitude(), $address->getLatitude() ]
+            ],
+            'properties' => $properties,
+        ];
 
-        // Custom bounds property
-        $bounds = $result->getBounds();
-
-        if (null !== $bounds) {
-            $json['bounds'] = $bounds;
+        if (null !== $bounds = $address->getBounds()) {
+            if ($bounds->isDefined()) {
+                $json['bounds'] = $bounds->toArray();
+            }
         }
 
         return json_encode($json);

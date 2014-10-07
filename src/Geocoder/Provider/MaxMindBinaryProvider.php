@@ -10,29 +10,29 @@
 
 namespace Geocoder\Provider;
 
-use Geocoder\Exception\NoResultException;
-use Geocoder\Exception\InvalidArgumentException;
+use Geocoder\Exception\NoResult;
+use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\RuntimeException;
-use Geocoder\Exception\UnsupportedException;
+use Geocoder\Exception\UnsupportedOperation;
 
-class MaxMindBinaryProvider extends AbstractProvider implements ProviderInterface
+class MaxMindBinaryProvider extends AbstractProvider implements Provider
 {
     /**
      * @var string
      */
-    protected $datFile;
+    private $datFile;
 
     /**
      * @var int|null
      */
-    protected $openFlag;
+    private $openFlag;
 
     /**
      * @param string   $datFile
      * @param int|null $openFlag
      *
-     * @throws RuntimeException         If maxmind's lib not installed.
-     * @throws InvalidArgumentException If dat file is not correct (optional).
+     * @throws RuntimeException If maxmind's lib not installed.
+     * @throws InvalidArgument  If dat file is not correct (optional).
      */
     public function __construct($datFile, $openFlag = null)
     {
@@ -45,11 +45,11 @@ class MaxMindBinaryProvider extends AbstractProvider implements ProviderInterfac
         }
 
         if (false === is_file($datFile)) {
-            throw new InvalidArgumentException(sprintf('Given MaxMind dat file "%s" does not exist.', $datFile));
+            throw new InvalidArgument(sprintf('Given MaxMind dat file "%s" does not exist.', $datFile));
         }
 
         if (false === is_readable($datFile)) {
-            throw new InvalidArgumentException(sprintf('Given MaxMind dat file "%s" does not readable.', $datFile));
+            throw new InvalidArgument(sprintf('Given MaxMind dat file "%s" does not readable.', $datFile));
         }
 
         $this->datFile  = $datFile;
@@ -62,7 +62,7 @@ class MaxMindBinaryProvider extends AbstractProvider implements ProviderInterfac
     public function getGeocodedData($address)
     {
         if (false === filter_var($address, FILTER_VALIDATE_IP)) {
-            throw new UnsupportedException('The MaxMindBinaryProvider does not support street addresses.');
+            throw new UnsupportedOperation('The MaxMindBinaryProvider does not support street addresses.');
         }
 
         $geoIp       = geoip_open($this->datFile, $this->openFlag);
@@ -71,14 +71,14 @@ class MaxMindBinaryProvider extends AbstractProvider implements ProviderInterfac
         geoip_close($geoIp);
 
         if (false === $geoIpRecord instanceof \geoiprecord) {
-            throw new NoResultException(sprintf('No results found for IP address %s', $address));
+            throw new NoResult(sprintf('No results found for IP address %s', $address));
         }
 
         return array($this->fixEncoding(array_merge($this->getDefaults(), array(
             'countryCode' => $geoIpRecord->country_code,
             'country'     => $geoIpRecord->country_name,
             'region'      => $geoIpRecord->region,
-            'city'        => $geoIpRecord->city,
+            'locality'    => $geoIpRecord->city,
             'latitude'    => $geoIpRecord->latitude,
             'longitude'   => $geoIpRecord->longitude,
         ))));
@@ -89,7 +89,7 @@ class MaxMindBinaryProvider extends AbstractProvider implements ProviderInterfac
      */
     public function getReversedData(array $coordinates)
     {
-        throw new UnsupportedException('The MaxMindBinaryProvider is not able to do reverse geocoding.');
+        throw new UnsupportedOperation('The MaxMindBinaryProvider is not able to do reverse geocoding.');
     }
 
     /**

@@ -10,20 +10,18 @@
 
 namespace Geocoder\Dumper;
 
-use Geocoder\Result\ResultInterface;
+use Geocoder\Result\Address;
 
 /**
  * @author Jan Sorgalla <jsorgalla@googlemail.com>
  */
-class WktDumper implements DumperInterface
+class WktDumper implements Dumper
 {
     /**
-     * @param ResultInterface $result
-     *
-     * @return string
+     * {@inheritDoc}
      */
-    public function dump(ResultInterface $result)
+    public function dump(Address $address)
     {
-        return sprintf('POINT(%F %F)', $result->getLongitude(), $result->getLatitude());
+        return sprintf('POINT(%F %F)', $address->getLongitude(), $address->getLatitude());
     }
 }

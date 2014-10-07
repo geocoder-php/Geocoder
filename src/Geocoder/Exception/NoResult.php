@@ -13,6 +13,6 @@ namespace Geocoder\Exception;
 /**
  * @author Markus Bachmann <markus.bachmann@bachi.biz>
  */
-class InvalidCredentialsException extends RuntimeException implements ExceptionInterface
+class NoResult extends \RuntimeException implements Exception
 {
 }

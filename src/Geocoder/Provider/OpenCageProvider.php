@@ -10,15 +10,15 @@
 
 namespace Geocoder\Provider;
 
-use Geocoder\Exception\InvalidCredentialsException;
+use Geocoder\Exception\InvalidCredentials;
+use Geocoder\Exception\NoResult;
+use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\HttpAdapter\HttpAdapterInterface;
-use Geocoder\Exception\NoResultException;
-use Geocoder\Exception\UnsupportedException;
 
 /**
  * @author mtm <mtm@opencagedata.com>
  */
-class OpenCageProvider extends AbstractProvider implements ProviderInterface
+class OpenCageProvider extends AbstractProvider implements Provider
 {
     /**
      * @var string
@@ -56,11 +56,11 @@ class OpenCageProvider extends AbstractProvider implements ProviderInterface
     {
         // This API doesn't handle IPs
         if (filter_var($address, FILTER_VALIDATE_IP)) {
-            throw new UnsupportedException('The OpenCageProvider does not support IP addresses.');
+            throw new UnsupportedOperation('The OpenCageProvider does not support IP addresses.');
         }
 
         if (null === $this->apiKey) {
-            throw new InvalidCredentialsException('No API Key provided.');
+            throw new InvalidCredentials('No API Key provided.');
         }
 
         $query = sprintf(self::GEOCODE_ENDPOINT_URL, $this->scheme, $this->apiKey, urlencode($address), $this->getMaxResults() );
@@ -92,7 +92,7 @@ class OpenCageProvider extends AbstractProvider implements ProviderInterface
      *
      * @return array
      */
-    protected function executeQuery($query)
+    private function executeQuery($query)
     {
 
         if (null !== $this->getLocale()) {
@@ -102,19 +102,19 @@ class OpenCageProvider extends AbstractProvider implements ProviderInterface
         $content = $this->getAdapter()->getContent($query);
 
         if (null === $content) {
-            throw new NoResultException(sprintf('Could not execute query: %s', $query));
+            throw new NoResult(sprintf('Could not execute query: %s', $query));
         }
 
         $json = json_decode($content, true);
 
         if (!isset($json['total_results']) || $json['total_results'] == 0 ) {
-            throw new NoResultException(sprintf('Could not find results for given query: %s', $query));
+            throw new NoResult(sprintf('Could not find results for given query: %s', $query));
         }
 
         $locations = $json['results'];
 
         if (empty($locations)) {
-            throw new NoResultException(sprintf('Could not find results for given query: %s', $query));
+            throw new NoResult(sprintf('Could not find results for given query: %s', $query));
         }
 
         $results = array();
@@ -136,19 +136,19 @@ class OpenCageProvider extends AbstractProvider implements ProviderInterface
             $comp = $location['components'];
 
             $results[] = array_merge($this->getDefaults(), array(
-                'latitude'      => $location['geometry']['lat'],
-                'longitude'     => $location['geometry']['lng'],
-                'bounds'        => $bounds ?: null,
-                'streetNumber'  => isset($comp['house_number']) ? $comp['house_number'] : null,
-                'streetName'    => isset($comp['road']        ) ? $comp['road']         : null,
-                'cityDistrict'  => isset($comp['suburb']      ) ? $comp['suburb']       : null,
-                'city'          => isset($comp['city']        ) ? $comp['city']         : null,
-                'zipcode'       => isset($comp['postcode']    ) ? $comp['postcode']     : null,
-                'county'        => isset($comp['county']      ) ? $comp['county']       : null,
-                'region'        => isset($comp['state']       ) ? $comp['state']        : null,
-                'country'       => isset($comp['country']     ) ? $comp['country']      : null,
-                'countryCode'   => isset($comp['country_code']) ? strtoupper($comp['country_code']) : null,
-                'timezone'      => isset($location['annotations']['timezone']['name']) ? $location['annotations']['timezone']['name'] : null,
+                'latitude'     => $location['geometry']['lat'],
+                'longitude'    => $location['geometry']['lng'],
+                'bounds'       => $bounds ?: null,
+                'streetNumber' => isset($comp['house_number']) ? $comp['house_number'] : null,
+                'streetName'   => isset($comp['road']        ) ? $comp['road']         : null,
+                'subLocality'  => isset($comp['suburb']      ) ? $comp['suburb']       : null,
+                'locality'     => isset($comp['city']        ) ? $comp['city']         : null,
+                'postalCode'   => isset($comp['postcode']    ) ? $comp['postcode']     : null,
+                'county'       => isset($comp['county']      ) ? $comp['county']       : null,
+                'region'       => isset($comp['state']       ) ? $comp['state']        : null,
+                'country'      => isset($comp['country']     ) ? $comp['country']      : null,
+                'countryCode'  => isset($comp['country_code']) ? strtoupper($comp['country_code']) : null,
+                'timezone'     => isset($location['annotations']['timezone']['name']) ? $location['annotations']['timezone']['name'] : null,
             ));
         }
 

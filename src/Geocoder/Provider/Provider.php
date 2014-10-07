@@ -10,23 +10,23 @@
 
 namespace Geocoder\Provider;
 
-use Geocoder\Exception\NoResultException;
-use Geocoder\Exception\InvalidCredentialsException;
-use Geocoder\Exception\UnsupportedException;
+use Geocoder\Exception\NoResult;
+use Geocoder\Exception\InvalidCredentials;
+use Geocoder\Exception\UnsupportedOperation;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-interface ProviderInterface
+interface Provider
 {
     /**
      * Returns an associative array with data treated by the provider.
      *
      * @param string $address An address (IP or street).
      *
-     * @throws NoResultException           If the address could not be resolved
-     * @throws InvalidCredentialsException If the credentials are invalid
-     * @throws UnsupportedException        If IPv4, IPv6 or street is not supported
+     * @throws NoResult             If the address could not be resolved
+     * @throws InvalidCredentials   If the credentials are invalid
+     * @throws UnsupportedOperation If IPv4, IPv6 or street is not supported
      *
      * @return array
      */
@@ -37,9 +37,9 @@ interface ProviderInterface
      *
      * @param array $coordinates Coordinates (latitude, longitude).
      *
-     * @throws NoResultException           If the coordinates could not be resolved
-     * @throws InvalidCredentialsException If the credentials are invalid
-     * @throws UnsupportedException        If reverse geocoding is not supported
+     * @throws NoResult             If the coordinates could not be resolved
+     * @throws InvalidCredentials   If the credentials are invalid
+     * @throws UnsupportedOperation If reverse geocoding is not supported
      *
      * @return array
      */
@@ -57,7 +57,7 @@ interface ProviderInterface
      *
      * @param integer $maxResults
      *
-     * @return ProviderInterface
+     * @return Provider
      */
     public function setMaxResults($maxResults);
 }

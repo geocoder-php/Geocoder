@@ -10,11 +10,11 @@
 
 namespace Geocoder\Provider;
 
-use Geocoder\Exception\InvalidCredentialsException;
-use Geocoder\Exception\NoResultException;
-use Geocoder\Exception\UnsupportedException;
-use Geocoder\Exception\InvalidArgumentException;
-use Geocoder\Exception\QuotaExceededException;
+use Geocoder\Exception\InvalidCredentials;
+use Geocoder\Exception\NoResult;
+use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Exception\InvalidArgument;
+use Geocoder\Exception\QuotaExceeded;
 use Geocoder\HttpAdapter\HttpAdapterInterface;
 
 /**
@@ -23,7 +23,7 @@ use Geocoder\HttpAdapter\HttpAdapterInterface;
  *
  * @link http://www.geoips.com/en/developer/api-guide
  */
-class GeoIPsProvider extends AbstractProvider implements ProviderInterface
+class GeoIPsProvider extends AbstractProvider implements Provider
 {
     /**
      * @var string
@@ -60,16 +60,16 @@ class GeoIPsProvider extends AbstractProvider implements ProviderInterface
     public function getGeocodedData($address)
     {
         if (null === $this->apiKey) {
-            throw new InvalidCredentialsException('No API Key provided.');
+            throw new InvalidCredentials('No API Key provided.');
         }
 
         if (!filter_var($address, FILTER_VALIDATE_IP)) {
-            throw new UnsupportedException('The GeoIPsProvider does not support street addresses.');
+            throw new UnsupportedOperation('The GeoIPsProvider does not support street addresses.');
         }
 
         // This API does not support IPv6
         if (filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
-            throw new UnsupportedException('The GeoIPsProvider does not support IPv6 addresses.');
+            throw new UnsupportedOperation('The GeoIPsProvider does not support IPv6 addresses.');
         }
 
         if ('127.0.0.1' === $address) {
@@ -86,7 +86,7 @@ class GeoIPsProvider extends AbstractProvider implements ProviderInterface
      */
     public function getReversedData(array $coordinates)
     {
-        throw new UnsupportedException('The GeoIPsProvider is not able to do reverse geocoding.');
+        throw new UnsupportedOperation('The GeoIPsProvider is not able to do reverse geocoding.');
     }
 
     /**
@@ -101,12 +101,12 @@ class GeoIPsProvider extends AbstractProvider implements ProviderInterface
      * @param  string $query
      * @return array
      */
-    protected function executeQuery($query)
+    private function executeQuery($query)
     {
         $content = $this->getAdapter()->getContent($query);
 
         if (null === $content || '' === $content) {
-            throw new NoResultException(sprintf('Invalid response from GeoIPs server for query %s', $query));
+            throw new NoResult(sprintf('Invalid response from GeoIPs server for query %s', $query));
         }
 
         $json = json_decode($content, true);
@@ -114,17 +114,17 @@ class GeoIPsProvider extends AbstractProvider implements ProviderInterface
         if (isset($json['error'])) {
             switch ($json['error']['code']) {
                 case static::CODE_BAD_IP:
-                    throw new InvalidArgumentException('The API call should include a valid IP address.');
+                    throw new InvalidArgument('The API call should include a valid IP address.');
                 case static::CODE_BAD_KEY:
-                    throw new InvalidCredentialsException('The API call should include a API key parameter.');
+                    throw new InvalidCredentials('The API call should include a API key parameter.');
                 case static::CODE_NOT_AUTHORIZED:
-                    throw new InvalidCredentialsException('The API key associated with your request was not recognized.');
+                    throw new InvalidCredentials('The API key associated with your request was not recognized.');
                 case static::CODE_ACCOUNT_INACTIVE:
-                    throw new InvalidCredentialsException('The API key has not been approved or has been disabled.');
+                    throw new InvalidCredentials('The API key has not been approved or has been disabled.');
                 case static::CODE_LIMIT_EXCEEDED:
-                    throw new QuotaExceededException('The service you have requested is over capacity.');
+                    throw new QuotaExceeded('The service you have requested is over capacity.');
                 default:
-                    throw new NoResultException(sprintf(
+                    throw new NoResult(sprintf(
                         'GeoIPs error %s%s%s%s - query: %s',
                         $json['error']['code'],
                         isset($json['error']['status']) ? ', ' . $json['error']['status'] : '',
@@ -136,7 +136,7 @@ class GeoIPsProvider extends AbstractProvider implements ProviderInterface
         }
 
         if (!is_array($json) || empty($json) || empty($json['response']) || empty($json['response']['code'])) {
-            throw new NoResultException(sprintf('Invalid response from GeoIPs server for query %s', $query));
+            throw new NoResult(sprintf('Invalid response from GeoIPs server for query %s', $query));
         }
 
         $response = $json['response'];
@@ -144,12 +144,12 @@ class GeoIPsProvider extends AbstractProvider implements ProviderInterface
         // Check response code
         switch ($response['code']) {
             case static::CODE_NOT_FOUND:
-                throw new NoResultException();
+                throw new NoResult();
             case static::CODE_SUCCESS;
                 // everything is ok
                 break;
             default:
-                throw new NoResultException(sprintf(
+                throw new NoResult(sprintf(
                     'GeoIPs returned unknown result code %s for query: %s',
                     $response['code'],
                     $query
@@ -158,10 +158,10 @@ class GeoIPsProvider extends AbstractProvider implements ProviderInterface
 
         // Make sure that we do have proper result array
         if (empty($response['location']) || !is_array($response['location'])) {
-            throw new NoResultException(sprintf('Invalid response from GeoIPs server for query %s', $query));
+            throw new NoResult(sprintf('Invalid response from GeoIPs server for query %s', $query));
         }
 
-        $locations = array();
+        $locations = [];
         $location = $response['location'];
         $locations[] = array_merge($this->getDefaults(), array(
             'country'     => '' === $location['country_name'] ? null : $location['country_name'],
@@ -169,7 +169,7 @@ class GeoIPsProvider extends AbstractProvider implements ProviderInterface
             'region'      => '' === $location['region_name']  ? null : $location['region_name'],
             'regionCode'  => '' === $location['region_code']  ? null : $location['region_code'],
             'county'      => '' === $location['county_name']  ? null : $location['county_name'],
-            'city'        => '' === $location['city_name']    ? null : $location['city_name'],
+            'locality'    => '' === $location['city_name']    ? null : $location['city_name'],
             'latitude'    => '' === $location['latitude']     ? null : $location['latitude'],
             'longitude'   => '' === $location['longitude']    ? null : $location['longitude'],
             'timezone'    => '' === $location['timezone']     ? null : $location['timezone'],

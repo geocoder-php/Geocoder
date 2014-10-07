@@ -23,7 +23,7 @@ class GeoIPsProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The GeoIPsProvider does not support street addresses.
      */
     public function testGetGeocodedDataWithNull()
@@ -33,7 +33,7 @@ class GeoIPsProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The GeoIPsProvider does not support street addresses.
      */
     public function testGetGeocodedDataWithEmpty()
@@ -43,7 +43,7 @@ class GeoIPsProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The GeoIPsProvider does not support street addresses.
      */
     public function testGetGeocodedDataWithAddress()
@@ -64,17 +64,17 @@ class GeoIPsProviderTest extends TestCase
         $this->assertInternalType('array', $result);
         $this->assertArrayNotHasKey('latitude', $result);
         $this->assertArrayNotHasKey('longitude', $result);
-        $this->assertArrayNotHasKey('zipcode', $result);
+        $this->assertArrayNotHasKey('postalCode', $result);
         $this->assertArrayNotHasKey('timezone', $result);
 
-        $this->assertEquals('localhost', $result['city']);
+        $this->assertEquals('localhost', $result['locality']);
         $this->assertEquals('localhost', $result['region']);
         $this->assertEquals('localhost', $result['county']);
         $this->assertEquals('localhost', $result['country']);
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The GeoIPsProvider does not support IPv6 addresses.
      */
     public function testGetGeocodedDataWithLocalhostIPv6()
@@ -84,7 +84,7 @@ class GeoIPsProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Invalid response from GeoIPs server for query http://api.geoips.com/ip/74.200.247.59/key/api_key/output/json/timezone/true/
      */
     public function testGetGeocodedDataWithRealIPv4GetsNullContent()
@@ -94,7 +94,7 @@ class GeoIPsProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Invalid response from GeoIPs server for query http://api.geoips.com/ip/74.200.247.59/key/api_key/output/json/timezone/true/
      */
     public function testGetGeocodedDataWithRealIPv4GetsEmptyContent()
@@ -142,10 +142,10 @@ class GeoIPsProviderTest extends TestCase
         $this->assertNull($result['country']);
         $this->assertNull($result['countryCode']);
         $this->assertNull($result['regionCode']);
-        $this->assertNull($result['city']);
+        $this->assertNull($result['locality']);
         $this->assertNull($result['latitude']);
         $this->assertNull($result['longitude']);
-        $this->assertNull($result['zipcode']);
+        $this->assertNull($result['postalCode']);
         $this->assertNull($result['timezone']);
     }
 
@@ -186,16 +186,16 @@ class GeoIPsProviderTest extends TestCase
         $this->assertEquals('UTAH', $result['region']);
         $this->assertEquals('UT', $result['regionCode']);
         $this->assertEquals('UTAH', $result['county']);
-        $this->assertEquals('PROVO', $result['city']);
+        $this->assertEquals('PROVO', $result['locality']);
         $this->assertEquals(40.3402, $result['latitude'], '', 0.0001);
         $this->assertEquals(-111.6073, $result['longitude'], '', 0.0001);
         $this->assertEquals('MST', $result['timezone']);
         $this->assertNull($result['streetName']);
-        $this->assertNull($result['zipcode']);
+        $this->assertNull($result['postalCode']);
     }
 
     /**
-     * @expectedException \Geocoder\Exception\InvalidCredentialsException
+     * @expectedException \Geocoder\Exception\InvalidCredentials
      * @expectedExceptionMessage The API key associated with your request was not recognized.
      */
     public function testGetGeocodedDataWithRealIPv4AndInvalidApiKeyGetsFakeContent()
@@ -221,7 +221,7 @@ class GeoIPsProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\InvalidCredentialsException
+     * @expectedException \Geocoder\Exception\InvalidCredentials
      * @expectedExceptionMessage The API key has not been approved or has been disabled.
      */
     public function testGetGeocodedDataWithRealIPv4AndInvalidApiKeyGetsFakeContent2()
@@ -247,7 +247,7 @@ class GeoIPsProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\QuotaExceededException
+     * @expectedException \Geocoder\Exception\QuotaExceeded
      * @expectedExceptionMessage The service you have requested is over capacity.
      */
     public function testGetGeocodedDataWithRealIPv4AndQuotaExceeded()
@@ -273,7 +273,7 @@ class GeoIPsProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\InvalidArgumentException
+     * @expectedException \Geocoder\Exception\InvalidArgument
      * @expectedExceptionMessage The API call should include a valid IP address.
      */
     public function testGetGeocodedDataGetsFakeContentWithIpNotFound()
@@ -299,7 +299,7 @@ class GeoIPsProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\InvalidCredentialsException
+     * @expectedException \Geocoder\Exception\InvalidCredentials
      * @expectedExceptionMessage The API call should include a API key parameter.
      */
     public function testGetGeocodedDataGetsFakeContentWithKeyNotFound()
@@ -343,8 +343,8 @@ class GeoIPsProviderTest extends TestCase
         $this->assertEquals('UTAH', $result['region']);
         $this->assertEquals('UT', $result['regionCode']);
         $this->assertEquals('UTAH', $result['county']);
-        $this->assertEquals('PROVO', $result['city']);
-        $this->assertNull($result['zipcode']);
+        $this->assertEquals('PROVO', $result['locality']);
+        $this->assertNull($result['postalCode']);
         $this->assertEquals(40.3402, $result['latitude'], '', 0.0001);
         $this->assertEquals(-111.6073, $result['longitude'], '', 0.0001);
         $this->assertEquals('MST', $result['timezone']);
@@ -352,7 +352,7 @@ class GeoIPsProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      */
     public function testGetGeocodedDataWithRealIPv4NoResults()
     {
@@ -365,7 +365,7 @@ class GeoIPsProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The GeoIPsProvider is not able to do reverse geocoding.
      */
     public function testGetReverseData()

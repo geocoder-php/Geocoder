@@ -23,7 +23,7 @@ class BingMapsProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query http://dev.virtualearth.net/REST/v1/Locations/?maxResults=5&q=foobar&key=api_key
      */
     public function testGetGeocodedDataWithInvalidData()
@@ -33,7 +33,7 @@ class BingMapsProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query http://dev.virtualearth.net/REST/v1/Locations/?maxResults=5&q=&key=api_key
      */
     public function testGetGeocodedDataWithNull()
@@ -43,7 +43,7 @@ class BingMapsProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query http://dev.virtualearth.net/REST/v1/Locations/?maxResults=5&q=&key=api_key
      */
     public function testGetGeocodedDataWithEmpty()
@@ -53,7 +53,7 @@ class BingMapsProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The BingMapsProvider does not support IP addresses.
      */
     public function testGetGeocodedDataWithLocalhostIPv4()
@@ -63,7 +63,7 @@ class BingMapsProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The BingMapsProvider does not support IP addresses.
      */
     public function testGetGeocodedDataWithLocalhostIPv6()
@@ -73,7 +73,7 @@ class BingMapsProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query http://dev.virtualearth.net/REST/v1/Locations/?maxResults=5&q=10+avenue+Gambetta%2C+Paris%2C+France&key=api_key
      */
     public function testGetGeocodedDataWithAddressGetsNullContent()
@@ -107,8 +107,8 @@ JSON;
         $this->assertEquals(2.3966003933611, $results[0]['bounds']['east'], '', 0.01);
         $this->assertNull($results[0]['streetNumber']);
         $this->assertEquals('10 Avenue Gambetta', $results[0]['streetName']);
-        $this->assertEquals(75020, $results[0]['zipcode']);
-        $this->assertEquals('Paris', $results[0]['city']);
+        $this->assertEquals(75020, $results[0]['postalCode']);
+        $this->assertEquals('Paris', $results[0]['locality']);
         $this->assertEquals('Paris', $results[0]['county']);
         $this->assertEquals('IdF', $results[0]['region']);
         $this->assertEquals('France', $results[0]['country']);
@@ -129,8 +129,8 @@ JSON;
         $this->assertEquals(2.3328581572262, $results[1]['bounds']['east'], '', 0.01);
         $this->assertNull($results[1]['streetNumber']);
         $this->assertEquals('10 Avenue Léon Gambetta', $results[1]['streetName']);
-        $this->assertEquals(92120, $results[1]['zipcode']);
-        $this->assertEquals('Montrouge', $results[1]['city']);
+        $this->assertEquals(92120, $results[1]['postalCode']);
+        $this->assertEquals('Montrouge', $results[1]['locality']);
         $this->assertEquals('Hauts-de-Seine', $results[1]['county']);
         $this->assertEquals('IdF', $results[1]['region']);
         $this->assertEquals('France', $results[1]['country']);
@@ -148,8 +148,8 @@ JSON;
         $this->assertEquals(2.4435004547103, $results[2]['bounds']['east'], '', 0.01);
         $this->assertNull($results[2]['streetNumber']);
         $this->assertEquals('10 Avenue Gambetta', $results[2]['streetName']);
-        $this->assertEquals(94700, $results[2]['zipcode']);
-        $this->assertEquals('Maisons-Alfort', $results[2]['city']);
+        $this->assertEquals(94700, $results[2]['postalCode']);
+        $this->assertEquals('Maisons-Alfort', $results[2]['locality']);
         $this->assertEquals('Val-De-Marne', $results[2]['county']);
         $this->assertEquals('IdF', $results[2]['region']);
         $this->assertEquals('France', $results[2]['country']);
@@ -181,9 +181,9 @@ JSON;
         $this->assertEquals(2.3966002592208, $result['bounds']['east'], '', 0.0001);
         $this->assertNull($result['streetNumber']);
         $this->assertEquals('10 Avenue Gambetta', $result['streetName']);
-        $this->assertEquals(75020, $result['zipcode']);
-        // $this->assertEquals('Paris', $result['city']);
-        $this->assertEquals('20e Arrondissement', $result['city']);
+        $this->assertEquals(75020, $result['postalCode']);
+        // $this->assertEquals('Paris', $result['locality']);
+        $this->assertEquals('20e Arrondissement', $result['locality']);
         $this->assertEquals('Paris', $result['county']);
         $this->assertEquals('IdF', $result['region']);
         $this->assertEquals('France', $result['country']);
@@ -217,8 +217,8 @@ JSON;
         $this->assertEquals(2.3966003933611, $results[0]['bounds']['east'], '', 0.01);
         $this->assertNull($results[0]['streetNumber']);
         $this->assertEquals('10 Avenue Gambetta', $results[0]['streetName']);
-        $this->assertEquals(75020, $results[0]['zipcode']);
-        $this->assertEquals('Paris', $results[0]['city']);
+        $this->assertEquals(75020, $results[0]['postalCode']);
+        $this->assertEquals('Paris', $results[0]['locality']);
         $this->assertEquals('Paris', $results[0]['county']);
         $this->assertEquals('IdF', $results[0]['region']);
         $this->assertEquals('France', $results[0]['country']);
@@ -239,8 +239,8 @@ JSON;
         $this->assertEquals(2.3328581572262, $results[1]['bounds']['east'], '', 0.01);
         $this->assertNull($results[1]['streetNumber']);
         $this->assertEquals('10 Avenue Léon Gambetta', $results[1]['streetName']);
-        $this->assertEquals(92120, $results[1]['zipcode']);
-        $this->assertEquals('Montrouge', $results[1]['city']);
+        $this->assertEquals(92120, $results[1]['postalCode']);
+        $this->assertEquals('Montrouge', $results[1]['locality']);
         $this->assertEquals('Hauts-de-Seine', $results[1]['county']);
         $this->assertEquals('IdF', $results[1]['region']);
         $this->assertEquals('France', $results[1]['country']);
@@ -258,15 +258,15 @@ JSON;
         $this->assertEquals(2.4435004547103, $results[2]['bounds']['east'], '', 0.01);
         $this->assertNull($results[2]['streetNumber']);
         $this->assertEquals('10 Avenue Gambetta', $results[2]['streetName']);
-        $this->assertEquals(94700, $results[2]['zipcode']);
-        $this->assertEquals('Maisons-Alfort', $results[2]['city']);
+        $this->assertEquals(94700, $results[2]['postalCode']);
+        $this->assertEquals('Maisons-Alfort', $results[2]['locality']);
         $this->assertEquals('Val-De-Marne', $results[2]['county']);
         $this->assertEquals('IdF', $results[2]['region']);
         $this->assertEquals('France', $results[2]['country']);
     }
 
     /**
-     * @expectedException Geocoder\Exception\NoResultException
+     * @expectedException Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query http://dev.virtualearth.net/REST/v1/Locations/1.000000,2.000000?key=api_key
      */
     public function testGetReversedData()
@@ -276,7 +276,7 @@ JSON;
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query http://dev.virtualearth.net/REST/v1/Locations/48.863216,2.388772?key=api_key
      */
     public function testGetReversedDataWithCoordinatesContentReturnNull()
@@ -311,9 +311,9 @@ JSON;
         $this->assertEquals(2.3966002592208, $result['bounds']['east'], '', 0.0001);
         $this->assertNull($result['streetNumber']);
         $this->assertEquals('10 Avenue Gambetta', $result['streetName']);
-        $this->assertEquals(75020, $result['zipcode']);
-        // $this->assertEquals('Paris', $result['city']);
-        $this->assertEquals('20e Arrondissement', $result['city']);
+        $this->assertEquals(75020, $result['postalCode']);
+        // $this->assertEquals('Paris', $result['locality']);
+        $this->assertEquals('20e Arrondissement', $result['locality']);
         $this->assertEquals('Paris', $result['county']);
         $this->assertEquals('IdF', $result['region']);
         $this->assertEquals('France', $result['country']);
@@ -323,7 +323,7 @@ JSON;
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The BingMapsProvider does not support IP addresses.
      */
     public function testGetGeocodedDataWithRealIPv4()
@@ -337,7 +337,7 @@ JSON;
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The BingMapsProvider does not support IP addresses.
      */
     public function testGetGeocodedDataWithRealIPv6()

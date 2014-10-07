@@ -10,15 +10,15 @@
 
 namespace Geocoder\Provider;
 
+use Geocoder\Exception\InvalidCredentials;
+use Geocoder\Exception\NoResult;
+use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\HttpAdapter\HttpAdapterInterface;
-use Geocoder\Exception\InvalidCredentialsException;
-use Geocoder\Exception\NoResultException;
-use Geocoder\Exception\UnsupportedException;
 
 /**
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class TomTomProvider extends AbstractProvider implements LocaleAwareProviderInterface
+class TomTomProvider extends AbstractProvider implements LocaleAwareProvider
 {
     /**
      * @var string
@@ -53,12 +53,12 @@ class TomTomProvider extends AbstractProvider implements LocaleAwareProviderInte
     public function getGeocodedData($address)
     {
         if (null === $this->apiKey) {
-            throw new InvalidCredentialsException('No Geocoding API Key provided');
+            throw new InvalidCredentials('No Geocoding API Key provided');
         }
 
         // This API doesn't handle IPs
         if (filter_var($address, FILTER_VALIDATE_IP)) {
-            throw new UnsupportedException('The TomTomProvider does not support IP addresses.');
+            throw new UnsupportedOperation('The TomTomProvider does not support IP addresses.');
         }
 
         $query = sprintf(self::GEOCODE_ENDPOINT_URL, $this->apiKey, rawurlencode($address), $this->getMaxResults());
@@ -72,7 +72,7 @@ class TomTomProvider extends AbstractProvider implements LocaleAwareProviderInte
     public function getReversedData(array $coordinates)
     {
         if (null === $this->apiKey) {
-            throw new InvalidCredentialsException('No Map API Key provided');
+            throw new InvalidCredentials('No Map API Key provided');
         }
 
         $query = sprintf(self::REVERSE_ENDPOINT_URL, $this->apiKey, $coordinates[0], $coordinates[1]);
@@ -93,7 +93,7 @@ class TomTomProvider extends AbstractProvider implements LocaleAwareProviderInte
      *
      * @return array
      */
-    protected function executeQuery($query)
+    private function executeQuery($query)
     {
         if (null !== $this->getLocale()) {
             // Supported 2- character values are de, en, es, fr, it, nl, pl, pt, and sv.
@@ -106,21 +106,21 @@ class TomTomProvider extends AbstractProvider implements LocaleAwareProviderInte
         try {
             $xml = new \SimpleXmlElement($content);
         } catch (\Exception $e) {
-            throw new NoResultException(sprintf('Could not execute query %s', $query));
+            throw new NoResult(sprintf('Could not execute query %s', $query));
         }
 
         $attributes = $xml->attributes();
 
         if (isset($attributes['count']) && 0 === (int) $attributes['count']) {
-            throw new NoResultException(sprintf('Could not execute query %s', $query));
+            throw new NoResult(sprintf('Could not execute query %s', $query));
         }
 
         if (isset($attributes['errorCode'])) {
             if ('403' === (string) $attributes['errorCode']) {
-                throw new InvalidCredentialsException('Map API Key provided is not valid.');
+                throw new InvalidCredentials('Map API Key provided is not valid.');
             }
 
-            throw new NoResultException(sprintf('Could not execute query %s', $query));
+            throw new NoResult(sprintf('Could not execute query %s', $query));
         }
 
         $data = isset($xml->geoResult) ? $xml->geoResult : $xml->reverseGeoResult;
@@ -144,13 +144,13 @@ class TomTomProvider extends AbstractProvider implements LocaleAwareProviderInte
      *
      * @return array
      */
-    protected function getResultArray(\SimpleXmlElement $data)
+    private function getResultArray(\SimpleXmlElement $data)
     {
         return array_merge($this->getDefaults(), array(
             'latitude'    => isset($data->latitude) ? (double) $data->latitude : null,
             'longitude'   => isset($data->longitude) ? (double) $data->longitude : null,
             'streetName'  => isset($data->street) ? (string) $data->street : null,
-            'city'        => isset($data->city) ? (string) $data->city : null,
+            'locality'    => isset($data->city) ? (string) $data->city : null,
             'region'      => isset($data->state) ? (string) $data->state : null,
             'country'     => isset($data->country) ? (string) $data->country : null,
             'countryCode' => isset($data->countryISO3) ? (string) $data->countryISO3 : null,

@@ -23,7 +23,7 @@ class GeoipProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The GeoipProvider does not support Street addresses.
      */
     public function testGetGeocodedDataWithNull()
@@ -33,7 +33,7 @@ class GeoipProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The GeoipProvider does not support Street addresses.
      */
     public function testGetGeocodedDataWithEmpty()
@@ -43,7 +43,7 @@ class GeoipProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The GeoipProvider does not support Street addresses.
      */
     public function testGetGeocodedDataWithAddress()
@@ -64,17 +64,17 @@ class GeoipProviderTest extends TestCase
         $this->assertInternalType('array', $result);
         $this->assertArrayNotHasKey('latitude', $result);
         $this->assertArrayNotHasKey('longitude', $result);
-        $this->assertArrayNotHasKey('zipcode', $result);
+        $this->assertArrayNotHasKey('postalCode', $result);
         $this->assertArrayNotHasKey('timezone', $result);
 
-        $this->assertEquals('localhost', $result['city']);
+        $this->assertEquals('localhost', $result['locality']);
         $this->assertEquals('localhost', $result['region']);
         $this->assertEquals('localhost', $result['county']);
         $this->assertEquals('localhost', $result['country']);
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The GeoipProvider does not support IPv6 addresses.
      */
     public function testGetGeocodedDataWithLocalhostIPv6()
@@ -95,8 +95,8 @@ class GeoipProviderTest extends TestCase
         $this->assertInternalType('array', $result);
         $this->assertNotNull($result['latitude']);
         $this->assertNotNull($result['longitude']);
-        $this->assertNotNull($result['zipcode']);
-        $this->assertNotNull($result['city']);
+        $this->assertNotNull($result['postalCode']);
+        $this->assertNotNull($result['locality']);
         $this->assertNotNull($result['regionCode']);
         $this->assertNotNull($result['region']);
         $this->assertNotNull($result['country']);
@@ -105,7 +105,7 @@ class GeoipProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The GeoipProvider does not support IPv6 addresses.
      */
     public function testGetGeocodedDataWithRealIPv6()
@@ -115,7 +115,7 @@ class GeoipProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The GeoipProvider is not able to do reverse geocoding.
      */
     public function testGetReverseData()

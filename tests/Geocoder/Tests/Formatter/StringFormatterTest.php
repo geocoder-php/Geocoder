@@ -2,25 +2,28 @@
 
 namespace Geocoder\Tests\Formatter;
 
-use Geocoder\Formatter\Formatter;
-use Geocoder\Result\Geocoded;
+use Geocoder\Formatter\StringFormatter;
 use Geocoder\Tests\TestCase;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-class FormatterTest extends TestCase
+class StringFormatterTest extends TestCase
 {
+    private $formatter;
+
+    public function setUp()
+    {
+        $this->formatter = new StringFormatter();
+    }
+
     /**
      * @dataProvider dataProviderForTestFormat
      */
     public function testFormat($data, $format, $expected)
     {
-        $geocodedObject = new Geocoded();
-        $geocodedObject->fromArray($data);
-
-        $formatter = new Formatter($geocodedObject);
-        $result    = $formatter->format($format);
+        $address = $this->createAddress($data);
+        $result  = $this->formatter->format($address, $format);
 
         $this->assertTrue(is_string($result));
         $this->assertEquals($expected, $result);
@@ -40,12 +43,12 @@ class FormatterTest extends TestCase
                 'Via San Marco'
             ),
             array(
-                array('city' => 'Zuerich'),
+                array('locality' => 'Zuerich'),
                 '%L',
                 'Zuerich'
             ),
             array(
-                array('zipcode' => '8001'),
+                array('postalCode' => '8001'),
                 '%z',
                 '8001'
             ),
@@ -85,36 +88,36 @@ class FormatterTest extends TestCase
                 'Europe/Paris'
             ),
             array(
-                array('cityDistrict' => 'District'),
+                array('subLocality' => 'District'),
                 '%D',
                 'District'
             ),
             array(
                 array(
-                    'streetNumber'  => 120,
-                    'streetName'    => 'Badenerstrasse',
-                    'zipcode'       => 8001,
-                    'city'          => 'Zuerich',
+                    'streetNumber' => 120,
+                    'streetName'   => 'Badenerstrasse',
+                    'postalCode'   => 8001,
+                    'locality'     => 'Zuerich',
                 ),
                 '%S %n, %z %L',
                 'Badenerstrasse 120, 8001 Zuerich'
             ),
             array(
                 array(
-                    'streetNumber'  => 120,
-                    'streetName'    => 'Badenerstrasse',
-                    'zipcode'       => 8001,
-                    'city'          => 'Zuerich',
+                    'streetNumber' => 120,
+                    'streetName'   => 'Badenerstrasse',
+                    'postalCode'   => 8001,
+                    'locality'     => 'Zuerich',
                 ),
                 '<p>%S %n, %z <a href="#%L">%L</a></p>',
                 '<p>Badenerstrasse 120, 8001 <a href="#Zuerich">Zuerich</a></p>'
             ),
             array(
                 array(
-                    'streetNumber'  => 120,
-                    'streetName'    => 'Badenerstrasse',
-                    'zipcode'       => 8001,
-                    'city'          => 'Zuerich',
+                    'streetNumber' => 120,
+                    'streetName'   => 'Badenerstrasse',
+                    'postalCode'   => 8001,
+                    'locality'     => 'Zuerich',
                 ),
                 '<p>%S %n, %z <a href="#%L">%L</a></p><p>%P</p>',
                 '<p>Badenerstrasse 120, 8001 <a href="#Zuerich">Zuerich</a></p><p></p>'

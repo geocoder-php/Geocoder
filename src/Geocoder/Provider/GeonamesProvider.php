@@ -10,15 +10,15 @@
 
 namespace Geocoder\Provider;
 
-use Geocoder\Exception\InvalidCredentialsException;
-use Geocoder\Exception\NoResultException;
-use Geocoder\Exception\UnsupportedException;
+use Geocoder\Exception\InvalidCredentials;
+use Geocoder\Exception\NoResult;
+use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\HttpAdapter\HttpAdapterInterface;
 
 /**
  * @author Giovanni Pirrotta <giovanni.pirrotta@gmail.com>
  */
-class GeonamesProvider extends AbstractProvider implements LocaleAwareProviderInterface
+class GeonamesProvider extends AbstractProvider implements LocaleAwareProvider
 {
     /**
      * @var string
@@ -33,7 +33,7 @@ class GeonamesProvider extends AbstractProvider implements LocaleAwareProviderIn
     /**
      * @var string
      */
-    private $username = null;
+    private $username;
 
     /**
      * @param HttpAdapterInterface $adapter  An HTTP adapter.
@@ -43,6 +43,7 @@ class GeonamesProvider extends AbstractProvider implements LocaleAwareProviderIn
     public function __construct(HttpAdapterInterface $adapter, $username, $locale = null)
     {
         parent::__construct($adapter, $locale);
+
         $this->username = $username;
     }
 
@@ -52,12 +53,12 @@ class GeonamesProvider extends AbstractProvider implements LocaleAwareProviderIn
     public function getGeocodedData($address)
     {
         if (null === $this->username) {
-            throw new InvalidCredentialsException('No Username provided');
+            throw new InvalidCredentials('No Username provided');
         }
 
         // This API doesn't handle IPs
         if (filter_var($address, FILTER_VALIDATE_IP)) {
-            throw new UnsupportedException('The GeonamesProvider does not support IP addresses.');
+            throw new UnsupportedOperation('The GeonamesProvider does not support IP addresses.');
         }
 
         $query = sprintf(self::GEOCODE_ENDPOINT_URL, urlencode($address), $this->getMaxResults(), $this->username);
@@ -71,7 +72,7 @@ class GeonamesProvider extends AbstractProvider implements LocaleAwareProviderIn
     public function getReversedData(array $coordinates)
     {
         if (null === $this->username) {
-            throw new InvalidCredentialsException('No Username provided');
+            throw new InvalidCredentials('No Username provided');
         }
 
         $query = sprintf(self::REVERSE_ENDPOINT_URL, $coordinates[0], $coordinates[1], $this->getMaxResults(), $this->username);
@@ -92,7 +93,7 @@ class GeonamesProvider extends AbstractProvider implements LocaleAwareProviderIn
      *
      * @return array
      */
-    protected function executeQuery($query)
+    private function executeQuery($query)
     {
         if (null !== $this->getLocale()) {
             // Locale code transformation: for example from it_IT to it
@@ -102,24 +103,24 @@ class GeonamesProvider extends AbstractProvider implements LocaleAwareProviderIn
         $content = $this->getAdapter()->getContent($query);
 
         if (null === $content) {
-            throw new NoResultException(sprintf('Could not execute query %s', $query));
+            throw new NoResult(sprintf('Could not execute query %s', $query));
         }
 
         if (null === $json = json_decode($content)) {
-            throw new NoResultException(sprintf('Could not execute query %s', $query));
+            throw new NoResult(sprintf('Could not execute query %s', $query));
         }
 
         if (isset($json->totalResultsCount) && empty($json->totalResultsCount)) {
-            throw new NoResultException(sprintf('No places found for query %s', $query));
+            throw new NoResult(sprintf('No places found for query %s', $query));
         }
 
         $data = $json->geonames;
 
         if (empty($data)) {
-            throw new NoResultException(sprintf('Could not execute query %s', $query));
+            throw new NoResult(sprintf('Could not execute query %s', $query));
         }
 
-        $results = array();
+        $results = [];
 
         foreach ($data as $item) {
             $bounds = null;
@@ -136,7 +137,7 @@ class GeonamesProvider extends AbstractProvider implements LocaleAwareProviderIn
                 'latitude'    => isset($item->lat) ? $item->lat : null,
                 'longitude'   => isset($item->lng) ? $item->lng : null,
                 'bounds'      => $bounds,
-                'city'        => isset($item->name) ? $item->name : null,
+                'locality'    => isset($item->name) ? $item->name : null,
                 'county'      => isset($item->adminName2) ? $item->adminName2 : null,
                 'region'      => isset($item->adminName1) ? $item->adminName1 : null,
                 'country'     => isset($item->countryName) ? $item->countryName : null,

@@ -11,8 +11,8 @@
 namespace Geocoder\Exception;
 
 /**
- * @author William Durand <william.durand1@gmail.com>
+ * @author Max V. Kovrigovich <mvk@tut.by>
  */
-class UnsupportedException extends InvalidArgumentException implements ExceptionInterface
+class QuotaExceeded extends \RuntimeException implements Exception
 {
 }

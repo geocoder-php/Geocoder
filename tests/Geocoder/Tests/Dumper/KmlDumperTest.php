@@ -3,11 +3,11 @@
 namespace Geocoder\Tests\Dumper;
 
 use Geocoder\Dumper\KmlDumper;
-use Geocoder\Result\Geocoded;
 use Geocoder\Tests\TestCase;
 
 /**
  * @author Jan Sorgalla <jsorgalla@googlemail.com>
+ * @author William Durand <william.durand1@gmail.com>
  */
 class KmlDumperTest extends TestCase
 {
@@ -20,8 +20,7 @@ class KmlDumperTest extends TestCase
 
     public function testDump()
     {
-        $obj = new Geocoded();
-
+        $address  = $this->createEmptyAddress();
         $expected = <<<KML
 <?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2">
@@ -37,7 +36,7 @@ class KmlDumperTest extends TestCase
 </kml>
 KML;
 
-        $result = $this->dumper->dump($obj);
+        $result = $this->dumper->dump($address);
 
         $this->assertTrue(is_string($result));
         $this->assertEquals($expected, $result);
@@ -45,13 +44,11 @@ KML;
 
     public function testDumpWithData()
     {
-        $obj = new Geocoded();
-        $obj['latitude']  = 48.8631507;
-        $obj['longitude'] = 2.3889114;
-        $obj->fromArray(array(
-            'city' => 'Paris'
-        ));
-
+        $address  = $this->createAddress([
+            'latitude'  => 48.8631507,
+            'longitude' => 2.3889114,
+            'locality'      => 'Paris',
+        ]);
         $expected = <<<KML
 <?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2">
@@ -67,7 +64,7 @@ KML;
 </kml>
 KML;
 
-        $result = $this->dumper->dump($obj);
+        $result = $this->dumper->dump($address);
 
         $this->assertTrue(is_string($result));
         $this->assertEquals($expected, $result);

@@ -70,7 +70,7 @@ class GoogleMapsBusinessProviderTest extends TestCase
     }
 
     /**
-     * @expectedException Geocoder\Exception\InvalidCredentialsException
+     * @expectedException Geocoder\Exception\InvalidCredentials
      * @expectedExceptionMessage Invalid client ID / API Key https://maps.googleapis.com/maps/api/geocode/json?address=Columbia%20University&client=foo&signature=9dJq1hPF7_iwafUpnqXUqEkP0gY=
      */
     public function testGetGeocodedDataWithInvalidClientIdAndKey()
@@ -81,7 +81,7 @@ class GoogleMapsBusinessProviderTest extends TestCase
     }
 
     /**
-     * @expectedException Geocoder\Exception\InvalidCredentialsException
+     * @expectedException Geocoder\Exception\InvalidCredentials
      * @expectedExceptionMessage Invalid client ID / API Key http://maps.googleapis.com/maps/api/geocode/json?address=Columbia%20University&client=foo&signature=9dJq1hPF7_iwafUpnqXUqEkP0gY=
      */
     public function testGetGeocodedDataWithINvalidClientIdAndKeyNoSsl()

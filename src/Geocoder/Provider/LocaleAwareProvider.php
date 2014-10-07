@@ -10,7 +10,7 @@
 
 namespace Geocoder\Provider;
 
-interface LocaleAwareProviderInterface extends ProviderInterface
+interface LocaleAwareProvider extends Provider
 {
     /**
      * Return the locale to be used in locale aware requests.

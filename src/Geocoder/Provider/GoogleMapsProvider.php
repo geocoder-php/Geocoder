@@ -10,16 +10,16 @@
 
 namespace Geocoder\Provider;
 
-use Geocoder\Exception\NoResultException;
-use Geocoder\Exception\QuotaExceededException;
-use Geocoder\Exception\UnsupportedException;
-use Geocoder\Exception\InvalidCredentialsException;
+use Geocoder\Exception\NoResult;
+use Geocoder\Exception\QuotaExceeded;
+use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Exception\InvalidCredentials;
 use Geocoder\HttpAdapter\HttpAdapterInterface;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-class GoogleMapsProvider extends AbstractProvider implements LocaleAwareProviderInterface
+class GoogleMapsProvider extends AbstractProvider implements LocaleAwareProvider
 {
     /**
      * @var string
@@ -34,17 +34,17 @@ class GoogleMapsProvider extends AbstractProvider implements LocaleAwareProvider
     /**
      * @var string
      */
-    private $region = null;
+    private $region;
 
     /**
      * @var bool
      */
-    private $useSsl = false;
+    private $useSsl;
 
     /**
      * @var string
      */
-    private $apiKey = null;
+    private $apiKey;
 
     /**
      * @param HttpAdapterInterface $adapter An HTTP adapter.
@@ -70,7 +70,7 @@ class GoogleMapsProvider extends AbstractProvider implements LocaleAwareProvider
         // Google API returns invalid data if IP address given
         // This API doesn't handle IPs
         if (filter_var($address, FILTER_VALIDATE_IP)) {
-            throw new UnsupportedException('The GoogleMapsProvider does not support IP addresses.');
+            throw new UnsupportedOperation('The GoogleMapsProvider does not support IP addresses.');
         }
 
         $query = sprintf(
@@ -108,8 +108,8 @@ class GoogleMapsProvider extends AbstractProvider implements LocaleAwareProvider
             $query = sprintf('%s&language=%s', $query, $this->getLocale());
         }
 
-        if (null !== $this->getRegion()) {
-            $query = sprintf('%s&region=%s', $query, $this->getRegion());
+        if (null !== $this->region) {
+            $query = sprintf('%s&region=%s', $query, $this->region);
         }
 
         if (null !== $this->apiKey) {
@@ -124,7 +124,7 @@ class GoogleMapsProvider extends AbstractProvider implements LocaleAwareProvider
      *
      * @return array
      */
-    protected function executeQuery($query)
+    private function executeQuery($query)
     {
         $query = $this->buildQuery($query);
 
@@ -132,32 +132,32 @@ class GoogleMapsProvider extends AbstractProvider implements LocaleAwareProvider
 
         // Throw exception if invalid clientID and/or privateKey used with GoogleMapsBusinessProvider
         if (strpos($content, "Provided 'signature' is not valid for the provided client ID") !== false) {
-            throw new InvalidCredentialsException(sprintf('Invalid client ID / API Key %s', $query));
+            throw new InvalidCredentials(sprintf('Invalid client ID / API Key %s', $query));
         }
 
         if (null === $content) {
-            throw new NoResultException(sprintf('Could not execute query %s', $query));
+            throw new NoResult(sprintf('Could not execute query %s', $query));
         }
 
         $json = json_decode($content);
 
         // API error
         if (!isset($json)) {
-            throw new NoResultException(sprintf('Could not execute query %s', $query));
+            throw new NoResult(sprintf('Could not execute query %s', $query));
         }
 
         if ('REQUEST_DENIED' === $json->status && 'The provided API key is invalid.' === $json->error_message) {
-            throw new InvalidCredentialsException(sprintf('API key is invalid %s', $query));
+            throw new InvalidCredentials(sprintf('API key is invalid %s', $query));
         }
 
         // you are over your quota
         if ('OVER_QUERY_LIMIT' === $json->status) {
-            throw new QuotaExceededException(sprintf('Daily quota exceeded %s', $query));
+            throw new QuotaExceeded(sprintf('Daily quota exceeded %s', $query));
         }
 
         // no result
         if (!isset($json->results) || !count($json->results) || 'OK' !== $json->status) {
-            throw new NoResultException(sprintf('Could not execute query %s', $query));
+            throw new NoResult(sprintf('Could not execute query %s', $query));
         }
 
         $results = array();
@@ -210,15 +210,15 @@ class GoogleMapsProvider extends AbstractProvider implements LocaleAwareProvider
      *
      * @return array
      */
-    protected function updateAddressComponent(&$resultset, $type, $values)
+    private function updateAddressComponent(&$resultset, $type, $values)
     {
         switch ($type) {
             case 'postal_code':
-                $resultset['zipcode'] = $values->long_name;
+                $resultset['postalCode'] = $values->long_name;
                 break;
 
             case 'locality':
-                $resultset['city'] = $values->long_name;
+                $resultset['locality'] = $values->long_name;
                 break;
 
             case 'administrative_area_level_2':
@@ -245,22 +245,12 @@ class GoogleMapsProvider extends AbstractProvider implements LocaleAwareProvider
                 break;
 
             case 'sublocality':
-                $resultset['cityDistrict'] = $values->long_name;
+                $resultset['subLocality'] = $values->long_name;
                 break;
 
             default:
         }
 
         return $resultset;
-    }
-
-    /**
-     * Returns the configured region or null.
-     *
-     * @return string|null
-     */
-    protected function getRegion()
-    {
-        return $this->region;
     }
 }

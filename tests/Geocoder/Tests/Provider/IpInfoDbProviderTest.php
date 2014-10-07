@@ -14,7 +14,7 @@ class IpInfoDbProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\InvalidCredentialsException
+     * @expectedException \Geocoder\Exception\InvalidCredentials
      */
     public function testGetDataWithNullApiKey()
     {
@@ -23,7 +23,7 @@ class IpInfoDbProviderTest extends TestCase
     }
 
     /**
-     * @expectedException Geocoder\Exception\UnsupportedException
+     * @expectedException Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The IpInfoDbProvider does not support Street addresses.
      */
     public function testGetGeocodedDataWithRandomString()
@@ -33,7 +33,7 @@ class IpInfoDbProviderTest extends TestCase
     }
 
     /**
-     * @expectedException Geocoder\Exception\UnsupportedException
+     * @expectedException Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The IpInfoDbProvider does not support Street addresses.
      */
     public function testGetGeocodedDataWithNull()
@@ -43,7 +43,7 @@ class IpInfoDbProviderTest extends TestCase
     }
 
     /**
-     * @expectedException Geocoder\Exception\UnsupportedException
+     * @expectedException Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The IpInfoDbProvider does not support Street addresses.
      */
     public function testGetGeocodedDataWithEmpty()
@@ -53,7 +53,7 @@ class IpInfoDbProviderTest extends TestCase
     }
 
     /**
-     * @expectedException Geocoder\Exception\UnsupportedException
+     * @expectedException Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The IpInfoDbProvider does not support Street addresses.
      */
     public function testGetGeocodedDataWithAddress()
@@ -74,17 +74,17 @@ class IpInfoDbProviderTest extends TestCase
         $this->assertInternalType('array', $result);
         $this->assertArrayNotHasKey('latitude', $result);
         $this->assertArrayNotHasKey('longitude', $result);
-        $this->assertArrayNotHasKey('zipcode', $result);
+        $this->assertArrayNotHasKey('postalCode', $result);
         $this->assertArrayNotHasKey('timezone', $result);
 
-        $this->assertEquals('localhost', $result['city']);
+        $this->assertEquals('localhost', $result['locality']);
         $this->assertEquals('localhost', $result['region']);
         $this->assertEquals('localhost', $result['county']);
         $this->assertEquals('localhost', $result['country']);
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The IpInfoDbProvider does not support IPv6 addresses.
      */
     public function testGetGeocodedDataWithLocalhostIPv6()
@@ -94,7 +94,7 @@ class IpInfoDbProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query http://api.ipinfodb.com/v3/ip-city/?key=api_key&format=json&ip=74.125.45.100
      */
     public function testGetGeocodedDataWithRealIPv4GetsNullContent()
@@ -104,7 +104,7 @@ class IpInfoDbProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query http://api.ipinfodb.com/v3/ip-city/?key=api_key&format=json&ip=74.125.45.100
      */
     public function testGetGeocodedDataWithRealIPv4GetsEmptyContent()
@@ -129,8 +129,8 @@ class IpInfoDbProviderTest extends TestCase
         $this->assertInternalType('array', $result);
         $this->assertEquals(37.406, $result['latitude'], '', 0.001);
         $this->assertEquals(-122.079, $result['longitude'], '', 0.001);
-        $this->assertEquals(94043, $result['zipcode']);
-        $this->assertEquals('MOUNTAIN VIEW', $result['city']);
+        $this->assertEquals(94043, $result['postalCode']);
+        $this->assertEquals('MOUNTAIN VIEW', $result['locality']);
         $this->assertEquals('CALIFORNIA', $result['region']);
         $this->assertEquals('UNITED STATES', $result['country']);
         $this->assertEquals('US', $result['countryCode']);
@@ -138,7 +138,7 @@ class IpInfoDbProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The IpInfoDbProvider does not support IPv6 addresses.
      */
     public function testGetGeocodedDataWithRealIPv6()
@@ -152,7 +152,7 @@ class IpInfoDbProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The IpInfoDbProvider is not able to do reverse geocoding.
      */
     public function testReversedData()

@@ -10,13 +10,13 @@
 
 namespace Geocoder\Provider;
 
-use Geocoder\Exception\NoResultException;
-use Geocoder\Exception\UnsupportedException;
+use Geocoder\Exception\NoResult;
+use Geocoder\Exception\UnsupportedOperation;
 
 /**
  * @author Andrea Cristaudo <andrea.cristaudo@gmail.com>
  */
-class GeoPluginProvider extends AbstractProvider implements ProviderInterface
+class GeoPluginProvider extends AbstractProvider implements Provider
 {
     /**
      * @var string
@@ -29,7 +29,7 @@ class GeoPluginProvider extends AbstractProvider implements ProviderInterface
     public function getGeocodedData($address)
     {
         if (!filter_var($address, FILTER_VALIDATE_IP)) {
-            throw new UnsupportedException('The GeoPluginProvider does not support street addresses.');
+            throw new UnsupportedOperation('The GeoPluginProvider does not support street addresses.');
         }
 
         if (in_array($address, array('127.0.0.1', '::1'))) {
@@ -46,7 +46,7 @@ class GeoPluginProvider extends AbstractProvider implements ProviderInterface
      */
     public function getReversedData(array $coordinates)
     {
-        throw new UnsupportedException('The GeoPluginProvider is not able to do reverse geocoding.');
+        throw new UnsupportedOperation('The GeoPluginProvider is not able to do reverse geocoding.');
     }
 
     /**
@@ -62,28 +62,28 @@ class GeoPluginProvider extends AbstractProvider implements ProviderInterface
      *
      * @return array
      */
-    protected function executeQuery($query)
+    private function executeQuery($query)
     {
         $content = $this->getAdapter()->getContent($query);
 
         if (null === $content || '' === $content) {
-            throw new NoResultException(sprintf('Could not execute query %s', $query));
+            throw new NoResult(sprintf('Could not execute query %s', $query));
         }
 
         $json = json_decode($content, true);
 
         if (!is_array($json) || !count($json)) {
-            throw new NoResultException(sprintf('Could not execute query %s', $query));
+            throw new NoResult(sprintf('Could not execute query %s', $query));
         }
 
         if (!array_key_exists('geoplugin_status', $json) || (200 !== $json['geoplugin_status'] && 206 !== $json['geoplugin_status'])) {
-            throw new NoResultException(sprintf('Could not execute query %s', $query));
+            throw new NoResult(sprintf('Could not execute query %s', $query));
         }
 
         $data = array_filter($json);
 
         return array(array_merge($this->getDefaults(), array(
-            'city'        => isset($data['geoplugin_city']) ? $data['geoplugin_city'] : null,
+            'locality'    => isset($data['geoplugin_city']) ? $data['geoplugin_city'] : null,
             'country'     => isset($data['geoplugin_countryName']) ? $data['geoplugin_countryName'] : null,
             'countryCode' => isset($data['geoplugin_countryCode']) ? $data['geoplugin_countryCode'] : null,
             'region'      => isset($data['geoplugin_regionName']) ? $data['geoplugin_regionName'] : null,

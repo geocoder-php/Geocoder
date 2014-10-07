@@ -10,14 +10,14 @@
 
 namespace Geocoder\Provider;
 
+use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Exception\NoResult;
 use Geocoder\HttpAdapter\HttpAdapterInterface;
-use Geocoder\Exception\UnsupportedException;
-use Geocoder\Exception\NoResultException;
 
 /**
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class YandexProvider extends AbstractProvider implements LocaleAwareProviderInterface
+class YandexProvider extends AbstractProvider implements LocaleAwareProvider
 {
     /**
      * @var string
@@ -53,7 +53,7 @@ class YandexProvider extends AbstractProvider implements LocaleAwareProviderInte
     {
         // This API doesn't handle IPs
         if (filter_var($address, FILTER_VALIDATE_IP)) {
-            throw new UnsupportedException('The YandexProvider does not support IP addresses.');
+            throw new UnsupportedOperation('The YandexProvider does not support IP addresses.');
         }
 
         $query = sprintf(self::GEOCODE_ENDPOINT_URL, urlencode($address));
@@ -88,7 +88,7 @@ class YandexProvider extends AbstractProvider implements LocaleAwareProviderInte
      *
      * @return array
      */
-    protected function executeQuery($query)
+    private function executeQuery($query)
     {
         if (null !== $this->getLocale()) {
             $query = sprintf('%s&lang=%s', $query, str_replace('_', '-', $this->getLocale()));
@@ -100,7 +100,7 @@ class YandexProvider extends AbstractProvider implements LocaleAwareProviderInte
         $json    = (array) json_decode($content, true);
 
         if (empty($json) || '0' === $json['response']['GeoObjectCollection']['metaDataProperty']['GeocoderResponseMetaData']['found']) {
-            throw new NoResultException(sprintf('Could not execute query %s', $query));
+            throw new NoResult(sprintf('Could not execute query %s', $query));
         }
 
         $data = $json['response']['GeoObjectCollection']['featureMember'];
@@ -131,16 +131,16 @@ class YandexProvider extends AbstractProvider implements LocaleAwareProviderInte
             $coordinates = explode(' ', $details['pos']);
 
             $results[] = array_merge($this->getDefaults(), array(
-                'latitude'      => $coordinates[1],
-                'longitude'     => $coordinates[0],
-                'bounds'        => $bounds,
-                'streetNumber'  => isset($details['PremiseNumber']) ? $details['PremiseNumber'] : null,
-                'streetName'    => isset($details['ThoroughfareName']) ? $details['ThoroughfareName'] : null,
-                'cityDistrict'  => isset($details['DependentLocalityName']) ? $details['DependentLocalityName'] : null,
-                'city'          => isset($details['LocalityName']) ? $details['LocalityName'] : null,
-                'region'        => isset($details['AdministrativeAreaName']) ? $details['AdministrativeAreaName'] : null,
-                'country'       => isset($details['CountryName']) ? $details['CountryName'] : null,
-                'countryCode'   => isset($details['CountryNameCode']) ? $details['CountryNameCode'] : null,
+                'latitude'     => $coordinates[1],
+                'longitude'    => $coordinates[0],
+                'bounds'       => $bounds,
+                'streetNumber' => isset($details['PremiseNumber']) ? $details['PremiseNumber'] : null,
+                'streetName'   => isset($details['ThoroughfareName']) ? $details['ThoroughfareName'] : null,
+                'subLocality'  => isset($details['DependentLocalityName']) ? $details['DependentLocalityName'] : null,
+                'locality'     => isset($details['LocalityName']) ? $details['LocalityName'] : null,
+                'region'       => isset($details['AdministrativeAreaName']) ? $details['AdministrativeAreaName'] : null,
+                'country'      => isset($details['CountryName']) ? $details['CountryName'] : null,
+                'countryCode'  => isset($details['CountryNameCode']) ? $details['CountryNameCode'] : null,
             ));
         }
 

@@ -10,15 +10,15 @@
 
 namespace Geocoder\Provider;
 
-use Geocoder\Exception\InvalidCredentialsException;
-use Geocoder\Exception\NoResultException;
-use Geocoder\Exception\UnsupportedException;
+use Geocoder\Exception\InvalidCredentials;
+use Geocoder\Exception\NoResult;
+use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\HttpAdapter\HttpAdapterInterface;
 
 /**
  * @author Andrea Cristaudo <andrea.cristaudo@gmail.com>
  */
-class MaxMindProvider extends AbstractProvider implements ProviderInterface
+class MaxMindProvider extends AbstractProvider implements Provider
 {
     /**
      * @var string Country, City, ISP and Organization
@@ -77,11 +77,11 @@ class MaxMindProvider extends AbstractProvider implements ProviderInterface
     public function getGeocodedData($address)
     {
         if (null === $this->apiKey) {
-            throw new InvalidCredentialsException('No API Key provided.');
+            throw new InvalidCredentials('No API Key provided.');
         }
 
         if (!filter_var($address, FILTER_VALIDATE_IP)) {
-            throw new UnsupportedException('The MaxMindProvider does not support street addresses.');
+            throw new UnsupportedOperation('The MaxMindProvider does not support street addresses.');
         }
 
         if (in_array($address, array('127.0.0.1', '::1'))) {
@@ -101,7 +101,7 @@ class MaxMindProvider extends AbstractProvider implements ProviderInterface
      */
     public function getReversedData(array $coordinates)
     {
-        throw new UnsupportedException('The MaxMindProvider is not able to do reverse geocoding.');
+        throw new UnsupportedOperation('The MaxMindProvider is not able to do reverse geocoding.');
     }
 
     /**
@@ -109,31 +109,33 @@ class MaxMindProvider extends AbstractProvider implements ProviderInterface
      *
      * @return array
      */
-    protected function executeQuery($query)
+    private function executeQuery($query)
     {
         $content = $this->getAdapter()->getContent($query);
         $fields  = $this->fieldsForService($this->service);
 
         if (null === $content || '' === $content) {
-            throw new NoResultException(sprintf('Could not execute query %s', $query));
+            throw new NoResult(sprintf('Could not execute query %s', $query));
         }
 
         $data = str_getcsv($content);
 
         if (in_array(end($data), array('INVALID_LICENSE_KEY', 'LICENSE_REQUIRED'))) {
-            throw new InvalidCredentialsException('API Key provided is not valid.');
+            throw new InvalidCredentials('API Key provided is not valid.');
         }
 
         if ('IP_NOT_FOUND' === end($data)) {
-            throw new NoResultException('Could not retrieve informations for the ip address provided.');
+            throw new NoResult('Could not retrieve informations for the ip address provided.');
         }
 
         if (count($fields) !== count($data)) {
-            throw new NoResultException('Invalid result returned by provider.');
+            throw new NoResult('Invalid result returned by provider.');
         }
 
         $data = array_combine($fields, $data);
-        $data = array_map(function ($value) { return '' === $value ? null : $value; }, $data);
+        $data = array_map(function ($value) {
+            return '' === $value ? null : $value;
+        }, $data);
 
         if (empty($data['country']) && !empty($data['countryCode'])) {
             $data['country'] = $this->countryCodeToCountryName($data['countryCode']);
@@ -147,7 +149,7 @@ class MaxMindProvider extends AbstractProvider implements ProviderInterface
      *
      * @return string
      */
-    protected function countryCodeToCountryName($code)
+    private function countryCodeToCountryName($code)
     {
         $countryNames = $this->getCountryNames();
 
@@ -170,15 +172,15 @@ class MaxMindProvider extends AbstractProvider implements ProviderInterface
      *
      * @return array
      */
-    protected function fieldsForService($service)
+    private function fieldsForService($service)
     {
         switch ($service) {
             case self::CITY_EXTENDED_SERVICE:
                 return array(
                     'countryCode',
                     'regionCode',
-                    'city',
-                    'zipcode',
+                    'locality',
+                    'postalCode',
                     'latitude',
                     'longitude',
                     'metroCode',
@@ -192,14 +194,14 @@ class MaxMindProvider extends AbstractProvider implements ProviderInterface
                     'countryName',
                     'regionCode',
                     'region',
-                    'city',
+                    'locality',
                     'latitude',
                     'longitude',
                     'metroCode',
                     'areaCode',
                     'timezone',
                     'continentCode',
-                    'zipcode',
+                    'postalCode',
                     'isp',
                     'organization',
                     'domain',
@@ -214,7 +216,7 @@ class MaxMindProvider extends AbstractProvider implements ProviderInterface
                     'error'
                 );
             default:
-                throw new UnsupportedException(sprintf('Unknown MaxMind service %s', $service));
+                throw new UnsupportedOperation(sprintf('Unknown MaxMind service %s', $service));
         }
     }
 

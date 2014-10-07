@@ -10,20 +10,18 @@
 
 namespace Geocoder\Dumper;
 
-use Geocoder\Result\ResultInterface;
+use Geocoder\Result\Address;
 
 /**
  * @author Jan Sorgalla <jsorgalla@googlemail.com>
  */
-class WkbDumper implements DumperInterface
+class WkbDumper implements Dumper
 {
     /**
-     * @param ResultInterface $result
-     *
-     * @return string
+     * {@inheritDoc}
      */
-    public function dump(ResultInterface $result)
+    public function dump(Address $address)
     {
-        return pack('cLdd', 1, 1, $result->getLongitude(), $result->getLatitude());
+        return pack('cLdd', 1, 1, $address->getLongitude(), $address->getLatitude());
     }
 }

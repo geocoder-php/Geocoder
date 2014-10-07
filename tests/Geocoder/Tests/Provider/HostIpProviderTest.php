@@ -14,7 +14,7 @@ class HostIpProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The HostIpProvider does not support Street addresses.
      */
     public function testGetGeocodedDataWithNull()
@@ -24,7 +24,7 @@ class HostIpProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The HostIpProvider does not support Street addresses.
      */
     public function testGetGeocodedDataWithEmpty()
@@ -34,7 +34,7 @@ class HostIpProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The HostIpProvider does not support Street addresses.
      */
     public function testGetGeocodedDataWithAddress()
@@ -55,17 +55,17 @@ class HostIpProviderTest extends TestCase
         $this->assertInternalType('array', $result);
         $this->assertArrayNotHasKey('latitude', $result);
         $this->assertArrayNotHasKey('longitude', $result);
-        $this->assertArrayNotHasKey('zipcode', $result);
+        $this->assertArrayNotHasKey('postalCode', $result);
         $this->assertArrayNotHasKey('timezone', $result);
 
-        $this->assertEquals('localhost', $result['city']);
+        $this->assertEquals('localhost', $result['locality']);
         $this->assertEquals('localhost', $result['region']);
         $this->assertEquals('localhost', $result['county']);
         $this->assertEquals('localhost', $result['country']);
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The HostIpProvider does not support IPv6 addresses.
      */
     public function testGetGeocodedDataWithLocalhostIPv6()
@@ -75,7 +75,7 @@ class HostIpProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query http://api.hostip.info/get_json.php?ip=88.188.221.14&position=true
      */
     public function testGetGeocodedDataWithRealIPv4GetsNullContent()
@@ -85,7 +85,7 @@ class HostIpProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query http://api.hostip.info/get_json.php?ip=88.188.221.14&position=true
      */
     public function testGetGeocodedDataWithRealIPv4GetsEmptyContent()
@@ -106,15 +106,15 @@ class HostIpProviderTest extends TestCase
         $this->assertInternalType('array', $result);
         $this->assertEquals(45.5333, $result['latitude'], '', 0.0001);
         $this->assertEquals(2.6167, $result['longitude'], '', 0.0001);
-        $this->assertNull($result['zipcode']);
-        $this->assertEquals('Aulnat', $result['city']);
+        $this->assertNull($result['postalCode']);
+        $this->assertEquals('Aulnat', $result['locality']);
         $this->assertNull($result['region']);
         $this->assertEquals('FRANCE', $result['country']);
         $this->assertEquals('FR', $result['countryCode']);
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The HostIpProvider does not support IPv6 addresses.
      */
     public function testGetGeocodedDataWithRealIPv6()
@@ -124,7 +124,7 @@ class HostIpProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The HostIpProvider is not able to do reverse geocoding.
      */
     public function testGetReverseData()

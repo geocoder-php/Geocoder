@@ -17,7 +17,7 @@ class YandexProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The YandexProvider does not support IP addresses.
      */
     public function testGetGeocodedDataWithLocalhostIPv4()
@@ -27,7 +27,7 @@ class YandexProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The YandexProvider does not support IP addresses.
      */
     public function testGetGeocodedDataWithLocalhostIPv6()
@@ -37,7 +37,7 @@ class YandexProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query http://geocode-maps.yandex.ru/1.x/?format=json&geocode=&results=5
      */
     public function testGetGeocodedDataWithNull()
@@ -47,7 +47,7 @@ class YandexProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query http://geocode-maps.yandex.ru/1.x/?format=json&geocode=&results=5
      */
     public function testGetGeocodedDataWithEmpty()
@@ -57,7 +57,7 @@ class YandexProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query http://geocode-maps.yandex.ru/1.x/?format=json&geocode=foobar&results=5
      */
     public function testGetGeocodedDataWithInvalidData()
@@ -67,7 +67,7 @@ class YandexProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query http://geocode-maps.yandex.ru/1.x/?format=json&geocode=Kabasakal+Caddesi%2C+Istanbul%2C+Turkey&results=5
      */
     public function testGetGeocodedDataWithAddressGetsNullContent()
@@ -77,7 +77,7 @@ class YandexProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query http://geocode-maps.yandex.ru/1.x/?format=json&geocode=foobar&results=5
      */
     public function testGetGeocodedDataWithFakeAddress()
@@ -108,9 +108,9 @@ class YandexProviderTest extends TestCase
         $this->assertEquals('FR', $results[0]['countryCode']);
 
         // not provided
-        $this->assertNull($results[0]['zipcode']);
-        $this->assertNull($results[0]['city']);
-        $this->assertNull($results[0]['cityDistrict']);
+        $this->assertNull($results[0]['postalCode']);
+        $this->assertNull($results[0]['locality']);
+        $this->assertNull($results[0]['subLocality']);
         $this->assertNull($results[0]['regionCode']);
         $this->assertNull($results[0]['timezone']);
 
@@ -149,13 +149,13 @@ class YandexProviderTest extends TestCase
         $this->assertNull($results[0]['streetNumber']);
         $this->assertEquals('Столичная область', $results[0]['region']);
         $this->assertNull($results[0]['streetName']);
-        $this->assertEquals('Копенгаген', $results[0]['city']);
+        $this->assertEquals('Копенгаген', $results[0]['locality']);
         $this->assertEquals('Данія', $results[0]['country']);
         $this->assertEquals('DK', $results[0]['countryCode']);
 
         // not provided
-        $this->assertNull($results[0]['zipcode']);
-        $this->assertNull($results[0]['cityDistrict']);
+        $this->assertNull($results[0]['postalCode']);
+        $this->assertNull($results[0]['subLocality']);
         $this->assertNull($results[0]['regionCode']);
         $this->assertNull($results[0]['timezone']);
 
@@ -193,13 +193,13 @@ class YandexProviderTest extends TestCase
         $this->assertEquals(-77.012453, $results[0]['bounds']['east'], '', 0.01);
         $this->assertEquals('District of Columbia', $results[0]['region']);
         $this->assertEquals('Pennsylvania Ave NW', $results[0]['streetName']);
-        $this->assertEquals('Washington', $results[0]['city']);
+        $this->assertEquals('Washington', $results[0]['locality']);
         $this->assertEquals('United States', $results[0]['country']);
         $this->assertEquals('US', $results[0]['countryCode']);
 
         // not provided
-        $this->assertNull($results[0]['zipcode']);
-        $this->assertNull($results[0]['cityDistrict']);
+        $this->assertNull($results[0]['postalCode']);
+        $this->assertNull($results[0]['subLocality']);
         $this->assertNull($results[0]['regionCode']);
         $this->assertNull($results[0]['timezone']);
 
@@ -228,19 +228,19 @@ class YandexProviderTest extends TestCase
         $this->assertEquals(19, $result['streetNumber']);
         $this->assertNull($result['region']);
         $this->assertEquals('улица Ленина', $result['streetName']);
-        $this->assertEquals('Минск', $result['city']);
+        $this->assertEquals('Минск', $result['locality']);
         $this->assertEquals('Беларусь', $result['country']);
         $this->assertEquals('BY', $result['countryCode']);
 
         // not provided
-        $this->assertNull($result['zipcode']);
-        $this->assertNull($result['cityDistrict']);
+        $this->assertNull($result['postalCode']);
+        $this->assertNull($result['subLocality']);
         $this->assertNull($result['regionCode']);
         $this->assertNull($result['timezone']);
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query http://geocode-maps.yandex.ru/1.x/?format=json&geocode=2.000000,1.000000&results=5
      */
     public function testGetReversedData()
@@ -250,7 +250,7 @@ class YandexProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query http://geocode-maps.yandex.ru/1.x/?format=json&geocode=0.000000,0.000000&results=5
      */
     public function testGetReversedDataWithInvalidData()
@@ -260,7 +260,7 @@ class YandexProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query http://geocode-maps.yandex.ru/1.x/?format=json&geocode=2.388772,48.863216&results=5
      */
     public function testGetReversedDataWithAddressGetsNullContent()
@@ -291,9 +291,9 @@ class YandexProviderTest extends TestCase
         $this->assertEquals('FR', $results[0]['countryCode']);
 
         // not provided
-        $this->assertNull($results[0]['zipcode']);
-        $this->assertNull($results[0]['city']);
-        $this->assertNull($results[0]['cityDistrict']);
+        $this->assertNull($results[0]['postalCode']);
+        $this->assertNull($results[0]['locality']);
+        $this->assertNull($results[0]['subLocality']);
         $this->assertNull($results[0]['regionCode']);
         $this->assertNull($results[0]['timezone']);
 
@@ -328,9 +328,9 @@ class YandexProviderTest extends TestCase
         $this->assertEquals('FR', $results[0]['countryCode']);
 
         // not provided
-        $this->assertNull($results[0]['zipcode']);
-        $this->assertNull($results[0]['city']);
-        $this->assertNull($results[0]['cityDistrict']);
+        $this->assertNull($results[0]['postalCode']);
+        $this->assertNull($results[0]['locality']);
+        $this->assertNull($results[0]['subLocality']);
         $this->assertNull($results[0]['regionCode']);
         $this->assertNull($results[0]['timezone']);
 
@@ -369,13 +369,13 @@ class YandexProviderTest extends TestCase
         $this->assertEquals(36, $results[0]['streetNumber']);
         $this->assertEquals('Исконная Финляндия', $results[0]['region']);
         //$this->assertEquals('Bangårdsgatan', $results[0]['streetName']);
-        $this->assertEquals('Турку', $results[0]['city']);
+        $this->assertEquals('Турку', $results[0]['locality']);
         $this->assertEquals('Фінляндія', $results[0]['country']);
         $this->assertEquals('FI', $results[0]['countryCode']);
 
         // not provided
-        $this->assertNull($results[0]['zipcode']);
-        $this->assertNull($results[0]['cityDistrict']);
+        $this->assertNull($results[0]['postalCode']);
+        $this->assertNull($results[0]['subLocality']);
         $this->assertNull($results[0]['regionCode']);
         $this->assertNull($results[0]['timezone']);
     }
@@ -398,13 +398,13 @@ class YandexProviderTest extends TestCase
         $this->assertNull($results[0]['streetNumber']);
         $this->assertEquals('İstanbul', $results[0]['region']);
         $this->assertNull($results[0]['streetName']);
-        $this->assertEquals('Dragos', $results[0]['city']);
+        $this->assertEquals('Dragos', $results[0]['locality']);
         $this->assertEquals('Türkiye', $results[0]['country']);
         $this->assertEquals('TR', $results[0]['countryCode']);
 
         // not provided
-        $this->assertNull($results[0]['zipcode']);
-        $this->assertNull($results[0]['cityDistrict']);
+        $this->assertNull($results[0]['postalCode']);
+        $this->assertNull($results[0]['subLocality']);
         $this->assertNull($results[0]['regionCode']);
         $this->assertNull($results[0]['timezone']);
 

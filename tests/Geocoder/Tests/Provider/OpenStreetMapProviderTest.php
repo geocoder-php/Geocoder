@@ -32,11 +32,11 @@ class OpenStreetMapProviderTest extends TestCase
         $this->assertEquals(2.22412180900574, $results[0]['bounds']['west'], '', 0.01);
         $this->assertEquals(48.902156829834, $results[0]['bounds']['north'], '', 0.01);
         $this->assertEquals(2.46976041793823, $results[0]['bounds']['east'], '', 0.01);
-        $this->assertEquals(75000, $results[0]['zipcode']);
+        $this->assertEquals(75000, $results[0]['postalCode']);
         $this->assertNull($results[0]['streetNumber']);
         $this->assertNull($results[0]['streetName']);
-        $this->assertEquals('Paris', $results[0]['city']);
-        $this->assertNull($results[0]['cityDistrict']);
+        $this->assertEquals('Paris', $results[0]['locality']);
+        $this->assertNull($results[0]['subLocality']);
         $this->assertEquals('Paris', $results[0]['county']);
         $this->assertEquals('Île-de-France', $results[0]['region']);
         $this->assertNull($results[0]['regionCode']);
@@ -54,11 +54,11 @@ class OpenStreetMapProviderTest extends TestCase
         $this->assertEquals(2.22412180900574, $results[1]['bounds']['west'], '', 0.01);
         $this->assertEquals(48.902156829834, $results[1]['bounds']['north'], '', 0.01);
         $this->assertEquals(2.46976041793823, $results[1]['bounds']['east'], '', 0.01);
-        $this->assertNull($results[1]['zipcode']);
+        $this->assertNull($results[1]['postalCode']);
         $this->assertNull($results[1]['streetNumber']);
         $this->assertNull($results[1]['streetName']);
-        $this->assertNull($results[1]['city']);
-        $this->assertNull($results[1]['cityDistrict']);
+        $this->assertNull($results[1]['locality']);
+        $this->assertNull($results[1]['subLocality']);
         $this->assertEquals('Paris', $results[1]['county']);
         $this->assertEquals('Île-de-France', $results[1]['region']);
         $this->assertNull($results[1]['regionCode']);
@@ -76,11 +76,11 @@ class OpenStreetMapProviderTest extends TestCase
         $this->assertEquals(-93.7618103027344, $results[2]['bounds']['west'], '', 0.01);
         $this->assertEquals(35.3065032958984, $results[2]['bounds']['north'], '', 0.01);
         $this->assertEquals(-93.6750793457031, $results[2]['bounds']['east'], '', 0.01);
-        $this->assertNull($results[2]['zipcode']);
+        $this->assertNull($results[2]['postalCode']);
         $this->assertNull($results[2]['streetNumber']);
         $this->assertNull($results[2]['streetName']);
-        $this->assertEquals('Paris', $results[2]['city']);
-        $this->assertNull($results[2]['cityDistrict']);
+        $this->assertEquals('Paris', $results[2]['locality']);
+        $this->assertNull($results[2]['subLocality']);
         $this->assertEquals('Logan County', $results[2]['county']);
         $this->assertEquals('Arkansas', $results[2]['region']);
         $this->assertNull($results[2]['regionCode']);
@@ -98,11 +98,11 @@ class OpenStreetMapProviderTest extends TestCase
         $this->assertEquals(-95.6279296875, $results[3]['bounds']['west'], '', 0.01);
         $this->assertEquals(33.7383804321289, $results[3]['bounds']['north'], '', 0.01);
         $this->assertEquals(-95.4354476928711, $results[3]['bounds']['east'], '', 0.01);
-        $this->assertNull($results[3]['zipcode']);
+        $this->assertNull($results[3]['postalCode']);
         $this->assertNull($results[3]['streetNumber']);
         $this->assertNull($results[3]['streetName']);
-        $this->assertEquals('Paris', $results[3]['city']);
-        $this->assertNull($results[3]['cityDistrict']);
+        $this->assertEquals('Paris', $results[3]['locality']);
+        $this->assertNull($results[3]['subLocality']);
         $this->assertEquals('Lamar County', $results[3]['county']);
         $this->assertEquals('Texas', $results[3]['region']);
         $this->assertNull($results[3]['regionCode']);
@@ -120,11 +120,11 @@ class OpenStreetMapProviderTest extends TestCase
         $this->assertEquals(-84.3073272705078, $results[4]['bounds']['west'], '', 0.01);
         $this->assertEquals(38.2382736206055, $results[4]['bounds']['north'], '', 0.01);
         $this->assertEquals(-84.2320861816406, $results[4]['bounds']['east'], '', 0.01);
-        $this->assertNull($results[4]['zipcode']);
+        $this->assertNull($results[4]['postalCode']);
         $this->assertNull($results[4]['streetNumber']);
         $this->assertNull($results[4]['streetName']);
-        $this->assertEquals('Paris', $results[4]['city']);
-        $this->assertNull($results[4]['cityDistrict']);
+        $this->assertEquals('Paris', $results[4]['locality']);
+        $this->assertNull($results[4]['subLocality']);
         $this->assertEquals('Bourbon County', $results[4]['county']);
         $this->assertEquals('Kentucky', $results[4]['region']);
         $this->assertNull($results[4]['regionCode']);
@@ -153,9 +153,9 @@ class OpenStreetMapProviderTest extends TestCase
         $this->assertEquals(3.13707232475281, $results[0]['bounds']['east'], '', 0.01);
         $this->assertNull($results[0]['streetNumber']);
         $this->assertEquals('Allée Évariste Galois', $results[0]['streetName']);
-        $this->assertEquals('63170', $results[0]['zipcode']);
-        $this->assertEquals('Clermont-Ferrand', $results[0]['city']);
-        $this->assertEquals('La Pardieu', $results[0]['cityDistrict']);
+        $this->assertEquals('63170', $results[0]['postalCode']);
+        $this->assertEquals('Clermont-Ferrand', $results[0]['locality']);
+        $this->assertEquals('La Pardieu', $results[0]['subLocality']);
         $this->assertEquals('Clermont-Ferrand', $results[0]['county']);
         $this->assertEquals('Auvergne', $results[0]['region']);
         $this->assertNull($results[0]['regionCode']);
@@ -175,9 +175,9 @@ class OpenStreetMapProviderTest extends TestCase
         $this->assertEquals(3.13707232475281, $results[1]['bounds']['east'], '', 0.01);
         $this->assertNull($results[1]['streetNumber']);
         $this->assertEquals('Allée Évariste Galois', $results[1]['streetName']);
-        $this->assertEquals('63170', $results[1]['zipcode']);
-        $this->assertEquals('Aubière', $results[1]['city']);
-        $this->assertEquals('Cap Sud', $results[1]['cityDistrict']);
+        $this->assertEquals('63170', $results[1]['postalCode']);
+        $this->assertEquals('Aubière', $results[1]['locality']);
+        $this->assertEquals('Cap Sud', $results[1]['subLocality']);
         $this->assertEquals('Clermont-Ferrand', $results[1]['county']);
         $this->assertEquals('Auvergne', $results[1]['region']);
         $this->assertNull($results[1]['regionCode']);
@@ -200,16 +200,16 @@ class OpenStreetMapProviderTest extends TestCase
         $this->assertNull($result['bounds']);
         $this->assertEquals(35, $result['streetNumber']);
         $this->assertEquals('Läntinen Pitkäkatu', $result['streetName']);
-        $this->assertEquals(20100, $result['zipcode']);
-        $this->assertEquals('Turku', $result['city']);
-        $this->assertEquals('VII', $result['cityDistrict']);
+        $this->assertEquals(20100, $result['postalCode']);
+        $this->assertEquals('Turku', $result['locality']);
+        $this->assertEquals('VII', $result['subLocality']);
         $this->assertEquals('Lounais-Suomen aluehallintovirasto', $result['region']);
         $this->assertNull($result['regionCode']);
         $this->assertEquals('FI', $result['countryCode']);
     }
 
     /**
-     * @expectedException Geocoder\Exception\NoResultException
+     * @expectedException Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query http://nominatim.openstreetmap.org/search?q=Hammm&format=xml&addressdetails=1&limit=5
      */
     public function testGetGeocodedDataWithUnknownCity()
@@ -239,9 +239,9 @@ class OpenStreetMapProviderTest extends TestCase
         $this->assertEquals(8.65207576751709, $results[0]['bounds']['east'], '', 0.01);
         $this->assertNull($results[0]['streetNumber']);
         $this->assertEquals('Kalbacher Hauptstraße', $results[0]['streetName']);
-        $this->assertEquals(60437, $results[0]['zipcode']);
-        $this->assertEquals('Frankfurt am Main', $results[0]['city']);
-        $this->assertEquals('Kalbach', $results[0]['cityDistrict']);
+        $this->assertEquals(60437, $results[0]['postalCode']);
+        $this->assertEquals('Frankfurt am Main', $results[0]['locality']);
+        $this->assertEquals('Kalbach', $results[0]['subLocality']);
         $this->assertEquals('Frankfurt am Main', $results[0]['county']);
         $this->assertEquals('Hessen', $results[0]['region']);
         $this->assertNull($results[0]['regionCode']);
@@ -261,9 +261,9 @@ class OpenStreetMapProviderTest extends TestCase
         $this->assertEquals(8.65643787384033, $results[1]['bounds']['east'], '', 0.01);
         $this->assertNull($results[1]['streetNumber']);
         $this->assertEquals('Kalbacher Hauptstraße', $results[1]['streetName']);
-        $this->assertEquals(60437, $results[1]['zipcode']);
-        $this->assertEquals('Frankfurt am Main', $results[1]['city']);
-        $this->assertEquals('Bonames', $results[1]['cityDistrict']);
+        $this->assertEquals(60437, $results[1]['postalCode']);
+        $this->assertEquals('Frankfurt am Main', $results[1]['locality']);
+        $this->assertEquals('Bonames', $results[1]['subLocality']);
         $this->assertEquals('Frankfurt am Main', $results[1]['county']);
         $this->assertEquals('Hessen', $results[1]['region']);
         $this->assertNull($results[1]['regionCode']);
@@ -283,9 +283,9 @@ class OpenStreetMapProviderTest extends TestCase
         $this->assertEquals(8.64943981170654, $results[2]['bounds']['east'], '', 0.01);
         $this->assertNull($results[2]['streetNumber']);
         $this->assertEquals('Kalbacher Hauptstraße', $results[2]['streetName']);
-        $this->assertEquals(60437, $results[2]['zipcode']);
-        $this->assertEquals('Frankfurt am Main', $results[2]['city']);
-        $this->assertEquals('Kalbach', $results[2]['cityDistrict']);
+        $this->assertEquals(60437, $results[2]['postalCode']);
+        $this->assertEquals('Frankfurt am Main', $results[2]['locality']);
+        $this->assertEquals('Kalbach', $results[2]['subLocality']);
         $this->assertEquals('Frankfurt am Main', $results[2]['county']);
         $this->assertEquals('Hessen', $results[2]['region']);
         $this->assertNull($results[2]['regionCode']);
@@ -305,9 +305,9 @@ class OpenStreetMapProviderTest extends TestCase
         $this->assertEquals(8.64984703063965, $results[3]['bounds']['east'], '', 0.01);
         $this->assertNull($results[3]['streetNumber']);
         $this->assertEquals('Kalbacher Hauptstraße', $results[3]['streetName']);
-        $this->assertEquals(60437, $results[3]['zipcode']);
-        $this->assertEquals('Frankfurt am Main', $results[3]['city']);
-        $this->assertEquals('Kalbach', $results[3]['cityDistrict']);
+        $this->assertEquals(60437, $results[3]['postalCode']);
+        $this->assertEquals('Frankfurt am Main', $results[3]['locality']);
+        $this->assertEquals('Kalbach', $results[3]['subLocality']);
         $this->assertEquals('Frankfurt am Main', $results[3]['county']);
         $this->assertEquals('Hessen', $results[3]['region']);
         $this->assertNull($results[3]['regionCode']);
@@ -327,17 +327,17 @@ class OpenStreetMapProviderTest extends TestCase
         $this->assertInternalType('array', $result);
         $this->assertArrayNotHasKey('latitude', $result);
         $this->assertArrayNotHasKey('longitude', $result);
-        $this->assertArrayNotHasKey('zipcode', $result);
+        $this->assertArrayNotHasKey('postalCode', $result);
         $this->assertArrayNotHasKey('timezone', $result);
 
-        $this->assertEquals('localhost', $result['city']);
+        $this->assertEquals('localhost', $result['locality']);
         $this->assertEquals('localhost', $result['region']);
         $this->assertEquals('localhost', $result['county']);
         $this->assertEquals('localhost', $result['country']);
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The NominatimProvider does not support IPv6 addresses.
      */
     public function testGetGeocodedDataWithLocalhostIPv6()
@@ -367,9 +367,9 @@ class OpenStreetMapProviderTest extends TestCase
         $this->assertEquals(1.45882403850555, $results[0]['bounds']['east'], '', 0.01);
         $this->assertNull($results[0]['streetNumber']);
         //$this->assertEquals('Rue du Faubourg Bonnefoy', $results[0]['streetName']);
-        $this->assertEquals(31506, $results[0]['zipcode']);
-        $this->assertEquals(4, $results[0]['cityDistrict']);
-        $this->assertEquals('Toulouse', $results[0]['city']);
+        $this->assertEquals(31506, $results[0]['postalCode']);
+        $this->assertEquals(4, $results[0]['subLocality']);
+        $this->assertEquals('Toulouse', $results[0]['locality']);
         //$this->assertEquals('Haute-Garonne', $results[0]['county']);
         $this->assertEquals('Midi-Pyrénées', $results[0]['region']);
         $this->assertNull($results[0]['regionCode']);
@@ -403,9 +403,9 @@ class OpenStreetMapProviderTest extends TestCase
         $this->assertEquals(1.45262920856476, $results[0]['bounds']['east'], '', 0.01);
         $this->assertNull($results[0]['streetNumber']);
         $this->assertEquals('Rue du Faubourg Bonnefoy', $results[0]['streetName']);
-        $this->assertEquals(31506, $results[0]['zipcode']);
-        $this->assertEquals(4, $results[0]['cityDistrict']);
-        $this->assertEquals('Toulouse', $results[0]['city']);
+        $this->assertEquals(31506, $results[0]['postalCode']);
+        $this->assertEquals(4, $results[0]['subLocality']);
+        $this->assertEquals('Toulouse', $results[0]['locality']);
         $this->assertEquals('Toulouse', $results[0]['county']);
         $this->assertEquals('Midi-Pyrénées', $results[0]['region']);
         $this->assertNull($results[0]['regionCode']);
@@ -419,7 +419,7 @@ class OpenStreetMapProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The NominatimProvider does not support IPv6 addresses.
      */
     public function testGetGeocodedDataWithRealIPv6()
@@ -429,7 +429,7 @@ class OpenStreetMapProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not resolve address "Läntinen Pitkäkatu 35, Turku"
      */
     public function testGetGeocodedDataWithAddressGetsNullContent()
@@ -439,7 +439,7 @@ class OpenStreetMapProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query http://nominatim.openstreetmap.org/search?q=L%C3%A4ntinen+Pitk%C3%A4katu+35%2C+Turku&format=xml&addressdetails=1&limit=5
      */
     public function testGetGeocodedDataWithAddressGetsEmptyContent()
@@ -449,7 +449,7 @@ class OpenStreetMapProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query http://nominatim.openstreetmap.org/search?q=L%C3%A4ntinen+Pitk%C3%A4katu+35%2C+Turku&format=xml&addressdetails=1&limit=5
      */
     public function testGetGeocodedDataWithAddressGetsEmptyXML()
@@ -462,7 +462,7 @@ XML;
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Unable to resolve the coordinates 60.4539471728726, 22.2567841926781
      */
     public function testGetReversedDataWithCoordinatesGetsNullContent()
@@ -472,7 +472,7 @@ XML;
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not resolve coordinates 60.4539471728726, 22.2567841926781
      */
     public function testGetReversedDataWithCoordinatesGetsEmptyContent()
@@ -482,7 +482,7 @@ XML;
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not resolve coordinates -80.000000, -170.000000
      */
     public function testGetReversedDataWithCoordinatesGetsError()

@@ -13,7 +13,7 @@ namespace Geocoder\Exception;
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-class ProviderNotRegistered extends RuntimeException implements ExceptionInterface
+class ProviderNotRegistered extends RuntimeException implements Exception
 {
     public function __construct($providerName)
     {

@@ -10,25 +10,25 @@
 
 namespace Geocoder\Provider;
 
-use Geocoder\Exception\InvalidCredentialsException;
-use Geocoder\Exception\ChainNoResultException;
+use Geocoder\Exception\InvalidCredentials;
+use Geocoder\Exception\ChainNoResult;
 
 /**
  * @author Markus Bachmann <markus.bachmann@bachi.biz>
  */
-class ChainProvider implements ProviderInterface
+class ChainProvider implements Provider
 {
     /**
-     * @var ProviderInterface[]
+     * @var Provider[]
      */
-    private $providers = array();
+    private $providers = [];
 
     /**
      * Constructor
      *
-     * @param ProviderInterface[] $providers
+     * @param Provider[] $providers
      */
-    public function __construct(array $providers = array())
+    public function __construct(array $providers = [])
     {
         $this->providers = $providers;
     }
@@ -36,9 +36,9 @@ class ChainProvider implements ProviderInterface
     /**
      * Add a provider
      *
-     * @param ProviderInterface $provider
+     * @param Provider $provider
      */
-    public function addProvider(ProviderInterface $provider)
+    public function addProvider(Provider $provider)
     {
         $this->providers[] = $provider;
     }
@@ -48,19 +48,19 @@ class ChainProvider implements ProviderInterface
      */
     public function getGeocodedData($address)
     {
-        $exceptions = array();
+        $exceptions = [];
 
         foreach ($this->providers as $provider) {
             try {
                 return $provider->getGeocodedData($address);
-            } catch (InvalidCredentialsException $e) {
+            } catch (InvalidCredentials $e) {
                 throw $e;
             } catch (\Exception $e) {
                 $exceptions[] = $e;
             }
         }
 
-        throw new ChainNoResultException(sprintf('No provider could provide the address "%s"', $address), $exceptions);
+        throw new ChainNoResult(sprintf('No provider could provide the address "%s"', $address), $exceptions);
     }
 
     /**
@@ -68,19 +68,18 @@ class ChainProvider implements ProviderInterface
      */
     public function getReversedData(array $coordinates)
     {
-        $exceptions = array();
-
+        $exceptions = [];
         foreach ($this->providers as $provider) {
             try {
                 return $provider->getReversedData($coordinates);
-            } catch (InvalidCredentialsException $e) {
+            } catch (InvalidCredentials $e) {
                 throw $e;
             } catch (\Exception $e) {
                 $exceptions[] = $e;
             }
         }
 
-        throw new ChainNoResultException(sprintf('No provider could provide the coordinated %s', json_encode($coordinates)), $exceptions);
+        throw new ChainNoResult(sprintf('No provider could provide the coordinated %s', json_encode($coordinates)), $exceptions);
     }
 
     /**

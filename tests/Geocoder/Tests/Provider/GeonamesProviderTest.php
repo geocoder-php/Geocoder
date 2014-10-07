@@ -14,7 +14,7 @@ class GeonamesProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\InvalidCredentialsException
+     * @expectedException \Geocoder\Exception\InvalidCredentials
      * @expectedExceptionMessage No Username provided
      */
     public function testGetGeocodedDataWithNullUsername()
@@ -24,7 +24,7 @@ class GeonamesProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\InvalidCredentialsException
+     * @expectedException \Geocoder\Exception\InvalidCredentials
      * @expectedExceptionMessage No Username provided
      */
     public function testGetReversedDataWithNullUsername()
@@ -34,7 +34,7 @@ class GeonamesProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The GeonamesProvider does not support IP addresses.
      */
     public function testGetGeocodedDataWithLocalhostIPv4()
@@ -44,7 +44,7 @@ class GeonamesProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The GeonamesProvider does not support IP addresses.
      */
     public function testGetGeocodedDataWithLocalhostIPv6()
@@ -54,7 +54,7 @@ class GeonamesProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query http://api.geonames.org/searchJSON?q=&maxRows=5&style=full&username=username
      */
     public function testGetGeocodedDataWithNull()
@@ -64,7 +64,7 @@ class GeonamesProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage No places found for query http://api.geonames.org/searchJSON?q=BlaBlaBla&maxRows=5&style=full&username=username
      * @
      */
@@ -103,7 +103,7 @@ JSON;
         $this->assertEquals(-0.70360885396019, $results[0]['bounds']['west'], '', 0.01);
         $this->assertEquals(51.865368153381, $results[0]['bounds']['north'], '', 0.01);
         $this->assertEquals(0.45212493672386, $results[0]['bounds']['east'], '', 0.01);
-        $this->assertEquals('London', $results[0]['city']);
+        $this->assertEquals('London', $results[0]['locality']);
         $this->assertEquals('Greater London', $results[0]['county']);
         $this->assertEquals('England', $results[0]['region']);
         $this->assertEquals('United Kingdom', $results[0]['country']);
@@ -121,7 +121,7 @@ JSON;
         $this->assertEquals(27.804746435655, $results[1]['bounds']['west'], '', 0.01);
         $this->assertEquals(-32.925573728925, $results[1]['bounds']['north'], '', 0.01);
         $this->assertEquals(28.018503381239, $results[1]['bounds']['east'], '', 0.01);
-        $this->assertEquals('East London', $results[1]['city']);
+        $this->assertEquals('East London', $results[1]['locality']);
         $this->assertEquals('Buffalo City Metropolitan Municipality', $results[1]['county']);
         $this->assertEquals('Eastern Cape', $results[1]['region']);
         $this->assertEquals('South Africa', $results[1]['country']);
@@ -139,7 +139,7 @@ JSON;
         $this->assertEquals(-0.66976046752962, $results[2]['bounds']['west'], '', 0.01);
         $this->assertEquals(51.869628267826, $results[2]['bounds']['north'], '', 0.01);
         $this->assertEquals(0.48608279418978, $results[2]['bounds']['east'], '', 0.01);
-        $this->assertEquals('City of London', $results[2]['city']);
+        $this->assertEquals('City of London', $results[2]['locality']);
         $this->assertEquals('Greater London', $results[2]['county']);
         $this->assertEquals('England', $results[2]['region']);
         $this->assertEquals('United Kingdom', $results[2]['country']);
@@ -157,7 +157,7 @@ JSON;
         $this->assertEquals(-81.337489676463, $results[3]['bounds']['west'], '', 0.01);
         $this->assertEquals(43.059702923237, $results[3]['bounds']['north'], '', 0.01);
         $this->assertEquals(-81.128595097537, $results[3]['bounds']['east'], '', 0.01);
-        $this->assertEquals('London', $results[3]['city']);
+        $this->assertEquals('London', $results[3]['locality']);
         $this->assertEquals('', $results[3]['county']);
         $this->assertEquals('Ontario', $results[3]['region']);
         $this->assertEquals('Canada', $results[3]['country']);
@@ -175,7 +175,7 @@ JSON;
         $this->assertEquals(-72.128261254846, $results[4]['bounds']['west'], '', 0.01);
         $this->assertEquals(41.377219912096, $results[4]['bounds']['north'], '', 0.01);
         $this->assertEquals(-72.070780545154, $results[4]['bounds']['east'], '', 0.01);
-        $this->assertEquals('New London', $results[4]['city']);
+        $this->assertEquals('New London', $results[4]['locality']);
         $this->assertEquals('New London County', $results[4]['county']);
         $this->assertEquals('Connecticut', $results[4]['region']);
         $this->assertEquals('United States', $results[4]['country']);
@@ -206,7 +206,7 @@ JSON;
         $this->assertEquals(-0.70361, $results[0]['bounds']['west'], '', 0.01);
         $this->assertEquals(51.86537, $results[0]['bounds']['north'], '', 0.01);
         $this->assertEquals(0.45212, $results[0]['bounds']['east'], '', 0.01);
-        $this->assertEquals('Londra', $results[0]['city']);
+        $this->assertEquals('Londra', $results[0]['locality']);
         $this->assertEquals('Greater London', $results[0]['county']);
         $this->assertEquals('Inghilterra', $results[0]['region']);
         $this->assertEquals('Regno Unito', $results[0]['country']);
@@ -224,7 +224,7 @@ JSON;
         $this->assertEquals(27.804746435655, $results[1]['bounds']['west'], '', 0.01);
         $this->assertEquals(-32.925573728925, $results[1]['bounds']['north'], '', 0.01);
         $this->assertEquals(28.018503381239, $results[1]['bounds']['east'], '', 0.01);
-        $this->assertEquals('East London', $results[1]['city']);
+        $this->assertEquals('East London', $results[1]['locality']);
         $this->assertEquals('Buffalo City Metropolitan Municipality', $results[1]['county']);
         $this->assertEquals('Eastern Cape', $results[1]['region']);
         $this->assertEquals('Sudafrica', $results[1]['country']);
@@ -242,7 +242,7 @@ JSON;
         $this->assertEquals(-0.66976046752962, $results[2]['bounds']['west'], '', 0.01);
         $this->assertEquals(51.869628267826, $results[2]['bounds']['north'], '', 0.01);
         $this->assertEquals(0.48608279418978, $results[2]['bounds']['east'], '', 0.01);
-        $this->assertEquals('Città di Londra', $results[2]['city']);
+        $this->assertEquals('Città di Londra', $results[2]['locality']);
         $this->assertEquals('Greater London', $results[2]['county']);
         $this->assertEquals('Inghilterra', $results[2]['region']);
         $this->assertEquals('Regno Unito', $results[2]['country']);
@@ -260,7 +260,7 @@ JSON;
         $this->assertEquals(-81.337489676463, $results[3]['bounds']['west'], '', 0.01);
         $this->assertEquals(43.059702923237, $results[3]['bounds']['north'], '', 0.01);
         $this->assertEquals(-81.128595097537, $results[3]['bounds']['east'], '', 0.01);
-        $this->assertEquals('London', $results[3]['city']);
+        $this->assertEquals('London', $results[3]['locality']);
         $this->assertEquals('', $results[3]['county']);
         $this->assertEquals('Ontario', $results[3]['region']);
         $this->assertEquals('Canada', $results[3]['country']);
@@ -278,7 +278,7 @@ JSON;
         $this->assertEquals(-72.128261254846, $results[4]['bounds']['west'], '', 0.01);
         $this->assertEquals(41.377219912096, $results[4]['bounds']['north'], '', 0.01);
         $this->assertEquals(-72.070780545154, $results[4]['bounds']['east'], '', 0.01);
-        $this->assertEquals('New London', $results[4]['city']);
+        $this->assertEquals('New London', $results[4]['locality']);
         $this->assertEquals('Contea di New London', $results[4]['county']);
         $this->assertEquals('Connecticut', $results[4]['region']);
         $this->assertEquals('Stati Uniti', $results[4]['country']);
@@ -302,7 +302,7 @@ JSON;
         $this->assertInternalType('array', $result);
         $this->assertEquals(51.50853, $result['latitude'], '', 0.01);
         $this->assertEquals(-0.12574, $result['longitude'], '', 0.01);
-        $this->assertEquals('London', $result['city']);
+        $this->assertEquals('London', $result['locality']);
         $this->assertEquals('Greater London', $result['county']);
         $this->assertEquals('England', $result['region']);
         $this->assertEquals('United Kingdom', $result['country']);
@@ -326,7 +326,7 @@ JSON;
         $this->assertInternalType('array', $result);
         $this->assertEquals(51.50853, $result['latitude'], '', 0.01);
         $this->assertEquals(-0.12574, $result['longitude'], '', 0.01);
-        $this->assertEquals('Londra', $result['city']);
+        $this->assertEquals('Londra', $result['locality']);
         $this->assertEquals('Greater London', $result['county']);
         $this->assertEquals('Inghilterra', $result['region']);
         $this->assertEquals('Regno Unito', $result['country']);
@@ -335,7 +335,7 @@ JSON;
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query http://api.geonames.org/findNearbyPlaceNameJSON?lat=-80.000000&lng=-170.000000&style=full&maxRows=5&username=username
      */
     public function testGetReversedDataWithBadCoordinates()

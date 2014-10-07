@@ -12,7 +12,8 @@
         }
     ],
     "require": {
-        "php": ">=5.3.0"
+        "php": ">=5.4.0",
+        "igorw/get-in": "~1.0"
     },
     "require-dev": {
         "kriswallsmith/buzz": "@stable",

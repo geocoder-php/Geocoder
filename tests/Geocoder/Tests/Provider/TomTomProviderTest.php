@@ -15,7 +15,7 @@ class TomTomProviderTest extends TestCase
 
     /**
      * @expectedException \RuntimeException
-     * @expectedException \Geocoder\Exception\InvalidCredentialsException
+     * @expectedException \Geocoder\Exception\InvalidCredentials
      * @expectedExceptionMessage No Geocoding API Key provided
      */
     public function testGetGeocodedDataWithNullApiKey()
@@ -25,7 +25,7 @@ class TomTomProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query https://api.tomtom.com/lbs/geocoding/geocode?key=api_key&query=&maxResults=5
      */
     public function testGetGeocodedDataWithNull()
@@ -35,7 +35,7 @@ class TomTomProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query https://api.tomtom.com/lbs/geocoding/geocode?key=api_key&query=&maxResults=5
      */
     public function testGetGeocodedDataWithEmpty()
@@ -45,7 +45,7 @@ class TomTomProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query https://api.tomtom.com/lbs/geocoding/geocode?key=api_key&query=Tagensvej%2047%2C%202200%20K%C3%B8benhavn%20N&maxResults=5
      */
     public function testGetGeocodedDataWithAddressContentReturnNull()
@@ -55,7 +55,7 @@ class TomTomProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query https://api.tomtom.com/lbs/geocoding/geocode?key=api_key&query=Tagensvej%2047%2C%202200%20K%C3%B8benhavn%20N&maxResults=5
      */
     public function testGetGeocodedDataWithAddress()
@@ -65,7 +65,7 @@ class TomTomProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query https://api.tomtom.com/lbs/geocoding/geocode?key=api_key&query=foo&maxResults=5
      */
     public function testGetGeocodedDataNoResult()
@@ -97,9 +97,9 @@ XML;
         $this->assertNull($result['bounds']);
         $this->assertNull($result['streetNumber']);
         $this->assertEquals('Tagensvej', $result['streetName']);
-        $this->assertNull($result['zipcode']);
-        $this->assertEquals('Copenhagen', $result['city']);
-        $this->assertNull($result['cityDistrict']);
+        $this->assertNull($result['postalCode']);
+        $this->assertEquals('Copenhagen', $result['locality']);
+        $this->assertNull($result['subLocality']);
         $this->assertNull($result['region']);
         $this->assertNull($result['regionCode']);
         $this->assertEquals('Denmark', $result['country']);
@@ -126,9 +126,9 @@ XML;
         $this->assertNull($result['bounds']);
         $this->assertNull($result['streetNumber']);
         $this->assertEquals('Tagensvej', $result['streetName']);
-        $this->assertNull($result['zipcode']);
-        $this->assertEquals('Copenhague', $result['city']);
-        $this->assertNull($result['cityDistrict']);
+        $this->assertNull($result['postalCode']);
+        $this->assertEquals('Copenhague', $result['locality']);
+        $this->assertNull($result['subLocality']);
         $this->assertNull($result['region']);
         $this->assertNull($result['regionCode']);
         $this->assertEquals('Danemark', $result['country']);
@@ -155,9 +155,9 @@ XML;
         $this->assertNull($result['bounds']);
         $this->assertNull($result['streetNumber']);
         $this->assertEquals('Tagensvej', $result['streetName']);
-        $this->assertNull($result['zipcode']);
-        $this->assertEquals('Köpenhamn', $result['city']);
-        $this->assertNull($result['cityDistrict']);
+        $this->assertNull($result['postalCode']);
+        $this->assertEquals('Köpenhamn', $result['locality']);
+        $this->assertNull($result['subLocality']);
         $this->assertNull($result['region']);
         $this->assertNull($result['regionCode']);
         $this->assertEquals('Dania', $result['country']);
@@ -183,9 +183,9 @@ XML;
         $this->assertNull($results[0]['bounds']);
         $this->assertNull($results[0]['streetNumber']);
         $this->assertNull($results[0]['streetName']);
-        $this->assertNull($results[0]['zipcode']);
-        $this->assertEquals('Paris', $results[0]['city']);
-        $this->assertNull($results[0]['cityDistrict']);
+        $this->assertNull($results[0]['postalCode']);
+        $this->assertEquals('Paris', $results[0]['locality']);
+        $this->assertNull($results[0]['subLocality']);
         $this->assertEquals('Ile-de-France', $results[0]['region']);
         $this->assertNull($results[0]['regionCode']);
         $this->assertEquals('France', $results[0]['country']);
@@ -195,7 +195,7 @@ XML;
         $this->assertInternalType('array', $results[1]);
         $this->assertEquals(33.661426, $results[1]['latitude'], '', 0.0001);
         $this->assertEquals(-95.556321, $results[1]['longitude'], '', 0.0001);
-        $this->assertEquals('Paris', $results[1]['city']);
+        $this->assertEquals('Paris', $results[1]['locality']);
         $this->assertEquals('Texas', $results[1]['region']);
         $this->assertEquals('United States', $results[1]['country']);
         $this->assertEquals('USA', $results[1]['countryCode']);
@@ -203,7 +203,7 @@ XML;
         $this->assertInternalType('array', $results[2]);
         $this->assertEquals(36.302754, $results[2]['latitude'], '', 0.0001);
         $this->assertEquals(-88.326359, $results[2]['longitude'], '', 0.0001);
-        $this->assertEquals('Paris', $results[2]['city']);
+        $this->assertEquals('Paris', $results[2]['locality']);
         $this->assertEquals('Tennessee', $results[2]['region']);
         $this->assertEquals('United States', $results[2]['country']);
         $this->assertEquals('USA', $results[2]['countryCode']);
@@ -211,7 +211,7 @@ XML;
         $this->assertInternalType('array', $results[3]);
         $this->assertEquals(-19.039448, $results[3]['latitude'], '', 0.0001);
         $this->assertEquals(29.560445, $results[3]['longitude'], '', 0.0001);
-        $this->assertEquals('Paris', $results[3]['city']);
+        $this->assertEquals('Paris', $results[3]['locality']);
         $this->assertEquals('Midlands', $results[3]['region']);
         $this->assertEquals('Zimbabwe', $results[3]['country']);
         $this->assertEquals('ZWE', $results[3]['countryCode']);
@@ -219,14 +219,14 @@ XML;
         $this->assertInternalType('array', $results[4]);
         $this->assertEquals(35.292105, $results[4]['latitude'], '', 0.0001);
         $this->assertEquals(-93.729922, $results[4]['longitude'], '', 0.0001);
-        $this->assertEquals('Paris', $results[4]['city']);
+        $this->assertEquals('Paris', $results[4]['locality']);
         $this->assertEquals('Arkansas', $results[4]['region']);
         $this->assertEquals('United States', $results[4]['country']);
         $this->assertEquals('USA', $results[4]['countryCode']);
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The TomTomProvider does not support IP addresses.
      */
     public function testGetGeocodedDataWithLocalhostIPv4()
@@ -236,7 +236,7 @@ XML;
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The TomTomProvider does not support IP addresses.
      */
     public function testGetGeocodedDataWithLocalhostIPv6()
@@ -246,7 +246,7 @@ XML;
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The TomTomProvider does not support IP addresses.
      */
     public function testGetGeocodedDataWithIPv4()
@@ -256,7 +256,7 @@ XML;
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The TomTomProvider does not support IP addresses.
      */
     public function testGetGeocodedDataWithIPv6()
@@ -266,7 +266,7 @@ XML;
     }
 
     /**
-     * @expectedException \Geocoder\Exception\InvalidCredentialsException
+     * @expectedException \Geocoder\Exception\InvalidCredentials
      * @expectedExceptionMessage No Map API Key provided
      */
     public function testGetReversedDataWithoutApiKey()
@@ -276,7 +276,7 @@ XML;
     }
 
     /**
-     * @expectedException Geocoder\Exception\NoResultException
+     * @expectedException Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query https://api.tomtom.com/lbs/services/reverseGeocode/3/xml?key=api_key&point=1.000000,2.000000
      */
     public function testGetReversedData()
@@ -286,7 +286,7 @@ XML;
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query https://api.tomtom.com/lbs/services/reverseGeocode/3/xml?key=api_key&point=48.863216,2.388772
      */
     public function testGetReversedDataWithCoordinatesContentReturnNull()
@@ -296,7 +296,7 @@ XML;
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query https://api.tomtom.com/lbs/services/reverseGeocode/3/xml?key=api_key&point=60.453947,22.256784
      */
     public function testGetReversedDataWithCoordinatesGetsEmptyContent()
@@ -306,7 +306,7 @@ XML;
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query https://api.tomtom.com/lbs/services/reverseGeocode/3/xml?key=api_key&point=1.000000,2.000000
      */
     public function testGetReversedDataError400()
@@ -320,7 +320,7 @@ XML;
     }
 
     /**
-     * @expectedException \Geocoder\Exception\InvalidCredentialsException
+     * @expectedException \Geocoder\Exception\InvalidCredentials
      * @expectedExceptionMessage Map API Key provided is not valid.
      */
     public function testGetReversedDataError403()
@@ -352,9 +352,9 @@ XML;
         $this->assertNull($result['bounds']);
         $this->assertNull($result['streetNumber']);
         $this->assertEquals('Avenue Gambetta', $result['streetName']);
-        $this->assertNull($result['zipcode']);
-        $this->assertEquals('20e Arrondissement Paris', $result['city']);
-        $this->assertNull($result['cityDistrict']);
+        $this->assertNull($result['postalCode']);
+        $this->assertEquals('20e Arrondissement Paris', $result['locality']);
+        $this->assertNull($result['subLocality']);
         $this->assertNull($result['region']);
         $this->assertNull($result['regionCode']);
         $this->assertEquals('France', $result['country']);
@@ -381,9 +381,9 @@ XML;
         $this->assertNull($result['bounds']);
         $this->assertNull($result['streetNumber']);
         $this->assertEquals('Stabelsvej', $result['streetName']);
-        $this->assertNull($result['zipcode']);
-        $this->assertEquals('Spentrup', $result['city']);
-        $this->assertNull($result['cityDistrict']);
+        $this->assertNull($result['postalCode']);
+        $this->assertEquals('Spentrup', $result['locality']);
+        $this->assertNull($result['subLocality']);
         $this->assertNull($result['region']);
         $this->assertNull($result['regionCode']);
         $this->assertEquals('Denmark', $result['country']);

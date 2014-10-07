@@ -4,7 +4,7 @@ namespace Geocoder\Tests\Provider;
 
 use Geocoder\Tests\TestCase;
 use Geocoder\Provider\ChainProvider;
-use Geocoder\Exception\ChainNoResultException;
+use Geocoder\Exception\ChainNoResult;
 
 /**
  * @author Markus Bachmann <markus.bachmann@bachi.biz>
@@ -13,7 +13,7 @@ class ChainProviderTest extends TestCase
 {
     public function testAddProvider()
     {
-        $mock  = $this->getMock('Geocoder\Provider\ProviderInterface');
+        $mock  = $this->getMock('Geocoder\Provider\Provider');
         $chain = new ChainProvider();
 
         $chain->addProvider($mock);
@@ -27,12 +27,12 @@ class ChainProviderTest extends TestCase
 
     public function testGetReversedData()
     {
-        $mockOne = $this->getMock('Geocoder\\Provider\\ProviderInterface');
+        $mockOne = $this->getMock('Geocoder\\Provider\\Provider');
         $mockOne->expects($this->once())
             ->method('getReversedData')
             ->will($this->returnCallback(function () { throw new \Exception; }));
 
-        $mockTwo = $this->getMock('Geocoder\\Provider\\ProviderInterface');
+        $mockTwo = $this->getMock('Geocoder\\Provider\\Provider');
         $mockTwo->expects($this->once())
             ->method('getReversedData')
             ->with(array('11', '22'))
@@ -43,9 +43,9 @@ class ChainProviderTest extends TestCase
         $this->assertEquals(array('foo' => 'bar'), $chain->getReversedData(array('11', '22')));
     }
 
-    public function testChainProviderReverseThrowsChainNoResultException()
+    public function testChainProviderReverseThrowsChainNoResult()
     {
-        $mockOne = $this->getMock('Geocoder\\Provider\\ProviderInterface');
+        $mockOne = $this->getMock('Geocoder\\Provider\\Provider');
         $mockOne->expects($this->exactly(2))
             ->method('getReversedData')
             ->will($this->returnCallback(function () { throw new \Exception; }));
@@ -54,19 +54,19 @@ class ChainProviderTest extends TestCase
 
         try {
             $chain->getReversedData(array('11', '22'));
-        } catch (ChainNoResultException $e) {
+        } catch (ChainNoResult $e) {
             $this->assertCount(2, $e->getExceptions());
         }
     }
 
     public function testGetGeocodedData()
     {
-        $mockOne = $this->getMock('Geocoder\\Provider\\ProviderInterface');
+        $mockOne = $this->getMock('Geocoder\\Provider\\Provider');
         $mockOne->expects($this->once())
             ->method('getGeocodedData')
             ->will($this->returnCallback(function () { throw new \Exception; }));
 
-        $mockTwo = $this->getMock('Geocoder\\Provider\\ProviderInterface');
+        $mockTwo = $this->getMock('Geocoder\\Provider\\Provider');
         $mockTwo->expects($this->once())
             ->method('getGeocodedData')
             ->with('Paris')
@@ -77,9 +77,9 @@ class ChainProviderTest extends TestCase
         $this->assertEquals(array('foo' => 'bar'), $chain->getGeocodedData('Paris'));
     }
 
-    public function testChainProviderGeocodeThrowsChainNoResultException()
+    public function testChainProviderGeocodeThrowsChainNoResult()
     {
-        $mockOne = $this->getMock('Geocoder\\Provider\\ProviderInterface');
+        $mockOne = $this->getMock('Geocoder\\Provider\\Provider');
         $mockOne->expects($this->exactly(2))
             ->method('getGeocodedData')
             ->will($this->returnCallback(function () { throw new \Exception; }));
@@ -88,7 +88,7 @@ class ChainProviderTest extends TestCase
 
         try {
             $chain->getGeocodedData('Paris');
-        } catch (ChainNoResultException $e) {
+        } catch (ChainNoResult $e) {
             $this->assertCount(2, $e->getExceptions());
         }
     }

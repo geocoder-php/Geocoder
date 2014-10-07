@@ -10,15 +10,15 @@
 
 namespace Geocoder\Provider;
 
-use Geocoder\Exception\UnsupportedException;
-use Geocoder\Exception\NoResultException;
-use Geocoder\Exception\InvalidCredentialsException;
+use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Exception\NoResult;
+use Geocoder\Exception\InvalidCredentials;
 use Geocoder\HttpAdapter\HttpAdapterInterface;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-class IpInfoDbProvider extends AbstractProvider implements ProviderInterface
+class IpInfoDbProvider extends AbstractProvider implements Provider
 {
     /**
      * @var string
@@ -28,7 +28,7 @@ class IpInfoDbProvider extends AbstractProvider implements ProviderInterface
     /**
      * @var string
      */
-    private $apiKey = null;
+    private $apiKey;
 
     /**
      * @param HttpAdapterInterface $adapter An HTTP adapter.
@@ -47,16 +47,16 @@ class IpInfoDbProvider extends AbstractProvider implements ProviderInterface
     public function getGeocodedData($address)
     {
         if (null === $this->apiKey) {
-            throw new InvalidCredentialsException('No API Key provided');
+            throw new InvalidCredentials('No API Key provided');
         }
 
         if (!filter_var($address, FILTER_VALIDATE_IP)) {
-            throw new UnsupportedException('The IpInfoDbProvider does not support Street addresses.');
+            throw new UnsupportedOperation('The IpInfoDbProvider does not support Street addresses.');
         }
 
         // This API does not support IPv6
         if (filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
-            throw new UnsupportedException('The IpInfoDbProvider does not support IPv6 addresses.');
+            throw new UnsupportedOperation('The IpInfoDbProvider does not support IPv6 addresses.');
         }
 
         if ('127.0.0.1' === $address) {
@@ -73,7 +73,7 @@ class IpInfoDbProvider extends AbstractProvider implements ProviderInterface
      */
     public function getReversedData(array $coordinates)
     {
-        throw new UnsupportedException('The IpInfoDbProvider is not able to do reverse geocoding.');
+        throw new UnsupportedOperation('The IpInfoDbProvider is not able to do reverse geocoding.');
     }
 
     /**
@@ -89,18 +89,18 @@ class IpInfoDbProvider extends AbstractProvider implements ProviderInterface
      *
      * @return array
      */
-    protected function executeQuery($query)
+    private function executeQuery($query)
     {
         $content = $this->getAdapter()->getContent($query);
 
         if (null === $content) {
-            throw new NoResultException(sprintf('Could not execute query %s', $query));
+            throw new NoResult(sprintf('Could not execute query %s', $query));
         }
 
         $data = (array) json_decode($content);
 
         if (empty($data) || 'OK' !== $data['statusCode']) {
-            throw new NoResultException(sprintf('Could not execute query %s', $query));
+            throw new NoResult(sprintf('Could not execute query %s', $query));
         }
 
         $timezone = null;
@@ -111,8 +111,8 @@ class IpInfoDbProvider extends AbstractProvider implements ProviderInterface
         return array(array_merge($this->getDefaults(), array(
             'latitude'    => isset($data['latitude']) ? $data['latitude'] : null,
             'longitude'   => isset($data['longitude']) ? $data['longitude'] : null,
-            'city'        => isset($data['cityName']) ? $data['cityName'] : null,
-            'zipcode'     => isset($data['zipCode']) ? $data['zipCode'] : null,
+            'locality'    => isset($data['cityName']) ? $data['cityName'] : null,
+            'postalCode'  => isset($data['zipCode']) ? $data['zipCode'] : null,
             'region'      => isset($data['regionName']) ? $data['regionName'] : null,
             'country'     => isset($data['countryName']) ? $data['countryName'] : null,
             'countryCode' => isset($data['countryName']) ? $data['countryCode'] : null,

@@ -13,14 +13,14 @@ namespace Geocoder\Exception;
 /**
  * @author Ben Glassman <bglassman@gmail.com>
  */
-class ChainNoResultException extends NoResultException
+class ChainNoResult extends NoResult
 {
     /**
      * Exceptions from chained providers
      *
      * @var array
      */
-    private $exceptions = array();
+    private $exceptions = [];
 
     /**
      * Constructor
@@ -28,7 +28,7 @@ class ChainNoResultException extends NoResultException
      * @param string $message
      * @param array  $exceptions Array of Exception instances
      */
-    public function __construct($message = '', array $exceptions = array())
+    public function __construct($message = '', array $exceptions = [])
     {
         parent::__construct($message);
 

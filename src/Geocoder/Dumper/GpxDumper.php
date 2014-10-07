@@ -10,20 +10,20 @@
 
 namespace Geocoder\Dumper;
 
-use Geocoder\Geocoder;
-use Geocoder\Result\ResultInterface;
+use Geocoder\ProviderBasedGeocoder;
+use Geocoder\Result\Address;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-class GpxDumper implements DumperInterface
+class GpxDumper implements Dumper
 {
     /**
-     * @param ResultInterface $result
+     * @param Address $address
      *
      * @return string
      */
-    public function dump(ResultInterface $result)
+    public function dump(Address $address)
     {
         $gpx = sprintf(<<<GPX
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
@@ -35,14 +35,15 @@ version="1.0"
     xsi:schemaLocation="http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd">
 
 GPX
-        , Geocoder::VERSION);
+        , ProviderBasedGeocoder::VERSION);
 
-        if ($bounds = $result->getBounds()) {
+        if ($address->getBounds()->isDefined()) {
+            $bounds = $address->getBounds();
             $gpx .= sprintf(<<<GPX
     <bounds minlat="%f" minlon="%f" maxlat="%f" maxlon="%f"/>
 
 GPX
-            , $bounds['west'], $bounds['south'], $bounds['east'], $bounds['north']);
+            , $bounds->getWest(), $bounds->getSouth(), $bounds->getEast(), $bounds->getNorth());
         }
 
         $gpx .= sprintf(<<<GPX
@@ -52,7 +53,7 @@ GPX
     </wpt>
 
 GPX
-        , $result->getLatitude(), $result->getLongitude(), $this->formatName($result));
+        , $address->getLatitude(), $address->getLongitude(), $this->formatName($address));
 
         $gpx .= <<<GPX
 </gpx>
@@ -62,15 +63,15 @@ GPX;
     }
 
     /**
-     * @param ResultInterface $result
+     * @param Address $address
      *
      * @return string
      */
-    protected function formatName(ResultInterface $result)
+    protected function formatName(Address $address)
     {
         $name  = '';
-        $array = $result->toArray();
-        $attrs = array('streetNumber', 'streetName', 'zipcode', 'city', 'county', 'region', 'country');
+        $array = $address->toArray();
+        $attrs = array('streetNumber', 'streetName', 'postalCode', 'locality', 'county', 'region', 'country');
 
         foreach ($attrs as $attr) {
             if (isset($array[$attr]) && !empty($array[$attr])) {

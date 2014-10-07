@@ -10,14 +10,14 @@
 
 namespace Geocoder\Provider;
 
-use Geocoder\Exception\NoResultException;
-use Geocoder\Exception\UnsupportedException;
+use Geocoder\Exception\NoResult;
+use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\HttpAdapter\HttpAdapterInterface;
 
 /**
  * @author ALKOUM Dorian <baikunz@gmail.com>
  */
-class ArcGISOnlineProvider extends AbstractProvider implements ProviderInterface
+class ArcGISOnlineProvider extends AbstractProvider implements Provider
 {
     /**
      * @var string
@@ -32,12 +32,12 @@ class ArcGISOnlineProvider extends AbstractProvider implements ProviderInterface
     /**
      * @var string
      */
-    protected $sourceCountry = null;
+    private $sourceCountry;
 
     /**
      * @var string
      */
-    protected $protocol = 'http';
+    private $protocol;
 
     /**
      * @param HttpAdapterInterface $adapter       An HTTP adapter.
@@ -58,12 +58,12 @@ class ArcGISOnlineProvider extends AbstractProvider implements ProviderInterface
     public function getGeocodedData($address)
     {
         if (filter_var($address, FILTER_VALIDATE_IP)) {
-            throw new UnsupportedException('The ArcGISOnlineProvider does not support IP addresses.');
+            throw new UnsupportedOperation('The ArcGISOnlineProvider does not support IP addresses.');
         }
 
         // Save a request if no valid address entered
         if (empty($address)) {
-            throw new NoResultException('Invalid address.');
+            throw new NoResult('Invalid address.');
         }
 
         $query = sprintf(self::ENDPOINT_URL, $this->protocol, urlencode($address));
@@ -72,7 +72,7 @@ class ArcGISOnlineProvider extends AbstractProvider implements ProviderInterface
 
         // no result
         if (empty($json->locations)) {
-            throw new NoResultException(sprintf('No results found for query %s', $query));
+            throw new NoResult(sprintf('No results found for query %s', $query));
         }
 
         $results = array();
@@ -94,8 +94,8 @@ class ArcGISOnlineProvider extends AbstractProvider implements ProviderInterface
                 'longitude'    => $coordinates['x'],
                 'streetNumber' => $streetNumber,
                 'streetName'   => $streetName,
-                'city'         => $city,
-                'zipcode'      => $zipcode,
+                'locality'     => $city,
+                'postalCode'   => $zipcode,
                 'region'       => $region,
                 'countryCode'  => $countryCode,
                 'county'       => $county,
@@ -115,7 +115,7 @@ class ArcGISOnlineProvider extends AbstractProvider implements ProviderInterface
         $json = $this->executeQuery($query);
 
         if (property_exists($json, 'error')) {
-            throw new NoResultException(sprintf('No results found for query %s', $query));
+            throw new NoResult(sprintf('No results found for query %s', $query));
         }
 
         $data = $json->address;
@@ -128,14 +128,14 @@ class ArcGISOnlineProvider extends AbstractProvider implements ProviderInterface
         $countryCode  = !empty($data->CountryCode) ? $data->CountryCode : null;
 
         return array(array_merge($this->getDefaults(), array(
-            'latitude'     => $coordinates[0],
-            'longitude'    => $coordinates[1],
-            'streetName'   => $streetName,
-            'city'         => $city,
-            'zipcode'      => $zipcode,
-            'region'       => $region,
-            'countryCode'  => $countryCode,
-            'county'       => $county,
+            'latitude'    => $coordinates[0],
+            'longitude'   => $coordinates[1],
+            'streetName'  => $streetName,
+            'locality'    => $city,
+            'postalCode'  => $zipcode,
+            'region'      => $region,
+            'countryCode' => $countryCode,
+            'county'      => $county,
         )));
     }
 
@@ -152,15 +152,13 @@ class ArcGISOnlineProvider extends AbstractProvider implements ProviderInterface
      *
      * @return string Query with extra params
      */
-    protected function buildQuery($query)
+    private function buildQuery($query)
     {
-        if (null !== $this->getSourceCountry()) {
-            $query = sprintf('%s&sourceCountry=%s', $query, $this->getSourceCountry());
+        if (null !== $this->sourceCountry) {
+            $query = sprintf('%s&sourceCountry=%s', $query, $this->sourceCountry);
         }
 
-        $query = sprintf('%s&maxLocations=%d', $query, $this->getMaxResults());
-        $query = sprintf('%s&f=%s', $query, 'json'); // set format to json
-        $query = sprintf('%s&outFields=*', $query); // Get all result fields
+        $query = sprintf('%s&maxLocations=%d&f=%s&outFields=*', $query, $this->getMaxResults(), 'json');
 
         return $query;
     }
@@ -170,36 +168,26 @@ class ArcGISOnlineProvider extends AbstractProvider implements ProviderInterface
      *
      * @param string $query
      *
-     * @throws NoResultException
+     * @throws NoResult
      *
      * @return \stdClass json object representing the query result
      */
-    protected function executeQuery($query)
+    private function executeQuery($query)
     {
         $query = $this->buildQuery($query);
 
         $content = $this->getAdapter()->getContent($query);
         if (null === $content) {
-            throw new NoResultException(sprintf('Could not execute query %s', $query));
+            throw new NoResult(sprintf('Could not execute query %s', $query));
         }
 
         $json = json_decode($content);
 
         // API error
         if (!isset($json)) {
-            throw new NoResultException(sprintf('Could not execute query %s', $query));
+            throw new NoResult(sprintf('Could not execute query %s', $query));
         }
 
         return $json;
-    }
-
-    /**
-     * Returns the configured source country or null.
-     *
-     * @return string|null
-     */
-    protected function getSourceCountry()
-    {
-        return $this->sourceCountry;
     }
 }

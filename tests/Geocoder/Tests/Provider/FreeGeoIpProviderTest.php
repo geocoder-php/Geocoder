@@ -14,7 +14,7 @@ class FreeGeoIpProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The FreeGeoIpProvider does not support Street addresses.
      */
     public function testGetGeocodedDataWithNull()
@@ -24,7 +24,7 @@ class FreeGeoIpProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The FreeGeoIpProvider does not support Street addresses.
      */
     public function testGetGeocodedDataWithEmpty()
@@ -34,7 +34,7 @@ class FreeGeoIpProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The FreeGeoIpProvider does not support Street addresses.
      */
     public function testGetGeocodedDataWithAddress()
@@ -55,10 +55,10 @@ class FreeGeoIpProviderTest extends TestCase
         $this->assertInternalType('array', $result);
         $this->assertArrayNotHasKey('latitude', $result);
         $this->assertArrayNotHasKey('longitude', $result);
-        $this->assertArrayNotHasKey('zipcode', $result);
+        $this->assertArrayNotHasKey('postalCode', $result);
         $this->assertArrayNotHasKey('timezone', $result);
 
-        $this->assertEquals('localhost', $result['city']);
+        $this->assertEquals('localhost', $result['locality']);
         $this->assertEquals('localhost', $result['region']);
         $this->assertEquals('localhost', $result['county']);
         $this->assertEquals('localhost', $result['country']);
@@ -76,17 +76,17 @@ class FreeGeoIpProviderTest extends TestCase
         $this->assertInternalType('array', $result);
         $this->assertArrayNotHasKey('latitude', $result);
         $this->assertArrayNotHasKey('longitude', $result);
-        $this->assertArrayNotHasKey('zipcode', $result);
+        $this->assertArrayNotHasKey('postalCode', $result);
         $this->assertArrayNotHasKey('timezone', $result);
 
-        $this->assertEquals('localhost', $result['city']);
+        $this->assertEquals('localhost', $result['locality']);
         $this->assertEquals('localhost', $result['region']);
         $this->assertEquals('localhost', $result['county']);
         $this->assertEquals('localhost', $result['country']);
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query http://freegeoip.net/json/74.200.247.59
      */
     public function testGetGeocodedDataWithRealIPv4GetsNullContent()
@@ -96,7 +96,7 @@ class FreeGeoIpProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query http://freegeoip.net/json/74.200.247.59
      */
     public function testGetGeocodedDataWithRealIPv4GetsEmptyContent()
@@ -117,8 +117,8 @@ class FreeGeoIpProviderTest extends TestCase
         $this->assertInternalType('array', $result);
         $this->assertEquals(33.0347, $result['latitude'], '', 0.01);
         $this->assertEquals(-96.8134, $result['longitude'], '', 0.01);
-        $this->assertEquals(75093, $result['zipcode']);
-        $this->assertEquals('Plano', $result['city']);
+        $this->assertEquals(75093, $result['postalCode']);
+        $this->assertEquals('Plano', $result['locality']);
         $this->assertEquals('Texas', $result['region']);
         $this->assertEquals('United States', $result['country']);
         $this->assertEquals('US', $result['countryCode']);
@@ -136,15 +136,15 @@ class FreeGeoIpProviderTest extends TestCase
         $this->assertInternalType('array', $result);
         $this->assertEquals(33.0347, $result['latitude'], '', 0.01);
         $this->assertEquals(-96.8134, $result['longitude'], '', 0.01);
-        $this->assertEquals(75093, $result['zipcode']);
-        $this->assertEquals('Plano', $result['city']);
+        $this->assertEquals(75093, $result['postalCode']);
+        $this->assertEquals('Plano', $result['locality']);
         $this->assertEquals('Texas', $result['region']);
         $this->assertEquals('United States', $result['country']);
         $this->assertEquals('US', $result['countryCode']);
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query http://freegeoip.net/json/::ffff:74.200.247.59
      */
     public function testGetGeocodedDataWithRealIPv6GetsNullContent()
@@ -206,7 +206,7 @@ class FreeGeoIpProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The FreeGeoIpProvider is not able to do reverse geocoding.
      */
     public function testGetReverseData()

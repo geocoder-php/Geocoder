@@ -11,8 +11,8 @@
 namespace Geocoder\Exception;
 
 /**
- * @author Markus Bachmann <markus.bachmann@bachi.biz>
+ * @author William Durand <william.durand1@gmail.com>
  */
-class NoResultException extends \RuntimeException implements ExceptionInterface
+interface Exception
 {
 }

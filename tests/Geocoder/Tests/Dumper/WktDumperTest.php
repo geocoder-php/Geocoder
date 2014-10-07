@@ -3,11 +3,11 @@
 namespace Geocoder\Tests\Dumper;
 
 use Geocoder\Dumper\WktDumper;
-use Geocoder\Result\Geocoded;
 use Geocoder\Tests\TestCase;
 
 /**
  * @author Jan Sorgalla <jsorgalla@googlemail.com>
+ * @author William Durand <william.durand1@gmail.com>
  */
 class WktDumperTest extends TestCase
 {
@@ -20,11 +20,9 @@ class WktDumperTest extends TestCase
 
     public function testDump()
     {
-        $obj = new Geocoded();
-
+        $address  = $this->createEmptyAddress();
         $expected = sprintf('POINT(%F %F)', 0, 0);
-
-        $result = $this->dumper->dump($obj);
+        $result   = $this->dumper->dump($address);
 
         $this->assertTrue(is_string($result));
         $this->assertEquals($expected, $result);
@@ -32,13 +30,13 @@ class WktDumperTest extends TestCase
 
     public function testDumpWithData()
     {
-        $obj = new Geocoded();
-        $obj['latitude']  = 48.8631507;
-        $obj['longitude'] = 2.3889114;
-
+        $address  = $this->createAddress([
+            'latitude'  => 48.8631507,
+            'longitude' => 2.3889114,
+        ]);
         $expected = sprintf('POINT(%F %F)', 2.3889114, 48.8631507);
 
-        $result = $this->dumper->dump($obj);
+        $result = $this->dumper->dump($address);
 
         $this->assertTrue(is_string($result));
         $this->assertEquals($expected, $result);

@@ -10,20 +10,20 @@
 
 namespace Geocoder\Dumper;
 
-use Geocoder\Result\ResultInterface;
+use Geocoder\Result\Address;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-interface DumperInterface
+interface Dumper
 {
     /**
-     * Dump a `ResultInterface` object as a string representation of
+     * Dumps an `Address` object as a string representation of
      * the implemented format.
      *
-     * @param ResultInterface $result A result object
+     * @param Address $address
      *
      * @return string
      */
-    public function dump(ResultInterface $result);
+    public function dump(Address $address);
 }

@@ -11,8 +11,8 @@
 namespace Geocoder\Exception;
 
 /**
- * @author Max V. Kovrigovich <mvk@tut.by>
+ * @author Markus Bachmann <markus.bachmann@bachi.biz>
  */
-class QuotaExceededException extends \RuntimeException implements ExceptionInterface
+class InvalidCredentials extends RuntimeException implements Exception
 {
 }

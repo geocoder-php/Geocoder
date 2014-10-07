@@ -14,7 +14,7 @@ class ArcGISOnlineProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      */
     public function testGetGeocodedDataWithInvalidData()
     {
@@ -23,7 +23,7 @@ class ArcGISOnlineProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Invalid address.
      */
     public function testGetGeocodedDataWithNull()
@@ -33,7 +33,7 @@ class ArcGISOnlineProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Invalid address.
      */
     public function testGetGeocodedDataWithEmpty()
@@ -43,7 +43,7 @@ class ArcGISOnlineProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The ArcGISOnlineProvider does not support IP addresses.
      */
     public function testGetGeocodedDataWithLocalhostIPv4()
@@ -53,7 +53,7 @@ class ArcGISOnlineProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The ArcGISOnlineProvider does not support IP addresses.
      */
     public function testGetGeocodedDataWithLocalhostIPv6()
@@ -63,7 +63,7 @@ class ArcGISOnlineProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find?text=10+avenue+Gambetta%2C+Paris%2C+France&maxLocations=5&f=json&outFields=*
      */
     public function testGetGeocodedDataWithAddressGetsNullContent()
@@ -85,8 +85,8 @@ class ArcGISOnlineProviderTest extends TestCase
         $this->assertEquals(48.863279997000461, $result['latitude'], '', 0.0001);
         $this->assertEquals(2.3890199980004354, $result['longitude'], '', 0.0001);
         $this->assertEquals('10 Avenue Gambetta, 75020, Paris', $result['streetName']);
-        $this->assertEquals(75020, $result['zipcode']);
-        $this->assertEquals('Paris', $result['city']);
+        $this->assertEquals(75020, $result['postalCode']);
+        $this->assertEquals('Paris', $result['locality']);
         $this->assertEquals('Paris', $result['county']);
         $this->assertEquals('Île-de-France', $result['region']);
         $this->assertEquals('FRA', $result['countryCode']);
@@ -96,7 +96,7 @@ class ArcGISOnlineProviderTest extends TestCase
         $this->assertNull($result['timezone']);
         $this->assertNull($result['regionCode']);
         $this->assertNull($result['bounds']);
-        $this->assertNull($result['cityDistrict']);
+        $this->assertNull($result['subLocality']);
         $this->assertNull($result['countyCode']);
     }
 
@@ -113,8 +113,8 @@ class ArcGISOnlineProviderTest extends TestCase
         $this->assertEquals(48.863279997000461, $result['latitude'], '', 0.0001);
         $this->assertEquals(2.3890199980004354, $result['longitude'], '', 0.0001);
         $this->assertEquals('10 Avenue Gambetta, 75020, Paris', $result['streetName']);
-        $this->assertEquals(75020, $result['zipcode']);
-        $this->assertEquals('Paris', $result['city']);
+        $this->assertEquals(75020, $result['postalCode']);
+        $this->assertEquals('Paris', $result['locality']);
         $this->assertEquals('Paris', $result['county']);
         $this->assertEquals('Île-de-France', $result['region']);
         $this->assertEquals('FRA', $result['countryCode']);
@@ -124,12 +124,12 @@ class ArcGISOnlineProviderTest extends TestCase
         $this->assertNull($result['timezone']);
         $this->assertNull($result['regionCode']);
         $this->assertNull($result['bounds']);
-        $this->assertNull($result['cityDistrict']);
+        $this->assertNull($result['subLocality']);
         $this->assertNull($result['countyCode']);
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage No results found for query http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find?text=10+avenue+Gambetta%2C+Paris%2C+France
      */
     public function testGetGeocodedDataWithInvalidAddressForSourceCountry()
@@ -139,7 +139,7 @@ class ArcGISOnlineProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage No results found for query https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find?text=10+avenue+Gambetta%2C+Paris%2C+France
      */
     public function testGetGeocodedDataWithInvalidAddressWithHttpsForSourceCountry()
@@ -149,7 +149,7 @@ class ArcGISOnlineProviderTest extends TestCase
     }
 
     /**
-     * @expectedException Geocoder\Exception\NoResultException
+     * @expectedException Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/reverseGeocode?location=2.000000,1.000000&maxLocations=5&f=json&outFields=*
      */
     public function testGetReversedDataWithInvalid()
@@ -159,7 +159,7 @@ class ArcGISOnlineProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/reverseGeocode?location=2.389020,48.863280&maxLocations=5&f=json&outFields=*
      */
     public function testGetReversedDataWithCoordinatesContentReturnNull()
@@ -180,8 +180,8 @@ class ArcGISOnlineProviderTest extends TestCase
         $this->assertEquals(48.863279997000461, $result['latitude'], '', 0.0001);
         $this->assertEquals(2.3890199980004354, $result['longitude'], '', 0.0001);
         $this->assertEquals('3 Avenue Gambetta', $result['streetName']);
-        $this->assertEquals(75020, $result['zipcode']);
-        $this->assertEquals('Paris', $result['city']);
+        $this->assertEquals(75020, $result['postalCode']);
+        $this->assertEquals('Paris', $result['locality']);
         $this->assertEquals('Paris', $result['county']);
         $this->assertEquals('Île-de-France', $result['region']);
         $this->assertEquals('FRA', $result['countryCode']);
@@ -191,7 +191,7 @@ class ArcGISOnlineProviderTest extends TestCase
         $this->assertNull($result['timezone']);
         $this->assertNull($result['regionCode']);
         $this->assertNull($result['bounds']);
-        $this->assertNull($result['cityDistrict']);
+        $this->assertNull($result['subLocality']);
         $this->assertNull($result['countyCode']);
     }
 
@@ -207,8 +207,8 @@ class ArcGISOnlineProviderTest extends TestCase
         $this->assertEquals(48.863279997000461, $result['latitude'], '', 0.0001);
         $this->assertEquals(2.3890199980004354, $result['longitude'], '', 0.0001);
         $this->assertEquals('3 Avenue Gambetta', $result['streetName']);
-        $this->assertEquals(75020, $result['zipcode']);
-        $this->assertEquals('Paris', $result['city']);
+        $this->assertEquals(75020, $result['postalCode']);
+        $this->assertEquals('Paris', $result['locality']);
         $this->assertEquals('Paris', $result['county']);
         $this->assertEquals('Île-de-France', $result['region']);
         $this->assertEquals('FRA', $result['countryCode']);
@@ -218,7 +218,7 @@ class ArcGISOnlineProviderTest extends TestCase
         $this->assertNull($result['timezone']);
         $this->assertNull($result['regionCode']);
         $this->assertNull($result['bounds']);
-        $this->assertNull($result['cityDistrict']);
+        $this->assertNull($result['subLocality']);
         $this->assertNull($result['countyCode']);
     }
 
@@ -237,22 +237,22 @@ class ArcGISOnlineProviderTest extends TestCase
         $this->assertEquals('Lower Saxony', $results[0]['region']);
         $this->assertEquals('DEU', $results[0]['countryCode']);
 
-        $this->assertNull($results[0]['city']);
+        $this->assertNull($results[0]['locality']);
         $this->assertNull($results[0]['county']);
-        $this->assertNull($results[0]['zipcode']);
+        $this->assertNull($results[0]['postalCode']);
         $this->assertNull($results[0]['streetNumber']);
         $this->assertNull($results[0]['country']);
         $this->assertNull($results[0]['timezone']);
         $this->assertNull($results[0]['regionCode']);
         $this->assertNull($results[0]['bounds']);
-        $this->assertNull($results[0]['cityDistrict']);
+        $this->assertNull($results[0]['subLocality']);
         $this->assertNull($results[0]['countyCode']);
 
         $this->assertInternalType('array', $results[1]);
         $this->assertEquals(52.370518568, $results[1]['latitude'], '', 0.0001);
         $this->assertEquals(9.7332166860004, $results[1]['longitude'], '', 0.0001);
         $this->assertEquals('Hannover, Lower Saxony, Germany', $results[1]['streetName']);
-        $this->assertEquals('Hannover', $results[1]['city']);
+        $this->assertEquals('Hannover', $results[1]['locality']);
         $this->assertEquals('Lower Saxony', $results[1]['region']);
         $this->assertEquals('DEU', $results[1]['countryCode']);
 
@@ -260,7 +260,7 @@ class ArcGISOnlineProviderTest extends TestCase
         $this->assertEquals(47.111386795, $results[2]['latitude'], '', 0.0001);
         $this->assertEquals(-101.426539157, $results[2]['longitude'], '', 0.0001);
         $this->assertEquals('Hannover, North Dakota, United States', $results[2]['streetName']);
-        $this->assertNull($results[2]['city']);
+        $this->assertNull($results[2]['locality']);
         $this->assertEquals('North Dakota', $results[2]['region']);
         $this->assertEquals('USA', $results[2]['countryCode']);
 
@@ -275,14 +275,14 @@ class ArcGISOnlineProviderTest extends TestCase
         $this->assertEquals(53.174198173, $results[4]['latitude'], '', 0.0001);
         $this->assertEquals(8.5069383810005, $results[4]['longitude'], '', 0.0001);
         $this->assertEquals('Hannöver, Lower Saxony, Germany', $results[4]['streetName']);
-        $this->assertNull($results[4]['city']);
+        $this->assertNull($results[4]['locality']);
         $this->assertEquals('Lower Saxony', $results[4]['region']);
         $this->assertNull($results[4]['county']);
         $this->assertEquals('DEU', $results[4]['countryCode']);
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The ArcGISOnlineProvider does not support IP addresses.
      */
     public function testGetGeocodedDataWithRealIPv4()
@@ -292,7 +292,7 @@ class ArcGISOnlineProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The ArcGISOnlineProvider does not support IP addresses.
      */
     public function testGetGeocodedDataWithRealIPv6()

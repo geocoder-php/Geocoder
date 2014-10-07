@@ -10,14 +10,14 @@
 
 namespace Geocoder\Provider;
 
-use Geocoder\Exception\NoResultException;
-use Geocoder\Exception\UnsupportedException;
+use Geocoder\Exception\NoResult;
+use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\HttpAdapter\HttpAdapterInterface;
 
 /**
  * @author Niklas Närhinen <niklas@narhinen.net>
  */
-class NominatimProvider extends AbstractProvider implements LocaleAwareProviderInterface
+class NominatimProvider extends AbstractProvider implements LocaleAwareProvider
 {
     /**
      * @param HttpAdapterInterface $adapter An HTTP adapter.
@@ -38,7 +38,7 @@ class NominatimProvider extends AbstractProvider implements LocaleAwareProviderI
     {
         // This API does not support IPv6
         if (filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
-            throw new UnsupportedException('The NominatimProvider does not support IPv6 addresses.');
+            throw new UnsupportedOperation('The NominatimProvider does not support IPv6 addresses.');
         }
 
         if ('127.0.0.1' === $address) {
@@ -49,19 +49,19 @@ class NominatimProvider extends AbstractProvider implements LocaleAwareProviderI
         $content = $this->executeQuery($query);
 
         if (null === $content) {
-            throw new NoResultException(sprintf('Could not resolve address "%s"', $address));
+            throw new NoResult(sprintf('Could not resolve address "%s"', $address));
         }
 
         $doc = new \DOMDocument();
         if (!@$doc->loadXML($content) || null === $doc->getElementsByTagName('searchresults')->item(0)) {
-            throw new NoResultException(sprintf('Could not execute query %s', $query));
+            throw new NoResult(sprintf('Could not execute query %s', $query));
         }
 
         $searchResult = $doc->getElementsByTagName('searchresults')->item(0);
         $places = $searchResult->getElementsByTagName('place');
 
         if (null === $places || 0 === $places->length) {
-            throw new NoResultException(sprintf('Could not execute query %s', $query));
+            throw new NoResult(sprintf('Could not execute query %s', $query));
         }
 
         $results = array();
@@ -76,13 +76,13 @@ class NominatimProvider extends AbstractProvider implements LocaleAwareProviderI
                 'latitude'     => $place->getAttribute('lat'),
                 'longitude'    => $place->getAttribute('lon'),
                 'bounds'       => $bounds,
-                'zipcode'      => $this->getNodeValue($place->getElementsByTagName('postcode')),
+                'postalCode'   => $this->getNodeValue($place->getElementsByTagName('postcode')),
                 'county'       => $this->getNodeValue($place->getElementsByTagName('county')),
                 'region'       => $this->getNodeValue($place->getElementsByTagName('state')),
                 'streetNumber' => $this->getNodeValue($place->getElementsByTagName('house_number')),
                 'streetName'   => $this->getNodeValue($place->getElementsByTagName('road')) ?: $this->getNodeValue($place->getElementsByTagName('pedestrian')),
-                'city'         => $this->getNodeValue($place->getElementsByTagName('city')),
-                'cityDistrict' => $this->getNodeValue($place->getElementsByTagName('suburb')),
+                'locality'     => $this->getNodeValue($place->getElementsByTagName('city')),
+                'subLocality'  => $this->getNodeValue($place->getElementsByTagName('suburb')),
                 'country'      => $this->getNodeValue($place->getElementsByTagName('country')),
                 'countryCode'  => strtoupper($this->getNodeValue($place->getElementsByTagName('country_code'))),
             ));
@@ -100,12 +100,12 @@ class NominatimProvider extends AbstractProvider implements LocaleAwareProviderI
         $content = $this->executeQuery($query);
 
         if (null === $content) {
-            throw new NoResultException(sprintf('Unable to resolve the coordinates %s', implode(', ', $coordinates)));
+            throw new NoResult(sprintf('Unable to resolve the coordinates %s', implode(', ', $coordinates)));
         }
 
         $doc = new \DOMDocument();
         if (!@$doc->loadXML($content) || $doc->getElementsByTagName('error')->length > 0) {
-            throw new NoResultException(sprintf('Could not resolve coordinates %s', implode(', ', $coordinates)));
+            throw new NoResult(sprintf('Could not resolve coordinates %s', implode(', ', $coordinates)));
         }
 
         $searchResult = $doc->getElementsByTagName('reversegeocode')->item(0);
@@ -115,13 +115,13 @@ class NominatimProvider extends AbstractProvider implements LocaleAwareProviderI
         return array(array_merge($this->getDefaults(), array(
             'latitude'     => $result->getAttribute('lat'),
             'longitude'    => $result->getAttribute('lon'),
-            'zipcode'      => $this->getNodeValue($addressParts->getElementsByTagName('postcode')),
+            'postalCode'   => $this->getNodeValue($addressParts->getElementsByTagName('postcode')),
             'county'       => $this->getNodeValue($addressParts->getElementsByTagName('county')),
             'region'       => $this->getNodeValue($addressParts->getElementsByTagName('state')),
             'streetNumber' => $this->getNodeValue($addressParts->getElementsByTagName('house_number')),
             'streetName'   => $this->getNodeValue($addressParts->getElementsByTagName('road')) ?: $this->getNodeValue($addressParts->getElementsByTagName('pedestrian')),
-            'city'         => $this->getNodeValue($addressParts->getElementsByTagName('city')),
-            'cityDistrict' => $this->getNodeValue($addressParts->getElementsByTagName('suburb')),
+            'locality'     => $this->getNodeValue($addressParts->getElementsByTagName('city')),
+            'subLocality'  => $this->getNodeValue($addressParts->getElementsByTagName('suburb')),
             'country'      => $this->getNodeValue($addressParts->getElementsByTagName('country')),
             'countryCode'  => strtoupper($this->getNodeValue($addressParts->getElementsByTagName('country_code'))),
         )));
@@ -140,7 +140,7 @@ class NominatimProvider extends AbstractProvider implements LocaleAwareProviderI
      *
      * @return string
      */
-    protected function executeQuery($query)
+    private function executeQuery($query)
     {
         if (null !== $this->getLocale()) {
             $query = sprintf('%s&accept-language=%s', $query, $this->getLocale());
@@ -152,7 +152,7 @@ class NominatimProvider extends AbstractProvider implements LocaleAwareProviderI
     /**
      * @return string
      */
-    protected function getGeocodeEndpointUrl()
+    private function getGeocodeEndpointUrl()
     {
         return $this->rootUrl.'/search?q=%s&format=xml&addressdetails=1&limit=%d';
     }
@@ -160,7 +160,7 @@ class NominatimProvider extends AbstractProvider implements LocaleAwareProviderI
     /**
      * @return string
      */
-    protected function getReverseEndpointUrl()
+    private function getReverseEndpointUrl()
     {
         return $this->rootUrl.'/reverse?format=xml&lat=%F&lon=%F&addressdetails=1&zoom=18';
     }

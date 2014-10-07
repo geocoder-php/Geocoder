@@ -33,7 +33,7 @@ class MaxMindBinaryProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\InvalidArgumentException
+     * @expectedException \Geocoder\Exception\InvalidArgument
      * @expectedExceptionMessage Given MaxMind dat file "not_exist.dat" does not exist.
      */
     public function testThrowIfNotExistBinaryFileGiven()
@@ -58,14 +58,14 @@ class MaxMindBinaryProviderTest extends TestCase
         $this->assertArrayHasKey('country', $result);
         $this->assertArrayHasKey('countryCode', $result);
         $this->assertArrayHasKey('regionCode', $result);
-        $this->assertArrayHasKey('city', $result);
+        $this->assertArrayHasKey('locality', $result);
         $this->assertArrayHasKey('latitude', $result);
         $this->assertArrayHasKey('longitude', $result);
-        $this->assertArrayHasKey('zipcode', $result);
+        $this->assertArrayHasKey('postalCode', $result);
         $this->assertArrayHasKey('bounds', $result);
         $this->assertArrayHasKey('streetNumber', $result);
         $this->assertArrayHasKey('streetName', $result);
-        $this->assertArrayHasKey('cityDistrict', $result);
+        $this->assertArrayHasKey('subLocality', $result);
         $this->assertArrayHasKey('county', $result);
         $this->assertArrayHasKey('countyCode', $result);
         $this->assertArrayHasKey('region', $result);
@@ -86,8 +86,8 @@ class MaxMindBinaryProviderTest extends TestCase
         $result = $result[0];
         $this->assertInternalType('array', $result);
 
-        $this->assertArrayHasKey('city', $result);
-        $this->assertEquals($expectedCity, $result['city']);
+        $this->assertArrayHasKey('locality', $result);
+        $this->assertEquals($expectedCity, $result['locality']);
         $this->assertArrayHasKey('country', $result);
         $this->assertEquals($expectedCountry, $result['country']);
     }
@@ -97,7 +97,7 @@ class MaxMindBinaryProviderTest extends TestCase
         $provider = new MaxMindBinaryProvider($this->binaryFile);
         $results  = $provider->getGeocodedData('212.51.181.237');
 
-        $this->assertSame('Châlette-sur-loing', $results[0]['city']);
+        $this->assertSame('Châlette-sur-loing', $results[0]['locality']);
     }
 
     public function testGetName()
@@ -108,7 +108,7 @@ class MaxMindBinaryProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage No results found for IP address 127.0.0.1
      */
     public function testThrowIfIpAddressCouldNotBeLocated()
@@ -119,7 +119,7 @@ class MaxMindBinaryProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The MaxMindBinaryProvider does not support street addresses.
      */
     public function testThrowIfInvalidIpAddressGiven()
@@ -130,7 +130,7 @@ class MaxMindBinaryProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The MaxMindBinaryProvider is not able to do reverse geocoding.
      */
     public function testThrowOnReversedDataMethodUsage()

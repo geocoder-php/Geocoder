@@ -10,7 +10,7 @@
 
 namespace Geocoder\Tests\Provider;
 
-use Geocoder\Exception\NoResultException;
+use Geocoder\Exception\NoResult;
 use Geocoder\HttpAdapter\CurlHttpAdapter;
 use Geocoder\Provider\GeoIP2Provider;
 use Geocoder\Tests\TestCase;
@@ -31,7 +31,7 @@ class GeoIP2ProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\InvalidArgumentException
+     * @expectedException \Geocoder\Exception\InvalidArgument
      * @expectedExceptionMessage GeoIP2Adapter is needed in order to access the GeoIP2 service.
      */
     public function testWrongAdapterLeadsToException()
@@ -46,7 +46,7 @@ class GeoIP2ProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The Geocoder\Provider\GeoIP2Provider is not able to do reverse geocoding.
      */
     public function testQueryingReversedDataLeadToException()
@@ -57,7 +57,7 @@ class GeoIP2ProviderTest extends TestCase
     public function testLocalhostDefaults()
     {
         $expectedResult = array(
-            'city'      => 'localhost',
+            'locality'      => 'localhost',
             'region'    => 'localhost',
             'county'    => 'localhost',
             'country'   => 'localhost',
@@ -69,7 +69,7 @@ class GeoIP2ProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The Geocoder\Provider\GeoIP2Provider does not support street addresses.
      */
     public function testOnlyIpAddressesCouldBeResolved()
@@ -94,9 +94,9 @@ class GeoIP2ProviderTest extends TestCase
                     'bounds' => null,
                     'streetNumber' => null,
                     'streetName' => null,
-                    'city' => 'Hamburg',
-                    'zipcode' => null,
-                    'cityDistrict' => null,
+                    'locality' => 'Hamburg',
+                    'postalCode' => null,
+                    'subLocality' => null,
                     'county' => null,
                     'countyCode' => null,
                     'region' => 'Hamburg',
@@ -115,9 +115,9 @@ class GeoIP2ProviderTest extends TestCase
                     'bounds' => null,
                     'streetNumber' => null,
                     'streetName' => null,
-                    'city' => null,
-                    'zipcode' => null,
-                    'cityDistrict' => null,
+                    'locality' => null,
+                    'postalCode' => null,
+                    'subLocality' => null,
                     'county' => null,
                     'countyCode' => null,
                     'region' => null,
@@ -149,12 +149,12 @@ class GeoIP2ProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage No results found for IP address 74.200.247.59
      */
     public function testRetrievingGeodataNotExistingLocation()
     {
-        $adapterReturn = new NoResultException('No results found for IP address 74.200.247.59');
+        $adapterReturn = new NoResult('No results found for IP address 74.200.247.59');
         $adapter = $this->getGeoIP2AdapterMock($adapterReturn);
 
         $provider = new GeoIP2Provider($adapter);

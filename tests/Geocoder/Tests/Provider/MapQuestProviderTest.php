@@ -17,7 +17,7 @@ class MapQuestProviderTest extends TestCase
     }
 
     /**
-     * @expectedException Geocoder\Exception\NoResultException
+     * @expectedException Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not find results for given query: http://open.mapquestapi.com/geocoding/v1/address?location=foobar&outFormat=json&maxResults=5&key=api_key&thumbMaps=false
      */
     public function testGetGeocodedData()
@@ -27,7 +27,7 @@ class MapQuestProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query: http://open.mapquestapi.com/geocoding/v1/address?location=10+avenue+Gambetta%2C+Paris%2C+France&outFormat=json&maxResults=5&key=api_key&thumbMaps=false
      */
     public function testGetGeocodedDataWithAddressGetsNullContent()
@@ -37,7 +37,7 @@ class MapQuestProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not find results for given query: http://open.mapquestapi.com/geocoding/v1/reverse?key=api_key&lat=123.000000&lng=456.000000
      */
     public function testGetNotRelevantData()
@@ -67,8 +67,8 @@ class MapQuestProviderTest extends TestCase
         $this->assertNull($result['bounds']);
         $this->assertNull($result['streetNumber']);
         $this->assertEquals('10 Avenue Gambetta', $result['streetName']);
-        $this->assertEquals(75011, $result['zipcode']);
-        $this->assertEquals('Paris', $result['city']);
+        $this->assertEquals(75011, $result['postalCode']);
+        $this->assertEquals('Paris', $result['locality']);
         $this->assertEquals('Paris', $result['county']);
         $this->assertEquals('Ile-de-France', $result['region']);
         $this->assertEquals('FR', $result['country']);
@@ -78,7 +78,7 @@ class MapQuestProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      */
     public function testGetReversedData()
     {
@@ -109,8 +109,8 @@ class MapQuestProviderTest extends TestCase
         $this->assertNull($result['bounds']);
         $this->assertNull($result['streetNumber']);
         $this->assertEquals('Mary Street', $result['streetName']);
-        $this->assertEquals('LA1 1LZ', $result['zipcode']);
-        $this->assertEquals('Lancaster', $result['city']);
+        $this->assertEquals('LA1 1LZ', $result['postalCode']);
+        $this->assertEquals('Lancaster', $result['locality']);
         $this->assertEquals('Lancashire', $result['county']);
         $this->assertEquals('England', $result['region']);
         $this->assertEquals('GB', $result['country']);
@@ -134,7 +134,7 @@ class MapQuestProviderTest extends TestCase
         $this->assertInternalType('array', $results[0]);
         $this->assertEquals(52.374478, $results[0]['latitude'], '', 0.01);
         $this->assertEquals(9.738553, $results[0]['longitude'], '', 0.01);
-        $this->assertEquals('Hanover', $results[0]['city']);
+        $this->assertEquals('Hanover', $results[0]['locality']);
         $this->assertEquals('Region Hannover', $results[0]['county']);
         $this->assertEquals('Niedersachsen (Landmasse)', $results[0]['region']);
         $this->assertEquals('DE', $results[0]['country']);
@@ -142,14 +142,14 @@ class MapQuestProviderTest extends TestCase
         $this->assertInternalType('array', $results[1]);
         $this->assertEquals(18.383715, $results[1]['latitude'], '', 0.01);
         $this->assertEquals(-78.131484, $results[1]['longitude'], '', 0.01);
-        $this->assertNull($results[1]['city']);
+        $this->assertNull($results[1]['locality']);
         $this->assertEquals('Hanover', $results[1]['county']);
         $this->assertEquals('JM', $results[1]['country']);
 
         $this->assertInternalType('array', $results[2]);
         $this->assertEquals(43.703307, $results[2]['latitude'], '', 0.01);
         $this->assertEquals(-72.288566, $results[2]['longitude'], '', 0.01);
-        $this->assertEquals('Hanover', $results[2]['city']);
+        $this->assertEquals('Hanover', $results[2]['locality']);
         $this->assertEquals('Grafton County', $results[2]['county']);
         $this->assertEquals('NH', $results[2]['region']);
         $this->assertEquals('US', $results[2]['country']);
@@ -157,7 +157,7 @@ class MapQuestProviderTest extends TestCase
         $this->assertInternalType('array', $results[3]);
         $this->assertEquals(39.806325, $results[3]['latitude'], '', 0.01);
         $this->assertEquals(-76.984274, $results[3]['longitude'], '', 0.01);
-        $this->assertEquals('Hanover', $results[3]['city']);
+        $this->assertEquals('Hanover', $results[3]['locality']);
         $this->assertEquals('York County', $results[3]['county']);
         $this->assertEquals('PA', $results[3]['region']);
         $this->assertEquals('US', $results[3]['country']);
@@ -182,8 +182,8 @@ class MapQuestProviderTest extends TestCase
         $this->assertNull($result['bounds']);
         $this->assertNull($result['streetNumber']);
         $this->assertEquals('Kalbacher Hauptstraße 10', $result['streetName']);
-        $this->assertEquals(60437, $result['zipcode']);
-        $this->assertEquals('Frankfurt', $result['city']);
+        $this->assertEquals(60437, $result['postalCode']);
+        $this->assertEquals('Frankfurt', $result['locality']);
         $this->assertEquals('Frankfurt', $result['county']);
         $this->assertEquals('Hesse', $result['region']);
         $this->assertEquals('DE', $result['country']);
@@ -194,7 +194,7 @@ class MapQuestProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The MapQuestProvider does not support IP addresses.
      */
     public function testGetGeocodedDataWithLocalhostIPv4()
@@ -204,7 +204,7 @@ class MapQuestProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The MapQuestProvider does not support IP addresses.
      */
     public function testGetGeocodedDataWithLocalhostIPv6()
@@ -214,7 +214,7 @@ class MapQuestProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The MapQuestProvider does not support IP addresses.
      */
     public function testGetGeocodedDataWithRealIPv4()
@@ -224,7 +224,7 @@ class MapQuestProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The MapQuestProvider does not support IP addresses.
      */
     public function testGetGeocodedDataWithRealIPv6()

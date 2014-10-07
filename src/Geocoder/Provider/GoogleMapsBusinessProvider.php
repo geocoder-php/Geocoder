@@ -18,17 +18,17 @@ use Geocoder\HttpAdapter\HttpAdapterInterface;
  *
  * @author Jason Bouffard <jpb0104@gmail.com>
  */
-class GoogleMapsBusinessProvider extends GoogleMapsProvider
+class GoogleMapsBusinessProvider extends GoogleMapsProvider implements Provider
 {
     /**
      * @var string
      */
-    private $clientId = null;
+    private $clientId;
 
     /**
      * @var string
      */
-    private $privateKey = null;
+    private $privateKey;
 
     /**
      * @param HttpAdapterInterface $adapter    An HTTP adapter.
@@ -38,8 +38,7 @@ class GoogleMapsBusinessProvider extends GoogleMapsProvider
      * @param string               $region     Region biasing (optional).
      * @param bool                 $useSsl     Whether to use an SSL connection (optional)
      */
-    public function __construct(HttpAdapterInterface $adapter, $clientId, $privateKey = null, $locale = null,
-        $region = null, $useSsl = false)
+    public function __construct(HttpAdapterInterface $adapter, $clientId, $privateKey = null, $locale = null, $region = null, $useSsl = false)
     {
         parent::__construct($adapter, $locale, $region, $useSsl);
 
@@ -79,7 +78,7 @@ class GoogleMapsBusinessProvider extends GoogleMapsProvider
      *
      * @return string $query Query with signature appended.
      */
-    protected function signQuery($query)
+    private function signQuery($query)
     {
         $url = parse_url($query);
 

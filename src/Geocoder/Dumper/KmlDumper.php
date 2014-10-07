@@ -10,7 +10,7 @@
 
 namespace Geocoder\Dumper;
 
-use Geocoder\Result\ResultInterface;
+use Geocoder\Result\Address;
 
 /**
  * @author Jan Sorgalla <jsorgalla@googlemail.com>
@@ -18,15 +18,12 @@ use Geocoder\Result\ResultInterface;
 class KmlDumper extends GpxDumper
 {
     /**
-     * @param ResultInterface $result
-     *
-     * @return string
+     * {@inheritDoc}
      */
-    public function dump(ResultInterface $result)
+    public function dump(Address $address)
     {
-        $name = $this->formatName($result);
-
-        $kml = <<<KML
+        $name = $this->formatName($address);
+        $kml  = <<<KML
 <?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2">
     <Document>
@@ -41,6 +38,6 @@ class KmlDumper extends GpxDumper
 </kml>
 KML;
 
-        return sprintf($kml, $name, $name, $result->getLongitude(), $result->getLatitude());
+        return sprintf($kml, $name, $name, $address->getLongitude(), $address->getLatitude());
     }
 }

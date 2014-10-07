@@ -10,9 +10,9 @@
 
 namespace Geocoder\Provider;
 
-use Geocoder\Exception\NoResultException;
-use Geocoder\Exception\InvalidArgumentException;
-use Geocoder\Exception\UnsupportedException;
+use Geocoder\Exception\NoResult;
+use Geocoder\Exception\InvalidArgument;
+use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\HttpAdapter\GeoIP2Adapter;
 use Geocoder\HttpAdapter\HttpAdapterInterface;
 use GeoIp2\Exception\AddressNotFoundException;
@@ -21,7 +21,7 @@ use GeoIp2\Model\City;
 /**
  * @author Jens Wiese <jens@howtrueisfalse.de>
  */
-class GeoIP2Provider extends AbstractProvider implements ProviderInterface
+class GeoIP2Provider extends AbstractProvider implements Provider
 {
     /**
      * {@inheritdoc}
@@ -29,7 +29,7 @@ class GeoIP2Provider extends AbstractProvider implements ProviderInterface
     public function __construct(HttpAdapterInterface $adapter, $locale = 'en')
     {
         if (false === $adapter instanceof GeoIP2Adapter) {
-            throw new InvalidArgumentException(
+            throw new InvalidArgument(
                 'GeoIP2Adapter is needed in order to access the GeoIP2 service.'
             );
         }
@@ -43,7 +43,7 @@ class GeoIP2Provider extends AbstractProvider implements ProviderInterface
     public function getGeocodedData($address)
     {
         if (false === filter_var($address, FILTER_VALIDATE_IP)) {
-            throw new UnsupportedException(sprintf('The %s does not support street addresses.', __CLASS__));
+            throw new UnsupportedOperation(sprintf('The %s does not support street addresses.', __CLASS__));
         }
 
         if ('127.0.0.1' === $address) {
@@ -65,11 +65,11 @@ class GeoIP2Provider extends AbstractProvider implements ProviderInterface
         return array($this->fixEncoding(array_merge($this->getDefaults(), array(
             'countryCode' => (isset($result->country->iso_code) ? $result->country->iso_code : null),
             'country'     => (isset($result->country->names->{$this->locale}) ? $result->country->names->{$this->locale} : null),
-            'city'        => (isset($result->city->names->{$this->locale}) ? $result->city->names->{$this->locale} : null),
+            'locality'    => (isset($result->city->names->{$this->locale}) ? $result->city->names->{$this->locale} : null),
             'latitude'    => (isset($result->location->latitude) ? $result->location->latitude : null),
             'longitude'   => (isset($result->location->longitude) ? $result->location->longitude : null),
             'timezone'    => (isset($result->location->timezone) ? $result->location->timezone : null),
-            'zipcode'     => (isset($result->location->postalcode) ? $result->location->postalcode : null),
+            'postalCode'  => (isset($result->location->postalcode) ? $result->location->postalcode : null),
             'region'      => $region,
             'regionCode'  => $regionCode
         ))));
@@ -80,7 +80,7 @@ class GeoIP2Provider extends AbstractProvider implements ProviderInterface
      */
     public function getReversedData(array $coordinates)
     {
-        throw new UnsupportedException(sprintf('The %s is not able to do reverse geocoding.', __CLASS__));
+        throw new UnsupportedOperation(sprintf('The %s is not able to do reverse geocoding.', __CLASS__));
     }
 
     /**
@@ -92,18 +92,18 @@ class GeoIP2Provider extends AbstractProvider implements ProviderInterface
     }
 
     /**
-     * @param  string                                $address
-     * @throws \Geocoder\Exception\NoResultException
+     * @param  string                       $address
+     * @throws \Geocoder\Exception\NoResult
      * @return City
      */
-    protected function executeQuery($address)
+    private function executeQuery($address)
     {
         $uri = sprintf('file://geoip?%s', $address);
 
         try {
             $result = $this->getAdapter()->setLocale($this->locale)->getContent($uri);
         } catch (AddressNotFoundException $e) {
-            throw new NoResultException(sprintf('No results found for IP address %s', $address));
+            throw new NoResult(sprintf('No results found for IP address %s', $address));
         }
 
         return $result;

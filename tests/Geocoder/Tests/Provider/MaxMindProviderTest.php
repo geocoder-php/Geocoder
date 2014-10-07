@@ -14,7 +14,7 @@ class MaxMindProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \RuntimeException
+     * @expectedException \Geocoder\Exception\RuntimeException
      */
     public function testGetGeocodedDataWithNullApiKey()
     {
@@ -23,7 +23,7 @@ class MaxMindProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The MaxMindProvider does not support street addresses.
      */
     public function testGetGeocodedDataWithNull()
@@ -33,7 +33,7 @@ class MaxMindProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The MaxMindProvider does not support street addresses.
      */
     public function testGetGeocodedDataWithEmpty()
@@ -43,7 +43,7 @@ class MaxMindProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The MaxMindProvider does not support street addresses.
      */
     public function testGetGeocodedDataWithAddress()
@@ -64,10 +64,10 @@ class MaxMindProviderTest extends TestCase
         $this->assertInternalType('array', $result);
         $this->assertArrayNotHasKey('latitude', $result);
         $this->assertArrayNotHasKey('longitude', $result);
-        $this->assertArrayNotHasKey('zipcode', $result);
+        $this->assertArrayNotHasKey('postalCode', $result);
         $this->assertArrayNotHasKey('timezone', $result);
 
-        $this->assertEquals('localhost', $result['city']);
+        $this->assertEquals('localhost', $result['locality']);
         $this->assertEquals('localhost', $result['region']);
         $this->assertEquals('localhost', $result['county']);
         $this->assertEquals('localhost', $result['country']);
@@ -85,17 +85,17 @@ class MaxMindProviderTest extends TestCase
         $this->assertInternalType('array', $result);
         $this->assertArrayNotHasKey('latitude', $result);
         $this->assertArrayNotHasKey('longitude', $result);
-        $this->assertArrayNotHasKey('zipcode', $result);
+        $this->assertArrayNotHasKey('postalCode', $result);
         $this->assertArrayNotHasKey('timezone', $result);
 
-        $this->assertEquals('localhost', $result['city']);
+        $this->assertEquals('localhost', $result['locality']);
         $this->assertEquals('localhost', $result['region']);
         $this->assertEquals('localhost', $result['county']);
         $this->assertEquals('localhost', $result['country']);
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage Unknown MaxMind service foo
      */
     public function testGetGeocodedDataWithRealIPv4AndNotSupportedService()
@@ -105,7 +105,7 @@ class MaxMindProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage Unknown MaxMind service 12345
      */
     public function testGetGeocodedDataWithRealIPv6AndNotSupportedService()
@@ -115,7 +115,7 @@ class MaxMindProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query http://geoip.maxmind.com/f?l=api_key&i=74.200.247.59
      */
     public function testGetGeocodedDataWithRealIPv4GetsNullContent()
@@ -125,7 +125,7 @@ class MaxMindProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query http://geoip.maxmind.com/f?l=api_key&i=74.200.247.59
      */
     public function testGetGeocodedDataWithRealIPv4GetsEmptyContent()
@@ -147,14 +147,14 @@ class MaxMindProviderTest extends TestCase
         $this->assertNull($result['country']);
         $this->assertNull($result['countryCode']);
         $this->assertNull($result['regionCode']);
-        $this->assertNull($result['city']);
+        $this->assertNull($result['locality']);
         $this->assertNull($result['latitude']);
         $this->assertNull($result['longitude']);
-        $this->assertNull($result['zipcode']);
+        $this->assertNull($result['postalCode']);
         $this->assertNull($result['bounds']);
         $this->assertNull($result['streetNumber']);
         $this->assertNull($result['streetName']);
-        $this->assertNull($result['cityDistrict']);
+        $this->assertNull($result['subLocality']);
         $this->assertNull($result['county']);
         $this->assertNull($result['countyCode']);
         $this->assertNull($result['region']);
@@ -175,15 +175,15 @@ class MaxMindProviderTest extends TestCase
         $this->assertEquals('United States', $result['country']);
         $this->assertEquals('US', $result['countryCode']);
         $this->assertEquals('TX', $result['regionCode']);
-        $this->assertEquals('Plano', $result['city']);
-        $this->assertEquals(75093, $result['zipcode']);
+        $this->assertEquals('Plano', $result['locality']);
+        $this->assertEquals(75093, $result['postalCode']);
         $this->assertEquals(33.034698486328, $result['latitude'], '', 0.0001);
         $this->assertEquals(-96.813400268555, $result['longitude'], '', 0.0001);
         $this->assertNull($result['timezone']);
         $this->assertNull($result['bounds']);
         $this->assertNull($result['streetNumber']);
         $this->assertNull($result['streetName']);
-        $this->assertNull($result['cityDistrict']);
+        $this->assertNull($result['subLocality']);
         $this->assertNull($result['county']);
         $this->assertNull($result['countyCode']);
         $this->assertNull($result['region']);
@@ -209,14 +209,14 @@ class MaxMindProviderTest extends TestCase
         $this->assertEquals('United States', $result['country']);
         $this->assertEquals('US', $result['countryCode']);
         $this->assertEquals('CA', $result['regionCode']);
-        $this->assertEquals('San Francisco', $result['city']);
-        $this->assertEquals(94110, $result['zipcode']);
+        $this->assertEquals('San Francisco', $result['locality']);
+        $this->assertEquals(94110, $result['postalCode']);
         $this->assertEquals(37.748402, $result['latitude'], '', 0.0001);
         $this->assertEquals(-122.415604, $result['longitude'], '', 0.0001);
         $this->assertNull($result['bounds']);
         $this->assertNull($result['streetNumber']);
         $this->assertNull($result['streetName']);
-        $this->assertNull($result['cityDistrict']);
+        $this->assertNull($result['subLocality']);
         $this->assertNull($result['county']);
         $this->assertNull($result['countyCode']);
         $this->assertNull($result['region']);
@@ -224,7 +224,7 @@ class MaxMindProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\InvalidCredentialsException
+     * @expectedException \Geocoder\Exception\InvalidCredentials
      * @expectedExceptionMessage API Key provided is not valid.
      */
     public function testGetGeocodedDataWithRealIPv4AndInvalidApiKeyGetsFakeContent()
@@ -234,7 +234,7 @@ class MaxMindProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\InvalidCredentialsException
+     * @expectedException \Geocoder\Exception\InvalidCredentials
      * @expectedExceptionMessage API Key provided is not valid.
      */
     public function testGetGeocodedOmniServiceDataWithRealIPv6AndInvalidApiKeyGetsFakeContent()
@@ -245,7 +245,7 @@ class MaxMindProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\InvalidCredentialsException
+     * @expectedException \Geocoder\Exception\InvalidCredentials
      * @expectedExceptionMessage API Key provided is not valid.
      */
     public function testGetGeocodedDataWithRealIPv4AndInvalidApiKey()
@@ -255,7 +255,7 @@ class MaxMindProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\InvalidCredentialsException
+     * @expectedException \Geocoder\Exception\InvalidCredentials
      * @expectedExceptionMessage API Key provided is not valid.
      */
     public function testGetGeocodedDataWithRealIPv4AndInvalidApiKeyGetsFakeContent2()
@@ -265,7 +265,7 @@ class MaxMindProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\InvalidCredentialsException
+     * @expectedException \Geocoder\Exception\InvalidCredentials
      * @expectedExceptionMessage API Key provided is not valid.
      */
     public function testGetGeocodedOmniServiceDataWithRealIPv6AndInvalidApiKeyGetsFakeContent2()
@@ -276,7 +276,7 @@ class MaxMindProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not retrieve informations for the ip address provided.
      */
     public function testGetGeocodedDataWithRealIPv4GetsFakeContentWithIpNotFound()
@@ -286,7 +286,7 @@ class MaxMindProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not retrieve informations for the ip address provided.
      */
     public function testGetGeocodedOmniServiceDataWithRealIPv6GetsFakeContentWithIpNotFound()
@@ -297,7 +297,7 @@ class MaxMindProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Invalid result returned by provider.
      */
     public function testGetGeocodedDataGetsFakeContentWithInvalidData()
@@ -322,15 +322,15 @@ class MaxMindProviderTest extends TestCase
         $this->assertInternalType('array', $result);
         $this->assertEquals(33.034698, $result['latitude'], '', 0.1);
         $this->assertEquals(-96.813400, $result['longitude'], '', 0.1);
-        $this->assertEquals('Plano', $result['city']);
-        $this->assertEquals(75093, $result['zipcode']);
+        $this->assertEquals('Plano', $result['locality']);
+        $this->assertEquals(75093, $result['postalCode']);
         $this->assertEquals('TX', $result['regionCode']);
         $this->assertEquals('United States', $result['country']);
         $this->assertEquals('US', $result['countryCode']);
         $this->assertNull($result['bounds']);
         $this->assertNull($result['streetNumber']);
         $this->assertNull($result['streetName']);
-        $this->assertNull($result['cityDistrict']);
+        $this->assertNull($result['subLocality']);
         $this->assertNull($result['county']);
         $this->assertNull($result['countyCode']);
         $this->assertNull($result['region']);
@@ -354,15 +354,15 @@ class MaxMindProviderTest extends TestCase
         $this->assertInternalType('array', $result);
         $this->assertEquals(33.0347, $result['latitude'], '', 0.1);
         $this->assertEquals(-96.8134, $result['longitude'], '', 0.1);
-        $this->assertEquals('Plano', $result['city']);
-        $this->assertEquals(75093, $result['zipcode']);
+        $this->assertEquals('Plano', $result['locality']);
+        $this->assertEquals(75093, $result['postalCode']);
         $this->assertEquals('TX', $result['regionCode']);
         $this->assertEquals('United States', $result['country']);
         $this->assertEquals('US', $result['countryCode']);
         $this->assertNull($result['bounds']);
         $this->assertNull($result['streetNumber']);
         $this->assertNull($result['streetName']);
-        $this->assertNull($result['cityDistrict']);
+        $this->assertNull($result['subLocality']);
         $this->assertNull($result['county']);
         $this->assertNull($result['countyCode']);
         $this->assertEquals('Texas', $result['region']);
@@ -385,15 +385,15 @@ class MaxMindProviderTest extends TestCase
         $this->assertInternalType('array', $result);
         $this->assertEquals(40.2181, $result['latitude'], '', 0.1);
         $this->assertEquals(-111.6133, $result['longitude'], '', 0.1);
-        $this->assertEquals('Provo', $result['city']);
-        $this->assertEquals(84606, $result['zipcode']);
+        $this->assertEquals('Provo', $result['locality']);
+        $this->assertEquals(84606, $result['postalCode']);
         $this->assertEquals('UT', $result['regionCode']);
         $this->assertEquals('United States', $result['country']);
         $this->assertEquals('US', $result['countryCode']);
         $this->assertNull($result['bounds']);
         $this->assertNull($result['streetNumber']);
         $this->assertNull($result['streetName']);
-        $this->assertNull($result['cityDistrict']);
+        $this->assertNull($result['subLocality']);
         $this->assertNull($result['county']);
         $this->assertNull($result['countyCode']);
         $this->assertNull($result['region']);
@@ -417,15 +417,15 @@ class MaxMindProviderTest extends TestCase
         $this->assertInternalType('array', $result);
         $this->assertEquals(40.2181, $result['latitude'], '', 0.1);
         $this->assertEquals(-111.6133, $result['longitude'], '', 0.1);
-        $this->assertEquals('Provo', $result['city']);
-        $this->assertEquals(84606, $result['zipcode']);
+        $this->assertEquals('Provo', $result['locality']);
+        $this->assertEquals(84606, $result['postalCode']);
         $this->assertEquals('UT', $result['regionCode']);
         $this->assertEquals('United States', $result['country']);
         $this->assertEquals('US', $result['countryCode']);
         $this->assertNull($result['bounds']);
         $this->assertNull($result['streetNumber']);
         $this->assertNull($result['streetName']);
-        $this->assertNull($result['cityDistrict']);
+        $this->assertNull($result['subLocality']);
         $this->assertNull($result['county']);
         $this->assertNull($result['countyCode']);
         $this->assertEquals('Utah', $result['region']);
@@ -433,7 +433,7 @@ class MaxMindProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The MaxMindProvider is not able to do reverse geocoding.
      */
     public function testGetReverseData()

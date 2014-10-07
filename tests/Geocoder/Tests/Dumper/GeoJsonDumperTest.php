@@ -3,11 +3,12 @@
 namespace Geocoder\Tests\Dumper;
 
 use Geocoder\Dumper\GeoJsonDumper;
-use Geocoder\Result\Geocoded;
+use Geocoder\Result\Address;
 use Geocoder\Tests\TestCase;
 
 /**
  * @author Jan Sorgalla <jsorgalla@googlemail.com>
+ * @author William Durand <william.durand1@gmail.com>
  */
 class GeoJsonDumperTest extends TestCase
 {
@@ -20,8 +21,7 @@ class GeoJsonDumperTest extends TestCase
 
     public function testDump()
     {
-        $obj = new Geocoded();
-
+        $address  = $this->createAddress([]);
         $expected = array(
             'type' => 'Feature',
             'geometry' => array(
@@ -31,7 +31,7 @@ class GeoJsonDumperTest extends TestCase
             'properties' => null
         );
 
-        $result = $this->dumper->dump($obj);
+        $result = $this->dumper->dump($address);
 
         $this->assertTrue(is_string($result));
         $this->assertEquals($expected, json_decode($result, true));
@@ -39,9 +39,10 @@ class GeoJsonDumperTest extends TestCase
 
     public function testDumpWithData()
     {
-        $obj = new Geocoded();
-        $obj['latitude']  = 48.8631507;
-        $obj['longitude'] = 2.3889114;
+        $address = $this->createAddress([
+            'latitude'  => 48.8631507,
+            'longitude' => 2.3889114
+        ]);
 
         $expected = array(
             'type' => 'Feature',
@@ -52,7 +53,7 @@ class GeoJsonDumperTest extends TestCase
             'properties' => null
         );
 
-        $result = $this->dumper->dump($obj);
+        $result = $this->dumper->dump($address);
 
         $this->assertTrue(is_string($result));
         $this->assertEquals($expected, json_decode($result, true));
@@ -60,17 +61,16 @@ class GeoJsonDumperTest extends TestCase
 
     public function testDumpWithBounds()
     {
-        $obj = new Geocoded();
-        $obj['latitude']  = 48.8631507;
-        $obj['longitude'] = 2.3889114;
-        $obj->fromArray(array(
-            'bounds' => array(
+        $address = $this->createAddress([
+            'latitude'  => 48.8631507,
+            'longitude' => 2.3889114,
+            'bounds' => [
                 'south' => 48.8631507,
                 'west'  => 2.3889114,
                 'north' => 48.8631507,
                 'east'  => 2.388911
-            )
-        ));
+            ]
+        ]);
 
         $expected = array(
             'type' => 'Feature',
@@ -87,7 +87,7 @@ class GeoJsonDumperTest extends TestCase
             )
         );
 
-        $result = $this->dumper->dump($obj);
+        $result = $this->dumper->dump($address);
 
         $this->assertTrue(is_string($result));
         $this->assertEquals($expected, json_decode($result, true));
@@ -95,19 +95,18 @@ class GeoJsonDumperTest extends TestCase
 
     public function testDumpWithProperties()
     {
-        $obj = new Geocoded();
-        $obj['latitude']  = 48.8631507;
-        $obj['longitude'] = 2.3889114;
-        $obj->fromArray(array(
-            'bounds' => array(
+        $address = $this->createAddress([
+            'latitude'  => 48.8631507,
+            'longitude' => 2.3889114,
+            'bounds' => [
                 'south' => 48.8631507,
                 'west'  => 2.3889114,
                 'north' => 48.8631507,
                 'east'  => 2.388911
-            ),
-            'city' => 'Paris',
+            ],
+            'locality'  => 'Paris',
             'country' => 'France'
-        ));
+        ]);
 
         $expected = array(
             'type' => 'Feature',
@@ -116,7 +115,7 @@ class GeoJsonDumperTest extends TestCase
                 'coordinates' => array(2.3889114, 48.8631507)
             ),
             'properties' => array(
-                'city' => 'Paris',
+                'locality' => 'Paris',
                 'country' => 'France'
             ),
             'bounds' => array(
@@ -127,7 +126,7 @@ class GeoJsonDumperTest extends TestCase
             )
         );
 
-        $result = $this->dumper->dump($obj);
+        $result = $this->dumper->dump($address);
 
         $this->assertTrue(is_string($result));
         $this->assertEquals($expected, json_decode($result, true));

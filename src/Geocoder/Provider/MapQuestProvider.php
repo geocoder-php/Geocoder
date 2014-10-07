@@ -10,15 +10,15 @@
 
 namespace Geocoder\Provider;
 
-use Geocoder\Exception\InvalidCredentialsException;
+use Geocoder\Exception\InvalidCredentials;
+use Geocoder\Exception\NoResult;
+use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\HttpAdapter\HttpAdapterInterface;
-use Geocoder\Exception\NoResultException;
-use Geocoder\Exception\UnsupportedException;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-class MapQuestProvider extends AbstractProvider implements ProviderInterface
+class MapQuestProvider extends AbstractProvider implements Provider
 {
     /**
      * @var string
@@ -46,7 +46,7 @@ class MapQuestProvider extends AbstractProvider implements ProviderInterface
      *
      * @var bool
      */
-    protected $licensed = false;
+    private $licensed = false;
 
     /**
      * @var string
@@ -74,11 +74,11 @@ class MapQuestProvider extends AbstractProvider implements ProviderInterface
     {
         // This API doesn't handle IPs
         if (filter_var($address, FILTER_VALIDATE_IP)) {
-            throw new UnsupportedException('The MapQuestProvider does not support IP addresses.');
+            throw new UnsupportedOperation('The MapQuestProvider does not support IP addresses.');
         }
 
         if (null === $this->apiKey) {
-            throw new InvalidCredentialsException('No API Key provided.');
+            throw new InvalidCredentials('No API Key provided.');
         }
 
         if ($this->licensed) {
@@ -96,7 +96,7 @@ class MapQuestProvider extends AbstractProvider implements ProviderInterface
     public function getReversedData(array $coordinates)
     {
         if (null === $this->apiKey) {
-            throw new InvalidCredentialsException('No API Key provided.');
+            throw new InvalidCredentials('No API Key provided.');
         }
 
         if ($this->licensed) {
@@ -126,40 +126,40 @@ class MapQuestProvider extends AbstractProvider implements ProviderInterface
         $content = $this->getAdapter()->getContent($query);
 
         if (null === $content) {
-            throw new NoResultException(sprintf('Could not execute query: %s', $query));
+            throw new NoResult(sprintf('Could not execute query: %s', $query));
         }
 
         $json = json_decode($content, true);
 
         if (!isset($json['results']) || empty($json['results'])) {
-            throw new NoResultException(sprintf('Could not find results for given query: %s', $query));
+            throw new NoResult(sprintf('Could not find results for given query: %s', $query));
         }
 
         $locations = $json['results'][0]['locations'];
 
         if (empty($locations)) {
-            throw new NoResultException(sprintf('Could not find results for given query: %s', $query));
+            throw new NoResult(sprintf('Could not find results for given query: %s', $query));
         }
 
-        $results = array();
+        $results = [];
 
         foreach ($locations as $location) {
             if ($location['street'] || $location['postalCode'] || $location['adminArea5'] || $location['adminArea4'] || $location['adminArea3'] || $location['adminArea1']) {
                 $results[] = array_merge($this->getDefaults(), array(
-                    'latitude'      => $location['latLng']['lat'],
-                    'longitude'     => $location['latLng']['lng'],
-                    'streetName'    => $location['street'] ?: null,
-                    'city'          => $location['adminArea5'] ?: null,
-                    'zipcode'       => $location['postalCode'] ?: null,
-                    'county'        => $location['adminArea4'] ?: null,
-                    'region'        => $location['adminArea3'] ?: null,
-                    'country'       => $location['adminArea1'] ?: null,
+                    'latitude'   => $location['latLng']['lat'],
+                    'longitude'  => $location['latLng']['lng'],
+                    'streetName' => $location['street'] ?: null,
+                    'locality'   => $location['adminArea5'] ?: null,
+                    'postalCode' => $location['postalCode'] ?: null,
+                    'county'     => $location['adminArea4'] ?: null,
+                    'region'     => $location['adminArea3'] ?: null,
+                    'country'    => $location['adminArea1'] ?: null,
                 ));
             }
         }
 
         if (empty($results)) {
-            throw new NoResultException(sprintf('Could not find results for given query: %s', $query));
+            throw new NoResult(sprintf('Could not find results for given query: %s', $query));
         }
 
         return $results;

@@ -14,7 +14,7 @@ class GeoPluginProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The GeoPluginProvider does not support street addresses.
      */
     public function testGetGeocodedDataWithNull()
@@ -24,7 +24,7 @@ class GeoPluginProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The GeoPluginProvider does not support street addresses.
      */
     public function testGetGeocodedDataWithEmpty()
@@ -34,7 +34,7 @@ class GeoPluginProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The GeoPluginProvider does not support street addresses.
      */
     public function testGetGeocodedDataWithAddress()
@@ -55,10 +55,10 @@ class GeoPluginProviderTest extends TestCase
         $this->assertInternalType('array', $result);
         $this->assertArrayNotHasKey('latitude', $result);
         $this->assertArrayNotHasKey('longitude', $result);
-        $this->assertArrayNotHasKey('zipcode', $result);
+        $this->assertArrayNotHasKey('postalCode', $result);
         $this->assertArrayNotHasKey('timezone', $result);
 
-        $this->assertEquals('localhost', $result['city']);
+        $this->assertEquals('localhost', $result['locality']);
         $this->assertEquals('localhost', $result['region']);
         $this->assertEquals('localhost', $result['county']);
         $this->assertEquals('localhost', $result['country']);
@@ -76,17 +76,17 @@ class GeoPluginProviderTest extends TestCase
         $this->assertInternalType('array', $result);
         $this->assertArrayNotHasKey('latitude', $result);
         $this->assertArrayNotHasKey('longitude', $result);
-        $this->assertArrayNotHasKey('zipcode', $result);
+        $this->assertArrayNotHasKey('postalCode', $result);
         $this->assertArrayNotHasKey('timezone', $result);
 
-        $this->assertEquals('localhost', $result['city']);
+        $this->assertEquals('localhost', $result['locality']);
         $this->assertEquals('localhost', $result['region']);
         $this->assertEquals('localhost', $result['county']);
         $this->assertEquals('localhost', $result['country']);
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query http://www.geoplugin.net/json.gp?ip=74.200.247.59
      */
     public function testGetGeocodedDataWithRealIPv4GetsNullContent()
@@ -96,7 +96,7 @@ class GeoPluginProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResultException
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query http://www.geoplugin.net/json.gp?ip=74.200.247.59
      */
     public function testGetGeocodedDataWithRealIPv4GetsEmptyContent()
@@ -115,7 +115,7 @@ class GeoPluginProviderTest extends TestCase
 
         $result = $result[0];
         $this->assertInternalType('array', $result);
-        $this->assertEquals('Provo', $result['city']);
+        $this->assertEquals('Provo', $result['locality']);
         $this->assertEquals(40.218102, $result['latitude'], '', 0.0001);
         $this->assertEquals(-111.613297, $result['longitude'], '', 0.0001);
         $this->assertEquals('UT', $result['regionCode']);
@@ -125,7 +125,7 @@ class GeoPluginProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The GeoPluginProvider is not able to do reverse geocoding.
      */
     public function testGetReverseData()

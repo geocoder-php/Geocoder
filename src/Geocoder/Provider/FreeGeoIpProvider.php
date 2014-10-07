@@ -10,13 +10,13 @@
 
 namespace Geocoder\Provider;
 
-use Geocoder\Exception\NoResultException;
-use Geocoder\Exception\UnsupportedException;
+use Geocoder\Exception\NoResult;
+use Geocoder\Exception\UnsupportedOperation;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-class FreeGeoIpProvider extends AbstractProvider implements ProviderInterface
+class FreeGeoIpProvider extends AbstractProvider implements Provider
 {
     /**
      * @var string
@@ -29,7 +29,7 @@ class FreeGeoIpProvider extends AbstractProvider implements ProviderInterface
     public function getGeocodedData($address)
     {
         if (!filter_var($address, FILTER_VALIDATE_IP)) {
-            throw new UnsupportedException('The FreeGeoIpProvider does not support Street addresses.');
+            throw new UnsupportedOperation('The FreeGeoIpProvider does not support Street addresses.');
         }
 
         if (in_array($address, array('127.0.0.1', '::1'))) {
@@ -46,7 +46,7 @@ class FreeGeoIpProvider extends AbstractProvider implements ProviderInterface
      */
     public function getReversedData(array $coordinates)
     {
-        throw new UnsupportedException('The FreeGeoIpProvider is not able to do reverse geocoding.');
+        throw new UnsupportedOperation('The FreeGeoIpProvider is not able to do reverse geocoding.');
     }
 
     /**
@@ -62,18 +62,18 @@ class FreeGeoIpProvider extends AbstractProvider implements ProviderInterface
      *
      * @return array
      */
-    protected function executeQuery($query)
+    private function executeQuery($query)
     {
         $content = $this->getAdapter()->getContent($query);
 
         if (null === $content) {
-            throw new NoResultException(sprintf('Could not execute query %s', $query));
+            throw new NoResult(sprintf('Could not execute query %s', $query));
         }
 
         $data = (array) json_decode($content);
 
         if (empty($data)) {
-            throw new NoResultException(sprintf('Could not execute query %s', $query));
+            throw new NoResult(sprintf('Could not execute query %s', $query));
         }
 
         //it appears that for US states the region code is not returning the FIPS standard
@@ -85,8 +85,8 @@ class FreeGeoIpProvider extends AbstractProvider implements ProviderInterface
         return array(array_merge($this->getDefaults(), array(
             'latitude'    => isset($data['latitude']) ? $data['latitude'] : null,
             'longitude'   => isset($data['longitude']) ? $data['longitude'] : null,
-            'city'        => isset($data['city']) ? $data['city'] : null,
-            'zipcode'     => isset($data['zipcode']) ? $data['zipcode'] : null,
+            'locality'    => isset($data['city']) ? $data['city'] : null,
+            'postalCode'  => isset($data['zipcode']) ? $data['zipcode'] : null,
             'region'      => isset($data['region_name']) ? $data['region_name'] : null,
             'regionCode'  => isset($data['region_code']) ? $data['region_code'] : null,
             'country'     => isset($data['country_name']) ? $data['country_name'] : null,
