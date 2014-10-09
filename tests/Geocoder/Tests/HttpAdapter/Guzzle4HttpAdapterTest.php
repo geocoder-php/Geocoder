@@ -35,7 +35,7 @@ class Guzzle4HttpAdapterTest extends \Geocoder\Tests\TestCase
     public function testRetrievesResponse()
     {
         $historyPlugin = new History();
-        $mockPlugin = new Mock(array(new Response(200, [], Stream::factory('body'))));
+        $mockPlugin = new Mock(array(new Response(200, array(), Stream::factory('body'))));
 
         $client = new Client();
         $client->getEmitter()->attach($mockPlugin);
