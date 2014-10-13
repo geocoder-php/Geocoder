@@ -49,32 +49,12 @@ class ProviderBasedGeocoder implements Geocoder
      * @param AddressFactory $addressFactory
      * @param integer        $maxResults
      */
-    public function __construct(Provider $provider = null, AddressFactory $addressFactory = null, $maxResults = self::MAX_RESULTS)
+    public function __construct(Provider $provider = null, $maxResults = self::MAX_RESULTS)
     {
         $this->provider = $provider;
-        $this->factory  = $addressFactory ?: new AddressFactory();
+        $this->factory  = new AddressFactory();
 
         $this->limit($maxResults);
-    }
-
-    /**
-     * @param integer $maxResults
-     *
-     * @return GeocoderInterface
-     */
-    public function limit($maxResults)
-    {
-        $this->maxResults = $maxResults;
-
-        return $this;
-    }
-
-    /**
-     * @return integer $maxResults
-     */
-    public function getMaxResults()
-    {
-        return $this->maxResults;
     }
 
     /**
@@ -114,7 +94,7 @@ class ProviderBasedGeocoder implements Geocoder
      *
      * @param Provider $provider
      *
-     * @return GeocoderInterface
+     * @return ProviderBasedGeocoder
      */
     public function registerProvider(Provider $provider)
     {
@@ -130,7 +110,7 @@ class ProviderBasedGeocoder implements Geocoder
      *
      * @param Provider[] $providers
      *
-     * @return GeocoderInterface
+     * @return ProviderBasedGeocoder
      */
     public function registerProviders(array $providers = [])
     {
@@ -146,7 +126,7 @@ class ProviderBasedGeocoder implements Geocoder
      *
      * @param string $name A provider's name
      *
-     * @return GeocoderInterface
+     * @return ProviderBasedGeocoder
      */
     public function using($name)
     {
@@ -170,11 +150,31 @@ class ProviderBasedGeocoder implements Geocoder
     }
 
     /**
+     * @param integer $maxResults
+     *
+     * @return ProviderBasedGeocoder
+     */
+    public function limit($maxResults)
+    {
+        $this->maxResults = $maxResults;
+
+        return $this;
+    }
+
+    /**
+     * @return integer $maxResults
+     */
+    public function getMaxResults()
+    {
+        return $this->maxResults;
+    }
+
+    /**
      * Return the provider to use.
      *
      * @return Provider
      */
-    protected function getProvider()
+    private function getProvider()
     {
         if (null === $this->provider) {
             if (0 === count($this->providers)) {
@@ -192,7 +192,7 @@ class ProviderBasedGeocoder implements Geocoder
      *
      * @return Address[]
      */
-    protected function returnResult(array $data = [])
+    private function returnResult(array $data = [])
     {
         return $this->factory->createFromArray($data);
     }
