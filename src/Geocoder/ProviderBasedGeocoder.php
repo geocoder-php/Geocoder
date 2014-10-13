@@ -174,7 +174,7 @@ class ProviderBasedGeocoder implements Geocoder
      *
      * @return Provider
      */
-    private function getProvider()
+    protected function getProvider()
     {
         if (null === $this->provider) {
             if (0 === count($this->providers)) {
@@ -192,7 +192,7 @@ class ProviderBasedGeocoder implements Geocoder
      *
      * @return Address[]
      */
-    private function returnResult(array $data = [])
+    protected function returnResult(array $data = [])
     {
         return $this->factory->createFromArray($data);
     }
