@@ -14,7 +14,7 @@ class MaxMindProviderTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\RuntimeException
+     * @expectedException \Geocoder\Exception\InvalidCredentials
      */
     public function testGetGeocodedDataWithNullApiKey()
     {

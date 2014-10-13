@@ -12,7 +12,7 @@ namespace Geocoder\Provider;
 
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\InvalidArgument;
-use Geocoder\Exception\RuntimeException;
+use Geocoder\Exception\FunctionNotFound;
 use Geocoder\Exception\UnsupportedOperation;
 
 class MaxMindBinaryProvider extends AbstractProvider implements Provider
@@ -31,17 +31,23 @@ class MaxMindBinaryProvider extends AbstractProvider implements Provider
      * @param string   $datFile
      * @param int|null $openFlag
      *
-     * @throws RuntimeException If maxmind's lib not installed.
+     * @throws FunctionNotFound If maxmind's lib not installed.
      * @throws InvalidArgument  If dat file is not correct (optional).
      */
     public function __construct($datFile, $openFlag = null)
     {
         if (false === function_exists('geoip_open')) {
-            throw new RuntimeException('The MaxMindBinaryProvider requires maxmind\'s lib to be installed and loaded. Have you included geoip.inc file?');
+            throw new FunctionNotFound(
+                'geoip_open',
+                'The MaxMindBinaryProvider requires maxmind\'s lib to be installed and loaded. Have you included geoip.inc file?'
+            );
         }
 
         if (false === function_exists('GeoIP_record_by_addr')) {
-            throw new RuntimeException('The MaxMindBinaryProvider requires maxmind\'s lib to be installed and loaded. Have you included geoipcity.inc file?');
+            throw new FunctionNotFound(
+                'GeoIP_record_by_addr',
+                'The MaxMindBinaryProvider requires maxmind\'s lib to be installed and loaded. Have you included geoipcity.inc file?'
+            );
         }
 
         if (false === is_file($datFile)) {

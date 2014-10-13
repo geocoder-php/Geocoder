@@ -11,7 +11,6 @@
 namespace Geocoder;
 
 use Geocoder\Exception\ProviderNotRegistered;
-use Geocoder\Exception\RuntimeException;
 use Geocoder\Provider\Provider;
 use Geocoder\Result\AddressFactory;
 
@@ -179,7 +178,7 @@ class ProviderBasedGeocoder implements Geocoder
     {
         if (null === $this->provider) {
             if (0 === count($this->providers)) {
-                throw new RuntimeException('No provider registered.');
+                throw new \RuntimeException('No provider registered.');
             }
 
             $this->using(key($this->providers));
