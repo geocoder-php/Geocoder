@@ -1,6 +1,32 @@
 CHANGELOG
 =========
 
+### 3.0.0 (????-??-??)
+
+* Remove useless file
+* Rewrite README
+* Rework ProviderBasedGeocoder
+* Remove 'Dumper' suffix
+* Fix exceptions, remove RuntimeException
+* Add new Result classes (Address, Bounds, Region, Country, County, Coordinates)
+* Refactor dumpers (remove Interface suffix, define a new method signature)
+* Remove Interface and Exception suffixes
+* Rename properties such as:
+    - city => locality
+    - cityDistrict => subLocality
+    - zipcode => postalCode
+* Remove `autoload.php`
+* Reintroduce string formatting into the `AddressFactory`
+* Refactor using() method to throw an exception
+* Move IGN OpenLS provider to geocoder-extra (#339)
+* Move OIORest provider to geocoder-extra (#336)
+* Move GeoCoder.us provider to geocoder-extra (#338)
+* Move GeoCoder.ca provider to geocoder-extra (#337)
+* Remove `OpenStreetMapsProvider` class (#335)
+* Move DataScienceToolkit provider to geocoder-extra (#340)
+* Move Baidu provider to geocoder-extra (#341)
+* Move IpGeoBase provider to geocoder-extra (#342)
+
 ### 2.8.0 (2014-10-03)
 
 * Added: Allow for greater flexibility in setting curl parameters by passing in
