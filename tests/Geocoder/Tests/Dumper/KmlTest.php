@@ -2,20 +2,20 @@
 
 namespace Geocoder\Tests\Dumper;
 
-use Geocoder\Dumper\KmlDumper;
+use Geocoder\Dumper\Kml;
 use Geocoder\Tests\TestCase;
 
 /**
  * @author Jan Sorgalla <jsorgalla@googlemail.com>
  * @author William Durand <william.durand1@gmail.com>
  */
-class KmlDumperTest extends TestCase
+class KmlTest extends TestCase
 {
     private $dumper;
 
     public function setUp()
     {
-        $this->dumper = new KmlDumper();
+        $this->dumper = new Kml();
     }
 
     public function testDump()

@@ -15,13 +15,13 @@ use Geocoder\Result\Address;
 /**
  * @author Jan Sorgalla <jsorgalla@googlemail.com>
  */
-class WktDumper implements Dumper
+class Wkb implements Dumper
 {
     /**
      * {@inheritDoc}
      */
     public function dump(Address $address)
     {
-        return sprintf('POINT(%F %F)', $address->getLongitude(), $address->getLatitude());
+        return pack('cLdd', 1, 1, $address->getLongitude(), $address->getLatitude());
     }
 }

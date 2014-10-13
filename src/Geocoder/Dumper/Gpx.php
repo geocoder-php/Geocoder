@@ -16,7 +16,7 @@ use Geocoder\Result\Address;
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-class GpxDumper implements Dumper
+class Gpx implements Dumper
 {
     /**
      * @param Address $address

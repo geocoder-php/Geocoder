@@ -2,26 +2,26 @@
 
 namespace Geocoder\Tests\Dumper;
 
-use Geocoder\Dumper\WkbDumper;
+use Geocoder\Dumper\Wkt;
 use Geocoder\Tests\TestCase;
 
 /**
  * @author Jan Sorgalla <jsorgalla@googlemail.com>
  * @author William Durand <william.durand1@gmail.com>
  */
-class WkbDumperTest extends TestCase
+class WktTest extends TestCase
 {
     private $dumper;
 
     public function setUp()
     {
-        $this->dumper = new WkbDumper();
+        $this->dumper = new Wkt();
     }
 
     public function testDump()
     {
         $address  = $this->createEmptyAddress();
-        $expected = pack('H*', '010100000000000000000000000000000000000000');
+        $expected = sprintf('POINT(%F %F)', 0, 0);
         $result   = $this->dumper->dump($address);
 
         $this->assertTrue(is_string($result));
@@ -34,7 +34,7 @@ class WkbDumperTest extends TestCase
             'latitude'  => 48.8631507,
             'longitude' => 2.3889114,
         ]);
-        $expected = pack('H*', '0101000000255580947D1C03407F02DEB87B6E4840');
+        $expected = sprintf('POINT(%F %F)', 2.3889114, 48.8631507);
 
         $result = $this->dumper->dump($address);
 

@@ -3,19 +3,19 @@
 namespace Geocoder\Tests\Dumper;
 
 use Geocoder\Geocoder;
-use Geocoder\Dumper\GpxDumper;
+use Geocoder\Dumper\Gpx;
 use Geocoder\Tests\TestCase;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-class GpxDumperTest extends TestCase
+class GpxTest extends TestCase
 {
     private $dumper;
 
     public function setUp()
     {
-        $this->dumper = new GpxDumper();
+        $this->dumper = new Gpx();
     }
 
     public function testDump()

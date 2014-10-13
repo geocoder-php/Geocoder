@@ -15,7 +15,7 @@ use Geocoder\Result\Address;
 /**
  * @author Jan Sorgalla <jsorgalla@googlemail.com>
  */
-class GeoJsonDumper implements Dumper
+class GeoJson implements Dumper
 {
     /**
      * {@inheritDoc}

@@ -2,7 +2,7 @@
 
 namespace Geocoder\Tests\Dumper;
 
-use Geocoder\Dumper\GeoJsonDumper;
+use Geocoder\Dumper\GeoJson;
 use Geocoder\Result\Address;
 use Geocoder\Tests\TestCase;
 
@@ -10,13 +10,13 @@ use Geocoder\Tests\TestCase;
  * @author Jan Sorgalla <jsorgalla@googlemail.com>
  * @author William Durand <william.durand1@gmail.com>
  */
-class GeoJsonDumperTest extends TestCase
+class GeoJsonTest extends TestCase
 {
     private $dumper;
 
     public function setUp()
     {
-        $this->dumper = new GeoJsonDumper();
+        $this->dumper = new GeoJson();
     }
 
     public function testDump()
