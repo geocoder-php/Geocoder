@@ -16,7 +16,7 @@ use Geocoder\Exception\ExtensionNotLoadedException;
 /**
  * @author Markus Bachmann <markus.bachmann@bachi.biz>
  */
-class SocketHttpAdapter implements HttpAdapterInterface
+class SocketHttpAdapter extends AbstractHttpAdapter implements HttpAdapterInterface
 {
     /**
      * @var integer

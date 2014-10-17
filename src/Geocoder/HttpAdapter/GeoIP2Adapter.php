@@ -17,7 +17,7 @@ use GeoIp2\ProviderInterface;
 /**
  * @author Jens Wiese <jens@howtrueisfalse.de>
  */
-class GeoIP2Adapter implements HttpAdapterInterface
+class GeoIP2Adapter extends AbstractHttpAdapter implements HttpAdapterInterface
 {
     /**
      * GeoIP2 models (e.g. city or country)

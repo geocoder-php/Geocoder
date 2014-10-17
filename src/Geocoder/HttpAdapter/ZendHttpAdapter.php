@@ -15,7 +15,7 @@ use Zend\Http\Client;
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-class ZendHttpAdapter implements HttpAdapterInterface
+class ZendHttpAdapter extends AbstractHttpAdapter implements HttpAdapterInterface
 {
     /**
      * @var Client
