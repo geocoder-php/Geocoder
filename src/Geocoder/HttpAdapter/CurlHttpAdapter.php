@@ -15,7 +15,7 @@ use Geocoder\Exception\ExtensionNotLoadedException;
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-class CurlHttpAdapter implements HttpAdapterInterface
+class CurlHttpAdapter extends AbstractHttpAdapter implements HttpAdapterInterface
 {
     private $timeout;
 
@@ -50,6 +50,8 @@ class CurlHttpAdapter implements HttpAdapterInterface
         $c = curl_init();
         curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($c, CURLOPT_URL, $url);
+        curl_setopt($c, CURLOPT_HEADER, 1);
+
 
         if ($this->timeout) {
             curl_setopt($c, CURLOPT_TIMEOUT, $this->timeout);
@@ -68,13 +70,18 @@ class CurlHttpAdapter implements HttpAdapterInterface
         }
 
         $content = curl_exec($c);
+        $headerSize = curl_getinfo($c, CURLINFO_HEADER_SIZE);
         curl_close($c);
 
         if (false === $content) {
-            $content = null;
+            $this->setHeaders([]);
+            return null;
         }
+        $header = substr($content, 0, $headerSize);
+        $this->setHeaders($this->parseHeader($header));
+        $body = substr($content, $headerSize);
 
-        return $content;
+        return $body;
     }
 
     /**
@@ -83,5 +90,21 @@ class CurlHttpAdapter implements HttpAdapterInterface
     public function getName()
     {
         return 'curl';
+    }
+
+    /**
+     * Parses HTTP header into an array of name => value headers
+     */
+    protected function parseHeader($header)
+    {
+        $headers = explode("\n", $header);
+        $return = [];
+        foreach ($headers as $header) {
+            if (!preg_match('#^([^:]+): (.*)$#', $header, $match)) {
+                continue;
+            }
+            $return[strtolower(trim($match[1]))] = trim($match[2]);
+        }
+        return $return;
     }
 }

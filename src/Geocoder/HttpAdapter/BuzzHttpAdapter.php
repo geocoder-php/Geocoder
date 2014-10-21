@@ -15,7 +15,7 @@ use Buzz\Browser;
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-class BuzzHttpAdapter implements HttpAdapterInterface
+class BuzzHttpAdapter extends AbstractHttpAdapter implements HttpAdapterInterface
 {
     /**
      * @var Browser

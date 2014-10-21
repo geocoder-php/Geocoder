@@ -1,7 +1,7 @@
 {
-    "name": "willdurand/geocoder",
+    "name": "msty/geocoder",
     "type": "library",
-    "description": "The almost missing Geocoder PHP 5.3 library.",
+    "description": "Forked almost missing Geocoder PHP 5.3 library.",
     "keywords": ["geocoder", "geocoding", "abstraction", "geoip"],
     "homepage": "http://geocoder-php.org",
     "license": "MIT",
@@ -9,6 +9,9 @@
         {
             "name": "William Durand",
             "email": "william.durand1@gmail.com"
+        },
+        {
+            "name": "msty"
         }
     ],
     "require": {
@@ -35,7 +38,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "3.0-dev"
+            "dev-master": "2.8-dev"
         }
     }
 }
