@@ -24,6 +24,7 @@ class DefaultResultFactoryTest extends TestCase
      */
     public function testCreateFromArray($array, $expected)
     {
+
         $factory = new DefaultResultFactory();
         $result  = $factory->createFromArray($array);
 

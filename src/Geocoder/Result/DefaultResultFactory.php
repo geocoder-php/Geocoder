@@ -20,10 +20,17 @@ class DefaultResultFactory implements ResultFactoryInterface
      */
     final public function createFromArray(array $data)
     {
-        $result = $this->newInstance();
-        $result->fromArray(isset($data[0]) ? $data[0] : $data);
+        $results = [];
 
-        return $result;
+        if (count($data)>0 && is_array(reset($data))) {
+            foreach ($data as $dataGeocode) {
+                $results[] = $this->getEntityGeocoded($dataGeocode);
+            }
+        } else {
+            $results[] = $this->getEntityGeocoded($data);;
+        }
+
+        return (count($results) == 1) ? $results[0] : $results;
     }
 
     /**
@@ -32,5 +39,17 @@ class DefaultResultFactory implements ResultFactoryInterface
     public function newInstance()
     {
         return new Geocoded();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    private function getEntityGeocoded($data)
+    {
+        $result = $this->newInstance();
+        $result->fromArray($data);
+
+        return $result;
+
     }
 }
