@@ -20,7 +20,7 @@ class DefaultResultFactory implements ResultFactoryInterface
      */
     final public function createFromArray(array $data)
     {
-        $results = [];
+        $results = array();
 
         if (count($data)>0 && is_array(reset($data))) {
             foreach ($data as $dataGeocode) {
