@@ -159,10 +159,10 @@ class GoogleMapsProvider extends AbstractProvider implements LocaleAwareProvider
         if (!isset($json->results) || !count($json->results) || 'OK' !== $json->status) {
             throw new NoResultException(sprintf('Could not execute query %s', $query));
         }
-
         $results = array();
+        $jsonResults = array_slice($json->results, 0, $this->getMaxResults());
 
-        foreach ($json->results as $result) {
+        foreach ($jsonResults as $result) {
             $resultset = $this->getDefaults();
 
             // update address components
