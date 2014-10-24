@@ -49,7 +49,10 @@ class AddressFactoryTest extends TestCase
         }
         // MB_TITLE_CASE Will turn this into 1St so let's test to ensure we are correcting that
         // We do not want to "correct" 5C, however, as it is part of the original string
-        $address = $this->factory->createFromArray([ 'streetName' => '1st ave 1A' ]);
+        $addresses = $this->factory->createFromArray([
+            [ 'streetName' => '1st ave 1A' ],
+        ]);
+        $address   = current($addresses);
 
         $this->assertEquals('1st Ave 1A', $address->getStreetName());
     }
