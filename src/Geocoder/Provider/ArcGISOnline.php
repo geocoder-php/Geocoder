@@ -17,7 +17,7 @@ use Geocoder\HttpAdapter\HttpAdapterInterface;
 /**
  * @author ALKOUM Dorian <baikunz@gmail.com>
  */
-class ArcGISOnlineProvider extends AbstractProvider implements Provider
+class ArcGISOnline extends AbstractProvider implements Provider
 {
     /**
      * @var string
@@ -58,7 +58,7 @@ class ArcGISOnlineProvider extends AbstractProvider implements Provider
     public function getGeocodedData($address)
     {
         if (filter_var($address, FILTER_VALIDATE_IP)) {
-            throw new UnsupportedOperation('The ArcGISOnlineProvider does not support IP addresses.');
+            throw new UnsupportedOperation('The ArcGISOnline does not support IP addresses.');
         }
 
         // Save a request if no valid address entered
