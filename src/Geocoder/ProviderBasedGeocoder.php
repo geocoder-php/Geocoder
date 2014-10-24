@@ -189,7 +189,7 @@ class ProviderBasedGeocoder implements Geocoder
     /**
      * @param array $data An array of data.
      *
-     * @return Address[]
+     * @return \Geocoder\Model\Address[]
      */
     protected function returnResult(array $data = [])
     {
