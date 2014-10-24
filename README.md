@@ -415,8 +415,8 @@ $address = $geocoder->geocode('10 rue Gambetta, Paris, France');
 // "timezone"       => string(6) "Europe/Paris"
 ```
 
-The `geocode()` method returns an `Address` object with the following API, this
-object also implements the `ArrayAccess` interface:
+The `geocode()` method returns an array of `Address` objects, each providing the
+following API:
 
 * `getCoordinates()` will return a `Coordinates` object (with `latitude` and
   `longitude` properties);
