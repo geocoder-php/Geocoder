@@ -15,7 +15,7 @@ class GeoPluginTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The GeoPluginProvider does not support street addresses.
+     * @expectedExceptionMessage The GeoPlugin does not support street addresses.
      */
     public function testGetGeocodedDataWithNull()
     {
@@ -25,7 +25,7 @@ class GeoPluginTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The GeoPluginProvider does not support street addresses.
+     * @expectedExceptionMessage The GeoPlugin does not support street addresses.
      */
     public function testGetGeocodedDataWithEmpty()
     {
@@ -35,7 +35,7 @@ class GeoPluginTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The GeoPluginProvider does not support street addresses.
+     * @expectedExceptionMessage The GeoPlugin does not support street addresses.
      */
     public function testGetGeocodedDataWithAddress()
     {
@@ -126,7 +126,7 @@ class GeoPluginTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The GeoPluginProvider is not able to do reverse geocoding.
+     * @expectedExceptionMessage The GeoPlugin is not able to do reverse geocoding.
      */
     public function testGetReverseData()
     {

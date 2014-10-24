@@ -15,7 +15,7 @@ class FreeGeoIpTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The FreeGeoIpProvider does not support Street addresses.
+     * @expectedExceptionMessage The FreeGeoIp does not support Street addresses.
      */
     public function testGetGeocodedDataWithNull()
     {
@@ -25,7 +25,7 @@ class FreeGeoIpTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The FreeGeoIpProvider does not support Street addresses.
+     * @expectedExceptionMessage The FreeGeoIp does not support Street addresses.
      */
     public function testGetGeocodedDataWithEmpty()
     {
@@ -35,7 +35,7 @@ class FreeGeoIpTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The FreeGeoIpProvider does not support Street addresses.
+     * @expectedExceptionMessage The FreeGeoIp does not support Street addresses.
      */
     public function testGetGeocodedDataWithAddress()
     {
@@ -207,7 +207,7 @@ class FreeGeoIpTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The FreeGeoIpProvider is not able to do reverse geocoding.
+     * @expectedExceptionMessage The FreeGeoIp is not able to do reverse geocoding.
      */
     public function testGetReverseData()
     {

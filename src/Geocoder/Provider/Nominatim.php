@@ -19,6 +19,8 @@ use Geocoder\HttpAdapter\HttpAdapterInterface;
  */
 class Nominatim extends AbstractProvider implements LocaleAwareProvider
 {
+    private $rootUrl;
+
     /**
      * @param HttpAdapterInterface $adapter An HTTP adapter.
      * @param string               $rootUrl Root URL of the nominatim server
@@ -38,7 +40,7 @@ class Nominatim extends AbstractProvider implements LocaleAwareProvider
     {
         // This API does not support IPv6
         if (filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
-            throw new UnsupportedOperation('The NominatimProvider does not support IPv6 addresses.');
+            throw new UnsupportedOperation('The Nominatim does not support IPv6 addresses.');
         }
 
         if ('127.0.0.1' === $address) {
@@ -68,9 +70,9 @@ class Nominatim extends AbstractProvider implements LocaleAwareProvider
 
         foreach ($places as $place) {
             $boundsAttr = $place->getAttribute('boundingbox');
-            list($bounds['south'], $bounds['north'], $bounds['west'], $bounds['east']) = $boundsAttr
-                ? explode(',', $boundsAttr)
-                : null;
+            $bounds     = [];
+
+            list($bounds['south'], $bounds['north'], $bounds['west'], $bounds['east']) = $boundsAttr ? explode(',', $boundsAttr) : null;
 
             $results[] = array_merge($this->getDefaults(), array(
                 'latitude'     => $place->getAttribute('lat'),

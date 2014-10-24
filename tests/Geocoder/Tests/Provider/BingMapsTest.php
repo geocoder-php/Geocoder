@@ -54,7 +54,7 @@ class BingMapsTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The BingMapsProvider does not support IP addresses.
+     * @expectedExceptionMessage The BingMaps does not support IP addresses.
      */
     public function testGetGeocodedDataWithLocalhostIPv4()
     {
@@ -64,7 +64,7 @@ class BingMapsTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The BingMapsProvider does not support IP addresses.
+     * @expectedExceptionMessage The BingMaps does not support IP addresses.
      */
     public function testGetGeocodedDataWithLocalhostIPv6()
     {
@@ -324,7 +324,7 @@ JSON;
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The BingMapsProvider does not support IP addresses.
+     * @expectedExceptionMessage The BingMaps does not support IP addresses.
      */
     public function testGetGeocodedDataWithRealIPv4()
     {
@@ -338,7 +338,7 @@ JSON;
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The BingMapsProvider does not support IP addresses.
+     * @expectedExceptionMessage The BingMaps does not support IP addresses.
      */
     public function testGetGeocodedDataWithRealIPv6()
     {

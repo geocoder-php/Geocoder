@@ -24,7 +24,7 @@ class IpInfoDbTest extends TestCase
 
     /**
      * @expectedException Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The IpInfoDbProvider does not support Street addresses.
+     * @expectedExceptionMessage The IpInfoDb does not support Street addresses.
      */
     public function testGetGeocodedDataWithRandomString()
     {
@@ -34,7 +34,7 @@ class IpInfoDbTest extends TestCase
 
     /**
      * @expectedException Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The IpInfoDbProvider does not support Street addresses.
+     * @expectedExceptionMessage The IpInfoDb does not support Street addresses.
      */
     public function testGetGeocodedDataWithNull()
     {
@@ -44,7 +44,7 @@ class IpInfoDbTest extends TestCase
 
     /**
      * @expectedException Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The IpInfoDbProvider does not support Street addresses.
+     * @expectedExceptionMessage The IpInfoDb does not support Street addresses.
      */
     public function testGetGeocodedDataWithEmpty()
     {
@@ -54,7 +54,7 @@ class IpInfoDbTest extends TestCase
 
     /**
      * @expectedException Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The IpInfoDbProvider does not support Street addresses.
+     * @expectedExceptionMessage The IpInfoDb does not support Street addresses.
      */
     public function testGetGeocodedDataWithAddress()
     {
@@ -85,7 +85,7 @@ class IpInfoDbTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The IpInfoDbProvider does not support IPv6 addresses.
+     * @expectedExceptionMessage The IpInfoDb does not support IPv6 addresses.
      */
     public function testGetGeocodedDataWithLocalhostIPv6()
     {
@@ -139,7 +139,7 @@ class IpInfoDbTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The IpInfoDbProvider does not support IPv6 addresses.
+     * @expectedExceptionMessage The IpInfoDb does not support IPv6 addresses.
      */
     public function testGetGeocodedDataWithRealIPv6()
     {
@@ -153,7 +153,7 @@ class IpInfoDbTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The IpInfoDbProvider is not able to do reverse geocoding.
+     * @expectedExceptionMessage The IpInfoDb is not able to do reverse geocoding.
      */
     public function testReversedData()
     {

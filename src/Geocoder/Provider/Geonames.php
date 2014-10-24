@@ -58,7 +58,7 @@ class Geonames extends AbstractProvider implements LocaleAwareProvider
 
         // This API doesn't handle IPs
         if (filter_var($address, FILTER_VALIDATE_IP)) {
-            throw new UnsupportedOperation('The GeonamesProvider does not support IP addresses.');
+            throw new UnsupportedOperation('The Geonames does not support IP addresses.');
         }
 
         $query = sprintf(self::GEOCODE_ENDPOINT_URL, urlencode($address), $this->getMaxResults(), $this->username);

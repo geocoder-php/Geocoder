@@ -227,7 +227,7 @@ XML;
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The TomTomProvider does not support IP addresses.
+     * @expectedExceptionMessage The TomTom does not support IP addresses.
      */
     public function testGetGeocodedDataWithLocalhostIPv4()
     {
@@ -237,7 +237,7 @@ XML;
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The TomTomProvider does not support IP addresses.
+     * @expectedExceptionMessage The TomTom does not support IP addresses.
      */
     public function testGetGeocodedDataWithLocalhostIPv6()
     {
@@ -247,7 +247,7 @@ XML;
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The TomTomProvider does not support IP addresses.
+     * @expectedExceptionMessage The TomTom does not support IP addresses.
      */
     public function testGetGeocodedDataWithIPv4()
     {
@@ -257,7 +257,7 @@ XML;
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The TomTomProvider does not support IP addresses.
+     * @expectedExceptionMessage The TomTom does not support IP addresses.
      */
     public function testGetGeocodedDataWithIPv6()
     {

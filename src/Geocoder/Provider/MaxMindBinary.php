@@ -39,14 +39,14 @@ class MaxMindBinary extends AbstractProvider implements Provider
         if (false === function_exists('geoip_open')) {
             throw new FunctionNotFound(
                 'geoip_open',
-                'The MaxMindBinaryProvider requires maxmind\'s lib to be installed and loaded. Have you included geoip.inc file?'
+                'The MaxMindBinary requires maxmind\'s lib to be installed and loaded. Have you included geoip.inc file?'
             );
         }
 
         if (false === function_exists('GeoIP_record_by_addr')) {
             throw new FunctionNotFound(
                 'GeoIP_record_by_addr',
-                'The MaxMindBinaryProvider requires maxmind\'s lib to be installed and loaded. Have you included geoipcity.inc file?'
+                'The MaxMindBinary requires maxmind\'s lib to be installed and loaded. Have you included geoipcity.inc file?'
             );
         }
 
@@ -68,7 +68,7 @@ class MaxMindBinary extends AbstractProvider implements Provider
     public function getGeocodedData($address)
     {
         if (false === filter_var($address, FILTER_VALIDATE_IP)) {
-            throw new UnsupportedOperation('The MaxMindBinaryProvider does not support street addresses.');
+            throw new UnsupportedOperation('The MaxMindBinary does not support street addresses.');
         }
 
         $geoIp       = geoip_open($this->datFile, $this->openFlag);
@@ -76,7 +76,7 @@ class MaxMindBinary extends AbstractProvider implements Provider
 
         geoip_close($geoIp);
 
-        if (false === $geoIpRecord instanceof \geoiprecord) {
+        if (false === $geoIpRecord instanceof \GeoIpRecord) {
             throw new NoResult(sprintf('No results found for IP address %s', $address));
         }
 
@@ -95,7 +95,7 @@ class MaxMindBinary extends AbstractProvider implements Provider
      */
     public function getReversedData(array $coordinates)
     {
-        throw new UnsupportedOperation('The MaxMindBinaryProvider is not able to do reverse geocoding.');
+        throw new UnsupportedOperation('The MaxMindBinary is not able to do reverse geocoding.');
     }
 
     /**

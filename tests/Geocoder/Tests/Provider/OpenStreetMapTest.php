@@ -338,7 +338,7 @@ class OpenStreetMapTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The NominatimProvider does not support IPv6 addresses.
+     * @expectedExceptionMessage The Nominatim does not support IPv6 addresses.
      */
     public function testGetGeocodedDataWithLocalhostIPv6()
     {
@@ -420,7 +420,7 @@ class OpenStreetMapTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The NominatimProvider does not support IPv6 addresses.
+     * @expectedExceptionMessage The Nominatim does not support IPv6 addresses.
      */
     public function testGetGeocodedDataWithRealIPv6()
     {

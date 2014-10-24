@@ -8,7 +8,7 @@ use Geocoder\Provider\OpenCage;
 /**
  * @author mtm <mtm@opencagedata.com>
  */
-class OpenCageProviderTest extends TestCase
+class OpenCageTest extends TestCase
 {
     public function testGetName()
     {
@@ -215,7 +215,7 @@ class OpenCageProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The OpenCageProvider does not support IP addresses.
+     * @expectedExceptionMessage The OpenCage does not support IP addresses.
      */
     public function testGetGeocodedDataWithLocalhostIPv4()
     {
@@ -225,7 +225,7 @@ class OpenCageProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The OpenCageProvider does not support IP addresses.
+     * @expectedExceptionMessage The OpenCage does not support IP addresses.
      */
     public function testGetGeocodedDataWithLocalhostIPv6()
     {
@@ -235,7 +235,7 @@ class OpenCageProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The OpenCageProvider does not support IP addresses.
+     * @expectedExceptionMessage The OpenCage does not support IP addresses.
      */
     public function testGetGeocodedDataWithRealIPv4()
     {
@@ -245,7 +245,7 @@ class OpenCageProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The OpenCageProvider does not support IP addresses.
+     * @expectedExceptionMessage The OpenCage does not support IP addresses.
      */
     public function testGetGeocodedDataWithRealIPv6()
     {

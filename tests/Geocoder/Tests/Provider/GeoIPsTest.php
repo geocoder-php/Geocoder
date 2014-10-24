@@ -24,7 +24,7 @@ class GeoIPsTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The GeoIPsProvider does not support street addresses.
+     * @expectedExceptionMessage The GeoIPs does not support street addresses.
      */
     public function testGetGeocodedDataWithNull()
     {
@@ -34,7 +34,7 @@ class GeoIPsTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The GeoIPsProvider does not support street addresses.
+     * @expectedExceptionMessage The GeoIPs does not support street addresses.
      */
     public function testGetGeocodedDataWithEmpty()
     {
@@ -44,7 +44,7 @@ class GeoIPsTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The GeoIPsProvider does not support street addresses.
+     * @expectedExceptionMessage The GeoIPs does not support street addresses.
      */
     public function testGetGeocodedDataWithAddress()
     {
@@ -75,7 +75,7 @@ class GeoIPsTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The GeoIPsProvider does not support IPv6 addresses.
+     * @expectedExceptionMessage The GeoIPs does not support IPv6 addresses.
      */
     public function testGetGeocodedDataWithLocalhostIPv6()
     {
@@ -366,7 +366,7 @@ class GeoIPsTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The GeoIPsProvider is not able to do reverse geocoding.
+     * @expectedExceptionMessage The GeoIPs is not able to do reverse geocoding.
      */
     public function testGetReverseData()
     {

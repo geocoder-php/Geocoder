@@ -50,7 +50,7 @@ class GoogleMapsTest extends TestCase
 
     /**
      * @expectedException Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The GoogleMapsProvider does not support IP addresses.
+     * @expectedExceptionMessage The GoogleMaps does not support IP addresses.
      */
     public function testGetGeocodedDataWithLocalhostIPv4()
     {
@@ -60,7 +60,7 @@ class GoogleMapsTest extends TestCase
 
     /**
      * @expectedException Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The GoogleMapsProvider does not support IP addresses.
+     * @expectedExceptionMessage The GoogleMaps does not support IP addresses.
      */
     public function testGetGeocodedDataWithLocalhostIPv6()
     {
@@ -70,7 +70,7 @@ class GoogleMapsTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The GoogleMapsProvider does not support IP addresses.
+     * @expectedExceptionMessage The GoogleMaps does not support IP addresses.
      */
     public function testGetGeocodedDataWithRealIp()
     {

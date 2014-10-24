@@ -70,7 +70,7 @@ class GoogleMaps extends AbstractProvider implements LocaleAwareProvider
         // Google API returns invalid data if IP address given
         // This API doesn't handle IPs
         if (filter_var($address, FILTER_VALIDATE_IP)) {
-            throw new UnsupportedOperation('The GoogleMapsProvider does not support IP addresses.');
+            throw new UnsupportedOperation('The GoogleMaps does not support IP addresses.');
         }
 
         $query = sprintf(

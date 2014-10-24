@@ -15,7 +15,7 @@ class HostIpTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The HostIpProvider does not support Street addresses.
+     * @expectedExceptionMessage The HostIp does not support Street addresses.
      */
     public function testGetGeocodedDataWithNull()
     {
@@ -25,7 +25,7 @@ class HostIpTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The HostIpProvider does not support Street addresses.
+     * @expectedExceptionMessage The HostIp does not support Street addresses.
      */
     public function testGetGeocodedDataWithEmpty()
     {
@@ -35,7 +35,7 @@ class HostIpTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The HostIpProvider does not support Street addresses.
+     * @expectedExceptionMessage The HostIp does not support Street addresses.
      */
     public function testGetGeocodedDataWithAddress()
     {
@@ -66,7 +66,7 @@ class HostIpTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The HostIpProvider does not support IPv6 addresses.
+     * @expectedExceptionMessage The HostIp does not support IPv6 addresses.
      */
     public function testGetGeocodedDataWithLocalhostIPv6()
     {
@@ -115,7 +115,7 @@ class HostIpTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The HostIpProvider does not support IPv6 addresses.
+     * @expectedExceptionMessage The HostIp does not support IPv6 addresses.
      */
     public function testGetGeocodedDataWithRealIPv6()
     {
@@ -125,7 +125,7 @@ class HostIpTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The HostIpProvider is not able to do reverse geocoding.
+     * @expectedExceptionMessage The HostIp is not able to do reverse geocoding.
      */
     public function testGetReverseData()
     {

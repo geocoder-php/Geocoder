@@ -120,7 +120,7 @@ class MaxMindBinaryTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The MaxMindBinaryProvider does not support street addresses.
+     * @expectedExceptionMessage The MaxMindBinary does not support street addresses.
      */
     public function testThrowIfInvalidIpAddressGiven()
     {
@@ -131,7 +131,7 @@ class MaxMindBinaryTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The MaxMindBinaryProvider is not able to do reverse geocoding.
+     * @expectedExceptionMessage The MaxMindBinary is not able to do reverse geocoding.
      */
     public function testThrowOnReversedDataMethodUsage()
     {

@@ -51,12 +51,12 @@ class IpInfoDb extends AbstractProvider implements Provider
         }
 
         if (!filter_var($address, FILTER_VALIDATE_IP)) {
-            throw new UnsupportedOperation('The IpInfoDbProvider does not support Street addresses.');
+            throw new UnsupportedOperation('The IpInfoDb does not support Street addresses.');
         }
 
         // This API does not support IPv6
         if (filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
-            throw new UnsupportedOperation('The IpInfoDbProvider does not support IPv6 addresses.');
+            throw new UnsupportedOperation('The IpInfoDb does not support IPv6 addresses.');
         }
 
         if ('127.0.0.1' === $address) {
@@ -73,7 +73,7 @@ class IpInfoDb extends AbstractProvider implements Provider
      */
     public function getReversedData(array $coordinates)
     {
-        throw new UnsupportedOperation('The IpInfoDbProvider is not able to do reverse geocoding.');
+        throw new UnsupportedOperation('The IpInfoDb is not able to do reverse geocoding.');
     }
 
     /**

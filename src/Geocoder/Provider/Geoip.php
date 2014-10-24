@@ -37,12 +37,12 @@ class Geoip extends AbstractProvider implements Provider
     public function getGeocodedData($address)
     {
         if (!filter_var($address, FILTER_VALIDATE_IP)) {
-            throw new UnsupportedOperation('The GeoipProvider does not support Street addresses.');
+            throw new UnsupportedOperation('The Geoip does not support Street addresses.');
         }
 
         // This API does not support IPv6
         if (filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
-            throw new UnsupportedOperation('The GeoipProvider does not support IPv6 addresses.');
+            throw new UnsupportedOperation('The Geoip does not support IPv6 addresses.');
         }
 
         if ('127.0.0.1' === $address) {
@@ -76,7 +76,7 @@ class Geoip extends AbstractProvider implements Provider
      */
     public function getReversedData(array $coordinates)
     {
-        throw new UnsupportedOperation('The GeoipProvider is not able to do reverse geocoding.');
+        throw new UnsupportedOperation('The Geoip is not able to do reverse geocoding.');
     }
 
     /**

@@ -8,7 +8,7 @@ use Geocoder\Provider\MapQuest;
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-class MapQuestProviderTest extends TestCase
+class MapQuestTest extends TestCase
 {
     public function testGetName()
     {
@@ -195,7 +195,7 @@ class MapQuestProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The MapQuestProvider does not support IP addresses.
+     * @expectedExceptionMessage The MapQuest does not support IP addresses.
      */
     public function testGetGeocodedDataWithLocalhostIPv4()
     {
@@ -205,7 +205,7 @@ class MapQuestProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The MapQuestProvider does not support IP addresses.
+     * @expectedExceptionMessage The MapQuest does not support IP addresses.
      */
     public function testGetGeocodedDataWithLocalhostIPv6()
     {
@@ -215,7 +215,7 @@ class MapQuestProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The MapQuestProvider does not support IP addresses.
+     * @expectedExceptionMessage The MapQuest does not support IP addresses.
      */
     public function testGetGeocodedDataWithRealIPv4()
     {
@@ -225,7 +225,7 @@ class MapQuestProviderTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The MapQuestProvider does not support IP addresses.
+     * @expectedExceptionMessage The MapQuest does not support IP addresses.
      */
     public function testGetGeocodedDataWithRealIPv6()
     {

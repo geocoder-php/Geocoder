@@ -35,7 +35,7 @@ class GeonamesTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The GeonamesProvider does not support IP addresses.
+     * @expectedExceptionMessage The Geonames does not support IP addresses.
      */
     public function testGetGeocodedDataWithLocalhostIPv4()
     {
@@ -45,7 +45,7 @@ class GeonamesTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The GeonamesProvider does not support IP addresses.
+     * @expectedExceptionMessage The Geonames does not support IP addresses.
      */
     public function testGetGeocodedDataWithLocalhostIPv6()
     {

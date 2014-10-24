@@ -53,7 +53,7 @@ class Yandex extends AbstractProvider implements LocaleAwareProvider
     {
         // This API doesn't handle IPs
         if (filter_var($address, FILTER_VALIDATE_IP)) {
-            throw new UnsupportedOperation('The YandexProvider does not support IP addresses.');
+            throw new UnsupportedOperation('The Yandex does not support IP addresses.');
         }
 
         $query = sprintf(self::GEOCODE_ENDPOINT_URL, urlencode($address));
