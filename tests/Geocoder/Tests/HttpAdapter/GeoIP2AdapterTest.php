@@ -48,7 +48,7 @@ class GeoIP2AdapterTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\InvalidArgumentException
+     * @expectedException \Geocoder\Exception\InvalidArgument
      * @expectedExceptionMessage must be called with a valid url. Got "127.0.0.1" instead.
      */
     public function testGetContentMustBeCalledWithUrl()
@@ -58,7 +58,7 @@ class GeoIP2AdapterTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\InvalidArgumentException
+     * @expectedException \Geocoder\Exception\InvalidArgument
      * @expectedExceptionMessage URL must contain a valid query-string (an IP address, 127.0.0.1 for instance)
      */
     public function testAddressPassedToReaderMustBeIpAddress()
@@ -94,7 +94,7 @@ class GeoIP2AdapterTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\UnsupportedException
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage Model "unsupported_model" is not available.
      */
     public function testNotSupportedGeoIP2ModelLeadsToException()

@@ -10,7 +10,7 @@
 
 namespace Geocoder\Provider;
 
-use Geocoder\Geocoder;
+use Geocoder\ProviderBasedGeocoder;
 use Geocoder\HttpAdapter\HttpAdapterInterface;
 
 /**
@@ -21,17 +21,17 @@ abstract class AbstractProvider
     /**
      * @var HttpAdapterInterface
      */
-    protected $adapter = null;
+    protected $adapter;
 
     /**
      * @var string
      */
-    protected $locale = null;
+    protected $locale;
 
     /**
      * @var integer
      */
-    protected $maxResults = Geocoder::MAX_RESULTS;
+    protected $maxResults = ProviderBasedGeocoder::MAX_RESULTS;
 
     /**
      * @param HttpAdapterInterface $adapter An HTTP adapter.
@@ -119,21 +119,21 @@ abstract class AbstractProvider
     protected function getDefaults()
     {
         return array(
-            'latitude'      => null,
-            'longitude'     => null,
-            'bounds'        => null,
-            'streetNumber'  => null,
-            'streetName'    => null,
-            'city'          => null,
-            'zipcode'       => null,
-            'cityDistrict'  => null,
-            'county'        => null,
-            'countyCode'    => null,
-            'region'        => null,
-            'regionCode'    => null,
-            'country'       => null,
-            'countryCode'   => null,
-            'timezone'      => null,
+            'latitude'     => null,
+            'longitude'    => null,
+            'bounds'       => null,
+            'streetNumber' => null,
+            'streetName'   => null,
+            'locality'     => null,
+            'postalCode'   => null,
+            'subLocality'  => null,
+            'county'       => null,
+            'countyCode'   => null,
+            'region'       => null,
+            'regionCode'   => null,
+            'country'      => null,
+            'countryCode'  => null,
+            'timezone'     => null,
         );
     }
 
@@ -145,10 +145,10 @@ abstract class AbstractProvider
     protected function getLocalhostDefaults()
     {
         return array(
-            'city'      => 'localhost',
-            'region'    => 'localhost',
-            'county'    => 'localhost',
-            'country'   => 'localhost',
+            'locality' => 'localhost',
+            'region'   => 'localhost',
+            'county'   => 'localhost',
+            'country'  => 'localhost',
         );
     }
 

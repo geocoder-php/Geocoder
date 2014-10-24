@@ -4,6 +4,7 @@ namespace Geocoder\Tests;
 
 use Geocoder\HttpAdapter\CurlHttpAdapter;
 use Geocoder\HttpAdapter\HttpAdapterInterface;
+use Geocoder\Model\AddressFactory;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -61,5 +62,17 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
     protected function useCache()
     {
         return isset($_SERVER['USE_CACHED_RESPONSES']) && true === $_SERVER['USE_CACHED_RESPONSES'];
+    }
+
+    protected function createAddress(array $data)
+    {
+        $addresses = (new AddressFactory())->createFromArray([ $data ]);
+
+        return 0 === count($addresses) ? null : $addresses[0];
+    }
+
+    protected function createEmptyAddress()
+    {
+        return $this->createAddress([]);
     }
 }

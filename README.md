@@ -65,9 +65,10 @@ The [Geocoder Extra](https://github.com/geocoder-php/geocoder-extra) library con
 Installation
 ------------
 
-The recommended way to install Geocoder is through composer.
+The recommended way to install Geocoder is through
+[Composer](http://getcomposer.org).
 
-Just create a `composer.json` file for your project:
+Create a `composer.json` file into your project:
 
 ``` json
 {
@@ -77,30 +78,15 @@ Just create a `composer.json` file for your project:
 }
 ```
 
-**Protip:** you should browse the [`willdurand/geocoder`](https://packagist.org/packages/willdurand/geocoder)
-page to choose a stable version to use, avoid the `@stable` meta constraint.
+**Protip:** you should browse the
+[`willdurand/geocoder`](https://packagist.org/packages/willdurand/geocoder) page
+to choose a stable version to use, avoid the `@stable` meta constraint.
 
 And run these two commands to install it:
 
 ``` bash
 $ curl -sS https://getcomposer.org/installer | php
 $ composer install
-```
-
-Now you can add the autoloader, and you will have access to the library:
-
-``` php
-<?php
-
-require 'vendor/autoload.php';
-```
-
-If you don't use either **Composer** or a _ClassLoader_ in your application, just require the provided autoloader:
-
-``` php
-<?php
-
-require_once 'src/autoload.php';
 ```
 
 You're done.
@@ -131,7 +117,8 @@ Now, you have to choose a `provider` which is closed to what you want to get.
 
 ### FreeGeoIpProvider ###
 
-The `FreeGeoIpProvider` named `free_geo_ip` is able to geocode **IPv4 and IPv6 addresses** only.
+The `FreeGeoIpProvider` named `free_geo_ip` is able to geocode **IPv4 and IPv6
+addresses** only.
 
 
 ### HostIpProvider ###
@@ -141,26 +128,28 @@ The `HostIpProvider` named `host_ip` is able to geocode **IPv4 addresses** only.
 
 ### IpInfoDbProvider ###
 
-The `IpInfoDbProvider` named `ip_info_db` is able to geocode **IPv4 addresses** only.
-A valid api key is required.
+The `IpInfoDbProvider` named `ip_info_db` is able to geocode **IPv4 addresses**
+only.  A valid api key is required.
 
 
 ### GoogleMapsProvider ###
 
-The `GoogleMapsProvider` named `google_maps` is able to geocode and reverse geocode **street addresses**.
-A locale and a region can be set as well as an optional api key. This provider also supports SSL.
+The `GoogleMapsProvider` named `google_maps` is able to geocode and reverse
+geocode **street addresses**.  A locale and a region can be set as well as an
+optional api key. This provider also supports SSL.
 
 
 ### GoogleMapsBusinessProvider ###
 
-The `GoogleMapsBusinessProvider` named `google_maps_business` is able to geocode and reverse geocode **street addresses**.
-A valid `Client ID` is required. The private key is optional. This provider also supports SSL.
+The `GoogleMapsBusinessProvider` named `google_maps_business` is able to geocode
+and reverse geocode **street addresses**.  A valid `Client ID` is required. The
+private key is optional. This provider also supports SSL.
 
 
 ### BingMapsProvider ###
 
-The `BingMapsProvider` named `bing_maps` is able to geocode and reverse geocode **street addresses**.
-A valid api key is required.
+The `BingMapsProvider` named `bing_maps` is able to geocode and reverse geocode
+**street addresses**.  A valid api key is required.
 
 
 ### OpenStreetMapProvider ###
@@ -171,48 +160,54 @@ geocode **street addresses**.
 
 ### NominatimProvider ###
 
-The `NominatimProvider` named `nominatim` is able to geocode and reverse geocode **street addresses**.
-Access to a Nominatim server is required. See the [Nominatim
-Wiki Page](http://wiki.openstreetmap.org/wiki/Nominatim) for more information.
+The `NominatimProvider` named `nominatim` is able to geocode and reverse geocode
+**street addresses**.  Access to a Nominatim server is required. See the
+[Nominatim Wiki Page](http://wiki.openstreetmap.org/wiki/Nominatim) for more
+information.
 
 
 ### GeoipProvider ###
 
-The `GeoipProvider` named `geoip` is able to geocode **IPv4 and IPv6 addresses** only. No need to use an `HttpAdapter` as it uses a local database.
-See the [MaxMind page](http://www.maxmind.com/app/php) for more information.
+The `GeoipProvider` named `geoip` is able to geocode **IPv4 and IPv6 addresses**
+only. No need to use an `HttpAdapter` as it uses a local database.  See the
+[MaxMind page](http://www.maxmind.com/app/php) for more information.
 
 
 ### ChainProvider ###
 
-The `ChainProvider` named `chain` is a special provider that takes a list of providers and iterates over this list to get information.
+The `ChainProvider` named `chain` is a special provider that takes a list of
+providers and iterates over this list to get information.
 
 
 ### MapQuestProvider ###
 
-The `MapQuestProvider` named `map_quest` is able to geocode and reverse geocode **street addresses**.
-A valid api key is required. Access to [MapQuest's licensed endpoints](http://developer.mapquest.com/web/tools/getting-started/platform/licensed-vs-open)
+The `MapQuestProvider` named `map_quest` is able to geocode and reverse geocode
+**street addresses**.  A valid api key is required. Access to [MapQuest's
+licensed
+endpoints](http://developer.mapquest.com/web/tools/getting-started/platform/licensed-vs-open)
 is provided via constructor argument.
 
 
 ### OpenCageProvider ###
 
-The `OpenCageProvider` named `opencage` is able to geocode and reverse geocode **street addresses**.
-A valid api key is required.
+The `OpenCageProvider` named `opencage` is able to geocode and reverse geocode
+**street addresses**.  A valid api key is required.
 
 
 ### YandexProvider ###
 
-The `YandexProvider` named `yandex` is able to geocode and reverse geocode **street addresses**.
-The default language-locale is `ru-RU`, you can choose between `uk-UA`, `be-BY`,
-`en-US`, `en-BR` and `tr-TR`.
-This provider can also reverse information based on coordinates (latitude,
-longitude). It's possible to precise the toponym to get more accurate result for reverse geocoding:
-`house`, `street`, `metro`, `district` and `locality`.
+The `YandexProvider` named `yandex` is able to geocode and reverse geocode
+**street addresses**.  The default language-locale is `ru-RU`, you can choose
+between `uk-UA`, `be-BY`, `en-US`, `en-BR` and `tr-TR`.  This provider can also
+reverse information based on coordinates (latitude, longitude). It's possible to
+precise the toponym to get more accurate result for reverse geocoding: `house`,
+`street`, `metro`, `district` and `locality`.
 
 
 ### GeoPluginProvider ###
 
-The `GeoPluginProvider` named `geo_plugin` is able to geocode **IPv4 addresses and IPv6 addresses** only.
+The `GeoPluginProvider` named `geo_plugin` is able to geocode **IPv4 addresses
+and IPv6 addresses** only.
 
 
 ### GeoIPsProvider ###
@@ -223,19 +218,22 @@ A valid api key is required.
 
 ### MaxMindProvider ###
 
-The `MaxMindProvider` named `maxmind` is able to geocode **IPv4 and IPv6 addresses** only.
-A valid `City/ISP/Org` or `Omni` service's api key is required.
-This provider provides two constants `CITY_EXTENDED_SERVICE` by default and `OMNI_SERVICE`.
+The `MaxMindProvider` named `maxmind` is able to geocode **IPv4 and IPv6
+addresses** only.  A valid `City/ISP/Org` or `Omni` service's api key is
+required.  This provider provides two constants `CITY_EXTENDED_SERVICE` by
+default and `OMNI_SERVICE`.
 
 
 ### MaxMindBinaryProvider ###
 
-The `MaxMindBinaryProvider` named `maxmind_binary` is able to geocode **IPv4 and IPv6 addresses**
-only. It requires a data file, and the [geoip/geoip](https://packagist.org/packages/geoip/geoip)
-package must be installed.
+The `MaxMindBinaryProvider` named `maxmind_binary` is able to geocode **IPv4 and
+IPv6 addresses** only. It requires a data file, and the
+[geoip/geoip](https://packagist.org/packages/geoip/geoip) package must be
+installed.
 
-It is worth mentioning that this provider has **serious performance issues**, and should **not**
-be used in production. For more information, please read [issue #301](https://github.com/geocoder-php/Geocoder/issues/301).
+It is worth mentioning that this provider has **serious performance issues**,
+and should **not** be used in production. For more information, please read
+[issue #301](https://github.com/geocoder-php/Geocoder/issues/301).
 
 ### GeoIP2DatabaseProvider ###
 
@@ -264,36 +262,38 @@ $adapter  = new \Geocoder\HttpAdapter\GeoIP2Adapter($reader);
 $provider = new \Geocoder\Provider\GeoIP2Provider($adapter);
 $geocoder = new \Geocoder\Geocoder($provider);
 
-$result   = $geocoder->geocode('74.200.247.59');
+$address   = $geocoder->geocode('74.200.247.59');
 ```
 
 ### GeonamesProvider ###
 
-The `GeonamesProvider` named `geonames` is able to geocode and reverse geocode **places**.
-A valid username is required.
+The `GeonamesProvider` named `geonames` is able to geocode and reverse geocode
+**places**.  A valid username is required.
 
 ### TomTomProvider ###
 
-The `TomTomProvider` named `tomtom` is able to geocode and reverse geocode **street addresses**.
-The default langage-locale is `en`, you can choose between `de`, `es`, `fr`, `it`, `nl`, `pl`, `pt` and `sv`.
-A valid api key is required.
+The `TomTomProvider` named `tomtom` is able to geocode and reverse geocode
+**street addresses**.  The default langage-locale is `en`, you can choose
+between `de`, `es`, `fr`, `it`, `nl`, `pl`, `pt` and `sv`.  A valid api key is
+required.
 
 ### ArcGISOnlineProvider ###
 
-The `ArcGISOnlineProvider` named `arcgis_online` is able to geocode and reverse geocode **street addresses**.
-It's possible to specify a sourceCountry to restrict result to this specific country thus reducing
-request time (note that this doesn't work on reverse geocoding). This provider also supports SSL.
+The `ArcGISOnlineProvider` named `arcgis_online` is able to geocode and reverse
+geocode **street addresses**.  It's possible to specify a sourceCountry to
+restrict result to this specific country thus reducing request time (note that
+this doesn't work on reverse geocoding). This provider also supports SSL.
 
 
 ### Using The Providers ###
 
-You can use one of them or write your own provider. You can also register all providers and decide later.
-That's we'll do:
+You can use one of them or write your own provider. You can also register all
+providers and decide later. That's we'll do:
 
 ``` php
 <?php
 
-$geocoder = new \Geocoder\Geocoder();
+$geocoder = new \Geocoder\ProviderBasedGeocoder();
 $geocoder->registerProviders(array(
     new \Geocoder\Provider\GoogleMapsProvider(
         $adapter, $locale, $region, $useSsl
@@ -318,22 +318,27 @@ $geocoder->registerProviders(array(
 
 Parameters:
 
-* `$locale` is available for `YandexProvider`, `BingMapsProvider`, `OpenCageProvider` and `TomTomProvider`.
-* `$region` is available for `GoogleMapsProvider` and `GoogleMapsBusinessProvider`.
-* `$toponym` is available for `YandexProvider`.
-* `$service` is available for `MaxMindProvider`.
-* `$useSsl` is available for `GoogleMapsProvider`, `GoogleMapsBusinessProvider`, `OpenCageProvider`, `MaxMindProvider` and `ArcGISOnlineProvider`.
-* `$sourceCountry` is available for `ArcGISOnlineProvider`.
-* `$rootUrl` is available for `NominatimProvider`.
+* `$locale` is available for `YandexProvider`, `BingMapsProvider`,
+  `OpenCageProvider` and `TomTomProvider`
+* `$region` is available for `GoogleMapsProvider` and
+  `GoogleMapsBusinessProvider`
+* `$toponym` is available for `YandexProvider`
+* `$service` is available for `MaxMindProvider`
+* `$useSsl` is available for `GoogleMapsProvider`, `GoogleMapsBusinessProvider`,
+  `OpenCageProvider`, `MaxMindProvider` and `ArcGISOnlineProvider`
+* `$sourceCountry` is available for `ArcGISOnlineProvider`
+* `$rootUrl` is available for `NominatimProvider`
 
 ### Using The ChainProvider ###
 
-As said it's a special provider that takes a list of providers and iterates over this list to get information. Note
-that it **stops** its iteration when a provider returns a result. The result is returned by `GoogleMapsProvider`
-because `FreeGeoIpProvider` and `HostIpProvider` cannot geocode street addresses. `BingMapsProvider` is ignored.
+As said it's a special provider that takes a list of providers and iterates over
+this list to get information. Note that it **stops** its iteration when a
+provider returns a result. The result is returned by `GoogleMapsProvider`
+because `FreeGeoIpProvider` and `HostIpProvider` cannot geocode street
+addresses. `BingMapsProvider` is ignored.
 
 ``` php
-$geocoder = new \Geocoder\Geocoder();
+$geocoder = new \Geocoder\ProviderBasedGeocoder();
 $adapter  = new \Geocoder\HttpAdapter\CurlHttpAdapter();
 $chain    = new \Geocoder\Provider\ChainProvider(array(
     new \Geocoder\Provider\FreeGeoIpProvider($adapter),
@@ -357,12 +362,13 @@ Everything is ok, enjoy!
 API
 ---
 
-The main method is called `geocode()` which receives a value to geocode. It can be an IP address or a street address (partial or not).
+The main method is called `geocode()` which receives a value to geocode. It can
+be an IP address or a street address (partial or not).
 
 ``` php
 <?php
 
-$result = $geocoder->geocode('88.188.221.14');
+$address = $geocoder->geocode('88.188.221.14');
 // Result is:
 // "latitude"       => string(9) "47.901428"
 // "longitude"      => string(8) "1.904960"
@@ -385,7 +391,7 @@ $result = $geocoder->geocode('88.188.221.14');
 // "countryCode"    => string(2) "FR"
 // "timezone"       => string(6) "Europe/Paris"
 
-$result = $geocoder->geocode('10 rue Gambetta, Paris, France');
+$address = $geocoder->geocode('10 rue Gambetta, Paris, France');
 // Result is:
 // "latitude"       => string(9) "48.863217"
 // "longitude"      => string(8) "2.388821"
@@ -409,31 +415,37 @@ $result = $geocoder->geocode('10 rue Gambetta, Paris, France');
 // "timezone"       => string(6) "Europe/Paris"
 ```
 
-The `geocode()` method returns a `Geocoded` result object with the following API, this object also implements the `ArrayAccess` interface:
+The `geocode()` method returns an array of `Address` objects, each providing the
+following API:
 
-* `getCoordinates()` will return an array with `latitude` and `longitude` values;
+* `getCoordinates()` will return a `Coordinates` object (with `latitude` and
+  `longitude` properties);
 * `getLatitude()` will return the `latitude` value;
 * `getLongitude()` will return the `longitude` value;
-* `getBounds()` will return an array with `south`, `west`, `north` and `east` values;
+* `getBounds()` will return an `Bounds` object (with `south`, `west`, `north`
+  and `east` properties);
 * `getStreetNumber()` will return the `street number/house number` value;
 * `getStreetName()` will return the `street name` value;
-* `getCity()` will return the `city`;
-* `getZipcode()` will return the `zipcode`;
-* `getCityDistrict()` will return the `city district`, or `sublocality`;
-* `getCounty()` will return the `county`;
+* `getLocality()` will return the `locality` or `city`;
+* `getPostalCode()` will return the `postalCode` or `zipcode`;
+* `getSubLocality()` will return the `city district`, or `sublocality`;
+* `getCounty()` will return a `County` object (with `name` and `code`
+  properties);
 * `getCountyCode()` will return the `county` code (county short name);
-* `getRegion()` will return the `region`;
+* `getRegion()` will return a `Region` object (with `name` and `code`
+  properties);
 * `getRegionCode()` will return the `region` code (region short name);
-* `getCountry()` will return the `country`;
+* `getCountry()` will return a `Country` object (with `name` and `code`
+  properties);
 * `getCountryCode()` will return the ISO `country` code;
 * `getTimezone()` will return the `timezone`.
 
-The Geocoder's API is fluent, you can write:
+The `ProviderBasedGeocoder`'s API is fluent, you can write:
 
 ``` php
 <?php
 
-$result = $geocoder
+$address = $geocoder
     ->registerProvider(new \My\Provider\Custom($adapter))
     ->using('custom')
     ->limit(10)
@@ -442,41 +454,43 @@ $result = $geocoder
 ```
 
 The `using()` method allows you to choose the `provider` to use by its name.
-When you deal with multiple providers, you may want to choose one of them.
-The default behavior is to use the first one but it can be annoying.
+When you deal with multiple providers, you may want to choose one of them.  The
+default behavior is to use the first one but it can be annoying.
 
-The `limit()` method allows you to configure the maximum number of results
-being returned. Depending on the provider you may not get as many results as
-expected, it is a maximum limit, not the expected number of results.
+The `limit()` method allows you to configure the maximum number of results being
+returned. Depending on the provider you may not get as many results as expected,
+it is a maximum limit, not the expected number of results.
 
 
 Reverse Geocoding
 -----------------
 
-This library provides a `reverse()` method to retrieve information from coordinates:
+This library provides a `reverse()` method to retrieve information from
+coordinates:
 
 ``` php
-$result = $geocoder->reverse($latitude, $longitude);
+$address = $geocoder->reverse($latitude, $longitude);
 ```
 
 
 Dumpers
 -------
 
-**Geocoder** provides dumpers that aim to transform a `ResultInterface` object in standard formats.
+**Geocoder** provides dumpers that aim to transform an `Address` object in standard formats.
 
 ### GPS eXchange Format (GPX) ###
 
-The **GPS eXchange** format is designed to share geolocated data like point of interests, tracks, ways, but also
-coordinates. **Geocoder** provides a dumper to convert a `ResultInterface` object in an GPX compliant format.
+The **GPS eXchange** format is designed to share geolocated data like point of
+interests, tracks, ways, but also coordinates. **Geocoder** provides a dumper to
+convert an `Address` object in an GPX compliant format.
 
-Assuming we got a `$result` object as seen previously:
+Assuming we got a `$address` object as seen previously:
 
 ``` php
 <?php
 
-$dumper = new \Geocoder\Dumper\GpxDumper();
-$strGpx = $dumper->dump($result);
+$dumper = new \Geocoder\Dumper\Gpx();
+$strGpx = $dumper->dump($address);
 
 echo $strGpx;
 ```
@@ -500,43 +514,46 @@ It will display:
 
 ### GeoJSON ###
 
-[GeoJSON](http://geojson.org/) is a format for encoding a variety of geographic data structures.
+[GeoJSON](http://geojson.org/) is a format for encoding a variety of geographic
+data structures.
 
 
 ### Keyhole Markup Language (KML) ###
 
-[Keyhole Markup Language](http://en.wikipedia.org/wiki/Keyhole_Markup_Language) is an XML notation
-for expressing geographic annotation and visualization within Internet-based, two-dimensional maps
-and three-dimensional Earth browsers.
+[Keyhole Markup Language](http://en.wikipedia.org/wiki/Keyhole_Markup_Language)
+is an XML notation for expressing geographic annotation and visualization within
+Internet-based, two-dimensional maps and three-dimensional Earth browsers.
 
 
 ### Well-Known Binary (WKB) ###
 
-The Well-Known Binary (WKB) representation for geometric values is defined by the OpenGIS specification.
+The Well-Known Binary (WKB) representation for geometric values is defined by
+the OpenGIS specification.
 
 
 ### Well-Known Text (WKT) ###
 
-Well-known text (WKT) is a text markup language for representing vector geometry objects on a map,
-spatial reference systems of spatial objects and transformations between spatial reference systems.
+Well-known text (WKT) is a text markup language for representing vector geometry
+objects on a map, spatial reference systems of spatial objects and
+transformations between spatial reference systems.
 
 
-Formatter
----------
+Formatters
+----------
 
-A common use case is to print geocoded data. Thanks to the `Formatter` class,
-it's really easy to format a `ResultInterface` object as a string:
+A common use case is to print geocoded data. Thanks to the `StringFormatter`
+class, it's simple to format an `Address` object as a string:
 
 ``` php
 <?php
 
-// $result is an instance of ResultInterface
-$formatter = new \Geocoder\Formatter\Formatter($result);
+// $address is an instance of Address
+$formatter = new \Geocoder\Formatter\StringFormatter();
 
-$formatter->format('%S %n, %z %L');
+$formatter->format($address, '%S %n, %z %L');
 // 'Badenerstrasse 120, 8001 Zuerich'
 
-$formatter->format('<p>%S %n, %z %L</p>');
+$formatter->format($address, '<p>%S %n, %z %L</p>');
 // '<p>Badenerstrasse 120, 8001 Zuerich</p>'
 ```
 
@@ -570,39 +587,30 @@ Here is the mapping:
 Extending Things
 ----------------
 
-You can provide your own `adapter`, you just need to create a new class which implements `HttpAdapterInterface`.
+You can write your own `provider` by implementing the `Provider` interface.
 
-You can also write your own `provider` by implementing the `ProviderInterface`.
-
-You can provide your own `result` by extending `DefaultResultFactory` or `MultipleResultFactory` and implementing
-`ResultInterface` if your provider returns one or multiple results and more informations than the default one.
-Please note that the method `createFromArray` is marked `final` in these factories.
-
-If you need your own `ResultFactory`, just implement `ResultFactoryInterface`.
-
-Note, `AbstractProvider` and `AbstractResult` classes can help you by providing useful features.
-
-You can provide your own `dumper` by implementing the `DumperInterface`.
-
-Write your own `formatter` by implementing the `FormatterInterface`.
+You can provide your own `dumper` by implementing the `Dumper` interface.
 
 
 Contributing
 ------------
 
-See CONTRIBUTING file.
+See
+[`CONTRIBUTING`](https://github.com/geocoder-php/Geocoder/blob/master/CONTRIBUTING.md#contributing)
+file.
 
 
 Unit Tests
 ----------
 
-To run unit tests, you'll need `cURL` and a set of dependencies you can install using Composer:
+To run unit tests, you'll need `cURL` and a set of dependencies you can install
+using Composer:
 
 ```
 composer install --dev
 ```
 
-Once installed, just launch the following command:
+Once installed, run the following command:
 
 ```
 phpunit
@@ -610,7 +618,8 @@ phpunit
 
 You'll obtain some _skipped_ unit tests due to the need of API keys.
 
-Rename the `phpunit.xml.dist` file to `phpunit.xml`, then uncomment the following lines and add your own API keys:
+Rename the `phpunit.xml.dist` file to `phpunit.xml`, then uncomment the
+following lines and add your own API keys:
 
 ``` xml
 <php>

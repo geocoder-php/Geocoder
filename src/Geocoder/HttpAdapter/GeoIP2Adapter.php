@@ -10,8 +10,8 @@
 
 namespace Geocoder\HttpAdapter;
 
-use Geocoder\Exception\InvalidArgumentException;
-use Geocoder\Exception\UnsupportedException;
+use Geocoder\Exception\InvalidArgument;
+use Geocoder\Exception\UnsupportedOperation;
 use GeoIp2\ProviderInterface;
 
 /**
@@ -43,7 +43,7 @@ class GeoIP2Adapter implements HttpAdapterInterface
     /**
      * @param  \GeoIp2\ProviderInterface                $geoIpProvider
      * @param  string                                   $geoIP2Model   (e.g. self::GEOIP2_MODEL_CITY)
-     * @throws \Geocoder\Exception\UnsupportedException
+     * @throws \Geocoder\Exception\UnsupportedOperation
      * @internal param string $dbFile
      */
     public function __construct(ProviderInterface $geoIpProvider, $geoIP2Model = self::GEOIP2_MODEL_CITY)
@@ -51,7 +51,7 @@ class GeoIP2Adapter implements HttpAdapterInterface
         $this->geoIp2Provider = $geoIpProvider;
 
         if (false === $this->isSupportedGeoIP2Model($geoIP2Model)) {
-            throw new UnsupportedException(
+            throw new UnsupportedOperation(
                 sprintf('Model "%s" is not available.', $geoIP2Model)
             );
         }
@@ -81,15 +81,15 @@ class GeoIP2Adapter implements HttpAdapterInterface
     /**
      * Returns the content fetched from a given resource.
      *
-     * @param  string                                       $url (e.g. file://database?127.0.0.1)
-     * @throws \Geocoder\Exception\UnsupportedException
-     * @throws \Geocoder\Exception\InvalidArgumentException
+     * @param  string                                   $url (e.g. file://database?127.0.0.1)
+     * @throws \Geocoder\Exception\UnsupportedOperation
+     * @throws \Geocoder\Exception\InvalidArgument
      * @return string
      */
     public function getContent($url)
     {
         if (false === filter_var($url, FILTER_VALIDATE_URL)) {
-            throw new InvalidArgumentException(
+            throw new InvalidArgument(
                 sprintf('"%s" must be called with a valid url. Got "%s" instead.', __METHOD__, $url)
             );
         }
@@ -97,7 +97,7 @@ class GeoIP2Adapter implements HttpAdapterInterface
         $ipAddress = parse_url($url, PHP_URL_QUERY);
 
         if (false === filter_var($ipAddress, FILTER_VALIDATE_IP)) {
-            throw new InvalidArgumentException('URL must contain a valid query-string (an IP address, 127.0.0.1 for instance)');
+            throw new InvalidArgument('URL must contain a valid query-string (an IP address, 127.0.0.1 for instance)');
         }
 
         $result = $this->geoIp2Provider

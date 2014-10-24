@@ -10,8 +10,8 @@
 
 namespace Geocoder\HttpAdapter;
 
-use Geocoder\Exception\HttpException;
-use Geocoder\Exception\ExtensionNotLoadedException;
+use Geocoder\Exception\HttpError;
+use Geocoder\Exception\ExtensionNotLoaded;
 
 /**
  * @author Markus Bachmann <markus.bachmann@bachi.biz>
@@ -45,7 +45,7 @@ class SocketHttpAdapter implements HttpAdapterInterface
         $socketHandle = $this->createSocket($hostname, $port, 30);
 
         if (!fwrite($socketHandle, $this->buildHttpRequest($path, $hostname))) {
-            throw new ExtensionNotLoadedException('Could not send the request');
+            throw new ExtensionNotLoaded('Could not send the request');
         }
 
         $httpResponse = $this->getParsedHttpResponse($socketHandle);
@@ -54,14 +54,14 @@ class SocketHttpAdapter implements HttpAdapterInterface
             if (--$this->redirectsRemaining) {
                 return $this->getContent($httpResponse['headers']['location']);
             } else {
-                throw new HttpException('Too Many Redirects');
+                throw new HttpError('Too Many Redirects');
             }
         } else {
             $this->redirectsRemaining = self::MAX_REDIRECTS;
         }
 
         if ($httpResponse['headers']['status'] !== 200) {
-            throw new HttpException(sprintf('The server return a %s status.', $httpResponse['headers']['status']));
+            throw new HttpError(sprintf('The server return a %s status.', $httpResponse['headers']['status']));
         }
 
         return $httpResponse['content'];
@@ -76,7 +76,7 @@ class SocketHttpAdapter implements HttpAdapterInterface
      * @param integer $timeout  The timeout.
      *
      * @return resource
-     * @throws HttpException
+     * @throws HttpError
      */
     protected function createSocket($hostname, $port, $timeout)
     {
@@ -84,7 +84,7 @@ class SocketHttpAdapter implements HttpAdapterInterface
 
         //verify handle
         if (null === $socketHandle) {
-            throw new HttpException(sprintf('Could not connect to socket. (%s)', $errstr));
+            throw new HttpError(sprintf('Could not connect to socket. (%s)', $errstr));
         }
 
         return $socketHandle;
