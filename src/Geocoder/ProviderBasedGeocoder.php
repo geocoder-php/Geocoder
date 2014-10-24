@@ -12,7 +12,7 @@ namespace Geocoder;
 
 use Geocoder\Exception\ProviderNotRegistered;
 use Geocoder\Provider\Provider;
-use Geocoder\Result\AddressFactory;
+use Geocoder\Model\AddressFactory;
 
 /**
  * @author William Durand <william.durand1@gmail.com>

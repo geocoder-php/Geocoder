@@ -8,7 +8,7 @@
  * @license    MIT License
  */
 
-namespace Geocoder\Result;
+namespace Geocoder\Model;
 
 /**
  * @author William Durand <william.durand1@gmail.com>

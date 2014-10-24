@@ -8,7 +8,7 @@
  * @license    MIT License
  */
 
-namespace Geocoder\Result;
+namespace Geocoder\Model;
 
 /**
  * @author Markus Bachmann <markus.bachmann@bachi.biz>

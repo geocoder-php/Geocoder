@@ -4,8 +4,8 @@ namespace Geocoder\Tests;
 
 use Geocoder\ProviderBasedGeocoder;
 use Geocoder\Provider\Provider;
-use Geocoder\Result\Address;
-use Geocoder\Result\AddressFactory;
+use Geocoder\Model\Address;
+use Geocoder\Model\AddressFactory;
 
 /**
  * @author William Durand <william.durand1@gmail.com>

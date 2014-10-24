@@ -3,7 +3,7 @@
 namespace Geocoder\Tests\Dumper;
 
 use Geocoder\Dumper\GeoJson;
-use Geocoder\Result\Address;
+use Geocoder\Model\Address;
 use Geocoder\Tests\TestCase;
 
 /**

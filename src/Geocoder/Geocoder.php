@@ -10,7 +10,7 @@
 
 namespace Geocoder;
 
-use Geocoder\Result\Address;
+use Geocoder\Model\Address;
 
 /**
  * @author William Durand <william.durand1@gmail.com>

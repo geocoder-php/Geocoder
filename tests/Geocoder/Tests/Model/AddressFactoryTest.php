@@ -2,7 +2,7 @@
 
 namespace Geocoder\Tests\address;
 
-use Geocoder\Result\AddressFactory;
+use Geocoder\Model\AddressFactory;
 use Geocoder\Tests\TestCase;
 
 /**
@@ -32,11 +32,11 @@ class AddressFactoryTest extends TestCase
 
         $i = 1;
         foreach ($addresses as $address) {
-            $this->assertInstanceOf('Geocoder\Result\Address', $address);
-            $this->assertInstanceOf('Geocoder\Result\Coordinates', $address->getCoordinates());
-            $this->assertInstanceOf('Geocoder\Result\County', $address->getCounty());
-            $this->assertInstanceOf('Geocoder\Result\Country', $address->getCountry());
-            $this->assertInstanceOf('Geocoder\Result\Region', $address->getRegion());
+            $this->assertInstanceOf('Geocoder\Model\Address', $address);
+            $this->assertInstanceOf('Geocoder\Model\Coordinates', $address->getCoordinates());
+            $this->assertInstanceOf('Geocoder\Model\County', $address->getCounty());
+            $this->assertInstanceOf('Geocoder\Model\Country', $address->getCountry());
+            $this->assertInstanceOf('Geocoder\Model\Region', $address->getRegion());
 
             $this->assertEquals($i++, $address->getStreetNumber());
         }

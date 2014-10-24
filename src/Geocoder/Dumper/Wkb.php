@@ -10,7 +10,7 @@
 
 namespace Geocoder\Dumper;
 
-use Geocoder\Result\Address;
+use Geocoder\Model\Address;
 
 /**
  * @author Jan Sorgalla <jsorgalla@googlemail.com>

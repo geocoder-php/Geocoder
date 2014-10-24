@@ -4,7 +4,7 @@ namespace Geocoder\Tests;
 
 use Geocoder\HttpAdapter\CurlHttpAdapter;
 use Geocoder\HttpAdapter\HttpAdapterInterface;
-use Geocoder\Result\AddressFactory;
+use Geocoder\Model\AddressFactory;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
