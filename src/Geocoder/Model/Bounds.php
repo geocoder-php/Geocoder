@@ -23,6 +23,12 @@ final class Bounds
 
     private $east;
 
+    /**
+     * @param double $south
+     * @param double $west
+     * @param double $north
+     * @param double $east
+     */
     public function __construct($south, $west, $north, $east)
     {
         $this->south = $south;

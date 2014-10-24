@@ -15,6 +15,9 @@ namespace Geocoder\Exception;
  */
 class ProviderNotRegistered extends \RuntimeException implements Exception
 {
+    /**
+     * @param string $providerName
+     */
     public function __construct($providerName, array $registeredProviders = [])
     {
         parent::__construct(sprintf(

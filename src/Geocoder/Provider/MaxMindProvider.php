@@ -170,7 +170,7 @@ class MaxMindProvider extends AbstractProvider implements Provider
      *
      * @param string $service
      *
-     * @return array
+     * @return string[]
      */
     private function fieldsForService($service)
     {

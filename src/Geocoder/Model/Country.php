@@ -19,6 +19,9 @@ final class Country
 
     private $code;
 
+    /**
+     * @param string $code
+     */
     public function __construct($name, $code)
     {
         $this->name = $name;

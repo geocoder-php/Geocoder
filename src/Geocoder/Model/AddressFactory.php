@@ -55,11 +55,17 @@ final class AddressFactory
         return $addresses;
     }
 
+    /**
+     * @param string $key
+     */
     private function readDoubleValue(array $data, $key)
     {
         return (double) \igorw\get_in($data, explode('.', $key));
     }
 
+    /**
+     * @param string $key
+     */
     private function readStringValue(array $data, $key)
     {
         return $this->formatString(\igorw\get_in($data, [ $key ]));

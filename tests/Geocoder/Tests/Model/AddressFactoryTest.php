@@ -1,6 +1,6 @@
 <?php
 
-namespace Geocoder\Tests\address;
+namespace Geocoder\Tests\Model;
 
 use Geocoder\Model\AddressFactory;
 use Geocoder\Tests\TestCase;

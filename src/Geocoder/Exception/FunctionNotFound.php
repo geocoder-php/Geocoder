@@ -15,6 +15,10 @@ namespace Geocoder\Exception;
  */
 class FunctionNotFound extends \RuntimeException implements Exception
 {
+    /**
+     * @param string $functionName
+     * @param string $description
+     */
     public function __construct($functionName, $description = null)
     {
         parent::__construct(sprintf('The function "%s" cannot be found.%s',

@@ -45,9 +45,8 @@ class ProviderBasedGeocoder implements Geocoder
     private $maxResults;
 
     /**
-     * @param Provider       $provider
-     * @param AddressFactory $addressFactory
-     * @param integer        $maxResults
+     * @param Provider $provider
+     * @param integer  $maxResults
      */
     public function __construct(Provider $provider = null, $maxResults = self::MAX_RESULTS)
     {

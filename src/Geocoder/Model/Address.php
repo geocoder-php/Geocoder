@@ -179,7 +179,7 @@ final class Address
     /**
      * Returns the county value.
      *
-     * @return string
+     * @return County
      */
     public function getCounty()
     {
