@@ -13,7 +13,7 @@ namespace Geocoder\Provider;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
-use Geocoder\HttpAdapter\HttpAdapterInterface;
+use Ivory\HttpAdapter\HttpAdapterInterface;
 
 /**
  * @author Antoine Corcy <contact@sbin.dk>
@@ -101,7 +101,7 @@ class TomTom extends AbstractProvider implements LocaleAwareProvider
             $query = sprintf('%s&language=%s', $query, substr($this->getLocale(), 0, 2));
         }
 
-        $content = $this->getAdapter()->getContent($query);
+        $content = (string) $this->getAdapter()->get($query)->getBody();
 
         try {
             $xml = new \SimpleXmlElement($content);

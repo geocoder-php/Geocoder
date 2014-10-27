@@ -69,7 +69,7 @@ class HostIp extends AbstractProvider implements Provider
      */
     private function executeQuery($query)
     {
-        $content = $this->getAdapter()->getContent($query);
+        $content = (string) $this->getAdapter()->get($query)->getBody();
 
         $data = json_decode($content, true);
 

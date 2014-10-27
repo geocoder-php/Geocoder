@@ -10,10 +10,10 @@
 
 namespace Geocoder\Provider;
 
-use Geocoder\HttpAdapter\HttpAdapterInterface;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
+use Ivory\HttpAdapter\HttpAdapterInterface;
 
 /**
  * @author David Guyon <dguyon@gmail.com>
@@ -99,9 +99,9 @@ class BingMaps extends AbstractProvider implements LocaleAwareProvider
             $query = sprintf('%s&culture=%s', $query, str_replace('_', '-', $this->getLocale()));
         }
 
-        $content = $this->getAdapter()->getContent($query);
+        $content = (string) $this->getAdapter()->get($query)->getBody();
 
-        if (null === $content) {
+        if (empty($content)) {
             throw new NoResult(sprintf('Could not execute query %s', $query));
         }
 

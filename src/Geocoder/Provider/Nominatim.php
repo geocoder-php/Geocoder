@@ -12,7 +12,7 @@ namespace Geocoder\Provider;
 
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
-use Geocoder\HttpAdapter\HttpAdapterInterface;
+use Ivory\HttpAdapter\HttpAdapterInterface;
 
 /**
  * @author Niklas Närhinen <niklas@narhinen.net>
@@ -50,7 +50,7 @@ class Nominatim extends AbstractProvider implements LocaleAwareProvider
         $query   = sprintf($this->getGeocodeEndpointUrl(), urlencode($address), $this->getMaxResults());
         $content = $this->executeQuery($query);
 
-        if (null === $content) {
+        if (empty($content)) {
             throw new NoResult(sprintf('Could not resolve address "%s"', $address));
         }
 
@@ -101,7 +101,7 @@ class Nominatim extends AbstractProvider implements LocaleAwareProvider
         $query   = sprintf($this->getReverseEndpointUrl(), $coordinates[0], $coordinates[1]);
         $content = $this->executeQuery($query);
 
-        if (null === $content) {
+        if (empty($content)) {
             throw new NoResult(sprintf('Unable to resolve the coordinates %s', implode(', ', $coordinates)));
         }
 
@@ -148,7 +148,7 @@ class Nominatim extends AbstractProvider implements LocaleAwareProvider
             $query = sprintf('%s&accept-language=%s', $query, $this->getLocale());
         }
 
-        return $this->getAdapter()->getContent($query);
+        return (string) $this->getAdapter()->get($query)->getBody();
     }
 
     /**

@@ -4,8 +4,9 @@ namespace Geocoder\Tests\Provider;
 
 use Geocoder\Tests\TestCase;
 
-use Geocoder\HttpAdapter\HttpAdapterInterface;
 use Geocoder\Provider\AbstractProvider;
+use Ivory\HttpAdapter\AbstractHttpAdapter;
+use Ivory\HttpAdapter\Message\InternalRequestInterface;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -68,14 +69,15 @@ class MockProvider extends AbstractProvider
     }
 }
 
-class MockHttpAdapter implements HttpAdapterInterface
+class MockHttpAdapter extends AbstractHttpAdapter
 {
-    public function getContent($url)
-    {
-    }
-
     public function getName()
     {
         return 'mock_http_adapter';
+    }
+
+    protected function doSend(InternalRequestInterface $internalRequest)
+    {
+
     }
 }

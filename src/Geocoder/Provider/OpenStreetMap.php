@@ -10,7 +10,7 @@
 
 namespace Geocoder\Provider;
 
-use Geocoder\HttpAdapter\HttpAdapterInterface;
+use Ivory\HttpAdapter\HttpAdapterInterface;
 
 /**
  * @author Niklas Närhinen <niklas@narhinen.net>

@@ -18,7 +18,7 @@ class GeoIPsTest extends TestCase
      */
     public function testGetGeocodedDataWithNullApiKey()
     {
-        $provider = new GeoIPs($this->getMock('Geocoder\HttpAdapter\HttpAdapterInterface'), null);
+        $provider = new GeoIPs($this->getMockAdapter($this->never()), null);
         $provider->getGeocodedData('foo');
     }
 

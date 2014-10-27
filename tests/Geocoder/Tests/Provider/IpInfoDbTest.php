@@ -18,7 +18,7 @@ class IpInfoDbTest extends TestCase
      */
     public function testGetDataWithNullApiKey()
     {
-        $provider = new IpInfoDb($this->getMock('\Geocoder\HttpAdapter\HttpAdapterInterface'), null);
+        $provider = new IpInfoDb($this->getMock('\Ivory\HttpAdapter\HttpAdapterInterface'), null);
         $provider->getGeocodedData('foo');
     }
 
@@ -157,7 +157,7 @@ class IpInfoDbTest extends TestCase
      */
     public function testReversedData()
     {
-        $provider = new IpInfoDb($this->getMock('\Geocoder\HttpAdapter\HttpAdapterInterface'), 'api_key');
+        $provider = new IpInfoDb($this->getMock('\Ivory\HttpAdapter\HttpAdapterInterface'), 'api_key');
         $provider->getReversedData(array());
     }
 }

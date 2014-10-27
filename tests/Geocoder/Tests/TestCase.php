@@ -2,9 +2,9 @@
 
 namespace Geocoder\Tests;
 
-use Geocoder\HttpAdapter\CurlHttpAdapter;
-use Geocoder\HttpAdapter\HttpAdapterInterface;
 use Geocoder\Model\AddressFactory;
+use Ivory\HttpAdapter\HttpAdapterInterface;
+use Ivory\HttpAdapter\SocketHttpAdapter;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -21,13 +21,15 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
             $expects = $this->once();
         }
 
-        $mock = $this->getMock('Geocoder\HttpAdapter\HttpAdapterInterface');
-        $mock
-            ->expects($expects)
-            ->method('getContent')
-            ->will($this->returnArgument(0));
+        $response = $this->getMock('Psr\Http\Message\ResponseInterface');
 
-        return $mock;
+        $adapter = $this->getMock('Ivory\HttpAdapter\HttpAdapterInterface');
+        $adapter
+            ->expects($expects)
+            ->method('get')
+            ->will($this->returnValue($response));
+
+        return $adapter;
     }
 
     /**
@@ -36,13 +38,25 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
      */
     protected function getMockAdapterReturns($returnValue)
     {
-        $mock = $this->getMock('Geocoder\HttpAdapter\HttpAdapterInterface');
-        $mock
+        $body = $this->getMock('Psr\Http\Message\StreamableInterface');
+        $body
             ->expects($this->once())
-            ->method('getContent')
-            ->will($this->returnValue($returnValue));
+            ->method('__toString')
+            ->will($this->returnValue((string) $returnValue));
 
-        return $mock;
+        $response = $this->getMock('Psr\Http\Message\ResponseInterface');
+        $response
+            ->expects($this->once())
+            ->method('getBody')
+            ->will($this->returnValue($body));
+
+        $adapter = $this->getMock('Ivory\HttpAdapter\HttpAdapterInterface');
+        $adapter
+            ->expects($this->once())
+            ->method('get')
+            ->will($this->returnValue($response));
+
+        return $adapter;
     }
 
     /**
@@ -53,7 +67,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
      */
     protected function getAdapter()
     {
-        return new CachedResponseAdapter(new CurlHttpAdapter(), $this->useCache());
+        return new CachedResponseAdapter(new SocketHttpAdapter(), $this->useCache());
     }
 
     /**

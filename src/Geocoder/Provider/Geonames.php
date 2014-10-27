@@ -13,7 +13,7 @@ namespace Geocoder\Provider;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
-use Geocoder\HttpAdapter\HttpAdapterInterface;
+use Ivory\HttpAdapter\HttpAdapterInterface;
 
 /**
  * @author Giovanni Pirrotta <giovanni.pirrotta@gmail.com>
@@ -100,9 +100,9 @@ class Geonames extends AbstractProvider implements LocaleAwareProvider
             $query = sprintf('%s&lang=%s', $query, substr($this->getLocale(), 0, 2));
         }
 
-        $content = $this->getAdapter()->getContent($query);
+        $content = (string) $this->getAdapter()->get($query)->getBody();
 
-        if (null === $content) {
+        if (empty($content)) {
             throw new NoResult(sprintf('Could not execute query %s', $query));
         }
 

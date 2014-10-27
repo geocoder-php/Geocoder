@@ -18,7 +18,7 @@ class BingMapsTest extends TestCase
      */
     public function testGetGeocodedDataWithNullApiKey()
     {
-        $provider = new BingMaps($this->getMock('Geocoder\HttpAdapter\HttpAdapterInterface'), null);
+        $provider = new BingMaps($this->getMockAdapter($this->never()), null);
         $provider->getGeocodedData('foo');
     }
 

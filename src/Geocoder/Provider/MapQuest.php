@@ -13,7 +13,7 @@ namespace Geocoder\Provider;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
-use Geocoder\HttpAdapter\HttpAdapterInterface;
+use Ivory\HttpAdapter\HttpAdapterInterface;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -123,9 +123,9 @@ class MapQuest extends AbstractProvider implements Provider
      */
     protected function executeQuery($query)
     {
-        $content = $this->getAdapter()->getContent($query);
+        $content = (string) $this->getAdapter()->get($query)->getBody();
 
-        if (null === $content) {
+        if (empty($content)) {
             throw new NoResult(sprintf('Could not execute query: %s', $query));
         }
 

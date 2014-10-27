@@ -2,9 +2,12 @@
 
 namespace Geocoder\Tests;
 
-use Geocoder\HttpAdapter\HttpAdapterInterface;
+use Ivory\HttpAdapter\AbstractHttpAdapter;
+use Ivory\HttpAdapter\HttpAdapterInterface;
+use Ivory\HttpAdapter\Message\InternalRequestInterface;
+use Ivory\HttpAdapter\Message\Stream\StringStream;
 
-class CachedResponseAdapter implements HttpAdapterInterface
+class CachedResponseAdapter extends AbstractHttpAdapter
 {
     private $adapter;
 
@@ -14,6 +17,8 @@ class CachedResponseAdapter implements HttpAdapterInterface
 
     public function __construct(HttpAdapterInterface $adapter, $useCache = false, $cacheDir = '.cached_responses')
     {
+        parent::__construct();
+
         $this->adapter  = $adapter;
         $this->useCache = $useCache;
         $this->cacheDir = $cacheDir;
@@ -22,32 +27,36 @@ class CachedResponseAdapter implements HttpAdapterInterface
     /**
      * {@inheritDoc}
      */
-    public function getContent($url)
+    public function getName()
     {
-        $file = sprintf('%s/%s/%s', realpath(__DIR__ . '/../../'), $this->cacheDir, sha1($url));
-
-        if ($this->useCache && is_file($file) && is_readable($file)) {
-            $response = unserialize(file_get_contents($file));
-
-            if (!empty($response)) {
-                return $response;
-            }
-        }
-
-        $response = $this->adapter->getContent($url);
-
-        if ($this->useCache) {
-            file_put_contents($file, serialize($response));
-        }
-
-        return $response;
+        return 'cached_response';
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getName()
+    protected function doSend(InternalRequestInterface $internalRequest)
     {
-        return 'cached_response';
+        $file = sprintf('%s/%s/%s', realpath(__DIR__ . '/../../'), $this->cacheDir, sha1($internalRequest->getUrl()));
+
+        if ($this->useCache && is_file($file) && is_readable($file)) {
+            $content = unserialize(file_get_contents($file));
+            $body = new StringStream($content);
+
+            $response = $this->adapter->getConfiguration()->getMessageFactory()->createResponse();
+            $response->setBody($body);
+
+            if (!empty($content)) {
+                return $response;
+            }
+        }
+
+        $response = $this->adapter->get($internalRequest);
+
+        if ($this->useCache) {
+            file_put_contents($file, serialize((string) $response->getBody()));
+        }
+
+        return $response;
     }
 }
