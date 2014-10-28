@@ -12,7 +12,6 @@ namespace Geocoder;
 
 use Geocoder\Exception\ProviderNotRegistered;
 use Geocoder\Provider\Provider;
-use Geocoder\Model\AddressFactory;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -35,11 +34,6 @@ class ProviderBasedGeocoder implements Geocoder
     private $provider;
 
     /**
-     * @var AddressFactory
-     */
-    private $factory;
-
-    /**
      * @var integer
      */
     private $maxResults;
@@ -51,7 +45,6 @@ class ProviderBasedGeocoder implements Geocoder
     public function __construct(Provider $provider = null, $maxResults = self::MAX_RESULTS)
     {
         $this->provider = $provider;
-        $this->factory  = new AddressFactory();
 
         $this->limit($maxResults);
     }
@@ -61,15 +54,16 @@ class ProviderBasedGeocoder implements Geocoder
      */
     public function geocode($value)
     {
+        $value = trim($value);
+
         if (empty($value)) {
             // let's save a request
             return [];
         }
 
         $provider = $this->getProvider()->setMaxResults($this->getMaxResults());
-        $data     = $provider->getGeocodedData(trim($value));
 
-        return $this->returnResult($data);
+        return $provider->geocode($value);
     }
 
     /**
@@ -83,9 +77,8 @@ class ProviderBasedGeocoder implements Geocoder
         }
 
         $provider = $this->getProvider()->setMaxResults($this->getMaxResults());
-        $data     = $provider->getReversedData([ $latitude, $longitude ]);
 
-        return $this->returnResult($data);
+        return $provider->reverse($latitude, $longitude);
     }
 
     /**
@@ -184,15 +177,5 @@ class ProviderBasedGeocoder implements Geocoder
         }
 
         return $this->provider;
-    }
-
-    /**
-     * @param array $data An array of data.
-     *
-     * @return \Geocoder\Model\Address[]
-     */
-    protected function returnResult(array $data = [])
-    {
-        return $this->factory->createFromArray($data);
     }
 }

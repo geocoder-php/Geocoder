@@ -10,6 +10,7 @@
 
 namespace Geocoder\Provider;
 
+use Geocoder\Model\AddressFactory;
 use Geocoder\ProviderBasedGeocoder;
 use Ivory\HttpAdapter\HttpAdapterInterface;
 
@@ -34,6 +35,11 @@ abstract class AbstractProvider
     protected $maxResults = ProviderBasedGeocoder::MAX_RESULTS;
 
     /**
+     * @var AddressFactory
+     */
+    protected $factory;
+
+    /**
      * @param HttpAdapterInterface $adapter An HTTP adapter.
      * @param string               $locale  A locale (optional).
      */
@@ -41,6 +47,7 @@ abstract class AbstractProvider
     {
         $this->setAdapter($adapter);
         $this->setLocale($locale);
+        $this->factory  = new AddressFactory();
     }
 
     /**
@@ -162,5 +169,15 @@ abstract class AbstractProvider
         return array_map(function ($value) {
             return is_string($value) ? utf8_encode($value) : $value;
         }, $results);
+    }
+
+    /**
+     * @param array $data An array of data.
+     *
+     * @return \Geocoder\Model\Address[]
+     */
+    protected function returnResult(array $data = [])
+    {
+        return $this->factory->createFromArray($data);
     }
 }

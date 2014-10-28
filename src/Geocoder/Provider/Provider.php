@@ -10,41 +10,16 @@
 
 namespace Geocoder\Provider;
 
-use Geocoder\Exception\NoResult;
 use Geocoder\Exception\InvalidCredentials;
+use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Geocoder;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-interface Provider
+interface Provider extends Geocoder
 {
-    /**
-     * Returns an associative array with data treated by the provider.
-     *
-     * @param string $address An address (IP or street).
-     *
-     * @throws NoResult             If the address could not be resolved
-     * @throws InvalidCredentials   If the credentials are invalid
-     * @throws UnsupportedOperation If IPv4, IPv6 or street is not supported
-     *
-     * @return array
-     */
-    public function getGeocodedData($address);
-
-    /**
-     * Returns an associative array with data treated by the provider.
-     *
-     * @param array $coordinates Coordinates (latitude, longitude).
-     *
-     * @throws NoResult             If the coordinates could not be resolved
-     * @throws InvalidCredentials   If the credentials are invalid
-     * @throws UnsupportedOperation If reverse geocoding is not supported
-     *
-     * @return array
-     */
-    public function getReversedData(array $coordinates);
-
     /**
      * Returns the provider's name.
      *
