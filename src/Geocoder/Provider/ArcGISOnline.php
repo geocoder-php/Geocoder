@@ -12,7 +12,7 @@ namespace Geocoder\Provider;
 
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
-use Geocoder\HttpAdapter\HttpAdapterInterface;
+use Ivory\HttpAdapter\HttpAdapterInterface;
 
 /**
  * @author ALKOUM Dorian <baikunz@gmail.com>
@@ -158,9 +158,7 @@ class ArcGISOnline extends AbstractProvider implements Provider
             $query = sprintf('%s&sourceCountry=%s', $query, $this->sourceCountry);
         }
 
-        $query = sprintf('%s&maxLocations=%d&f=%s&outFields=*', $query, $this->getMaxResults(), 'json');
-
-        return $query;
+        return sprintf('%s&maxLocations=%d&f=%s&outFields=*', $query, $this->getMaxResults(), 'json');
     }
 
     /**
@@ -175,9 +173,9 @@ class ArcGISOnline extends AbstractProvider implements Provider
     private function executeQuery($query)
     {
         $query = $this->buildQuery($query);
+        $content = (string) $this->getAdapter()->get($query)->getBody();
 
-        $content = $this->getAdapter()->getContent($query);
-        if (null === $content) {
+        if (empty($content)) {
             throw new NoResult(sprintf('Could not execute query %s', $query));
         }
 

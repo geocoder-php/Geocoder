@@ -14,7 +14,7 @@ use Geocoder\Exception\NoResult;
 use Geocoder\Exception\QuotaExceeded;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Exception\InvalidCredentials;
-use Geocoder\HttpAdapter\HttpAdapterInterface;
+use Ivory\HttpAdapter\HttpAdapterInterface;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -127,15 +127,14 @@ class GoogleMaps extends AbstractProvider implements LocaleAwareProvider
     private function executeQuery($query)
     {
         $query = $this->buildQuery($query);
-
-        $content = $this->getAdapter()->getContent($query);
+        $content = (string) $this->getAdapter()->get($query)->getBody();
 
         // Throw exception if invalid clientID and/or privateKey used with GoogleMapsBusinessProvider
         if (strpos($content, "Provided 'signature' is not valid for the provided client ID") !== false) {
             throw new InvalidCredentials(sprintf('Invalid client ID / API Key %s', $query));
         }
 
-        if (null === $content) {
+        if (empty($content)) {
             throw new NoResult(sprintf('Could not execute query %s', $query));
         }
 

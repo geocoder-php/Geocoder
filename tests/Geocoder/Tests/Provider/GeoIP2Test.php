@@ -11,7 +11,6 @@
 namespace Geocoder\Tests\Provider;
 
 use Geocoder\Exception\NoResult;
-use Geocoder\HttpAdapter\CurlHttpAdapter;
 use Geocoder\Provider\GeoIP2;
 use Geocoder\Tests\TestCase;
 
@@ -28,15 +27,6 @@ class GeoIP2Test extends TestCase
     public function setUp()
     {
         $this->provider = new GeoIP2($this->getGeoIP2AdapterMock());
-    }
-
-    /**
-     * @expectedException \Geocoder\Exception\InvalidArgument
-     * @expectedExceptionMessage GeoIP2Adapter is needed in order to access the GeoIP2 service.
-     */
-    public function testWrongAdapterLeadsToException()
-    {
-        new GeoIP2(new CurlHttpAdapter());
     }
 
     public function testGetName()

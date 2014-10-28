@@ -18,7 +18,7 @@ class MaxMindTest extends TestCase
      */
     public function testGetGeocodedDataWithNullApiKey()
     {
-        $provider = new MaxMind($this->getMock('Geocoder\HttpAdapter\HttpAdapterInterface'), null);
+        $provider = new MaxMind($this->getMockAdapter($this->never()), null);
         $provider->getGeocodedData('foo');
     }
 
@@ -100,7 +100,7 @@ class MaxMindTest extends TestCase
      */
     public function testGetGeocodedDataWithRealIPv4AndNotSupportedService()
     {
-        $provider = new MaxMind($this->getMock('Geocoder\HttpAdapter\HttpAdapterInterface'), 'api_key', 'foo');
+        $provider = new MaxMind($this->getMockAdapter(), 'api_key', 'foo');
         $provider->getGeocodedData('74.200.247.59');
     }
 
@@ -110,7 +110,7 @@ class MaxMindTest extends TestCase
      */
     public function testGetGeocodedDataWithRealIPv6AndNotSupportedService()
     {
-        $provider = new MaxMind($this->getMock('Geocoder\HttpAdapter\HttpAdapterInterface'), 'api_key', 12345);
+        $provider = new MaxMind($this->getMockAdapter(), 'api_key', 12345);
         $provider->getGeocodedData('::ffff:74.200.247.59');
     }
 

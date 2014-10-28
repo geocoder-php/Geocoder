@@ -13,7 +13,7 @@ namespace Geocoder\Provider;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
-use Geocoder\HttpAdapter\HttpAdapterInterface;
+use Ivory\HttpAdapter\HttpAdapterInterface;
 
 /**
  * @author mtm <mtm@opencagedata.com>
@@ -94,14 +94,13 @@ class OpenCage extends AbstractProvider implements Provider
      */
     private function executeQuery($query)
     {
-
         if (null !== $this->getLocale()) {
             $query = sprintf('%s&language=%s', $query, $this->getLocale());
         }
 
-        $content = $this->getAdapter()->getContent($query);
+        $content = (string) $this->getAdapter()->get($query)->getBody();
 
-        if (null === $content) {
+        if (empty($content)) {
             throw new NoResult(sprintf('Could not execute query: %s', $query));
         }
 

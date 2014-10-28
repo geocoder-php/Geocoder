@@ -12,7 +12,7 @@ namespace Geocoder\Provider;
 
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Exception\NoResult;
-use Geocoder\HttpAdapter\HttpAdapterInterface;
+use Ivory\HttpAdapter\HttpAdapterInterface;
 
 /**
  * @author Antoine Corcy <contact@sbin.dk>
@@ -96,7 +96,7 @@ class Yandex extends AbstractProvider implements LocaleAwareProvider
 
         $query = sprintf('%s&results=%d', $query, $this->getMaxResults());
 
-        $content = $this->getAdapter()->getContent($query);
+        $content = (string) $this->getAdapter()->get($query)->getBody();
         $json    = (array) json_decode($content, true);
 
         if (empty($json) || '0' === $json['response']['GeoObjectCollection']['metaDataProperty']['GeocoderResponseMetaData']['found']) {

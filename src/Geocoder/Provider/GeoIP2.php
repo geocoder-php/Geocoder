@@ -11,10 +11,8 @@
 namespace Geocoder\Provider;
 
 use Geocoder\Exception\NoResult;
-use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\HttpAdapter\GeoIP2Adapter;
-use Geocoder\HttpAdapter\HttpAdapterInterface;
 use GeoIp2\Exception\AddressNotFoundException;
 use GeoIp2\Model\City;
 
@@ -26,15 +24,10 @@ class GeoIP2 extends AbstractProvider implements Provider
     /**
      * {@inheritdoc}
      */
-    public function __construct(HttpAdapterInterface $adapter, $locale = 'en')
+    public function __construct(GeoIP2Adapter $adapter, $locale = 'en')
     {
-        if (false === $adapter instanceof GeoIP2Adapter) {
-            throw new InvalidArgument(
-                'GeoIP2Adapter is needed in order to access the GeoIP2 service.'
-            );
-        }
-
-        parent::__construct($adapter, $locale);
+        $this->setAdapter($adapter);
+        $this->setLocale($locale);
     }
 
     /**

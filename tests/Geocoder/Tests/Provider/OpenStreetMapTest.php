@@ -444,7 +444,7 @@ class OpenStreetMapTest extends TestCase
      */
     public function testGetGeocodedDataWithAddressGetsEmptyContent()
     {
-        $provider = new OpenStreetMap($this->getMockAdapterReturns(''));
+        $provider = new OpenStreetMap($this->getMockAdapterReturns('<foo></foo>'));
         $provider->getGeocodedData('Läntinen Pitkäkatu 35, Turku');
     }
 
@@ -477,7 +477,7 @@ XML;
      */
     public function testGetReversedDataWithCoordinatesGetsEmptyContent()
     {
-        $provider = new OpenStreetMap($this->getMockAdapterReturns(''));
+        $provider = new OpenStreetMap($this->getMockAdapterReturns('<error></error>'));
         $provider->getReversedData(array('60.4539471728726', '22.2567841926781'));
     }
 

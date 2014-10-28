@@ -13,7 +13,7 @@ namespace Geocoder\Provider;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
-use Geocoder\HttpAdapter\HttpAdapterInterface;
+use Ivory\HttpAdapter\HttpAdapterInterface;
 
 /**
  * @author Andrea Cristaudo <andrea.cristaudo@gmail.com>
@@ -111,7 +111,7 @@ class MaxMind extends AbstractProvider implements Provider
      */
     private function executeQuery($query)
     {
-        $content = $this->getAdapter()->getContent($query);
+        $content = (string) $this->getAdapter()->get($query)->getBody();
         $fields  = $this->fieldsForService($this->service);
 
         if (null === $content || '' === $content) {

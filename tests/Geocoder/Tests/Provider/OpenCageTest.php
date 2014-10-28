@@ -22,7 +22,7 @@ class OpenCageTest extends TestCase
      */
     public function testGetGeocodedData()
     {
-        $provider = new OpenCage($this->getMockAdapter(), 'api_key');
+        $provider = new OpenCage($this->getMockAdapterReturns('{}'), 'api_key');
         $provider->getGeocodedData('foobar');
     }
 
@@ -32,7 +32,7 @@ class OpenCageTest extends TestCase
      */
     public function testSslSchema()
     {
-        $provider = new OpenCage($this->getMockAdapter(), 'api_key', true);
+        $provider = new OpenCage($this->getMockAdapterReturns('{}'), 'api_key', true);
         $provider->getGeocodedData('foobar');
     }
 

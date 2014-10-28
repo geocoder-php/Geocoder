@@ -15,7 +15,7 @@ use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\QuotaExceeded;
-use Geocoder\HttpAdapter\HttpAdapterInterface;
+use Ivory\HttpAdapter\HttpAdapterInterface;
 
 /**
  * @author Andrea Cristaudo <andrea.cristaudo@gmail.com>
@@ -103,9 +103,9 @@ class GeoIPs extends AbstractProvider implements Provider
      */
     private function executeQuery($query)
     {
-        $content = $this->getAdapter()->getContent($query);
+        $content = (string) $this->getAdapter()->get($query)->getBody();
 
-        if (null === $content || '' === $content) {
+        if (empty($content)) {
             throw new NoResult(sprintf('Invalid response from GeoIPs server for query %s', $query));
         }
 

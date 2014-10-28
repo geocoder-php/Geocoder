@@ -11,7 +11,7 @@
 namespace Geocoder\Provider;
 
 use Geocoder\ProviderBasedGeocoder;
-use Geocoder\HttpAdapter\HttpAdapterInterface;
+use Ivory\HttpAdapter\HttpAdapterInterface;
 
 /**
  * @author William Durand <william.durand1@gmail.com>

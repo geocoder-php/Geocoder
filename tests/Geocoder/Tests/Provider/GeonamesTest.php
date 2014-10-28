@@ -19,7 +19,7 @@ class GeonamesTest extends TestCase
      */
     public function testGetGeocodedDataWithNullUsername()
     {
-        $provider = new Geonames($this->getMock('\Geocoder\HttpAdapter\HttpAdapterInterface'), null);
+        $provider = new Geonames($this->getMock('\Ivory\HttpAdapter\HttpAdapterInterface'), null);
         $provider->getGeocodedData('foo');
     }
 
@@ -29,7 +29,7 @@ class GeonamesTest extends TestCase
      */
     public function testGetReversedDataWithNullUsername()
     {
-        $provider = new Geonames($this->getMock('\Geocoder\HttpAdapter\HttpAdapterInterface'), null);
+        $provider = new Geonames($this->getMock('\Ivory\HttpAdapter\HttpAdapterInterface'), null);
         $provider->getReversedData(array(1,2));
     }
 

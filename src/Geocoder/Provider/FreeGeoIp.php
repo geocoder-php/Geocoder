@@ -64,9 +64,9 @@ class FreeGeoIp extends AbstractProvider implements Provider
      */
     private function executeQuery($query)
     {
-        $content = $this->getAdapter()->getContent($query);
+        $content = (string) $this->getAdapter()->get($query)->getBody();
 
-        if (null === $content) {
+        if (empty($content)) {
             throw new NoResult(sprintf('Could not execute query %s', $query));
         }
 
