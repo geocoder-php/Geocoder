@@ -13,14 +13,13 @@
     ],
     "require": {
         "php": ">=5.4.0",
+        "egeloen/http-adapter": "~0.1",
         "igorw/get-in": "~1.0"
     },
     "require-dev": {
-        "egeloen/http-adapter": "~0.1",
         "geoip2/geoip2": "~0.6"
     },
     "suggest": {
-        "egeloen/http-adapter": "If you are going to use any http adapters",
         "ext-geoip": "Enabling the geoip extension allows you to use the MaxMindProvider.",
         "geoip/geoip": "If you are going to use the MaxMindBinaryProvider (conflict with geoip extension).",
         "geoip2/geoip2": "If you are going to use the GeoIP2DatabaseProvider."
