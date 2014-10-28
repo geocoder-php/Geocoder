@@ -2,10 +2,11 @@
 
 namespace Geocoder\Tests;
 
-use Geocoder\ProviderBasedGeocoder;
-use Geocoder\Provider\Provider;
 use Geocoder\Model\Address;
 use Geocoder\Model\AddressFactory;
+use Geocoder\ProviderBasedGeocoder;
+use Geocoder\Provider\LocaleAwareProvider;
+use Geocoder\Provider\Provider;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -150,6 +151,19 @@ class ProviderBasedGeocoderTest extends TestCase
         $this->assertSame(3, $this->geocoder->getMaxResults());
     }
 
+    public function testSetLocale()
+    {
+        $provider1 = new MockProvider('test1');
+        $provider2 = new MockLocaleAwareProvider('test2');
+
+        $this->geocoder->registerProviders([$provider1, $provider2]);
+        $this->geocoder->setLocale('en');
+        $this->assertEquals('en', $provider2->getLocale());
+
+        $this->geocoder->setLocale(null);
+        $this->assertNull($provider2->getLocale());
+    }
+
     public function testDefaultMaxResults()
     {
         $this->assertSame(ProviderBasedGeocoder::MAX_RESULTS, $this->geocoder->getMaxResults());
@@ -187,6 +201,23 @@ class MockProvider implements Provider
 
     public function setMaxResults($maxResults)
     {
+        return $this;
+    }
+}
+
+class MockLocaleAwareProvider extends MockProvider implements LocaleAwareProvider
+{
+    protected $locale;
+
+    public function getLocale()
+    {
+        return $this->locale;
+    }
+
+    public function setLocale($locale = null)
+    {
+        $this->locale = $locale;
+
         return $this;
     }
 }

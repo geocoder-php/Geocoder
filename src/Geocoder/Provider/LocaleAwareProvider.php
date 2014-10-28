@@ -20,4 +20,13 @@ interface LocaleAwareProvider extends Provider
      * @return string|null
      */
     public function getLocale();
+
+    /**
+     * Sets the locale to be used.
+     *
+     * @param string|null $locale If no locale is set, the provider or service will fallback.
+     *
+     * @return LocaleAwareProvider Self object
+     */
+    public function setLocale($locale = null);
 }
