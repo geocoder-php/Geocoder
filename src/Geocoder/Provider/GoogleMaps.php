@@ -10,10 +10,11 @@
 
 namespace Geocoder\Provider;
 
+use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\QuotaExceeded;
 use Geocoder\Exception\UnsupportedOperation;
-use Geocoder\Exception\InvalidCredentials;
+use Geocoder\Model\AddressFactory;
 use Ivory\HttpAdapter\HttpAdapterInterface;
 
 /**
@@ -62,10 +63,17 @@ class GoogleMaps extends AbstractProvider implements LocaleAwareProvider
         $this->apiKey = $apiKey;
     }
 
+    public function setRegion($region)
+    {
+        $this->region = $region;
+
+        return $this;
+    }
+
     /**
      * {@inheritDoc}
      */
-    public function getGeocodedData($address)
+    public function geocode($address)
     {
         // Google API returns invalid data if IP address given
         // This API doesn't handle IPs
@@ -84,9 +92,9 @@ class GoogleMaps extends AbstractProvider implements LocaleAwareProvider
     /**
      * {@inheritDoc}
      */
-    public function getReversedData(array $coordinates)
+    public function reverse($latitude, $longitude)
     {
-        return $this->getGeocodedData(sprintf('%F,%F', $coordinates[0], $coordinates[1]));
+        return $this->getGeocodedData(sprintf('%F,%F', $latitude, $longitude));
     }
 
     /**
@@ -197,7 +205,7 @@ class GoogleMaps extends AbstractProvider implements LocaleAwareProvider
             $results[] = array_merge($this->getDefaults(), $resultset);
         }
 
-        return $results;
+        return $this->returnResult($results);
     }
 
     /**
