@@ -11,8 +11,9 @@
 namespace Geocoder;
 
 use Geocoder\Exception\ProviderNotRegistered;
-use Geocoder\Provider\Provider;
 use Geocoder\Model\AddressFactory;
+use Geocoder\Provider\LocaleAwareProvider;
+use Geocoder\Provider\Provider;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -166,6 +167,20 @@ class ProviderBasedGeocoder implements Geocoder
     public function getMaxResults()
     {
         return $this->maxResults;
+    }
+
+    /**
+     * Change the locale to be used in locale aware requests.
+     *
+     * @param string
+     */
+    public function setLocale($locale)
+    {
+        foreach ($this->providers as $provider) {
+            if ($provider instanceof LocaleAwareProvider) {
+                $provider->setLocale($locale);
+            }
+        }
     }
 
     /**

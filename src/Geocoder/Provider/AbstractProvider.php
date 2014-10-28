@@ -78,11 +78,7 @@ abstract class AbstractProvider
     }
 
     /**
-     * Sets the locale to be used.
-     *
-     * @param string|null $locale If no locale is set, the provider or service will fallback.
-     *
-     * @return AbstractProvider
+     * {@inheritDoc}
      */
     public function setLocale($locale = null)
     {
