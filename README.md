@@ -1,25 +1,24 @@
 Geocoder
 ========
 
-**Geocoder** is a library which helps you build geo-aware applications. It provides an abstraction layer for geocoding manipulations.
-The library is split in two parts: `HttpAdapter` and `Provider` and is really extensible.
-
 [![Build Status](https://secure.travis-ci.org/geocoder-php/Geocoder.png)](http://travis-ci.org/geocoder-php/Geocoder)
+[![Total Downloads](https://poser.pugx.org/willdurand/Geocoder/downloads.png)](https://packagist.org/packages/willdurand/Geocoder)
+[![Latest Stable Version](https://poser.pugx.org/willdurand/Geocoder/v/stable.png)](https://packagist.org/packages/willdurand/Geocoder)
 
+**Geocoder** is a library which helps you build geo-aware applications. It
+provides an abstraction layer for geocoding manipulations.
 
-### HttpAdapters ###
+### HTTP Adapters ###
 
-_HttpAdapters_ are responsible to get data from remote APIs.
+In order to talk to geocoding APIs, you need HTTP adapters. While it was part of
+the library in Geocoder 1.x and 2.x, Geocoder 3.x and upper now relies on the
+[PSR-7
+Standard](https://github.com/php-fig/fig-standards/blob/master/proposed/http-message.md)
+which defines how HTTP message should be implemented. Choose any library that
+follows this PSR and implement the specified interfaces to use with Geocoder.
 
-Currently, there are the following adapters:
-
-* `BuzzHttpAdapter` to use [Buzz](https://github.com/kriswallsmith/Buzz), a lightweight PHP 5.3 library for issuing HTTP requests;
-* `CurlHttpAdapter` to use [cURL](http://php.net/manual/book.curl.php);
-* `GuzzleHttpAdapter` to use [Guzzle](https://github.com/guzzle/guzzle), PHP 5.3+ HTTP client and framework for building RESTful web service clients;
-* `SocketHttpAdapter` to use a [socket](http://www.php.net/manual/function.fsockopen.php);
-* `ZendHttpAdapter` to use [Zend Http Client](http://framework.zend.com/manual/2.0/en/modules/zend.http.client.html);
-* `GeoIP2Adapter` to use [GeoIP2 Database Reader](https://github.com/maxmind/GeoIP2-php#database-reader) or the [Webservice Client](https://github.com/maxmind/GeoIP2-php#web-service-client) by MaxMind.
-
+As making choices is rather hard, Geocoder requires the
+[egeloen/http-adapter](https://github.com/egeloen/ivory-http-adapter) library.
 
 ### Providers ###
 
