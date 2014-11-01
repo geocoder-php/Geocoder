@@ -10,9 +10,6 @@
 
 namespace Geocoder\Provider;
 
-use Geocoder\Exception\InvalidCredentials;
-use Geocoder\Exception\NoResult;
-use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Geocoder;
 
 /**
@@ -26,13 +23,4 @@ interface Provider extends Geocoder
      * @return string
      */
     public function getName();
-
-    /**
-     * Sets the maximum number of returned results.
-     *
-     * @param integer $maxResults
-     *
-     * @return Provider
-     */
-    public function setMaxResults($maxResults);
 }

@@ -55,7 +55,7 @@ class ArcGISOnline extends AbstractProvider implements Provider
     /**
      * {@inheritDoc}
      */
-    public function getGeocodedData($address)
+    public function geocode($address)
     {
         if (filter_var($address, FILTER_VALIDATE_IP)) {
             throw new UnsupportedOperation('The ArcGISOnline does not support IP addresses.');
@@ -108,7 +108,7 @@ class ArcGISOnline extends AbstractProvider implements Provider
     /**
      * {@inheritDoc}
      */
-    public function getReversedData(array $coordinates)
+    public function reverse($latitude, $longitude)
     {
         $query = sprintf(self::REVERSE_ENDPOINT_URL, $this->protocol, $coordinates[1], $coordinates[0]);
 

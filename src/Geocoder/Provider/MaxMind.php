@@ -74,7 +74,7 @@ class MaxMind extends AbstractProvider implements Provider
     /**
      * {@inheritDoc}
      */
-    public function getGeocodedData($address)
+    public function geocode($address)
     {
         if (null === $this->apiKey) {
             throw new InvalidCredentials('No API Key provided.');
@@ -99,7 +99,7 @@ class MaxMind extends AbstractProvider implements Provider
     /**
      * {@inheritDoc}
      */
-    public function getReversedData(array $coordinates)
+    public function reverse($latitude, $longitude)
     {
         throw new UnsupportedOperation('The MaxMind is not able to do reverse geocoding.');
     }

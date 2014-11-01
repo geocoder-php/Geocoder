@@ -50,7 +50,7 @@ class TomTom extends AbstractProvider implements LocaleAwareProvider
     /**
      * {@inheritDoc}
      */
-    public function getGeocodedData($address)
+    public function geocode($address)
     {
         if (null === $this->apiKey) {
             throw new InvalidCredentials('No Geocoding API Key provided');
@@ -69,7 +69,7 @@ class TomTom extends AbstractProvider implements LocaleAwareProvider
     /**
      * {@inheritDoc}
      */
-    public function getReversedData(array $coordinates)
+    public function reverse($latitude, $longitude)
     {
         if (null === $this->apiKey) {
             throw new InvalidCredentials('No Map API Key provided');

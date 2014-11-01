@@ -33,7 +33,7 @@ class GeoIP2 extends AbstractProvider implements Provider
     /**
      * {@inheritDoc}
      */
-    public function getGeocodedData($address)
+    public function geocode($address)
     {
         if (false === filter_var($address, FILTER_VALIDATE_IP)) {
             throw new UnsupportedOperation(sprintf('The %s does not support street addresses.', __CLASS__));
@@ -71,7 +71,7 @@ class GeoIP2 extends AbstractProvider implements Provider
     /**
      * {@inheritDoc}
      */
-    public function getReversedData(array $coordinates)
+    public function reverse($latitude, $longitude)
     {
         throw new UnsupportedOperation(sprintf('The %s is not able to do reverse geocoding.', __CLASS__));
     }

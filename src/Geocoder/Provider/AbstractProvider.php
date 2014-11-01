@@ -45,9 +45,10 @@ abstract class AbstractProvider
      */
     public function __construct(HttpAdapterInterface $adapter, $locale = null)
     {
-        $this->setAdapter($adapter);
         $this->setLocale($locale);
-        $this->factory  = new AddressFactory();
+
+        $this->adapter = $adapter;
+        $this->factory = new AddressFactory();
     }
 
     /**
@@ -58,40 +59,6 @@ abstract class AbstractProvider
     public function getAdapter()
     {
         return $this->adapter;
-    }
-
-    /**
-     * Sets the HTTP adapter to be used for further requests.
-     *
-     * @param HttpAdapterInterface $adapter
-     *
-     * @return AbstractProvider
-     */
-    public function setAdapter($adapter)
-    {
-        $this->adapter = $adapter;
-
-        return $this;
-    }
-
-    /**
-     * Returns the configured locale or null.
-     *
-     * @return string
-     */
-    public function getLocale()
-    {
-        return $this->locale;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setLocale($locale = null)
-    {
-        $this->locale = $locale;
-
-        return $this;
     }
 
     /**

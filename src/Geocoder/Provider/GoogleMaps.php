@@ -14,7 +14,6 @@ use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\QuotaExceeded;
 use Geocoder\Exception\UnsupportedOperation;
-use Geocoder\Model\AddressFactory;
 use Ivory\HttpAdapter\HttpAdapterInterface;
 
 /**
@@ -94,7 +93,7 @@ class GoogleMaps extends AbstractProvider implements LocaleAwareProvider
      */
     public function reverse($latitude, $longitude)
     {
-        return $this->getGeocodedData(sprintf('%F,%F', $latitude, $longitude));
+        return $this->geocode(sprintf('%F,%F', $latitude, $longitude));
     }
 
     /**

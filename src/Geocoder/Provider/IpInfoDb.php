@@ -44,7 +44,7 @@ class IpInfoDb extends AbstractProvider implements Provider
     /**
      * {@inheritDoc}
      */
-    public function getGeocodedData($address)
+    public function geocode($address)
     {
         if (null === $this->apiKey) {
             throw new InvalidCredentials('No API Key provided');
@@ -71,7 +71,7 @@ class IpInfoDb extends AbstractProvider implements Provider
     /**
      * {@inheritDoc}
      */
-    public function getReversedData(array $coordinates)
+    public function reverse($latitude, $longitude)
     {
         throw new UnsupportedOperation('The IpInfoDb is not able to do reverse geocoding.');
     }

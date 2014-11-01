@@ -26,7 +26,7 @@ class GeoPlugin extends AbstractProvider implements Provider
     /**
      * {@inheritDoc}
      */
-    public function getGeocodedData($address)
+    public function geocode($address)
     {
         if (!filter_var($address, FILTER_VALIDATE_IP)) {
             throw new UnsupportedOperation('The GeoPlugin does not support street addresses.');
@@ -44,7 +44,7 @@ class GeoPlugin extends AbstractProvider implements Provider
     /**
      * {@inheritDoc}
      */
-    public function getReversedData(array $coordinates)
+    public function reverse($latitude, $longitude)
     {
         throw new UnsupportedOperation('The GeoPlugin is not able to do reverse geocoding.');
     }

@@ -36,7 +36,7 @@ class Nominatim extends AbstractProvider implements LocaleAwareProvider
     /**
      * {@inheritDoc}
      */
-    public function getGeocodedData($address)
+    public function geocode($address)
     {
         // This API does not support IPv6
         if (filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
@@ -96,7 +96,7 @@ class Nominatim extends AbstractProvider implements LocaleAwareProvider
     /**
      * {@inheritDoc}
      */
-    public function getReversedData(array $coordinates)
+    public function reverse($latitude, $longitude)
     {
         $query   = sprintf($this->getReverseEndpointUrl(), $coordinates[0], $coordinates[1]);
         $content = $this->executeQuery($query);

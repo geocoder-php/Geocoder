@@ -50,7 +50,7 @@ class Geonames extends AbstractProvider implements LocaleAwareProvider
     /**
      * {@inheritDoc}
      */
-    public function getGeocodedData($address)
+    public function geocode($address)
     {
         if (null === $this->username) {
             throw new InvalidCredentials('No Username provided');
@@ -69,7 +69,7 @@ class Geonames extends AbstractProvider implements LocaleAwareProvider
     /**
      * {@inheritDoc}
      */
-    public function getReversedData(array $coordinates)
+    public function reverse($latitude, $longitude)
     {
         if (null === $this->username) {
             throw new InvalidCredentials('No Username provided');

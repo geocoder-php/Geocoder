@@ -46,13 +46,13 @@ class Chain implements Provider
     /**
      * {@inheritDoc}
      */
-    public function getGeocodedData($address)
+    public function geocode($address)
     {
         $exceptions = [];
 
         foreach ($this->providers as $provider) {
             try {
-                return $provider->getGeocodedData($address);
+                return $provider->geocode($address);
             } catch (InvalidCredentials $e) {
                 throw $e;
             } catch (\Exception $e) {
@@ -66,7 +66,7 @@ class Chain implements Provider
     /**
      * {@inheritDoc}
      */
-    public function getReversedData(array $coordinates)
+    public function reverse($latitude, $longitude)
     {
         $exceptions = [];
         foreach ($this->providers as $provider) {

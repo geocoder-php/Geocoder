@@ -70,7 +70,7 @@ class MapQuest extends AbstractProvider implements Provider
     /**
      * {@inheritDoc}
      */
-    public function getGeocodedData($address)
+    public function geocode($address)
     {
         // This API doesn't handle IPs
         if (filter_var($address, FILTER_VALIDATE_IP)) {
@@ -93,7 +93,7 @@ class MapQuest extends AbstractProvider implements Provider
     /**
      * {@inheritDoc}
      */
-    public function getReversedData(array $coordinates)
+    public function reverse($latitude, $longitude)
     {
         if (null === $this->apiKey) {
             throw new InvalidCredentials('No API Key provided.');

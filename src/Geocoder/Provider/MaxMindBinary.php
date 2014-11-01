@@ -65,7 +65,7 @@ class MaxMindBinary extends AbstractProvider implements Provider
     /**
      * {@inheritDoc}
      */
-    public function getGeocodedData($address)
+    public function geocode($address)
     {
         if (false === filter_var($address, FILTER_VALIDATE_IP)) {
             throw new UnsupportedOperation('The MaxMindBinary does not support street addresses.');
@@ -93,7 +93,7 @@ class MaxMindBinary extends AbstractProvider implements Provider
     /**
      * {@inheritDoc}
      */
-    public function getReversedData(array $coordinates)
+    public function reverse($latitude, $longitude)
     {
         throw new UnsupportedOperation('The MaxMindBinary is not able to do reverse geocoding.');
     }

@@ -49,7 +49,7 @@ class Yandex extends AbstractProvider implements LocaleAwareProvider
     /**
      * {@inheritDoc}
      */
-    public function getGeocodedData($address)
+    public function geocode($address)
     {
         // This API doesn't handle IPs
         if (filter_var($address, FILTER_VALIDATE_IP)) {
@@ -64,7 +64,7 @@ class Yandex extends AbstractProvider implements LocaleAwareProvider
     /**
      * {@inheritDoc}
      */
-    public function getReversedData(array $coordinates)
+    public function reverse($latitude, $longitude)
     {
         $query = sprintf(self::REVERSE_ENDPOINT_URL, $coordinates[1], $coordinates[0]);
 
