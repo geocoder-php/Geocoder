@@ -32,7 +32,12 @@ class Yandex extends AbstractProvider implements LocaleAwareProvider
     /**
      * @var string
      */
-    private $toponym = null;
+    private $toponym;
+
+    /**
+     * @var string
+     */
+    private $locale;
 
     /**
      * @param HttpAdapterInterface $adapter An HTTP adapter.
@@ -41,8 +46,9 @@ class Yandex extends AbstractProvider implements LocaleAwareProvider
      */
     public function __construct(HttpAdapterInterface $adapter, $locale = null, $toponym = null)
     {
-        parent::__construct($adapter, $locale);
+        parent::__construct($adapter);
 
+        $this->locale  = $locale;
         $this->toponym = $toponym;
     }
 
@@ -66,7 +72,7 @@ class Yandex extends AbstractProvider implements LocaleAwareProvider
      */
     public function reverse($latitude, $longitude)
     {
-        $query = sprintf(self::REVERSE_ENDPOINT_URL, $coordinates[1], $coordinates[0]);
+        $query = sprintf(self::REVERSE_ENDPOINT_URL, $longitude, $latitude);
 
         if (null !== $this->toponym) {
             $query = sprintf('%s&kind=%s', $query, $this->toponym);
@@ -84,29 +90,41 @@ class Yandex extends AbstractProvider implements LocaleAwareProvider
     }
 
     /**
-     * @param string $query
-     *
-     * @return array
+     * {@inheritDoc}
      */
+    public function getLocale()
+    {
+        return $this->locale;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setLocale($locale)
+    {
+        $this->locale = $locale;
+
+        return $this;
+    }
+
     private function executeQuery($query)
     {
         if (null !== $this->getLocale()) {
             $query = sprintf('%s&lang=%s', $query, str_replace('_', '-', $this->getLocale()));
         }
 
-        $query = sprintf('%s&results=%d', $query, $this->getMaxResults());
+        $query = sprintf('%s&results=%d', $query, $this->getLimit());
 
         $content = (string) $this->getAdapter()->get($query)->getBody();
         $json    = (array) json_decode($content, true);
 
         if (empty($json) || '0' === $json['response']['GeoObjectCollection']['metaDataProperty']['GeocoderResponseMetaData']['found']) {
-            throw new NoResult(sprintf('Could not execute query %s', $query));
+            throw new NoResult(sprintf('Could not execute query "%s".', $query));
         }
 
         $data = $json['response']['GeoObjectCollection']['featureMember'];
 
-        $results = array();
-
+        $results = [];
         foreach ($data as $item) {
             $bounds = null;
             $details = array('pos' => ' ');
@@ -118,21 +136,21 @@ class Yandex extends AbstractProvider implements LocaleAwareProvider
 
             if (! empty($details['lowerCorner'])) {
                 $coordinates = explode(' ', $details['lowerCorner']);
-                $bounds['south'] = $coordinates[1];
-                $bounds['west']  = $coordinates[0];
+                $bounds['south'] = $longitude;
+                $bounds['west']  = $latitude;
             }
 
             if (! empty($details['upperCorner'])) {
                 $coordinates = explode(' ', $details['upperCorner']);
-                $bounds['north'] = $coordinates[1];
-                $bounds['east']  = $coordinates[0];
+                $bounds['north'] = $longitude;
+                $bounds['east']  = $latitude;
             }
 
             $coordinates = explode(' ', $details['pos']);
 
             $results[] = array_merge($this->getDefaults(), array(
-                'latitude'     => $coordinates[1],
-                'longitude'    => $coordinates[0],
+                'latitude'     => $longitude,
+                'longitude'    => $latitude,
                 'bounds'       => $bounds,
                 'streetNumber' => isset($details['PremiseNumber']) ? $details['PremiseNumber'] : null,
                 'streetName'   => isset($details['ThoroughfareName']) ? $details['ThoroughfareName'] : null,
@@ -144,6 +162,6 @@ class Yandex extends AbstractProvider implements LocaleAwareProvider
             ));
         }
 
-        return $results;
+        return $this->returnResults($results);
     }
 }

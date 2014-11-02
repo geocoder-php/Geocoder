@@ -18,6 +18,11 @@ use Geocoder\Geocoder;
 interface Provider extends Geocoder
 {
     /**
+     * @var integer
+     */
+    const MAX_RESULTS = 5;
+
+    /**
      * Returns the provider's name.
      *
      * @return string

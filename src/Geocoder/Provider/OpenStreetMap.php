@@ -30,4 +30,12 @@ class OpenStreetMap extends Nominatim
     {
         parent::__construct($adapter, static::ROOT_URL, $locale);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getName()
+    {
+        return 'openstreetmap';
+    }
 }

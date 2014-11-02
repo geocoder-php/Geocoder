@@ -19,53 +19,53 @@ class IpInfoDbTest extends TestCase
     public function testGetDataWithNullApiKey()
     {
         $provider = new IpInfoDb($this->getMock('\Ivory\HttpAdapter\HttpAdapterInterface'), null);
-        $provider->getGeocodedData('foo');
+        $provider->geocode('foo');
     }
 
     /**
      * @expectedException Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The IpInfoDb does not support Street addresses.
+     * @expectedExceptionMessage The IpInfoDb provider does not support street addresses, only IPv4 addresses.
      */
     public function testGetGeocodedDataWithRandomString()
     {
         $provider = new IpInfoDb($this->getMockAdapter($this->never()), 'api_key');
-        $provider->getGeocodedData('foobar');
+        $provider->geocode('foobar');
     }
 
     /**
      * @expectedException Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The IpInfoDb does not support Street addresses.
+     * @expectedExceptionMessage The IpInfoDb provider does not support street addresses, only IPv4 addresses.
      */
     public function testGetGeocodedDataWithNull()
     {
         $provider = new IpInfoDb($this->getMockAdapter($this->never()), 'api_key');
-        $provider->getGeocodedData(null);
+        $provider->geocode(null);
     }
 
     /**
      * @expectedException Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The IpInfoDb does not support Street addresses.
+     * @expectedExceptionMessage The IpInfoDb provider does not support street addresses, only IPv4 addresses.
      */
     public function testGetGeocodedDataWithEmpty()
     {
         $provider = new IpInfoDb($this->getMockAdapter($this->never()), 'api_key');
-        $provider->getGeocodedData('');
+        $provider->geocode('');
     }
 
     /**
      * @expectedException Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The IpInfoDb does not support Street addresses.
+     * @expectedExceptionMessage The IpInfoDb provider does not support street addresses, only IPv4 addresses.
      */
     public function testGetGeocodedDataWithAddress()
     {
         $provider = new IpInfoDb($this->getMockAdapter($this->never()), 'api_key');
-        $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
+        $provider->geocode('10 avenue Gambetta, Paris, France');
     }
 
     public function testGetGeocodedDataWithLocalhostIPv4()
     {
         $provider = new IpInfoDb($this->getMockAdapter($this->never()), 'api_key');
-        $result   = $provider->getGeocodedData('127.0.0.1');
+        $result   = $provider->geocode('127.0.0.1');
 
         $this->assertInternalType('array', $result);
         $this->assertCount(1, $result);
@@ -85,32 +85,32 @@ class IpInfoDbTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The IpInfoDb does not support IPv6 addresses.
+     * @expectedExceptionMessage The IpInfoDb provider does not support IPv6 addresses.
      */
     public function testGetGeocodedDataWithLocalhostIPv6()
     {
         $provider = new IpInfoDb($this->getMockAdapter($this->never()), 'api_key');
-        $provider->getGeocodedData('::1');
+        $provider->geocode('::1');
     }
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query http://api.ipinfodb.com/v3/ip-city/?key=api_key&format=json&ip=74.125.45.100
+     * @expectedExceptionMessage Could not execute query "http://api.ipinfodb.com/v3/ip-city/?key=api_key&format=json&ip=74.125.45.100".
      */
     public function testGetGeocodedDataWithRealIPv4GetsNullContent()
     {
         $provider = new IpInfoDb($this->getMockAdapterReturns(null), 'api_key');
-        $provider->getGeocodedData('74.125.45.100');
+        $provider->geocode('74.125.45.100');
     }
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query http://api.ipinfodb.com/v3/ip-city/?key=api_key&format=json&ip=74.125.45.100
+     * @expectedExceptionMessage Could not execute query "http://api.ipinfodb.com/v3/ip-city/?key=api_key&format=json&ip=74.125.45.100".
      */
     public function testGetGeocodedDataWithRealIPv4GetsEmptyContent()
     {
         $provider = new IpInfoDb($this->getMockAdapterReturns(''), 'api_key');
-        $provider->getGeocodedData('74.125.45.100');
+        $provider->geocode('74.125.45.100');
     }
 
     public function testGetGeocodedDataWithRealIPv4()
@@ -120,7 +120,7 @@ class IpInfoDbTest extends TestCase
         }
 
         $provider = new IpInfoDb($this->getAdapter(), $_SERVER['IPINFODB_API_KEY']);
-        $result   = $provider->getGeocodedData('74.125.45.100');
+        $result   = $provider->geocode('74.125.45.100');
 
         $this->assertInternalType('array', $result);
         $this->assertCount(1, $result);
@@ -139,7 +139,7 @@ class IpInfoDbTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The IpInfoDb does not support IPv6 addresses.
+     * @expectedExceptionMessage The IpInfoDb provider does not support IPv6 addresses, only IPv4 addresses.
      */
     public function testGetGeocodedDataWithRealIPv6()
     {
@@ -148,16 +148,16 @@ class IpInfoDbTest extends TestCase
         }
 
         $provider = new IpInfoDb($this->getAdapter(), $_SERVER['IPINFODB_API_KEY']);
-        $provider->getGeocodedData('::ffff:74.125.45.100');
+        $provider->geocode('::ffff:74.125.45.100');
     }
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The IpInfoDb is not able to do reverse geocoding.
+     * @expectedExceptionMessage The IpInfoDb provider is not able to do reverse geocoding.
      */
     public function testReversedData()
     {
         $provider = new IpInfoDb($this->getMock('\Ivory\HttpAdapter\HttpAdapterInterface'), 'api_key');
-        $provider->getReversedData(array());
+        $provider->reverse(null, null);
     }
 }

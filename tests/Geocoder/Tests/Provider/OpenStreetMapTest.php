@@ -16,12 +16,14 @@ class OpenStreetMapTest extends TestCase
     public function testGetGeocodedDataWithRealAddress()
     {
         $provider = new OpenStreetMap($this->getAdapter());
-        $results  = $provider->getGeocodedData('Paris');
+        $results  = $provider->geocode('Paris');
 
-        $this->assertInternalType('array', $results);
         $this->assertCount(5, $results);
 
-        $this->assertInternalType('array', $results[0]);
+        $results = array_map(function ($res) {
+            return $res->toArray();
+        }, $results);
+
         $this->assertEquals(48.8565056, $results[0]['latitude'], '', 0.01);
         $this->assertEquals(2.3521334, $results[0]['longitude'], '', 0.01);
         $this->assertArrayHasKey('south', $results[0]['bounds']);
@@ -43,7 +45,6 @@ class OpenStreetMapTest extends TestCase
         $this->assertEquals('France métropolitaine', $results[0]['country']);
         $this->assertEquals('FR', $results[0]['countryCode']);
 
-        $this->assertInternalType('array', $results[1]);
         $this->assertEquals(48.8588408, $results[1]['latitude'], '', 0.01);
         $this->assertEquals(2.32003465529896, $results[1]['longitude'], '', 0.01);
         $this->assertArrayHasKey('south', $results[1]['bounds']);
@@ -65,7 +66,6 @@ class OpenStreetMapTest extends TestCase
         $this->assertEquals('France métropolitaine', $results[1]['country']);
         $this->assertEquals('FR', $results[1]['countryCode']);
 
-        $this->assertInternalType('array', $results[2]);
         $this->assertEquals(35.28687645, $results[2]['latitude'], '', 0.01);
         $this->assertEquals(-93.7354879210082, $results[2]['longitude'], '', 0.01);
         $this->assertArrayHasKey('south', $results[2]['bounds']);
@@ -87,7 +87,6 @@ class OpenStreetMapTest extends TestCase
         $this->assertEquals('United States of America', $results[2]['country']);
         $this->assertEquals('US', $results[2]['countryCode']);
 
-        $this->assertInternalType('array', $results[3]);
         $this->assertEquals(33.6751155, $results[3]['latitude'], '', 0.01);
         $this->assertEquals(-95.5502662477703, $results[3]['longitude'], '', 0.01);
         $this->assertArrayHasKey('south', $results[3]['bounds']);
@@ -109,7 +108,6 @@ class OpenStreetMapTest extends TestCase
         $this->assertEquals('United States of America', $results[3]['country']);
         $this->assertEquals('US', $results[3]['countryCode']);
 
-        $this->assertInternalType('array', $results[4]);
         $this->assertEquals(38.2097987, $results[4]['latitude'], '', 0.01);
         $this->assertEquals(-84.2529869, $results[4]['longitude'], '', 0.01);
         $this->assertArrayHasKey('south', $results[4]['bounds']);
@@ -135,12 +133,14 @@ class OpenStreetMapTest extends TestCase
     public function testGetGeocodedDataWithRealAddressWithLocale()
     {
         $provider = new OpenStreetMap($this->getAdapter(), 'fr_FR');
-        $results  = $provider->getGeocodedData('10 allée Evariste Galois, Clermont ferrand');
+        $results  = $provider->geocode('10 allée Evariste Galois, Clermont ferrand');
 
-        $this->assertInternalType('array', $results);
         $this->assertCount(2, $results);
 
-        $this->assertInternalType('array', $results[0]);
+        $results = array_map(function ($res) {
+            return $res->toArray();
+        }, $results);
+
         $this->assertEquals(45.7586841, $results[0]['latitude'], '', 0.01);
         $this->assertEquals(3.1354075, $results[0]['longitude'], '', 0.01);
         $this->assertArrayHasKey('south', $results[0]['bounds']);
@@ -162,7 +162,6 @@ class OpenStreetMapTest extends TestCase
         $this->assertEquals('France', $results[0]['country']);
         $this->assertEquals('FR', $results[0]['countryCode']);
 
-        $this->assertInternalType('array', $results[1]);
         $this->assertEquals(45.7586841, $results[1]['latitude'], '', 0.01);
         $this->assertEquals(3.1354075, $results[1]['longitude'], '', 0.01);
         $this->assertArrayHasKey('south', $results[1]['bounds']);
@@ -188,13 +187,11 @@ class OpenStreetMapTest extends TestCase
     public function testGetReversedDataWithRealCoordinates()
     {
         $provider = new OpenStreetMap($this->getAdapter());
-        $results  = $provider->getReversedData(array('60.4539471728726', '22.2567841926781'));
+        $results  = $provider->reverse(60.4539471728726, 22.2567841926781);
 
-        $this->assertInternalType('array', $results);
         $this->assertCount(1, $results);
 
-        $result = $results[0];
-        $this->assertInternalType('array', $result);
+        $result = $results[0]->toArray();
         $this->assertEquals(60.4539, $result['latitude'], '', 0.001);
         $this->assertEquals(22.2568, $result['longitude'], '', 0.001);
         $this->assertNull($result['bounds']);
@@ -210,23 +207,25 @@ class OpenStreetMapTest extends TestCase
 
     /**
      * @expectedException Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query http://nominatim.openstreetmap.org/search?q=Hammm&format=xml&addressdetails=1&limit=5
+     * @expectedExceptionMessage Could not execute query "http://nominatim.openstreetmap.org/search?q=Hammm&format=xml&addressdetails=1&limit=5".
      */
     public function testGetGeocodedDataWithUnknownCity()
     {
         $provider = new OpenStreetMap($this->getAdapter());
-        $provider->getGeocodedData('Hammm');
+        $provider->geocode('Hammm');
     }
 
     public function testGetReversedDataWithRealCoordinatesWithLocale()
     {
         $provider = new OpenStreetMap($this->getAdapter(), 'de_DE');
-        $results  = $provider->getGeocodedData('Kalbacher Hauptstraße, 60437 Frankfurt, Germany');
+        $results  = $provider->geocode('Kalbacher Hauptstraße, 60437 Frankfurt, Germany');
 
-        $this->assertInternalType('array', $results);
         $this->assertCount(5, $results);
 
-        $this->assertInternalType('array', $results[0]);
+        $results = array_map(function ($res) {
+            return $res->toArray();
+        }, $results);
+
         $this->assertEquals(50.1856803, $results[0]['latitude'], '', 0.01);
         $this->assertEquals(8.6506285, $results[0]['longitude'], '', 0.01);
         $this->assertArrayHasKey('south', $results[0]['bounds']);
@@ -248,7 +247,6 @@ class OpenStreetMapTest extends TestCase
         $this->assertEquals('Deutschland', $results[0]['country']);
         $this->assertEquals('DE', $results[0]['countryCode']);
 
-        $this->assertInternalType('array', $results[1]);
         $this->assertEquals(50.1845911, $results[1]['latitude'], '', 0.01);
         $this->assertEquals(8.6540194, $results[1]['longitude'], '', 0.01);
         $this->assertArrayHasKey('south', $results[1]['bounds']);
@@ -270,7 +268,6 @@ class OpenStreetMapTest extends TestCase
         $this->assertEquals('Deutschland', $results[1]['country']);
         $this->assertEquals('DE', $results[1]['countryCode']);
 
-        $this->assertInternalType('array', $results[2]);
         $this->assertEquals(50.1862884, $results[2]['latitude'], '', 0.01);
         $this->assertEquals(8.6493167, $results[2]['longitude'], '', 0.01);
         $this->assertArrayHasKey('south', $results[2]['bounds']);
@@ -292,7 +289,6 @@ class OpenStreetMapTest extends TestCase
         $this->assertEquals('Deutschland', $results[2]['country']);
         $this->assertEquals('DE', $results[2]['countryCode']);
 
-        $this->assertInternalType('array', $results[3]);
         $this->assertEquals(50.1861344, $results[3]['latitude'], '', 0.01);
         $this->assertEquals(8.649578, $results[3]['longitude'], '', 0.01);
         $this->assertArrayHasKey('south', $results[3]['bounds']);
@@ -318,43 +314,38 @@ class OpenStreetMapTest extends TestCase
     public function testGetGeocodedDataWithLocalhostIPv4()
     {
         $provider = new OpenStreetMap($this->getMockAdapter($this->never()));
-        $result   = $provider->getGeocodedData('127.0.0.1');
+        $results  = $provider->geocode('127.0.0.1');
 
-        $this->assertInternalType('array', $result);
-        $this->assertCount(1, $result);
+        $this->assertCount(1, $results);
 
-        $result = $result[0];
-        $this->assertInternalType('array', $result);
-        $this->assertArrayNotHasKey('latitude', $result);
-        $this->assertArrayNotHasKey('longitude', $result);
-        $this->assertArrayNotHasKey('postalCode', $result);
-        $this->assertArrayNotHasKey('timezone', $result);
-
-        $this->assertEquals('localhost', $result['locality']);
-        $this->assertEquals('localhost', $result['region']);
-        $this->assertEquals('localhost', $result['county']);
-        $this->assertEquals('localhost', $result['country']);
+        $result = $results[0]->toArray();
+        $this->assertEquals('Localhost', $result['locality']);
+        $this->assertEquals('Localhost', $result['region']);
+        $this->assertEquals('Localhost', $result['county']);
+        $this->assertEquals('Localhost', $result['country']);
     }
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The Nominatim does not support IPv6 addresses.
+     * @expectedExceptionMessage The OpenStreetMap provider does not support IPv6 addresses.
      */
     public function testGetGeocodedDataWithLocalhostIPv6()
     {
         $provider = new OpenStreetMap($this->getMockAdapter($this->never()));
-        $provider->getGeocodedData('::1');
+        $provider->geocode('::1');
     }
 
     public function testGetGeocodedDataWithRealIPv4()
     {
         $provider = new OpenStreetMap($this->getAdapter());
-        $results  = $provider->getGeocodedData('88.188.221.14');
+        $results  = $provider->geocode('88.188.221.14');
 
-        $this->assertInternalType('array', $results);
         $this->assertCount(5, $results);
 
-        $this->assertInternalType('array', $results[0]);
+        $results = array_map(function ($res) {
+            return $res->toArray();
+        }, $results);
+
         $this->assertEquals(43.6189768, $results[0]['latitude'], '', 0.01);
         $this->assertEquals(1.4564493, $results[0]['longitude'], '', 0.01);
         $this->assertArrayHasKey('south', $results[0]['bounds']);
@@ -375,22 +366,19 @@ class OpenStreetMapTest extends TestCase
         $this->assertNull($results[0]['regionCode']);
         $this->assertEquals('France métropolitaine', $results[0]['country']);
         $this->assertEquals('FR', $results[0]['countryCode']);
-
-        $this->assertInternalType('array', $results[1]);
-        $this->assertInternalType('array', $results[2]);
-        $this->assertInternalType('array', $results[3]);
-        $this->assertInternalType('array', $results[4]);
     }
 
     public function testGetGeocodedDataWithRealIPv4WithLocale()
     {
         $provider = new OpenStreetMap($this->getAdapter(), 'da_DK');
-        $results  = $provider->getGeocodedData('88.188.221.14');
+        $results  = $provider->geocode('88.188.221.14');
 
-        $this->assertInternalType('array', $results);
         $this->assertCount(5, $results);
 
-        $this->assertInternalType('array', $results[0]);
+        $results = array_map(function ($res) {
+            return $res->toArray();
+        }, $results);
+
         $this->assertEquals(43.6155351, $results[0]['latitude'], '', 0.01);
         $this->assertEquals(1.4525647, $results[0]['longitude'], '', 0.01);
         $this->assertArrayHasKey('south', $results[0]['bounds']);
@@ -411,46 +399,41 @@ class OpenStreetMapTest extends TestCase
         $this->assertNull($results[0]['regionCode']);
         $this->assertEquals('Frankrig', $results[0]['country']);
         $this->assertEquals('FR', $results[0]['countryCode']);
-
-        $this->assertInternalType('array', $results[1]);
-        $this->assertInternalType('array', $results[2]);
-        $this->assertInternalType('array', $results[3]);
-        $this->assertInternalType('array', $results[4]);
     }
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The Nominatim does not support IPv6 addresses.
+     * @expectedExceptionMessage The OpenStreetMap provider does not support IPv6 addresses.
      */
     public function testGetGeocodedDataWithRealIPv6()
     {
         $provider = new OpenStreetMap($this->getAdapter());
-        $provider->getGeocodedData('::ffff:88.188.221.14');
+        $provider->geocode('::ffff:88.188.221.14');
     }
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not resolve address "Läntinen Pitkäkatu 35, Turku"
+     * @expectedExceptionMessage Could not execute query "http://nominatim.openstreetmap.org/search?q=L%C3%A4ntinen+Pitk%C3%A4katu+35%2C+Turku&format=xml&addressdetails=1&limit=5".
      */
     public function testGetGeocodedDataWithAddressGetsNullContent()
     {
         $provider = new OpenStreetMap($this->getMockAdapterReturns(null));
-        $provider->getGeocodedData('Läntinen Pitkäkatu 35, Turku');
+        $provider->geocode('Läntinen Pitkäkatu 35, Turku');
     }
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query http://nominatim.openstreetmap.org/search?q=L%C3%A4ntinen+Pitk%C3%A4katu+35%2C+Turku&format=xml&addressdetails=1&limit=5
+     * @expectedExceptionMessage Could not execute query "http://nominatim.openstreetmap.org/search?q=L%C3%A4ntinen+Pitk%C3%A4katu+35%2C+Turku&format=xml&addressdetails=1&limit=5".
      */
     public function testGetGeocodedDataWithAddressGetsEmptyContent()
     {
         $provider = new OpenStreetMap($this->getMockAdapterReturns('<foo></foo>'));
-        $provider->getGeocodedData('Läntinen Pitkäkatu 35, Turku');
+        $provider->geocode('Läntinen Pitkäkatu 35, Turku');
     }
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query http://nominatim.openstreetmap.org/search?q=L%C3%A4ntinen+Pitk%C3%A4katu+35%2C+Turku&format=xml&addressdetails=1&limit=5
+     * @expectedExceptionMessage Could not execute query "http://nominatim.openstreetmap.org/search?q=L%C3%A4ntinen+Pitk%C3%A4katu+35%2C+Turku&format=xml&addressdetails=1&limit=5".
      */
     public function testGetGeocodedDataWithAddressGetsEmptyXML()
     {
@@ -458,32 +441,32 @@ class OpenStreetMapTest extends TestCase
 <?xml version="1.0" encoding="utf-8"?><searchresults_empty></searchresults_empty>
 XML;
         $provider = new OpenStreetMap($this->getMockAdapterReturns($emptyXML));
-        $provider->getGeocodedData('Läntinen Pitkäkatu 35, Turku');
+        $provider->geocode('Läntinen Pitkäkatu 35, Turku');
     }
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Unable to resolve the coordinates 60.4539471728726, 22.2567841926781
+     * @expectedExceptionMessage Unable to find results for coordinates [ 60.453947, 22.256784 ].
      */
     public function testGetReversedDataWithCoordinatesGetsNullContent()
     {
         $provider = new OpenStreetMap($this->getMockAdapterReturns(null));
-        $provider->getReversedData(array('60.4539471728726', '22.2567841926781'));
+        $provider->reverse(60.4539471728726, 22.2567841926781);
     }
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not resolve coordinates 60.4539471728726, 22.2567841926781
+     * @expectedExceptionMessage Unable to find results for coordinates [ 60.453947, 22.256784 ].
      */
     public function testGetReversedDataWithCoordinatesGetsEmptyContent()
     {
         $provider = new OpenStreetMap($this->getMockAdapterReturns('<error></error>'));
-        $provider->getReversedData(array('60.4539471728726', '22.2567841926781'));
+        $provider->reverse(60.4539471728726, 22.2567841926781);
     }
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not resolve coordinates -80.000000, -170.000000
+     * @expectedExceptionMessage Unable to find results for coordinates [ -80.000000, -170.000000 ].
      */
     public function testGetReversedDataWithCoordinatesGetsError()
     {
@@ -494,14 +477,14 @@ XML;
 </reversegeocode>
 XML;
         $provider = new OpenStreetMap($this->getMockAdapterReturns($errorXml));
-        $provider->getReversedData(array('-80.000000', '-170.000000'));
+        $provider->reverse(-80.000000, -170.000000);
     }
 
     public function testGetNodeStreetName()
     {
         $provider = new OpenStreetMap($this->getAdapter(), 'fr_FR');
-        $results  = $provider->getReversedData(array(48.86, 2.35));
+        $results  = $provider->reverse(48.86, 2.35);
 
-        $this->assertEquals('Rue Quincampoix', $results[0]['streetName']);
+        $this->assertEquals('Rue Quincampoix', $results[0]->getStreetName());
     }
 }

@@ -46,12 +46,12 @@ class MapQuest extends AbstractProvider implements Provider
      *
      * @var bool
      */
-    private $licensed = false;
+    private $licensed;
 
     /**
      * @var string
      */
-    private $apiKey = null;
+    private $apiKey;
 
     /**
      * @param HttpAdapterInterface $adapter  An HTTP adapter.
@@ -63,7 +63,7 @@ class MapQuest extends AbstractProvider implements Provider
     {
         parent::__construct($adapter, $locale);
 
-        $this->apiKey = $apiKey;
+        $this->apiKey   = $apiKey;
         $this->licensed = $licensed;
     }
 
@@ -72,19 +72,19 @@ class MapQuest extends AbstractProvider implements Provider
      */
     public function geocode($address)
     {
-        // This API doesn't handle IPs
-        if (filter_var($address, FILTER_VALIDATE_IP)) {
-            throw new UnsupportedOperation('The MapQuest does not support IP addresses.');
-        }
-
         if (null === $this->apiKey) {
             throw new InvalidCredentials('No API Key provided.');
         }
 
+        // This API doesn't handle IPs
+        if (filter_var($address, FILTER_VALIDATE_IP)) {
+            throw new UnsupportedOperation('The MapQuest provider does not support IP addresses, only street addresses.');
+        }
+
         if ($this->licensed) {
-            $query = sprintf(self::LICENSED_GEOCODE_ENDPOINT_URL, urlencode($address), $this->getMaxResults(), $this->apiKey);
+            $query = sprintf(self::LICENSED_GEOCODE_ENDPOINT_URL, urlencode($address), $this->getLimit(), $this->apiKey);
         } else {
-            $query = sprintf(self::OPEN_GEOCODE_ENDPOINT_URL, urlencode($address), $this->getMaxResults(), $this->apiKey);
+            $query = sprintf(self::OPEN_GEOCODE_ENDPOINT_URL, urlencode($address), $this->getLimit(), $this->apiKey);
         }
 
         return $this->executeQuery($query);
@@ -100,9 +100,9 @@ class MapQuest extends AbstractProvider implements Provider
         }
 
         if ($this->licensed) {
-            $query = sprintf(self::LICENSED_REVERSE_ENDPOINT_URL, $this->apiKey, $coordinates[0], $coordinates[1]);
+            $query = sprintf(self::LICENSED_REVERSE_ENDPOINT_URL, $this->apiKey, $latitude, $longitude);
         } else {
-            $query = sprintf(self::OPEN_REVERSE_ENDPOINT_URL, $this->apiKey, $coordinates[0], $coordinates[1]);
+            $query = sprintf(self::OPEN_REVERSE_ENDPOINT_URL, $this->apiKey, $latitude, $longitude);
         }
 
         return $this->executeQuery($query);
@@ -116,33 +116,27 @@ class MapQuest extends AbstractProvider implements Provider
         return 'map_quest';
     }
 
-    /**
-     * @param string $query
-     *
-     * @return array
-     */
-    protected function executeQuery($query)
+    private function executeQuery($query)
     {
         $content = (string) $this->getAdapter()->get($query)->getBody();
 
         if (empty($content)) {
-            throw new NoResult(sprintf('Could not execute query: %s', $query));
+            throw new NoResult(sprintf('Could not execute query "%s".', $query));
         }
 
         $json = json_decode($content, true);
 
         if (!isset($json['results']) || empty($json['results'])) {
-            throw new NoResult(sprintf('Could not find results for given query: %s', $query));
+            throw new NoResult(sprintf('Could not find results for query "%s".', $query));
         }
 
         $locations = $json['results'][0]['locations'];
 
         if (empty($locations)) {
-            throw new NoResult(sprintf('Could not find results for given query: %s', $query));
+            throw new NoResult(sprintf('Could not find results for query "%s".', $query));
         }
 
         $results = [];
-
         foreach ($locations as $location) {
             if ($location['street'] || $location['postalCode'] || $location['adminArea5'] || $location['adminArea4'] || $location['adminArea3'] || $location['adminArea1']) {
                 $results[] = array_merge($this->getDefaults(), array(
@@ -159,9 +153,9 @@ class MapQuest extends AbstractProvider implements Provider
         }
 
         if (empty($results)) {
-            throw new NoResult(sprintf('Could not find results for given query: %s', $query));
+            throw new NoResult(sprintf('Could not find results for query "%s".', $query));
         }
 
-        return $results;
+        return $this->returnResults($results);
     }
 }

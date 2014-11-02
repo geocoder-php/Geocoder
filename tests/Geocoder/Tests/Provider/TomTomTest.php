@@ -16,57 +16,57 @@ class TomTomTest extends TestCase
     /**
      * @expectedException \RuntimeException
      * @expectedException \Geocoder\Exception\InvalidCredentials
-     * @expectedExceptionMessage No Geocoding API Key provided
+     * @expectedExceptionMessage No API Key provided.
      */
     public function testGetGeocodedDataWithNullApiKey()
     {
         $provider = new TomTom($this->getMockAdapter($this->never()), null);
-        $provider->getGeocodedData('foo');
+        $provider->geocode('foo');
     }
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query https://api.tomtom.com/lbs/geocoding/geocode?key=api_key&query=&maxResults=5
+     * @expectedExceptionMessage Could not execute query "https://api.tomtom.com/lbs/geocoding/geocode?key=api_key&query=&maxResults=5".
      */
     public function testGetGeocodedDataWithNull()
     {
         $provider = new TomTom($this->getMockAdapter(), 'api_key');
-        $provider->getGeocodedData(null);
+        $provider->geocode(null);
     }
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query https://api.tomtom.com/lbs/geocoding/geocode?key=api_key&query=&maxResults=5
+     * @expectedExceptionMessage Could not execute query "https://api.tomtom.com/lbs/geocoding/geocode?key=api_key&query=&maxResults=5".
      */
     public function testGetGeocodedDataWithEmpty()
     {
         $provider = new TomTom($this->getMockAdapter(), 'api_key');
-        $provider->getGeocodedData('');
+        $provider->geocode('');
     }
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query https://api.tomtom.com/lbs/geocoding/geocode?key=api_key&query=Tagensvej%2047%2C%202200%20K%C3%B8benhavn%20N&maxResults=5
+     * @expectedExceptionMessage Could not execute query "https://api.tomtom.com/lbs/geocoding/geocode?key=api_key&query=Tagensvej%2047%2C%202200%20K%C3%B8benhavn%20N&maxResults=5".
      */
     public function testGetGeocodedDataWithAddressContentReturnNull()
     {
         $provider = new TomTom($this->getMockAdapterReturns(null), 'api_key');
-        $provider->getGeocodedData('Tagensvej 47, 2200 København N');
+        $provider->geocode('Tagensvej 47, 2200 København N');
     }
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query https://api.tomtom.com/lbs/geocoding/geocode?key=api_key&query=Tagensvej%2047%2C%202200%20K%C3%B8benhavn%20N&maxResults=5
+     * @expectedExceptionMessage Could not execute query "https://api.tomtom.com/lbs/geocoding/geocode?key=api_key&query=Tagensvej%2047%2C%202200%20K%C3%B8benhavn%20N&maxResults=5".
      */
     public function testGetGeocodedDataWithAddress()
     {
         $provider = new TomTom($this->getMockAdapter(), 'api_key');
-        $provider->getGeocodedData('Tagensvej 47, 2200 København N');
+        $provider->geocode('Tagensvej 47, 2200 København N');
     }
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query https://api.tomtom.com/lbs/geocoding/geocode?key=api_key&query=foo&maxResults=5
+     * @expectedExceptionMessage Could not execute query "https://api.tomtom.com/lbs/geocoding/geocode?key=api_key&query=foo&maxResults=5".
      */
     public function testGetGeocodedDataNoResult()
     {
@@ -75,7 +75,7 @@ class TomTomTest extends TestCase
 XML;
 
         $provider = new TomTom($this->getMockAdapterReturns($noResult), 'api_key');
-        $provider->getGeocodedData('foo');
+        $provider->geocode('foo');
     }
 
     public function testGetGeocodedDataWithRealAddress()
@@ -85,7 +85,7 @@ XML;
         }
 
         $provider = new TomTom($this->getAdapter(), $_SERVER['TOMTOM_GEOCODING_KEY']);
-        $result   = $provider->getGeocodedData('Tagensvej 47, 2200 København N');
+        $result   = $provider->geocode('Tagensvej 47, 2200 København N');
 
         $this->assertInternalType('array', $result);
         $this->assertCount(1, $result);
@@ -114,7 +114,7 @@ XML;
         }
 
         $provider = new TomTom($this->getAdapter(), $_SERVER['TOMTOM_GEOCODING_KEY'], 'fr_FR');
-        $result   = $provider->getGeocodedData('Tagensvej 47, 2200 København N');
+        $result   = $provider->geocode('Tagensvej 47, 2200 København N');
 
         $this->assertInternalType('array', $result);
         $this->assertCount(1, $result);
@@ -143,7 +143,7 @@ XML;
         }
 
         $provider = new TomTom($this->getAdapter(), $_SERVER['TOMTOM_GEOCODING_KEY'], 'sv-SE');
-        $result   = $provider->getGeocodedData('Tagensvej 47, 2200 København N');
+        $result   = $provider->geocode('Tagensvej 47, 2200 København N');
 
         $this->assertInternalType('array', $result);
         $this->assertCount(1, $result);
@@ -172,7 +172,7 @@ XML;
         }
 
         $provider = new TomTom($this->getAdapter(), $_SERVER['TOMTOM_GEOCODING_KEY']);
-        $results  = $provider->getGeocodedData('Paris');
+        $results  = $provider->geocode('Paris');
 
         $this->assertInternalType('array', $results);
         $this->assertCount(5, $results);
@@ -227,42 +227,42 @@ XML;
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The TomTom does not support IP addresses.
+     * @expectedExceptionMessage The TomTom provider does not support IP addresses, only street addresses.
      */
     public function testGetGeocodedDataWithLocalhostIPv4()
     {
         $provider = new TomTom($this->getMockAdapter($this->never()), 'api_key');
-        $provider->getGeocodedData('127.0.0.1');
+        $provider->geocode('127.0.0.1');
     }
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The TomTom does not support IP addresses.
+     * @expectedExceptionMessage The TomTom provider does not support IP addresses, only street addresses.
      */
     public function testGetGeocodedDataWithLocalhostIPv6()
     {
         $provider = new TomTom($this->getMockAdapter($this->never()), 'api_key');
-        $provider->getGeocodedData('::1');
+        $provider->geocode('::1');
     }
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The TomTom does not support IP addresses.
+     * @expectedExceptionMessage The TomTom provider does not support IP addresses, only street addresses.
      */
     public function testGetGeocodedDataWithIPv4()
     {
         $provider = new TomTom($this->getAdapter(), 'api_key');
-        $provider->getGeocodedData('74.200.247.59');
+        $provider->geocode('74.200.247.59');
     }
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The TomTom does not support IP addresses.
+     * @expectedExceptionMessage The TomTom provider does not support IP addresses, only street addresses.
      */
     public function testGetGeocodedDataWithIPv6()
     {
         $provider = new TomTom($this->getAdapter(), 'api_key');
-        $provider->getGeocodedData('::ffff:74.200.247.59');
+        $provider->geocode('::ffff:74.200.247.59');
     }
 
     /**
@@ -272,42 +272,42 @@ XML;
     public function testGetReversedDataWithoutApiKey()
     {
         $provider = new TomTom($this->getMockAdapter($this->never()), null);
-        $provider->getReversedData(array(1, 2));
+        $provider->reverse(1, 2);
     }
 
     /**
      * @expectedException Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query https://api.tomtom.com/lbs/services/reverseGeocode/3/xml?key=api_key&point=1.000000,2.000000
+     * @expectedExceptionMessage Could not execute query "https://api.tomtom.com/lbs/services/reverseGeocode/3/xml?key=api_key&point=1.000000,2.000000".
      */
     public function testGetReversedData()
     {
         $provider = new TomTom($this->getMockAdapter(), 'api_key');
-        $provider->getReversedData(array(1, 2));
+        $provider->reverse(1, 2);
     }
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query https://api.tomtom.com/lbs/services/reverseGeocode/3/xml?key=api_key&point=48.863216,2.388772
+     * @expectedExceptionMessage Could not execute query "https://api.tomtom.com/lbs/services/reverseGeocode/3/xml?key=api_key&point=48.863216,2.388772".
      */
     public function testGetReversedDataWithCoordinatesContentReturnNull()
     {
         $provider = new TomTom($this->getMockAdapterReturns(null), 'api_key');
-        $provider->getReversedData(array(48.86321648955345, 2.3887719959020615));
+        $provider->reverse(48.86321648955345, 2.3887719959020615);
     }
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query https://api.tomtom.com/lbs/services/reverseGeocode/3/xml?key=api_key&point=60.453947,22.256784
+     * @expectedExceptionMessage Could not execute query "https://api.tomtom.com/lbs/services/reverseGeocode/3/xml?key=api_key&point=60.453947,22.256784".
      */
     public function testGetReversedDataWithCoordinatesGetsEmptyContent()
     {
         $provider = new TomTom($this->getMockAdapterReturns(''), 'api_key');
-        $provider->getReversedData(array('60.4539471728726', '22.2567841926781'));
+        $provider->reverse('60.4539471728726', '22.2567841926781');
     }
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query https://api.tomtom.com/lbs/services/reverseGeocode/3/xml?key=api_key&point=1.000000,2.000000
+     * @expectedExceptionMessage Could not execute query "https://api.tomtom.com/lbs/services/reverseGeocode/3/xml?key=api_key&point=1.000000,2.000000".
      */
     public function testGetReversedDataError400()
     {
@@ -316,7 +316,7 @@ XML;
 XML;
 
         $provider = new TomTom($this->getMockAdapterReturns($error400), 'api_key');
-        $provider->getReversedData(array(1, 2));
+        $provider->reverse(1, 2);
     }
 
     /**
@@ -330,7 +330,7 @@ XML;
 XML;
 
         $provider = new TomTom($this->getMockAdapterReturns($error403), 'api_key');
-        $provider->getReversedData(array(1, 2));
+        $provider->reverse(1, 2);
     }
 
     public function testGetReversedDataWithRealCoordinates()
@@ -340,7 +340,7 @@ XML;
         }
 
         $provider = new TomTom($this->getAdapter(), $_SERVER['TOMTOM_MAP_KEY']);
-        $result   = $provider->getReversedData(array(48.86321648955345, 2.3887719959020615));
+        $result   = $provider->reverse(array(48.86321648955345, 2.3887719959020615));
 
         $this->assertInternalType('array', $result);
         $this->assertCount(1, $result);
@@ -369,7 +369,7 @@ XML;
         }
 
         $provider = new TomTom($this->getAdapter(),  $_SERVER['TOMTOM_MAP_KEY']);
-        $result   = $provider->getReversedData(array(56.5231, 10.0659));
+        $result   = $provider->reverse(array(56.5231, 10.0659));
 
         $this->assertInternalType('array', $result);
         $this->assertCount(1, $result);

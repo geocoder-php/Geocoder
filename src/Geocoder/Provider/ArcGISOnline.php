@@ -40,16 +40,16 @@ class ArcGISOnline extends AbstractProvider implements Provider
     private $protocol;
 
     /**
-     * @param HttpAdapterInterface $adapter       An HTTP adapter.
-     * @param string               $sourceCountry Country biasing (optional).
-     * @param bool                 $useSsl        Whether to use an SSL connection (optional).
+     * @param HttpAdapterInterface $adapter       An HTTP adapter
+     * @param string               $sourceCountry Country biasing (optional)
+     * @param bool                 $useSsl        Whether to use an SSL connection (optional)
      */
     public function __construct(HttpAdapterInterface $adapter, $sourceCountry = null, $useSsl = false)
     {
         parent::__construct($adapter);
 
         $this->sourceCountry = $sourceCountry;
-        $this->protocol = $useSsl ? 'https' : 'http';
+        $this->protocol      = $useSsl ? 'https' : 'http';
     }
 
     /**
@@ -58,7 +58,7 @@ class ArcGISOnline extends AbstractProvider implements Provider
     public function geocode($address)
     {
         if (filter_var($address, FILTER_VALIDATE_IP)) {
-            throw new UnsupportedOperation('The ArcGISOnline does not support IP addresses.');
+            throw new UnsupportedOperation('The ArcGISOnline provider does not support IP addresses, only street addresses.');
         }
 
         // Save a request if no valid address entered
@@ -67,16 +67,14 @@ class ArcGISOnline extends AbstractProvider implements Provider
         }
 
         $query = sprintf(self::ENDPOINT_URL, $this->protocol, urlencode($address));
-
-        $json = $this->executeQuery($query);
+        $json  = $this->executeQuery($query);
 
         // no result
         if (empty($json->locations)) {
-            throw new NoResult(sprintf('No results found for query %s', $query));
+            throw new NoResult(sprintf('No results found for query "%s".', $query));
         }
 
-        $results = array();
-
+        $results = [];
         foreach ($json->locations as $location) {
             $data = $location->feature->attributes;
 
@@ -89,7 +87,7 @@ class ArcGISOnline extends AbstractProvider implements Provider
             $county       = !empty($data->Subregion) ? $data->Subregion : null;
             $countryCode  = !empty($data->Country) ? $data->Country : null;
 
-            $results[] = array_merge($this->getDefaults(), array(
+            $results[] = array_merge($this->getDefaults(), [
                 'latitude'     => $coordinates['y'],
                 'longitude'    => $coordinates['x'],
                 'streetNumber' => $streetNumber,
@@ -99,10 +97,10 @@ class ArcGISOnline extends AbstractProvider implements Provider
                 'region'       => $region,
                 'countryCode'  => $countryCode,
                 'county'       => $county,
-            ));
+            ]);
         }
 
-        return $results;
+        return $this->returnResults($results);
     }
 
     /**
@@ -111,11 +109,10 @@ class ArcGISOnline extends AbstractProvider implements Provider
     public function reverse($latitude, $longitude)
     {
         $query = sprintf(self::REVERSE_ENDPOINT_URL, $this->protocol, $coordinates[1], $coordinates[0]);
-
-        $json = $this->executeQuery($query);
+        $json  = $this->executeQuery($query);
 
         if (property_exists($json, 'error')) {
-            throw new NoResult(sprintf('No results found for query %s', $query));
+            throw new NoResult(sprintf('No results found for query "%s".', $query));
         }
 
         $data = $json->address;
@@ -127,16 +124,18 @@ class ArcGISOnline extends AbstractProvider implements Provider
         $county       = !empty($data->Subregion) ? $data->Subregion : null;
         $countryCode  = !empty($data->CountryCode) ? $data->CountryCode : null;
 
-        return array(array_merge($this->getDefaults(), array(
-            'latitude'    => $coordinates[0],
-            'longitude'   => $coordinates[1],
-            'streetName'  => $streetName,
-            'locality'    => $city,
-            'postalCode'  => $zipcode,
-            'region'      => $region,
-            'countryCode' => $countryCode,
-            'county'      => $county,
-        )));
+        return $this->returnResults([
+            array_merge($this->getDefaults(), [
+                'latitude'    => $coordinates[0],
+                'longitude'   => $coordinates[1],
+                'streetName'  => $streetName,
+                'locality'    => $city,
+                'postalCode'  => $zipcode,
+                'region'      => $region,
+                'countryCode' => $countryCode,
+                'county'      => $county,
+            ])
+        ]);
     }
 
     /**
@@ -147,43 +146,29 @@ class ArcGISOnline extends AbstractProvider implements Provider
         return 'arcgis_online';
     }
 
-    /**
-     * @param string $query
-     *
-     * @return string Query with extra params
-     */
     private function buildQuery($query)
     {
         if (null !== $this->sourceCountry) {
             $query = sprintf('%s&sourceCountry=%s', $query, $this->sourceCountry);
         }
 
-        return sprintf('%s&maxLocations=%d&f=%s&outFields=*', $query, $this->getMaxResults(), 'json');
+        return sprintf('%s&maxLocations=%d&f=%s&outFields=*', $query, $this->getLimit(), 'json');
     }
 
-    /**
-     * Executes a query
-     *
-     * @param string $query
-     *
-     * @throws NoResult
-     *
-     * @return \stdClass json object representing the query result
-     */
     private function executeQuery($query)
     {
-        $query = $this->buildQuery($query);
+        $query   = $this->buildQuery($query);
         $content = (string) $this->getAdapter()->get($query)->getBody();
 
         if (empty($content)) {
-            throw new NoResult(sprintf('Could not execute query %s', $query));
+            throw new NoResult(sprintf('Could not execute query "%s".', $query));
         }
 
         $json = json_decode($content);
 
         // API error
         if (!isset($json)) {
-            throw new NoResult(sprintf('Could not execute query %s', $query));
+            throw new NoResult(sprintf('Could not execute query "%s".', $query));
         }
 
         return $json;

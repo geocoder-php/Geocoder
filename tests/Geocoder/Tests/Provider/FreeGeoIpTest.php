@@ -17,36 +17,36 @@ class FreeGeoIpTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The FreeGeoIp does not support Street addresses.
      */
-    public function testGetGeocodedDataWithNull()
+    public function testGeocodeWithNull()
     {
         $provider = new FreeGeoIp($this->getMockAdapter($this->never()));
-        $provider->getGeocodedData(null);
+        $provider->geocode(null);
     }
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The FreeGeoIp does not support Street addresses.
      */
-    public function testGetGeocodedDataWithEmpty()
+    public function testGeocodeWithEmpty()
     {
         $provider = new FreeGeoIp($this->getMockAdapter($this->never()));
-        $provider->getGeocodedData('');
+        $provider->geocode('');
     }
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The FreeGeoIp does not support Street addresses.
      */
-    public function testGetGeocodedDataWithAddress()
+    public function testGeocodeWithAddress()
     {
         $provider = new FreeGeoIp($this->getMockAdapter($this->never()));
-        $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
+        $provider->geocode('10 avenue Gambetta, Paris, France');
     }
 
-    public function testGetGeocodedDataWithLocalhostIPv4()
+    public function testGeocodeWithLocalhostIPv4()
     {
         $provider = new FreeGeoIp($this->getMockAdapter($this->never()));
-        $result   = $provider->getGeocodedData('127.0.0.1');
+        $result   = $provider->geocode('127.0.0.1');
 
         $this->assertInternalType('array', $result);
         $this->assertCount(1, $result);
@@ -64,10 +64,10 @@ class FreeGeoIpTest extends TestCase
         $this->assertEquals('localhost', $result['country']);
     }
 
-    public function testGetGeocodedDataWithLocalhostIPv6()
+    public function testGeocodeWithLocalhostIPv6()
     {
         $provider = new FreeGeoIp($this->getMockAdapter($this->never()));
-        $result   = $provider->getGeocodedData('::1');
+        $result   = $provider->geocode('::1');
 
         $this->assertInternalType('array', $result);
         $this->assertCount(1, $result);
@@ -89,26 +89,26 @@ class FreeGeoIpTest extends TestCase
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query http://freegeoip.net/json/74.200.247.59
      */
-    public function testGetGeocodedDataWithRealIPv4GetsNullContent()
+    public function testGeocodeWithRealIPv4GetsNullContent()
     {
         $provider = new FreeGeoIp($this->getMockAdapterReturns(null));
-        $provider->getGeocodedData('74.200.247.59');
+        $provider->geocode('74.200.247.59');
     }
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query http://freegeoip.net/json/74.200.247.59
      */
-    public function testGetGeocodedDataWithRealIPv4GetsEmptyContent()
+    public function testGeocodeWithRealIPv4GetsEmptyContent()
     {
         $provider = new FreeGeoIp($this->getMockAdapterReturns(''));
-        $provider->getGeocodedData('74.200.247.59');
+        $provider->geocode('74.200.247.59');
     }
 
-    public function testGetGeocodedDataWithRealIPv4()
+    public function testGeocodeWithRealIPv4()
     {
         $provider = new FreeGeoIp($this->getAdapter());
-        $result   = $provider->getGeocodedData('74.200.247.59');
+        $result   = $provider->geocode('74.200.247.59');
 
         $this->assertInternalType('array', $result);
         $this->assertCount(1, $result);
@@ -124,10 +124,10 @@ class FreeGeoIpTest extends TestCase
         $this->assertEquals('US', $result['countryCode']);
     }
 
-    public function testGetGeocodedDataWithRealIPv6()
+    public function testGeocodeWithRealIPv6()
     {
         $provider = new FreeGeoIp($this->getAdapter());
-        $result   = $provider->getGeocodedData('::ffff:74.200.247.59');
+        $result   = $provider->geocode('::ffff:74.200.247.59');
 
         $this->assertInternalType('array', $result);
         $this->assertCount(1, $result);
@@ -147,16 +147,16 @@ class FreeGeoIpTest extends TestCase
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query http://freegeoip.net/json/::ffff:74.200.247.59
      */
-    public function testGetGeocodedDataWithRealIPv6GetsNullContent()
+    public function testGeocodeWithRealIPv6GetsNullContent()
     {
         $provider = new FreeGeoIp($this->getMockAdapterReturns(null));
-        $provider->getGeocodedData('::ffff:74.200.247.59');
+        $provider->geocode('::ffff:74.200.247.59');
     }
 
-    public function testGetGeocodedDataWithUSIPv4()
+    public function testGeocodeWithUSIPv4()
     {
         $provider = new FreeGeoIp($this->getAdapter());
-        $result   = $provider->getGeocodedData('74.200.247.59');
+        $result   = $provider->geocode('74.200.247.59');
 
         $this->assertInternalType('array', $result);
         $this->assertCount(1, $result);
@@ -166,10 +166,10 @@ class FreeGeoIpTest extends TestCase
         $this->assertEquals('48', $result['regionCode']);
     }
 
-    public function testGetGeocodedDataWithUSIPv6()
+    public function testGeocodeWithUSIPv6()
     {
         $provider = new FreeGeoIp($this->getAdapter());
-        $result   = $provider->getGeocodedData('::ffff:74.200.247.59');
+        $result   = $provider->geocode('::ffff:74.200.247.59');
 
         $this->assertInternalType('array', $result);
         $this->assertCount(1, $result);
@@ -179,10 +179,10 @@ class FreeGeoIpTest extends TestCase
         $this->assertEquals('48', $result['regionCode']);
     }
 
-    public function testGetGeocodedDataWithUKIPv4()
+    public function testGeocodeWithUKIPv4()
     {
         $provider = new FreeGeoIp($this->getAdapter());
-        $result   = $provider->getGeocodedData('132.185.255.60');
+        $result   = $provider->geocode('132.185.255.60');
 
         $this->assertInternalType('array', $result);
         $this->assertCount(1, $result);
@@ -192,10 +192,10 @@ class FreeGeoIpTest extends TestCase
         $this->assertEquals('H9', $result['regionCode']);
     }
 
-    public function testGetGeocodedDataWithUKIPv6()
+    public function testGeocodeWithUKIPv6()
     {
         $provider = new FreeGeoIp($this->getAdapter());
-        $result   = $provider->getGeocodedData('::ffff:132.185.255.60');
+        $result   = $provider->geocode('::ffff:132.185.255.60');
 
         $this->assertInternalType('array', $result);
         $this->assertCount(1, $result);
@@ -209,9 +209,9 @@ class FreeGeoIpTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The FreeGeoIp is not able to do reverse geocoding.
      */
-    public function testGetReverseData()
+    public function testReverse()
     {
         $provider = new FreeGeoIp($this->getMockAdapter($this->never()));
-        $provider->getReversedData(array(1, 2));
+        $provider->reverse(1, 2);
     }
 }

@@ -29,7 +29,7 @@ class FreeGeoIp extends AbstractProvider implements Provider
     public function geocode($address)
     {
         if (!filter_var($address, FILTER_VALIDATE_IP)) {
-            throw new UnsupportedOperation('The FreeGeoIp does not support Street addresses.');
+            throw new UnsupportedOperation('The FreeGeoIp provider does not support street addresses.');
         }
 
         if (in_array($address, array('127.0.0.1', '::1'))) {
@@ -46,7 +46,7 @@ class FreeGeoIp extends AbstractProvider implements Provider
      */
     public function reverse($latitude, $longitude)
     {
-        throw new UnsupportedOperation('The FreeGeoIp is not able to do reverse geocoding.');
+        throw new UnsupportedOperation('The FreeGeoIp provider is not able to do reverse geocoding.');
     }
 
     /**
@@ -57,11 +57,6 @@ class FreeGeoIp extends AbstractProvider implements Provider
         return 'free_geo_ip';
     }
 
-    /**
-     * @param string $query
-     *
-     * @return array
-     */
     private function executeQuery($query)
     {
         $content = (string) $this->getAdapter()->get($query)->getBody();
@@ -76,26 +71,28 @@ class FreeGeoIp extends AbstractProvider implements Provider
             throw new NoResult(sprintf('Could not execute query %s', $query));
         }
 
-        //it appears that for US states the region code is not returning the FIPS standard
+        // it appears that for US states the region code is not returning the FIPS standard
         if ('US' === $data['country_code'] && isset($data['region_code']) && !is_numeric($data['region_code'])) {
-            $newRegionCode = $this->stateToRegionCode($data['region_code']);
+            $newRegionCode       = $this->stateToRegionCode($data['region_code']);
             $data['region_code'] = is_numeric($newRegionCode) ? $newRegionCode : null;
         }
 
-        return array(array_merge($this->getDefaults(), array(
-            'latitude'    => isset($data['latitude']) ? $data['latitude'] : null,
-            'longitude'   => isset($data['longitude']) ? $data['longitude'] : null,
-            'locality'    => isset($data['city']) ? $data['city'] : null,
-            'postalCode'  => isset($data['zipcode']) ? $data['zipcode'] : null,
-            'region'      => isset($data['region_name']) ? $data['region_name'] : null,
-            'regionCode'  => isset($data['region_code']) ? $data['region_code'] : null,
-            'country'     => isset($data['country_name']) ? $data['country_name'] : null,
-            'countryCode' => isset($data['country_code']) ? $data['country_code'] : null,
-        )));
+        return $this->returnResults([
+            array_merge($this->getDefaults(), array(
+                'latitude'    => isset($data['latitude']) ? $data['latitude'] : null,
+                'longitude'   => isset($data['longitude']) ? $data['longitude'] : null,
+                'locality'    => isset($data['city']) ? $data['city'] : null,
+                'postalCode'  => isset($data['zipcode']) ? $data['zipcode'] : null,
+                'region'      => isset($data['region_name']) ? $data['region_name'] : null,
+                'regionCode'  => isset($data['region_code']) ? $data['region_code'] : null,
+                'country'     => isset($data['country_name']) ? $data['country_name'] : null,
+                'countryCode' => isset($data['country_code']) ? $data['country_code'] : null,
+            ))
+        ]);
     }
 
     /**
-     * Converts the state code to FIPS standard
+     * Converts the state code to FIPS standard.
      *
      * @param string $state
      *

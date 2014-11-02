@@ -77,7 +77,7 @@ class GoogleMapsBusinessTest extends TestCase
     {
         $provider = new GoogleMapsBusiness($this->getAdapter(), $this->testClientId, $this->testPrivateKey, null, null, true);
 
-        $provider->getGeocodedData('Columbia University');
+        $provider->geocode('Columbia University');
     }
 
     /**
@@ -88,6 +88,6 @@ class GoogleMapsBusinessTest extends TestCase
     {
         $provider = new GoogleMapsBusiness($this->getAdapter(), $this->testClientId, $this->testPrivateKey, null, null, false);
 
-        $provider->getGeocodedData('Columbia University', true);
+        $provider->geocode('Columbia University', true);
     }
 }

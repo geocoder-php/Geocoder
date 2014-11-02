@@ -10,8 +10,8 @@
 
 namespace Geocoder\Provider;
 
+use Geocoder\Geocoder;
 use Geocoder\Model\AddressFactory;
-use Geocoder\ProviderBasedGeocoder;
 use Ivory\HttpAdapter\HttpAdapterInterface;
 
 /**
@@ -22,33 +22,43 @@ abstract class AbstractProvider
     /**
      * @var HttpAdapterInterface
      */
-    protected $adapter;
-
-    /**
-     * @var string
-     */
-    protected $locale;
-
-    /**
-     * @var integer
-     */
-    protected $maxResults = ProviderBasedGeocoder::MAX_RESULTS;
+    private $adapter;
 
     /**
      * @var AddressFactory
      */
-    protected $factory;
+    private $factory;
 
     /**
-     * @param HttpAdapterInterface $adapter An HTTP adapter.
-     * @param string               $locale  A locale (optional).
+     * @var integer
      */
-    public function __construct(HttpAdapterInterface $adapter, $locale = null)
-    {
-        $this->setLocale($locale);
+    private $limit = Provider::MAX_RESULTS;
 
+    /**
+     * @param HttpAdapterInterface $adapter An HTTP adapter
+     */
+    public function __construct(HttpAdapterInterface $adapter)
+    {
         $this->adapter = $adapter;
         $this->factory = new AddressFactory();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function limit($limit)
+    {
+        $this->limit = $limit;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getLimit()
+    {
+        return $this->limit;
     }
 
     /**
@@ -62,36 +72,21 @@ abstract class AbstractProvider
     }
 
     /**
-     * {@inheritDoc}
-     */
-    public function setMaxResults($maxResults)
-    {
-        $this->maxResults = $maxResults;
-
-        return $this;
-    }
-
-    /**
-     * Returns the maximum of wished results.
-     *
-     * @return integer
-     */
-    public function getMaxResults()
-    {
-        return $this->maxResults;
-    }
-
-    /**
      * Returns the default results.
      *
      * @return array
      */
     protected function getDefaults()
     {
-        return array(
+        return [
             'latitude'     => null,
             'longitude'    => null,
-            'bounds'       => null,
+            'bounds'       => [
+                'south' => null,
+                'west'  => null,
+                'north' => null,
+                'east'  => null,
+            ],
             'streetNumber' => null,
             'streetName'   => null,
             'locality'     => null,
@@ -104,7 +99,7 @@ abstract class AbstractProvider
             'country'      => null,
             'countryCode'  => null,
             'timezone'     => null,
-        );
+        ];
     }
 
     /**
@@ -114,24 +109,12 @@ abstract class AbstractProvider
      */
     protected function getLocalhostDefaults()
     {
-        return array(
+        return [
             'locality' => 'localhost',
             'region'   => 'localhost',
             'county'   => 'localhost',
             'country'  => 'localhost',
-        );
-    }
-
-    /**
-     * @param array $results
-     *
-     * @return array
-     */
-    protected function fixEncoding(array $results)
-    {
-        return array_map(function ($value) {
-            return is_string($value) ? utf8_encode($value) : $value;
-        }, $results);
+        ];
     }
 
     /**
@@ -139,8 +122,12 @@ abstract class AbstractProvider
      *
      * @return \Geocoder\Model\Address[]
      */
-    protected function returnResult(array $data = [])
+    protected function returnResults(array $data = [])
     {
+        if (0 < $this->getLimit()) {
+            $data = array_slice($data, 0, $this->getLimit());
+        }
+
         return $this->factory->createFromArray($data);
     }
 }

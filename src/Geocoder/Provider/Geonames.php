@@ -36,15 +36,21 @@ class Geonames extends AbstractProvider implements LocaleAwareProvider
     private $username;
 
     /**
-     * @param HttpAdapterInterface $adapter  An HTTP adapter.
+     * @var string
+     */
+    private $locale;
+
+    /**
+     * @param HttpAdapterInterface $adapter  An HTTP adapter
      * @param string               $username Username login (Free registration at http://www.geonames.org/login)
-     * @param string               $locale   A locale (optional).
+     * @param string               $locale   A locale (optional)
      */
     public function __construct(HttpAdapterInterface $adapter, $username, $locale = null)
     {
-        parent::__construct($adapter, $locale);
+        parent::__construct($adapter);
 
         $this->username = $username;
+        $this->locale   = $locale;
     }
 
     /**
@@ -53,15 +59,15 @@ class Geonames extends AbstractProvider implements LocaleAwareProvider
     public function geocode($address)
     {
         if (null === $this->username) {
-            throw new InvalidCredentials('No Username provided');
+            throw new InvalidCredentials('No username provided.');
         }
 
         // This API doesn't handle IPs
         if (filter_var($address, FILTER_VALIDATE_IP)) {
-            throw new UnsupportedOperation('The Geonames does not support IP addresses.');
+            throw new UnsupportedOperation('The Geonames provider does not support IP addresses.');
         }
 
-        $query = sprintf(self::GEOCODE_ENDPOINT_URL, urlencode($address), $this->getMaxResults(), $this->username);
+        $query = sprintf(self::GEOCODE_ENDPOINT_URL, urlencode($address), $this->getLimit(), $this->username);
 
         return $this->executeQuery($query);
     }
@@ -72,10 +78,10 @@ class Geonames extends AbstractProvider implements LocaleAwareProvider
     public function reverse($latitude, $longitude)
     {
         if (null === $this->username) {
-            throw new InvalidCredentials('No Username provided');
+            throw new InvalidCredentials('No username provided.');
         }
 
-        $query = sprintf(self::REVERSE_ENDPOINT_URL, $coordinates[0], $coordinates[1], $this->getMaxResults(), $this->username);
+        $query = sprintf(self::REVERSE_ENDPOINT_URL, $coordinates[0], $coordinates[1], $this->getLimit(), $this->username);
 
         return $this->executeQuery($query);
     }
@@ -89,10 +95,23 @@ class Geonames extends AbstractProvider implements LocaleAwareProvider
     }
 
     /**
-     * @param string $query
-     *
-     * @return array
+     * {@inheritDoc}
      */
+    public function getLocale()
+    {
+        return $this->locale;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setLocale($locale)
+    {
+        $this->locale = $locale;
+
+        return $this;
+    }
+
     private function executeQuery($query)
     {
         if (null !== $this->getLocale()) {
@@ -103,27 +122,27 @@ class Geonames extends AbstractProvider implements LocaleAwareProvider
         $content = (string) $this->getAdapter()->get($query)->getBody();
 
         if (empty($content)) {
-            throw new NoResult(sprintf('Could not execute query %s', $query));
+            throw new NoResult(sprintf('Could not execute query "%s".', $query));
         }
 
         if (null === $json = json_decode($content)) {
-            throw new NoResult(sprintf('Could not execute query %s', $query));
+            throw new NoResult(sprintf('Could not execute query "%s".', $query));
         }
 
         if (isset($json->totalResultsCount) && empty($json->totalResultsCount)) {
-            throw new NoResult(sprintf('No places found for query %s', $query));
+            throw new NoResult(sprintf('No places found for query "%s".', $query));
         }
 
         $data = $json->geonames;
 
         if (empty($data)) {
-            throw new NoResult(sprintf('Could not execute query %s', $query));
+            throw new NoResult(sprintf('Could not execute query "%s".', $query));
         }
 
         $results = [];
-
         foreach ($data as $item) {
             $bounds = null;
+
             if (isset($item->bbox)) {
                 $bounds = array(
                     'south' => $item->bbox->south,
@@ -133,7 +152,7 @@ class Geonames extends AbstractProvider implements LocaleAwareProvider
                 );
             }
 
-            $results[] = array_merge($this->getDefaults(), array(
+            $results[] = array_merge($this->getDefaults(), [
                 'latitude'    => isset($item->lat) ? $item->lat : null,
                 'longitude'   => isset($item->lng) ? $item->lng : null,
                 'bounds'      => $bounds,
@@ -143,9 +162,9 @@ class Geonames extends AbstractProvider implements LocaleAwareProvider
                 'country'     => isset($item->countryName) ? $item->countryName : null,
                 'countryCode' => isset($item->countryCode) ? $item->countryCode : null,
                 'timezone'    => isset($item->timezone->timeZoneId)  ? $item->timezone->timeZoneId : null,
-            ));
+            ]);
         }
 
-        return $results;
+        return $this->returnResults($results);
     }
 }

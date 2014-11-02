@@ -19,7 +19,7 @@ class ArcGISOnlineTest extends TestCase
     public function testGetGeocodedDataWithInvalidData()
     {
         $provider = new ArcGISOnline($this->getMockAdapter());
-        $provider->getGeocodedData('loremipsum');
+        $provider->geocode('loremipsum');
     }
 
     /**
@@ -29,7 +29,7 @@ class ArcGISOnlineTest extends TestCase
     public function testGetGeocodedDataWithNull()
     {
         $provider = new ArcGISOnline($this->getMockAdapter($this->never()));
-        $provider->getGeocodedData(null);
+        $provider->geocode(null);
     }
 
     /**
@@ -39,7 +39,7 @@ class ArcGISOnlineTest extends TestCase
     public function testGetGeocodedDataWithEmpty()
     {
         $provider = new ArcGISOnline($this->getMockAdapter($this->never()));
-        $provider->getGeocodedData('');
+        $provider->geocode('');
     }
 
     /**
@@ -49,7 +49,7 @@ class ArcGISOnlineTest extends TestCase
     public function testGetGeocodedDataWithLocalhostIPv4()
     {
         $provider = new ArcGISOnline($this->getMockAdapter($this->never()));
-        $provider->getGeocodedData('127.0.0.1');
+        $provider->geocode('127.0.0.1');
     }
 
     /**
@@ -59,7 +59,7 @@ class ArcGISOnlineTest extends TestCase
     public function testGetGeocodedDataWithLocalhostIPv6()
     {
         $provider = new ArcGISOnline($this->getMockAdapter($this->never()));
-        $provider->getGeocodedData('::1');
+        $provider->geocode('::1');
     }
 
     /**
@@ -69,13 +69,13 @@ class ArcGISOnlineTest extends TestCase
     public function testGetGeocodedDataWithAddressGetsNullContent()
     {
         $provider = new ArcGISOnline($this->getMockAdapterReturns(null));
-        $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
+        $provider->geocode('10 avenue Gambetta, Paris, France');
     }
 
     public function testGetGeocodedDataWithRealAddress()
     {
         $provider = new ArcGISOnline($this->getAdapter());
-        $results  = $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
+        $results  = $provider->geocode('10 avenue Gambetta, Paris, France');
 
         $this->assertInternalType('array', $results);
         $this->assertCount(5, $results);
@@ -103,7 +103,7 @@ class ArcGISOnlineTest extends TestCase
     public function testGetGeocodedDataWithRealAddressAndHttps()
     {
         $provider = new ArcGISOnline($this->getAdapter(), null, true);
-        $results  = $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
+        $results  = $provider->geocode('10 avenue Gambetta, Paris, France');
 
         $this->assertInternalType('array', $results);
         $this->assertCount(5, $results);
@@ -135,7 +135,7 @@ class ArcGISOnlineTest extends TestCase
     public function testGetGeocodedDataWithInvalidAddressForSourceCountry()
     {
         $provider = new ArcGISOnline($this->getAdapter(), 'USA');
-        $result   = $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
+        $result   = $provider->geocode('10 avenue Gambetta, Paris, France');
     }
 
     /**
@@ -145,7 +145,7 @@ class ArcGISOnlineTest extends TestCase
     public function testGetGeocodedDataWithInvalidAddressWithHttpsForSourceCountry()
     {
         $provider = new ArcGISOnline($this->getAdapter(), 'USA', true);
-        $result   = $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
+        $result   = $provider->geocode('10 avenue Gambetta, Paris, France');
     }
 
     /**
@@ -155,7 +155,7 @@ class ArcGISOnlineTest extends TestCase
     public function testGetReversedDataWithInvalid()
     {
         $provider = new ArcGISOnline($this->getMockAdapter());
-        $provider->getReversedData(array(1, 2));
+        $provider->reverse(1, 2);
     }
 
     /**
@@ -165,13 +165,13 @@ class ArcGISOnlineTest extends TestCase
     public function testGetReversedDataWithCoordinatesContentReturnNull()
     {
         $provider = new ArcGISOnline($this->getMockAdapterReturns(null));
-        $provider->getReversedData(array(48.863279997000461, 2.3890199980004354));
+        $provider->reverse(48.863279997000461, 2.3890199980004354);
     }
 
     public function testGetReversedDataWithRealCoordinates()
     {
         $provider = new ArcGISOnline($this->getAdapter());
-        $result   = $provider->getReversedData(array(48.863279997000461, 2.3890199980004354));
+        $result   = $provider->reverse(48.863279997000461, 2.3890199980004354);
 
         $this->assertInternalType('array', $result);
         $this->assertCount(1, $result);
@@ -198,7 +198,7 @@ class ArcGISOnlineTest extends TestCase
     public function testGetReversedDataWithRealCoordinatesWithHttps()
     {
         $provider = new ArcGISOnline($this->getAdapter(), null, true);
-        $result   = $provider->getReversedData(array(48.863279997000461, 2.3890199980004354));
+        $result   = $provider->reverse(48.863279997000461, 2.3890199980004354);
 
         $this->assertInternalType('array', $result);
         $this->assertCount(1, $result);
@@ -225,7 +225,7 @@ class ArcGISOnlineTest extends TestCase
     public function testGetGeocodedDataWithCity()
     {
         $provider = new ArcGISOnline($this->getAdapter());
-        $results  = $provider->getGeocodedData('Hannover');
+        $results  = $provider->geocode('Hannover');
 
         $this->assertInternalType('array', $results);
         $this->assertCount(5, $results);
@@ -288,7 +288,7 @@ class ArcGISOnlineTest extends TestCase
     public function testGetGeocodedDataWithRealIPv4()
     {
         $provider = new ArcGISOnline($this->getMockAdapter($this->never()));
-        $provider->getGeocodedData('88.188.221.14');
+        $provider->geocode('88.188.221.14');
     }
 
     /**
@@ -298,6 +298,6 @@ class ArcGISOnlineTest extends TestCase
     public function testGetGeocodedDataWithRealIPv6()
     {
         $provider = new ArcGISOnline($this->getMockAdapter($this->never()));
-        $provider->getGeocodedData('::ffff:88.188.221.14');
+        $provider->geocode('::ffff:88.188.221.14');
     }
 }

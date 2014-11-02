@@ -11,7 +11,7 @@
 namespace Geocoder\Provider;
 
 use Geocoder\Exception\NoResult;
-use Geocoder\Exception\ExceptionNotLoaded;
+use Geocoder\Exception\ExtensionNotLoaded;
 use Geocoder\Exception\UnsupportedOperation;
 
 /**
@@ -21,13 +21,10 @@ use Geocoder\Exception\UnsupportedOperation;
  */
 class Geoip extends AbstractProvider implements Provider
 {
-    /**
-     * No need to pass a HTTP adapter.
-     */
     public function __construct()
     {
         if (!function_exists('geoip_record_by_name')) {
-            throw new ExceptionNotLoaded('You have to install GeoIP');
+            throw new ExtensionNotLoaded('You must install the GeoIP extension, see: https://php.net/manual/book.geoip.php.');
         }
     }
 
@@ -37,38 +34,40 @@ class Geoip extends AbstractProvider implements Provider
     public function geocode($address)
     {
         if (!filter_var($address, FILTER_VALIDATE_IP)) {
-            throw new UnsupportedOperation('The Geoip does not support Street addresses.');
+            throw new UnsupportedOperation('The Geoip provider does not support street addresses, only IPv4 addresses.');
         }
 
         // This API does not support IPv6
         if (filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
-            throw new UnsupportedOperation('The Geoip does not support IPv6 addresses.');
+            throw new UnsupportedOperation('The Geoip provider does not support IPv6 addresses, only IPv4 addresses.');
         }
 
         if ('127.0.0.1' === $address) {
-            return array($this->getLocalhostDefaults());
+            return $this->returnResults([ $this->getLocalhostDefaults() ]);
         }
 
         $results = @geoip_record_by_name($address);
 
         if (!is_array($results)) {
-            throw new NoResult(sprintf('Could not find %s ip address in database.', $address));
+            throw new NoResult(sprintf('Could not find "%s" IP address in database.', $address));
         }
 
         $timezone = @geoip_time_zone_by_country_and_region($results['country_code'], $results['region']) ?: null;
         $region   = @geoip_region_name_by_code($results['country_code'], $results['region']) ?: $results['region'];
 
-        return array($this->fixEncoding(array_merge($this->getDefaults(), array(
-            'latitude'    => $results['latitude'],
-            'longitude'   => $results['longitude'],
-            'locality'    => $results['city'],
-            'postalCode'  => $results['postal_code'],
-            'region'      => $region,
-            'regionCode'  => $results['region'],
-            'country'     => $results['country_name'],
-            'countryCode' => $results['country_code'],
-            'timezone'    => $timezone,
-        ))));
+        return $this->returnResults([
+            array_merge($this->getDefaults(), [
+                'latitude'    => $results['latitude'],
+                'longitude'   => $results['longitude'],
+                'locality'    => $results['city'],
+                'postalCode'  => $results['postal_code'],
+                'region'      => $region,
+                'regionCode'  => $results['region'],
+                'country'     => $results['country_name'],
+                'countryCode' => $results['country_code'],
+                'timezone'    => $timezone,
+            ])
+        ]);
     }
 
     /**
@@ -76,7 +75,7 @@ class Geoip extends AbstractProvider implements Provider
      */
     public function reverse($latitude, $longitude)
     {
-        throw new UnsupportedOperation('The Geoip is not able to do reverse geocoding.');
+        throw new UnsupportedOperation('The Geoip provider is not able to do reverse geocoding.');
     }
 
     /**

@@ -39,9 +39,9 @@ class GeoIP2Test extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The Geocoder\Provider\GeoIP2 is not able to do reverse geocoding.
      */
-    public function testQueryingReversedDataLeadToException()
+    public function testQueryingReverseLeadsToException()
     {
-        $this->provider->getReversedData(array(50, 9));
+        $this->provider->reverse(50, 9);
     }
 
     public function testLocalhostDefaults()
@@ -53,7 +53,7 @@ class GeoIP2Test extends TestCase
             'country'   => 'localhost',
         );
 
-        $actualResult = $this->provider->getGeocodedData('127.0.0.1');
+        $actualResult = $this->provider->geocode('127.0.0.1');
 
         $this->assertSame($expectedResult, $actualResult);
     }
@@ -64,11 +64,11 @@ class GeoIP2Test extends TestCase
      */
     public function testOnlyIpAddressesCouldBeResolved()
     {
-        $this->provider->getGeocodedData('Street 123, Somewhere');
+        $this->provider->geocode('Street 123, Somewhere');
     }
 
     /**
-     * Provides data for getGeocodedData test
+     * Provides data for geocode test
      *
      * @return array
      */
@@ -133,7 +133,7 @@ class GeoIP2Test extends TestCase
         $adapter = $this->getGeoIP2AdapterMock($adapterResponse);
         $provider = new GeoIP2($adapter);
 
-        $actualGeodata = $provider->getGeocodedData($address);
+        $actualGeodata = $provider->geocode($address);
 
         $this->assertSame($expectedGeodata, $actualGeodata[0]);
     }
@@ -149,7 +149,7 @@ class GeoIP2Test extends TestCase
 
         $provider = new GeoIP2($adapter);
 
-        $provider->getGeocodedData('74.200.247.59');
+        $provider->geocode('74.200.247.59');
     }
 
     /**

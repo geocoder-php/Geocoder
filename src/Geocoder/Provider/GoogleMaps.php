@@ -34,6 +34,11 @@ class GoogleMaps extends AbstractProvider implements LocaleAwareProvider
     /**
      * @var string
      */
+    private $locale;
+
+    /**
+     * @var string
+     */
     private $region;
 
     /**
@@ -47,26 +52,20 @@ class GoogleMaps extends AbstractProvider implements LocaleAwareProvider
     private $apiKey;
 
     /**
-     * @param HttpAdapterInterface $adapter An HTTP adapter.
-     * @param string               $locale  A locale (optional).
-     * @param string               $region  Region biasing (optional).
+     * @param HttpAdapterInterface $adapter An HTTP adapter
+     * @param string               $locale  A locale (optional)
+     * @param string               $region  Region biasing (optional)
      * @param bool                 $useSsl  Whether to use an SSL connection (optional)
      * @param string               $apiKey  Google Geocoding API key (optional)
      */
     public function __construct(HttpAdapterInterface $adapter, $locale = null, $region = null, $useSsl = false, $apiKey = null)
     {
-        parent::__construct($adapter, $locale);
+        parent::__construct($adapter);
 
+        $this->locale = $locale;
         $this->region = $region;
         $this->useSsl = $useSsl;
         $this->apiKey = $apiKey;
-    }
-
-    public function setRegion($region)
-    {
-        $this->region = $region;
-
-        return $this;
     }
 
     /**
@@ -77,7 +76,7 @@ class GoogleMaps extends AbstractProvider implements LocaleAwareProvider
         // Google API returns invalid data if IP address given
         // This API doesn't handle IPs
         if (filter_var($address, FILTER_VALIDATE_IP)) {
-            throw new UnsupportedOperation('The GoogleMaps does not support IP addresses.');
+            throw new UnsupportedOperation('The GoogleMaps provider does not support IP addresses, only street addresses.');
         }
 
         $query = sprintf(
@@ -105,9 +104,34 @@ class GoogleMaps extends AbstractProvider implements LocaleAwareProvider
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public function getLocale()
+    {
+        return $this->locale;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setLocale($locale)
+    {
+        $this->locale = $locale;
+
+        return $this;
+    }
+
+    public function setRegion($region)
+    {
+        $this->region = $region;
+
+        return $this;
+    }
+
+    /**
      * @param string $query
      *
-     * @return string Query with extra params
+     * @return string query with extra params
      */
     protected function buildQuery($query)
     {
@@ -126,14 +150,9 @@ class GoogleMaps extends AbstractProvider implements LocaleAwareProvider
         return $query;
     }
 
-    /**
-     * @param string $query
-     *
-     * @return array
-     */
     private function executeQuery($query)
     {
-        $query = $this->buildQuery($query);
+        $query   = $this->buildQuery($query);
         $content = (string) $this->getAdapter()->get($query)->getBody();
 
         // Throw exception if invalid clientID and/or privateKey used with GoogleMapsBusinessProvider
@@ -142,14 +161,14 @@ class GoogleMaps extends AbstractProvider implements LocaleAwareProvider
         }
 
         if (empty($content)) {
-            throw new NoResult(sprintf('Could not execute query %s', $query));
+            throw new NoResult(sprintf('Could not execute query "%s".', $query));
         }
 
         $json = json_decode($content);
 
         // API error
         if (!isset($json)) {
-            throw new NoResult(sprintf('Could not execute query %s', $query));
+            throw new NoResult(sprintf('Could not execute query "%s".', $query));
         }
 
         if ('REQUEST_DENIED' === $json->status && 'The provided API key is invalid.' === $json->error_message) {
@@ -163,29 +182,28 @@ class GoogleMaps extends AbstractProvider implements LocaleAwareProvider
 
         // no result
         if (!isset($json->results) || !count($json->results) || 'OK' !== $json->status) {
-            throw new NoResult(sprintf('Could not execute query %s', $query));
+            throw new NoResult(sprintf('Could not execute query "%s".', $query));
         }
 
-        $results = array();
-
+        $results = [];
         foreach ($json->results as $result) {
-            $resultset = $this->getDefaults();
+            $resultSet = $this->getDefaults();
 
             // update address components
             foreach ($result->address_components as $component) {
                 foreach ($component->types as $type) {
-                    $this->updateAddressComponent($resultset, $type, $component);
+                    $this->updateAddressComponent($resultSet, $type, $component);
                 }
             }
 
             // update coordinates
             $coordinates = $result->geometry->location;
-            $resultset['latitude']  = $coordinates->lat;
-            $resultset['longitude'] = $coordinates->lng;
+            $resultSet['latitude']  = $coordinates->lat;
+            $resultSet['longitude'] = $coordinates->lng;
 
-            $resultset['bounds'] = null;
+            $resultSet['bounds'] = null;
             if (isset($result->geometry->bounds)) {
-                $resultset['bounds'] = array(
+                $resultSet['bounds'] = array(
                     'south' => $result->geometry->bounds->southwest->lat,
                     'west'  => $result->geometry->bounds->southwest->lng,
                     'north' => $result->geometry->bounds->northeast->lat,
@@ -193,7 +211,7 @@ class GoogleMaps extends AbstractProvider implements LocaleAwareProvider
                 );
             } elseif ('ROOFTOP' === $result->geometry->location_type) {
                 // Fake bounds
-                $resultset['bounds'] = array(
+                $resultSet['bounds'] = array(
                     'south' => $coordinates->lat,
                     'west'  => $coordinates->lng,
                     'north' => $coordinates->lat,
@@ -201,62 +219,62 @@ class GoogleMaps extends AbstractProvider implements LocaleAwareProvider
                 );
             }
 
-            $results[] = array_merge($this->getDefaults(), $resultset);
+            $results[] = array_merge($this->getDefaults(), $resultSet);
         }
 
-        return $this->returnResult($results);
+        return $this->returnResults($results);
     }
 
     /**
-     * Update current resultset with given key/value.
+     * Update current resultSet with given key/value.
      *
-     * @param array  $resultset Resultset to update.
-     * @param string $type      Component type.
-     * @param object $values    The component values;
+     * @param array  $resultSet resultSet to update
+     * @param string $type      Component type
+     * @param object $values    The component values
      *
      * @return array
      */
-    private function updateAddressComponent(&$resultset, $type, $values)
+    private function updateAddressComponent(&$resultSet, $type, $values)
     {
         switch ($type) {
             case 'postal_code':
-                $resultset['postalCode'] = $values->long_name;
+                $resultSet['postalCode'] = $values->long_name;
                 break;
 
             case 'locality':
-                $resultset['locality'] = $values->long_name;
+                $resultSet['locality'] = $values->long_name;
                 break;
 
             case 'administrative_area_level_2':
-                $resultset['county'] = $values->long_name;
-                $resultset['countyCode'] = $values->short_name;
+                $resultSet['county'] = $values->long_name;
+                $resultSet['countyCode'] = $values->short_name;
                 break;
 
             case 'administrative_area_level_1':
-                $resultset['region'] = $values->long_name;
-                $resultset['regionCode'] = $values->short_name;
+                $resultSet['region'] = $values->long_name;
+                $resultSet['regionCode'] = $values->short_name;
                 break;
 
             case 'country':
-                $resultset['country'] = $values->long_name;
-                $resultset['countryCode'] = $values->short_name;
+                $resultSet['country'] = $values->long_name;
+                $resultSet['countryCode'] = $values->short_name;
                 break;
 
             case 'street_number':
-                $resultset['streetNumber'] = $values->long_name;
+                $resultSet['streetNumber'] = $values->long_name;
                 break;
 
             case 'route':
-                $resultset['streetName'] = $values->long_name;
+                $resultSet['streetName'] = $values->long_name;
                 break;
 
             case 'sublocality':
-                $resultset['subLocality'] = $values->long_name;
+                $resultSet['subLocality'] = $values->long_name;
                 break;
 
             default:
         }
 
-        return $resultset;
+        return $resultSet;
     }
 }

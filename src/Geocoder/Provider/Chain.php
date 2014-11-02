@@ -24,8 +24,6 @@ class Chain implements Provider
     private $providers = [];
 
     /**
-     * Constructor
-     *
      * @param Provider[] $providers
      */
     public function __construct(array $providers = [])
@@ -34,22 +32,11 @@ class Chain implements Provider
     }
 
     /**
-     * Add a provider
-     *
-     * @param Provider $provider
-     */
-    public function add(Provider $provider)
-    {
-        $this->providers[] = $provider;
-    }
-
-    /**
      * {@inheritDoc}
      */
     public function geocode($address)
     {
         $exceptions = [];
-
         foreach ($this->providers as $provider) {
             try {
                 return $provider->geocode($address);
@@ -60,7 +47,7 @@ class Chain implements Provider
             }
         }
 
-        throw new ChainNoResult(sprintf('No provider could provide the address "%s"', $address), $exceptions);
+        throw new ChainNoResult(sprintf('No provider could geocode address: "%s".', $address), $exceptions);
     }
 
     /**
@@ -71,7 +58,7 @@ class Chain implements Provider
         $exceptions = [];
         foreach ($this->providers as $provider) {
             try {
-                return $provider->getReversedData($coordinates);
+                return $provider->reverse($latitude, $longitude);
             } catch (InvalidCredentials $e) {
                 throw $e;
             } catch (\Exception $e) {
@@ -79,16 +66,16 @@ class Chain implements Provider
             }
         }
 
-        throw new ChainNoResult(sprintf('No provider could provide the coordinated %s', json_encode($coordinates)), $exceptions);
+        throw new ChainNoResult(sprintf('No provider could reverse coordinates: %f, %f.', $latitude, $longitude), $exceptions);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function setMaxResults($limit)
+    public function limit($limit)
     {
         foreach ($this->providers as $provider) {
-            $provider->setMaxResults($limit);
+            $provider->limit($limit);
         }
 
         return $this;
@@ -97,8 +84,30 @@ class Chain implements Provider
     /**
      * {@inheritDoc}
      */
+    public function getLimit()
+    {
+        throw new \LogicException("The `Chain` provider is not able to return the limit value.");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getName()
     {
         return 'chain';
+    }
+
+    /**
+     * Adds a provider.
+     *
+     * @param Provider $provider
+     *
+     * @return Chain
+     */
+    public function add(Provider $provider)
+    {
+        $this->providers[] = $provider;
+
+        return $this;
     }
 }
