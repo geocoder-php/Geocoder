@@ -17,12 +17,14 @@
         "igorw/get-in": "~1.0"
     },
     "require-dev": {
-        "geoip2/geoip2": "~0.6"
+        "geoip2/geoip2": "~0.6",
+        "symfony/stopwatch": "~2.5"
     },
     "suggest": {
         "ext-geoip": "Enabling the geoip extension allows you to use the MaxMindProvider.",
         "geoip/geoip": "If you are going to use the MaxMindBinaryProvider (conflict with geoip extension).",
-        "geoip2/geoip2": "If you are going to use the GeoIP2DatabaseProvider."
+        "geoip2/geoip2": "If you are going to use the GeoIP2DatabaseProvider.",
+        "symfony/stopwatch": "If you want to use the TimedGeocoder"
     },
     "autoload": {
         "psr-0": { "Geocoder": "src/" }
