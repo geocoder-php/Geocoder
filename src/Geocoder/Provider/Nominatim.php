@@ -19,8 +19,14 @@ use Ivory\HttpAdapter\HttpAdapterInterface;
  */
 class Nominatim extends AbstractProvider implements LocaleAwareProvider
 {
+    /**
+     * @var string
+     */
     private $rootUrl;
 
+    /**
+     * @var string
+     */
     private $locale;
 
     /**
@@ -30,7 +36,7 @@ class Nominatim extends AbstractProvider implements LocaleAwareProvider
      */
     public function __construct(HttpAdapterInterface $adapter, $rootUrl, $locale = null)
     {
-        parent::__construct($adapter, $locale);
+        parent::__construct($adapter);
 
         $this->rootUrl = rtrim($rootUrl, '/');
         $this->locale  = $locale;
@@ -43,7 +49,7 @@ class Nominatim extends AbstractProvider implements LocaleAwareProvider
     {
         // This API does not support IPv6
         if (filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
-            throw new UnsupportedOperation('The ' . end(explode('\\', get_called_class())) . ' provider does not support IPv6 addresses.');
+            throw new UnsupportedOperation('The ' . get_called_class() . ' provider does not support IPv6 addresses.');
         }
 
         if ('127.0.0.1' === $address) {

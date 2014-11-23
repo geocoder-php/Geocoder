@@ -36,6 +36,11 @@ class OpenCage extends AbstractProvider implements LocaleAwareProvider
     private $apiKey;
 
     /**
+     * @var string
+     */
+    private $locale;
+
+    /**
      * @param HttpAdapterInterface $adapter An HTTP adapter.
      * @param string               $apiKey  An API key.
      * @param bool                 $useSsl  Whether to use an SSL connection (optional).
@@ -43,10 +48,11 @@ class OpenCage extends AbstractProvider implements LocaleAwareProvider
      */
     public function __construct(HttpAdapterInterface $adapter, $apiKey, $useSsl = false, $locale = null)
     {
-        parent::__construct($adapter, $locale);
+        parent::__construct($adapter);
 
         $this->apiKey = $apiKey;
         $this->scheme = $useSsl ? 'https' : 'http';
+        $this->locale = $locale;
     }
 
     /**

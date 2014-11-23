@@ -15,7 +15,7 @@ class FreeGeoIpTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The FreeGeoIp does not support Street addresses.
+     * @expectedExceptionMessage The FreeGeoIp provider does not support street addresses.
      */
     public function testGeocodeWithNull()
     {
@@ -25,7 +25,7 @@ class FreeGeoIpTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The FreeGeoIp does not support Street addresses.
+     * @expectedExceptionMessage The FreeGeoIp provider does not support street addresses.
      */
     public function testGeocodeWithEmpty()
     {
@@ -35,7 +35,7 @@ class FreeGeoIpTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The FreeGeoIp does not support Street addresses.
+     * @expectedExceptionMessage The FreeGeoIp provider does not support street addresses.
      */
     public function testGeocodeWithAddress()
     {
@@ -48,20 +48,13 @@ class FreeGeoIpTest extends TestCase
         $provider = new FreeGeoIp($this->getMockAdapter($this->never()));
         $result   = $provider->geocode('127.0.0.1');
 
-        $this->assertInternalType('array', $result);
         $this->assertCount(1, $result);
 
-        $result = $result[0];
-        $this->assertInternalType('array', $result);
-        $this->assertArrayNotHasKey('latitude', $result);
-        $this->assertArrayNotHasKey('longitude', $result);
-        $this->assertArrayNotHasKey('postalCode', $result);
-        $this->assertArrayNotHasKey('timezone', $result);
-
-        $this->assertEquals('localhost', $result['locality']);
-        $this->assertEquals('localhost', $result['region']);
-        $this->assertEquals('localhost', $result['county']);
-        $this->assertEquals('localhost', $result['country']);
+        $result = $result[0]->toArray();
+        $this->assertEquals('Localhost', $result['locality']);
+        $this->assertEquals('Localhost', $result['region']);
+        $this->assertEquals('Localhost', $result['county']);
+        $this->assertEquals('Localhost', $result['country']);
     }
 
     public function testGeocodeWithLocalhostIPv6()
@@ -69,20 +62,13 @@ class FreeGeoIpTest extends TestCase
         $provider = new FreeGeoIp($this->getMockAdapter($this->never()));
         $result   = $provider->geocode('::1');
 
-        $this->assertInternalType('array', $result);
         $this->assertCount(1, $result);
 
-        $result = $result[0];
-        $this->assertInternalType('array', $result);
-        $this->assertArrayNotHasKey('latitude', $result);
-        $this->assertArrayNotHasKey('longitude', $result);
-        $this->assertArrayNotHasKey('postalCode', $result);
-        $this->assertArrayNotHasKey('timezone', $result);
-
-        $this->assertEquals('localhost', $result['locality']);
-        $this->assertEquals('localhost', $result['region']);
-        $this->assertEquals('localhost', $result['county']);
-        $this->assertEquals('localhost', $result['country']);
+        $result = $result[0]->toArray();
+        $this->assertEquals('Localhost', $result['locality']);
+        $this->assertEquals('Localhost', $result['region']);
+        $this->assertEquals('Localhost', $result['county']);
+        $this->assertEquals('Localhost', $result['country']);
     }
 
     /**
@@ -110,11 +96,9 @@ class FreeGeoIpTest extends TestCase
         $provider = new FreeGeoIp($this->getAdapter());
         $result   = $provider->geocode('74.200.247.59');
 
-        $this->assertInternalType('array', $result);
         $this->assertCount(1, $result);
 
-        $result = $result[0];
-        $this->assertInternalType('array', $result);
+        $result = $result[0]->toArray();
         $this->assertEquals(33.0347, $result['latitude'], '', 0.01);
         $this->assertEquals(-96.8134, $result['longitude'], '', 0.01);
         $this->assertEquals(75093, $result['postalCode']);
@@ -129,11 +113,9 @@ class FreeGeoIpTest extends TestCase
         $provider = new FreeGeoIp($this->getAdapter());
         $result   = $provider->geocode('::ffff:74.200.247.59');
 
-        $this->assertInternalType('array', $result);
         $this->assertCount(1, $result);
 
-        $result = $result[0];
-        $this->assertInternalType('array', $result);
+        $result = $result[0]->toArray();
         $this->assertEquals(33.0347, $result['latitude'], '', 0.01);
         $this->assertEquals(-96.8134, $result['longitude'], '', 0.01);
         $this->assertEquals(75093, $result['postalCode']);
@@ -158,11 +140,9 @@ class FreeGeoIpTest extends TestCase
         $provider = new FreeGeoIp($this->getAdapter());
         $result   = $provider->geocode('74.200.247.59');
 
-        $this->assertInternalType('array', $result);
         $this->assertCount(1, $result);
 
-        $result = $result[0];
-        $this->assertInternalType('array', $result);
+        $result = $result[0]->toArray();
         $this->assertEquals('48', $result['regionCode']);
     }
 
@@ -171,11 +151,9 @@ class FreeGeoIpTest extends TestCase
         $provider = new FreeGeoIp($this->getAdapter());
         $result   = $provider->geocode('::ffff:74.200.247.59');
 
-        $this->assertInternalType('array', $result);
         $this->assertCount(1, $result);
 
-        $result = $result[0];
-        $this->assertInternalType('array', $result);
+        $result = $result[0]->toArray();
         $this->assertEquals('48', $result['regionCode']);
     }
 
@@ -184,11 +162,9 @@ class FreeGeoIpTest extends TestCase
         $provider = new FreeGeoIp($this->getAdapter());
         $result   = $provider->geocode('132.185.255.60');
 
-        $this->assertInternalType('array', $result);
         $this->assertCount(1, $result);
 
-        $result = $result[0];
-        $this->assertInternalType('array', $result);
+        $result = $result[0]->toArray();
         $this->assertEquals('H9', $result['regionCode']);
     }
 
@@ -197,17 +173,14 @@ class FreeGeoIpTest extends TestCase
         $provider = new FreeGeoIp($this->getAdapter());
         $result   = $provider->geocode('::ffff:132.185.255.60');
 
-        $this->assertInternalType('array', $result);
         $this->assertCount(1, $result);
 
-        $result = $result[0];
-        $this->assertInternalType('array', $result);
-        $this->assertEquals('H9', $result['regionCode']);
+        $this->assertEquals('H9', $result[0]->getRegion()->getCode());
     }
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The FreeGeoIp is not able to do reverse geocoding.
+     * @expectedExceptionMessage The FreeGeoIp provider is not able to do reverse geocoding.
      */
     public function testReverse()
     {

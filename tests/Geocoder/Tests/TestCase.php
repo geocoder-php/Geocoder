@@ -23,7 +23,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
 
         $response = $this->getMock('Psr\Http\Message\MessageInterface');
         $response
-            ->expects($expects)
+            ->expects($this->any())
             ->method('getBody')
             ->will($this->returnValue(
                 $this->getMock('Psr\Http\Message\StreamableInterface')

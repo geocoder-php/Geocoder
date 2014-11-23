@@ -24,7 +24,7 @@ class GeoIPsTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The GeoIPs does not support street addresses.
+     * @expectedExceptionMessage The GeoIPs provider does not support street addresses, only IPv4 addresses.
      */
     public function testGeocodeWithNull()
     {
@@ -34,7 +34,7 @@ class GeoIPsTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The GeoIPs does not support street addresses.
+     * @expectedExceptionMessage The GeoIPs provider does not support street addresses, only IPv4 addresses.
      */
     public function testGeocodeWithEmpty()
     {
@@ -44,7 +44,7 @@ class GeoIPsTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The GeoIPs does not support street addresses.
+     * @expectedExceptionMessage The GeoIPs provider does not support street addresses, only IPv4 addresses.
      */
     public function testGeocodeWithAddress()
     {
@@ -57,25 +57,18 @@ class GeoIPsTest extends TestCase
         $provider = new GeoIPs($this->getMockAdapter($this->never()), 'api_key');
         $result   = $provider->geocode('127.0.0.1');
 
-        $this->assertInternalType('array', $result);
         $this->assertCount(1, $result);
 
-        $result = $result[0];
-        $this->assertInternalType('array', $result);
-        $this->assertArrayNotHasKey('latitude', $result);
-        $this->assertArrayNotHasKey('longitude', $result);
-        $this->assertArrayNotHasKey('postalCode', $result);
-        $this->assertArrayNotHasKey('timezone', $result);
-
-        $this->assertEquals('localhost', $result['locality']);
-        $this->assertEquals('localhost', $result['region']);
-        $this->assertEquals('localhost', $result['county']);
-        $this->assertEquals('localhost', $result['country']);
+        $result = $result[0]->toArray();
+        $this->assertEquals('Localhost', $result['locality']);
+        $this->assertEquals('Localhost', $result['region']);
+        $this->assertEquals('Localhost', $result['county']);
+        $this->assertEquals('Localhost', $result['country']);
     }
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The GeoIPs does not support IPv6 addresses.
+     * @expectedExceptionMessage The GeoIPs provider does not support IPv6 addresses, only IPv4 addresses.
      */
     public function testGeocodeWithLocalhostIPv6()
     {
@@ -85,7 +78,7 @@ class GeoIPsTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Invalid response from GeoIPs server for query http://api.geoips.com/ip/74.200.247.59/key/api_key/output/json/timezone/true/
+     * @expectedExceptionMessage Invalid response from GeoIPs API for query "http://api.geoips.com/ip/74.200.247.59/key/api_key/output/json/timezone/true/".
      */
     public function testGeocodeWithRealIPv4GetsNullContent()
     {
@@ -95,7 +88,7 @@ class GeoIPsTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Invalid response from GeoIPs server for query http://api.geoips.com/ip/74.200.247.59/key/api_key/output/json/timezone/true/
+     * @expectedExceptionMessage Invalid response from GeoIPs API for query "http://api.geoips.com/ip/74.200.247.59/key/api_key/output/json/timezone/true/".
      */
     public function testGeocodeWithRealIPv4GetsEmptyContent()
     {
@@ -134,19 +127,17 @@ class GeoIPsTest extends TestCase
         $provider = new GeoIPs($this->getMockAdapterReturns($json), 'api_key');
         $result   = $provider->geocode('66.147.244.214');
 
-        $this->assertInternalType('array', $result);
         $this->assertCount(1, $result);
 
-        $result = $result[0];
-        $this->assertInternalType('array', $result);
-        $this->assertNull($result['country']);
-        $this->assertNull($result['countryCode']);
-        $this->assertNull($result['regionCode']);
-        $this->assertNull($result['locality']);
-        $this->assertNull($result['latitude']);
-        $this->assertNull($result['longitude']);
-        $this->assertNull($result['postalCode']);
-        $this->assertNull($result['timezone']);
+        $result = $result[0]->toArray();
+        $this->assertEmpty($result['country']);
+        $this->assertEmpty($result['countryCode']);
+        $this->assertEmpty($result['regionCode']);
+        $this->assertEmpty($result['locality']);
+        $this->assertEmpty($result['latitude']);
+        $this->assertEmpty($result['longitude']);
+        $this->assertEmpty($result['postalCode']);
+        $this->assertEmpty($result['timezone']);
     }
 
     public function testGeocodeWithRealIPv4GetsFakeContent()
@@ -176,17 +167,15 @@ class GeoIPsTest extends TestCase
         $provider = new GeoIPs($this->getMockAdapterReturns($json), 'api_key');
         $result   = $provider->geocode('66.147.244.214');
 
-        $this->assertInternalType('array', $result);
         $this->assertCount(1, $result);
 
-        $result = $result[0];
-        $this->assertInternalType('array', $result);
-        $this->assertEquals('UNITED STATES', $result['country']);
+        $result = $result[0]->toArray();
+        $this->assertEquals('United States', $result['country']);
         $this->assertEquals('US', $result['countryCode']);
-        $this->assertEquals('UTAH', $result['region']);
+        $this->assertEquals('Utah', $result['region']);
         $this->assertEquals('UT', $result['regionCode']);
-        $this->assertEquals('UTAH', $result['county']);
-        $this->assertEquals('PROVO', $result['locality']);
+        $this->assertEquals('Utah', $result['county']);
+        $this->assertEquals('Provo', $result['locality']);
         $this->assertEquals(40.3402, $result['latitude'], '', 0.0001);
         $this->assertEquals(-111.6073, $result['longitude'], '', 0.0001);
         $this->assertEquals('MST', $result['timezone']);
@@ -333,11 +322,9 @@ class GeoIPsTest extends TestCase
         $provider = new GeoIPs($this->getAdapter(), $_SERVER['GEOIPS_API_KEY']);
         $result   = $provider->geocode('66.147.244.214');
 
-        $this->assertInternalType('array', $result);
         $this->assertCount(1, $result);
 
-        $result = $result[0];
-        $this->assertInternalType('array', $result);
+        $result = $result[0]->toArray();
         $this->assertEquals('UNITED STATES', $result['country']);
         $this->assertEquals('US', $result['countryCode']);
         $this->assertEquals('UTAH', $result['region']);
@@ -366,7 +353,7 @@ class GeoIPsTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The GeoIPs is not able to do reverse geocoding.
+     * @expectedExceptionMessage The GeoIPs provider is not able to do reverse geocoding.
      */
     public function testGetReverseData()
     {

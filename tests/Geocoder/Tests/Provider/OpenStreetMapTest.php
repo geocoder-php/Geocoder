@@ -327,7 +327,7 @@ class OpenStreetMapTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The OpenStreetMap provider does not support IPv6 addresses.
+     * @expectedExceptionMessage The Geocoder\Provider\OpenStreetMap provider does not support IPv6 addresses.
      */
     public function testGetGeocodedDataWithLocalhostIPv6()
     {
@@ -403,7 +403,7 @@ class OpenStreetMapTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The OpenStreetMap provider does not support IPv6 addresses.
+     * @expectedExceptionMessage The Geocoder\Provider\OpenStreetMap provider does not support IPv6 addresses.
      */
     public function testGetGeocodedDataWithRealIPv6()
     {

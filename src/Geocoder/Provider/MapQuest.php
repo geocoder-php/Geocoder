@@ -56,12 +56,11 @@ class MapQuest extends AbstractProvider implements Provider
     /**
      * @param HttpAdapterInterface $adapter  An HTTP adapter.
      * @param string               $apiKey   An API key.
-     * @param string|null          $locale   A locale (optional).
      * @param bool                 $licensed True to use MapQuest's licensed endpoints, default is false to use the open endpoints (optional).
      */
-    public function __construct(HttpAdapterInterface $adapter, $apiKey, $locale = null, $licensed = false)
+    public function __construct(HttpAdapterInterface $adapter, $apiKey, $licensed = false)
     {
-        parent::__construct($adapter, $locale);
+        parent::__construct($adapter);
 
         $this->apiKey   = $apiKey;
         $this->licensed = $licensed;

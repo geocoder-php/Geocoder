@@ -127,13 +127,6 @@ class ProviderAggregatorTest extends TestCase
         $this->assertEquals(0, $this->geocoder->getProvider('test2')->geocodeCount);
     }
 
-    public function testReverseReturnsArray()
-    {
-        $this->geocoder->registerProvider(new MockProvider('test1'));
-
-        $this->assertTrue(is_array($this->geocoder->reverse(1, 2)));
-    }
-
     public function testReverseAlwaysReturnsArrayAndDoesNotCallProviderWihEmptyValues()
     {
         $this->geocoder->registerProvider(new MockProviderWithRequestCount('test2'));
