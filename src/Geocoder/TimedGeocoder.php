@@ -25,26 +25,48 @@ class TimedGeocoder implements Geocoder
 
     public function __construct(Geocoder $delegate, Stopwatch $stopwatch)
     {
-        $this->delegate = $delegate;
+        $this->delegate  = $delegate;
         $this->stopwatch = $stopwatch;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function geocode($value)
     {
-       $this->stopwatch->start('geocode', 'geocoder');
-       $result = $this->delegate->geocode($value);
-       $this->stopwatch->stop('geocode');
+        $this->stopwatch->start('geocode', 'geocoder');
+        $result = $this->delegate->geocode($value);
+        $this->stopwatch->stop('geocode');
 
-       return $result;
+        return $result;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function reverse($latitude, $longitude)
     {
-       $this->stopwatch->start('reverse', 'geocoder');
-       $result = $this->delegate->reverse($latitude, $longitude);
-       $this->stopwatch->stop('reverse');
+        $this->stopwatch->start('reverse', 'geocoder');
+        $result = $this->delegate->reverse($latitude, $longitude);
+        $this->stopwatch->stop('reverse');
 
-       return $result;
+        return $result;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getLimit()
+    {
+        return $this->delegate->getLimit();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function limit($limit)
+    {
+        return $this->delegate->limit($limit);
     }
 
     public function __call($method, $args)
