@@ -22,7 +22,7 @@ class TimedGeocoderTest extends TestCase
            ->will($this->returnValue([]));
 
       $this->geocoder->geocode('foo');
-      
+
       $this->assertCount(1, $this->stopwatch->getSectionEvents('__root__'));
    }
 

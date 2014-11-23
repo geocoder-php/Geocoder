@@ -13,7 +13,7 @@ namespace Geocoder;
 use Symfony\Component\Stopwatch\Stopwatch;
 
 /**
- * This Geocoder allows you to profile your API/Database calls. 
+ * This Geocoder allows you to profile your API/Database calls.
  *
  * @author Markus Bachmann <markus.bachmann@bachi.biz>
  */
