@@ -136,21 +136,21 @@ class Yandex extends AbstractProvider implements LocaleAwareProvider
 
             if (! empty($details['lowerCorner'])) {
                 $coordinates = explode(' ', $details['lowerCorner']);
-                $bounds['south'] = $longitude;
-                $bounds['west']  = $latitude;
+                $bounds['south'] = $coordinates[1];
+                $bounds['west']  = $coordinates[0];
             }
 
             if (! empty($details['upperCorner'])) {
                 $coordinates = explode(' ', $details['upperCorner']);
-                $bounds['north'] = $longitude;
-                $bounds['east']  = $latitude;
+                $bounds['north'] = $coordinates[1];
+                $bounds['east']  = $coordinates[0];
             }
 
             $coordinates = explode(' ', $details['pos']);
 
             $results[] = array_merge($this->getDefaults(), array(
-                'latitude'     => $longitude,
-                'longitude'    => $latitude,
+                'latitude'     => $coordinates[1],
+                'longitude'    => $coordinates[0],
                 'bounds'       => $bounds,
                 'streetNumber' => isset($details['PremiseNumber']) ? $details['PremiseNumber'] : null,
                 'streetName'   => isset($details['ThoroughfareName']) ? $details['ThoroughfareName'] : null,

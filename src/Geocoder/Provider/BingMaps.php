@@ -64,7 +64,7 @@ class BingMaps extends AbstractProvider implements LocaleAwareProvider
 
         // This API doesn't handle IPs
         if (filter_var($address, FILTER_VALIDATE_IP)) {
-            throw new UnsupportedOperation('The BingMaps provider does not support IP addresses, only street providers.');
+            throw new UnsupportedOperation('The BingMaps provider does not support IP addresses, only street addresses.');
         }
 
         $query = sprintf(self::GEOCODE_ENDPOINT_URL, $this->getLimit(), urlencode($address), $this->apiKey);
@@ -81,7 +81,7 @@ class BingMaps extends AbstractProvider implements LocaleAwareProvider
             throw new InvalidCredentials('No API key provided.');
         }
 
-        $query = sprintf(self::REVERSE_ENDPOINT_URL, $coordinates[0], $coordinates[1], $this->apiKey);
+        $query = sprintf(self::REVERSE_ENDPOINT_URL, $latitude, $longitude, $this->apiKey);
 
         return $this->executeQuery($query);
     }

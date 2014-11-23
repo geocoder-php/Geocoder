@@ -24,7 +24,7 @@ class BingMapsTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query http://dev.virtualearth.net/REST/v1/Locations/?maxResults=5&q=foobar&key=api_key
+     * @expectedExceptionMessage Could not execute query "http://dev.virtualearth.net/REST/v1/Locations/?maxResults=5&q=foobar&key=api_key".
      */
     public function testGeocodeWithInvalidData()
     {
@@ -34,7 +34,7 @@ class BingMapsTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query http://dev.virtualearth.net/REST/v1/Locations/?maxResults=5&q=&key=api_key
+     * @expectedExceptionMessage Could not execute query "http://dev.virtualearth.net/REST/v1/Locations/?maxResults=5&q=&key=api_key".
      */
     public function testGeocodeWithNull()
     {
@@ -44,7 +44,7 @@ class BingMapsTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query http://dev.virtualearth.net/REST/v1/Locations/?maxResults=5&q=&key=api_key
+     * @expectedExceptionMessage Could not execute query "http://dev.virtualearth.net/REST/v1/Locations/?maxResults=5&q=&key=api_key".
      */
     public function testGeocodeWithEmpty()
     {
@@ -54,7 +54,7 @@ class BingMapsTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The BingMaps does not support IP addresses.
+     * @expectedExceptionMessage The BingMaps provider does not support IP addresses, only street addresses.
      */
     public function testGeocodeWithLocalhostIPv4()
     {
@@ -64,7 +64,7 @@ class BingMapsTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The BingMaps does not support IP addresses.
+     * @expectedExceptionMessage The BingMaps provider does not support IP addresses, only street addresses.
      */
     public function testGeocodeWithLocalhostIPv6()
     {
@@ -74,7 +74,7 @@ class BingMapsTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query http://dev.virtualearth.net/REST/v1/Locations/?maxResults=5&q=10+avenue+Gambetta%2C+Paris%2C+France&key=api_key
+     * @expectedExceptionMessage Could not execute query "http://dev.virtualearth.net/REST/v1/Locations/?maxResults=5&q=10+avenue+Gambetta%2C+Paris%2C+France&key=api_key".
      */
     public function testGeocodeWithAddressGetsNullContent()
     {
@@ -267,7 +267,7 @@ JSON;
 
     /**
      * @expectedException Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query http://dev.virtualearth.net/REST/v1/Locations/1.000000,2.000000?key=api_key
+     * @expectedExceptionMessage Could not execute query "http://dev.virtualearth.net/REST/v1/Locations/1.000000,2.000000?key=api_key".
      */
     public function testReverse()
     {
@@ -277,7 +277,7 @@ JSON;
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query http://dev.virtualearth.net/REST/v1/Locations/48.863216,2.388772?key=api_key
+     * @expectedExceptionMessage Could not execute query "http://dev.virtualearth.net/REST/v1/Locations/48.863216,2.388772?key=api_key".
      */
     public function testReverseWithCoordinatesContentReturnNull()
     {
@@ -324,7 +324,7 @@ JSON;
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The BingMaps does not support IP addresses.
+     * @expectedExceptionMessage The BingMaps provider does not support IP addresses, only street addresses.
      */
     public function testGeocodeWithRealIPv4()
     {
@@ -338,7 +338,7 @@ JSON;
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The BingMaps does not support IP addresses.
+     * @expectedExceptionMessage The BingMaps provider does not support IP addresses, only street addresses.
      */
     public function testGeocodeWithRealIPv6()
     {

@@ -44,7 +44,7 @@ class ArcGISOnlineTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The ArcGISOnline does not support IP addresses.
+     * @expectedExceptionMessage The ArcGISOnline provider does not support IP addresses, only street addresses.
      */
     public function testGetGeocodedDataWithLocalhostIPv4()
     {
@@ -54,7 +54,7 @@ class ArcGISOnlineTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The ArcGISOnline does not support IP addresses.
+     * @expectedExceptionMessage The ArcGISOnline provider does not support IP addresses, only street addresses.
      */
     public function testGetGeocodedDataWithLocalhostIPv6()
     {
@@ -64,7 +64,7 @@ class ArcGISOnlineTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find?text=10+avenue+Gambetta%2C+Paris%2C+France&maxLocations=5&f=json&outFields=*
+     * @expectedExceptionMessage Could not execute query "http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find?text=10+avenue+Gambetta%2C+Paris%2C+France&maxLocations=5&f=json&outFields=*".
      */
     public function testGetGeocodedDataWithAddressGetsNullContent()
     {
@@ -130,7 +130,7 @@ class ArcGISOnlineTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage No results found for query http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find?text=10+avenue+Gambetta%2C+Paris%2C+France
+     * @expectedExceptionMessage No results found for query "http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find?text=10+avenue+Gambetta%2C+Paris%2C+France".
      */
     public function testGetGeocodedDataWithInvalidAddressForSourceCountry()
     {
@@ -140,7 +140,7 @@ class ArcGISOnlineTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage No results found for query https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find?text=10+avenue+Gambetta%2C+Paris%2C+France
+     * @expectedExceptionMessage No results found for query "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find?text=10+avenue+Gambetta%2C+Paris%2C+France".
      */
     public function testGetGeocodedDataWithInvalidAddressWithHttpsForSourceCountry()
     {
@@ -150,7 +150,7 @@ class ArcGISOnlineTest extends TestCase
 
     /**
      * @expectedException Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/reverseGeocode?location=2.000000,1.000000&maxLocations=5&f=json&outFields=*
+     * @expectedExceptionMessage Could not execute query "http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/reverseGeocode?location=2.000000,1.000000&maxLocations=5&f=json&outFields=*".
      */
     public function testGetReversedDataWithInvalid()
     {
@@ -160,7 +160,7 @@ class ArcGISOnlineTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/reverseGeocode?location=2.389020,48.863280&maxLocations=5&f=json&outFields=*
+     * @expectedExceptionMessage Could not execute query "http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/reverseGeocode?location=2.389020,48.863280&maxLocations=5&f=json&outFields=*".
      */
     public function testGetReversedDataWithCoordinatesContentReturnNull()
     {
@@ -283,7 +283,7 @@ class ArcGISOnlineTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The ArcGISOnline does not support IP addresses.
+     * @expectedExceptionMessage The ArcGISOnline provider does not support IP addresses, only street addresses.
      */
     public function testGetGeocodedDataWithRealIPv4()
     {
@@ -293,7 +293,7 @@ class ArcGISOnlineTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The ArcGISOnline does not support IP addresses.
+     * @expectedExceptionMessage The ArcGISOnline provider does not support IP addresses, only street addresses.
      */
     public function testGetGeocodedDataWithRealIPv6()
     {
