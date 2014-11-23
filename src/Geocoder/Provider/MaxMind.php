@@ -61,10 +61,9 @@ class MaxMind extends AbstractProvider implements Provider
      * @param string               $service The specific Maxmind service to use (optional).
      * @param bool                 $useSsl  Whether to use an SSL connection (optional).
      */
-    public function __construct(HttpAdapterInterface $adapter, $apiKey, $service = self::CITY_EXTENDED_SERVICE,
-        $useSsl = false)
+    public function __construct(HttpAdapterInterface $adapter, $apiKey, $service = self::CITY_EXTENDED_SERVICE, $useSsl = false)
     {
-        parent::__construct($adapter, null);
+        parent::__construct($adapter);
 
         $this->apiKey  = $apiKey;
         $this->service = $service;
@@ -74,18 +73,18 @@ class MaxMind extends AbstractProvider implements Provider
     /**
      * {@inheritDoc}
      */
-    public function getGeocodedData($address)
+    public function geocode($address)
     {
         if (null === $this->apiKey) {
             throw new InvalidCredentials('No API Key provided.');
         }
 
         if (!filter_var($address, FILTER_VALIDATE_IP)) {
-            throw new UnsupportedOperation('The MaxMind does not support street addresses.');
+            throw new UnsupportedOperation('The MaxMind provider does not support street addresses, only IP addresses.');
         }
 
         if (in_array($address, array('127.0.0.1', '::1'))) {
-            return array($this->getLocalhostDefaults());
+            return $this->returnResults([ $this->getLocalhostDefaults() ]);
         }
 
         $query = sprintf(
@@ -99,23 +98,26 @@ class MaxMind extends AbstractProvider implements Provider
     /**
      * {@inheritDoc}
      */
-    public function getReversedData(array $coordinates)
+    public function reverse($latitude, $longitude)
     {
-        throw new UnsupportedOperation('The MaxMind is not able to do reverse geocoding.');
+        throw new UnsupportedOperation('The MaxMind provider is not able to do reverse geocoding.');
     }
 
     /**
-     * @param string $query
-     *
-     * @return array
+     * {@inheritDoc}
      */
+    public function getName()
+    {
+        return 'maxmind';
+    }
+
     private function executeQuery($query)
     {
         $content = (string) $this->getAdapter()->get($query)->getBody();
         $fields  = $this->fieldsForService($this->service);
 
         if (null === $content || '' === $content) {
-            throw new NoResult(sprintf('Could not execute query %s', $query));
+            throw new NoResult(sprintf('Could not execute query "%s".', $query));
         }
 
         $data = str_getcsv($content);
@@ -125,11 +127,11 @@ class MaxMind extends AbstractProvider implements Provider
         }
 
         if ('IP_NOT_FOUND' === end($data)) {
-            throw new NoResult('Could not retrieve informations for the ip address provided.');
+            throw new NoResult('Could not retrieve information for the supplied IP address.');
         }
 
         if (count($fields) !== count($data)) {
-            throw new NoResult('Invalid result returned by provider.');
+            throw new NoResult('Invalid result returned by the API.');
         }
 
         $data = array_combine($fields, $data);
@@ -141,27 +143,16 @@ class MaxMind extends AbstractProvider implements Provider
             $data['country'] = $this->countryCodeToCountryName($data['countryCode']);
         }
 
-        return array(array_merge($this->getDefaults(), $data));
+        return $this->returnResults([
+            array_merge($this->getDefaults(), $data)
+        ]);
     }
 
-    /**
-     * @param string $code
-     *
-     * @return string
-     */
     private function countryCodeToCountryName($code)
     {
         $countryNames = $this->getCountryNames();
 
         return $countryNames[$code];
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getName()
-    {
-        return 'maxmind';
     }
 
     /**

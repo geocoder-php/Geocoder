@@ -25,7 +25,7 @@ interface Geocoder
     /**
      * Geocodes a given value.
      *
-     * @param string $value A value to geocode.
+     * @param string $value
      *
      * @return Address[]
      */
@@ -34,10 +34,28 @@ interface Geocoder
     /**
      * Reverses geocode given latitude and longitude values.
      *
-     * @param double $latitude  Latitude.
-     * @param double $longitude Longitude.
+     * @param double $latitude.
+     * @param double $longitude
      *
      * @return Address[]
      */
     public function reverse($latitude, $longitude);
+
+    /**
+     * Returns the maximum number of Address objects that can be
+     * returned by `geocode()` or `reverse()` methods.
+     *
+     * @return integer
+     */
+    public function getLimit();
+
+    /**
+     * Sets the maximum number of `Address` objects that can be
+     * returned by `geocode()` or `reverse()` methods.
+     *
+     * @param integer $limit
+     *
+     * @return Geocoder
+     */
+    public function limit($limit);
 }

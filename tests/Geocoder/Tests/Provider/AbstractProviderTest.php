@@ -13,30 +13,6 @@ use Ivory\HttpAdapter\Message\InternalRequestInterface;
  */
 class AbstractProviderTest extends TestCase
 {
-    public function testSetGetAdapter()
-    {
-        $adapter  = new MockHttpAdapter();
-        $adapter2 = new MockHttpAdapter();
-        $provider = new MockProvider($adapter);
-
-        $this->assertSame($adapter, $provider->getAdapter());
-        $this->assertNull($provider->getLocale());
-
-        $provider->setAdapter($adapter2);
-        $this->assertSame($adapter2, $provider->getAdapter());
-    }
-
-    public function testSetGetLocale()
-    {
-        $adapter  = new MockHttpAdapter();
-        $provider = new MockProvider($adapter, 'fr_FR');
-
-        $this->assertEquals('fr_FR', $provider->getLocale());
-
-        $provider->setLocale('de_DE');
-        $this->assertEquals('de_DE', $provider->getLocale());
-    }
-
     public function testGetLocalhostDefaults()
     {
         $adapter  = new MockHttpAdapter();
@@ -53,16 +29,6 @@ class AbstractProviderTest extends TestCase
 
 class MockProvider extends AbstractProvider
 {
-    public function getAdapter()
-    {
-        return parent::getAdapter();
-    }
-
-    public function getLocale()
-    {
-        return parent::getLocale();
-    }
-
     public function getLocalhostDefaults()
     {
         return parent::getLocalhostDefaults();
@@ -78,6 +44,5 @@ class MockHttpAdapter extends AbstractHttpAdapter
 
     protected function doSend(InternalRequestInterface $internalRequest)
     {
-
     }
 }

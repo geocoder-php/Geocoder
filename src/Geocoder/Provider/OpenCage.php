@@ -18,7 +18,7 @@ use Ivory\HttpAdapter\HttpAdapterInterface;
 /**
  * @author mtm <mtm@opencagedata.com>
  */
-class OpenCage extends AbstractProvider implements Provider
+class OpenCage extends AbstractProvider implements LocaleAwareProvider
 {
     /**
      * @var string
@@ -28,12 +28,12 @@ class OpenCage extends AbstractProvider implements Provider
     /**
      * @var string
      */
-    private $scheme = 'http';
+    private $scheme;
 
     /**
      * @var string
      */
-    private $apiKey = null;
+    private $apiKey;
 
     /**
      * @param HttpAdapterInterface $adapter An HTTP adapter.
@@ -46,24 +46,24 @@ class OpenCage extends AbstractProvider implements Provider
         parent::__construct($adapter, $locale);
 
         $this->apiKey = $apiKey;
-        $this->scheme = $useSsl ? 'https' : $this->scheme;
+        $this->scheme = $useSsl ? 'https' : 'http';
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getGeocodedData($address)
+    public function geocode($address)
     {
-        // This API doesn't handle IPs
-        if (filter_var($address, FILTER_VALIDATE_IP)) {
-            throw new UnsupportedOperation('The OpenCage does not support IP addresses.');
-        }
-
         if (null === $this->apiKey) {
             throw new InvalidCredentials('No API Key provided.');
         }
 
-        $query = sprintf(self::GEOCODE_ENDPOINT_URL, $this->scheme, $this->apiKey, urlencode($address), $this->getMaxResults() );
+        // This API doesn't handle IPs
+        if (filter_var($address, FILTER_VALIDATE_IP)) {
+            throw new UnsupportedOperation('The OpenCage provider does not support IP addresses, only street addresses.');
+        }
+
+        $query = sprintf(self::GEOCODE_ENDPOINT_URL, $this->scheme, $this->apiKey, urlencode($address), $this->getLimit() );
 
         return $this->executeQuery($query);
     }
@@ -71,12 +71,29 @@ class OpenCage extends AbstractProvider implements Provider
     /**
      * {@inheritDoc}
      */
-    public function getReversedData(array $coordinates)
+    public function reverse($latitude, $longitude)
     {
-        // latitude, longitude
-        $address = sprintf("%f, %f", $coordinates[0], $coordinates[1]);
+        $address = sprintf("%f, %f", $latitude, $longitude);
 
-        return $this->getGeocodedData($address);
+        return $this->geocode($address);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getLocale()
+    {
+        return $this->locale;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setLocale($locale)
+    {
+        $this->locale = $locale;
+
+        return $this;
     }
 
     /**
@@ -87,11 +104,6 @@ class OpenCage extends AbstractProvider implements Provider
         return 'opencage';
     }
 
-    /**
-     * @param string $query
-     *
-     * @return array
-     */
     private function executeQuery($query)
     {
         if (null !== $this->getLocale()) {
@@ -101,39 +113,34 @@ class OpenCage extends AbstractProvider implements Provider
         $content = (string) $this->getAdapter()->get($query)->getBody();
 
         if (empty($content)) {
-            throw new NoResult(sprintf('Could not execute query: %s', $query));
+            throw new NoResult(sprintf('Could not execute query "%s".', $query));
         }
 
         $json = json_decode($content, true);
 
         if (!isset($json['total_results']) || $json['total_results'] == 0 ) {
-            throw new NoResult(sprintf('Could not find results for given query: %s', $query));
+            throw new NoResult(sprintf('Could not find results for query "%s".', $query));
         }
 
         $locations = $json['results'];
 
         if (empty($locations)) {
-            throw new NoResult(sprintf('Could not find results for given query: %s', $query));
+            throw new NoResult(sprintf('Could not find results for query "%s".', $query));
         }
 
-        $results = array();
-
-
-
+        $results = [];
         foreach ($locations as $location) {
-
-            $bounds = null;
+            $bounds = [];
             if (isset($location['bounds'])) {
-                $bounds = array(
+                $bounds = [
                     'south' => $location['bounds']['southwest']['lat'],
                     'west'  => $location['bounds']['southwest']['lng'],
                     'north' => $location['bounds']['northeast']['lat'],
                     'east'  => $location['bounds']['northeast']['lng'],
-                );
+                ];
             }
 
-            $comp = $location['components'];
-
+            $comp      = $location['components'];
             $results[] = array_merge($this->getDefaults(), array(
                 'latitude'     => $location['geometry']['lat'],
                 'longitude'    => $location['geometry']['lng'],
@@ -151,6 +158,6 @@ class OpenCage extends AbstractProvider implements Provider
             ));
         }
 
-        return $results;
+        return $this->returnResults($results);
     }
 }

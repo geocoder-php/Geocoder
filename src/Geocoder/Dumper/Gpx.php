@@ -10,7 +10,7 @@
 
 namespace Geocoder\Dumper;
 
-use Geocoder\ProviderBasedGeocoder;
+use Geocoder\Geocoder;
 use Geocoder\Model\Address;
 
 /**
@@ -35,7 +35,7 @@ version="1.0"
     xsi:schemaLocation="http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd">
 
 GPX
-        , ProviderBasedGeocoder::VERSION);
+        , Geocoder::VERSION);
 
         if ($address->getBounds()->isDefined()) {
             $bounds = $address->getBounds();

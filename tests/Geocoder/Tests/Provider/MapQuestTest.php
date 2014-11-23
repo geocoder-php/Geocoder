@@ -18,34 +18,34 @@ class MapQuestTest extends TestCase
 
     /**
      * @expectedException Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not find results for given query: http://open.mapquestapi.com/geocoding/v1/address?location=foobar&outFormat=json&maxResults=5&key=api_key&thumbMaps=false
+     * @expectedExceptionMessage Could not find results for query "http://open.mapquestapi.com/geocoding/v1/address?location=foobar&outFormat=json&maxResults=5&key=api_key&thumbMaps=false".
      */
     public function testGetGeocodedData()
     {
         $provider = new MapQuest($this->getMockAdapterReturns('{}'), 'api_key');
-        $provider->getGeocodedData('foobar');
+        $provider->geocode('foobar');
     }
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query: http://open.mapquestapi.com/geocoding/v1/address?location=10+avenue+Gambetta%2C+Paris%2C+France&outFormat=json&maxResults=5&key=api_key&thumbMaps=false
+     * @expectedExceptionMessage Could not execute query "http://open.mapquestapi.com/geocoding/v1/address?location=10+avenue+Gambetta%2C+Paris%2C+France&outFormat=json&maxResults=5&key=api_key&thumbMaps=false".
      */
     public function testGetGeocodedDataWithAddressGetsNullContent()
     {
         $provider = new MapQuest($this->getMockAdapterReturns(null), 'api_key');
-        $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
+        $provider->geocode('10 avenue Gambetta, Paris, France');
     }
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not find results for given query: http://open.mapquestapi.com/geocoding/v1/reverse?key=api_key&lat=123.000000&lng=456.000000
+     * @expectedExceptionMessage Could not find results for query "http://open.mapquestapi.com/geocoding/v1/reverse?key=api_key&lat=123.000000&lng=456.000000".
      */
     public function testGetNotRelevantData()
     {
         $json = '{"results":[{"locations":[{"street":"","postalCode":"","adminArea5":"","adminArea4":"","adminArea3":"","adminArea1":""}]}]}';
 
         $provider = new MapQuest($this->getMockAdapterReturns($json), 'api_key');
-        $provider->getReversedData(array(123, 456));
+        $provider->reverse(123, 456);
     }
 
     public function testGetGeocodedDataWithRealAddress()
@@ -55,7 +55,7 @@ class MapQuestTest extends TestCase
         }
 
         $provider = new MapQuest($this->getAdapter(), $_SERVER['MAPQUEST_API_KEY']);
-        $results  = $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
+        $results  = $provider->geocode('10 avenue Gambetta, Paris, France');
 
         $this->assertInternalType('array', $results);
         $this->assertCount(1, $results);
@@ -87,7 +87,7 @@ class MapQuestTest extends TestCase
         }
 
         $provider = new MapQuest($this->getMockAdapter(), $_SERVER['MAPQUEST_API_KEY']);
-        $provider->getReversedData(array(1, 2));
+        $provider->reverse(1, 2);
     }
 
     public function testGetReversedDataWithRealCoordinates()
@@ -97,7 +97,7 @@ class MapQuestTest extends TestCase
         }
 
         $provider = new MapQuest($this->getAdapter(), $_SERVER['MAPQUEST_API_KEY']);
-        $result   = $provider->getReversedData(array(54.0484068, -2.7990345));
+        $result   = $provider->reverse(54.0484068, -2.7990345);
 
         $this->assertInternalType('array', $result);
         $this->assertCount(1, $result);
@@ -126,7 +126,7 @@ class MapQuestTest extends TestCase
         }
 
         $provider = new MapQuest($this->getAdapter(), $_SERVER['MAPQUEST_API_KEY']);
-        $results  = $provider->getGeocodedData('Hanover');
+        $results  = $provider->geocode('Hanover');
 
         $this->assertInternalType('array', $results);
         $this->assertCount(5, $results);
@@ -170,7 +170,7 @@ class MapQuestTest extends TestCase
         }
 
         $provider = new MapQuest($this->getAdapter(), $_SERVER['MAPQUEST_API_KEY']);
-        $result   = $provider->getGeocodedData('Kalbacher Hauptstraße 10, 60437 Frankfurt, Germany');
+        $result   = $provider->geocode('Kalbacher Hauptstraße 10, 60437 Frankfurt, Germany');
 
         $this->assertInternalType('array', $result);
         $this->assertCount(1, $result);
@@ -195,79 +195,41 @@ class MapQuestTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The MapQuest does not support IP addresses.
+     * @expectedExceptionMessage The MapQuest provider does not support IP addresses, only street addresses.
      */
     public function testGetGeocodedDataWithLocalhostIPv4()
     {
         $provider = new MapQuest($this->getMockAdapter($this->never()), 'api_key');
-        $provider->getGeocodedData('127.0.0.1');
+        $provider->geocode('127.0.0.1');
     }
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The MapQuest does not support IP addresses.
+     * @expectedExceptionMessage The MapQuest provider does not support IP addresses, only street addresses.
      */
     public function testGetGeocodedDataWithLocalhostIPv6()
     {
         $provider = new MapQuest($this->getMockAdapter($this->never()), 'api_key');
-        $provider->getGeocodedData('::1');
+        $provider->geocode('::1');
     }
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The MapQuest does not support IP addresses.
+     * @expectedExceptionMessage The MapQuest provider does not support IP addresses, only street addresses.
      */
     public function testGetGeocodedDataWithRealIPv4()
     {
         $provider = new MapQuest($this->getAdapter(), 'api_key');
-        $provider->getGeocodedData('74.200.247.59');
+        $provider->geocode('74.200.247.59');
     }
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The MapQuest does not support IP addresses.
+     * @expectedExceptionMessage The MapQuest provider does not support IP addresses, only street addresses.
      */
     public function testGetGeocodedDataWithRealIPv6()
     {
         $provider = new MapQuest($this->getAdapter(), 'api_key');
-        $provider->getGeocodedData('::ffff:74.200.247.59');
-    }
-
-    public function testLicensedVsOpenGeocodeEndpoints()
-    {
-        $licensed = false;
-        $provider = new MapQuestMock($this->getAdapter(), 'api_key', null, $licensed);
-        $queryUrl = $provider->getGeocodedData('Hanover');
-        $this->assertContains('http://open.', $queryUrl);
-
-        $licensed = true;
-        $provider = new MapQuestMock($this->getAdapter(), 'api_key', null, $licensed);
-        $queryUrl = $provider->getGeocodedData('Hanover');
-        $this->assertContains('http://www.', $queryUrl);
-    }
-
-    public function testLicensedVsOpenReverseGeocodeEndpoints()
-    {
-        $licensed = false;
-        $provider = new MapQuestMock($this->getAdapter(), 'api_key', null, $licensed);
-        $queryUrl = $provider->getReversedData(array(54.0484068, -2.7990345));
-        $this->assertContains('http://open.', $queryUrl);
-
-        $licensed = true;
-        $provider = new MapQuestMock($this->getAdapter(), 'api_key', null, $licensed);
-        $queryUrl = $provider->getReversedData(array(54.0484068, -2.7990345));
-        $this->assertContains('http://www.', $queryUrl);
-    }
-}
-
-class MapQuestMock extends MapQuest
-{
-    /**
-     * Short circuits so assertions can inspect the
-     * executed query URL
-     */
-    protected function executeQuery($query)
-    {
-        return $query;
+        $provider->geocode('::ffff:74.200.247.59');
     }
 }

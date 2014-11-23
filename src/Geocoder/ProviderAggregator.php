@@ -11,20 +11,13 @@
 namespace Geocoder;
 
 use Geocoder\Exception\ProviderNotRegistered;
-use Geocoder\Model\AddressFactory;
-use Geocoder\Provider\LocaleAwareProvider;
 use Geocoder\Provider\Provider;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-class ProviderBasedGeocoder implements Geocoder
+class ProviderAggregator implements Geocoder
 {
-    /**
-     * @var integer
-     */
-    const MAX_RESULTS = 5;
-
     /**
      * @var Provider[]
      */
@@ -36,25 +29,16 @@ class ProviderBasedGeocoder implements Geocoder
     private $provider;
 
     /**
-     * @var AddressFactory
-     */
-    private $factory;
-
-    /**
      * @var integer
      */
-    private $maxResults;
+    private $limit;
 
     /**
-     * @param Provider $provider
-     * @param integer  $maxResults
+     * @param integer $limit
      */
-    public function __construct(Provider $provider = null, $maxResults = self::MAX_RESULTS)
+    public function __construct($limit = Provider::MAX_RESULTS)
     {
-        $this->provider = $provider;
-        $this->factory  = new AddressFactory();
-
-        $this->limit($maxResults);
+        $this->limit($limit);
     }
 
     /**
@@ -62,15 +46,16 @@ class ProviderBasedGeocoder implements Geocoder
      */
     public function geocode($value)
     {
+        $value = trim($value);
+
         if (empty($value)) {
             // let's save a request
             return [];
         }
 
-        $provider = $this->getProvider()->setMaxResults($this->getMaxResults());
-        $data     = $provider->getGeocodedData(trim($value));
-
-        return $this->returnResult($data);
+        return $this->getProvider()
+            ->limit($this->getLimit())
+            ->geocode($value);
     }
 
     /**
@@ -83,14 +68,31 @@ class ProviderBasedGeocoder implements Geocoder
             return [];
         }
 
-        $provider = $this->getProvider()->setMaxResults($this->getMaxResults());
-        $data     = $provider->getReversedData([ $latitude, $longitude ]);
-
-        return $this->returnResult($data);
+        return $this->getProvider()
+            ->limit($this->getLimit())
+            ->reverse($latitude, $longitude);
     }
 
     /**
-     * Registers a provider.
+     * {@inheritDoc}
+     */
+    public function limit($limit)
+    {
+        $this->limit = $limit;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getLimit()
+    {
+        return $this->limit;
+    }
+
+    /**
+     * Registers a new provider to the aggregator.
      *
      * @param Provider $provider
      *
@@ -106,7 +108,7 @@ class ProviderBasedGeocoder implements Geocoder
     }
 
     /**
-     * Convenient method to egister a set of providers.
+     * Registers a set of providers.
      *
      * @param Provider[] $providers
      *
@@ -122,9 +124,9 @@ class ProviderBasedGeocoder implements Geocoder
     }
 
     /**
-     * Set the provider to use.
+     * Sets the default provider to use.
      *
-     * @param string $name A provider's name
+     * @param string $name
      *
      * @return ProviderBasedGeocoder
      */
@@ -140,7 +142,7 @@ class ProviderBasedGeocoder implements Geocoder
     }
 
     /**
-     * Return registered providers indexed by name.
+     * Returns all registered providers indexed by their name.
      *
      * @return Provider[]
      */
@@ -150,41 +152,7 @@ class ProviderBasedGeocoder implements Geocoder
     }
 
     /**
-     * @param integer $maxResults
-     *
-     * @return ProviderBasedGeocoder
-     */
-    public function limit($maxResults)
-    {
-        $this->maxResults = $maxResults;
-
-        return $this;
-    }
-
-    /**
-     * @return integer $maxResults
-     */
-    public function getMaxResults()
-    {
-        return $this->maxResults;
-    }
-
-    /**
-     * Change the locale to be used in locale aware requests.
-     *
-     * @param string
-     */
-    public function setLocale($locale)
-    {
-        foreach ($this->providers as $provider) {
-            if ($provider instanceof LocaleAwareProvider) {
-                $provider->setLocale($locale);
-            }
-        }
-    }
-
-    /**
-     * Return the provider to use.
+     * Returns the current provider in use.
      *
      * @return Provider
      */
@@ -199,15 +167,5 @@ class ProviderBasedGeocoder implements Geocoder
         }
 
         return $this->provider;
-    }
-
-    /**
-     * @param array $data An array of data.
-     *
-     * @return \Geocoder\Model\Address[]
-     */
-    protected function returnResult(array $data = [])
-    {
-        return $this->factory->createFromArray($data);
     }
 }

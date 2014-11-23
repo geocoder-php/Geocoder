@@ -15,38 +15,38 @@ class HostIpTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The HostIp does not support Street addresses.
+     * @expectedExceptionMessage The HostIp provider does not support Street addresses.
      */
     public function testGetGeocodedDataWithNull()
     {
         $provider = new HostIp($this->getMockAdapter($this->never()));
-        $provider->getGeocodedData(null);
+        $provider->geocode(null);
     }
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The HostIp does not support Street addresses.
+     * @expectedExceptionMessage The HostIp provider does not support Street addresses.
      */
     public function testGetGeocodedDataWithEmpty()
     {
         $provider = new HostIp($this->getMockAdapter($this->never()));
-        $provider->getGeocodedData('');
+        $provider->geocode('');
     }
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The HostIp does not support Street addresses.
+     * @expectedExceptionMessage The HostIp provider does not support Street addresses.
      */
     public function testGetGeocodedDataWithAddress()
     {
         $provider = new HostIp($this->getMockAdapter($this->never()));
-        $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
+        $provider->geocode('10 avenue Gambetta, Paris, France');
     }
 
     public function testGetGeocodedDataWithLocalhostIPv4()
     {
         $provider = new HostIp($this->getMockAdapter($this->never()));
-        $result   = $provider->getGeocodedData('127.0.0.1');
+        $result   = $provider->geocode('127.0.0.1');
 
         $this->assertInternalType('array', $result);
         $this->assertCount(1, $result);
@@ -66,38 +66,38 @@ class HostIpTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The HostIp does not support IPv6 addresses.
+     * @expectedExceptionMessage The HostIp provider does not support IPv6 addresses.
      */
     public function testGetGeocodedDataWithLocalhostIPv6()
     {
         $provider = new HostIp($this->getMockAdapter($this->never()));
-        $provider->getGeocodedData('::1');
+        $provider->geocode('::1');
     }
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query http://api.hostip.info/get_json.php?ip=88.188.221.14&position=true
+     * @expectedExceptionMessage Could not execute query "http://api.hostip.info/get_json.php?ip=88.188.221.14&position=true".
      */
     public function testGetGeocodedDataWithRealIPv4GetsNullContent()
     {
         $provider = new HostIp($this->getMockAdapterReturns(null));
-        $provider->getGeocodedData('88.188.221.14');
+        $provider->geocode('88.188.221.14');
     }
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query http://api.hostip.info/get_json.php?ip=88.188.221.14&position=true
+     * @expectedExceptionMessage Could not execute query "http://api.hostip.info/get_json.php?ip=88.188.221.14&position=true".
      */
     public function testGetGeocodedDataWithRealIPv4GetsEmptyContent()
     {
         $provider = new HostIp($this->getMockAdapterReturns(''));
-        $provider->getGeocodedData('88.188.221.14');
+        $provider->geocode('88.188.221.14');
     }
 
     public function testGetGeocodedDataWithRealIPv4()
     {
         $provider = new HostIp($this->getAdapter());
-        $result   = $provider->getGeocodedData('88.188.221.14');
+        $result   = $provider->geocode('88.188.221.14');
 
         $this->assertInternalType('array', $result);
         $this->assertCount(1, $result);
@@ -115,28 +115,28 @@ class HostIpTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The HostIp does not support IPv6 addresses.
+     * @expectedExceptionMessage The HostIp provider does not support IPv6 addresses.
      */
     public function testGetGeocodedDataWithRealIPv6()
     {
         $provider = new HostIp($this->getAdapter());
-        $provider->getGeocodedData('::ffff:88.188.221.14');
+        $provider->geocode('::ffff:88.188.221.14');
     }
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The HostIp is not able to do reverse geocoding.
+     * @expectedExceptionMessage The HostIp provider is not able to do reverse geocoding.
      */
     public function testGetReverseData()
     {
         $provider = new HostIp($this->getMockAdapter($this->never()));
-        $provider->getReversedData(array(1, 2));
+        $provider->reverse(1, 2);
     }
 
     public function testGetGeocodedDataWithAnotherIp()
     {
         $provider = new HostIp($this->getAdapter());
-        $result   = $provider->getGeocodedData('33.33.33.22');
+        $result   = $provider->geocode('33.33.33.22');
 
         $this->assertInternalType('array', $result);
         $this->assertCount(1, $result);

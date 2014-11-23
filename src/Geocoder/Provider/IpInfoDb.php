@@ -31,8 +31,8 @@ class IpInfoDb extends AbstractProvider implements Provider
     private $apiKey;
 
     /**
-     * @param HttpAdapterInterface $adapter An HTTP adapter.
-     * @param string               $apiKey  An API key.
+     * @param HttpAdapterInterface $adapter An HTTP adapter
+     * @param string               $apiKey  An API key
      */
     public function __construct(HttpAdapterInterface $adapter, $apiKey)
     {
@@ -44,19 +44,19 @@ class IpInfoDb extends AbstractProvider implements Provider
     /**
      * {@inheritDoc}
      */
-    public function getGeocodedData($address)
+    public function geocode($address)
     {
         if (null === $this->apiKey) {
             throw new InvalidCredentials('No API Key provided');
         }
 
         if (!filter_var($address, FILTER_VALIDATE_IP)) {
-            throw new UnsupportedOperation('The IpInfoDb does not support Street addresses.');
+            throw new UnsupportedOperation('The IpInfoDb provider does not support street addresses, only IPv4 addresses.');
         }
 
         // This API does not support IPv6
         if (filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
-            throw new UnsupportedOperation('The IpInfoDb does not support IPv6 addresses.');
+            throw new UnsupportedOperation('The IpInfoDb provider does not support IPv6 addresses.');
         }
 
         if ('127.0.0.1' === $address) {
@@ -71,9 +71,9 @@ class IpInfoDb extends AbstractProvider implements Provider
     /**
      * {@inheritDoc}
      */
-    public function getReversedData(array $coordinates)
+    public function reverse($latitude, $longitude)
     {
-        throw new UnsupportedOperation('The IpInfoDb is not able to do reverse geocoding.');
+        throw new UnsupportedOperation('The IpInfoDb provider is not able to do reverse geocoding.');
     }
 
     /**
@@ -84,23 +84,18 @@ class IpInfoDb extends AbstractProvider implements Provider
         return 'ip_info_db';
     }
 
-    /**
-     * @param string $query
-     *
-     * @return array
-     */
     private function executeQuery($query)
     {
         $content = (string) $this->getAdapter()->get($query)->getBody();
 
         if (empty($content)) {
-            throw new NoResult(sprintf('Could not execute query %s', $query));
+            throw new NoResult(sprintf('Could not execute query "%s".', $query));
         }
 
         $data = (array) json_decode($content);
 
         if (empty($data) || 'OK' !== $data['statusCode']) {
-            throw new NoResult(sprintf('Could not execute query %s', $query));
+            throw new NoResult(sprintf('Could not execute query "%s".', $query));
         }
 
         $timezone = null;
@@ -108,15 +103,17 @@ class IpInfoDb extends AbstractProvider implements Provider
             $timezone = timezone_name_from_abbr("", (int) substr($data['timeZone'], 0, strpos($data['timeZone'], ':')) * 3600, 0);
         }
 
-        return array(array_merge($this->getDefaults(), array(
-            'latitude'    => isset($data['latitude']) ? $data['latitude'] : null,
-            'longitude'   => isset($data['longitude']) ? $data['longitude'] : null,
-            'locality'    => isset($data['cityName']) ? $data['cityName'] : null,
-            'postalCode'  => isset($data['zipCode']) ? $data['zipCode'] : null,
-            'region'      => isset($data['regionName']) ? $data['regionName'] : null,
-            'country'     => isset($data['countryName']) ? $data['countryName'] : null,
-            'countryCode' => isset($data['countryName']) ? $data['countryCode'] : null,
-            'timezone'    => $timezone,
-        )));
+        return $this->returnResults([
+            array_merge($this->getDefaults(), array(
+                'latitude'    => isset($data['latitude']) ? $data['latitude'] : null,
+                'longitude'   => isset($data['longitude']) ? $data['longitude'] : null,
+                'locality'    => isset($data['cityName']) ? $data['cityName'] : null,
+                'postalCode'  => isset($data['zipCode']) ? $data['zipCode'] : null,
+                'region'      => isset($data['regionName']) ? $data['regionName'] : null,
+                'country'     => isset($data['countryName']) ? $data['countryName'] : null,
+                'countryCode' => isset($data['countryName']) ? $data['countryCode'] : null,
+                'timezone'    => $timezone,
+            ))
+        ]);
     }
 }

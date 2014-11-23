@@ -15,57 +15,57 @@ class GeonamesTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\InvalidCredentials
-     * @expectedExceptionMessage No Username provided
+     * @expectedExceptionMessage No username provided.
      */
     public function testGetGeocodedDataWithNullUsername()
     {
         $provider = new Geonames($this->getMock('\Ivory\HttpAdapter\HttpAdapterInterface'), null);
-        $provider->getGeocodedData('foo');
+        $provider->geocode('foo');
     }
 
     /**
      * @expectedException \Geocoder\Exception\InvalidCredentials
-     * @expectedExceptionMessage No Username provided
+     * @expectedExceptionMessage No username provided.
      */
     public function testGetReversedDataWithNullUsername()
     {
         $provider = new Geonames($this->getMock('\Ivory\HttpAdapter\HttpAdapterInterface'), null);
-        $provider->getReversedData(array(1,2));
+        $provider->reverse(1,2);
     }
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The Geonames does not support IP addresses.
+     * @expectedExceptionMessage The Geonames provider does not support IP addresses.
      */
     public function testGetGeocodedDataWithLocalhostIPv4()
     {
         $provider = new Geonames($this->getMockAdapter($this->never()), 'username');
-        $provider->getGeocodedData('127.0.0.1');
+        $provider->geocode('127.0.0.1');
     }
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The Geonames does not support IP addresses.
+     * @expectedExceptionMessage The Geonames provider does not support IP addresses.
      */
     public function testGetGeocodedDataWithLocalhostIPv6()
     {
         $provider = new Geonames($this->getMockAdapter($this->never()), 'username');
-        $provider->getGeocodedData('::1');
+        $provider->geocode('::1');
     }
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query http://api.geonames.org/searchJSON?q=&maxRows=5&style=full&username=username
+     * @expectedExceptionMessage Could not execute query "http://api.geonames.org/searchJSON?q=&maxRows=5&style=full&username=username".
      */
     public function testGetGeocodedDataWithNull()
     {
         $provider = new Geonames($this->getMockAdapter(), 'username');
-        $provider->getGeocodedData(null);
+        $provider->geocode(null);
     }
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage No places found for query http://api.geonames.org/searchJSON?q=BlaBlaBla&maxRows=5&style=full&username=username
+     * @expectedExceptionMessage No places found for query "http://api.geonames.org/searchJSON?q=BlaBlaBla&maxRows=5&style=full&username=username".
      * @
      */
     public function testGetGeocodedDataWithUnknownCity()
@@ -77,7 +77,7 @@ class GeonamesTest extends TestCase
 }
 JSON;
         $provider = new Geonames($this->getMockAdapterReturns($noPlacesFoundResponse), 'username');
-        $provider->getGeocodedData('BlaBlaBla');
+        $provider->geocode('BlaBlaBla');
     }
 
     public function testGetGeocodedDataWithRealPlace()
@@ -87,12 +87,10 @@ JSON;
         }
 
         $provider = new Geonames($this->getAdapter(), $_SERVER['GEONAMES_USERNAME']);
-        $results  = $provider->getGeocodedData('London');
+        $results  = $provider->geocode('London');
 
-        $this->assertInternalType('array', $results);
         $this->assertCount(5, $results);
 
-        $this->assertInternalType('array', $results[0]);
         $this->assertEquals(51.508528775863, $results[0]['latitude'], '', 0.01);
         $this->assertEquals(-0.12574195861816, $results[0]['longitude'], '', 0.01);
         $this->assertArrayHasKey('south', $results[0]['bounds']);
@@ -190,7 +188,7 @@ JSON;
         }
 
         $provider = new Geonames($this->getAdapter(), $_SERVER['GEONAMES_USERNAME'], 'it_IT');
-        $results  = $provider->getGeocodedData('London');
+        $results  = $provider->geocode('London');
 
         $this->assertInternalType('array', $results);
         $this->assertCount(5, $results);
@@ -293,7 +291,7 @@ JSON;
         }
 
         $provider = new Geonames($this->getAdapter(), $_SERVER['GEONAMES_USERNAME']);
-        $results  = $provider->getReversedData(array(51.50853, -0.12574));
+        $results  = $provider->reverse(array(51.50853, -0.12574));
 
         $this->assertInternalType('array', $results);
         $this->assertCount(1, $results);
@@ -317,7 +315,7 @@ JSON;
         }
 
         $provider = new Geonames($this->getAdapter(), $_SERVER['GEONAMES_USERNAME'], 'it_IT');
-        $results  = $provider->getReversedData(array(51.50853, -0.12574));
+        $results  = $provider->reverse(array(51.50853, -0.12574));
 
         $this->assertInternalType('array', $results);
         $this->assertCount(1, $results);
@@ -336,7 +334,7 @@ JSON;
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query http://api.geonames.org/findNearbyPlaceNameJSON?lat=-80.000000&lng=-170.000000&style=full&maxRows=5&username=username
+     * @expectedExceptionMessage Could not execute query "http://api.geonames.org/findNearbyPlaceNameJSON?lat=-80.000000&lng=-170.000000&style=full&maxRows=5&username=username".
      */
     public function testGetReversedDataWithBadCoordinates()
     {
@@ -346,6 +344,6 @@ JSON;
 }
 JSON;
         $provider = new Geonames($this->getMockAdapterReturns($badCoordinateResponse), 'username');
-        $provider->getReversedData(array(-80.000000, -170.000000));
+        $provider->reverse(-80.000000, -170.000000);
     }
 }

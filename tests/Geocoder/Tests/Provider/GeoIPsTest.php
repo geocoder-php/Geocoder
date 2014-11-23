@@ -16,46 +16,46 @@ class GeoIPsTest extends TestCase
     /**
      * @expectedException \RuntimeException
      */
-    public function testGetGeocodedDataWithNullApiKey()
+    public function testGeocodeWithNullApiKey()
     {
         $provider = new GeoIPs($this->getMockAdapter($this->never()), null);
-        $provider->getGeocodedData('foo');
+        $provider->geocode('foo');
     }
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The GeoIPs does not support street addresses.
      */
-    public function testGetGeocodedDataWithNull()
+    public function testGeocodeWithNull()
     {
         $provider = new GeoIPs($this->getMockAdapter($this->never()), 'api_key');
-        $provider->getGeocodedData(null);
+        $provider->geocode(null);
     }
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The GeoIPs does not support street addresses.
      */
-    public function testGetGeocodedDataWithEmpty()
+    public function testGeocodeWithEmpty()
     {
         $provider = new GeoIPs($this->getMockAdapter($this->never()), 'api_key');
-        $provider->getGeocodedData('');
+        $provider->geocode('');
     }
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The GeoIPs does not support street addresses.
      */
-    public function testGetGeocodedDataWithAddress()
+    public function testGeocodeWithAddress()
     {
         $provider = new GeoIPs($this->getMockAdapter($this->never()), 'api_key');
-        $provider->getGeocodedData('10 avenue Gambetta, Paris, France');
+        $provider->geocode('10 avenue Gambetta, Paris, France');
     }
 
-    public function testGetGeocodedDataWithLocalhostIPv4()
+    public function testGeocodeWithLocalhostIPv4()
     {
         $provider = new GeoIPs($this->getMockAdapter($this->never()), 'api_key');
-        $result   = $provider->getGeocodedData('127.0.0.1');
+        $result   = $provider->geocode('127.0.0.1');
 
         $this->assertInternalType('array', $result);
         $this->assertCount(1, $result);
@@ -77,33 +77,33 @@ class GeoIPsTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The GeoIPs does not support IPv6 addresses.
      */
-    public function testGetGeocodedDataWithLocalhostIPv6()
+    public function testGeocodeWithLocalhostIPv6()
     {
         $provider = new GeoIPs($this->getMockAdapter($this->never()), 'api_key');
-        $provider->getGeocodedData('::1');
+        $provider->geocode('::1');
     }
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Invalid response from GeoIPs server for query http://api.geoips.com/ip/74.200.247.59/key/api_key/output/json/timezone/true/
      */
-    public function testGetGeocodedDataWithRealIPv4GetsNullContent()
+    public function testGeocodeWithRealIPv4GetsNullContent()
     {
         $provider = new GeoIPs($this->getMockAdapterReturns(null), 'api_key');
-        $provider->getGeocodedData('74.200.247.59');
+        $provider->geocode('74.200.247.59');
     }
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Invalid response from GeoIPs server for query http://api.geoips.com/ip/74.200.247.59/key/api_key/output/json/timezone/true/
      */
-    public function testGetGeocodedDataWithRealIPv4GetsEmptyContent()
+    public function testGeocodeWithRealIPv4GetsEmptyContent()
     {
         $provider = new GeoIPs($this->getMockAdapterReturns(''), 'api_key');
-        $provider->getGeocodedData('74.200.247.59');
+        $provider->geocode('74.200.247.59');
     }
 
-    public function testGetGeocodedDataWithRealIPv4GetsFakeContentFormattedEmpty()
+    public function testGeocodeWithRealIPv4GetsFakeContentFormattedEmpty()
     {
         $json = '{"response":{
             "status": "Propper Request",
@@ -132,7 +132,7 @@ class GeoIPsTest extends TestCase
         }}';
 
         $provider = new GeoIPs($this->getMockAdapterReturns($json), 'api_key');
-        $result   = $provider->getGeocodedData('66.147.244.214');
+        $result   = $provider->geocode('66.147.244.214');
 
         $this->assertInternalType('array', $result);
         $this->assertCount(1, $result);
@@ -149,7 +149,7 @@ class GeoIPsTest extends TestCase
         $this->assertNull($result['timezone']);
     }
 
-    public function testGetGeocodedDataWithRealIPv4GetsFakeContent()
+    public function testGeocodeWithRealIPv4GetsFakeContent()
     {
         $json = '{"response":{
             "status": "Propper Request",
@@ -174,7 +174,7 @@ class GeoIPsTest extends TestCase
         }}';
 
         $provider = new GeoIPs($this->getMockAdapterReturns($json), 'api_key');
-        $result   = $provider->getGeocodedData('66.147.244.214');
+        $result   = $provider->geocode('66.147.244.214');
 
         $this->assertInternalType('array', $result);
         $this->assertCount(1, $result);
@@ -198,7 +198,7 @@ class GeoIPsTest extends TestCase
      * @expectedException \Geocoder\Exception\InvalidCredentials
      * @expectedExceptionMessage The API key associated with your request was not recognized.
      */
-    public function testGetGeocodedDataWithRealIPv4AndInvalidApiKeyGetsFakeContent()
+    public function testGeocodeWithRealIPv4AndInvalidApiKeyGetsFakeContent()
     {
         $provider = new GeoIPs(
             $this->getMockAdapterReturns(
@@ -217,14 +217,14 @@ class GeoIPsTest extends TestCase
             ),
             'api_key'
         );
-        $provider->getGeocodedData('74.200.247.59');
+        $provider->geocode('74.200.247.59');
     }
 
     /**
      * @expectedException \Geocoder\Exception\InvalidCredentials
      * @expectedExceptionMessage The API key has not been approved or has been disabled.
      */
-    public function testGetGeocodedDataWithRealIPv4AndInvalidApiKeyGetsFakeContent2()
+    public function testGeocodeWithRealIPv4AndInvalidApiKeyGetsFakeContent2()
     {
         $provider = new GeoIPs(
             $this->getMockAdapterReturns(
@@ -243,14 +243,14 @@ class GeoIPsTest extends TestCase
             ),
             'api_key'
         );
-        $provider->getGeocodedData('74.200.247.59');
+        $provider->geocode('74.200.247.59');
     }
 
     /**
      * @expectedException \Geocoder\Exception\QuotaExceeded
      * @expectedExceptionMessage The service you have requested is over capacity.
      */
-    public function testGetGeocodedDataWithRealIPv4AndQuotaExceeded()
+    public function testGeocodeWithRealIPv4AndQuotaExceeded()
     {
         $provider = new GeoIPs(
             $this->getMockAdapterReturns(
@@ -269,14 +269,14 @@ class GeoIPsTest extends TestCase
             ),
             'api_key'
         );
-        $provider->getGeocodedData('74.200.247.59');
+        $provider->geocode('74.200.247.59');
     }
 
     /**
      * @expectedException \Geocoder\Exception\InvalidArgument
      * @expectedExceptionMessage The API call should include a valid IP address.
      */
-    public function testGetGeocodedDataGetsFakeContentWithIpNotFound()
+    public function testGeocodeGetsFakeContentWithIpNotFound()
     {
         $provider = new GeoIPs(
             $this->getMockAdapterReturns(
@@ -295,14 +295,14 @@ class GeoIPsTest extends TestCase
             ),
             'api_key'
         );
-        $provider->getGeocodedData('74.200.247.59');
+        $provider->geocode('74.200.247.59');
     }
 
     /**
      * @expectedException \Geocoder\Exception\InvalidCredentials
      * @expectedExceptionMessage The API call should include a API key parameter.
      */
-    public function testGetGeocodedDataGetsFakeContentWithKeyNotFound()
+    public function testGeocodeGetsFakeContentWithKeyNotFound()
     {
         $provider = new GeoIPs(
             $this->getMockAdapterReturns(
@@ -321,17 +321,17 @@ class GeoIPsTest extends TestCase
             ),
             'api_key'
         );
-        $provider->getGeocodedData('74.200.247.59');
+        $provider->geocode('74.200.247.59');
     }
 
-    public function testGetGeocodedDataWithRealIPv4()
+    public function testGeocodeWithRealIPv4()
     {
         if (!isset($_SERVER['GEOIPS_API_KEY'])) {
             $this->markTestSkipped('You need to configure the GEOIPS_API_KEY value in phpunit.xml');
         }
 
         $provider = new GeoIPs($this->getAdapter(), $_SERVER['GEOIPS_API_KEY']);
-        $result   = $provider->getGeocodedData('66.147.244.214');
+        $result   = $provider->geocode('66.147.244.214');
 
         $this->assertInternalType('array', $result);
         $this->assertCount(1, $result);
@@ -354,14 +354,14 @@ class GeoIPsTest extends TestCase
     /**
      * @expectedException \Geocoder\Exception\NoResult
      */
-    public function testGetGeocodedDataWithRealIPv4NoResults()
+    public function testGeocodeWithRealIPv4NoResults()
     {
         if (!isset($_SERVER['GEOIPS_API_KEY'])) {
             $this->markTestSkipped('You need to configure the GEOIPS_API_KEY value in phpunit.xml');
         }
 
         $provider = new GeoIPs($this->getAdapter(), $_SERVER['GEOIPS_API_KEY']);
-        $result   = $provider->getGeocodedData('255.255.150.96');
+        $result   = $provider->geocode('255.255.150.96');
     }
 
     /**
@@ -371,6 +371,6 @@ class GeoIPsTest extends TestCase
     public function testGetReverseData()
     {
         $provider = new GeoIPs($this->getMockAdapter($this->never()), 'api_key');
-        $provider->getReversedData(array(1, 2));
+        $provider->reverse(1, 2);
     }
 }

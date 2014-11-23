@@ -10,7 +10,8 @@
 
 namespace Geocoder\Provider;
 
-use Geocoder\ProviderBasedGeocoder;
+use Geocoder\Geocoder;
+use Geocoder\Model\AddressFactory;
 use Ivory\HttpAdapter\HttpAdapterInterface;
 
 /**
@@ -21,26 +22,43 @@ abstract class AbstractProvider
     /**
      * @var HttpAdapterInterface
      */
-    protected $adapter;
+    private $adapter;
 
     /**
-     * @var string
+     * @var AddressFactory
      */
-    protected $locale;
+    private $factory;
 
     /**
      * @var integer
      */
-    protected $maxResults = ProviderBasedGeocoder::MAX_RESULTS;
+    private $limit = Provider::MAX_RESULTS;
 
     /**
-     * @param HttpAdapterInterface $adapter An HTTP adapter.
-     * @param string               $locale  A locale (optional).
+     * @param HttpAdapterInterface $adapter An HTTP adapter
      */
-    public function __construct(HttpAdapterInterface $adapter, $locale = null)
+    public function __construct(HttpAdapterInterface $adapter)
     {
-        $this->setAdapter($adapter);
-        $this->setLocale($locale);
+        $this->adapter = $adapter;
+        $this->factory = new AddressFactory();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function limit($limit)
+    {
+        $this->limit = $limit;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getLimit()
+    {
+        return $this->limit;
     }
 
     /**
@@ -54,70 +72,21 @@ abstract class AbstractProvider
     }
 
     /**
-     * Sets the HTTP adapter to be used for further requests.
-     *
-     * @param HttpAdapterInterface $adapter
-     *
-     * @return AbstractProvider
-     */
-    public function setAdapter($adapter)
-    {
-        $this->adapter = $adapter;
-
-        return $this;
-    }
-
-    /**
-     * Returns the configured locale or null.
-     *
-     * @return string
-     */
-    public function getLocale()
-    {
-        return $this->locale;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setLocale($locale = null)
-    {
-        $this->locale = $locale;
-
-        return $this;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setMaxResults($maxResults)
-    {
-        $this->maxResults = $maxResults;
-
-        return $this;
-    }
-
-    /**
-     * Returns the maximum of wished results.
-     *
-     * @return integer
-     */
-    public function getMaxResults()
-    {
-        return $this->maxResults;
-    }
-
-    /**
      * Returns the default results.
      *
      * @return array
      */
     protected function getDefaults()
     {
-        return array(
+        return [
             'latitude'     => null,
             'longitude'    => null,
-            'bounds'       => null,
+            'bounds'       => [
+                'south' => null,
+                'west'  => null,
+                'north' => null,
+                'east'  => null,
+            ],
             'streetNumber' => null,
             'streetName'   => null,
             'locality'     => null,
@@ -130,7 +99,7 @@ abstract class AbstractProvider
             'country'      => null,
             'countryCode'  => null,
             'timezone'     => null,
-        );
+        ];
     }
 
     /**
@@ -140,23 +109,25 @@ abstract class AbstractProvider
      */
     protected function getLocalhostDefaults()
     {
-        return array(
+        return [
             'locality' => 'localhost',
             'region'   => 'localhost',
             'county'   => 'localhost',
             'country'  => 'localhost',
-        );
+        ];
     }
 
     /**
-     * @param array $results
+     * @param array $data An array of data.
      *
-     * @return array
+     * @return \Geocoder\Model\Address[]
      */
-    protected function fixEncoding(array $results)
+    protected function returnResults(array $data = [])
     {
-        return array_map(function ($value) {
-            return is_string($value) ? utf8_encode($value) : $value;
-        }, $results);
+        if (0 < $this->getLimit()) {
+            $data = array_slice($data, 0, $this->getLimit());
+        }
+
+        return $this->factory->createFromArray($data);
     }
 }

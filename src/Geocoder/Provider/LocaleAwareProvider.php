@@ -24,9 +24,9 @@ interface LocaleAwareProvider extends Provider
     /**
      * Sets the locale to be used.
      *
-     * @param string|null $locale If no locale is set, the provider or service will fallback.
+     * @param string|null
      *
-     * @return LocaleAwareProvider Self object
+     * @return LocaleAwareProvider
      */
-    public function setLocale($locale = null);
+    public function setLocale($locale);
 }
