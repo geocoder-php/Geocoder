@@ -97,9 +97,6 @@ final class AddressFactory
                 $str = $this->lowerize($str);
                 $str = ucwords($str);
             }
-
-            $str = str_replace('-', '', $str);
-            $str = str_replace('', '-', $str);
         }
 
         return $str;
