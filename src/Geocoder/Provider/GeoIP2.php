@@ -43,7 +43,7 @@ class GeoIP2 extends AbstractProvider implements LocaleAwareProvider
         }
 
         if ('127.0.0.1' === $address) {
-            return $this->getLocalhostDefaults();
+            return $this->returnResults([ $this->getLocalhostDefaults() ]);
         }
 
         $result = json_decode($this->executeQuery($address));

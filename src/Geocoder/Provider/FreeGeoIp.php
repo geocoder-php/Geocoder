@@ -33,7 +33,7 @@ class FreeGeoIp extends AbstractProvider implements Provider
         }
 
         if (in_array($address, array('127.0.0.1', '::1'))) {
-            return array($this->getLocalhostDefaults());
+            return $this->returnResults([ $this->getLocalhostDefaults() ]);
         }
 
         $query = sprintf(self::ENDPOINT_URL, $address);

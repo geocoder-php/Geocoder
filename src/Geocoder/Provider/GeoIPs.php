@@ -78,7 +78,7 @@ class GeoIPs extends AbstractProvider implements Provider
         }
 
         if ('127.0.0.1' === $address) {
-            return array($this->getLocalhostDefaults());
+            return $this->returnResults([ $this->getLocalhostDefaults() ]);
         }
 
         $query = sprintf(self::GEOCODE_ENDPOINT_URL, $address, $this->apiKey);
