@@ -81,7 +81,7 @@ class TomTom extends AbstractProvider implements LocaleAwareProvider
             throw new InvalidCredentials('No Map API Key provided.');
         }
 
-        $query = sprintf(self::REVERSE_ENDPOINT_URL, $this->apiKey, $coordinates[0], $coordinates[1]);
+        $query = sprintf(self::REVERSE_ENDPOINT_URL, $this->apiKey, $latitude, $longitude);
 
         return $this->executeQuery($query);
     }

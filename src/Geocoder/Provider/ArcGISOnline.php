@@ -108,7 +108,7 @@ class ArcGISOnline extends AbstractProvider implements Provider
      */
     public function reverse($latitude, $longitude)
     {
-        $query = sprintf(self::REVERSE_ENDPOINT_URL, $this->protocol, $coordinates[1], $coordinates[0]);
+        $query = sprintf(self::REVERSE_ENDPOINT_URL, $this->protocol, $longitude, $latitude);
         $json  = $this->executeQuery($query);
 
         if (property_exists($json, 'error')) {

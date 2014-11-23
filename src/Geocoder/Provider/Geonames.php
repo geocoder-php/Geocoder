@@ -81,7 +81,7 @@ class Geonames extends AbstractProvider implements LocaleAwareProvider
             throw new InvalidCredentials('No username provided.');
         }
 
-        $query = sprintf(self::REVERSE_ENDPOINT_URL, $coordinates[0], $coordinates[1], $this->getLimit(), $this->username);
+        $query = sprintf(self::REVERSE_ENDPOINT_URL, $latitude, $longitude, $this->getLimit(), $this->username);
 
         return $this->executeQuery($query);
     }
