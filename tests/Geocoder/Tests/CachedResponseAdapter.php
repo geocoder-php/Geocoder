@@ -43,8 +43,13 @@ class CachedResponseAdapter extends AbstractHttpAdapter
             $content = unserialize(file_get_contents($file));
             $body = new StringStream($content);
 
-            $response = $this->adapter->getConfiguration()->getMessageFactory()->createResponse();
-            $response->setBody($body);
+            $response = $this->adapter->getConfiguration()->getMessageFactory()->createResponse(
+                200,
+                'OK',
+                '1.1',
+                [],
+                $body
+            );
 
             if (!empty($content)) {
                 return $response;
