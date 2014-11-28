@@ -17,6 +17,7 @@ class ProviderNotRegistered extends \RuntimeException implements Exception
 {
     /**
      * @param string $providerName
+     * @param array  $registeredProviders
      */
     public function __construct($providerName, array $registeredProviders = [])
     {

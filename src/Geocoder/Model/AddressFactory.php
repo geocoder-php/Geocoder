@@ -56,7 +56,9 @@ final class AddressFactory
     }
 
     /**
+     * @param array  $data
      * @param string $key
+     * @return double
      */
     private function readDoubleValue(array $data, $key)
     {
@@ -64,7 +66,9 @@ final class AddressFactory
     }
 
     /**
+     * @param array  $data
      * @param string $key
+     * @return string
      */
     private function readStringValue(array $data, $key)
     {
