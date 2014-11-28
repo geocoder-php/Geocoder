@@ -82,7 +82,7 @@ class FreeGeoIp extends AbstractProvider implements Provider
                 'latitude'    => isset($data['latitude']) ? $data['latitude'] : null,
                 'longitude'   => isset($data['longitude']) ? $data['longitude'] : null,
                 'locality'    => isset($data['city']) ? $data['city'] : null,
-                'postalCode'  => isset($data['zipcode']) ? $data['zipcode'] : null,
+                'postalCode'  => isset($data['zip_code']) ? $data['zip_code'] : null,
                 'region'      => isset($data['region_name']) ? $data['region_name'] : null,
                 'regionCode'  => isset($data['region_code']) ? $data['region_code'] : null,
                 'country'     => isset($data['country_name']) ? $data['country_name'] : null,
