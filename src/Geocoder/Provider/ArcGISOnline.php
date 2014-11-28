@@ -126,8 +126,8 @@ class ArcGISOnline extends AbstractProvider implements Provider
 
         return $this->returnResults([
             array_merge($this->getDefaults(), [
-                'latitude'    => $coordinates[0],
-                'longitude'   => $coordinates[1],
+                'latitude'    => $latitude,
+                'longitude'   => $longitude,
                 'streetName'  => $streetName,
                 'locality'    => $city,
                 'postalCode'  => $zipcode,

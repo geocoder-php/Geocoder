@@ -77,12 +77,14 @@ class HostIp extends AbstractProvider implements Provider
             throw new NoResult(sprintf('Could not execute query "%s".', $query));
         }
 
-        return array(array_merge($this->getDefaults(), array(
-            'latitude'    => $data['lat'],
-            'longitude'   => $data['lng'],
-            'locality'    => $data['city'],
-            'country'     => $data['country_name'],
-            'countryCode' => $data['country_code'],
-        )));
+        return $this->returnResults([
+            array_merge($this->getDefaults(), [
+                'latitude'    => $data['lat'],
+                'longitude'   => $data['lng'],
+                'locality'    => $data['city'],
+                'country'     => $data['country_name'],
+                'countryCode' => $data['country_code'],
+            ])
+        ]);
     }
 }
