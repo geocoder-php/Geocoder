@@ -55,15 +55,18 @@ class GeoIPsTest extends TestCase
     public function testGeocodeWithLocalhostIPv4()
     {
         $provider = new GeoIPs($this->getMockAdapter($this->never()), 'api_key');
-        $result   = $provider->geocode('127.0.0.1');
+        $results  = $provider->geocode('127.0.0.1');
 
-        $this->assertCount(1, $result);
+        $this->assertInternalType('array', $results);
+        $this->assertCount(1, $results);
 
-        $result = $result[0]->toArray();
-        $this->assertEquals('Localhost', $result['locality']);
-        $this->assertEquals('Localhost', $result['region']);
-        $this->assertEquals('Localhost', $result['county']);
-        $this->assertEquals('Localhost', $result['country']);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[0];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals('localhost', $result->getLocality());
+        $this->assertEquals('localhost', $result->getCounty()->getName());
+        $this->assertEquals('localhost', $result->getRegion()->getName());
+        $this->assertEquals('localhost', $result->getCountry()->getName());
     }
 
     /**
@@ -125,19 +128,22 @@ class GeoIPsTest extends TestCase
         }}';
 
         $provider = new GeoIPs($this->getMockAdapterReturns($json), 'api_key');
-        $result   = $provider->geocode('66.147.244.214');
+        $results  = $provider->geocode('66.147.244.214');
 
-        $this->assertCount(1, $result);
+        $this->assertInternalType('array', $results);
+        $this->assertCount(1, $results);
 
-        $result = $result[0]->toArray();
-        $this->assertEmpty($result['country']);
-        $this->assertEmpty($result['countryCode']);
-        $this->assertEmpty($result['regionCode']);
-        $this->assertEmpty($result['locality']);
-        $this->assertEmpty($result['latitude']);
-        $this->assertEmpty($result['longitude']);
-        $this->assertEmpty($result['postalCode']);
-        $this->assertEmpty($result['timezone']);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[0];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertNull($result->getLatitude());
+        $this->assertNull($result->getLongitude());
+        $this->assertNull($result->getPostalCode());
+        $this->assertNull($result->getLocality());
+        $this->assertNull($result->getRegion()->getCode());
+        $this->assertNull($result->getCountry()->getName());
+        $this->assertNull($result->getCountry()->getCode());
+        $this->assertNull($result->getTimezone());
     }
 
     public function testGeocodeWithRealIPv4GetsFakeContent()
@@ -165,22 +171,25 @@ class GeoIPsTest extends TestCase
         }}';
 
         $provider = new GeoIPs($this->getMockAdapterReturns($json), 'api_key');
-        $result   = $provider->geocode('66.147.244.214');
+        $results  = $provider->geocode('66.147.244.214');
 
-        $this->assertCount(1, $result);
+        $this->assertInternalType('array', $results);
+        $this->assertCount(1, $results);
 
-        $result = $result[0]->toArray();
-        $this->assertEquals('United States', $result['country']);
-        $this->assertEquals('US', $result['countryCode']);
-        $this->assertEquals('Utah', $result['region']);
-        $this->assertEquals('UT', $result['regionCode']);
-        $this->assertEquals('Utah', $result['county']);
-        $this->assertEquals('Provo', $result['locality']);
-        $this->assertEquals(40.3402, $result['latitude'], '', 0.0001);
-        $this->assertEquals(-111.6073, $result['longitude'], '', 0.0001);
-        $this->assertEquals('MST', $result['timezone']);
-        $this->assertNull($result['streetName']);
-        $this->assertNull($result['postalCode']);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[0];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(40.3402, $result->getLatitude(), '', 0.0001);
+        $this->assertEquals(-111.6073, $result->getLongitude(), '', 0.0001);
+        $this->assertNull($result->getStreetName());
+        $this->assertNull($result->getPostalCode());
+        $this->assertEquals('Provo', $result->getLocality());
+        $this->assertEquals('Utah', $result->getCounty()->getName());
+        $this->assertEquals('Utah', $result->getRegion()->getName());
+        $this->assertEquals('UT',$result->getRegion()->getCode());
+        $this->assertEquals('United States', $result->getCountry()->getName());
+        $this->assertEquals('US',$result->getCountry()->getCode());
+        $this->assertEquals('MST', $result->getTimezone());
     }
 
     /**
@@ -320,22 +329,25 @@ class GeoIPsTest extends TestCase
         }
 
         $provider = new GeoIPs($this->getAdapter(), $_SERVER['GEOIPS_API_KEY']);
-        $result   = $provider->geocode('66.147.244.214');
+        $results  = $provider->geocode('66.147.244.214');
 
-        $this->assertCount(1, $result);
+        $this->assertInternalType('array', $results);
+        $this->assertCount(1, $results);
 
-        $result = $result[0]->toArray();
-        $this->assertEquals('UNITED STATES', $result['country']);
-        $this->assertEquals('US', $result['countryCode']);
-        $this->assertEquals('UTAH', $result['region']);
-        $this->assertEquals('UT', $result['regionCode']);
-        $this->assertEquals('UTAH', $result['county']);
-        $this->assertEquals('PROVO', $result['locality']);
-        $this->assertNull($result['postalCode']);
-        $this->assertEquals(40.3402, $result['latitude'], '', 0.0001);
-        $this->assertEquals(-111.6073, $result['longitude'], '', 0.0001);
-        $this->assertEquals('MST', $result['timezone']);
-        $this->assertNull($result['streetName']);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[0];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(40.3402, $result->getLatitude(), '', 0.0001);
+        $this->assertEquals(-111.6073, $result->getLongitude(), '', 0.0001);
+        $this->assertNull($result->getStreetName());
+        $this->assertNull($result->getPostalCode());
+        $this->assertEquals('Provo', $result->getLocality());
+        $this->assertEquals('Utah', $result->getCounty()->getName());
+        $this->assertEquals('Utah', $result->getRegion()->getName());
+        $this->assertEquals('UT',$result->getRegion()->getCode());
+        $this->assertEquals('United States', $result->getCountry()->getName());
+        $this->assertEquals('US',$result->getCountry()->getCode());
+        $this->assertEquals('MST', $result->getTimezone());
     }
 
     /**
@@ -348,7 +360,7 @@ class GeoIPsTest extends TestCase
         }
 
         $provider = new GeoIPs($this->getAdapter(), $_SERVER['GEOIPS_API_KEY']);
-        $result   = $provider->geocode('255.255.150.96');
+        $provider->geocode('255.255.150.96');
     }
 
     /**

@@ -46,22 +46,23 @@ class HostIpTest extends TestCase
     public function testGetGeocodedDataWithLocalhostIPv4()
     {
         $provider = new HostIp($this->getMockAdapter($this->never()));
-        $result   = $provider->geocode('127.0.0.1');
+        $results  = $provider->geocode('127.0.0.1');
 
-        $this->assertInternalType('array', $result);
-        $this->assertCount(1, $result);
+        $this->assertInternalType('array', $results);
+        $this->assertCount(1, $results);
 
-        $result = $result[0];
-        $this->assertInternalType('array', $result);
-        $this->assertArrayNotHasKey('latitude', $result);
-        $this->assertArrayNotHasKey('longitude', $result);
-        $this->assertArrayNotHasKey('postalCode', $result);
-        $this->assertArrayNotHasKey('timezone', $result);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[0];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertNull($result->getLatitude());
+        $this->assertNull($result->getLongitude());
+        $this->assertNull($result->getPostalCode());
+        $this->assertNull($result->getTimezone());
 
-        $this->assertEquals('localhost', $result['locality']);
-        $this->assertEquals('localhost', $result['region']);
-        $this->assertEquals('localhost', $result['county']);
-        $this->assertEquals('localhost', $result['country']);
+        $this->assertEquals('localhost', $result->getLocality());
+        $this->assertEquals('localhost', $result->getCounty()->getName());
+        $this->assertEquals('localhost', $result->getRegion()->getName());
+        $this->assertEquals('localhost', $result->getCountry()->getName());
     }
 
     /**
@@ -97,20 +98,21 @@ class HostIpTest extends TestCase
     public function testGetGeocodedDataWithRealIPv4()
     {
         $provider = new HostIp($this->getAdapter());
-        $result   = $provider->geocode('88.188.221.14');
+        $results  = $provider->geocode('88.188.221.14');
 
-        $this->assertInternalType('array', $result);
-        $this->assertCount(1, $result);
+        $this->assertInternalType('array', $results);
+        $this->assertCount(1, $results);
 
-        $result = $result[0];
-        $this->assertInternalType('array', $result);
-        $this->assertEquals(45.5333, $result['latitude'], '', 0.0001);
-        $this->assertEquals(2.6167, $result['longitude'], '', 0.0001);
-        $this->assertNull($result['postalCode']);
-        $this->assertEquals('Aulnat', $result['locality']);
-        $this->assertNull($result['region']);
-        $this->assertEquals('FRANCE', $result['country']);
-        $this->assertEquals('FR', $result['countryCode']);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[0];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(45.5333, $result->getLatitude(), '', 0.0001);
+        $this->assertEquals(2.6167, $result->getLongitude(), '', 0.0001);
+        $this->assertNull($result->getPostalCode());
+        $this->assertEquals('Aulnat', $result->getLocality());
+        $this->assertNull($result->getRegion()->getName());
+        $this->assertEquals('France', $result->getCountry()->getName());
+        $this->assertEquals('FR', $result->getCountry()->getCode());
     }
 
     /**
@@ -136,14 +138,15 @@ class HostIpTest extends TestCase
     public function testGetGeocodedDataWithAnotherIp()
     {
         $provider = new HostIp($this->getAdapter());
-        $result   = $provider->geocode('33.33.33.22');
+        $results  = $provider->geocode('33.33.33.22');
 
-        $this->assertInternalType('array', $result);
-        $this->assertCount(1, $result);
+        $this->assertInternalType('array', $results);
+        $this->assertCount(1, $results);
 
-        $result = $result[0];
-        $this->assertInternalType('array', $result);
-        $this->assertNull($result['latitude']);
-        $this->assertNull($result['longitude']);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[0];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertNull($result->getLatitude());
+        $this->assertNull($result->getLongitude());
     }
 }

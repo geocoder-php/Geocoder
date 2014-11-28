@@ -53,8 +53,8 @@ class GeoPluginTest extends TestCase
 
         $result = $results[0];
         $this->assertEquals('Localhost', $result->getLocality());
-        $this->assertEquals('Localhost', $result->getRegion()->getName());
         $this->assertEquals('Localhost', $result->getCounty()->getName());
+        $this->assertEquals('Localhost', $result->getRegion()->getName());
         $this->assertEquals('Localhost', $result->getCountry()->getName());
     }
 
@@ -68,8 +68,8 @@ class GeoPluginTest extends TestCase
 
         $result = $results[0];
         $this->assertEquals('Localhost', $result->getLocality());
-        $this->assertEquals('Localhost', $result->getRegion()->getName());
         $this->assertEquals('Localhost', $result->getCounty()->getName());
+        $this->assertEquals('Localhost', $result->getRegion()->getName());
         $this->assertEquals('Localhost', $result->getCountry()->getName());
     }
 
@@ -102,11 +102,11 @@ class GeoPluginTest extends TestCase
         $this->assertCount(1, $results);
 
         $result = $results[0];
-        $this->assertEquals('Provo', $result->getLocality());
         $this->assertEquals(40.218102, $result->getLatitude(), '', 0.0001);
         $this->assertEquals(-111.613297, $result->getLongitude(), '', 0.0001);
-        $this->assertEquals('UT', $result->getRegion()->getCode());
+        $this->assertEquals('Provo', $result->getLocality());
         $this->assertEquals('Utah', $result->getRegion()->getName());
+        $this->assertEquals('UT', $result->getRegion()->getCode());
         $this->assertEquals('United States', $result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
     }

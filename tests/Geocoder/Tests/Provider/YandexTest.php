@@ -91,42 +91,55 @@ class YandexTest extends TestCase
         $provider = new Yandex($this->getAdapter());
         $results  = $provider->geocode('10 avenue Gambetta, Paris, France');
 
+        $this->assertInternalType('array', $results);
         $this->assertCount(5, $results);
 
-        $results = array_map(function ($res) {
-            return $res->toArray();
-        }, $results);
-
-        $this->assertEquals(48.863277, $results[0]['latitude'], '', 0.01);
-        $this->assertEquals(2.389016, $results[0]['longitude'], '', 0.01);
-        $this->assertEquals(48.861926, $results[0]['bounds']['south'], '', 0.01);
-        $this->assertEquals(2.386967, $results[0]['bounds']['west'], '', 0.01);
-        $this->assertEquals(48.864629, $results[0]['bounds']['north'], '', 0.01);
-        $this->assertEquals(2.391064, $results[0]['bounds']['east'], '', 0.01);
-        $this->assertEquals(10, $results[0]['streetNumber']);
-        $this->assertEquals('Иль-Де-Франс', $results[0]['region']);
-        $this->assertEquals('Avenue Gambetta', $results[0]['streetName']);
-        $this->assertEquals('Франция', $results[0]['country']);
-        $this->assertEquals('FR', $results[0]['countryCode']);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[0];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(48.863277, $result->getLatitude(), '', 0.01);
+        $this->assertEquals(2.389016, $result->getLongitude(), '', 0.01);
+        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertEquals(48.861926, $result->getBounds()->getSouth(), '', 0.01);
+        $this->assertEquals(2.386967, $result->getBounds()->getWest(), '', 0.01);
+        $this->assertEquals(48.864629, $result->getBounds()->getNorth(), '', 0.01);
+        $this->assertEquals(2.391064, $result->getBounds()->getEast(), '', 0.01);
+        $this->assertEquals(10, $result->getStreetNumber());
+        $this->assertEquals('Avenue Gambetta', $result->getStreetName());
+        $this->assertEquals('Иль-Де-Франс', $result->getRegion()->getName());
+        $this->assertEquals('Франция', $result->getCountry()->getName());
+        $this->assertEquals('FR', $result->getCountry()->getCode());
 
         // not provided
-        $this->assertNull($results[0]['postalCode']);
-        $this->assertNull($results[0]['locality']);
-        $this->assertNull($results[0]['subLocality']);
-        $this->assertNull($results[0]['regionCode']);
-        $this->assertNull($results[0]['timezone']);
+        $this->assertNull($result->getPostalCode());
+        $this->assertNull($result->getSubLocality());
+        $this->assertNull($result->getLocality());
+        $this->assertNull($result->getRegion()->getCode());
+        $this->assertNull($result->getTimezone());
 
-        $this->assertEquals(48.810138, $results[1]['latitude'], '', 0.01);
-        $this->assertEquals(2.435926, $results[1]['longitude'], '', 0.01);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[1];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(48.810138, $result->getLatitude(), '', 0.01);
+        $this->assertEquals(2.435926, $result->getLongitude(), '', 0.01);
 
-        $this->assertEquals(48.892773, $results[2]['latitude'], '', 0.01);
-        $this->assertEquals(2.246174, $results[2]['longitude'], '', 0.01);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[2];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(48.892773, $result->getLatitude(), '', 0.01);
+        $this->assertEquals(2.246174, $result->getLongitude(), '', 0.01);
 
-        $this->assertEquals(48.844640, $results[3]['latitude'], '', 0.01);
-        $this->assertEquals(2.420493, $results[3]['longitude'], '', 0.01);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[3];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(48.844640, $result->getLatitude(), '', 0.01);
+        $this->assertEquals(2.420493, $result->getLongitude(), '', 0.01);
 
-        $this->assertEquals(48.813520, $results[4]['latitude'], '', 0.01);
-        $this->assertEquals(2.324642, $results[4]['longitude'], '', 0.01);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[4];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(48.813520, $result->getLatitude(), '', 0.01);
+        $this->assertEquals(2.324642, $result->getLongitude(), '', 0.01);
     }
 
     public function testGetGeocodedDataWithRealAddressWithUALocale()
@@ -134,42 +147,55 @@ class YandexTest extends TestCase
         $provider = new Yandex($this->getAdapter(), 'uk-UA');
         $results  = $provider->geocode('Copenhagen, Denmark');
 
-        $this->assertCount(5, $results);
+        $this->assertInternalType('array', $results);
+        $this->assertCount(5, $results);;
 
-        $results = array_map(function ($res) {
-            return $res->toArray();
-        }, $results);
-
-        $this->assertEquals(55.675682, $results[0]['latitude'], '', 0.01);
-        $this->assertEquals(12.567602, $results[0]['longitude'], '', 0.01);
-        $this->assertEquals(55.614999, $results[0]['bounds']['south'], '', 0.01);
-        $this->assertEquals(12.45295, $results[0]['bounds']['west'], '', 0.01);
-        $this->assertEquals(55.73259, $results[0]['bounds']['north'], '', 0.01);
-        $this->assertEquals(12.65075, $results[0]['bounds']['east'], '', 0.01);
-        $this->assertNull($results[0]['streetNumber']);
-        $this->assertEquals('Столичная область', $results[0]['region']);
-        $this->assertNull($results[0]['streetName']);
-        $this->assertEquals('Копенгаген', $results[0]['locality']);
-        $this->assertEquals('Данія', $results[0]['country']);
-        $this->assertEquals('DK', $results[0]['countryCode']);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[0];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(55.675682, $result->getLatitude(), '', 0.01);
+        $this->assertEquals(12.567602, $result->getLongitude(), '', 0.01);
+        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertEquals(55.614999, $result->getBounds()->getSouth(), '', 0.01);
+        $this->assertEquals(12.45295, $result->getBounds()->getWest(), '', 0.01);
+        $this->assertEquals(55.73259, $result->getBounds()->getNorth(), '', 0.01);
+        $this->assertEquals(12.65075, $result->getBounds()->getEast(), '', 0.01);
+        $this->assertNull($result->getStreetNumber());
+        $this->assertNull($result->getStreetName());
+        $this->assertEquals('Копенгаген', $result->getLocality());
+        $this->assertEquals('Столичная Область', $result->getRegion()->getName());
+        $this->assertEquals('Данія', $result->getCountry()->getName());
+        $this->assertEquals('DK', $result->getCountry()->getCode());
 
         // not provided
-        $this->assertNull($results[0]['postalCode']);
-        $this->assertNull($results[0]['subLocality']);
-        $this->assertNull($results[0]['regionCode']);
-        $this->assertNull($results[0]['timezone']);
+        $this->assertNull($result->getPostalCode());
+        $this->assertNull($result->getSubLocality());
+        $this->assertNull($result->getRegion()->getCode());
+        $this->assertNull($result->getTimezone());
 
-        $this->assertEquals(55.614439, $results[1]['latitude'], '', 0.01);
-        $this->assertEquals(12.645351, $results[1]['longitude'], '', 0.01);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[1];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(55.614439, $result->getLatitude(), '', 0.01);
+        $this->assertEquals(12.645351, $result->getLongitude(), '', 0.01);
 
-        $this->assertEquals(55.713258, $results[2]['latitude'], '', 0.01);
-        $this->assertEquals(12.534930, $results[2]['longitude'], '', 0.01);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[2];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(55.713258, $result->getLatitude(), '', 0.01);
+        $this->assertEquals(12.534930, $result->getLongitude(), '', 0.01);
 
-        $this->assertEquals(55.698878, $results[3]['latitude'], '', 0.01);
-        $this->assertEquals(12.578211, $results[3]['longitude'], '', 0.01);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[3];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(55.698878, $result->getLatitude(), '', 0.01);
+        $this->assertEquals(12.578211, $result->getLongitude(), '', 0.01);
 
-        $this->assertEquals(55.690380, $results[4]['latitude'], '', 0.01);
-        $this->assertEquals(12.554827, $results[4]['longitude'], '', 0.01);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[4];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(55.690380, $result->getLatitude(), '', 0.01);
+        $this->assertEquals(12.554827, $result->getLongitude(), '', 0.01);
     }
 
     public function testGetGeocodedDataWithRealAddressWithUSLocale()
@@ -177,57 +203,63 @@ class YandexTest extends TestCase
         $provider = new Yandex($this->getAdapter(), 'en-US');
         $results  = $provider->geocode('1600 Pennsylvania Ave, Washington');
 
+        $this->assertInternalType('array', $results);
         $this->assertCount(5, $results);
 
-        $results = array_map(function ($res) {
-            return $res->toArray();
-        }, $results);
-
-        $this->assertEquals(38.898720, $results[0]['latitude'], '', 0.01);
-        $this->assertEquals(-77.036384, $results[0]['longitude'], '', 0.01);
-        $this->assertEquals(38.897119, $results[0]['bounds']['south'], '', 0.01);
-        $this->assertEquals(-77.058078, $results[0]['bounds']['west'], '', 0.01);
-        $this->assertEquals(38.90032, $results[0]['bounds']['north'], '', 0.01);
-        $this->assertEquals(-77.012453, $results[0]['bounds']['east'], '', 0.01);
-        $this->assertEquals('District of Columbia', $results[0]['region']);
-        $this->assertEquals('Pennsylvania Ave NW', $results[0]['streetName']);
-        $this->assertEquals('Washington', $results[0]['locality']);
-        $this->assertEquals('United States', $results[0]['country']);
-        $this->assertEquals('US', $results[0]['countryCode']);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[0];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(38.898720, $result->getLatitude(), '', 0.01);
+        $this->assertEquals(-77.036384, $result->getLongitude(), '', 0.01);
+        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertEquals(38.897119, $result->getBounds()->getSouth(), '', 0.01);
+        $this->assertEquals(-77.058078, $result->getBounds()->getWest(), '', 0.01);
+        $this->assertEquals(38.90032, $result->getBounds()->getNorth(), '', 0.01);
+        $this->assertEquals(-77.012453, $result->getBounds()->getEast(), '', 0.01);
+        $this->assertNull($result->getStreetNumber());
+        $this->assertEquals('Pennsylvania Ave Nw', $result->getStreetName());
+        $this->assertEquals('Washington', $result->getLocality());
+        $this->assertEquals('District of Columbia', $result->getRegion()->getName());
+        $this->assertEquals('United States', $result->getCountry()->getName());
+        $this->assertEquals('US', $result->getCountry()->getCode());
 
         // not provided
-        $this->assertNull($results[0]['postalCode']);
-        $this->assertNull($results[0]['subLocality']);
-        $this->assertNull($results[0]['regionCode']);
-        $this->assertNull($results[0]['timezone']);
+        $this->assertNull($result->getPostalCode());
+        $this->assertNull($result->getSubLocality());
+        $this->assertNull($result->getRegion()->getCode());
+        $this->assertNull($result->getTimezone());
     }
 
     public function testGetGeocodedDataWithRealAddressWithBYLocale()
     {
         $provider = new Yandex($this->getAdapter(), 'be-BY');
-        $result   = $provider->geocode('ул.Ленина, 19, Минск 220030, Республика Беларусь');
+        $results  = $provider->geocode('ул.Ленина, 19, Минск 220030, Республика Беларусь');
 
-        $this->assertCount(1, $result);
+        $this->assertInternalType('array', $results);
+        $this->assertCount(1, $results);
 
-        $result = $result[0]->toArray();
-        $this->assertEquals(53.898077, $result['latitude'], '', 0.01);
-        $this->assertEquals(27.563673, $result['longitude'], '', 0.01);
-        $this->assertEquals(53.896867, $result['bounds']['south'], '', 0.01);
-        $this->assertEquals(27.561624, $result['bounds']['west'], '', 0.01);
-        $this->assertEquals(53.899286, $result['bounds']['north'], '', 0.01);
-        $this->assertEquals(27.565721, $result['bounds']['east'], '', 0.01);
-        $this->assertEquals(19, $result['streetNumber']);
-        $this->assertNull($result['region']);
-        $this->assertEquals('улица Ленина', $result['streetName']);
-        $this->assertEquals('Минск', $result['locality']);
-        $this->assertEquals('Беларусь', $result['country']);
-        $this->assertEquals('BY', $result['countryCode']);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[0];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(53.898077, $result->getLatitude(), '', 0.01);
+        $this->assertEquals(27.563673, $result->getLongitude(), '', 0.01);
+        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertEquals(53.896867, $result->getBounds()->getSouth(), '', 0.01);
+        $this->assertEquals(27.561624, $result->getBounds()->getWest(), '', 0.01);
+        $this->assertEquals(53.899286, $result->getBounds()->getNorth(), '', 0.01);
+        $this->assertEquals(27.565721, $result->getBounds()->getEast(), '', 0.01);
+        $this->assertEquals(19, $result->getStreetNumber());
+        $this->assertEquals('Улица Ленина', $result->getStreetName());
+        $this->assertEquals('Минск', $result->getLocality());
+        $this->assertNull($result->getRegion()->getName());
+        $this->assertEquals('Беларусь', $result->getCountry()->getName());
+        $this->assertEquals('BY', $result->getCountry()->getCode());
 
         // not provided
-        $this->assertNull($result['postalCode']);
-        $this->assertNull($result['subLocality']);
-        $this->assertNull($result['regionCode']);
-        $this->assertNull($result['timezone']);
+        $this->assertNull($result->getPostalCode());
+        $this->assertNull($result->getSubLocality());
+        $this->assertNull($result->getRegion()->getCode());
+        $this->assertNull($result->getTimezone());
     }
 
     /**
@@ -265,36 +297,43 @@ class YandexTest extends TestCase
         $provider = new Yandex($this->getAdapter());
         $results  = $provider->reverse(48.863216489553, 2.388771995902061);
 
+        $this->assertInternalType('array', $results);
         $this->assertCount(3, $results);
 
-        $results = array_map(function ($res) {
-            return $res->toArray();
-        }, $results);
-
-        $this->assertEquals(48.863212, $results[0]['latitude'], '', 0.01);
-        $this->assertEquals(2.388773, $results[0]['longitude'], '', 0.01);
-        $this->assertEquals(48.86294, $results[0]['bounds']['south'], '', 0.01);
-        $this->assertEquals(2.387497, $results[0]['bounds']['west'], '', 0.01);
-        $this->assertEquals(48.877038, $results[0]['bounds']['north'], '', 0.01);
-        $this->assertEquals(2.423214, $results[0]['bounds']['east'], '', 0.01);
-        $this->assertNull($results[0]['streetNumber']);
-        $this->assertEquals('Иль-Де-Франс', $results[0]['region']);
-        $this->assertEquals('Avenue Gambetta', $results[0]['streetName']);
-        $this->assertEquals('Франция', $results[0]['country']);
-        $this->assertEquals('FR', $results[0]['countryCode']);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[0];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(48.863212, $result->getLatitude(), '', 0.01);
+        $this->assertEquals(2.388773, $result->getLongitude(), '', 0.01);
+        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertEquals(48.86294, $result->getBounds()->getSouth(), '', 0.01);
+        $this->assertEquals(2.387497, $result->getBounds()->getWest(), '', 0.01);
+        $this->assertEquals(48.877038, $result->getBounds()->getNorth(), '', 0.01);
+        $this->assertEquals(2.423214, $result->getBounds()->getEast(), '', 0.01);
+        $this->assertNull($result->getStreetNumber());
+        $this->assertEquals('Avenue Gambetta', $result->getStreetName());
+        $this->assertEquals('Иль-Де-Франс', $result->getRegion()->getName());
+        $this->assertEquals('Франция', $result->getCountry()->getName());
+        $this->assertEquals('FR', $result->getCountry()->getCode());
 
         // not provided
-        $this->assertNull($results[0]['postalCode']);
-        $this->assertNull($results[0]['locality']);
-        $this->assertNull($results[0]['subLocality']);
-        $this->assertNull($results[0]['regionCode']);
-        $this->assertNull($results[0]['timezone']);
+        $this->assertNull($result->getPostalCode());
+        $this->assertNull($result->getSubLocality());
+        $this->assertNull($result->getLocality());
+        $this->assertNull($result->getRegion()->getCode());
+        $this->assertNull($result->getTimezone());
 
-        $this->assertEquals(48.709273, $results[1]['latitude'], '', 0.01);
-        $this->assertEquals(2.503371, $results[1]['longitude'], '', 0.01);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[1];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(48.709273, $result->getLatitude(), '', 0.01);
+        $this->assertEquals(2.503371, $result->getLongitude(), '', 0.01);
 
-        $this->assertEquals(46.621810, $results[2]['latitude'], '', 0.01);
-        $this->assertEquals(2.452113, $results[2]['longitude'], '', 0.01);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[2];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(46.621810, $result->getLatitude(), '', 0.01);
+        $this->assertEquals(2.452113, $result->getLongitude(), '', 0.01);
     }
 
     public function testGetReversedDataWithRealCoordinatesWithUSLocaleAndStreeToponym()
@@ -302,42 +341,55 @@ class YandexTest extends TestCase
         $provider = new Yandex($this->getAdapter(), 'en-US', 'street');
         $results  = $provider->reverse(48.863216489553, 2.388771995902061);
 
+        $this->assertInternalType('array', $results);
         $this->assertCount(5, $results);
 
-        $results = array_map(function ($res) {
-            return $res->toArray();
-        }, $results);
-
-        $this->assertEquals(48.87132, $results[0]['latitude'], '', 0.01);
-        $this->assertEquals(2.404017, $results[0]['longitude'], '', 0.01);
-        $this->assertEquals(48.86294, $results[0]['bounds']['south'], '', 0.01);
-        $this->assertEquals(2.387497, $results[0]['bounds']['west'], '', 0.01);
-        $this->assertEquals(48.877038, $results[0]['bounds']['north'], '', 0.01);
-        $this->assertEquals(2.423214, $results[0]['bounds']['east'], '', 0.01);
-        $this->assertNull($results[0]['streetNumber']);
-        $this->assertEquals('Ile-de-France', $results[0]['region']);
-        $this->assertEquals('Avenue Gambetta', $results[0]['streetName']);
-        $this->assertEquals('France', $results[0]['country']);
-        $this->assertEquals('FR', $results[0]['countryCode']);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[0];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(48.87132, $result->getLatitude(), '', 0.01);
+        $this->assertEquals(2.404017, $result->getLongitude(), '', 0.01);
+        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertEquals(48.86294, $result->getBounds()->getSouth(), '', 0.01);
+        $this->assertEquals(2.387497, $result->getBounds()->getWest(), '', 0.01);
+        $this->assertEquals(48.877038, $result->getBounds()->getNorth(), '', 0.01);
+        $this->assertEquals(2.423214, $result->getBounds()->getEast(), '', 0.01);
+        $this->assertNull($result->getStreetNumber());
+        $this->assertEquals('Avenue Gambetta', $result->getStreetName());
+        $this->assertEquals('Ile-de-France', $result->getRegion()->getName());
+        $this->assertEquals('France', $result->getCountry()->getName());
+        $this->assertEquals('FR', $result->getCountry()->getCode());
 
         // not provided
-        $this->assertNull($results[0]['postalCode']);
-        $this->assertNull($results[0]['locality']);
-        $this->assertNull($results[0]['subLocality']);
-        $this->assertNull($results[0]['regionCode']);
-        $this->assertNull($results[0]['timezone']);
+        $this->assertNull($result->getPostalCode());
+        $this->assertNull($result->getSubLocality());
+        $this->assertNull($result->getLocality());
+        $this->assertNull($result->getRegion()->getCode());
+        $this->assertNull($result->getTimezone());
 
-        $this->assertEquals(48.863230, $results[1]['latitude'], '', 0.01);
-        $this->assertEquals(2.388261, $results[1]['longitude'], '', 0.01);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[1];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(48.863230, $result->getLatitude(), '', 0.01);
+        $this->assertEquals(2.388261, $result->getLongitude(), '', 0.01);
 
-        $this->assertEquals(48.866022, $results[2]['latitude'], '', 0.01);
-        $this->assertEquals(2.389662, $results[2]['longitude'], '', 0.01);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[2];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(48.866022, $result->getLatitude(), '', 0.01);
+        $this->assertEquals(2.389662, $result->getLongitude(), '', 0.01);
 
-        $this->assertEquals(48.863918, $results[3]['latitude'], '', 0.01);
-        $this->assertEquals(2.387767, $results[3]['longitude'], '', 0.01);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[3];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(48.863918, $result->getLatitude(), '', 0.01);
+        $this->assertEquals(2.387767, $result->getLongitude(), '', 0.01);
 
-        $this->assertEquals(48.863787, $results[4]['latitude'], '', 0.01);
-        $this->assertEquals(2.389600, $results[4]['longitude'], '', 0.01);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[4];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(48.863787, $result->getLatitude(), '', 0.01);
+        $this->assertEquals(2.389600, $result->getLongitude(), '', 0.01);
     }
 
     public function testGetReversedDataWithRealCoordinatesWithUALocaleAndHouseToponym()
@@ -345,30 +397,31 @@ class YandexTest extends TestCase
         $provider = new Yandex($this->getAdapter(), 'uk-UA', 'house');
         $results  = $provider->reverse(60.4539471768582, 22.2567842183875);
 
+        $this->assertInternalType('array', $results);
         $this->assertCount(5, $results);
 
-        $results = array_map(function ($res) {
-            return $res->toArray();
-        }, $results);
-
-        $this->assertEquals(60.454462, $results[0]['latitude'], '', 0.01);
-        $this->assertEquals(22.256561, $results[0]['longitude'], '', 0.01);
-        $this->assertEquals(60.45345, $results[0]['bounds']['south'], '', 0.01);
-        $this->assertEquals(22.254513, $results[0]['bounds']['west'], '', 0.01);
-        $this->assertEquals(60.455474, $results[0]['bounds']['north'], '', 0.01);
-        $this->assertEquals(22.258609, $results[0]['bounds']['east'], '', 0.01);
-        $this->assertEquals(36, $results[0]['streetNumber']);
-        $this->assertEquals('Исконная Финляндия', $results[0]['region']);
-        //$this->assertEquals('Bangårdsgatan', $results[0]['streetName']);
-        $this->assertEquals('Турку', $results[0]['locality']);
-        $this->assertEquals('Фінляндія', $results[0]['country']);
-        $this->assertEquals('FI', $results[0]['countryCode']);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[0];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(60.454462, $result->getLatitude(), '', 0.01);
+        $this->assertEquals(22.256561, $result->getLongitude(), '', 0.01);
+        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertEquals(60.45345, $result->getBounds()->getSouth(), '', 0.01);
+        $this->assertEquals(22.254513, $result->getBounds()->getWest(), '', 0.01);
+        $this->assertEquals(60.455474, $result->getBounds()->getNorth(), '', 0.01);
+        $this->assertEquals(22.258609, $result->getBounds()->getEast(), '', 0.01);
+        $this->assertEquals(36, $result->getStreetNumber());
+        $this->assertEquals('Ratapihankatu', $result->getStreetName());
+        $this->assertEquals('Турку', $result->getLocality());
+        $this->assertEquals('Исконная Финляндия', $result->getRegion()->getName());
+        $this->assertEquals('Фінляндія', $result->getCountry()->getName());
+        $this->assertEquals('FI', $result->getCountry()->getCode());
 
         // not provided
-        $this->assertNull($results[0]['postalCode']);
-        $this->assertNull($results[0]['subLocality']);
-        $this->assertNull($results[0]['regionCode']);
-        $this->assertNull($results[0]['timezone']);
+        $this->assertNull($result->getPostalCode());
+        $this->assertNull($result->getSubLocality());
+        $this->assertNull($result->getRegion()->getCode());
+        $this->assertNull($result->getTimezone());
     }
 
     public function testGetReversedDataWithRealCoordinatesWithTRLocaleAndLocalityToponym()
@@ -376,29 +429,30 @@ class YandexTest extends TestCase
         $provider = new Yandex($this->getAdapter(), 'tr-TR', 'locality');
         $results  = $provider->reverse(40.900640, 29.198184);
 
+        $this->assertInternalType('array', $results);
         $this->assertCount(5, $results);
 
-        $results = array_map(function ($res) {
-            return $res->toArray();
-        }, $results);
-
-        $this->assertEquals(40.909452, $results[0]['latitude'], '', 0.01);
-        $this->assertEquals(29.138608, $results[0]['longitude'], '', 0.01);
-        $this->assertEquals(40.860413, $results[0]['bounds']['south'], '', 0.01);
-        $this->assertEquals(29.072708, $results[0]['bounds']['west'], '', 0.01);
-        $this->assertEquals(40.960403, $results[0]['bounds']['north'], '', 0.01);
-        $this->assertEquals(29.204508, $results[0]['bounds']['east'], '', 0.01);
-        $this->assertNull($results[0]['streetNumber']);
-        $this->assertEquals('İstanbul', $results[0]['region']);
-        $this->assertNull($results[0]['streetName']);
-        $this->assertEquals('Dragos', $results[0]['locality']);
-        $this->assertEquals('Türkiye', $results[0]['country']);
-        $this->assertEquals('TR', $results[0]['countryCode']);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[0];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(40.909452, $result->getLatitude(), '', 0.01);
+        $this->assertEquals(29.138608, $result->getLongitude(), '', 0.01);
+        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertEquals(40.860413, $result->getBounds()->getSouth(), '', 0.01);
+        $this->assertEquals(29.072708, $result->getBounds()->getWest(), '', 0.01);
+        $this->assertEquals(40.960403, $result->getBounds()->getNorth(), '', 0.01);
+        $this->assertEquals(29.204508, $result->getBounds()->getEast(), '', 0.01);
+        $this->assertNull($result->getStreetName());
+        $this->assertNull($result->getStreetNumber());
+        $this->assertEquals('Dragos', $result->getLocality());
+        $this->assertEquals('İstanbul', $result->getRegion()->getName());
+        $this->assertEquals('Türkiye', $result->getCountry()->getName());
+        $this->assertEquals('TR', $result->getCountry()->getCode());
 
         // not provided
-        $this->assertNull($results[0]['postalCode']);
-        $this->assertNull($results[0]['subLocality']);
-        $this->assertNull($results[0]['regionCode']);
-        $this->assertNull($results[0]['timezone']);
+        $this->assertNull($result->getPostalCode());
+        $this->assertNull($result->getSubLocality());
+        $this->assertNull($result->getRegion()->getCode());
+        $this->assertNull($result->getTimezone());
     }
 }

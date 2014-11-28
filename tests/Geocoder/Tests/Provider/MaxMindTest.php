@@ -57,13 +57,16 @@ class MaxMindTest extends TestCase
         $provider = new MaxMind($this->getMockAdapter($this->never()), 'api_key');
         $results  = $provider->geocode('127.0.0.1');
 
+        $this->assertInternalType('array', $results);
         $this->assertCount(1, $results);
 
-        $result = $results[0]->toArray();
-        $this->assertEquals('Localhost', $result['locality']);
-        $this->assertEquals('Localhost', $result['region']);
-        $this->assertEquals('Localhost', $result['county']);
-        $this->assertEquals('Localhost', $result['country']);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[0];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals('localhost', $result->getLocality());
+        $this->assertEquals('localhost', $result->getCounty()->getName());
+        $this->assertEquals('localhost', $result->getRegion()->getName());
+        $this->assertEquals('localhost', $result->getCountry()->getName());
     }
 
     public function testGetGeocodedDataWithLocalhostIPv6()
@@ -71,13 +74,16 @@ class MaxMindTest extends TestCase
         $provider = new MaxMind($this->getMockAdapter($this->never()), 'api_key');
         $results  = $provider->geocode('::1');
 
+        $this->assertInternalType('array', $results);
         $this->assertCount(1, $results);
 
-        $result = $results[0]->toArray();
-        $this->assertEquals('Localhost', $result['locality']);
-        $this->assertEquals('Localhost', $result['region']);
-        $this->assertEquals('Localhost', $result['county']);
-        $this->assertEquals('Localhost', $result['country']);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[0];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals('localhost', $result->getLocality());
+        $this->assertEquals('localhost', $result->getCounty()->getName());
+        $this->assertEquals('localhost', $result->getRegion()->getName());
+        $this->assertEquals('localhost', $result->getCountry()->getName());
     }
 
     /**
@@ -125,23 +131,26 @@ class MaxMindTest extends TestCase
         $provider = new MaxMind($this->getMockAdapterReturns(',,,,,,,,,'), 'api_key');
         $results  = $provider->geocode('74.200.247.59');
 
+        $this->assertInternalType('array', $results);
         $this->assertCount(1, $results);
 
-        $result = $results[0]->toArray();
-        $this->assertEmpty($result['country']);
-        $this->assertEmpty($result['countryCode']);
-        $this->assertEmpty($result['regionCode']);
-        $this->assertEmpty($result['locality']);
-        $this->assertEmpty($result['latitude']);
-        $this->assertEmpty($result['longitude']);
-        $this->assertEmpty($result['postalCode']);
-        $this->assertEmpty($result['streetNumber']);
-        $this->assertEmpty($result['streetName']);
-        $this->assertEmpty($result['subLocality']);
-        $this->assertEmpty($result['county']);
-        $this->assertEmpty($result['countyCode']);
-        $this->assertEmpty($result['region']);
-        $this->assertEmpty($result['timezone']);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[0];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertNull($result->getLatitude());
+        $this->assertNull($result->getLongitude());
+        $this->assertNull($result->getStreetNumber());
+        $this->assertNull($result->getStreetName());
+        $this->assertNull($result->getPostalCode());
+        $this->assertNull($result->getLocality());
+        $this->assertNull($result->getSubLocality());
+        $this->assertNull($result->getCounty()->getName());
+        $this->assertNull($result->getCounty()->getCode());
+        $this->assertNull($result->getRegion()->getName());
+        $this->assertNull($result->getRegion()->getCode());
+        $this->assertNull($result->getCountry()->getName());
+        $this->assertNull($result->getCountry()->getCode());
+        $this->assertNull($result->getTimezone());
     }
 
     public function testGetGeocodedDataWithRealIPv4GetsFakeContent()
@@ -150,24 +159,26 @@ class MaxMindTest extends TestCase
             'US,TX,Plano,75093,33.034698486328,-96.813400268555,,,,'), 'api_key');
         $results  = $provider->geocode('74.200.247.59');
 
+        $this->assertInternalType('array', $results);
         $this->assertCount(1, $results);
 
-        $result = $results[0]->toArray();
-        $this->assertEquals('United States', $result['country']);
-        $this->assertEquals('US', $result['countryCode']);
-        $this->assertEquals('TX', $result['regionCode']);
-        $this->assertEquals('Plano', $result['locality']);
-        $this->assertEquals(75093, $result['postalCode']);
-        $this->assertEquals(33.034698486328, $result['latitude'], '', 0.0001);
-        $this->assertEquals(-96.813400268555, $result['longitude'], '', 0.0001);
-        $this->assertEmpty($result['timezone']);
-        $this->assertEmpty($result['streetNumber']);
-        $this->assertEmpty($result['streetName']);
-        $this->assertEmpty($result['subLocality']);
-        $this->assertEmpty($result['county']);
-        $this->assertEmpty($result['countyCode']);
-        $this->assertEmpty($result['region']);
-        $this->assertEmpty($result['timezone']);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[0];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(33.034698486328, $result->getLatitude(), '', 0.0001);
+        $this->assertEquals(-96.813400268555, $result->getLongitude(), '', 0.0001);
+        $this->assertNull($result->getStreetNumber());
+        $this->assertNull($result->getStreetName());
+        $this->assertEquals(75093, $result->getPostalCode());
+        $this->assertEquals('Plano', $result->getLocality());
+        $this->assertNull($result->getSubLocality());
+        $this->assertNull($result->getCounty()->getName());
+        $this->assertNull($result->getCounty()->getCode());
+        $this->assertNull($result->getRegion()->getName());
+        $this->assertEquals('TX', $result->getRegion()->getCode());
+        $this->assertEquals('United States', $result->getCountry()->getName());
+        $this->assertEquals('US', $result->getCountry()->getCode());
+        $this->assertNull($result->getTimezone());
 
         $provider2 = new MaxMind($this->getMockAdapterReturns('FR,,,,,,,,,'), 'api_key');
         $result2   = $provider2->geocode('74.200.247.59');
@@ -181,23 +192,26 @@ class MaxMindTest extends TestCase
             'US,CA,San Francisco,94110,37.748402,-122.415604,807,415,"Layered Technologies","Automattic"'), 'api_key');
         $results   = $provider4->geocode('74.200.247.59');
 
+        $this->assertInternalType('array', $results);
         $this->assertCount(1, $results);
 
-        $result = $results[0]->toArray();
-        $this->assertEquals('United States', $result['country']);
-        $this->assertEquals('US', $result['countryCode']);
-        $this->assertEquals('CA', $result['regionCode']);
-        $this->assertEquals('San Francisco', $result['locality']);
-        $this->assertEquals(94110, $result['postalCode']);
-        $this->assertEquals(37.748402, $result['latitude'], '', 0.0001);
-        $this->assertEquals(-122.415604, $result['longitude'], '', 0.0001);
-        $this->assertEmpty($result['streetNumber']);
-        $this->assertEmpty($result['streetName']);
-        $this->assertEmpty($result['subLocality']);
-        $this->assertEmpty($result['county']);
-        $this->assertEmpty($result['countyCode']);
-        $this->assertEmpty($result['region']);
-        $this->assertEmpty($result['timezone']);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[0];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(37.748402, $result->getLatitude(), '', 0.0001);
+        $this->assertEquals(-122.415604, $result->getLongitude(), '', 0.0001);
+        $this->assertNull($result->getStreetNumber());
+        $this->assertNull($result->getStreetName());
+        $this->assertEquals(94110, $result->getPostalCode());
+        $this->assertEquals('San Francisco', $result->getLocality());
+        $this->assertNull($result->getSubLocality());
+        $this->assertNull($result->getCounty()->getName());
+        $this->assertNull($result->getCounty()->getCode());
+        $this->assertNull($result->getRegion()->getName());
+        $this->assertEquals('CA', $result->getRegion()->getCode());
+        $this->assertEquals('United States', $result->getCountry()->getName());
+        $this->assertEquals('US', $result->getCountry()->getCode());
+        $this->assertNull($result->getTimezone());
     }
 
     /**
@@ -290,26 +304,29 @@ class MaxMindTest extends TestCase
         }
 
         $provider = new MaxMind($this->getAdapter(), $_SERVER['MAXMIND_API_KEY']);
-        $result   = $provider->geocode('74.200.247.159');
+        $results  = $provider->geocode('74.200.247.159');
 
-        $this->assertCount(1, $result);
+        $this->assertInternalType('array', $results);
+        $this->assertCount(1, $results);
 
-        $result = $result[0];
-        $this->assertEquals(33.034698, $result['latitude'], '', 0.1);
-        $this->assertEquals(-96.813400, $result['longitude'], '', 0.1);
-        $this->assertEquals('Plano', $result['locality']);
-        $this->assertEquals(75093, $result['postalCode']);
-        $this->assertEquals('TX', $result['regionCode']);
-        $this->assertEquals('United States', $result['country']);
-        $this->assertEquals('US', $result['countryCode']);
-        $this->assertNull($result['bounds']);
-        $this->assertNull($result['streetNumber']);
-        $this->assertNull($result['streetName']);
-        $this->assertNull($result['subLocality']);
-        $this->assertNull($result['county']);
-        $this->assertNull($result['countyCode']);
-        $this->assertNull($result['region']);
-        $this->assertNull($result['timezone']);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[0];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(33.034698, $result->getLatitude(), '', 0.1);
+        $this->assertEquals(-96.813400, $result->getLongitude(), '', 0.1);
+        $this->assertFalse($result->getBounds()->isDefined());
+        $this->assertNull($result->getStreetNumber());
+        $this->assertNull($result->getStreetName());
+        $this->assertEquals(75093, $result->getPostalCode());
+        $this->assertEquals('Plano', $result->getLocality());
+        $this->assertNull($result->getSubLocality());
+        $this->assertNull($result->getCounty()->getName());
+        $this->assertNull($result->getCounty()->getCode());
+        $this->assertNull($result->getRegion()->getName());
+        $this->assertEquals('TX', $result->getRegion()->getCode());
+        $this->assertEquals('United States', $result->getCountry()->getName());
+        $this->assertEquals('US', $result->getCountry()->getCode());
+        $this->assertNull($result->getTimezone());
     }
 
     public function testGetGeocodedDataOmniServiceWithRealIPv4()
@@ -320,26 +337,29 @@ class MaxMindTest extends TestCase
 
         $provider = new MaxMind($this->getAdapter(), $_SERVER['MAXMIND_API_KEY'],
             MaxMind::OMNI_SERVICE);
-        $result   = $provider->geocode('74.200.247.159');
+        $results  = $provider->geocode('74.200.247.159');
 
-        $this->assertCount(1, $result);
+        $this->assertInternalType('array', $results);
+        $this->assertCount(1, $results);
 
-        $result = $result[0];
-        $this->assertEquals(33.0347, $result['latitude'], '', 0.1);
-        $this->assertEquals(-96.8134, $result['longitude'], '', 0.1);
-        $this->assertEquals('Plano', $result['locality']);
-        $this->assertEquals(75093, $result['postalCode']);
-        $this->assertEquals('TX', $result['regionCode']);
-        $this->assertEquals('United States', $result['country']);
-        $this->assertEquals('US', $result['countryCode']);
-        $this->assertNull($result['bounds']);
-        $this->assertNull($result['streetNumber']);
-        $this->assertNull($result['streetName']);
-        $this->assertNull($result['subLocality']);
-        $this->assertNull($result['county']);
-        $this->assertNull($result['countyCode']);
-        $this->assertEquals('Texas', $result['region']);
-        $this->assertEquals('America/Chicago', $result['timezone']);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[0];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(33.0347, $result->getLatitude(), '', 0.1);
+        $this->assertEquals(-96.8134, $result->getLongitude(), '', 0.1);
+        $this->assertFalse($result->getBounds()->isDefined());
+        $this->assertNull($result->getStreetNumber());
+        $this->assertNull($result->getStreetName());
+        $this->assertEquals(75093, $result->getPostalCode());
+        $this->assertEquals('Plano', $result->getLocality());
+        $this->assertNull($result->getSubLocality());
+        $this->assertNull($result->getCounty()->getName());
+        $this->assertNull($result->getCounty()->getCode());
+        $this->assertEquals('Texas', $result->getRegion()->getName());
+        $this->assertEquals('TX', $result->getRegion()->getCode());
+        $this->assertEquals('United States', $result->getCountry()->getName());
+        $this->assertEquals('US', $result->getCountry()->getCode());
+        $this->assertEquals('America/Chicago', $result->getTimezone());
     }
 
     public function testGetGeocodedDataWithRealIPv6()
@@ -349,26 +369,29 @@ class MaxMindTest extends TestCase
         }
 
         $provider = new MaxMind($this->getAdapter(), $_SERVER['MAXMIND_API_KEY']);
-        $result   = $provider->geocode('66.147.244.214');
+        $results  = $provider->geocode('66.147.244.214');
 
-        $this->assertCount(1, $result);
+        $this->assertInternalType('array', $results);
+        $this->assertCount(1, $results);
 
-        $result = $result[0]->toArray();
-        $this->assertEquals(40.2181, $result['latitude'], '', 0.1);
-        $this->assertEquals(-111.6133, $result['longitude'], '', 0.1);
-        $this->assertEquals('Provo', $result['locality']);
-        $this->assertEquals(84606, $result['postalCode']);
-        $this->assertEquals('UT', $result['regionCode']);
-        $this->assertEquals('United States', $result['country']);
-        $this->assertEquals('US', $result['countryCode']);
-        $this->assertNull($result['bounds']);
-        $this->assertNull($result['streetNumber']);
-        $this->assertNull($result['streetName']);
-        $this->assertNull($result['subLocality']);
-        $this->assertNull($result['county']);
-        $this->assertNull($result['countyCode']);
-        $this->assertNull($result['region']);
-        $this->assertNull($result['timezone']);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[0];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(40.2181, $result->getLatitude(), '', 0.1);
+        $this->assertEquals(-111.6133, $result->getLongitude(), '', 0.1);
+        $this->assertFalse($result->getBounds()->isDefined());
+        $this->assertNull($result->getStreetNumber());
+        $this->assertNull($result->getStreetName());
+        $this->assertEquals(84606, $result->getPostalCode());
+        $this->assertEquals('Provo', $result->getLocality());
+        $this->assertNull($result->getSubLocality());
+        $this->assertNull($result->getCounty()->getName());
+        $this->assertNull($result->getCounty()->getCode());
+        $this->assertNull($result->getRegion()->getName());
+        $this->assertEquals('UT', $result->getRegion()->getCode());
+        $this->assertEquals('United States', $result->getCountry()->getName());
+        $this->assertEquals('US', $result->getCountry()->getCode());
+        $this->assertNull($result->getTimezone());
     }
 
     public function testGetGeocodedDataOmniServiceWithRealIPv6WithSsl()
@@ -379,28 +402,29 @@ class MaxMindTest extends TestCase
 
         $provider = new MaxMind($this->getAdapter(), $_SERVER['MAXMIND_API_KEY'],
             MaxMind::OMNI_SERVICE, true);
-        $result   = $provider->geocode('::ffff:66.147.244.214');
+        $results  = $provider->geocode('::ffff:66.147.244.214');
 
-        $this->assertInternalType('array', $result);
-        $this->assertCount(1, $result);
+        $this->assertInternalType('array', $results);
+        $this->assertCount(1, $results);
 
-        $result = $result[0];
-        $this->assertInternalType('array', $result);
-        $this->assertEquals(40.2181, $result['latitude'], '', 0.1);
-        $this->assertEquals(-111.6133, $result['longitude'], '', 0.1);
-        $this->assertEquals('Provo', $result['locality']);
-        $this->assertEquals(84606, $result['postalCode']);
-        $this->assertEquals('UT', $result['regionCode']);
-        $this->assertEquals('United States', $result['country']);
-        $this->assertEquals('US', $result['countryCode']);
-        $this->assertNull($result['bounds']);
-        $this->assertNull($result['streetNumber']);
-        $this->assertNull($result['streetName']);
-        $this->assertNull($result['subLocality']);
-        $this->assertNull($result['county']);
-        $this->assertNull($result['countyCode']);
-        $this->assertEquals('Utah', $result['region']);
-        $this->assertEquals('America/Denver', $result['timezone']);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[0];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(40.2181, $result->getLatitude(), '', 0.1);
+        $this->assertEquals(-111.6133, $result->getLongitude(), '', 0.1);
+        $this->assertFalse($result->getBounds()->isDefined());
+        $this->assertNull($result->getStreetNumber());
+        $this->assertNull($result->getStreetName());
+        $this->assertEquals(84606, $result->getPostalCode());
+        $this->assertEquals('Provo', $result->getLocality());
+        $this->assertNull($result->getSubLocality());
+        $this->assertNull($result->getCounty()->getName());
+        $this->assertNull($result->getCounty()->getCode());
+        $this->assertEquals('Utah', $result->getRegion()->getName());
+        $this->assertEquals('UT', $result->getRegion()->getCode());
+        $this->assertEquals('United States', $result->getCountry()->getName());
+        $this->assertEquals('US', $result->getCountry()->getCode());
+        $this->assertEquals('America/Denver', $result->getTimezone());
     }
 
     /**

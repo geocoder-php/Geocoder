@@ -46,29 +46,35 @@ class FreeGeoIpTest extends TestCase
     public function testGeocodeWithLocalhostIPv4()
     {
         $provider = new FreeGeoIp($this->getMockAdapter($this->never()));
-        $result   = $provider->geocode('127.0.0.1');
+        $results  = $provider->geocode('127.0.0.1');
 
-        $this->assertCount(1, $result);
+        $this->assertInternalType('array', $results);
+        $this->assertCount(1, $results);
 
-        $result = $result[0]->toArray();
-        $this->assertEquals('Localhost', $result['locality']);
-        $this->assertEquals('Localhost', $result['region']);
-        $this->assertEquals('Localhost', $result['county']);
-        $this->assertEquals('Localhost', $result['country']);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[0];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals('localhost', $result->getLocality());
+        $this->assertEquals('localhost', $result->getCounty()->getName());
+        $this->assertEquals('localhost', $result->getRegion()->getName());
+        $this->assertEquals('localhost', $result->getCountry()->getName());
     }
 
     public function testGeocodeWithLocalhostIPv6()
     {
         $provider = new FreeGeoIp($this->getMockAdapter($this->never()));
-        $result   = $provider->geocode('::1');
+        $results  = $provider->geocode('::1');
 
-        $this->assertCount(1, $result);
+        $this->assertInternalType('array', $results);
+        $this->assertCount(1, $results);
 
-        $result = $result[0]->toArray();
-        $this->assertEquals('Localhost', $result['locality']);
-        $this->assertEquals('Localhost', $result['region']);
-        $this->assertEquals('Localhost', $result['county']);
-        $this->assertEquals('Localhost', $result['country']);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[0];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals('localhost', $result->getLocality());
+        $this->assertEquals('localhost', $result->getCounty()->getName());
+        $this->assertEquals('localhost', $result->getRegion()->getName());
+        $this->assertEquals('localhost', $result->getCountry()->getName());
     }
 
     /**
@@ -94,35 +100,41 @@ class FreeGeoIpTest extends TestCase
     public function testGeocodeWithRealIPv4()
     {
         $provider = new FreeGeoIp($this->getAdapter());
-        $result   = $provider->geocode('74.200.247.59');
+        $results  = $provider->geocode('74.200.247.59');
 
-        $this->assertCount(1, $result);
+        $this->assertInternalType('array', $results);
+        $this->assertCount(1, $results);
 
-        $result = $result[0]->toArray();
-        $this->assertEquals(33.0347, $result['latitude'], '', 0.01);
-        $this->assertEquals(-96.8134, $result['longitude'], '', 0.01);
-        $this->assertEquals(75093, $result['postalCode']);
-        $this->assertEquals('Plano', $result['locality']);
-        $this->assertEquals('Texas', $result['region']);
-        $this->assertEquals('United States', $result['country']);
-        $this->assertEquals('US', $result['countryCode']);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[0];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(33.0347, $result->getLatitude(), '', 0.01);
+        $this->assertEquals(-96.8134, $result->getLongitude(), '', 0.01);
+        $this->assertEquals(75093, $result->getPostalCode());
+        $this->assertEquals('Plano', $result->getLocality());
+        $this->assertEquals('Texas', $result->getRegion()->getName());
+        $this->assertEquals('United States', $result->getCountry()->getName());
+        $this->assertEquals('US', $result->getCountry()->getCode());
     }
 
     public function testGeocodeWithRealIPv6()
     {
         $provider = new FreeGeoIp($this->getAdapter());
-        $result   = $provider->geocode('::ffff:74.200.247.59');
+        $results  = $provider->geocode('::ffff:74.200.247.59');
 
-        $this->assertCount(1, $result);
+        $this->assertInternalType('array', $results);
+        $this->assertCount(1, $results);
 
-        $result = $result[0]->toArray();
-        $this->assertEquals(33.0347, $result['latitude'], '', 0.01);
-        $this->assertEquals(-96.8134, $result['longitude'], '', 0.01);
-        $this->assertEquals(75093, $result['postalCode']);
-        $this->assertEquals('Plano', $result['locality']);
-        $this->assertEquals('Texas', $result['region']);
-        $this->assertEquals('United States', $result['country']);
-        $this->assertEquals('US', $result['countryCode']);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[0];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(33.0347, $result->getLatitude(), '', 0.01);
+        $this->assertEquals(-96.8134, $result->getLongitude(), '', 0.01);
+        $this->assertEquals(75093, $result->getPostalCode());
+        $this->assertEquals('Plano', $result->getLocality());
+        $this->assertEquals('Texas', $result->getRegion()->getName());
+        $this->assertEquals('United States', $result->getCountry()->getName());
+        $this->assertEquals('US', $result->getCountry()->getCode());
     }
 
     /**
@@ -138,44 +150,45 @@ class FreeGeoIpTest extends TestCase
     public function testGeocodeWithUSIPv4()
     {
         $provider = new FreeGeoIp($this->getAdapter());
-        $result   = $provider->geocode('74.200.247.59');
+        $results  = $provider->geocode('74.200.247.59');
 
-        $this->assertCount(1, $result);
+        $this->assertInternalType('array', $results);
+        $this->assertCount(1, $results);
 
-        $result = $result[0]->toArray();
-        $this->assertEquals('48', $result['regionCode']);
+        $this->assertEquals('48', $results[0]->getRegion()->getCode());
     }
 
     public function testGeocodeWithUSIPv6()
     {
         $provider = new FreeGeoIp($this->getAdapter());
-        $result   = $provider->geocode('::ffff:74.200.247.59');
+        $results  = $provider->geocode('::ffff:74.200.247.59');
 
-        $this->assertCount(1, $result);
+        $this->assertInternalType('array', $results);
+        $this->assertCount(1, $results);
 
-        $result = $result[0]->toArray();
-        $this->assertEquals('48', $result['regionCode']);
+        $this->assertEquals('48', $results[0]->getRegion()->getCode());
     }
 
     public function testGeocodeWithUKIPv4()
     {
         $provider = new FreeGeoIp($this->getAdapter());
-        $result   = $provider->geocode('132.185.255.60');
+        $results  = $provider->geocode('132.185.255.60');
 
-        $this->assertCount(1, $result);
+        $this->assertInternalType('array', $results);
+        $this->assertCount(1, $results);
 
-        $result = $result[0]->toArray();
-        $this->assertEquals('H9', $result['regionCode']);
+        $this->assertEquals('H9', $results[0]->getRegion()->getCode());
     }
 
     public function testGeocodeWithUKIPv6()
     {
         $provider = new FreeGeoIp($this->getAdapter());
-        $result   = $provider->geocode('::ffff:132.185.255.60');
+        $results  = $provider->geocode('::ffff:132.185.255.60');
 
-        $this->assertCount(1, $result);
+        $this->assertInternalType('array', $results);
+        $this->assertCount(1, $results);
 
-        $this->assertEquals('H9', $result[0]->getRegion()->getCode());
+        $this->assertEquals('H9', $results[0]->getRegion()->getCode());
     }
 
     /**
