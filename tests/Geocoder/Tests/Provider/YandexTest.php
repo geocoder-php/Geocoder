@@ -20,7 +20,7 @@ class YandexTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The Yandex does not support IP addresses.
      */
-    public function testGetGeocodedDataWithLocalhostIPv4()
+    public function testGeocodeWithLocalhostIPv4()
     {
         $provider = new Yandex($this->getMockAdapter($this->never()));
         $provider->geocode('127.0.0.1');
@@ -30,7 +30,7 @@ class YandexTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The Yandex does not support IP addresses.
      */
-    public function testGetGeocodedDataWithLocalhostIPv6()
+    public function testGeocodeWithLocalhostIPv6()
     {
         $provider = new Yandex($this->getMockAdapter($this->never()));
         $provider->geocode('::1');
@@ -40,7 +40,7 @@ class YandexTest extends TestCase
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query "http://geocode-maps.yandex.ru/1.x/?format=json&geocode=&results=5".
      */
-    public function testGetGeocodedDataWithNull()
+    public function testGeocodeWithNull()
     {
         $provider = new Yandex($this->getMockAdapter());
         $provider->geocode(null);
@@ -50,7 +50,7 @@ class YandexTest extends TestCase
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query "http://geocode-maps.yandex.ru/1.x/?format=json&geocode=&results=5".
      */
-    public function testGetGeocodedDataWithEmpty()
+    public function testGeocodeWithEmpty()
     {
         $provider = new Yandex($this->getMockAdapter());
         $provider->geocode('');
@@ -60,7 +60,7 @@ class YandexTest extends TestCase
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query "http://geocode-maps.yandex.ru/1.x/?format=json&geocode=foobar&results=5".
      */
-    public function testGetGeocodedDataWithInvalidData()
+    public function testGeocodeWithInvalidData()
     {
         $provider = new Yandex($this->getMockAdapter());
         $provider->geocode('foobar');
@@ -70,7 +70,7 @@ class YandexTest extends TestCase
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query "http://geocode-maps.yandex.ru/1.x/?format=json&geocode=Kabasakal+Caddesi%2C+Istanbul%2C+Turkey&results=5".
      */
-    public function testGetGeocodedDataWithAddressGetsNullContent()
+    public function testGeocodeWithAddressGetsNullContent()
     {
         $provider = new Yandex($this->getMockAdapterReturns(null));
         $provider->geocode('Kabasakal Caddesi, Istanbul, Turkey');
@@ -80,13 +80,13 @@ class YandexTest extends TestCase
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query "http://geocode-maps.yandex.ru/1.x/?format=json&geocode=foobar&results=5".
      */
-    public function testGetGeocodedDataWithFakeAddress()
+    public function testGeocodeWithFakeAddress()
     {
         $provider = new Yandex($this->getAdapter());
         $provider->geocode('foobar');
     }
 
-    public function testGetGeocodedDataWithRealAddress()
+    public function testGeocodeWithRealAddress()
     {
         $provider = new Yandex($this->getAdapter());
         $results  = $provider->geocode('10 avenue Gambetta, Paris, France');
@@ -142,7 +142,7 @@ class YandexTest extends TestCase
         $this->assertEquals(2.324642, $result->getLongitude(), '', 0.01);
     }
 
-    public function testGetGeocodedDataWithRealAddressWithUALocale()
+    public function testGeocodeWithRealAddressWithUALocale()
     {
         $provider = new Yandex($this->getAdapter(), 'uk-UA');
         $results  = $provider->geocode('Copenhagen, Denmark');
@@ -198,7 +198,7 @@ class YandexTest extends TestCase
         $this->assertEquals(12.554827, $result->getLongitude(), '', 0.01);
     }
 
-    public function testGetGeocodedDataWithRealAddressWithUSLocale()
+    public function testGeocodeWithRealAddressWithUSLocale()
     {
         $provider = new Yandex($this->getAdapter(), 'en-US');
         $results  = $provider->geocode('1600 Pennsylvania Ave, Washington');
@@ -230,7 +230,7 @@ class YandexTest extends TestCase
         $this->assertNull($result->getTimezone());
     }
 
-    public function testGetGeocodedDataWithRealAddressWithBYLocale()
+    public function testGeocodeWithRealAddressWithBYLocale()
     {
         $provider = new Yandex($this->getAdapter(), 'be-BY');
         $results  = $provider->geocode('ул.Ленина, 19, Минск 220030, Республика Беларусь');
@@ -266,7 +266,7 @@ class YandexTest extends TestCase
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query "http://geocode-maps.yandex.ru/1.x/?format=json&geocode=2.000000,1.000000&results=5".
      */
-    public function testGetReversedData()
+    public function testReverse()
     {
         $provider = new Yandex($this->getMockAdapter());
         $provider->reverse(1, 2);
@@ -276,7 +276,7 @@ class YandexTest extends TestCase
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query "http://geocode-maps.yandex.ru/1.x/?format=json&geocode=0.000000,0.000000&results=5".
      */
-    public function testGetReversedDataWithInvalidData()
+    public function testReverseWithInvalidData()
     {
         $provider = new Yandex($this->getMockAdapter());
         $provider->reverse('foo', 'bar');
@@ -286,13 +286,13 @@ class YandexTest extends TestCase
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query "http://geocode-maps.yandex.ru/1.x/?format=json&geocode=2.388772,48.863216&results=5".
      */
-    public function testGetReversedDataWithAddressGetsNullContent()
+    public function testReverseWithAddressGetsNullContent()
     {
         $provider = new Yandex($this->getMockAdapterReturns(null));
         $provider->reverse(48.863216489553, 2.388771995902061);
     }
 
-    public function testGetReversedDataWithRealCoordinates()
+    public function testReverseWithRealCoordinates()
     {
         $provider = new Yandex($this->getAdapter());
         $results  = $provider->reverse(48.863216489553, 2.388771995902061);
@@ -336,7 +336,7 @@ class YandexTest extends TestCase
         $this->assertEquals(2.452113, $result->getLongitude(), '', 0.01);
     }
 
-    public function testGetReversedDataWithRealCoordinatesWithUSLocaleAndStreeToponym()
+    public function testReverseWithRealCoordinatesWithUSLocaleAndStreeToponym()
     {
         $provider = new Yandex($this->getAdapter(), 'en-US', 'street');
         $results  = $provider->reverse(48.863216489553, 2.388771995902061);
@@ -392,7 +392,7 @@ class YandexTest extends TestCase
         $this->assertEquals(2.389600, $result->getLongitude(), '', 0.01);
     }
 
-    public function testGetReversedDataWithRealCoordinatesWithUALocaleAndHouseToponym()
+    public function testReverseWithRealCoordinatesWithUALocaleAndHouseToponym()
     {
         $provider = new Yandex($this->getAdapter(), 'uk-UA', 'house');
         $results  = $provider->reverse(60.4539471768582, 22.2567842183875);
@@ -424,7 +424,7 @@ class YandexTest extends TestCase
         $this->assertNull($result->getTimezone());
     }
 
-    public function testGetReversedDataWithRealCoordinatesWithTRLocaleAndLocalityToponym()
+    public function testReverseWithRealCoordinatesWithTRLocaleAndLocalityToponym()
     {
         $provider = new Yandex($this->getAdapter(), 'tr-TR', 'locality');
         $results  = $provider->reverse(40.900640, 29.198184);

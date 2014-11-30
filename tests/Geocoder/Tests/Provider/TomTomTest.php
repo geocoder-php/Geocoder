@@ -18,7 +18,7 @@ class TomTomTest extends TestCase
      * @expectedException \Geocoder\Exception\InvalidCredentials
      * @expectedExceptionMessage No API Key provided.
      */
-    public function testGetGeocodedDataWithNullApiKey()
+    public function testGeocodeWithNullApiKey()
     {
         $provider = new TomTom($this->getMockAdapter($this->never()), null);
         $provider->geocode('foo');
@@ -28,7 +28,7 @@ class TomTomTest extends TestCase
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query "https://api.tomtom.com/lbs/geocoding/geocode?key=api_key&query=&maxResults=5".
      */
-    public function testGetGeocodedDataWithNull()
+    public function testGeocodeWithNull()
     {
         $provider = new TomTom($this->getMockAdapter(), 'api_key');
         $provider->geocode(null);
@@ -38,7 +38,7 @@ class TomTomTest extends TestCase
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query "https://api.tomtom.com/lbs/geocoding/geocode?key=api_key&query=&maxResults=5".
      */
-    public function testGetGeocodedDataWithEmpty()
+    public function testGeocodeWithEmpty()
     {
         $provider = new TomTom($this->getMockAdapter(), 'api_key');
         $provider->geocode('');
@@ -48,7 +48,7 @@ class TomTomTest extends TestCase
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query "https://api.tomtom.com/lbs/geocoding/geocode?key=api_key&query=Tagensvej%2047%2C%202200%20K%C3%B8benhavn%20N&maxResults=5".
      */
-    public function testGetGeocodedDataWithAddressContentReturnNull()
+    public function testGeocodeWithAddressContentReturnNull()
     {
         $provider = new TomTom($this->getMockAdapterReturns(null), 'api_key');
         $provider->geocode('Tagensvej 47, 2200 København N');
@@ -58,7 +58,7 @@ class TomTomTest extends TestCase
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query "https://api.tomtom.com/lbs/geocoding/geocode?key=api_key&query=Tagensvej%2047%2C%202200%20K%C3%B8benhavn%20N&maxResults=5".
      */
-    public function testGetGeocodedDataWithAddress()
+    public function testGeocodeWithAddress()
     {
         $provider = new TomTom($this->getMockAdapter(), 'api_key');
         $provider->geocode('Tagensvej 47, 2200 København N');
@@ -68,7 +68,7 @@ class TomTomTest extends TestCase
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query "https://api.tomtom.com/lbs/geocoding/geocode?key=api_key&query=foo&maxResults=5".
      */
-    public function testGetGeocodedDataNoResult()
+    public function testGeocodeNoResult()
     {
         $noResult = <<<XML
 <geoResponse duration="" debugInformation="" count="0" svnRevision="" version="" consolidatedMaps=""/>
@@ -78,7 +78,7 @@ XML;
         $provider->geocode('foo');
     }
 
-    public function testGetGeocodedDataWithRealAddress()
+    public function testGeocodeWithRealAddress()
     {
         if (!isset($_SERVER['TOMTOM_GEOCODING_KEY'])) {
             $this->markTestSkipped('You need to configure the TOMTOM_GEOCODING_KEY value in phpunit.xml');
@@ -108,7 +108,7 @@ XML;
         $this->assertNull($result->getTimezone());
     }
 
-    public function testGetGeocodedDataWithRealAddressWithFrenchLocale()
+    public function testGeocodeWithRealAddressWithFrenchLocale()
     {
         if (!isset($_SERVER['TOMTOM_GEOCODING_KEY'])) {
             $this->markTestSkipped('You need to configure the TOMTOM_GEOCODING_KEY value in phpunit.xml');
@@ -138,7 +138,7 @@ XML;
         $this->assertNull($result->getTimezone());
     }
 
-    public function testGetGeocodedDataWithRealAddressWithSwidishLocale()
+    public function testGeocodeWithRealAddressWithSwidishLocale()
     {
         if (!isset($_SERVER['TOMTOM_GEOCODING_KEY'])) {
             $this->markTestSkipped('You need to configure the TOMTOM_GEOCODING_KEY value in phpunit.xml');
@@ -168,7 +168,7 @@ XML;
         $this->assertNull($result->getTimezone());
     }
 
-    public function testGetGeocodedDataWithRealAddressReturnsMultipleResults()
+    public function testGeocodeWithRealAddressReturnsMultipleResults()
     {
         if (!isset($_SERVER['TOMTOM_GEOCODING_KEY'])) {
             $this->markTestSkipped('You need to configure the TOMTOM_GEOCODING_KEY value in phpunit.xml');
@@ -242,7 +242,7 @@ XML;
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The TomTom provider does not support IP addresses, only street addresses.
      */
-    public function testGetGeocodedDataWithLocalhostIPv4()
+    public function testGeocodeWithLocalhostIPv4()
     {
         $provider = new TomTom($this->getMockAdapter($this->never()), 'api_key');
         $provider->geocode('127.0.0.1');
@@ -252,7 +252,7 @@ XML;
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The TomTom provider does not support IP addresses, only street addresses.
      */
-    public function testGetGeocodedDataWithLocalhostIPv6()
+    public function testGeocodeWithLocalhostIPv6()
     {
         $provider = new TomTom($this->getMockAdapter($this->never()), 'api_key');
         $provider->geocode('::1');
@@ -262,7 +262,7 @@ XML;
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The TomTom provider does not support IP addresses, only street addresses.
      */
-    public function testGetGeocodedDataWithIPv4()
+    public function testGeocodeWithIPv4()
     {
         $provider = new TomTom($this->getAdapter(), 'api_key');
         $provider->geocode('74.200.247.59');
@@ -272,7 +272,7 @@ XML;
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The TomTom provider does not support IP addresses, only street addresses.
      */
-    public function testGetGeocodedDataWithIPv6()
+    public function testGeocodeWithIPv6()
     {
         $provider = new TomTom($this->getAdapter(), 'api_key');
         $provider->geocode('::ffff:74.200.247.59');
@@ -282,7 +282,7 @@ XML;
      * @expectedException \Geocoder\Exception\InvalidCredentials
      * @expectedExceptionMessage No Map API Key provided
      */
-    public function testGetReversedDataWithoutApiKey()
+    public function testReverseWithoutApiKey()
     {
         $provider = new TomTom($this->getMockAdapter($this->never()), null);
         $provider->reverse(1, 2);
@@ -292,7 +292,7 @@ XML;
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query "https://api.tomtom.com/lbs/services/reverseGeocode/3/xml?key=api_key&point=1.000000,2.000000".
      */
-    public function testGetReversedData()
+    public function testReverse()
     {
         $provider = new TomTom($this->getMockAdapter(), 'api_key');
         $provider->reverse(1, 2);
@@ -302,7 +302,7 @@ XML;
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query "https://api.tomtom.com/lbs/services/reverseGeocode/3/xml?key=api_key&point=48.863216,2.388772".
      */
-    public function testGetReversedDataWithCoordinatesContentReturnNull()
+    public function testReverseWithCoordinatesContentReturnNull()
     {
         $provider = new TomTom($this->getMockAdapterReturns(null), 'api_key');
         $provider->reverse(48.86321648955345, 2.3887719959020615);
@@ -312,7 +312,7 @@ XML;
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query "https://api.tomtom.com/lbs/services/reverseGeocode/3/xml?key=api_key&point=60.453947,22.256784".
      */
-    public function testGetReversedDataWithCoordinatesGetsEmptyContent()
+    public function testReverseWithCoordinatesGetsEmptyContent()
     {
         $provider = new TomTom($this->getMockAdapterReturns(''), 'api_key');
         $provider->reverse('60.4539471728726', '22.2567841926781');
@@ -322,7 +322,7 @@ XML;
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query "https://api.tomtom.com/lbs/services/reverseGeocode/3/xml?key=api_key&point=1.000000,2.000000".
      */
-    public function testGetReversedDataError400()
+    public function testReverseError400()
     {
         $error400 = <<<XML
 <errorResponse version="" description="" errorCode="400"/>
@@ -336,7 +336,7 @@ XML;
      * @expectedException \Geocoder\Exception\InvalidCredentials
      * @expectedExceptionMessage Map API Key provided is not valid.
      */
-    public function testGetReversedDataError403()
+    public function testReverseError403()
     {
         $error403 = <<<XML
 <errorResponse version="" description="" errorCode="403"/>
@@ -346,7 +346,7 @@ XML;
         $provider->reverse(1, 2);
     }
 
-    public function testGetReversedDataWithRealCoordinates()
+    public function testReverseWithRealCoordinates()
     {
         if (!isset($_SERVER['TOMTOM_MAP_KEY'])) {
             $this->markTestSkipped('You need to configure the TOMTOM_MAP_KEY value in phpunit.xml');
@@ -376,7 +376,7 @@ XML;
         $this->assertNull($result->getTimezone());
     }
 
-    public function testGetGeocodedDataWithRealCoordinates()
+    public function testGeocodeWithRealCoordinates()
     {
         if (!isset($_SERVER['TOMTOM_MAP_KEY'])) {
             $this->markTestSkipped('You need to configure the TOMTOM_MAP_KEY value in phpunit.xml');

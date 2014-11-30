@@ -135,7 +135,7 @@ class MaxMindBinaryTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The MaxMindBinary is not able to do reverse geocoding.
      */
-    public function testThrowOnReversedDataMethodUsage()
+    public function testThrowOnReverseMethodUsage()
     {
         $provider = new MaxMindBinary($this->binaryFile);
 

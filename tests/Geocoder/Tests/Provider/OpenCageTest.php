@@ -20,7 +20,7 @@ class OpenCageTest extends TestCase
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not find results for query "http://api.opencagedata.com/geocode/v1/json?key=api_key&query=foobar&limit=5&pretty=1".
      */
-    public function testGetGeocodedData()
+    public function testGeocode()
     {
         $provider = new OpenCage($this->getMockAdapterReturns('{}'), 'api_key');
         $provider->geocode('foobar');
@@ -40,13 +40,13 @@ class OpenCageTest extends TestCase
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query "http://api.opencagedata.com/geocode/v1/json?key=api_key&query=10+avenue+Gambetta%2C+Paris%2C+France&limit=5&pretty=1".
      */
-    public function testGetGeocodedDataWithAddressGetsNullContent()
+    public function testGeocodeWithAddressGetsNullContent()
     {
         $provider = new OpenCage($this->getMockAdapterReturns(null), 'api_key');
         $provider->geocode('10 avenue Gambetta, Paris, France');
     }
 
-    public function testGetGeocodedDataWithRealAddress()
+    public function testGeocodeWithRealAddress()
     {
         if (!isset($_SERVER['OPENCAGE_API_KEY'])) {
             $this->markTestSkipped('You need to configure the OPENCAGE_API_KEY value in phpunit.xml');
@@ -82,7 +82,7 @@ class OpenCageTest extends TestCase
     /**
      * @expectedException \Geocoder\Exception\NoResult
      */
-    public function testGetReversedData()
+    public function testReverse()
     {
         if (!isset($_SERVER['OPENCAGE_API_KEY'])) {
             $this->markTestSkipped('You need to configure the OPENCAGE_API_KEY value in phpunit.xml');
@@ -92,7 +92,7 @@ class OpenCageTest extends TestCase
         $provider->reverse(1, 2);
     }
 
-    public function testGetReversedDataWithRealCoordinates()
+    public function testReverseWithRealCoordinates()
     {
         if (!isset($_SERVER['OPENCAGE_API_KEY'])) {
             $this->markTestSkipped('You need to configure the OPENCAGE_API_KEY value in phpunit.xml');
@@ -125,7 +125,7 @@ class OpenCageTest extends TestCase
         $this->assertEquals('Europe/London' , $result->getTimezone());
     }
 
-    public function testGetGeocodedDataWithCity()
+    public function testGeocodeWithCity()
     {
         if (!isset($_SERVER['OPENCAGE_API_KEY'])) {
             $this->markTestSkipped('You need to configure the OPENCAGE_API_KEY value in phpunit.xml');
@@ -176,7 +176,7 @@ class OpenCageTest extends TestCase
         $this->assertEquals('United States of America', $result->getCountry()->getName());
     }
 
-    public function testGetGeocodedDataWithCityDistrict()
+    public function testGeocodeWithCityDistrict()
     {
         if (!isset($_SERVER['OPENCAGE_API_KEY'])) {
             $this->markTestSkipped('You need to configure the OPENCAGE_API_KEY value in phpunit.xml');
@@ -205,7 +205,7 @@ class OpenCageTest extends TestCase
         $this->assertEquals('Europe/Berlin', $result->getTimezone());
     }
 
-    public function testGetGeocodedDataWithLocale()
+    public function testGeocodeWithLocale()
     {
         if (!isset($_SERVER['OPENCAGE_API_KEY'])) {
             $this->markTestSkipped('You need to configure the OPENCAGE_API_KEY value in phpunit.xml');
@@ -231,7 +231,7 @@ class OpenCageTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The OpenCage provider does not support IP addresses, only street addresses.
      */
-    public function testGetGeocodedDataWithLocalhostIPv4()
+    public function testGeocodeWithLocalhostIPv4()
     {
         $provider = new OpenCage($this->getMockAdapter($this->never()), 'api_key');
         $provider->geocode('127.0.0.1');
@@ -241,7 +241,7 @@ class OpenCageTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The OpenCage provider does not support IP addresses, only street addresses.
      */
-    public function testGetGeocodedDataWithLocalhostIPv6()
+    public function testGeocodeWithLocalhostIPv6()
     {
         $provider = new OpenCage($this->getMockAdapter($this->never()), 'api_key');
         $provider->geocode('::1');
@@ -251,7 +251,7 @@ class OpenCageTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The OpenCage provider does not support IP addresses, only street addresses.
      */
-    public function testGetGeocodedDataWithRealIPv4()
+    public function testGeocodeWithRealIPv4()
     {
         $provider = new OpenCage($this->getAdapter(), 'api_key');
         $provider->geocode('74.200.247.59');
@@ -261,7 +261,7 @@ class OpenCageTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The OpenCage provider does not support IP addresses, only street addresses.
      */
-    public function testGetGeocodedDataWithRealIPv6()
+    public function testGeocodeWithRealIPv6()
     {
         $provider = new OpenCage($this->getAdapter(), 'api_key');
         $provider->geocode('::ffff:74.200.247.59');

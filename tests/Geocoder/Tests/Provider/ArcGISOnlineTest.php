@@ -16,7 +16,7 @@ class ArcGISOnlineTest extends TestCase
     /**
      * @expectedException \Geocoder\Exception\NoResult
      */
-    public function testGetGeocodedDataWithInvalidData()
+    public function testGeocodeWithInvalidData()
     {
         $provider = new ArcGISOnline($this->getMockAdapter());
         $provider->geocode('loremipsum');
@@ -26,7 +26,7 @@ class ArcGISOnlineTest extends TestCase
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Invalid address.
      */
-    public function testGetGeocodedDataWithNull()
+    public function testGeocodeWithNull()
     {
         $provider = new ArcGISOnline($this->getMockAdapter($this->never()));
         $provider->geocode(null);
@@ -36,7 +36,7 @@ class ArcGISOnlineTest extends TestCase
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Invalid address.
      */
-    public function testGetGeocodedDataWithEmpty()
+    public function testGeocodeWithEmpty()
     {
         $provider = new ArcGISOnline($this->getMockAdapter($this->never()));
         $provider->geocode('');
@@ -46,7 +46,7 @@ class ArcGISOnlineTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The ArcGISOnline provider does not support IP addresses, only street addresses.
      */
-    public function testGetGeocodedDataWithLocalhostIPv4()
+    public function testGeocodeWithLocalhostIPv4()
     {
         $provider = new ArcGISOnline($this->getMockAdapter($this->never()));
         $provider->geocode('127.0.0.1');
@@ -56,7 +56,7 @@ class ArcGISOnlineTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The ArcGISOnline provider does not support IP addresses, only street addresses.
      */
-    public function testGetGeocodedDataWithLocalhostIPv6()
+    public function testGeocodeWithLocalhostIPv6()
     {
         $provider = new ArcGISOnline($this->getMockAdapter($this->never()));
         $provider->geocode('::1');
@@ -66,13 +66,13 @@ class ArcGISOnlineTest extends TestCase
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query "http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find?text=10+avenue+Gambetta%2C+Paris%2C+France&maxLocations=5&f=json&outFields=*".
      */
-    public function testGetGeocodedDataWithAddressGetsNullContent()
+    public function testGeocodeWithAddressGetsNullContent()
     {
         $provider = new ArcGISOnline($this->getMockAdapterReturns(null));
         $provider->geocode('10 avenue Gambetta, Paris, France');
     }
 
-    public function testGetGeocodedDataWithRealAddress()
+    public function testGeocodeWithRealAddress()
     {
         $provider = new ArcGISOnline($this->getAdapter());
         $results  = $provider->geocode('10 avenue Gambetta, Paris, France');
@@ -101,7 +101,7 @@ class ArcGISOnlineTest extends TestCase
         $this->assertNull($result->getTimezone());
     }
 
-    public function testGetGeocodedDataWithRealAddressAndHttps()
+    public function testGeocodeWithRealAddressAndHttps()
     {
         $provider = new ArcGISOnline($this->getAdapter(), null, true);
         $results  = $provider->geocode('10 avenue Gambetta, Paris, France');
@@ -135,7 +135,7 @@ class ArcGISOnlineTest extends TestCase
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage No results found for query "http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find?text=10+avenue+Gambetta%2C+Paris%2C+France".
      */
-    public function testGetGeocodedDataWithInvalidAddressForSourceCountry()
+    public function testGeocodeWithInvalidAddressForSourceCountry()
     {
         $provider = new ArcGISOnline($this->getAdapter(), 'USA');
         $provider->geocode('10 avenue Gambetta, Paris, France');
@@ -145,7 +145,7 @@ class ArcGISOnlineTest extends TestCase
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage No results found for query "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find?text=10+avenue+Gambetta%2C+Paris%2C+France".
      */
-    public function testGetGeocodedDataWithInvalidAddressWithHttpsForSourceCountry()
+    public function testGeocodeWithInvalidAddressWithHttpsForSourceCountry()
     {
         $provider = new ArcGISOnline($this->getAdapter(), 'USA', true);
         $provider->geocode('10 avenue Gambetta, Paris, France');
@@ -155,7 +155,7 @@ class ArcGISOnlineTest extends TestCase
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query "http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/reverseGeocode?location=2.000000,1.000000&maxLocations=5&f=json&outFields=*".
      */
-    public function testGetReversedDataWithInvalid()
+    public function testReverseWithInvalid()
     {
         $provider = new ArcGISOnline($this->getMockAdapter());
         $provider->reverse(1, 2);
@@ -165,13 +165,13 @@ class ArcGISOnlineTest extends TestCase
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query "http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/reverseGeocode?location=2.389020,48.863280&maxLocations=5&f=json&outFields=*".
      */
-    public function testGetReversedDataWithCoordinatesContentReturnNull()
+    public function testReverseWithCoordinatesContentReturnNull()
     {
         $provider = new ArcGISOnline($this->getMockAdapterReturns(null));
         $provider->reverse(48.863279997000461, 2.3890199980004354);
     }
 
-    public function testGetReversedDataWithRealCoordinates()
+    public function testReverseWithRealCoordinates()
     {
         $provider = new ArcGISOnline($this->getAdapter());
         $results  = $provider->reverse(48.863279997000461, 2.3890199980004354);
@@ -200,7 +200,7 @@ class ArcGISOnlineTest extends TestCase
         $this->assertNull($result->getTimezone());
     }
 
-    public function testGetReversedDataWithRealCoordinatesWithHttps()
+    public function testReverseWithRealCoordinatesWithHttps()
     {
         $provider = new ArcGISOnline($this->getAdapter(), null, true);
         $results  = $provider->reverse(48.863279997000461, 2.3890199980004354);
@@ -229,7 +229,7 @@ class ArcGISOnlineTest extends TestCase
         $this->assertNull($result->getTimezone());
     }
 
-    public function testGetGeocodedDataWithCity()
+    public function testGeocodeWithCity()
     {
         $provider = new ArcGISOnline($this->getAdapter());
         $results  = $provider->geocode('Hannover');
@@ -302,7 +302,7 @@ class ArcGISOnlineTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The ArcGISOnline provider does not support IP addresses, only street addresses.
      */
-    public function testGetGeocodedDataWithRealIPv4()
+    public function testGeocodeWithRealIPv4()
     {
         $provider = new ArcGISOnline($this->getMockAdapter($this->never()));
         $provider->geocode('88.188.221.14');
@@ -312,7 +312,7 @@ class ArcGISOnlineTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The ArcGISOnline provider does not support IP addresses, only street addresses.
      */
-    public function testGetGeocodedDataWithRealIPv6()
+    public function testGeocodeWithRealIPv6()
     {
         $provider = new ArcGISOnline($this->getMockAdapter($this->never()));
         $provider->geocode('::ffff:88.188.221.14');

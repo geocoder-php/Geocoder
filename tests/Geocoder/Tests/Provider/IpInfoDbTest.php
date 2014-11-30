@@ -26,7 +26,7 @@ class IpInfoDbTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The IpInfoDb provider does not support street addresses, only IPv4 addresses.
      */
-    public function testGetGeocodedDataWithRandomString()
+    public function testGeocodeWithRandomString()
     {
         $provider = new IpInfoDb($this->getMockAdapter($this->never()), 'api_key');
         $provider->geocode('foobar');
@@ -36,7 +36,7 @@ class IpInfoDbTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The IpInfoDb provider does not support street addresses, only IPv4 addresses.
      */
-    public function testGetGeocodedDataWithNull()
+    public function testGeocodeWithNull()
     {
         $provider = new IpInfoDb($this->getMockAdapter($this->never()), 'api_key');
         $provider->geocode(null);
@@ -46,7 +46,7 @@ class IpInfoDbTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The IpInfoDb provider does not support street addresses, only IPv4 addresses.
      */
-    public function testGetGeocodedDataWithEmpty()
+    public function testGeocodeWithEmpty()
     {
         $provider = new IpInfoDb($this->getMockAdapter($this->never()), 'api_key');
         $provider->geocode('');
@@ -56,13 +56,13 @@ class IpInfoDbTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The IpInfoDb provider does not support street addresses, only IPv4 addresses.
      */
-    public function testGetGeocodedDataWithAddress()
+    public function testGeocodeWithAddress()
     {
         $provider = new IpInfoDb($this->getMockAdapter($this->never()), 'api_key');
         $provider->geocode('10 avenue Gambetta, Paris, France');
     }
 
-    public function testGetGeocodedDataWithLocalhostIPv4()
+    public function testGeocodeWithLocalhostIPv4()
     {
         $provider = new IpInfoDb($this->getMockAdapter($this->never()), 'api_key');
         $results  = $provider->geocode('127.0.0.1');
@@ -88,7 +88,7 @@ class IpInfoDbTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The IpInfoDb provider does not support IPv6 addresses.
      */
-    public function testGetGeocodedDataWithLocalhostIPv6()
+    public function testGeocodeWithLocalhostIPv6()
     {
         $provider = new IpInfoDb($this->getMockAdapter($this->never()), 'api_key');
         $provider->geocode('::1');
@@ -98,7 +98,7 @@ class IpInfoDbTest extends TestCase
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query "http://api.ipinfodb.com/v3/ip-city/?key=api_key&format=json&ip=74.125.45.100".
      */
-    public function testGetGeocodedDataWithRealIPv4GetsNullContent()
+    public function testGeocodeWithRealIPv4GetsNullContent()
     {
         $provider = new IpInfoDb($this->getMockAdapterReturns(null), 'api_key');
         $provider->geocode('74.125.45.100');
@@ -108,13 +108,13 @@ class IpInfoDbTest extends TestCase
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query "http://api.ipinfodb.com/v3/ip-city/?key=api_key&format=json&ip=74.125.45.100".
      */
-    public function testGetGeocodedDataWithRealIPv4GetsEmptyContent()
+    public function testGeocodeWithRealIPv4GetsEmptyContent()
     {
         $provider = new IpInfoDb($this->getMockAdapterReturns(''), 'api_key');
         $provider->geocode('74.125.45.100');
     }
 
-    public function testGetGeocodedDataWithRealIPv4()
+    public function testGeocodeWithRealIPv4()
     {
         if (!isset($_SERVER['IPINFODB_API_KEY'])) {
             $this->markTestSkipped('You need to configure the IPINFODB_API_KEY value in phpunit.xml');
@@ -143,7 +143,7 @@ class IpInfoDbTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The IpInfoDb provider does not support IPv6 addresses, only IPv4 addresses.
      */
-    public function testGetGeocodedDataWithRealIPv6()
+    public function testGeocodeWithRealIPv6()
     {
         if (!isset($_SERVER['IPINFODB_API_KEY'])) {
             $this->markTestSkipped('You need to configure the IPINFODB_API_KEY value in phpunit.xml');
@@ -157,7 +157,7 @@ class IpInfoDbTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The IpInfoDb provider is not able to do reverse geocoding.
      */
-    public function testReversedData()
+    public function testReverse()
     {
         $provider = new IpInfoDb($this->getMock('\Ivory\HttpAdapter\HttpAdapterInterface'), 'api_key');
         $provider->reverse(null, null);

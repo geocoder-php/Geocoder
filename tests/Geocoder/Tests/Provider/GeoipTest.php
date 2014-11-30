@@ -26,7 +26,7 @@ class GeoipTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The Geoip does not support Street addresses.
      */
-    public function testGetGeocodedDataWithNull()
+    public function testGeocodeWithNull()
     {
         $provider = new Geoip();
         $provider->geocode(null);
@@ -36,7 +36,7 @@ class GeoipTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The Geoip does not support Street addresses.
      */
-    public function testGetGeocodedDataWithEmpty()
+    public function testGeocodeWithEmpty()
     {
         $provider = new Geoip();
         $provider->geocode('');
@@ -46,13 +46,13 @@ class GeoipTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The Geoip does not support Street addresses.
      */
-    public function testGetGeocodedDataWithAddress()
+    public function testGeocodeWithAddress()
     {
         $provider = new Geoip();
         $provider->geocode('10 avenue Gambetta, Paris, France');
     }
 
-    public function testGetGeocodedDataWithLocalhostIPv4()
+    public function testGeocodeWithLocalhostIPv4()
     {
         $provider = new Geoip();
         $results  = $provider->geocode('127.0.0.1');
@@ -77,13 +77,13 @@ class GeoipTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The Geoip does not support IPv6 addresses.
      */
-    public function testGetGeocodedDataWithLocalhostIPv6()
+    public function testGeocodeWithLocalhostIPv6()
     {
         $provider = new Geoip();
         $provider->geocode('::1');
     }
 
-    public function testGetGeocodedDataWithRealIPv4()
+    public function testGeocodeWithRealIPv4()
     {
         $provider = new Geoip();
         $results  = $provider->geocode('74.200.247.59');
@@ -109,7 +109,7 @@ class GeoipTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The Geoip does not support IPv6 addresses.
      */
-    public function testGetGeocodedDataWithRealIPv6()
+    public function testGeocodeWithRealIPv6()
     {
         $provider = new Geoip();
         $provider->geocode('::ffff:74.200.247.59');
@@ -119,7 +119,7 @@ class GeoipTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The Geoip is not able to do reverse geocoding.
      */
-    public function testGetReverseData()
+    public function testReverse()
     {
         $provider = new Geoip();
         $provider->reverse(1, 2);

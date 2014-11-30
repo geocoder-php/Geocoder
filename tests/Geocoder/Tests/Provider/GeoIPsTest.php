@@ -367,7 +367,7 @@ class GeoIPsTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The GeoIPs provider is not able to do reverse geocoding.
      */
-    public function testGetReverseData()
+    public function testReverse()
     {
         $provider = new GeoIPs($this->getMockAdapter($this->never()), 'api_key');
         $provider->reverse(1, 2);

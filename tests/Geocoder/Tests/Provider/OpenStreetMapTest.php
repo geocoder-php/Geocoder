@@ -13,7 +13,7 @@ class OpenStreetMapTest extends TestCase
         $this->assertEquals('openstreetmap', $provider->getName());
     }
 
-    public function testGetGeocodedDataWithRealAddress()
+    public function testGeocodeWithRealAddress()
     {
         $provider = new OpenStreetMap($this->getAdapter());
         $results  = $provider->geocode('Paris');
@@ -127,7 +127,7 @@ class OpenStreetMapTest extends TestCase
         $this->assertEquals('US', $result->getCountry()->getCode());
     }
 
-    public function testGetGeocodedDataWithRealAddressWithLocale()
+    public function testGeocodeWithRealAddressWithLocale()
     {
         $provider = new OpenStreetMap($this->getAdapter(), 'fr_FR');
         $results  = $provider->geocode('10 allée Evariste Galois, Clermont ferrand');
@@ -178,7 +178,7 @@ class OpenStreetMapTest extends TestCase
         $this->assertEquals('FR', $result->getCountry()->getCode());
     }
 
-    public function testGetReversedDataWithRealCoordinates()
+    public function testReverseWithRealCoordinates()
     {
         $provider = new OpenStreetMap($this->getAdapter());
         $results  = $provider->reverse(60.4539471728726, 22.2567841926781);
@@ -207,13 +207,13 @@ class OpenStreetMapTest extends TestCase
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query "http://nominatim.openstreetmap.org/search?q=Hammm&format=xml&addressdetails=1&limit=5".
      */
-    public function testGetGeocodedDataWithUnknownCity()
+    public function testGeocodeWithUnknownCity()
     {
         $provider = new OpenStreetMap($this->getAdapter());
         $provider->geocode('Hammm');
     }
 
-    public function testGetReversedDataWithRealCoordinatesWithLocale()
+    public function testReverseWithRealCoordinatesWithLocale()
     {
         $provider = new OpenStreetMap($this->getAdapter(), 'de_DE');
         $results  = $provider->geocode('Kalbacher Hauptstraße, 60437 Frankfurt, Germany');
@@ -306,7 +306,7 @@ class OpenStreetMapTest extends TestCase
         $this->assertEquals('DE', $result->getCountry()->getCode());
     }
 
-    public function testGetGeocodedDataWithLocalhostIPv4()
+    public function testGeocodeWithLocalhostIPv4()
     {
         $provider = new OpenStreetMap($this->getMockAdapter($this->never()));
         $results  = $provider->geocode('127.0.0.1');
@@ -327,13 +327,13 @@ class OpenStreetMapTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The Geocoder\Provider\OpenStreetMap provider does not support IPv6 addresses.
      */
-    public function testGetGeocodedDataWithLocalhostIPv6()
+    public function testGeocodeWithLocalhostIPv6()
     {
         $provider = new OpenStreetMap($this->getMockAdapter($this->never()));
         $provider->geocode('::1');
     }
 
-    public function testGetGeocodedDataWithRealIPv4()
+    public function testGeocodeWithRealIPv4()
     {
         $provider = new OpenStreetMap($this->getAdapter());
         $results  = $provider->geocode('88.188.221.14');
@@ -363,7 +363,7 @@ class OpenStreetMapTest extends TestCase
         $this->assertEquals('FR', $result->getCountry()->getCode());
     }
 
-    public function testGetGeocodedDataWithRealIPv4WithLocale()
+    public function testGeocodeWithRealIPv4WithLocale()
     {
         $provider = new OpenStreetMap($this->getAdapter(), 'da_DK');
         $results  = $provider->geocode('88.188.221.14');
@@ -397,7 +397,7 @@ class OpenStreetMapTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The Geocoder\Provider\OpenStreetMap provider does not support IPv6 addresses.
      */
-    public function testGetGeocodedDataWithRealIPv6()
+    public function testGeocodeWithRealIPv6()
     {
         $provider = new OpenStreetMap($this->getAdapter());
         $provider->geocode('::ffff:88.188.221.14');
@@ -407,7 +407,7 @@ class OpenStreetMapTest extends TestCase
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query "http://nominatim.openstreetmap.org/search?q=L%C3%A4ntinen+Pitk%C3%A4katu+35%2C+Turku&format=xml&addressdetails=1&limit=5".
      */
-    public function testGetGeocodedDataWithAddressGetsNullContent()
+    public function testGeocodeWithAddressGetsNullContent()
     {
         $provider = new OpenStreetMap($this->getMockAdapterReturns(null));
         $provider->geocode('Läntinen Pitkäkatu 35, Turku');
@@ -417,7 +417,7 @@ class OpenStreetMapTest extends TestCase
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query "http://nominatim.openstreetmap.org/search?q=L%C3%A4ntinen+Pitk%C3%A4katu+35%2C+Turku&format=xml&addressdetails=1&limit=5".
      */
-    public function testGetGeocodedDataWithAddressGetsEmptyContent()
+    public function testGeocodeWithAddressGetsEmptyContent()
     {
         $provider = new OpenStreetMap($this->getMockAdapterReturns('<foo></foo>'));
         $provider->geocode('Läntinen Pitkäkatu 35, Turku');
@@ -427,7 +427,7 @@ class OpenStreetMapTest extends TestCase
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query "http://nominatim.openstreetmap.org/search?q=L%C3%A4ntinen+Pitk%C3%A4katu+35%2C+Turku&format=xml&addressdetails=1&limit=5".
      */
-    public function testGetGeocodedDataWithAddressGetsEmptyXML()
+    public function testGeocodeWithAddressGetsEmptyXML()
     {
         $emptyXML = <<<XML
 <?xml version="1.0" encoding="utf-8"?><searchresults_empty></searchresults_empty>
@@ -440,7 +440,7 @@ XML;
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Unable to find results for coordinates [ 60.453947, 22.256784 ].
      */
-    public function testGetReversedDataWithCoordinatesGetsNullContent()
+    public function testReverseWithCoordinatesGetsNullContent()
     {
         $provider = new OpenStreetMap($this->getMockAdapterReturns(null));
         $provider->reverse(60.4539471728726, 22.2567841926781);
@@ -450,7 +450,7 @@ XML;
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Unable to find results for coordinates [ 60.453947, 22.256784 ].
      */
-    public function testGetReversedDataWithCoordinatesGetsEmptyContent()
+    public function testReverseWithCoordinatesGetsEmptyContent()
     {
         $provider = new OpenStreetMap($this->getMockAdapterReturns('<error></error>'));
         $provider->reverse(60.4539471728726, 22.2567841926781);
@@ -460,7 +460,7 @@ XML;
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Unable to find results for coordinates [ -80.000000, -170.000000 ].
      */
-    public function testGetReversedDataWithCoordinatesGetsError()
+    public function testReverseWithCoordinatesGetsError()
     {
         $errorXml = <<<XML
 <?xml version="1.0" encoding="UTF-8" ?>

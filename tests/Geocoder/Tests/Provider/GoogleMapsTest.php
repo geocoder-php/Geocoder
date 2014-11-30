@@ -22,7 +22,7 @@ class GoogleMapsTest extends TestCase
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query "http://maps.googleapis.com/maps/api/geocode/json?address=foobar".
      */
-    public function testGetGeocodedData()
+    public function testGeocode()
     {
         $provider = new GoogleMaps($this->getMockAdapter());
         $provider->geocode('foobar');
@@ -32,7 +32,7 @@ class GoogleMapsTest extends TestCase
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query "http://maps.googleapis.com/maps/api/geocode/json?address=".
      */
-    public function testGetGeocodedDataWithNull()
+    public function testGeocodeWithNull()
     {
         $provider = new GoogleMaps($this->getMockAdapter());
         $provider->geocode(null);
@@ -42,7 +42,7 @@ class GoogleMapsTest extends TestCase
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query "http://maps.googleapis.com/maps/api/geocode/json?address=".
      */
-    public function testGetGeocodedDataWithEmpty()
+    public function testGeocodeWithEmpty()
     {
         $provider = new GoogleMaps($this->getMockAdapter());
         $provider->geocode('');
@@ -52,7 +52,7 @@ class GoogleMapsTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The GoogleMaps provider does not support IP addresses, only street addresses.
      */
-    public function testGetGeocodedDataWithLocalhostIPv4()
+    public function testGeocodeWithLocalhostIPv4()
     {
         $provider = new GoogleMaps($this->getMockAdapter($this->never()));
         $provider->geocode('127.0.0.1');
@@ -62,7 +62,7 @@ class GoogleMapsTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The GoogleMaps provider does not support IP addresses, only street addresses.
      */
-    public function testGetGeocodedDataWithLocalhostIPv6()
+    public function testGeocodeWithLocalhostIPv6()
     {
         $provider = new GoogleMaps($this->getMockAdapter($this->never()));
         $provider->geocode('::1');
@@ -72,7 +72,7 @@ class GoogleMapsTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The GoogleMaps provider does not support IP addresses, only street addresses.
      */
-    public function testGetGeocodedDataWithRealIp()
+    public function testGeocodeWithRealIp()
     {
         $provider = new GoogleMaps($this->getAdapter());
         $provider->geocode('74.200.247.59');
@@ -82,7 +82,7 @@ class GoogleMapsTest extends TestCase
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query "http://maps.googleapis.com/maps/api/geocode/json?address=10%20avenue%20Gambetta%2C%20Paris%2C%20France".
      */
-    public function testGetGeocodedDataWithAddressGetsNullContent()
+    public function testGeocodeWithAddressGetsNullContent()
     {
         $provider = new GoogleMaps($this->getMockAdapterReturns(null));
         $provider->geocode('10 avenue Gambetta, Paris, France');
@@ -92,7 +92,7 @@ class GoogleMapsTest extends TestCase
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query "http://maps.googleapis.com/maps/api/geocode/json?address=10%20avenue%20Gambetta%2C%20Paris%2C%20France".
      */
-    public function testGetGeocodedDataWithAddressGetsEmptyContent()
+    public function testGeocodeWithAddressGetsEmptyContent()
     {
         $provider = new GoogleMaps($this->getMockAdapterReturns('{"status":"OK"}'));
         $provider->geocode('10 avenue Gambetta, Paris, France');
@@ -102,13 +102,13 @@ class GoogleMapsTest extends TestCase
      * @expectedException \Geocoder\Exception\QuotaExceeded
      * @expectedExceptionMessage Daily quota exceeded http://maps.googleapis.com/maps/api/geocode/json?address=10%20avenue%20Gambetta%2C%20Paris%2C%20France
      */
-    public function testGetGeocodedDataWithQuotaExceeded()
+    public function testGeocodeWithQuotaExceeded()
     {
         $provider = new GoogleMaps($this->getMockAdapterReturns('{"status":"OVER_QUERY_LIMIT"}'));
         $provider->geocode('10 avenue Gambetta, Paris, France');
     }
 
-    public function testGetGeocodedDataWithRealAddress()
+    public function testGeocodeWithRealAddress()
     {
         $provider = new GoogleMaps($this->getAdapter(), 'fr-FR', 'Île-de-France');
         $results  = $provider->geocode('10 avenue Gambetta, Paris, France');
@@ -139,7 +139,7 @@ class GoogleMapsTest extends TestCase
         $this->assertNull($result->getTimezone());
     }
 
-    public function testGetGeocodedDataWithRealAddressWithSsl()
+    public function testGeocodeWithRealAddressWithSsl()
     {
         $provider = new GoogleMaps($this->getAdapter(), null, null, true);
         $results  = $provider->geocode('10 avenue Gambetta, Paris, France');
@@ -170,7 +170,7 @@ class GoogleMapsTest extends TestCase
         $this->assertNull($result->getTimezone());
     }
 
-    public function testGetGeocodedDataBoundsWithRealAddressForNonRooftopLocation()
+    public function testGeocodeBoundsWithRealAddressForNonRooftopLocation()
     {
         $provider = new GoogleMaps($this->getAdapter());
         $results  = $provider->geocode('Paris, France');
@@ -188,7 +188,7 @@ class GoogleMapsTest extends TestCase
         $this->assertEquals(2.4699209, $result->getBounds()->getEast(), '', 0.0001);
     }
 
-    public function testGetGeocodedDataWithRealAddressReturnsMultipleResults()
+    public function testGeocodeWithRealAddressReturnsMultipleResults()
     {
         $provider = new GoogleMaps($this->getAdapter());
         $results  = $provider->geocode('Paris');
@@ -246,13 +246,13 @@ class GoogleMapsTest extends TestCase
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query "http://maps.googleapis.com/maps/api/geocode/json?address=1.000000%2C2.000000".
      */
-    public function testGetReversedData()
+    public function testReverse()
     {
         $provider = new GoogleMaps($this->getMockAdapter());
         $provider->reverse(1, 2);
     }
 
-    public function testGetReversedDataWithRealCoordinates()
+    public function testReverseWithRealCoordinates()
     {
         $provider = new GoogleMaps($this->getAdapter());
         $results  = $provider->reverse(48.8631507, 2.388911);
@@ -277,13 +277,13 @@ class GoogleMapsTest extends TestCase
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query "http://maps.googleapis.com/maps/api/geocode/json?address=48.863151%2C2.388911".
      */
-    public function testGetReversedDataWithCoordinatesGetsNullContent()
+    public function testReverseWithCoordinatesGetsNullContent()
     {
         $provider = new GoogleMaps($this->getMockAdapterReturns(null));
         $provider->reverse(48.8631507, 2.388911);
     }
 
-    public function testGetGeocodedDataWithCityDistrict()
+    public function testGeocodeWithCityDistrict()
     {
         $provider = new GoogleMaps($this->getAdapter());
         $results  = $provider->geocode('Kalbacher Hauptstraße 10, 60437 Frankfurt, Germany');
@@ -301,13 +301,13 @@ class GoogleMapsTest extends TestCase
      * @expectedException \Geocoder\Exception\InvalidCredentials
      * @expectedExceptionMessage API key is invalid http://maps.googleapis.com/maps/api/geocode/json?address=10%20avenue%20Gambetta%2C%20Paris%2C%20France
      */
-    public function testGetGeocodedDataWithInavlidApiKey()
+    public function testGeocodeWithInavlidApiKey()
     {
         $provider = new GoogleMaps($this->getMockAdapterReturns('{"error_message":"The provided API key is invalid.", "status":"REQUEST_DENIED"}'));
         $provider->geocode('10 avenue Gambetta, Paris, France');
     }
 
-    public function testGetGeocodedDataWithRealValidApiKey()
+    public function testGeocodeWithRealValidApiKey()
     {
         if (!isset($_SERVER['GOOGLE_GEOCODING_KEY'])) {
             $this->markTestSkipped('You need to configure the GOOGLE_GEOCODING_KEY value in phpunit.xml');
@@ -335,7 +335,7 @@ class GoogleMapsTest extends TestCase
      * @expectedException \Geocoder\Exception\InvalidCredentials
      * @expectedExceptionMessage API key is invalid https://maps.googleapis.com/maps/api/geocode/json?address=Columbia%20University&key=fake_key
      */
-    public function testGetGeocodedDataWithRealInvalidApiKey()
+    public function testGeocodeWithRealInvalidApiKey()
     {
         $provider = new GoogleMaps($this->getAdapter(), null, null, true, $this->testAPIKey);
 

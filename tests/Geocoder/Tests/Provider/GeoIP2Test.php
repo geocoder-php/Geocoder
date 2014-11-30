@@ -44,7 +44,7 @@ class GeoIP2Test extends TestCase
         $this->provider->reverse(50, 9);
     }
 
-    public function testLocalhostDefaults()
+    public function testGeocodeWithLocalhostIPv4()
     {
         $results  = $this->provider->geocode('127.0.0.1');
 

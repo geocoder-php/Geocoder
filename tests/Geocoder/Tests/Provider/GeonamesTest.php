@@ -17,7 +17,7 @@ class GeonamesTest extends TestCase
      * @expectedException \Geocoder\Exception\InvalidCredentials
      * @expectedExceptionMessage No username provided.
      */
-    public function testGetGeocodedDataWithNullUsername()
+    public function testGeocodeWithNullUsername()
     {
         $provider = new Geonames($this->getMock('\Ivory\HttpAdapter\HttpAdapterInterface'), null);
         $provider->geocode('foo');
@@ -27,7 +27,7 @@ class GeonamesTest extends TestCase
      * @expectedException \Geocoder\Exception\InvalidCredentials
      * @expectedExceptionMessage No username provided.
      */
-    public function testGetReversedDataWithNullUsername()
+    public function testReverseWithNullUsername()
     {
         $provider = new Geonames($this->getMock('\Ivory\HttpAdapter\HttpAdapterInterface'), null);
         $provider->reverse(1,2);
@@ -37,7 +37,7 @@ class GeonamesTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The Geonames provider does not support IP addresses.
      */
-    public function testGetGeocodedDataWithLocalhostIPv4()
+    public function testGeocodeWithLocalhostIPv4()
     {
         $provider = new Geonames($this->getMockAdapter($this->never()), 'username');
         $provider->geocode('127.0.0.1');
@@ -47,7 +47,7 @@ class GeonamesTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The Geonames provider does not support IP addresses.
      */
-    public function testGetGeocodedDataWithLocalhostIPv6()
+    public function testGeocodeWithLocalhostIPv6()
     {
         $provider = new Geonames($this->getMockAdapter($this->never()), 'username');
         $provider->geocode('::1');
@@ -57,7 +57,7 @@ class GeonamesTest extends TestCase
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query "http://api.geonames.org/searchJSON?q=&maxRows=5&style=full&username=username".
      */
-    public function testGetGeocodedDataWithNull()
+    public function testGeocodeWithNull()
     {
         $provider = new Geonames($this->getMockAdapter(), 'username');
         $provider->geocode(null);
@@ -68,7 +68,7 @@ class GeonamesTest extends TestCase
      * @expectedExceptionMessage No places found for query "http://api.geonames.org/searchJSON?q=BlaBlaBla&maxRows=5&style=full&username=username".
      * @
      */
-    public function testGetGeocodedDataWithUnknownCity()
+    public function testGeocodeWithUnknownCity()
     {
         $noPlacesFoundResponse = <<<JSON
 {
@@ -80,7 +80,7 @@ JSON;
         $provider->geocode('BlaBlaBla');
     }
 
-    public function testGetGeocodedDataWithRealPlace()
+    public function testGeocodeWithRealPlace()
     {
         if (!isset($_SERVER['GEONAMES_USERNAME'])) {
             $this->markTestSkipped('You need to configure the GEONAMES_USERNAME value in phpunit.xml');
@@ -178,7 +178,7 @@ JSON;
         $this->assertEquals('America/New_York', $result->getTimezone());
     }
 
-    public function testGetGeocodedDataWithRealPlaceWithLocale()
+    public function testGeocodeWithRealPlaceWithLocale()
     {
         if (!isset($_SERVER['GEONAMES_USERNAME'])) {
             $this->markTestSkipped('You need to configure the GEONAMES_USERNAME value in phpunit.xml');
@@ -276,7 +276,7 @@ JSON;
         $this->assertEquals('America/New_York', $result->getTimezone());
     }
 
-    public function testGetReversedDataWithRealCoordinates()
+    public function testReverseWithRealCoordinates()
     {
         if (!isset($_SERVER['GEONAMES_USERNAME'])) {
             $this->markTestSkipped('You need to configure the GEONAMES_USERNAME value in phpunit.xml');
@@ -301,7 +301,7 @@ JSON;
         $this->assertEquals('Europe/London', $result->getTimezone());
     }
 
-    public function testGetReversedDataWithRealCoordinatesWithLocale()
+    public function testReverseWithRealCoordinatesWithLocale()
     {
         if (!isset($_SERVER['GEONAMES_USERNAME'])) {
             $this->markTestSkipped('You need to configure the GEONAMES_USERNAME value in phpunit.xml');
@@ -330,7 +330,7 @@ JSON;
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query "http://api.geonames.org/findNearbyPlaceNameJSON?lat=-80.000000&lng=-170.000000&style=full&maxRows=5&username=username".
      */
-    public function testGetReversedDataWithBadCoordinates()
+    public function testReverseWithBadCoordinates()
     {
         $badCoordinateResponse = <<<JSON
 {

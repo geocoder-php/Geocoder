@@ -20,7 +20,7 @@ class MapQuestTest extends TestCase
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not find results for query "http://open.mapquestapi.com/geocoding/v1/address?location=foobar&outFormat=json&maxResults=5&key=api_key&thumbMaps=false".
      */
-    public function testGetGeocodedData()
+    public function testGeocode()
     {
         $provider = new MapQuest($this->getMockAdapterReturns('{}'), 'api_key');
         $provider->geocode('foobar');
@@ -30,7 +30,7 @@ class MapQuestTest extends TestCase
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query "http://open.mapquestapi.com/geocoding/v1/address?location=10+avenue+Gambetta%2C+Paris%2C+France&outFormat=json&maxResults=5&key=api_key&thumbMaps=false".
      */
-    public function testGetGeocodedDataWithAddressGetsNullContent()
+    public function testGeocodeWithAddressGetsNullContent()
     {
         $provider = new MapQuest($this->getMockAdapterReturns(null), 'api_key');
         $provider->geocode('10 avenue Gambetta, Paris, France');
@@ -48,7 +48,7 @@ class MapQuestTest extends TestCase
         $provider->reverse(123, 456);
     }
 
-    public function testGetGeocodedDataWithRealAddress()
+    public function testGeocodeWithRealAddress()
     {
         if (!isset($_SERVER['MAPQUEST_API_KEY'])) {
             $this->markTestSkipped('You need to configure the MAPQUEST_API_KEY value in phpunit.xml');
@@ -82,7 +82,7 @@ class MapQuestTest extends TestCase
     /**
      * @expectedException \Geocoder\Exception\NoResult
      */
-    public function testGetReversedData()
+    public function testReverse()
     {
         if (!isset($_SERVER['MAPQUEST_API_KEY'])) {
             $this->markTestSkipped('You need to configure the MAPQUEST_API_KEY value in phpunit.xml');
@@ -92,7 +92,7 @@ class MapQuestTest extends TestCase
         $provider->reverse(1, 2);
     }
 
-    public function testGetReversedDataWithRealCoordinates()
+    public function testReverseWithRealCoordinates()
     {
         if (!isset($_SERVER['MAPQUEST_API_KEY'])) {
             $this->markTestSkipped('You need to configure the MAPQUEST_API_KEY value in phpunit.xml');
@@ -123,7 +123,7 @@ class MapQuestTest extends TestCase
         $this->assertNull($result->getTimezone());
     }
 
-    public function testGetGeocodedDataWithCity()
+    public function testGeocodeWithCity()
     {
         if (!isset($_SERVER['MAPQUEST_API_KEY'])) {
             $this->markTestSkipped('You need to configure the MAPQUEST_API_KEY value in phpunit.xml');
@@ -176,7 +176,7 @@ class MapQuestTest extends TestCase
         $this->assertEquals('US', $result->getCountry()->getName());
     }
 
-    public function testGetGeocodedDataWithCityDistrict()
+    public function testGeocodeWithCityDistrict()
     {
         if (!isset($_SERVER['MAPQUEST_API_KEY'])) {
             $this->markTestSkipped('You need to configure the MAPQUEST_API_KEY value in phpunit.xml');
@@ -211,7 +211,7 @@ class MapQuestTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The MapQuest provider does not support IP addresses, only street addresses.
      */
-    public function testGetGeocodedDataWithLocalhostIPv4()
+    public function testGeocodeWithLocalhostIPv4()
     {
         $provider = new MapQuest($this->getMockAdapter($this->never()), 'api_key');
         $provider->geocode('127.0.0.1');
@@ -221,7 +221,7 @@ class MapQuestTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The MapQuest provider does not support IP addresses, only street addresses.
      */
-    public function testGetGeocodedDataWithLocalhostIPv6()
+    public function testGeocodeWithLocalhostIPv6()
     {
         $provider = new MapQuest($this->getMockAdapter($this->never()), 'api_key');
         $provider->geocode('::1');
@@ -231,7 +231,7 @@ class MapQuestTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The MapQuest provider does not support IP addresses, only street addresses.
      */
-    public function testGetGeocodedDataWithRealIPv4()
+    public function testGeocodeWithRealIPv4()
     {
         $provider = new MapQuest($this->getAdapter(), 'api_key');
         $provider->geocode('74.200.247.59');
@@ -241,7 +241,7 @@ class MapQuestTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The MapQuest provider does not support IP addresses, only street addresses.
      */
-    public function testGetGeocodedDataWithRealIPv6()
+    public function testGeocodeWithRealIPv6()
     {
         $provider = new MapQuest($this->getAdapter(), 'api_key');
         $provider->geocode('::ffff:74.200.247.59');
