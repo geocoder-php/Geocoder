@@ -96,7 +96,7 @@ class YandexTest extends TestCase
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results[0];
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf('Geocoder\Model\Address', $result);
         $this->assertEquals(48.863277, $result->getLatitude(), '', 0.01);
         $this->assertEquals(2.389016, $result->getLongitude(), '', 0.01);
         $this->assertTrue($result->getBounds()->isDefined());
@@ -119,25 +119,25 @@ class YandexTest extends TestCase
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results[1];
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf('Geocoder\Model\Address', $result);
         $this->assertEquals(48.810138, $result->getLatitude(), '', 0.01);
         $this->assertEquals(2.435926, $result->getLongitude(), '', 0.01);
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results[2];
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf('Geocoder\Model\Address', $result);
         $this->assertEquals(48.892773, $result->getLatitude(), '', 0.01);
         $this->assertEquals(2.246174, $result->getLongitude(), '', 0.01);
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results[3];
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf('Geocoder\Model\Address', $result);
         $this->assertEquals(48.844640, $result->getLatitude(), '', 0.01);
         $this->assertEquals(2.420493, $result->getLongitude(), '', 0.01);
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results[4];
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf('Geocoder\Model\Address', $result);
         $this->assertEquals(48.813520, $result->getLatitude(), '', 0.01);
         $this->assertEquals(2.324642, $result->getLongitude(), '', 0.01);
     }
@@ -152,7 +152,7 @@ class YandexTest extends TestCase
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results[0];
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf('Geocoder\Model\Address', $result);
         $this->assertEquals(55.675682, $result->getLatitude(), '', 0.01);
         $this->assertEquals(12.567602, $result->getLongitude(), '', 0.01);
         $this->assertTrue($result->getBounds()->isDefined());
@@ -163,7 +163,7 @@ class YandexTest extends TestCase
         $this->assertNull($result->getStreetNumber());
         $this->assertNull($result->getStreetName());
         $this->assertEquals('Копенгаген', $result->getLocality());
-        $this->assertEquals('Столичная Область', $result->getRegion()->getName());
+        $this->assertEquals('Столичная область', $result->getRegion()->getName());
         $this->assertEquals('Данія', $result->getCountry()->getName());
         $this->assertEquals('DK', $result->getCountry()->getCode());
 
@@ -175,25 +175,25 @@ class YandexTest extends TestCase
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results[1];
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf('Geocoder\Model\Address', $result);
         $this->assertEquals(55.614439, $result->getLatitude(), '', 0.01);
         $this->assertEquals(12.645351, $result->getLongitude(), '', 0.01);
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results[2];
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf('Geocoder\Model\Address', $result);
         $this->assertEquals(55.713258, $result->getLatitude(), '', 0.01);
         $this->assertEquals(12.534930, $result->getLongitude(), '', 0.01);
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results[3];
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf('Geocoder\Model\Address', $result);
         $this->assertEquals(55.698878, $result->getLatitude(), '', 0.01);
         $this->assertEquals(12.578211, $result->getLongitude(), '', 0.01);
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results[4];
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf('Geocoder\Model\Address', $result);
         $this->assertEquals(55.690380, $result->getLatitude(), '', 0.01);
         $this->assertEquals(12.554827, $result->getLongitude(), '', 0.01);
     }
@@ -208,7 +208,7 @@ class YandexTest extends TestCase
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results[0];
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf('Geocoder\Model\Address', $result);
         $this->assertEquals(38.898720, $result->getLatitude(), '', 0.01);
         $this->assertEquals(-77.036384, $result->getLongitude(), '', 0.01);
         $this->assertTrue($result->getBounds()->isDefined());
@@ -217,7 +217,7 @@ class YandexTest extends TestCase
         $this->assertEquals(38.90032, $result->getBounds()->getNorth(), '', 0.01);
         $this->assertEquals(-77.012453, $result->getBounds()->getEast(), '', 0.01);
         $this->assertNull($result->getStreetNumber());
-        $this->assertEquals('Pennsylvania Ave Nw', $result->getStreetName());
+        $this->assertEquals('Pennsylvania Ave NW', $result->getStreetName());
         $this->assertEquals('Washington', $result->getLocality());
         $this->assertEquals('District of Columbia', $result->getRegion()->getName());
         $this->assertEquals('United States', $result->getCountry()->getName());
@@ -240,7 +240,7 @@ class YandexTest extends TestCase
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results[0];
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf('Geocoder\Model\Address', $result);
         $this->assertEquals(53.898077, $result->getLatitude(), '', 0.01);
         $this->assertEquals(27.563673, $result->getLongitude(), '', 0.01);
         $this->assertTrue($result->getBounds()->isDefined());
@@ -249,7 +249,7 @@ class YandexTest extends TestCase
         $this->assertEquals(53.899286, $result->getBounds()->getNorth(), '', 0.01);
         $this->assertEquals(27.565721, $result->getBounds()->getEast(), '', 0.01);
         $this->assertEquals(19, $result->getStreetNumber());
-        $this->assertEquals('Улица Ленина', $result->getStreetName());
+        $this->assertEquals('улица Ленина', $result->getStreetName());
         $this->assertEquals('Минск', $result->getLocality());
         $this->assertNull($result->getRegion()->getName());
         $this->assertEquals('Беларусь', $result->getCountry()->getName());
@@ -302,7 +302,7 @@ class YandexTest extends TestCase
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results[0];
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf('Geocoder\Model\Address', $result);
         $this->assertEquals(48.863212, $result->getLatitude(), '', 0.01);
         $this->assertEquals(2.388773, $result->getLongitude(), '', 0.01);
         $this->assertTrue($result->getBounds()->isDefined());
@@ -325,13 +325,13 @@ class YandexTest extends TestCase
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results[1];
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf('Geocoder\Model\Address', $result);
         $this->assertEquals(48.709273, $result->getLatitude(), '', 0.01);
         $this->assertEquals(2.503371, $result->getLongitude(), '', 0.01);
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results[2];
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf('Geocoder\Model\Address', $result);
         $this->assertEquals(46.621810, $result->getLatitude(), '', 0.01);
         $this->assertEquals(2.452113, $result->getLongitude(), '', 0.01);
     }
@@ -346,7 +346,7 @@ class YandexTest extends TestCase
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results[0];
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf('Geocoder\Model\Address', $result);
         $this->assertEquals(48.87132, $result->getLatitude(), '', 0.01);
         $this->assertEquals(2.404017, $result->getLongitude(), '', 0.01);
         $this->assertTrue($result->getBounds()->isDefined());
@@ -369,25 +369,25 @@ class YandexTest extends TestCase
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results[1];
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf('Geocoder\Model\Address', $result);
         $this->assertEquals(48.863230, $result->getLatitude(), '', 0.01);
         $this->assertEquals(2.388261, $result->getLongitude(), '', 0.01);
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results[2];
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf('Geocoder\Model\Address', $result);
         $this->assertEquals(48.866022, $result->getLatitude(), '', 0.01);
         $this->assertEquals(2.389662, $result->getLongitude(), '', 0.01);
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results[3];
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf('Geocoder\Model\Address', $result);
         $this->assertEquals(48.863918, $result->getLatitude(), '', 0.01);
         $this->assertEquals(2.387767, $result->getLongitude(), '', 0.01);
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results[4];
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf('Geocoder\Model\Address', $result);
         $this->assertEquals(48.863787, $result->getLatitude(), '', 0.01);
         $this->assertEquals(2.389600, $result->getLongitude(), '', 0.01);
     }
@@ -402,7 +402,7 @@ class YandexTest extends TestCase
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results[0];
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf('Geocoder\Model\Address', $result);
         $this->assertEquals(60.454462, $result->getLatitude(), '', 0.01);
         $this->assertEquals(22.256561, $result->getLongitude(), '', 0.01);
         $this->assertTrue($result->getBounds()->isDefined());
@@ -434,7 +434,7 @@ class YandexTest extends TestCase
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results[0];
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf('Geocoder\Model\Address', $result);
         $this->assertEquals(40.909452, $result->getLatitude(), '', 0.01);
         $this->assertEquals(29.138608, $result->getLongitude(), '', 0.01);
         $this->assertTrue($result->getBounds()->isDefined());

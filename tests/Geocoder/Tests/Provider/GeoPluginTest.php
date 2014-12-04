@@ -52,10 +52,10 @@ class GeoPluginTest extends TestCase
         $this->assertCount(1, $results);
 
         $result = $results[0];
-        $this->assertEquals('Localhost', $result->getLocality());
-        $this->assertEquals('Localhost', $result->getCounty()->getName());
-        $this->assertEquals('Localhost', $result->getRegion()->getName());
-        $this->assertEquals('Localhost', $result->getCountry()->getName());
+        $this->assertEquals('localhost', $result->getLocality());
+        $this->assertEquals('localhost', $result->getCounty()->getName());
+        $this->assertEquals('localhost', $result->getRegion()->getName());
+        $this->assertEquals('localhost', $result->getCountry()->getName());
     }
 
     public function testGeocodeWithLocalhostIPv6()
@@ -67,10 +67,10 @@ class GeoPluginTest extends TestCase
         $this->assertCount(1, $results);
 
         $result = $results[0];
-        $this->assertEquals('Localhost', $result->getLocality());
-        $this->assertEquals('Localhost', $result->getCounty()->getName());
-        $this->assertEquals('Localhost', $result->getRegion()->getName());
-        $this->assertEquals('Localhost', $result->getCountry()->getName());
+        $this->assertEquals('localhost', $result->getLocality());
+        $this->assertEquals('localhost', $result->getCounty()->getName());
+        $this->assertEquals('localhost', $result->getRegion()->getName());
+        $this->assertEquals('localhost', $result->getCountry()->getName());
     }
 
     /**

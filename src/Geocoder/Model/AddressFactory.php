@@ -56,8 +56,8 @@ final class AddressFactory
     }
 
     /**
-     * @param array  $data
-     * @param string $key
+     * @param  array  $data
+     * @param  string $key
      * @return double
      */
     private function readDoubleValue(array $data, $key)
@@ -66,53 +66,35 @@ final class AddressFactory
     }
 
     /**
-     * @param array  $data
-     * @param string $key
+     * @param  array  $data
+     * @param  string $key
      * @return string
      */
     private function readStringValue(array $data, $key)
     {
-        return $this->formatString(\igorw\get_in($data, [ $key ]));
+        return $this->valueOrNull(\igorw\get_in($data, [ $key ]));
     }
 
-    private function formatString($str)
+    private function valueOrNull($str)
     {
-        if (null !== $str) {
-            if (extension_loaded('mbstring')) {
-                $originalStr = $str;
-                $str         = mb_convert_case($str, MB_CASE_TITLE, 'UTF-8');
-                // Correct for MB_TITLE_CASE's insistence on uppercasing letters
-                // immediately preceded by numerals, eg: 1st -> 1St
-                $originalEncoding = mb_regex_encoding();
-                mb_regex_encoding('UTF-8');
-                // matches an upper case letter character immediately preceded by a numeral
-                mb_ereg_search_init($str, '[0-9]\p{Lu}');
-
-                while ($match = mb_ereg_search_pos()) {
-                    $charPos = $match[0] + 1;
-                    // Only swap it back to lowercase if it was lowercase to begin with
-                    if (mb_ereg_match('\p{Ll}', $originalStr[$charPos])) {
-                        $str[$charPos] = mb_strtolower($str[$charPos]);
-                    }
-                }
-
-                mb_regex_encoding($originalEncoding);
-            } else {
-                $str = $this->lowerize($str);
-                $str = ucwords($str);
-            }
-        }
-
-        return $str;
+        return empty($str) ? null : $str;
     }
 
     private function lowerize($str)
     {
-        return extension_loaded('mbstring') ? mb_strtolower($str, 'UTF-8') : strtolower($str);
+        if (null !== $str = $this->valueOrNull($str)) {
+            return extension_loaded('mbstring') ? mb_strtolower($str, 'UTF-8') : strtolower($str);
+        }
+
+        return null;
     }
 
     private function upperize($str)
     {
-        return extension_loaded('mbstring') ? mb_strtoupper($str, 'UTF-8') : strtoupper($str);
+        if (null !== $str = $this->valueOrNull($str)) {
+            return extension_loaded('mbstring') ? mb_strtoupper($str, 'UTF-8') : strtoupper($str);
+        }
+
+        return null;
     }
 }
