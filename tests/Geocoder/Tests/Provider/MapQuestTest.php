@@ -17,10 +17,10 @@ class MapQuestTest extends TestCase
     }
 
     /**
-     * @expectedException Geocoder\Exception\NoResult
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not find results for query "http://open.mapquestapi.com/geocoding/v1/address?location=foobar&outFormat=json&maxResults=5&key=api_key&thumbMaps=false".
      */
-    public function testGetGeocodedData()
+    public function testGeocode()
     {
         $provider = new MapQuest($this->getMockAdapterReturns('{}'), 'api_key');
         $provider->geocode('foobar');
@@ -30,7 +30,7 @@ class MapQuestTest extends TestCase
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query "http://open.mapquestapi.com/geocoding/v1/address?location=10+avenue+Gambetta%2C+Paris%2C+France&outFormat=json&maxResults=5&key=api_key&thumbMaps=false".
      */
-    public function testGetGeocodedDataWithAddressGetsNullContent()
+    public function testGeocodeWithAddressGetsNullContent()
     {
         $provider = new MapQuest($this->getMockAdapterReturns(null), 'api_key');
         $provider->geocode('10 avenue Gambetta, Paris, France');
@@ -48,7 +48,7 @@ class MapQuestTest extends TestCase
         $provider->reverse(123, 456);
     }
 
-    public function testGetGeocodedDataWithRealAddress()
+    public function testGeocodeWithRealAddress()
     {
         if (!isset($_SERVER['MAPQUEST_API_KEY'])) {
             $this->markTestSkipped('You need to configure the MAPQUEST_API_KEY value in phpunit.xml');
@@ -60,27 +60,29 @@ class MapQuestTest extends TestCase
         $this->assertInternalType('array', $results);
         $this->assertCount(1, $results);
 
+        /** @var \Geocoder\Model\Address $result */
         $result = $results[0];
-        $this->assertInternalType('array', $result);
-        $this->assertEquals(48.866205, $result['latitude'], '', 0.01);
-        $this->assertEquals(2.389089, $result['longitude'], '', 0.01);
-        $this->assertNull($result['bounds']);
-        $this->assertNull($result['streetNumber']);
-        $this->assertEquals('10 Avenue Gambetta', $result['streetName']);
-        $this->assertEquals(75011, $result['postalCode']);
-        $this->assertEquals('Paris', $result['locality']);
-        $this->assertEquals('Paris', $result['county']);
-        $this->assertEquals('Ile-de-France', $result['region']);
-        $this->assertEquals('FR', $result['country']);
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(48.866205, $result->getLatitude(), '', 0.01);
+        $this->assertEquals(2.389089, $result->getLongitude(), '', 0.01);
+        $this->assertEquals('10 Avenue Gambetta', $result->getStreetName());
+        $this->assertEquals(75011, $result->getPostalCode());
+        $this->assertEquals('Paris', $result->getLocality());
+        $this->assertEquals('Paris', $result->getCounty()->getName());
+        $this->assertEquals('Ile-de-France', $result->getRegion()->getName());
+        $this->assertEquals('FR', $result->getCountry()->getName());
 
-        $this->assertNull($result['countryCode']);
-        $this->assertNull($result['timezone']);
+        $this->assertFalse($result->getBounds()->isDefined());
+        $this->assertNull($result->getStreetNumber());
+        $this->assertNull($result->getRegion()->getCode());
+        $this->assertNull($result->getCountry()->getCode());
+        $this->assertNull($result->getTimezone());
     }
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
      */
-    public function testGetReversedData()
+    public function testReverse()
     {
         if (!isset($_SERVER['MAPQUEST_API_KEY'])) {
             $this->markTestSkipped('You need to configure the MAPQUEST_API_KEY value in phpunit.xml');
@@ -90,36 +92,38 @@ class MapQuestTest extends TestCase
         $provider->reverse(1, 2);
     }
 
-    public function testGetReversedDataWithRealCoordinates()
+    public function testReverseWithRealCoordinates()
     {
         if (!isset($_SERVER['MAPQUEST_API_KEY'])) {
             $this->markTestSkipped('You need to configure the MAPQUEST_API_KEY value in phpunit.xml');
         }
 
         $provider = new MapQuest($this->getAdapter(), $_SERVER['MAPQUEST_API_KEY']);
-        $result   = $provider->reverse(54.0484068, -2.7990345);
+        $results  = $provider->reverse(54.0484068, -2.7990345);
 
-        $this->assertInternalType('array', $result);
-        $this->assertCount(1, $result);
+        $this->assertInternalType('array', $results);
+        $this->assertCount(1, $results);
 
-        $result = $result[0];
-        $this->assertInternalType('array', $result);
-        $this->assertEquals(54.0484068, $result['latitude'], '', 0.001);
-        $this->assertEquals(-2.7990345, $result['longitude'], '', 0.001);
-        $this->assertNull($result['bounds']);
-        $this->assertNull($result['streetNumber']);
-        $this->assertEquals('Mary Street', $result['streetName']);
-        $this->assertEquals('LA1 1LZ', $result['postalCode']);
-        $this->assertEquals('Lancaster', $result['locality']);
-        $this->assertEquals('Lancashire', $result['county']);
-        $this->assertEquals('England', $result['region']);
-        $this->assertEquals('GB', $result['country']);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[0];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(54.0484068, $result->getLatitude(), '', 0.001);
+        $this->assertEquals(-2.7990345, $result->getLongitude(), '', 0.001);
+        $this->assertEquals('Mary Street', $result->getStreetName());
+        $this->assertEquals('LA1 1LZ', $result->getPostalCode());
+        $this->assertEquals('Lancaster', $result->getLocality());
+        $this->assertEquals('Lancashire', $result->getCounty()->getName());
+        $this->assertEquals('England', $result->getRegion()->getName());
+        $this->assertEquals('GB', $result->getCountry()->getName());
 
-        $this->assertNull($result['countryCode']);
-        $this->assertNull($result['timezone']);
+        $this->assertFalse($result->getBounds()->isDefined());
+        $this->assertNull($result->getStreetNumber());
+        $this->assertNull($result->getRegion()->getcode());
+        $this->assertNull($result->getCountry()->getCode());
+        $this->assertNull($result->getTimezone());
     }
 
-    public function testGetGeocodedDataWithCity()
+    public function testGeocodeWithCity()
     {
         if (!isset($_SERVER['MAPQUEST_API_KEY'])) {
             $this->markTestSkipped('You need to configure the MAPQUEST_API_KEY value in phpunit.xml');
@@ -131,73 +135,83 @@ class MapQuestTest extends TestCase
         $this->assertInternalType('array', $results);
         $this->assertCount(5, $results);
 
-        $this->assertInternalType('array', $results[0]);
-        $this->assertEquals(52.374478, $results[0]['latitude'], '', 0.01);
-        $this->assertEquals(9.738553, $results[0]['longitude'], '', 0.01);
-        $this->assertEquals('Hanover', $results[0]['locality']);
-        $this->assertEquals('Region Hannover', $results[0]['county']);
-        $this->assertEquals('Niedersachsen (Landmasse)', $results[0]['region']);
-        $this->assertEquals('DE', $results[0]['country']);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[0];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(52.374478, $result->getLatitude(), '', 0.01);
+        $this->assertEquals(9.738553, $result->getLongitude(), '', 0.01);
+        $this->assertEquals('Hanover', $result->getLocality());
+        $this->assertEquals('Region Hannover', $result->getCounty()->getName());
+        $this->assertEquals('Niedersachsen (Landmasse)', $result->getRegion()->getName());
+        $this->assertEquals('DE', $result->getCountry()->getName());
 
-        $this->assertInternalType('array', $results[1]);
-        $this->assertEquals(18.383715, $results[1]['latitude'], '', 0.01);
-        $this->assertEquals(-78.131484, $results[1]['longitude'], '', 0.01);
-        $this->assertNull($results[1]['locality']);
-        $this->assertEquals('Hanover', $results[1]['county']);
-        $this->assertEquals('JM', $results[1]['country']);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[0];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(18.383715, $result->getLatitude(), '', 0.01);
+        $this->assertEquals(-78.131484, $result->getLongitude(), '', 0.01);
+        $this->assertNull($result->getLocality());
+        $this->assertEquals('Hanover', $result->getCounty()->getName());
+        $this->assertEquals('PA', $result->getRegion()->getName());
+        $this->assertEquals('JM', $result->getCountry()->getName());
 
-        $this->assertInternalType('array', $results[2]);
-        $this->assertEquals(43.703307, $results[2]['latitude'], '', 0.01);
-        $this->assertEquals(-72.288566, $results[2]['longitude'], '', 0.01);
-        $this->assertEquals('Hanover', $results[2]['locality']);
-        $this->assertEquals('Grafton County', $results[2]['county']);
-        $this->assertEquals('NH', $results[2]['region']);
-        $this->assertEquals('US', $results[2]['country']);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[0];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(43.703307, $result->getLatitude(), '', 0.01);
+        $this->assertEquals(-72.288566, $result->getLongitude(), '', 0.01);
+        $this->assertEquals('Hanover', $result->getLocality());
+        $this->assertEquals('Grafton County', $result->getCounty()->getName());
+        $this->assertEquals('NH', $result->getRegion()->getName());
+        $this->assertEquals('US', $result->getCountry()->getName());
 
-        $this->assertInternalType('array', $results[3]);
-        $this->assertEquals(39.806325, $results[3]['latitude'], '', 0.01);
-        $this->assertEquals(-76.984274, $results[3]['longitude'], '', 0.01);
-        $this->assertEquals('Hanover', $results[3]['locality']);
-        $this->assertEquals('York County', $results[3]['county']);
-        $this->assertEquals('PA', $results[3]['region']);
-        $this->assertEquals('US', $results[3]['country']);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[0];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(39.806325, $result->getLatitude(), '', 0.01);
+        $this->assertEquals(-76.984274, $result->getLongitude(), '', 0.01);
+        $this->assertEquals('Hanover', $result->getLocality());
+        $this->assertEquals('York County', $result->getCounty()->getName());
+        $this->assertEquals('PA', $result->getRegion()->getName());
+        $this->assertEquals('US', $result->getCountry()->getName());
     }
 
-    public function testGetGeocodedDataWithCityDistrict()
+    public function testGeocodeWithCityDistrict()
     {
         if (!isset($_SERVER['MAPQUEST_API_KEY'])) {
             $this->markTestSkipped('You need to configure the MAPQUEST_API_KEY value in phpunit.xml');
         }
 
         $provider = new MapQuest($this->getAdapter(), $_SERVER['MAPQUEST_API_KEY']);
-        $result   = $provider->geocode('Kalbacher Hauptstraße 10, 60437 Frankfurt, Germany');
+        $results  = $provider->geocode('Kalbacher Hauptstraße 10, 60437 Frankfurt, Germany');
 
-        $this->assertInternalType('array', $result);
-        $this->assertCount(1, $result);
+        $this->assertInternalType('array', $results);
+        $this->assertCount(1, $results);
 
-        $result = $result[0];
-        $this->assertInternalType('array', $result);
-        $this->assertEquals(50.189062, $result['latitude'], '', 0.01);
-        $this->assertEquals(8.636567, $result['longitude'], '', 0.01);
-        $this->assertNull($result['bounds']);
-        $this->assertNull($result['streetNumber']);
-        $this->assertEquals('Kalbacher Hauptstraße 10', $result['streetName']);
-        $this->assertEquals(60437, $result['postalCode']);
-        $this->assertEquals('Frankfurt', $result['locality']);
-        $this->assertEquals('Frankfurt', $result['county']);
-        $this->assertEquals('Hesse', $result['region']);
-        $this->assertEquals('DE', $result['country']);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[0];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(50.189062, $result->getLatitude(), '', 0.01);
+        $this->assertEquals(8.636567, $result->getLongitude(), '', 0.01);
+        $this->assertEquals('Kalbacher Hauptstraße 10', $result->getStreetName());
+        $this->assertEquals(60437, $result->getPostalCode());
+        $this->assertEquals('Frankfurt', $result->getLocality());
+        $this->assertEquals('Frankfurt', $result->getCounty()->getName());
+        $this->assertEquals('Hesse', $result->getRegion()->getName());
+        $this->assertEquals('DE', $result->getCountry()->getName());
 
-        $this->assertNull($result['countryCode']);
-        $this->assertNull($result['regionCode']);
-        $this->assertNull($result['timezone']);
+        $this->assertFalse($result->getBounds()->isDefined());
+        $this->assertNull($result->getStreetNumber());
+        $this->assertNull($result->getRegion()->getcode());
+        $this->assertNull($result->getCountry()->getCode());
+        $this->assertNull($result->getTimezone());
     }
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The MapQuest provider does not support IP addresses, only street addresses.
      */
-    public function testGetGeocodedDataWithLocalhostIPv4()
+    public function testGeocodeWithLocalhostIPv4()
     {
         $provider = new MapQuest($this->getMockAdapter($this->never()), 'api_key');
         $provider->geocode('127.0.0.1');
@@ -207,7 +221,7 @@ class MapQuestTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The MapQuest provider does not support IP addresses, only street addresses.
      */
-    public function testGetGeocodedDataWithLocalhostIPv6()
+    public function testGeocodeWithLocalhostIPv6()
     {
         $provider = new MapQuest($this->getMockAdapter($this->never()), 'api_key');
         $provider->geocode('::1');
@@ -217,7 +231,7 @@ class MapQuestTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The MapQuest provider does not support IP addresses, only street addresses.
      */
-    public function testGetGeocodedDataWithRealIPv4()
+    public function testGeocodeWithRealIPv4()
     {
         $provider = new MapQuest($this->getAdapter(), 'api_key');
         $provider->geocode('74.200.247.59');
@@ -227,7 +241,7 @@ class MapQuestTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The MapQuest provider does not support IP addresses, only street addresses.
      */
-    public function testGetGeocodedDataWithRealIPv6()
+    public function testGeocodeWithRealIPv6()
     {
         $provider = new MapQuest($this->getAdapter(), 'api_key');
         $provider->geocode('::ffff:74.200.247.59');

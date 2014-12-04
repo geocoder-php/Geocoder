@@ -17,7 +17,7 @@ class GeoPluginTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The GeoPlugin provider does not support street addresses, only IP addresses.
      */
-    public function testGetGeocodedDataWithNull()
+    public function testGeocodeWithNull()
     {
         $provider = new GeoPlugin($this->getMockAdapter($this->never()));
         $provider->geocode(null);
@@ -27,7 +27,7 @@ class GeoPluginTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The GeoPlugin provider does not support street addresses, only IP addresses.
      */
-    public function testGetGeocodedDataWithEmpty()
+    public function testGeocodeWithEmpty()
     {
         $provider = new GeoPlugin($this->getMockAdapter($this->never()));
         $provider->geocode('');
@@ -37,13 +37,13 @@ class GeoPluginTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The GeoPlugin provider does not support street addresses, only IP addresses.
      */
-    public function testGetGeocodedDataWithAddress()
+    public function testGeocodeWithAddress()
     {
         $provider = new GeoPlugin($this->getMockAdapter($this->never()));
         $provider->geocode('10 avenue Gambetta, Paris, France');
     }
 
-    public function testGetGeocodedDataWithLocalhostIPv4()
+    public function testGeocodeWithLocalhostIPv4()
     {
         $provider = new GeoPlugin($this->getMockAdapter($this->never()));
         $results  = $provider->geocode('127.0.0.1');
@@ -53,12 +53,12 @@ class GeoPluginTest extends TestCase
 
         $result = $results[0];
         $this->assertEquals('Localhost', $result->getLocality());
-        $this->assertEquals('Localhost', $result->getRegion()->getName());
         $this->assertEquals('Localhost', $result->getCounty()->getName());
+        $this->assertEquals('Localhost', $result->getRegion()->getName());
         $this->assertEquals('Localhost', $result->getCountry()->getName());
     }
 
-    public function testGetGeocodedDataWithLocalhostIPv6()
+    public function testGeocodeWithLocalhostIPv6()
     {
         $provider = new GeoPlugin($this->getMockAdapter($this->never()));
         $results  = $provider->geocode('::1');
@@ -68,8 +68,8 @@ class GeoPluginTest extends TestCase
 
         $result = $results[0];
         $this->assertEquals('Localhost', $result->getLocality());
-        $this->assertEquals('Localhost', $result->getRegion()->getName());
         $this->assertEquals('Localhost', $result->getCounty()->getName());
+        $this->assertEquals('Localhost', $result->getRegion()->getName());
         $this->assertEquals('Localhost', $result->getCountry()->getName());
     }
 
@@ -77,7 +77,7 @@ class GeoPluginTest extends TestCase
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query "http://www.geoplugin.net/json.gp?ip=74.200.247.59".
      */
-    public function testGetGeocodedDataWithRealIPv4GetsNullContent()
+    public function testGeocodeWithRealIPv4GetsNullContent()
     {
         $provider = new GeoPlugin($this->getMockAdapterReturns(null));
         $provider->geocode('74.200.247.59');
@@ -87,13 +87,13 @@ class GeoPluginTest extends TestCase
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query "http://www.geoplugin.net/json.gp?ip=74.200.247.59".
      */
-    public function testGetGeocodedDataWithRealIPv4GetsEmptyContent()
+    public function testGeocodeWithRealIPv4GetsEmptyContent()
     {
         $provider = new GeoPlugin($this->getMockAdapterReturns(''));
         $provider->geocode('74.200.247.59');
     }
 
-    public function testGetGeocodedDataWithRealIPv4()
+    public function testGeocodeWithRealIPv4()
     {
         $provider = new GeoPlugin($this->getAdapter());
         $results  = $provider->geocode('66.147.244.214');
@@ -102,11 +102,11 @@ class GeoPluginTest extends TestCase
         $this->assertCount(1, $results);
 
         $result = $results[0];
-        $this->assertEquals('Provo', $result->getLocality());
         $this->assertEquals(40.218102, $result->getLatitude(), '', 0.0001);
         $this->assertEquals(-111.613297, $result->getLongitude(), '', 0.0001);
-        $this->assertEquals('UT', $result->getRegion()->getCode());
+        $this->assertEquals('Provo', $result->getLocality());
         $this->assertEquals('Utah', $result->getRegion()->getName());
+        $this->assertEquals('UT', $result->getRegion()->getCode());
         $this->assertEquals('United States', $result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
     }
@@ -115,7 +115,7 @@ class GeoPluginTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The GeoPlugin provider is not able to do reverse geocoding.
      */
-    public function testGetReverseData()
+    public function testReverse()
     {
         $provider = new GeoPlugin($this->getMockAdapter($this->never()));
         $provider->reverse(1, 2);

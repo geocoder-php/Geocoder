@@ -16,7 +16,7 @@ class ArcGISOnlineTest extends TestCase
     /**
      * @expectedException \Geocoder\Exception\NoResult
      */
-    public function testGetGeocodedDataWithInvalidData()
+    public function testGeocodeWithInvalidData()
     {
         $provider = new ArcGISOnline($this->getMockAdapter());
         $provider->geocode('loremipsum');
@@ -26,7 +26,7 @@ class ArcGISOnlineTest extends TestCase
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Invalid address.
      */
-    public function testGetGeocodedDataWithNull()
+    public function testGeocodeWithNull()
     {
         $provider = new ArcGISOnline($this->getMockAdapter($this->never()));
         $provider->geocode(null);
@@ -36,7 +36,7 @@ class ArcGISOnlineTest extends TestCase
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Invalid address.
      */
-    public function testGetGeocodedDataWithEmpty()
+    public function testGeocodeWithEmpty()
     {
         $provider = new ArcGISOnline($this->getMockAdapter($this->never()));
         $provider->geocode('');
@@ -46,7 +46,7 @@ class ArcGISOnlineTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The ArcGISOnline provider does not support IP addresses, only street addresses.
      */
-    public function testGetGeocodedDataWithLocalhostIPv4()
+    public function testGeocodeWithLocalhostIPv4()
     {
         $provider = new ArcGISOnline($this->getMockAdapter($this->never()));
         $provider->geocode('127.0.0.1');
@@ -56,7 +56,7 @@ class ArcGISOnlineTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The ArcGISOnline provider does not support IP addresses, only street addresses.
      */
-    public function testGetGeocodedDataWithLocalhostIPv6()
+    public function testGeocodeWithLocalhostIPv6()
     {
         $provider = new ArcGISOnline($this->getMockAdapter($this->never()));
         $provider->geocode('::1');
@@ -66,13 +66,13 @@ class ArcGISOnlineTest extends TestCase
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query "http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find?text=10+avenue+Gambetta%2C+Paris%2C+France&maxLocations=5&f=json&outFields=*".
      */
-    public function testGetGeocodedDataWithAddressGetsNullContent()
+    public function testGeocodeWithAddressGetsNullContent()
     {
         $provider = new ArcGISOnline($this->getMockAdapterReturns(null));
         $provider->geocode('10 avenue Gambetta, Paris, France');
     }
 
-    public function testGetGeocodedDataWithRealAddress()
+    public function testGeocodeWithRealAddress()
     {
         $provider = new ArcGISOnline($this->getAdapter());
         $results  = $provider->geocode('10 avenue Gambetta, Paris, France');
@@ -80,27 +80,28 @@ class ArcGISOnlineTest extends TestCase
         $this->assertInternalType('array', $results);
         $this->assertCount(5, $results);
 
+        /** @var \Geocoder\Model\Address $result */
         $result = $results[0];
-        $this->assertInternalType('array', $result);
-        $this->assertEquals(48.863279997000461, $result['latitude'], '', 0.0001);
-        $this->assertEquals(2.3890199980004354, $result['longitude'], '', 0.0001);
-        $this->assertEquals('10 Avenue Gambetta, 75020, Paris', $result['streetName']);
-        $this->assertEquals(75020, $result['postalCode']);
-        $this->assertEquals('Paris', $result['locality']);
-        $this->assertEquals('Paris', $result['county']);
-        $this->assertEquals('Île-de-France', $result['region']);
-        $this->assertEquals('FRA', $result['countryCode']);
-        $this->assertEquals(10, $result['streetNumber']);
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(48.863279997000461, $result->getLatitude(), '', 0.0001);
+        $this->assertEquals(2.3890199980004354, $result->getLongitude(), '', 0.0001);
+        $this->assertEquals(10, $result->getStreetNumber());
+        $this->assertEquals('10 Avenue Gambetta, 75020, Paris', $result->getStreetName());
+        $this->assertEquals(75020, $result->getPostalCode());
+        $this->assertEquals('Paris', $result->getLocality());
+        $this->assertEquals('Île-de-France', $result->getRegion()->getName());
+        $this->assertEquals('Paris', $result->getCounty()->getName());
+        $this->assertEquals('FRA', $result->getCountry()->getCode());
 
-        $this->assertNull($result['country']);
-        $this->assertNull($result['timezone']);
-        $this->assertNull($result['regionCode']);
-        $this->assertNull($result['bounds']);
-        $this->assertNull($result['subLocality']);
-        $this->assertNull($result['countyCode']);
+        $this->assertFalse($result->getBounds()->isDefined());
+        $this->assertNull($result->getSubLocality());
+        $this->assertNull($result->getCounty()->getCode());
+        $this->assertNull($result->getRegion()->getCode());
+        $this->assertNull($result->getCountry()->getName());
+        $this->assertNull($result->getTimezone());
     }
 
-    public function testGetGeocodedDataWithRealAddressAndHttps()
+    public function testGeocodeWithRealAddressAndHttps()
     {
         $provider = new ArcGISOnline($this->getAdapter(), null, true);
         $results  = $provider->geocode('10 avenue Gambetta, Paris, France');
@@ -108,51 +109,53 @@ class ArcGISOnlineTest extends TestCase
         $this->assertInternalType('array', $results);
         $this->assertCount(5, $results);
 
+        /** @var \Geocoder\Model\Address $result */
         $result = $results[0];
-        $this->assertInternalType('array', $result);
-        $this->assertEquals(48.863279997000461, $result['latitude'], '', 0.0001);
-        $this->assertEquals(2.3890199980004354, $result['longitude'], '', 0.0001);
-        $this->assertEquals('10 Avenue Gambetta, 75020, Paris', $result['streetName']);
-        $this->assertEquals(75020, $result['postalCode']);
-        $this->assertEquals('Paris', $result['locality']);
-        $this->assertEquals('Paris', $result['county']);
-        $this->assertEquals('Île-de-France', $result['region']);
-        $this->assertEquals('FRA', $result['countryCode']);
-        $this->assertEquals(10, $result['streetNumber']);
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(48.863279997000461, $result->getLatitude(), '', 0.0001);
+        $this->assertEquals(2.3890199980004354, $result->getLongitude(), '', 0.0001);
+        $this->assertEquals(10, $result->getStreetNumber());
+        $this->assertEquals('10 Avenue Gambetta, 75020, Paris', $result->getStreetName());
+        $this->assertEquals(75020, $result->getPostalCode());
+        $this->assertEquals('Paris', $result->getLocality());
+        $this->assertEquals('Paris', $result->getCounty()->getName());
+        $this->assertEquals('Île-de-France', $result->getRegion()->getName());
+        $this->assertEquals('FRA', $result->getCountry()->getCode());
+        $this->assertEquals(10, $result->getStreetNumber());
 
-        $this->assertNull($result['country']);
-        $this->assertNull($result['timezone']);
-        $this->assertNull($result['regionCode']);
-        $this->assertNull($result['bounds']);
-        $this->assertNull($result['subLocality']);
-        $this->assertNull($result['countyCode']);
+        $this->assertFalse($result->getBounds()->isDefined());
+        $this->assertNull($result->getSubLocality());
+        $this->assertNull($result->getCounty()->getCode());
+        $this->assertNull($result->getRegion()->getCode());
+        $this->assertNull($result->getCountry()->getName());
+        $this->assertNull($result->getTimezone());
     }
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage No results found for query "http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find?text=10+avenue+Gambetta%2C+Paris%2C+France".
      */
-    public function testGetGeocodedDataWithInvalidAddressForSourceCountry()
+    public function testGeocodeWithInvalidAddressForSourceCountry()
     {
         $provider = new ArcGISOnline($this->getAdapter(), 'USA');
-        $result   = $provider->geocode('10 avenue Gambetta, Paris, France');
+        $provider->geocode('10 avenue Gambetta, Paris, France');
     }
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage No results found for query "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find?text=10+avenue+Gambetta%2C+Paris%2C+France".
      */
-    public function testGetGeocodedDataWithInvalidAddressWithHttpsForSourceCountry()
+    public function testGeocodeWithInvalidAddressWithHttpsForSourceCountry()
     {
         $provider = new ArcGISOnline($this->getAdapter(), 'USA', true);
-        $result   = $provider->geocode('10 avenue Gambetta, Paris, France');
+        $provider->geocode('10 avenue Gambetta, Paris, France');
     }
 
     /**
-     * @expectedException Geocoder\Exception\NoResult
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query "http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/reverseGeocode?location=2.000000,1.000000&maxLocations=5&f=json&outFields=*".
      */
-    public function testGetReversedDataWithInvalid()
+    public function testReverseWithInvalid()
     {
         $provider = new ArcGISOnline($this->getMockAdapter());
         $provider->reverse(1, 2);
@@ -162,67 +165,71 @@ class ArcGISOnlineTest extends TestCase
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query "http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/reverseGeocode?location=2.389020,48.863280&maxLocations=5&f=json&outFields=*".
      */
-    public function testGetReversedDataWithCoordinatesContentReturnNull()
+    public function testReverseWithCoordinatesContentReturnNull()
     {
         $provider = new ArcGISOnline($this->getMockAdapterReturns(null));
         $provider->reverse(48.863279997000461, 2.3890199980004354);
     }
 
-    public function testGetReversedDataWithRealCoordinates()
+    public function testReverseWithRealCoordinates()
     {
         $provider = new ArcGISOnline($this->getAdapter());
-        $result   = $provider->reverse(48.863279997000461, 2.3890199980004354);
+        $results  = $provider->reverse(48.863279997000461, 2.3890199980004354);
 
-        $this->assertInternalType('array', $result);
-        $this->assertCount(1, $result);
+        $this->assertInternalType('array', $results);
+        $this->assertCount(1, $results);
 
-        $result = $result[0];
-        $this->assertEquals(48.863279997000461, $result['latitude'], '', 0.0001);
-        $this->assertEquals(2.3890199980004354, $result['longitude'], '', 0.0001);
-        $this->assertEquals('3 Avenue Gambetta', $result['streetName']);
-        $this->assertEquals(75020, $result['postalCode']);
-        $this->assertEquals('Paris', $result['locality']);
-        $this->assertEquals('Paris', $result['county']);
-        $this->assertEquals('Île-de-France', $result['region']);
-        $this->assertEquals('FRA', $result['countryCode']);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[0];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(48.863279997000461, $result->getLatitude(), '', 0.0001);
+        $this->assertEquals(2.3890199980004354, $result->getLongitude(), '', 0.0001);
+        $this->assertNull($result->getStreetNumber());
+        $this->assertEquals('3 Avenue Gambetta', $result->getStreetName());
+        $this->assertEquals(75020, $result->getPostalCode());
+        $this->assertEquals('Paris', $result->getLocality());
+        $this->assertEquals('Paris', $result->getCounty()->getName());
+        $this->assertEquals('Île-de-France', $result->getRegion()->getName());
+        $this->assertEquals('FRA', $result->getCountry()->getCode());
 
-        $this->assertNull($result['streetNumber']);
-        $this->assertNull($result['country']);
-        $this->assertNull($result['timezone']);
-        $this->assertNull($result['regionCode']);
-        $this->assertNull($result['bounds']);
-        $this->assertNull($result['subLocality']);
-        $this->assertNull($result['countyCode']);
+        $this->assertFalse($result->getBounds()->isDefined());
+        $this->assertNull($result->getSubLocality());
+        $this->assertNull($result->getCounty()->getCode());
+        $this->assertNull($result->getRegion()->getCode());
+        $this->assertNull($result->getCountry()->getName());
+        $this->assertNull($result->getTimezone());
     }
 
-    public function testGetReversedDataWithRealCoordinatesWithHttps()
+    public function testReverseWithRealCoordinatesWithHttps()
     {
         $provider = new ArcGISOnline($this->getAdapter(), null, true);
-        $result   = $provider->reverse(48.863279997000461, 2.3890199980004354);
+        $results  = $provider->reverse(48.863279997000461, 2.3890199980004354);
 
-        $this->assertInternalType('array', $result);
-        $this->assertCount(1, $result);
+        $this->assertInternalType('array', $results);
+        $this->assertCount(1, $results);
 
-        $result = $result[0];
-        $this->assertEquals(48.863279997000461, $result['latitude'], '', 0.0001);
-        $this->assertEquals(2.3890199980004354, $result['longitude'], '', 0.0001);
-        $this->assertEquals('3 Avenue Gambetta', $result['streetName']);
-        $this->assertEquals(75020, $result['postalCode']);
-        $this->assertEquals('Paris', $result['locality']);
-        $this->assertEquals('Paris', $result['county']);
-        $this->assertEquals('Île-de-France', $result['region']);
-        $this->assertEquals('FRA', $result['countryCode']);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[0];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(48.863279997000461, $result->getLatitude(), '', 0.0001);
+        $this->assertEquals(2.3890199980004354, $result->getLongitude(), '', 0.0001);
+        $this->assertNull($result->getStreetNumber());
+        $this->assertEquals('3 Avenue Gambetta', $result->getStreetName());
+        $this->assertEquals(75020, $result->getPostalCode());
+        $this->assertEquals('Paris', $result->getLocality());
+        $this->assertEquals('Paris', $result->getCounty()->getName());
+        $this->assertEquals('Île-de-France', $result->getRegion()->getName());
+        $this->assertEquals('FRA', $result->getCountry()->getCode());
 
-        $this->assertNull($result['streetNumber']);
-        $this->assertNull($result['country']);
-        $this->assertNull($result['timezone']);
-        $this->assertNull($result['regionCode']);
-        $this->assertNull($result['bounds']);
-        $this->assertNull($result['subLocality']);
-        $this->assertNull($result['countyCode']);
+        $this->assertFalse($result->getBounds()->isDefined());
+        $this->assertNull($result->getSubLocality());
+        $this->assertNull($result->getCounty()->getCode());
+        $this->assertNull($result->getRegion()->getCode());
+        $this->assertNull($result->getCountry()->getName());
+        $this->assertNull($result->getTimezone());
     }
 
-    public function testGetGeocodedDataWithCity()
+    public function testGeocodeWithCity()
     {
         $provider = new ArcGISOnline($this->getAdapter());
         $results  = $provider->geocode('Hannover');
@@ -230,62 +237,72 @@ class ArcGISOnlineTest extends TestCase
         $this->assertInternalType('array', $results);
         $this->assertCount(5, $results);
 
-        $this->assertInternalType('array', $results[0]);
-        $this->assertEquals(52.370518568000477, $results[0]['latitude'], '', 0.0001);
-        $this->assertEquals(9.7332166860004463, $results[0]['longitude'], '', 0.0001);
-        $this->assertEquals('Hannover, Lower Saxony, Germany', $results[0]['streetName']);
-        $this->assertEquals('Lower Saxony', $results[0]['region']);
-        $this->assertEquals('DEU', $results[0]['countryCode']);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[0];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(52.370518568000477, $result->getLatitude(), '', 0.0001);
+        $this->assertEquals(9.7332166860004463, $result->getLongitude(), '', 0.0001);
+        $this->assertNull($result->getStreetNumber());
+        $this->assertEquals('Hannover, Lower Saxony, Germany', $result->getStreetName());
+        $this->assertNull($result->getPostalCode());
+        $this->assertNull($result->getLocality());
+        $this->assertNull($result->getCounty()->getName());
+        $this->assertEquals('Lower Saxony', $result->getRegion()->getName());
+        $this->assertEquals('DEU', $result->getCountry()->getCode());
 
-        $this->assertNull($results[0]['locality']);
-        $this->assertNull($results[0]['county']);
-        $this->assertNull($results[0]['postalCode']);
-        $this->assertNull($results[0]['streetNumber']);
-        $this->assertNull($results[0]['country']);
-        $this->assertNull($results[0]['timezone']);
-        $this->assertNull($results[0]['regionCode']);
-        $this->assertNull($results[0]['bounds']);
-        $this->assertNull($results[0]['subLocality']);
-        $this->assertNull($results[0]['countyCode']);
+        $this->assertFalse($result->getBounds()->isDefined());
+        $this->assertNull($result->getSubLocality());
+        $this->assertNull($result->getCounty()->getCode());
+        $this->assertNull($result->getRegion()->getCode());
+        $this->assertNull($result->getCountry()->getName());
+        $this->assertNull($result->getTimezone());
 
-        $this->assertInternalType('array', $results[1]);
-        $this->assertEquals(52.370518568, $results[1]['latitude'], '', 0.0001);
-        $this->assertEquals(9.7332166860004, $results[1]['longitude'], '', 0.0001);
-        $this->assertEquals('Hannover, Lower Saxony, Germany', $results[1]['streetName']);
-        $this->assertEquals('Hannover', $results[1]['locality']);
-        $this->assertEquals('Lower Saxony', $results[1]['region']);
-        $this->assertEquals('DEU', $results[1]['countryCode']);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[1];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(52.370518568, $result->getLatitude(), '', 0.0001);
+        $this->assertEquals(9.7332166860004, $result->getLongitude(), '', 0.0001);
+        $this->assertEquals('Hannover, Lower Saxony, Germany', $result->getStreetName());
+        $this->assertEquals('Hannover', $result->getLocality());
+        $this->assertEquals('Lower Saxony', $result->getRegion()->getName());
+        $this->assertEquals('DEU', $result->getCountry()->getCode());
 
-        $this->assertInternalType('array', $results[2]);
-        $this->assertEquals(47.111386795, $results[2]['latitude'], '', 0.0001);
-        $this->assertEquals(-101.426539157, $results[2]['longitude'], '', 0.0001);
-        $this->assertEquals('Hannover, North Dakota, United States', $results[2]['streetName']);
-        $this->assertNull($results[2]['locality']);
-        $this->assertEquals('North Dakota', $results[2]['region']);
-        $this->assertEquals('USA', $results[2]['countryCode']);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[2];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(47.111386795, $result->getLatitude(), '', 0.0001);
+        $this->assertEquals(-101.426539157, $result->getLongitude(), '', 0.0001);
+        $this->assertEquals('Hannover, North Dakota, United States', $result->getStreetName());
+        $this->assertNull($result->getLocality());
+        $this->assertEquals('North Dakota', $result->getRegion()->getName());
+        $this->assertEquals('USA', $result->getCountry()->getCode());
 
-        $this->assertInternalType('array', $results[3]);
-        $this->assertEquals(39.391768472, $results[3]['latitude'], '', 0.0001);
-        $this->assertEquals(-77.440257129, $results[3]['longitude'], '', 0.0001);
-        $this->assertEquals('Hannover, Maryland, United States', $results[3]['streetName']);
-        $this->assertEquals('Maryland', $results[3]['region']);
-        $this->assertEquals('USA', $results[3]['countryCode']);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[3];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(39.391768472, $result->getLatitude(), '', 0.0001);
+        $this->assertEquals(-77.440257129, $result->getLongitude(), '', 0.0001);
+        $this->assertEquals('Hannover, Maryland, United States', $result->getStreetName());
+        $this->assertEquals('Maryland', $result->getRegion()->getName());
+        $this->assertEquals('USA', $result->getCountry()->getCode());
 
-        $this->assertInternalType('array', $results[4]);
-        $this->assertEquals(53.174198173, $results[4]['latitude'], '', 0.0001);
-        $this->assertEquals(8.5069383810005, $results[4]['longitude'], '', 0.0001);
-        $this->assertEquals('Hannöver, Lower Saxony, Germany', $results[4]['streetName']);
-        $this->assertNull($results[4]['locality']);
-        $this->assertEquals('Lower Saxony', $results[4]['region']);
-        $this->assertNull($results[4]['county']);
-        $this->assertEquals('DEU', $results[4]['countryCode']);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[4];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(53.174198173, $result->getLatitude(), '', 0.0001);
+        $this->assertEquals(8.5069383810005, $result->getLongitude(), '', 0.0001);
+        $this->assertEquals('Hannöver, Lower Saxony, Germany', $result->getStreetName());
+        $this->assertNull($result->getLocality());
+        $this->assertEquals('Lower Saxony', $result->getRegion()->getName());
+        $this->assertNull($result->getCounty()->getName());
+        $this->assertEquals('DEU', $result->getCountry()->getCode());
     }
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The ArcGISOnline provider does not support IP addresses, only street addresses.
      */
-    public function testGetGeocodedDataWithRealIPv4()
+    public function testGeocodeWithRealIPv4()
     {
         $provider = new ArcGISOnline($this->getMockAdapter($this->never()));
         $provider->geocode('88.188.221.14');
@@ -295,7 +312,7 @@ class ArcGISOnlineTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The ArcGISOnline provider does not support IP addresses, only street addresses.
      */
-    public function testGetGeocodedDataWithRealIPv6()
+    public function testGeocodeWithRealIPv6()
     {
         $provider = new ArcGISOnline($this->getMockAdapter($this->never()));
         $provider->geocode('::ffff:88.188.221.14');

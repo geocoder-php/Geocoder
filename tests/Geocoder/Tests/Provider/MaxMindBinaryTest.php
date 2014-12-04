@@ -47,29 +47,30 @@ class MaxMindBinaryTest extends TestCase
     public function testLocationResultContainsExpectedFields($ip)
     {
         $provider = new MaxMindBinary($this->binaryFile);
-        $results  = $provider->getGeocodedData($ip);
+        $results  = $provider->geocode($ip);
 
         $this->assertInternalType('array', $results);
         $this->assertCount(1, $results);
 
+        /** @var \Geocoder\Model\Address $result */
         $result = $results[0];
-        $this->assertInternalType('array', $result);
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
 
-        $this->assertArrayHasKey('country', $result);
-        $this->assertArrayHasKey('countryCode', $result);
-        $this->assertArrayHasKey('regionCode', $result);
-        $this->assertArrayHasKey('locality', $result);
-        $this->assertArrayHasKey('latitude', $result);
-        $this->assertArrayHasKey('longitude', $result);
-        $this->assertArrayHasKey('postalCode', $result);
-        $this->assertArrayHasKey('bounds', $result);
-        $this->assertArrayHasKey('streetNumber', $result);
-        $this->assertArrayHasKey('streetName', $result);
-        $this->assertArrayHasKey('subLocality', $result);
-        $this->assertArrayHasKey('county', $result);
-        $this->assertArrayHasKey('countyCode', $result);
-        $this->assertArrayHasKey('region', $result);
-        $this->assertArrayHasKey('timezone', $result);
+        $this->assertNull($result->getLatitude());
+        $this->assertNull($result->getLongitude());
+        $this->assertFalse($result->getBounds()->isDefined());
+        $this->assertNull($result->getStreetNumber());
+        $this->assertNull($result->getStreetName());
+        $this->assertNull($result->getPostalCode());
+        $this->assertNotNull($result->getLocality());
+        $this->assertNull($result->getSubLocality());
+        $this->assertNull($result->getCounty()->getName());
+        $this->assertNull($result->getCounty()->getCode());
+        $this->assertNull($result->getRegion()->getName());
+        $this->assertNull($result->getRegion()->getCode());
+        $this->assertNotNull($result->getCountry()->getName());
+        $this->assertNull($result->getCountry()->getCode());
+        $this->assertNull($result->getTimezone());
     }
 
     /**
@@ -78,26 +79,27 @@ class MaxMindBinaryTest extends TestCase
     public function testFindLocationByIp($ip, $expectedCity, $expectedCountry)
     {
         $provider = new MaxMindBinary($this->binaryFile);
-        $result   = $provider->getGeocodedData($ip);
+        $results  = $provider->geocode($ip);
 
-        $this->assertInternalType('array', $result);
-        $this->assertCount(1, $result);
+        $this->assertInternalType('array', $results);
+        $this->assertCount(1, $results);
 
-        $result = $result[0];
-        $this->assertInternalType('array', $result);
-
-        $this->assertArrayHasKey('locality', $result);
-        $this->assertEquals($expectedCity, $result['locality']);
-        $this->assertArrayHasKey('country', $result);
-        $this->assertEquals($expectedCountry, $result['country']);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[0];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals($expectedCity, $result->getLocality());
+        $this->assertEquals($expectedCountry, $result->getCountry()->getName());
     }
 
     public function testShouldReturnResultsAsUtf8Encoded()
     {
         $provider = new MaxMindBinary($this->binaryFile);
-        $results  = $provider->getGeocodedData('212.51.181.237');
+        $results  = $provider->geocode('212.51.181.237');
 
-        $this->assertSame('Châlette-sur-loing', $results[0]['locality']);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[0];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertSame('Châlette-sur-loing', $result->getLocality());
     }
 
     public function testGetName()
@@ -115,7 +117,7 @@ class MaxMindBinaryTest extends TestCase
     {
         $provider = new MaxMindBinary($this->binaryFile);
 
-        $provider->getGeocodedData('127.0.0.1');
+        $provider->geocode('127.0.0.1');
     }
 
     /**
@@ -126,17 +128,17 @@ class MaxMindBinaryTest extends TestCase
     {
         $provider = new MaxMindBinary($this->binaryFile);
 
-        $provider->getGeocodedData('invalidIp');
+        $provider->geocode('invalidIp');
     }
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The MaxMindBinary is not able to do reverse geocoding.
      */
-    public function testThrowOnReversedDataMethodUsage()
+    public function testThrowOnReverseMethodUsage()
     {
         $provider = new MaxMindBinary($this->binaryFile);
 
-        $provider->getReversedData(array());
+        $provider->reverse(0, 0);
     }
 }

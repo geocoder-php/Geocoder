@@ -15,11 +15,18 @@ namespace Geocoder\Model;
  */
 final class Country
 {
+    /**
+     * @var string
+     */
     private $name;
 
+    /**
+     * @var string
+     */
     private $code;
 
     /**
+     * @param string $name
      * @param string $code
      */
     public function __construct($name, $code)
@@ -28,16 +35,31 @@ final class Country
         $this->code = $code;
     }
 
+    /**
+     * Returns the country name
+     *
+     * @return string
+     */
     public function getName()
     {
         return $this->name;
     }
 
+    /**
+     * Returns the country ISO code.
+     *
+     * @return string
+     */
     public function getCode()
     {
         return $this->code;
     }
 
+    /**
+     * Returns a string with the country name.
+     *
+     * @return array
+     */
     public function toString()
     {
         return $this->getName();

@@ -15,8 +15,14 @@ namespace Geocoder\Model;
  */
 final class Coordinates
 {
+    /**
+     * @var double
+     */
     private $latitude;
 
+    /**
+     * @var double
+     */
     private $longitude;
 
     /**
@@ -29,11 +35,21 @@ final class Coordinates
         $this->longitude = $longitude;
     }
 
+    /**
+     * Returns the latitude.
+     *
+     * @return double
+     */
     public function getLatitude()
     {
         return $this->latitude;
     }
 
+    /**
+     * Returns the longitude.
+     *
+     * @return double
+     */
     public function getLongitude()
     {
         return $this->longitude;

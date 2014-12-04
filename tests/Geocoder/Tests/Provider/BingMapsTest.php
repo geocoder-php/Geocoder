@@ -94,65 +94,62 @@ JSON;
         $this->assertInternalType('array', $results);
         $this->assertCount(3, $results);
 
-        $this->assertInternalType('array', $results[0]);
-        $this->assertEquals(48.86321675999999, $results[0]['latitude'], '', 0.01);
-        $this->assertEquals(2.3887721299999995, $results[0]['longitude'], '', 0.01);
-        $this->assertArrayHasKey('south', $results[0]['bounds']);
-        $this->assertArrayHasKey('west', $results[0]['bounds']);
-        $this->assertArrayHasKey('north', $results[0]['bounds']);
-        $this->assertArrayHasKey('east', $results[0]['bounds']);
-        $this->assertEquals(48.859354042429, $results[0]['bounds']['south'], '', 0.01);
-        $this->assertEquals(2.3809438666389, $results[0]['bounds']['west'], '', 0.01);
-        $this->assertEquals(48.867079477571, $results[0]['bounds']['north'], '', 0.01);
-        $this->assertEquals(2.3966003933611, $results[0]['bounds']['east'], '', 0.01);
-        $this->assertNull($results[0]['streetNumber']);
-        $this->assertEquals('10 Avenue Gambetta', $results[0]['streetName']);
-        $this->assertEquals(75020, $results[0]['postalCode']);
-        $this->assertEquals('Paris', $results[0]['locality']);
-        $this->assertEquals('Paris', $results[0]['county']);
-        $this->assertEquals('IdF', $results[0]['region']);
-        $this->assertEquals('France', $results[0]['country']);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[0];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(48.86321675999999, $result->getLatitude(), '', 0.01);
+        $this->assertEquals(2.3887721299999995, $result->getLongitude(), '', 0.01);
+        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertEquals(48.859354042429, $result->getBounds()->getSouth(), '', 0.01);
+        $this->assertEquals(2.3809438666389, $result->getBounds()->getWest(), '', 0.01);
+        $this->assertEquals(48.867079477571, $result->getBounds()->getNorth(), '', 0.01);
+        $this->assertEquals(2.3966003933611, $result->getBounds()->getEast(), '', 0.01);
+        $this->assertNull($result->getStreetNumber());
+        $this->assertEquals('10 Avenue Gambetta', $result->getStreetName());
+        $this->assertEquals(75020, $result->getPostalCode());
+        $this->assertEquals('Paris', $result->getLocality());
+        $this->assertEquals('Paris', $result->getCounty()->getName());
+        $this->assertEquals('Idf', $result->getRegion()->getName());
+        $this->assertEquals('France', $result->getCountry()->getName());
 
-        $this->assertNull($results[0]['countryCode']);
-        $this->assertNull($results[0]['timezone']);
+        $this->assertNull($result->getCountry()->getCode());
+        $this->assertNull($result->getTimezone());
 
-        $this->assertInternalType('array', $results[1]);
-        $this->assertEquals(48.81342781, $results[1]['latitude'], '', 0.01);
-        $this->assertEquals(2.32503767, $results[1]['longitude'], '', 0.01);
-        $this->assertArrayHasKey('south', $results[1]['bounds']);
-        $this->assertArrayHasKey('west', $results[1]['bounds']);
-        $this->assertArrayHasKey('north', $results[1]['bounds']);
-        $this->assertArrayHasKey('east', $results[1]['bounds']);
-        $this->assertEquals(48.809565092429, $results[1]['bounds']['south'], '', 0.01);
-        $this->assertEquals(2.3172171827738, $results[1]['bounds']['west'], '', 0.01);
-        $this->assertEquals(48.817290527571, $results[1]['bounds']['north'], '', 0.01);
-        $this->assertEquals(2.3328581572262, $results[1]['bounds']['east'], '', 0.01);
-        $this->assertNull($results[1]['streetNumber']);
-        $this->assertEquals('10 Avenue Léon Gambetta', $results[1]['streetName']);
-        $this->assertEquals(92120, $results[1]['postalCode']);
-        $this->assertEquals('Montrouge', $results[1]['locality']);
-        $this->assertEquals('Hauts-de-Seine', $results[1]['county']);
-        $this->assertEquals('IdF', $results[1]['region']);
-        $this->assertEquals('France', $results[1]['country']);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[1];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(48.81342781, $result->getLatitude(), '', 0.01);
+        $this->assertEquals(2.32503767, $result->getLongitude(), '', 0.01);
+        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertEquals(48.809565092429, $result->getBounds()->getSouth(), '', 0.01);
+        $this->assertEquals(2.3172171827738, $result->getBounds()->getWest(), '', 0.01);
+        $this->assertEquals(48.817290527571, $result->getBounds()->getNorth(), '', 0.01);
+        $this->assertEquals(2.3328581572262,$result->getBounds()->getEast(), '', 0.01);
+        $this->assertNull($result->getStreetNumber());
+        $this->assertEquals('10 Avenue Léon Gambetta', $result->getStreetName());
+        $this->assertEquals(92120, $result->getPostalCode());
+        $this->assertEquals('Montrouge', $result->getLocality());
+        $this->assertEquals('Hauts-de-Seine', $result->getCounty()->getName());
+        $this->assertEquals('Idf', $result->getRegion()->getName());
+        $this->assertEquals('France', $result->getCountry()->getName());
 
-        $this->assertInternalType('array', $results[2]);
-        $this->assertEquals(48.81014147, $results[2]['latitude'], '', 0.01);
-        $this->assertEquals(2.43568048, $results[2]['longitude'], '', 0.01);
-        $this->assertArrayHasKey('south', $results[2]['bounds']);
-        $this->assertArrayHasKey('west', $results[2]['bounds']);
-        $this->assertArrayHasKey('north', $results[2]['bounds']);
-        $this->assertArrayHasKey('east', $results[2]['bounds']);
-        $this->assertEquals(48.806278752429, $results[2]['bounds']['south'], '', 0.01);
-        $this->assertEquals(2.4278605052897, $results[2]['bounds']['west'], '', 0.01);
-        $this->assertEquals(48.814004187571, $results[2]['bounds']['north'], '', 0.01);
-        $this->assertEquals(2.4435004547103, $results[2]['bounds']['east'], '', 0.01);
-        $this->assertNull($results[2]['streetNumber']);
-        $this->assertEquals('10 Avenue Gambetta', $results[2]['streetName']);
-        $this->assertEquals(94700, $results[2]['postalCode']);
-        $this->assertEquals('Maisons-Alfort', $results[2]['locality']);
-        $this->assertEquals('Val-De-Marne', $results[2]['county']);
-        $this->assertEquals('IdF', $results[2]['region']);
-        $this->assertEquals('France', $results[2]['country']);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[2];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(48.81014147, $result->getLatitude(), '', 0.01);
+        $this->assertEquals(2.43568048, $result->getLongitude(), '', 0.01);
+        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertEquals(48.806278752429, $result->getBounds()->getSouth(), '', 0.01);
+        $this->assertEquals(2.4278605052897, $result->getBounds()->getWest(), '', 0.01);
+        $this->assertEquals(48.814004187571, $result->getBounds()->getNorth(), '', 0.01);
+        $this->assertEquals(2.4435004547103, $result->getBounds()->getEast(), '', 0.01);
+        $this->assertNull($result->getStreetNumber());
+        $this->assertEquals('10 Avenue Gambetta', $result->getStreetName());
+        $this->assertEquals(94700, $result->getPostalCode());
+        $this->assertEquals('Maisons-Alfort', $result->getLocality());
+        $this->assertEquals('Val-de-Marne', $result->getCounty()->getName());
+        $this->assertEquals('Idf', $result->getRegion()->getName());
+        $this->assertEquals('France', $result->getCountry()->getName());
     }
 
     public function testReverseReturnsSingleResult()
@@ -167,29 +164,26 @@ JSON;
         $this->assertInternalType('array', $results);
         $this->assertCount(1, $results);
 
+        /** @var \Geocoder\Model\Address $result */
         $result = $results[0];
-        $this->assertInternalType('array', $result);
-        $this->assertEquals(48.86321648955345, $result['latitude'], '', 0.0001);
-        $this->assertEquals(2.3887719959020615, $result['longitude'], '', 0.0001);
-        $this->assertArrayHasKey('south', $result['bounds']);
-        $this->assertArrayHasKey('west', $result['bounds']);
-        $this->assertArrayHasKey('north', $result['bounds']);
-        $this->assertArrayHasKey('east', $result['bounds']);
-        $this->assertEquals(48.859353771983, $result['bounds']['south'], '', 0.0001);
-        $this->assertEquals(2.3809437325833, $result['bounds']['west'], '', 0.0001);
-        $this->assertEquals(48.867079207124, $result['bounds']['north'], '', 0.0001);
-        $this->assertEquals(2.3966002592208, $result['bounds']['east'], '', 0.0001);
-        $this->assertNull($result['streetNumber']);
-        $this->assertEquals('10 Avenue Gambetta', $result['streetName']);
-        $this->assertEquals(75020, $result['postalCode']);
-        // $this->assertEquals('Paris', $result['locality']);
-        $this->assertEquals('20e Arrondissement', $result['locality']);
-        $this->assertEquals('Paris', $result['county']);
-        $this->assertEquals('IdF', $result['region']);
-        $this->assertEquals('France', $result['country']);
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(48.86321648955345, $result->getLatitude(), '', 0.0001);
+        $this->assertEquals(2.3887719959020615, $result->getLongitude(), '', 0.0001);
+        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertEquals(48.859353771983, $result->getBounds()->getSouth(), '', 0.0001);
+        $this->assertEquals(2.3809437325833, $result->getBounds()->getWest(), '', 0.0001);
+        $this->assertEquals(48.867079207124, $result->getBounds()->getNorth(), '', 0.0001);
+        $this->assertEquals(2.3966002592208, $result->getBounds()->getEast(), '', 0.0001);
+        $this->assertNull($result->getStreetNumber());
+        $this->assertEquals('10 Avenue Gambetta', $result->getStreetName());
+        $this->assertEquals(75020, $result->getPostalCode());
+        $this->assertEquals('20e Arrondissement', $result->getLocality());
+        $this->assertEquals('Paris', $result->getCounty()->getName());
+        $this->assertEquals('Idf', $result->getRegion()->getName());
+        $this->assertEquals('France', $result->getCountry()->getName());
 
-        $this->assertNull($result['countryCode']);
-        $this->assertNull($result['timezone']);
+        $this->assertNull($result->getCountry()->getCode());
+        $this->assertNull($result->getTimezone());
     }
 
     public function testGeocodeWithRealAddressReturnsMultipleResults()
@@ -204,69 +198,66 @@ JSON;
         $this->assertInternalType('array', $results);
         $this->assertCount(3, $results);
 
-        $this->assertInternalType('array', $results[0]);
-        $this->assertEquals(48.86321675999999, $results[0]['latitude'], '', 0.01);
-        $this->assertEquals(2.3887721299999995, $results[0]['longitude'], '', 0.01);
-        $this->assertArrayHasKey('south', $results[0]['bounds']);
-        $this->assertArrayHasKey('west', $results[0]['bounds']);
-        $this->assertArrayHasKey('north', $results[0]['bounds']);
-        $this->assertArrayHasKey('east', $results[0]['bounds']);
-        $this->assertEquals(48.859354042429, $results[0]['bounds']['south'], '', 0.01);
-        $this->assertEquals(2.3809438666389, $results[0]['bounds']['west'], '', 0.01);
-        $this->assertEquals(48.867079477571, $results[0]['bounds']['north'], '', 0.01);
-        $this->assertEquals(2.3966003933611, $results[0]['bounds']['east'], '', 0.01);
-        $this->assertNull($results[0]['streetNumber']);
-        $this->assertEquals('10 Avenue Gambetta', $results[0]['streetName']);
-        $this->assertEquals(75020, $results[0]['postalCode']);
-        $this->assertEquals('Paris', $results[0]['locality']);
-        $this->assertEquals('Paris', $results[0]['county']);
-        $this->assertEquals('IdF', $results[0]['region']);
-        $this->assertEquals('France', $results[0]['country']);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[0];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(48.86321675999999, $result->getLatitude(), '', 0.01);
+        $this->assertEquals(2.3887721299999995, $result->getLongitude(), '', 0.01);
+        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertEquals(48.859354042429, $result->getBounds()->getSouth(), '', 0.01);
+        $this->assertEquals(2.3809438666389, $result->getBounds()->getWest(), '', 0.01);
+        $this->assertEquals(48.867079477571, $result->getBounds()->getNorth(), '', 0.01);
+        $this->assertEquals(2.3966003933611, $result->getBounds()->getEast(), '', 0.01);
+        $this->assertNull($result->getStreetNumber());
+        $this->assertEquals('10 Avenue Gambetta', $result->getStreetName());
+        $this->assertEquals(75020, $result->getPostalCode());
+        $this->assertEquals('Paris', $result->getLocality());
+        $this->assertEquals('Paris', $result->getCounty()->getName());
+        $this->assertEquals('Idf', $result->getRegion()->getName());
+        $this->assertEquals('France', $result->getCountry()->getName());
 
-        $this->assertNull($results[0]['countryCode']);
-        $this->assertNull($results[0]['timezone']);
+        $this->assertNull($result->getCountry()->getCode());
+        $this->assertNull($result->getTimezone());
 
-        $this->assertInternalType('array', $results[1]);
-        $this->assertEquals(48.81342781, $results[1]['latitude'], '', 0.01);
-        $this->assertEquals(2.32503767, $results[1]['longitude'], '', 0.01);
-        $this->assertArrayHasKey('south', $results[1]['bounds']);
-        $this->assertArrayHasKey('west', $results[1]['bounds']);
-        $this->assertArrayHasKey('north', $results[1]['bounds']);
-        $this->assertArrayHasKey('east', $results[1]['bounds']);
-        $this->assertEquals(48.809565092429, $results[1]['bounds']['south'], '', 0.01);
-        $this->assertEquals(2.3172171827738, $results[1]['bounds']['west'], '', 0.01);
-        $this->assertEquals(48.817290527571, $results[1]['bounds']['north'], '', 0.01);
-        $this->assertEquals(2.3328581572262, $results[1]['bounds']['east'], '', 0.01);
-        $this->assertNull($results[1]['streetNumber']);
-        $this->assertEquals('10 Avenue Léon Gambetta', $results[1]['streetName']);
-        $this->assertEquals(92120, $results[1]['postalCode']);
-        $this->assertEquals('Montrouge', $results[1]['locality']);
-        $this->assertEquals('Hauts-de-Seine', $results[1]['county']);
-        $this->assertEquals('IdF', $results[1]['region']);
-        $this->assertEquals('France', $results[1]['country']);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[1];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(48.81342781, $result->getLatitude(), '', 0.01);
+        $this->assertEquals(2.32503767, $result->getLongitude(), '', 0.01);
+        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertEquals(48.809565092429, $result->getBounds()->getSouth(), '', 0.01);
+        $this->assertEquals(2.3172171827738, $result->getBounds()->getWest(), '', 0.01);
+        $this->assertEquals(48.817290527571, $result->getBounds()->getNorth(), '', 0.01);
+        $this->assertEquals(2.3328581572262, $result->getBounds()->getEast(), '', 0.01);
+        $this->assertNull($result->getStreetNumber());
+        $this->assertEquals('10 Avenue Léon Gambetta', $result->getStreetName());
+        $this->assertEquals(92120, $result->getPostalCode());
+        $this->assertEquals('Montrouge', $result->getLocality());
+        $this->assertEquals('Hauts-de-Seine', $result->getCounty()->getName());
+        $this->assertEquals('Idf', $result->getRegion()->getName());
+        $this->assertEquals('France', $result->getCountry()->getName());
 
-        $this->assertInternalType('array', $results[2]);
-        $this->assertEquals(48.81014147, $results[2]['latitude'], '', 0.01);
-        $this->assertEquals(2.43568048, $results[2]['longitude'], '', 0.01);
-        $this->assertArrayHasKey('south', $results[2]['bounds']);
-        $this->assertArrayHasKey('west', $results[2]['bounds']);
-        $this->assertArrayHasKey('north', $results[2]['bounds']);
-        $this->assertArrayHasKey('east', $results[2]['bounds']);
-        $this->assertEquals(48.806278752429, $results[2]['bounds']['south'], '', 0.01);
-        $this->assertEquals(2.4278605052897, $results[2]['bounds']['west'], '', 0.01);
-        $this->assertEquals(48.814004187571, $results[2]['bounds']['north'], '', 0.01);
-        $this->assertEquals(2.4435004547103, $results[2]['bounds']['east'], '', 0.01);
-        $this->assertNull($results[2]['streetNumber']);
-        $this->assertEquals('10 Avenue Gambetta', $results[2]['streetName']);
-        $this->assertEquals(94700, $results[2]['postalCode']);
-        $this->assertEquals('Maisons-Alfort', $results[2]['locality']);
-        $this->assertEquals('Val-De-Marne', $results[2]['county']);
-        $this->assertEquals('IdF', $results[2]['region']);
-        $this->assertEquals('France', $results[2]['country']);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[2];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(48.81014147, $result->getLatitude(), '', 0.01);
+        $this->assertEquals(2.43568048, $result->getLongitude(), '', 0.01);
+        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertEquals(48.806278752429, $result->getBounds()->getSouth(), '', 0.01);
+        $this->assertEquals(2.4278605052897, $result->getBounds()->getWest(), '', 0.01);
+        $this->assertEquals(48.814004187571, $result->getBounds()->getNorth(), '', 0.01);
+        $this->assertEquals(2.4435004547103, $result->getBounds()->getEast(), '', 0.01);
+        $this->assertNull($result->getStreetNumber());
+        $this->assertEquals('10 Avenue Gambetta', $result->getStreetName());
+        $this->assertEquals(94700, $result->getPostalCode());
+        $this->assertEquals('Maisons-Alfort', $result->getLocality());
+        $this->assertEquals('Val-de-Marne', $result->getCounty()->getName());
+        $this->assertEquals('Idf', $result->getRegion()->getName());
+        $this->assertEquals('France', $result->getCountry()->getName());
     }
 
     /**
-     * @expectedException Geocoder\Exception\NoResult
+     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage Could not execute query "http://dev.virtualearth.net/REST/v1/Locations/1.000000,2.000000?key=api_key".
      */
     public function testReverse()
@@ -297,29 +288,26 @@ JSON;
         $this->assertInternalType('array', $results);
         $this->assertCount(1, $results);
 
+        /** @var \Geocoder\Model\Address $result */
         $result = $results[0];
-        $this->assertInternalType('array', $result);
-        $this->assertEquals(48.86321648955345, $result['latitude'], '', 0.0001);
-        $this->assertEquals(2.3887719959020615, $result['longitude'], '', 0.0001);
-        $this->assertArrayHasKey('south', $result['bounds']);
-        $this->assertArrayHasKey('west', $result['bounds']);
-        $this->assertArrayHasKey('north', $result['bounds']);
-        $this->assertArrayHasKey('east', $result['bounds']);
-        $this->assertEquals(48.859353771983, $result['bounds']['south'], '', 0.0001);
-        $this->assertEquals(2.3809437325833, $result['bounds']['west'], '', 0.0001);
-        $this->assertEquals(48.867079207124, $result['bounds']['north'], '', 0.0001);
-        $this->assertEquals(2.3966002592208, $result['bounds']['east'], '', 0.0001);
-        $this->assertNull($result['streetNumber']);
-        $this->assertEquals('10 Avenue Gambetta', $result['streetName']);
-        $this->assertEquals(75020, $result['postalCode']);
-        // $this->assertEquals('Paris', $result['locality']);
-        $this->assertEquals('20e Arrondissement', $result['locality']);
-        $this->assertEquals('Paris', $result['county']);
-        $this->assertEquals('IdF', $result['region']);
-        $this->assertEquals('France', $result['country']);
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(48.86321648955345, $result->getLatitude(), '', 0.0001);
+        $this->assertEquals(2.3887719959020615, $result->getLongitude(), '', 0.0001);
+        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertEquals(48.859353771983, $result->getBounds()->getSouth(), '', 0.0001);
+        $this->assertEquals(2.3809437325833, $result->getBounds()->getWest(), '', 0.0001);
+        $this->assertEquals(48.867079207124, $result->getBounds()->getNorth(), '', 0.0001);
+        $this->assertEquals(2.3966002592208, $result->getBounds()->getEast(), '', 0.0001);
+        $this->assertNull($result->getStreetNumber());
+        $this->assertEquals('10 Avenue Gambetta', $result->getStreetName());
+        $this->assertEquals(75020, $result->getPostalCode());
+        $this->assertEquals('20e Arrondissement', $result->getLocality());
+        $this->assertEquals('Paris', $result->getCounty()->getName());
+        $this->assertEquals('Idf', $result->getRegion()->getName());
+        $this->assertEquals('France', $result->getCountry()->getName());
 
-        $this->assertNull($result['countryCode']);
-        $this->assertNull($result['timezone']);
+        $this->assertNull($result->getCountry()->getCode());
+        $this->assertNull($result->getTimezone());
     }
 
     /**

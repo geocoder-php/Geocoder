@@ -112,7 +112,7 @@ class GeoIP2 extends AbstractProvider implements LocaleAwareProvider
         $uri = sprintf('file://geoip?%s', $address);
 
         try {
-            $result = $this->adapter
+            $result = $this->getAdapter()
                 ->setLocale($this->locale)
                 ->getContent($uri);
         } catch (AddressNotFoundException $e) {

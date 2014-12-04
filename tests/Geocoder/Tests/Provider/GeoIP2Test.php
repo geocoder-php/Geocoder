@@ -44,18 +44,20 @@ class GeoIP2Test extends TestCase
         $this->provider->reverse(50, 9);
     }
 
-    public function testLocalhostDefaults()
+    public function testGeocodeWithLocalhostIPv4()
     {
-        $expectedResult = array(
-            'locality'      => 'localhost',
-            'region'    => 'localhost',
-            'county'    => 'localhost',
-            'country'   => 'localhost',
-        );
+        $results  = $this->provider->geocode('127.0.0.1');
 
-        $actualResult = $this->provider->geocode('127.0.0.1');
+        $this->assertInternalType('array', $results);
+        $this->assertCount(1, $results);
 
-        $this->assertSame($expectedResult, $actualResult);
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[0];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals('localhost', $result->getLocality());
+        $this->assertEquals('localhost', $result->getCounty()->getName());
+        $this->assertEquals('localhost', $result->getRegion()->getName());
+        $this->assertEquals('localhost', $result->getCountry()->getName());
     }
 
     /**
@@ -81,12 +83,12 @@ class GeoIP2Test extends TestCase
                 array(
                     'latitude' => 53.55,
                     'longitude' => 10,
-                    'bounds' => null,
+                    'boundsDefined' => null,
                     'streetNumber' => null,
                     'streetName' => null,
                     'locality' => 'Hamburg',
-                    'postalCode' => null,
                     'subLocality' => null,
+                    'postalCode' => null,
                     'county' => null,
                     'countyCode' => null,
                     'region' => 'Hamburg',
@@ -102,12 +104,12 @@ class GeoIP2Test extends TestCase
                 array(
                     'latitude' => null,
                     'longitude' => null,
-                    'bounds' => null,
+                    'boundsDefined' => null,
                     'streetNumber' => null,
                     'streetName' => null,
                     'locality' => null,
-                    'postalCode' => null,
                     'subLocality' => null,
+                    'postalCode' => null,
                     'county' => null,
                     'countyCode' => null,
                     'region' => null,
@@ -124,18 +126,39 @@ class GeoIP2Test extends TestCase
 
     /**
      * @dataProvider provideDataForRetrievingGeodata
+     *
      * @param string $address
-     * @param $adapterResponse
-     * @param $expectedGeodata
+     * @param mixed  $adapterResponse
+     * @param mixed  $expectedGeodata
      */
     public function testRetrievingGeodata($address, $adapterResponse, $expectedGeodata)
     {
         $adapter = $this->getGeoIP2AdapterMock($adapterResponse);
         $provider = new GeoIP2($adapter);
 
-        $actualGeodata = $provider->geocode($address);
+        $results = $provider->geocode($address);
 
-        $this->assertSame($expectedGeodata, $actualGeodata[0]);
+        $this->assertInternalType('array', $results);
+        $this->assertCount(1, $results);
+
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[0];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals($expectedGeodata['latitude'], $result->getLatitude());
+        $this->assertEquals($expectedGeodata['longitude'], $result->getLongitude());
+        $this->assertEquals($expectedGeodata['boundsDefined'], $result->getBounds()->isDefined());
+        $this->assertEquals($expectedGeodata['streetNumber'], $result->getStreetNumber());
+        $this->assertEquals($expectedGeodata['streetName'], $result->getStreetName());
+        $this->assertEquals($expectedGeodata['locality'], $result->getLocality());
+        $this->assertEquals($expectedGeodata['subLocality'], $result->getSubLocality());
+        $this->assertEquals($expectedGeodata['postalCode'], $result->getPostalCode());
+        $this->assertEquals($expectedGeodata['county'], $result->getCounty()->getName());
+        $this->assertEquals($expectedGeodata['countyCode'], $result->getCounty()->getName());
+        $this->assertEquals($expectedGeodata['region'], $result->getRegion()->getName());
+        $this->assertEquals($expectedGeodata['regionCode'], $result->getRegion()->getName());
+        $this->assertEquals($expectedGeodata['country'], $result->getCountry()->getName());
+        $this->assertEquals($expectedGeodata['countryCode'], $result->getCountry()->getName());
+        $this->assertEquals($expectedGeodata['timezone'], $result->getTimezone());
     }
 
     /**
@@ -153,7 +176,8 @@ class GeoIP2Test extends TestCase
     }
 
     /**
-     * @param  mixed                                    $returnValue
+     * @param mixed $returnValue
+     *
      * @return \PHPUnit_Framework_MockObject_MockObject | GeoIP2DatabaseAdapter
      */
     public function getGeoIP2AdapterMock($returnValue = '')

@@ -15,12 +15,24 @@ namespace Geocoder\Model;
  */
 final class Bounds
 {
+    /**
+     * @var double
+     */
     private $south;
 
+    /**
+     * @var double
+     */
     private $west;
 
+    /**
+     * @var double
+     */
     private $north;
 
+    /**
+     * @var double
+     */
     private $east;
 
     /**
@@ -37,31 +49,61 @@ final class Bounds
         $this->east  = $east;
     }
 
+    /**
+     * Returns the south bound.
+     *
+     * @return double
+     */
     public function getSouth()
     {
         return $this->south;
     }
 
+    /**
+     * Returns the west bound.
+     *
+     * @return double
+     */
     public function getWest()
     {
         return $this->west;
     }
 
+    /**
+     * Returns the north bound.
+     *
+     * @return double
+     */
     public function getNorth()
     {
         return $this->north;
     }
 
+    /**
+     * Returns the east bound.
+     *
+     * @return double
+     */
     public function getEast()
     {
         return $this->east;
     }
 
+    /**
+     * Returns whether or not bounds are defined
+     *
+     * @return bool
+     */
     public function isDefined()
     {
         return !empty($this->south) && !empty($this->east) && !empty($this->north) && !empty($this->west);
     }
 
+    /**
+     * Returns an array with bounds.
+     *
+     * @return array
+     */
     public function toArray()
     {
         return [

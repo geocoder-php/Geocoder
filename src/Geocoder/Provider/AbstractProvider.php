@@ -111,8 +111,8 @@ abstract class AbstractProvider
     {
         return [
             'locality' => 'localhost',
-            'region'   => 'localhost',
             'county'   => 'localhost',
+            'region'   => 'localhost',
             'country'  => 'localhost',
         ];
     }

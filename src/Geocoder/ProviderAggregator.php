@@ -96,7 +96,7 @@ class ProviderAggregator implements Geocoder
      *
      * @param Provider $provider
      *
-     * @return ProviderBasedGeocoder
+     * @return ProviderAggregator
      */
     public function registerProvider(Provider $provider)
     {
@@ -112,7 +112,7 @@ class ProviderAggregator implements Geocoder
      *
      * @param Provider[] $providers
      *
-     * @return ProviderBasedGeocoder
+     * @return ProviderAggregator
      */
     public function registerProviders(array $providers = [])
     {
@@ -128,7 +128,7 @@ class ProviderAggregator implements Geocoder
      *
      * @param string $name
      *
-     * @return ProviderBasedGeocoder
+     * @return ProviderAggregator
      */
     public function using($name)
     {
