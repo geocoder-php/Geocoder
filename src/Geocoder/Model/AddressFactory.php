@@ -76,22 +76,16 @@ final class AddressFactory
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     private function valueOrNull($str)
     {
         return empty($str) ? null : $str;
     }
 
-    private function lowerize($str)
-    {
-        if (null !== $str = $this->valueOrNull($str)) {
-            return extension_loaded('mbstring') ? mb_strtolower($str, 'UTF-8') : strtolower($str);
-        }
-
-        return null;
-    }
-
+    /**
+     * @return string|null
+     */
     private function upperize($str)
     {
         if (null !== $str = $this->valueOrNull($str)) {

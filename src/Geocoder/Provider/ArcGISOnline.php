@@ -146,6 +146,9 @@ class ArcGISOnline extends AbstractHttpProvider implements Provider
         return 'arcgis_online';
     }
 
+    /**
+     * @param string $query
+     */
     private function buildQuery($query)
     {
         if (null !== $this->sourceCountry) {
