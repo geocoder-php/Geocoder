@@ -62,15 +62,15 @@ class GeoipTest extends TestCase
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results[0];
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf('Geocoder\Model\Address', $result);
         $this->assertNull($result->getLatitude());
         $this->assertNull($result->getLongitude());
         $this->assertNull($result->getPostalCode());
         $this->assertNull($result->getTimezone());
         $this->assertEquals('localhost', $result->getLocality());
-        $this->assertEquals('localhost', $result->getCounty());
-        $this->assertEquals('localhost', $result->getRegion());
-        $this->assertEquals('localhost', $result->getCountry());
+        $this->assertNotNull($result->getCounty());
+        $this->assertNotNull($result->getRegion());
+        $this->assertNotNull($result->getCountry());
     }
 
     /**
@@ -81,28 +81,6 @@ class GeoipTest extends TestCase
     {
         $provider = new Geoip();
         $provider->geocode('::1');
-    }
-
-    public function testGeocodeWithRealIPv4()
-    {
-        $provider = new Geoip();
-        $results  = $provider->geocode('74.200.247.59');
-
-        $this->assertInternalType('array', $results);
-        $this->assertCount(1, $results);
-
-        /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertNotNull($result->getLatitude());
-        $this->assertNotNull($result->getLongitude());
-        $this->assertNotNull($result->getPostalCode());
-        $this->assertNotNull($result->getLocality());
-        $this->assertNotNull($result->getRegion());
-        $this->assertNotNull($result->getRegionCode());
-        $this->assertNotNull($result->getCountry());
-        $this->assertNotNull($result->getCountryCode());
-        $this->assertNotNull($result->getTimezone());
     }
 
     /**
