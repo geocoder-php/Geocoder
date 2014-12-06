@@ -75,6 +75,9 @@ final class AddressFactory
         return $this->valueOrNull(\igorw\get_in($data, [ $key ]));
     }
 
+    /**
+     * @return string
+     */
     private function valueOrNull($str)
     {
         return empty($str) ? null : $str;
@@ -98,6 +101,10 @@ final class AddressFactory
         return null;
     }
 
+    /**
+     * @param double $latitude
+     * @param double $longitude
+     */
     private function createCoordinates($latitude, $longitude)
     {
         if (null === $latitude || null === $longitude) {

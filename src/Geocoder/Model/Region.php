@@ -58,7 +58,7 @@ final class Region
     /**
      * Returns a string with the region name.
      *
-     * @return array
+     * @return string
      */
     public function toString()
     {

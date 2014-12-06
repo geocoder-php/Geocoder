@@ -10,9 +10,9 @@
 
 namespace Geocoder\Adapter;
 
+use GeoIp2\ProviderInterface;
 use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\UnsupportedOperation;
-use GeoIp2\ProviderInterface;
 
 /**
  * @author Jens Wiese <jens@howtrueisfalse.de>

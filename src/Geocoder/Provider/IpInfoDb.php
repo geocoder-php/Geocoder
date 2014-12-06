@@ -10,9 +10,9 @@
 
 namespace Geocoder\Provider;
 
-use Geocoder\Exception\UnsupportedOperation;
-use Geocoder\Exception\NoResult;
 use Geocoder\Exception\InvalidCredentials;
+use Geocoder\Exception\NoResult;
+use Geocoder\Exception\UnsupportedOperation;
 use Ivory\HttpAdapter\HttpAdapterInterface;
 
 /**
@@ -84,6 +84,9 @@ class IpInfoDb extends AbstractHttpProvider implements Provider
         return 'ip_info_db';
     }
 
+    /**
+     * @param string $query
+     */
     private function executeQuery($query)
     {
         $content = (string) $this->getAdapter()->get($query)->getBody();

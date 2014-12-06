@@ -58,7 +58,7 @@ final class Country
     /**
      * Returns a string with the country name.
      *
-     * @return array
+     * @return string
      */
     public function toString()
     {

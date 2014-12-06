@@ -10,8 +10,8 @@
 
 namespace Geocoder\Provider;
 
-use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Exception\NoResult;
+use Geocoder\Exception\UnsupportedOperation;
 use Ivory\HttpAdapter\HttpAdapterInterface;
 
 /**
@@ -107,6 +107,9 @@ class Yandex extends AbstractHttpProvider implements LocaleAwareProvider
         return $this;
     }
 
+    /**
+     * @param string $query
+     */
     private function executeQuery($query)
     {
         if (null !== $this->getLocale()) {
@@ -131,6 +134,10 @@ class Yandex extends AbstractHttpProvider implements LocaleAwareProvider
 
             array_walk_recursive(
                 $item['GeoObject'],
+
+                /**
+                 * @param string $value
+                 */
                 function ($value, $key) use (&$details) {$details[$key] = $value;}
             );
 

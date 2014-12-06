@@ -10,8 +10,8 @@
 
 namespace Geocoder\Provider;
 
-use Geocoder\Exception\NoResult;
 use Geocoder\Exception\ExtensionNotLoaded;
+use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
 
 /**

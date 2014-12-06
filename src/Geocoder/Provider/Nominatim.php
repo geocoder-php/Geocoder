@@ -165,6 +165,9 @@ class Nominatim extends AbstractHttpProvider implements LocaleAwareProvider
         return $this;
     }
 
+    /**
+     * @param string $query
+     */
     private function executeQuery($query)
     {
         if (null !== $this->getLocale()) {

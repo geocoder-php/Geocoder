@@ -70,6 +70,13 @@ final class Address
      */
     private $timezone;
 
+    /**
+     * @param string $streetNumber
+     * @param string $streetName
+     * @param string $postalCode
+     * @param string $locality
+     * @param string $subLocality
+     */
     public function __construct(
         Coordinates $coordinates = null,
         Bounds $bounds           = null,

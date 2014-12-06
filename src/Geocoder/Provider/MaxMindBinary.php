@@ -10,9 +10,9 @@
 
 namespace Geocoder\Provider;
 
-use Geocoder\Exception\NoResult;
-use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\FunctionNotFound;
+use Geocoder\Exception\InvalidArgument;
+use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
 
 class MaxMindBinary extends AbstractProvider implements Provider

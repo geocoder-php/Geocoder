@@ -57,6 +57,9 @@ class GeoPlugin extends AbstractHttpProvider implements Provider
         return 'geo_plugin';
     }
 
+    /**
+     * @param string $query
+     */
     private function executeQuery($query)
     {
         $content = (string) $this->getAdapter()->get($query)->getBody();

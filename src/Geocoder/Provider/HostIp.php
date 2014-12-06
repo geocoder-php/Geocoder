@@ -65,7 +65,7 @@ class HostIp extends AbstractHttpProvider implements Provider
     /**
      * @param string $query
      *
-     * @return array
+     * @return \Geocoder\Model\Address[]
      */
     private function executeQuery($query)
     {

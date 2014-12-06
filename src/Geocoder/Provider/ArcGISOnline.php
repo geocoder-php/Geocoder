@@ -155,6 +155,9 @@ class ArcGISOnline extends AbstractHttpProvider implements Provider
         return sprintf('%s&maxLocations=%d&f=%s&outFields=*', $query, $this->getLimit(), 'json');
     }
 
+    /**
+     * @param string $query
+     */
     private function executeQuery($query)
     {
         $query   = $this->buildQuery($query);

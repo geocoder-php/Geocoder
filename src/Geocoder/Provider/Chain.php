@@ -10,8 +10,8 @@
 
 namespace Geocoder\Provider;
 
-use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\ChainNoResult;
+use Geocoder\Exception\InvalidCredentials;
 
 /**
  * @author Markus Bachmann <markus.bachmann@bachi.biz>

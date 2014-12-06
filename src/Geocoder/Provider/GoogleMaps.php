@@ -150,6 +150,9 @@ class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvider
         return $query;
     }
 
+    /**
+     * @param string $query
+     */
     private function executeQuery($query)
     {
         $query   = $this->buildQuery($query);

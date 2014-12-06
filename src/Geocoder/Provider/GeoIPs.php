@@ -10,11 +10,11 @@
 
 namespace Geocoder\Provider;
 
+use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\NoResult;
-use Geocoder\Exception\UnsupportedOperation;
-use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\QuotaExceeded;
+use Geocoder\Exception\UnsupportedOperation;
 use Ivory\HttpAdapter\HttpAdapterInterface;
 
 /**
@@ -102,6 +102,9 @@ class GeoIPs extends AbstractHttpProvider implements Provider
         return 'geo_ips';
     }
 
+    /**
+     * @param string $query
+     */
     private function executeQuery($query)
     {
         $content = (string) $this->getAdapter()->get($query)->getBody();

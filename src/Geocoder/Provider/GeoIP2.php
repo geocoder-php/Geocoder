@@ -10,11 +10,10 @@
 
 namespace Geocoder\Provider;
 
+use GeoIp2\Exception\AddressNotFoundException;
 use Geocoder\Adapter\GeoIP2Adapter;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
-use GeoIp2\Exception\AddressNotFoundException;
-use GeoIp2\Model\City;
 
 /**
  * @author Jens Wiese <jens@howtrueisfalse.de>
@@ -113,6 +112,9 @@ class GeoIP2 extends AbstractProvider implements LocaleAwareProvider
         return $this;
     }
 
+    /**
+     * @param string $address
+     */
     private function executeQuery($address)
     {
         $uri = sprintf('file://geoip?%s', $address);

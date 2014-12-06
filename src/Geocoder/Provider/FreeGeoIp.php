@@ -57,6 +57,9 @@ class FreeGeoIp extends AbstractHttpProvider implements Provider
         return 'free_geo_ip';
     }
 
+    /**
+     * @param string $query
+     */
     private function executeQuery($query)
     {
         $content = (string) $this->getAdapter()->get($query)->getBody();

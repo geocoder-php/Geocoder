@@ -110,6 +110,9 @@ class OpenCage extends AbstractHttpProvider implements LocaleAwareProvider
         return 'opencage';
     }
 
+    /**
+     * @param string $query
+     */
     private function executeQuery($query)
     {
         if (null !== $this->getLocale()) {
