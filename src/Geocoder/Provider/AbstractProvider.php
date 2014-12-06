@@ -12,17 +12,12 @@ namespace Geocoder\Provider;
 
 use Geocoder\Geocoder;
 use Geocoder\Model\AddressFactory;
-use Ivory\HttpAdapter\HttpAdapterInterface;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
 abstract class AbstractProvider
 {
-    /**
-     * @var HttpAdapterInterface
-     */
-    private $adapter;
 
     /**
      * @var AddressFactory
@@ -34,12 +29,8 @@ abstract class AbstractProvider
      */
     private $limit = Provider::MAX_RESULTS;
 
-    /**
-     * @param HttpAdapterInterface|null $adapter An HTTP adapter
-     */
-    public function __construct(HttpAdapterInterface $adapter = null)
+    public function __construct()
     {
-        $this->adapter = $adapter;
         $this->factory = new AddressFactory();
     }
 
@@ -59,16 +50,6 @@ abstract class AbstractProvider
     public function getLimit()
     {
         return $this->limit;
-    }
-
-    /**
-     * Returns the HTTP adapter.
-     *
-     * @return HttpAdapterInterface
-     */
-    public function getAdapter()
-    {
-        return $this->adapter;
     }
 
     /**

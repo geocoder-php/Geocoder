@@ -18,7 +18,7 @@ use Ivory\HttpAdapter\HttpAdapterInterface;
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-class MapQuest extends AbstractProvider implements Provider
+class MapQuest extends AbstractHttpProvider implements Provider
 {
     /**
      * @var string

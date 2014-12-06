@@ -23,7 +23,7 @@ use Ivory\HttpAdapter\HttpAdapterInterface;
  *
  * @link http://www.geoips.com/en/developer/api-guide
  */
-class GeoIPs extends AbstractProvider implements Provider
+class GeoIPs extends AbstractHttpProvider implements Provider
 {
     /**
      * @var string

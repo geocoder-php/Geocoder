@@ -18,7 +18,7 @@ use Ivory\HttpAdapter\HttpAdapterInterface;
 /**
  * @author David Guyon <dguyon@gmail.com>
  */
-class BingMaps extends AbstractProvider implements LocaleAwareProvider
+class BingMaps extends AbstractHttpProvider implements LocaleAwareProvider
 {
     /**
      * @var string

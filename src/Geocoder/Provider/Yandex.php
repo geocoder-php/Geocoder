@@ -17,7 +17,7 @@ use Ivory\HttpAdapter\HttpAdapterInterface;
 /**
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class Yandex extends AbstractProvider implements LocaleAwareProvider
+class Yandex extends AbstractHttpProvider implements LocaleAwareProvider
 {
     /**
      * @var string

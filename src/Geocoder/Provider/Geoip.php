@@ -15,9 +15,9 @@ use Geocoder\Exception\ExtensionNotLoaded;
 use Geocoder\Exception\UnsupportedOperation;
 
 /**
- * @see http://php.net/manual/ref.geoip.php
- *
  * @author William Durand <william.durand1@gmail.com>
+ *
+ * @link http://php.net/manual/ref.geoip.php
  */
 class Geoip extends AbstractProvider implements Provider
 {

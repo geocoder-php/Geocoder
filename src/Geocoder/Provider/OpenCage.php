@@ -18,7 +18,7 @@ use Ivory\HttpAdapter\HttpAdapterInterface;
 /**
  * @author mtm <mtm@opencagedata.com>
  */
-class OpenCage extends AbstractProvider implements LocaleAwareProvider
+class OpenCage extends AbstractHttpProvider implements LocaleAwareProvider
 {
     /**
      * @var string

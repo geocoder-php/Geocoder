@@ -8,9 +8,9 @@
  * @license    MIT License
  */
 
-namespace Geocoder\Tests\HttpAdapter;
+namespace Geocoder\Tests\Adapter;
 
-use Geocoder\HttpAdapter\GeoIP2Adapter;
+use Geocoder\Adapter\GeoIP2Adapter;
 use Geocoder\Tests\TestCase;
 use Geocoder\Exception\RuntimeException;
 use GeoIp2\Database\Reader;

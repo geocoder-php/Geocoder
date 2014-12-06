@@ -17,7 +17,7 @@ use Ivory\HttpAdapter\HttpAdapterInterface;
 /**
  * @author Niklas Närhinen <niklas@narhinen.net>
  */
-class Nominatim extends AbstractProvider implements LocaleAwareProvider
+class Nominatim extends AbstractHttpProvider implements LocaleAwareProvider
 {
     /**
      * @var string

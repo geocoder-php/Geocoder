@@ -10,9 +10,9 @@
 
 namespace Geocoder\Provider;
 
+use Geocoder\Adapter\GeoIP2Adapter;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
-use Geocoder\HttpAdapter\GeoIP2Adapter;
 use GeoIp2\Exception\AddressNotFoundException;
 use GeoIp2\Model\City;
 
@@ -33,7 +33,7 @@ class GeoIP2 extends AbstractProvider implements LocaleAwareProvider
 
     public function __construct(GeoIP2Adapter $adapter, $locale = 'en')
     {
-        parent::__construct(null);
+        parent::__construct();
 
         $this->adapter = $adapter;
         $this->locale  = $locale;

@@ -18,7 +18,7 @@ use Ivory\HttpAdapter\HttpAdapterInterface;
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-class IpInfoDb extends AbstractProvider implements Provider
+class IpInfoDb extends AbstractHttpProvider implements Provider
 {
     /**
      * @var string

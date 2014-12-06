@@ -19,7 +19,7 @@ use Ivory\HttpAdapter\HttpAdapterInterface;
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-class GoogleMaps extends AbstractProvider implements LocaleAwareProvider
+class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvider
 {
     /**
      * @var string

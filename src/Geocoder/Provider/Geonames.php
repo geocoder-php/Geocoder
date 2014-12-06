@@ -18,7 +18,7 @@ use Ivory\HttpAdapter\HttpAdapterInterface;
 /**
  * @author Giovanni Pirrotta <giovanni.pirrotta@gmail.com>
  */
-class Geonames extends AbstractProvider implements LocaleAwareProvider
+class Geonames extends AbstractHttpProvider implements LocaleAwareProvider
 {
     /**
      * @var string

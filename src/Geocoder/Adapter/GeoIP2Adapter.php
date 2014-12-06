@@ -8,7 +8,7 @@
  * @license    MIT License
  */
 
-namespace Geocoder\HttpAdapter;
+namespace Geocoder\Adapter;
 
 use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\UnsupportedOperation;
@@ -41,10 +41,8 @@ class GeoIP2Adapter
     protected $locale;
 
     /**
-     * @param  \GeoIp2\ProviderInterface                $geoIpProvider
-     * @param  string                                   $geoIP2Model   (e.g. self::GEOIP2_MODEL_CITY)
-     * @throws \Geocoder\Exception\UnsupportedOperation
-     * @internal param string $dbFile
+     * @param \GeoIp2\ProviderInterface $geoIpProvider
+     * @param string                    $geoIP2Model   (e.g. self::GEOIP2_MODEL_CITY)
      */
     public function __construct(ProviderInterface $geoIpProvider, $geoIP2Model = self::GEOIP2_MODEL_CITY)
     {
@@ -60,8 +58,8 @@ class GeoIP2Adapter
     }
 
     /**
-     * @param  string $locale
-     * @return $this
+     * @param  string        $locale
+     * @return GeoIP2Adapter
      */
     public function setLocale($locale)
     {
@@ -81,9 +79,7 @@ class GeoIP2Adapter
     /**
      * Returns the content fetched from a given resource.
      *
-     * @param  string                                   $url (e.g. file://database?127.0.0.1)
-     * @throws \Geocoder\Exception\UnsupportedOperation
-     * @throws \Geocoder\Exception\InvalidArgument
+     * @param  string $url (e.g. file://database?127.0.0.1)
      * @return string
      */
     public function getContent($url)

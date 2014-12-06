@@ -18,7 +18,7 @@ use Ivory\HttpAdapter\HttpAdapterInterface;
 /**
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class TomTom extends AbstractProvider implements LocaleAwareProvider
+class TomTom extends AbstractHttpProvider implements LocaleAwareProvider
 {
     /**
      * @var string

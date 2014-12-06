@@ -17,7 +17,7 @@ use Ivory\HttpAdapter\HttpAdapterInterface;
 /**
  * @author ALKOUM Dorian <baikunz@gmail.com>
  */
-class ArcGISOnline extends AbstractProvider implements Provider
+class ArcGISOnline extends AbstractHttpProvider implements Provider
 {
     /**
      * @var string
