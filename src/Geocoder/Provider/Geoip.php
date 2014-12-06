@@ -23,6 +23,8 @@ class Geoip extends AbstractProvider implements Provider
 {
     public function __construct()
     {
+        parent::__construct();
+
         if (!function_exists('geoip_record_by_name')) {
             throw new ExtensionNotLoaded('You must install the GeoIP extension, see: https://php.net/manual/book.geoip.php.');
         }
