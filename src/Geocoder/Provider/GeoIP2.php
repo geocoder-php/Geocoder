@@ -22,15 +22,21 @@ use GeoIp2\Model\City;
 class GeoIP2 extends AbstractProvider implements LocaleAwareProvider
 {
     /**
+     * @var GeoIP2Adapter
+     */
+    private $adapter;
+
+    /**
      * @var string
      */
     private $locale;
 
     public function __construct(GeoIP2Adapter $adapter, $locale = 'en')
     {
-        parent::__construct($adapter);
+        parent::__construct(null);
 
-        $this->locale = $locale;
+        $this->adapter = $adapter;
+        $this->locale  = $locale;
     }
 
     /**
@@ -112,7 +118,7 @@ class GeoIP2 extends AbstractProvider implements LocaleAwareProvider
         $uri = sprintf('file://geoip?%s', $address);
 
         try {
-            $result = $this->getAdapter()
+            $result = $this->adapter
                 ->setLocale($this->locale)
                 ->getContent($uri);
         } catch (AddressNotFoundException $e) {

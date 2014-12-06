@@ -183,11 +183,11 @@ class GeoIPsTest extends TestCase
         $this->assertEquals(-111.6073, $result->getLongitude(), '', 0.0001);
         $this->assertNull($result->getStreetName());
         $this->assertNull($result->getPostalCode());
-        $this->assertEquals('Provo', $result->getLocality());
-        $this->assertEquals('Utah', $result->getCounty()->getName());
-        $this->assertEquals('Utah', $result->getRegion()->getName());
+        $this->assertEquals('PROVO', $result->getLocality());
+        $this->assertEquals('UTAH', $result->getCounty()->getName());
+        $this->assertEquals('UTAH', $result->getRegion()->getName());
         $this->assertEquals('UT',$result->getRegion()->getCode());
-        $this->assertEquals('United States', $result->getCountry()->getName());
+        $this->assertEquals('UNITED STATES', $result->getCountry()->getName());
         $this->assertEquals('US',$result->getCountry()->getCode());
         $this->assertEquals('MST', $result->getTimezone());
     }

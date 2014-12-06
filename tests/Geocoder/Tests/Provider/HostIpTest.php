@@ -111,7 +111,7 @@ class HostIpTest extends TestCase
         $this->assertNull($result->getPostalCode());
         $this->assertEquals('Aulnat', $result->getLocality());
         $this->assertNull($result->getRegion()->getName());
-        $this->assertEquals('France', $result->getCountry()->getName());
+        $this->assertEquals('FRANCE', $result->getCountry()->getName());
         $this->assertEquals('FR', $result->getCountry()->getCode());
     }
 

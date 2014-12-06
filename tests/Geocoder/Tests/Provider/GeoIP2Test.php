@@ -31,13 +31,12 @@ class GeoIP2Test extends TestCase
 
     public function testGetName()
     {
-        $expectedName = 'maxmind_geoip2';
-        $this->assertEquals($expectedName, $this->provider->getName());
+        $this->assertEquals('geoip2', $this->provider->getName());
     }
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The Geocoder\Provider\GeoIP2 is not able to do reverse geocoding.
+     * @expectedExceptionMessage The GeoIP2 provider is not able to do reverse geocoding.
      */
     public function testQueryingReverseLeadsToException()
     {
@@ -62,7 +61,7 @@ class GeoIP2Test extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The Geocoder\Provider\GeoIP2 does not support street addresses.
+     * @expectedExceptionMessage The GeoIP2 provider does not support street addresses, only IP addresses.
      */
     public function testOnlyIpAddressesCouldBeResolved()
     {
@@ -153,11 +152,11 @@ class GeoIP2Test extends TestCase
         $this->assertEquals($expectedGeodata['subLocality'], $result->getSubLocality());
         $this->assertEquals($expectedGeodata['postalCode'], $result->getPostalCode());
         $this->assertEquals($expectedGeodata['county'], $result->getCounty()->getName());
-        $this->assertEquals($expectedGeodata['countyCode'], $result->getCounty()->getName());
+        $this->assertEquals($expectedGeodata['countyCode'], $result->getCounty()->getCode());
         $this->assertEquals($expectedGeodata['region'], $result->getRegion()->getName());
-        $this->assertEquals($expectedGeodata['regionCode'], $result->getRegion()->getName());
+        $this->assertEquals($expectedGeodata['regionCode'], $result->getRegion()->getCode());
         $this->assertEquals($expectedGeodata['country'], $result->getCountry()->getName());
-        $this->assertEquals($expectedGeodata['countryCode'], $result->getCountry()->getName());
+        $this->assertEquals($expectedGeodata['countryCode'], $result->getCountry()->getCode());
         $this->assertEquals($expectedGeodata['timezone'], $result->getTimezone());
     }
 

@@ -109,7 +109,7 @@ JSON;
         $this->assertEquals(75020, $result->getPostalCode());
         $this->assertEquals('Paris', $result->getLocality());
         $this->assertEquals('Paris', $result->getCounty()->getName());
-        $this->assertEquals('Idf', $result->getRegion()->getName());
+        $this->assertEquals('IdF', $result->getRegion()->getName());
         $this->assertEquals('France', $result->getCountry()->getName());
 
         $this->assertNull($result->getCountry()->getCode());
@@ -130,7 +130,7 @@ JSON;
         $this->assertEquals(92120, $result->getPostalCode());
         $this->assertEquals('Montrouge', $result->getLocality());
         $this->assertEquals('Hauts-de-Seine', $result->getCounty()->getName());
-        $this->assertEquals('Idf', $result->getRegion()->getName());
+        $this->assertEquals('IdF', $result->getRegion()->getName());
         $this->assertEquals('France', $result->getCountry()->getName());
 
         /** @var \Geocoder\Model\Address $result */
@@ -147,8 +147,8 @@ JSON;
         $this->assertEquals('10 Avenue Gambetta', $result->getStreetName());
         $this->assertEquals(94700, $result->getPostalCode());
         $this->assertEquals('Maisons-Alfort', $result->getLocality());
-        $this->assertEquals('Val-de-Marne', $result->getCounty()->getName());
-        $this->assertEquals('Idf', $result->getRegion()->getName());
+        $this->assertEquals('Val-De-Marne', $result->getCounty()->getName());
+        $this->assertEquals('IdF', $result->getRegion()->getName());
         $this->assertEquals('France', $result->getCountry()->getName());
     }
 
@@ -179,7 +179,7 @@ JSON;
         $this->assertEquals(75020, $result->getPostalCode());
         $this->assertEquals('20e Arrondissement', $result->getLocality());
         $this->assertEquals('Paris', $result->getCounty()->getName());
-        $this->assertEquals('Idf', $result->getRegion()->getName());
+        $this->assertEquals('IdF', $result->getRegion()->getName());
         $this->assertEquals('France', $result->getCountry()->getName());
 
         $this->assertNull($result->getCountry()->getCode());
@@ -213,7 +213,7 @@ JSON;
         $this->assertEquals(75020, $result->getPostalCode());
         $this->assertEquals('Paris', $result->getLocality());
         $this->assertEquals('Paris', $result->getCounty()->getName());
-        $this->assertEquals('Idf', $result->getRegion()->getName());
+        $this->assertEquals('IdF', $result->getRegion()->getName());
         $this->assertEquals('France', $result->getCountry()->getName());
 
         $this->assertNull($result->getCountry()->getCode());
@@ -234,7 +234,7 @@ JSON;
         $this->assertEquals(92120, $result->getPostalCode());
         $this->assertEquals('Montrouge', $result->getLocality());
         $this->assertEquals('Hauts-de-Seine', $result->getCounty()->getName());
-        $this->assertEquals('Idf', $result->getRegion()->getName());
+        $this->assertEquals('IdF', $result->getRegion()->getName());
         $this->assertEquals('France', $result->getCountry()->getName());
 
         /** @var \Geocoder\Model\Address $result */
@@ -252,7 +252,7 @@ JSON;
         $this->assertEquals(94700, $result->getPostalCode());
         $this->assertEquals('Maisons-Alfort', $result->getLocality());
         $this->assertEquals('Val-de-Marne', $result->getCounty()->getName());
-        $this->assertEquals('Idf', $result->getRegion()->getName());
+        $this->assertEquals('IdF', $result->getRegion()->getName());
         $this->assertEquals('France', $result->getCountry()->getName());
     }
 
@@ -303,7 +303,7 @@ JSON;
         $this->assertEquals(75020, $result->getPostalCode());
         $this->assertEquals('20e Arrondissement', $result->getLocality());
         $this->assertEquals('Paris', $result->getCounty()->getName());
-        $this->assertEquals('Idf', $result->getRegion()->getName());
+        $this->assertEquals('IdF', $result->getRegion()->getName());
         $this->assertEquals('France', $result->getCountry()->getName());
 
         $this->assertNull($result->getCountry()->getCode());

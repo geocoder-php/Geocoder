@@ -70,8 +70,19 @@ final class Address
      */
     private $timezone;
 
-    public function __construct(Coordinates $coordinates, Bounds $bounds, $streetNumber, $streetName, $postalCode, $locality, $subLocality, County $county, Region $region, Country $country, $timezone)
-    {
+    public function __construct(
+        Coordinates $coordinates = null,
+        Bounds $bounds           = null,
+        $streetNumber            = null,
+        $streetName              = null,
+        $postalCode              = null,
+        $locality                = null,
+        $subLocality             = null,
+        County $county           = null,
+        Region $region           = null,
+        Country $country         = null,
+        $timezone                = null
+    ) {
         $this->coordinates  = $coordinates;
         $this->bounds       = $bounds;
         $this->streetNumber = $streetNumber;
@@ -102,6 +113,10 @@ final class Address
      */
     public function getLatitude()
     {
+        if (null === $this->coordinates) {
+            return null;
+        }
+
         return $this->coordinates->getLatitude();
     }
 
@@ -112,6 +127,10 @@ final class Address
      */
     public function getLongitude()
     {
+        if (null === $this->coordinates) {
+            return null;
+        }
+
         return $this->coordinates->getLongitude();
     }
 

@@ -35,9 +35,9 @@ abstract class AbstractProvider
     private $limit = Provider::MAX_RESULTS;
 
     /**
-     * @param HttpAdapterInterface $adapter An HTTP adapter
+     * @param HttpAdapterInterface|null $adapter An HTTP adapter
      */
-    public function __construct(HttpAdapterInterface $adapter)
+    public function __construct(HttpAdapterInterface $adapter = null)
     {
         $this->adapter = $adapter;
         $this->factory = new AddressFactory();

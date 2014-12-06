@@ -21,7 +21,7 @@ final class AddressFactory
         $addresses = [];
         foreach ($results as $result) {
             $addresses[] = new Address(
-                new Coordinates(
+                $this->createCoordinates(
                     $this->readDoubleValue($result, 'latitude'),
                     $this->readDoubleValue($result, 'longitude')
                 ),
@@ -62,7 +62,7 @@ final class AddressFactory
      */
     private function readDoubleValue(array $data, $key)
     {
-        return (double) \igorw\get_in($data, explode('.', $key));
+        return \igorw\get_in($data, explode('.', $key));
     }
 
     /**
@@ -96,5 +96,14 @@ final class AddressFactory
         }
 
         return null;
+    }
+
+    private function createCoordinates($latitude, $longitude)
+    {
+        if (null === $latitude || null === $longitude) {
+            return null;
+        }
+
+        return new Coordinates((double) $latitude, (double) $longitude);
     }
 }

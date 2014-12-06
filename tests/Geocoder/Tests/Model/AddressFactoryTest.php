@@ -33,7 +33,7 @@ class AddressFactoryTest extends TestCase
         $i = 1;
         foreach ($addresses as $address) {
             $this->assertInstanceOf('Geocoder\Model\Address', $address);
-            $this->assertInstanceOf('Geocoder\Model\Coordinates', $address->getCoordinates());
+            $this->assertNull($address->getCoordinates());
             $this->assertInstanceOf('Geocoder\Model\County', $address->getCounty());
             $this->assertInstanceOf('Geocoder\Model\Country', $address->getCountry());
             $this->assertInstanceOf('Geocoder\Model\Region', $address->getRegion());
@@ -54,6 +54,6 @@ class AddressFactoryTest extends TestCase
         ]);
         $address   = current($addresses);
 
-        $this->assertEquals('1st Ave 1A', $address->getStreetName());
+        $this->assertEquals('1st ave 1A', $address->getStreetName());
     }
 }
