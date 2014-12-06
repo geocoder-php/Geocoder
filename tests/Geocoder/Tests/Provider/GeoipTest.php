@@ -24,7 +24,7 @@ class GeoipTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The Geoip does not support Street addresses.
+     * @expectedExceptionMessage The Geoip provider does not support street addresses, only IPv4 addresses.
      */
     public function testGeocodeWithNull()
     {
@@ -34,7 +34,7 @@ class GeoipTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The Geoip does not support Street addresses.
+     * @expectedExceptionMessage The Geoip provider does not support street addresses, only IPv4 addresses.
      */
     public function testGeocodeWithEmpty()
     {
@@ -44,7 +44,7 @@ class GeoipTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The Geoip does not support Street addresses.
+     * @expectedExceptionMessage The Geoip provider does not support street addresses, only IPv4 addresses.
      */
     public function testGeocodeWithAddress()
     {
@@ -75,7 +75,7 @@ class GeoipTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The Geoip does not support IPv6 addresses.
+     * @expectedExceptionMessage The Geoip provider does not support IPv6 addresses, only IPv4 addresses.
      */
     public function testGeocodeWithLocalhostIPv6()
     {
@@ -107,7 +107,7 @@ class GeoipTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The Geoip does not support IPv6 addresses.
+     * @expectedExceptionMessage The Geoip provider does not support IPv6 addresses, only IPv4 addresses.
      */
     public function testGeocodeWithRealIPv6()
     {
@@ -117,7 +117,7 @@ class GeoipTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The Geoip is not able to do reverse geocoding.
+     * @expectedExceptionMessage The Geoip provider is not able to do reverse geocoding.
      */
     public function testReverse()
     {
