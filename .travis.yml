@@ -11,6 +11,13 @@ matrix:
         - php: hhvm-nightly
 
 before_script:
+    - wget http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz
+    - gunzip GeoLiteCity.dat.gz
+    - sudo mkdir -p /usr/share/GeoIP
+    - sudo mv GeoLiteCity.dat /usr/share/GeoIP/GeoIPCity.dat
+    - sudo apt-get install -y --force-yes libgeoip-dev
+    - pecl install geoip
+    - echo "extension=geoip.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
     - composer self-update
     - composer install --dev --prefer-dist --no-interaction
 
