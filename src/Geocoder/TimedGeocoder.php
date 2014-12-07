@@ -35,7 +35,15 @@ class TimedGeocoder implements Geocoder
     public function geocode($value)
     {
         $this->stopwatch->start('geocode', 'geocoder');
-        $result = $this->delegate->geocode($value);
+
+        try {
+            $result = $this->delegate->geocode($value);
+        } catch (\Exception $e) {
+            $this->stopwatch->stop('geocode');
+
+            throw $e;
+        }
+
         $this->stopwatch->stop('geocode');
 
         return $result;
@@ -47,7 +55,15 @@ class TimedGeocoder implements Geocoder
     public function reverse($latitude, $longitude)
     {
         $this->stopwatch->start('reverse', 'geocoder');
-        $result = $this->delegate->reverse($latitude, $longitude);
+
+        try {
+            $result = $this->delegate->reverse($latitude, $longitude);
+        } catch (\Exception $e) {
+            $this->stopwatch->stop('reverse');
+
+            throw $e;
+        }
+
         $this->stopwatch->stop('reverse');
 
         return $result;
