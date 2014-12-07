@@ -18,7 +18,7 @@ class YandexTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The Yandex does not support IP addresses.
+     * @expectedExceptionMessage The Yandex provider does not support IP addresses, only street addresses.
      */
     public function testGeocodeWithLocalhostIPv4()
     {
@@ -28,7 +28,7 @@ class YandexTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The Yandex does not support IP addresses.
+     * @expectedExceptionMessage The Yandex provider does not support IP addresses, only street addresses.
      */
     public function testGeocodeWithLocalhostIPv6()
     {
