@@ -3,18 +3,15 @@ CHANGELOG
 
 ### 3.0.0 (????-??-??)
 
-
 * Added: `using()` method now throws an exception if provider not found
-* Added: new Result classes (Address, Bounds, Region, Country, County, Coordinates)
+* Added: new Result classes (`Address`, `Bounds`, `Region`, `Country`, `County`, `Coordinates`)
 * Added: new named exceptions
 * Added: better exception messages
 * Added: new HTTP layer thanks to `egeloen/http-adapter` library
 * Added: `TimedGeocoder` implementation (works with StopWatch Symfony component)
 * Added: `AbstractHttpProvider` (extending `AbstractProvider`)
-
 * Fixed: phpdoc, wording
 * Fixed: providers are now highly configurable, even at runtime
-
 * Moved: IGN OpenLS provider to geocoder-extra (#339)
 * Moved: OIORest provider to geocoder-extra (#336)
 * Moved: GeoCoder.us provider to geocoder-extra (#338)
@@ -22,15 +19,12 @@ CHANGELOG
 * Moved: DataScienceToolkit provider to geocoder-extra (#340)
 * Moved: Baidu provider to geocoder-extra (#341)
 * Moved: IpGeoBase provider to geocoder-extra (#342)
-
 * Renamed: properties such as:
     - city => locality
     - cityDistrict => subLocality
     - zipcode => postalCode
-
 * Refactored: dumpers (remove Interface suffix, define a new method signature)
 * Refactored: class names!
-
 * Removed: `Provider`, `Dumper`, `Interface`, and `Exception` suffixes
 * Removed: `autoload.php` file
 * Removed: `OpenStreetMapsProvider` class (#335)
