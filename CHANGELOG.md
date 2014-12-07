@@ -3,29 +3,38 @@ CHANGELOG
 
 ### 3.0.0 (????-??-??)
 
-* Remove useless file
-* Rewrite README
-* Rework ProviderBasedGeocoder
-* Remove 'Dumper' suffix
-* Fix exceptions, remove RuntimeException
-* Add new Result classes (Address, Bounds, Region, Country, County, Coordinates)
-* Refactor dumpers (remove Interface suffix, define a new method signature)
-* Remove Interface and Exception suffixes
-* Rename properties such as:
+
+* Added: `using()` method now throws an exception if provider not found
+* Added: new Result classes (Address, Bounds, Region, Country, County, Coordinates)
+* Added: new named exceptions
+* Added: better exception messages
+* Added: new HTTP layer thanks to `egeloen/http-adapter` library
+* Added: `TimedGeocoder` implementation (works with StopWatch Symfony component)
+* Added: `AbstractHttpProvider` (extending `AbstractProvider`)
+
+* Fixed: phpdoc, wording
+* Fixed: providers are now highly configurable, even at runtime
+
+* Moved: IGN OpenLS provider to geocoder-extra (#339)
+* Moved: OIORest provider to geocoder-extra (#336)
+* Moved: GeoCoder.us provider to geocoder-extra (#338)
+* Moved: GeoCoder.ca provider to geocoder-extra (#337)
+* Moved: DataScienceToolkit provider to geocoder-extra (#340)
+* Moved: Baidu provider to geocoder-extra (#341)
+* Moved: IpGeoBase provider to geocoder-extra (#342)
+
+* Renamed: properties such as:
     - city => locality
     - cityDistrict => subLocality
     - zipcode => postalCode
-* Remove `autoload.php`
-* Reintroduce string formatting into the `AddressFactory`
-* Refactor using() method to throw an exception
-* Move IGN OpenLS provider to geocoder-extra (#339)
-* Move OIORest provider to geocoder-extra (#336)
-* Move GeoCoder.us provider to geocoder-extra (#338)
-* Move GeoCoder.ca provider to geocoder-extra (#337)
-* Remove `OpenStreetMapsProvider` class (#335)
-* Move DataScienceToolkit provider to geocoder-extra (#340)
-* Move Baidu provider to geocoder-extra (#341)
-* Move IpGeoBase provider to geocoder-extra (#342)
+
+* Refactored: dumpers (remove Interface suffix, define a new method signature)
+* Refactored: class names!
+
+* Removed: `Provider`, `Dumper`, `Interface`, and `Exception` suffixes
+* Removed: `autoload.php` file
+* Removed: `OpenStreetMapsProvider` class (#335)
+* Removed: HTTP adapters layer
 
 ### 2.8.0 (2014-10-03)
 
