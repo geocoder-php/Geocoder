@@ -100,9 +100,7 @@ class ProviderAggregator implements Geocoder
      */
     public function registerProvider(Provider $provider)
     {
-        if (null !== $provider) {
-            $this->providers[$provider->getName()] = $provider;
-        }
+        $this->providers[$provider->getName()] = $provider;
 
         return $this;
     }
