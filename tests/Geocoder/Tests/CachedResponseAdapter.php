@@ -41,14 +41,10 @@ class CachedResponseAdapter extends AbstractHttpAdapter
 
         if ($this->useCache && is_file($file) && is_readable($file)) {
             $content = unserialize(file_get_contents($file));
-            $body = new StringStream($content);
+            $body    = new StringStream($content);
 
             $response = $this->adapter->getConfiguration()->getMessageFactory()->createResponse(
-                200,
-                'OK',
-                '1.1',
-                [],
-                $body
+                200, 'OK', '1.1', [], $body
             );
 
             if (!empty($content)) {
@@ -56,7 +52,7 @@ class CachedResponseAdapter extends AbstractHttpAdapter
             }
         }
 
-        $response = $this->adapter->get($internalRequest);
+        $response = $this->adapter->get($internalRequest->getUrl());
 
         if ($this->useCache) {
             file_put_contents($file, serialize((string) $response->getBody()));

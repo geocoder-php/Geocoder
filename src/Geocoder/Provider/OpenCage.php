@@ -153,7 +153,7 @@ class OpenCage extends AbstractHttpProvider implements LocaleAwareProvider
             $results[] = array_merge($this->getDefaults(), array(
                 'latitude'     => $location['geometry']['lat'],
                 'longitude'    => $location['geometry']['lng'],
-                'bounds'       => $bounds ?: null,
+                'bounds'       => $bounds ?: [],
                 'streetNumber' => isset($comp['house_number']) ? $comp['house_number'] : null,
                 'streetName'   => isset($comp['road']        ) ? $comp['road']         : null,
                 'subLocality'  => isset($comp['suburb']      ) ? $comp['suburb']       : null,

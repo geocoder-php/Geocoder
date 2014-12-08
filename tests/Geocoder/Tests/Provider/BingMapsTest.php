@@ -301,7 +301,7 @@ JSON;
         $this->assertNull($result->getStreetNumber());
         $this->assertEquals('10 Avenue Gambetta', $result->getStreetName());
         $this->assertEquals(75020, $result->getPostalCode());
-        $this->assertEquals('20e Arrondissement', $result->getLocality());
+        $this->assertEquals('Paris', $result->getLocality());
         $this->assertEquals('Paris', $result->getCounty()->getName());
         $this->assertEquals('IdF', $result->getRegion()->getName());
         $this->assertEquals('France', $result->getCountry()->getName());

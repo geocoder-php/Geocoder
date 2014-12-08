@@ -56,7 +56,7 @@ class IpInfoDb extends AbstractHttpProvider implements Provider
 
         // This API does not support IPv6
         if (filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
-            throw new UnsupportedOperation('The IpInfoDb provider does not support IPv6 addresses.');
+            throw new UnsupportedOperation('The IpInfoDb provider does not support IPv6 addresses, only IPv4 addresses.');
         }
 
         if ('127.0.0.1' === $address) {

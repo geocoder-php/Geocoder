@@ -86,7 +86,7 @@ class IpInfoDbTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The IpInfoDb provider does not support IPv6 addresses.
+     * @expectedExceptionMessage The IpInfoDb provider does not support IPv6 addresses, only IPv4 addresses.
      */
     public function testGeocodeWithLocalhostIPv6()
     {
@@ -136,7 +136,7 @@ class IpInfoDbTest extends TestCase
         $this->assertEquals('CALIFORNIA', $result->getRegion()->getName());
         $this->assertEquals('UNITED STATES', $result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
-        $this->assertEquals('America/Denver', $result->getTimezone());
+        $this->assertEquals('America/Los_Angeles', $result->getTimezone());
     }
 
     /**

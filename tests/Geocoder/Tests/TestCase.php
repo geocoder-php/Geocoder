@@ -4,7 +4,7 @@ namespace Geocoder\Tests;
 
 use Geocoder\Model\AddressFactory;
 use Ivory\HttpAdapter\HttpAdapterInterface;
-use Ivory\HttpAdapter\SocketHttpAdapter;
+use Ivory\HttpAdapter\CurlHttpAdapter;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -73,7 +73,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
      */
     protected function getAdapter()
     {
-        return new CachedResponseAdapter(new SocketHttpAdapter(), $this->useCache());
+        return new CachedResponseAdapter(new CurlHttpAdapter(), $this->useCache());
     }
 
     /**
