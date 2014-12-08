@@ -470,8 +470,9 @@ state. All new features should be contributed to (upcoming) version 3.0.
 ### Next Version
 
 Version 3.0.0 is the next major version of Geocoder. You can take a look at the
-`master` branch in order to follow its development. That is also why it is a bad
-idea to require `dev-master` into your `composer.json` file.
+[`master`](https://github.com/geocoder-php/Geocoder/tree/master) branch in order
+to follow its development. That is also why it is a bad idea to require
+`dev-master` into your `composer.json` file.
 
 Branch `2.x` is merged into `master` time to time, so that all bug/security
 fixes contributed to the current stable version will also appear in the next
