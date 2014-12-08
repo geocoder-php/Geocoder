@@ -437,6 +437,47 @@ You can write your own `provider` by implementing the `Provider` interface.
 You can provide your own `dumper` by implementing the `Dumper` interface.
 
 
+Versioning
+----------
+
+Geocoder follows [Semantic Versioning](http://semver.org/).
+
+### End Of Life
+
+As of December 2014, branch `1.7` is not officially supported anymore, meaning
+major version `1` reached end of life. Last version is:
+[1.7.1](https://github.com/geocoder-php/Geocoder/releases/tag/1.7.1). This
+branch did not receive any new fixes over the last year, and all plugins/modules
+require Geocoder `2.0+`.
+
+### Stable Version
+
+Stable version
+[2.0.0](https://github.com/geocoder-php/Geocoder/releases/tag/2.0.0) has been
+released on July 2013, and it is the only known stable major version. Branch
+[`2.x`](https://github.com/geocoder-php/Geocoder/tree/2.x) is used to contribute
+bug and/or security fixes, and that is the one you should use in order to
+contribute.
+
+Latest version is:
+[2.8.1](https://github.com/geocoder-php/Geocoder/releases/tag/2.8.1).
+
+**Important:** as of December 2014, this version is in a **feature freeze**
+state. All new features should be contributed to (upcoming) version 3.0.
+
+**Important:** version 2.0.0 does not have any EOL date scheduled yet.
+
+### Next Version
+
+Version 3.0.0 is the next major version of Geocoder. You can take a look at the
+`master` branch in order to follow its development. That is also why it is a bad
+idea to require `dev-master` into your `composer.json` file.
+
+Branch `2.x` is merged into `master` time to time, so that all bug/security
+fixes contributed to the current stable version will also appear in the next
+version.
+
+
 Contributing
 ------------
 
