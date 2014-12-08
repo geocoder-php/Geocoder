@@ -448,7 +448,7 @@ As of December 2014, branch `1.7` is not officially supported anymore, meaning
 major version `1` reached end of life. Last version is:
 [1.7.1](https://github.com/geocoder-php/Geocoder/releases/tag/1.7.1). This
 branch did not receive any new fixes over the last year, and all plugins/modules
-require Geocoder `2.0+`.
+require Geocoder `~2.0`.
 
 ### Stable Version
 
