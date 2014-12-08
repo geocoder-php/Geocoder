@@ -1,9 +1,9 @@
 CHANGELOG
 =========
 
-### 2.8.1 (????-??-??)
+### 2.8.1 (2014-12-08)
 
-n/a
+* Fixed: freegeoip `zip_code` property because of an API change
 
 ### 2.8.0 (2014-10-03)
 
