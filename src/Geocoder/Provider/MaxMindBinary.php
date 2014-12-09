@@ -80,14 +80,16 @@ class MaxMindBinary extends AbstractProvider implements Provider
             throw new NoResult(sprintf('No results found for IP address %s', $address));
         }
 
-        return [ array_merge($this->getDefaults(), [
-            'countryCode' => $geoIpRecord->country_code,
-            'country'     => $geoIpRecord->country_name,
-            'region'      => $geoIpRecord->region,
-            'locality'    => $geoIpRecord->city,
-            'latitude'    => $geoIpRecord->latitude,
-            'longitude'   => $geoIpRecord->longitude,
-        ])];
+        return $this->returnResults([
+            array_merge($this->getDefaults(), [
+                'countryCode' => $geoIpRecord->country_code,
+                'country'     => $geoIpRecord->country_name,
+                'region'      => $geoIpRecord->region,
+                'locality'    => $geoIpRecord->city,
+                'latitude'    => $geoIpRecord->latitude,
+                'longitude'   => $geoIpRecord->longitude,
+            ])
+        ]);
     }
 
     /**
