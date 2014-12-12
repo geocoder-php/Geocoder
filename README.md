@@ -95,7 +95,7 @@ provider implements
 
 ```php
 $curl     = new \Ivory\HttpAdapter\CurlHttpAdapter();
-$geocoder = new \Geocoder\Provider\GoogleMaps($curl);
+$geocoder = new \Geocoder\Provider\GoogleMapsProvider($curl);
 
 $geocoder->geocode(...);
 $geocoder->reverse(...);
