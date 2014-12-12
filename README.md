@@ -94,8 +94,10 @@ provider implements
 [PSR-7](https://github.com/php-fig/fig-standards/blob/master/proposed/http-message.md).
 
 ```php
-$curl     = new \Ivory\HttpAdapter\CurlHttpAdapter();
-$geocoder = new \Geocoder\Provider\GoogleMapsProvider($curl);
+$curl     = new \Geocoder\HttpAdapter\CurlHttpAdapter();
+$provider = new \Geocoder\Provider\GoogleMapsProvider($curl);
+$geocoder = new \Geocoder\Geocoder($provider);
+
 
 $geocoder->geocode(...);
 $geocoder->reverse(...);
