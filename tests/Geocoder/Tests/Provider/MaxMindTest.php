@@ -369,7 +369,7 @@ class MaxMindTest extends TestCase
         }
 
         $provider = new MaxMind($this->getAdapter(), $_SERVER['MAXMIND_API_KEY']);
-        $results  = $provider->geocode('66.147.244.214');
+        $results  = $provider->geocode('2002:4293:f4d6:0:0:0:0:0');
 
         $this->assertInternalType('array', $results);
         $this->assertCount(1, $results);
@@ -402,7 +402,7 @@ class MaxMindTest extends TestCase
 
         $provider = new MaxMind($this->getAdapter(), $_SERVER['MAXMIND_API_KEY'],
             MaxMind::OMNI_SERVICE, true);
-        $results  = $provider->geocode('::ffff:66.147.244.214');
+        $results  = $provider->geocode('2002:4293:f4d6:0:0:0:0:0');
 
         $this->assertInternalType('array', $results);
         $this->assertCount(1, $results);
