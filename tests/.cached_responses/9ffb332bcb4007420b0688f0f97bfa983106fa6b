@@ -1,0 +1,135 @@
+s:3944:"{
+   "licenses" : [
+      {
+         "name" : "CC-BY-SA",
+         "url" : "http://creativecommons.org/licenses/by-sa/3.0/"
+      },
+      {
+         "name" : "ODbL",
+         "url" : "http://opendatacommons.org/licenses/odbl/summary/"
+      }
+   ],
+   "rate" : {
+      "limit" : 2500,
+      "remaining" : 2491,
+      "reset" : 1418601600
+   },
+   "results" : [
+      {
+         "annotations" : {
+            "MGRS" : "32UMA7405659715",
+            "Maidenhead" : "JO40he65jj",
+            "OSM" : {
+               "url" : "http://www.openstreetmap.org/?mlat=50.18906&mlon=8.63657#map=17/50.18906/8.63657"
+            },
+            "callingcode" : 49,
+            "geohash" : "u0yjs88uqx70ec4w60ur",
+            "sun" : {
+               "rise" : {
+                  "astronomical" : 1418534160,
+                  "civil" : 1418539020,
+                  "nautical" : 1418536560
+               },
+               "set" : {
+                  "astronomical" : 1418577840,
+                  "civil" : 1418572980,
+                  "nautical" : 1418575500
+               }
+            },
+            "timezone" : {
+               "name" : "Europe/Berlin",
+               "now_in_dst" : 0,
+               "offset_sec" : 3600,
+               "offset_string" : 100,
+               "short_name" : "CET"
+            },
+            "what3words" : {
+               "words" : "whips.plank.daylight"
+            }
+         },
+         "bounds" : {
+            "northeast" : {
+               "lat" : 50.1891212,
+               "lng" : 8.6366633
+            },
+            "southwest" : {
+               "lat" : 50.1890027,
+               "lng" : 8.6364707
+            }
+         },
+         "components" : {
+            "city" : "Frankfurt",
+            "city_district" : "Kalbach",
+            "country" : "Germany",
+            "country_code" : "de",
+            "county" : "Frankfurt",
+            "house_number" : "10",
+            "postcode" : "60437",
+            "road" : "Kalbacher Hauptstra\u00dfe",
+            "state" : "Hesse",
+            "state_district" : "Regierungsbezirk Darmstadt",
+            "suburb" : "Kalbach"
+         },
+         "confidence" : 10,
+         "formatted" : "Kalbacher Hauptstra\u00dfe 10, 60437 Frankfurt, Germany",
+         "geometry" : {
+            "lat" : 50.189062,
+            "lng" : 8.63656700808489
+         }
+      },
+      {
+         "annotations" : {
+            "MGRS" : "32UMA7595659565",
+            "Maidenhead" : "JO40he95ob",
+            "OSM" : {
+               "url" : "http://www.openstreetmap.org/?mlat=50.18780&mlon=8.66320#map=17/50.18780/8.66320"
+            },
+            "geohash" : "u0yjt0km5hn07v28j4fu",
+            "sun" : {
+               "rise" : {
+                  "astronomical" : 1418534160,
+                  "civil" : 1418539020,
+                  "nautical" : 1418536500
+               },
+               "set" : {
+                  "astronomical" : 1418577840,
+                  "civil" : 1418572980,
+                  "nautical" : 1418575500
+               }
+            },
+            "timezone" : {
+               "name" : "Europe/Berlin",
+               "now_in_dst" : 0,
+               "offset_sec" : 3600,
+               "offset_string" : 100,
+               "short_name" : "CET"
+            },
+            "what3words" : {
+               "words" : "solder.lawn.smug"
+            }
+         },
+         "components" : {
+            "country" : "Germany",
+            "postcode" : "60437"
+         },
+         "confidence" : 0,
+         "formatted" : "60437, Germany",
+         "geometry" : {
+            "lat" : 50.1878,
+            "lng" : 8.6632
+         }
+      }
+   ],
+   "status" : {
+      "code" : 200,
+      "message" : "OK"
+   },
+   "thanks" : "For using an OpenCage Data API",
+   "timestamp" : {
+      "created_http" : "Sun, 14 Dec 2014 18:40:43 GMT",
+      "created_unix" : 1418582443
+   },
+   "total_results" : 2,
+   "we_are_hiring" : "http://lokku.com/#jobs"
+}
+";
