@@ -60,6 +60,8 @@ class MaxMindBinary extends AbstractProvider implements Provider
 
         $this->datFile  = $datFile;
         $this->openFlag = null === $openFlag ? GEOIP_STANDARD : $openFlag;
+
+        parent::__construct();
     }
 
     /**
@@ -68,7 +70,12 @@ class MaxMindBinary extends AbstractProvider implements Provider
     public function geocode($address)
     {
         if (false === filter_var($address, FILTER_VALIDATE_IP)) {
-            throw new UnsupportedOperation('The MaxMindBinary does not support street addresses.');
+            throw new UnsupportedOperation('The MaxMindBinary provider does not support street addresses.');
+        }
+
+        // This API does not support IPv6
+        if (filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+            throw new UnsupportedOperation('The MaxMindBinary provider does not support IPv6 addresses.');
         }
 
         $geoIp       = geoip_open($this->datFile, $this->openFlag);
@@ -81,14 +88,14 @@ class MaxMindBinary extends AbstractProvider implements Provider
         }
 
         return $this->returnResults([
-            array_merge($this->getDefaults(), [
+            $this->fixEncoding(array_merge($this->getDefaults(), [
                 'countryCode' => $geoIpRecord->country_code,
                 'country'     => $geoIpRecord->country_name,
                 'region'      => $geoIpRecord->region,
                 'locality'    => $geoIpRecord->city,
                 'latitude'    => $geoIpRecord->latitude,
                 'longitude'   => $geoIpRecord->longitude,
-            ])
+            ]))
         ]);
     }
 

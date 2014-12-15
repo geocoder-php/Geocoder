@@ -111,4 +111,16 @@ abstract class AbstractProvider
 
         return $this->factory->createFromArray($data);
     }
+
+    /**
+    * @param array $results
+    *
+    * @return array
+    */
+    protected function fixEncoding(array $results)
+    {
+        return array_map(function ($value) {
+            return is_string($value) ? utf8_encode($value) : $value;
+        }, $results);
+    }
 }

@@ -41,13 +41,10 @@ class MaxMindBinaryTest extends TestCase
         new MaxMindBinary('not_exist.dat');
     }
 
-    /**
-     * @dataProvider provideIps
-     */
-    public function testLocationResultContainsExpectedFields($ip)
+    public function testLocationResultContainsExpectedFieldsForAnAmericanIp()
     {
         $provider = new MaxMindBinary($this->binaryFile);
-        $results  = $provider->geocode($ip);
+        $results  = $provider->geocode('24.24.24.24');
 
         $this->assertInternalType('array', $results);
         $this->assertCount(1, $results);
@@ -56,20 +53,49 @@ class MaxMindBinaryTest extends TestCase
         $result = $results[0];
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
 
-        $this->assertNull($result->getLatitude());
-        $this->assertNull($result->getLongitude());
+        $this->assertEquals('43.089200000000005', $result->getLatitude(), '', 0.001);
+        $this->assertEquals('-76.025000000000006', $result->getLongitude(), '', 0.001);
         $this->assertFalse($result->getBounds()->isDefined());
         $this->assertNull($result->getStreetNumber());
         $this->assertNull($result->getStreetName());
         $this->assertNull($result->getPostalCode());
-        $this->assertNotNull($result->getLocality());
+        $this->assertEquals('East Syracuse', $result->getLocality());
         $this->assertNull($result->getSubLocality());
         $this->assertNull($result->getCounty()->getName());
         $this->assertNull($result->getCounty()->getCode());
-        $this->assertNull($result->getRegion()->getName());
+        $this->assertEquals('NY', $result->getRegion()->getName());
         $this->assertNull($result->getRegion()->getCode());
-        $this->assertNotNull($result->getCountry()->getName());
-        $this->assertNull($result->getCountry()->getCode());
+        $this->assertEquals('United States', $result->getCountry()->getName());
+        $this->assertEquals('US', $result->getCountry()->getCode());
+        $this->assertNull($result->getTimezone());
+    }
+
+    public function testLocationResultContainsExpectedFieldsForASpanishIp()
+    {
+        $provider = new MaxMindBinary($this->binaryFile);
+        $results  = $provider->geocode('80.24.24.24');
+
+        $this->assertInternalType('array', $results);
+        $this->assertCount(1, $results);
+
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[0];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+
+        $this->assertEquals('41.543299999999988', $result->getLatitude(), '', 0.001);
+        $this->assertEquals('2.1093999999999937', $result->getLongitude(), '', 0.001);
+        $this->assertFalse($result->getBounds()->isDefined());
+        $this->assertNull($result->getStreetNumber());
+        $this->assertNull($result->getStreetName());
+        $this->assertNull($result->getPostalCode());
+        $this->assertEquals('Sabadell', $result->getLocality());
+        $this->assertNull($result->getSubLocality());
+        $this->assertNull($result->getCounty()->getName());
+        $this->assertNull($result->getCounty()->getCode());
+        $this->assertEquals('56', $result->getRegion()->getName());
+        $this->assertNull($result->getRegion()->getCode());
+        $this->assertEquals('Spain', $result->getCountry()->getName());
+        $this->assertEquals('ES', $result->getCountry()->getCode());
         $this->assertNull($result->getTimezone());
     }
 
@@ -122,7 +148,18 @@ class MaxMindBinaryTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The MaxMindBinary does not support street addresses.
+     * @expectedExceptionMessage The MaxMindBinary provider does not support IPv6 addresses.
+     */
+    public function testThrowIfIpAddressIsNotIpV4()
+    {
+        $provider = new MaxMindBinary($this->binaryFile);
+
+        $provider->geocode('2002:5018:1818:0:0:0:0:0');
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
+     * @expectedExceptionMessage The MaxMindBinary provider does not support street addresses.
      */
     public function testThrowIfInvalidIpAddressGiven()
     {
