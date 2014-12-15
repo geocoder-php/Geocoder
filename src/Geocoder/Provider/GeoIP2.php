@@ -64,7 +64,7 @@ class GeoIP2 extends AbstractProvider implements LocaleAwareProvider
         }
 
         return $this->returnResults([
-            array_merge($this->getDefaults(), array(
+            $this->fixEncoding(array_merge($this->getDefaults(), array(
                 'countryCode' => (isset($result->country->iso_code) ? $result->country->iso_code : null),
                 'country'     => (isset($result->country->names->{$this->locale}) ? $result->country->names->{$this->locale} : null),
                 'locality'    => (isset($result->city->names->{$this->locale}) ? $result->city->names->{$this->locale} : null),
@@ -74,7 +74,7 @@ class GeoIP2 extends AbstractProvider implements LocaleAwareProvider
                 'postalCode'  => (isset($result->location->postalcode) ? $result->location->postalcode : null),
                 'region'      => $region,
                 'regionCode'  => $regionCode
-            ))
+            )))
         ]);
     }
 
