@@ -19,34 +19,34 @@ fetching results, dealing with errors, etc.) an are highly configurable.
 
 ### Address-based Providers
 
-Provider       | Name | Reverse? | SSL? | Coverage | Terms
-:------------- |:---- |:-------- |:---- |:-------- |:-----
-[ArcGIS Online](https://developers.arcgis.com/en/features/geocoding/) | `arcgis_online` | yes | supported | worldwide | requires API key. 1250 requests free
-[Bing Maps](http://msdn.microsoft.com/en-us/library/ff701713.aspx)    | `bing_maps` | yes | no | worldwide | requires API key. Limit 10,000 requests per month
-Chain                                                                 | `chain` | | | | meta provider which iterates over a list of providers
-[Geonames](http://www.geonames.org/commercial-webservices.html)       | `geonames` | yes |no | worldwide | requires registration, no free tier
-[Google Maps](https://developers.google.com/maps/documentation/geocoding/) | `google_maps` | yes | supported | worldwide | requires API key. Limit 2500 requests per day
-[Google Maps for Business](https://developers.google.com/maps/documentation/business/) | `google_maps_business` | yes | supported | worldwide | requires API key. Limit 100,000 requests per day
-[MapQuest](http://developer.mapquest.com/web/products/dev-services/geocoding-ws) | `map_quest` | yes | no | worldwide | both open and [commercial service](http://platform.mapquest.com/geocoding/) require API key
-[Nominatim](http://wiki.openstreetmap.org/wiki/Nominatim) | `nominatim` | yes | supported | worldwide | requires a domain name (e.g. local installation)
-[OpenCage](http://geocoder.opencagedata.com/) | `opencage` | yes | supported | worldwide | requires API key. 2500 requests/day free
-[OpenStreetMap](http://wiki.openstreetmap.org/wiki/Nominatim) | `openstreetmap` | yes | no | worldwide | heavy users (>1q/s) get banned
-[TomTom](https://geocoder.tomtom.com/app/view/index) | `tomtom` | yes | required | worldwide | requires API key. First 2500 requests or 30 days free
-[Yandex](http://api.yandex.com/maps/) | `yandex` | yes | no | worldwide
+Provider       | Name | Reverse? | SSL? | Coverage | Multiple? | Terms
+:------------- |:---- |:-------- |:---- |:-------- |:--------- |:-----
+[ArcGIS Online](https://developers.arcgis.com/en/features/geocoding/) | `arcgis_online` | yes | supported | worldwide | yes | requires API key. 1250 requests free
+[Bing Maps](http://msdn.microsoft.com/en-us/library/ff701713.aspx) | `bing_maps` | yes | no | worldwide | yes | requires API key. Limit 10,000 requests per month
+Chain | `chain` | | | | | meta provider which iterates over a list of providers
+[Geonames](http://www.geonames.org/commercial-webservices.html) | `geonames` | yes |no | worldwide | yes | requires registration, no free tier
+[Google Maps](https://developers.google.com/maps/documentation/geocoding/) | `google_maps` | yes | supported | worldwide | yes | requires API key. Limit 2500 requests per day
+[Google Maps for Business](https://developers.google.com/maps/documentation/business/) | `google_maps_business` | yes | supported | worldwide | yes | requires API key. Limit 100,000 requests per day
+[MapQuest](http://developer.mapquest.com/web/products/dev-services/geocoding-ws) | `map_quest` | yes | no | worldwide | yes | both open and [commercial service](http://platform.mapquest.com/geocoding/) require API key
+[Nominatim](http://wiki.openstreetmap.org/wiki/Nominatim) | `nominatim` | yes | supported | worldwide | yes | requires a domain name (e.g. local installation)
+[OpenCage](http://geocoder.opencagedata.com/) | `opencage` | yes | supported | worldwide | yes | requires API key. 2500 requests/day free
+[OpenStreetMap](http://wiki.openstreetmap.org/wiki/Nominatim) | `openstreetmap` | yes | no | worldwide | yes | heavy users (>1q/s) get banned
+[TomTom](https://geocoder.tomtom.com/app/view/index) | `tomtom` | yes | required | worldwide | yes | requires API key. First 2500 requests or 30 days free
+[Yandex](http://api.yandex.com/maps/) | `yandex` | yes | no | worldwide | yes
 
 ### IP-based Providers
 
-Provider  | Name | IPv4? | IPv6? | Terms | Notes
-:-------- |:---- |:----- |:----- |:----- |:-----
-[FreeGeoIp](http://freegeoip.net/)          | `free_geo_ip` | yes | yes
-[GeoIPs](http://www.geoips.com/en/)         | `geo_ips` | yes | no | requires API key
-[GeoIP2](https://www.maxmind.com/en/geoip2-databases) (Maxmind) | `maxmind_geoip2` | yes | yes |
-[GeoPlugin](http://www.geoplugin.com/)      | `geo_plugin` | yes | yes |
-[HostIp](http://www.hostip.info/use.html)   | `host_ip` | yes | no
-[IpInfoDB](http://ipinfodb.com/)            | `ip_info_db` | yes | no | requires API key. | city precision
-Geoip | `geoip` | | | | wrapper around the [PHP extension](http://php.net/manual/en/book.geoip.php) which must be installed
-[MaxMind](https://www.maxmind.com/) web service | `maxmind` | yes | yes | requires Omni API key | City/ISP/Org and Omni services, IPv6 on country level
-MaxMind Binary file | `maxmind_binary` | yes | no | | needs locally installed database files
+Provider  | Name | IPv4? | IPv6? | Multiple? | Terms | Notes
+:-------- |:---- |:----- |:----- |:--------- |:----- |:-----
+[FreeGeoIp](http://freegeoip.net/) | `free_geo_ip` | yes | yes | no
+[GeoIPs](http://www.geoips.com/en/) | `geo_ips` | yes | no | no | requires API key
+[GeoIP2](https://www.maxmind.com/en/geoip2-databases) (Maxmind) | `maxmind_geoip2` | yes | yes | no
+[GeoPlugin](http://www.geoplugin.com/) | `geo_plugin` | yes | yes | no
+[HostIp](http://www.hostip.info/use.html) | `host_ip` | yes | no | no
+[IpInfoDB](http://ipinfodb.com/) | `ip_info_db` | yes | no | no | requires API key | city precision
+Geoip | `geoip` | yes | no | no | | wrapper around the [PHP extension](http://php.net/manual/en/book.geoip.php) which must be installed
+[MaxMind](https://www.maxmind.com/) web service | `maxmind` | yes | yes | no | requires Omni API key | City/ISP/Org and Omni services, IPv6 on country level
+MaxMind Binary file | `maxmind_binary` | yes | no | no | needs locally installed database files
 
 **Important:** the [Geocoder
 Extra](https://github.com/geocoder-php/geocoder-extra) library contains even
