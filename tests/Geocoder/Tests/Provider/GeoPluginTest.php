@@ -102,11 +102,12 @@ class GeoPluginTest extends TestCase
         $this->assertCount(1, $results);
 
         $result = $results[0];
-        $this->assertEquals(40.218102, $result->getLatitude(), '', 0.0001);
-        $this->assertEquals(-111.613297, $result->getLongitude(), '', 0.0001);
-        $this->assertEquals('Provo', $result->getLocality());
-        $this->assertEquals('Utah', $result->getRegion()->getName());
-        $this->assertEquals('UT', $result->getRegion()->getCode());
+
+        $this->assertEquals(40.711101999999997, $result->getLatitude(), '', 0.0001);
+        $this->assertEquals(-73.946899000000002, $result->getLongitude(), '', 0.0001);
+        $this->assertNull($result->getLocality());
+        $this->assertEquals('New York', $result->getRegion()->getName());
+        $this->assertEquals('NY', $result->getRegion()->getCode());
         $this->assertEquals('United States', $result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
     }

@@ -23,7 +23,7 @@ class TomTom extends AbstractHttpProvider implements LocaleAwareProvider
     /**
      * @var string
      */
-    const GEOCODE_ENDPOINT_URL = 'https://api.tomtom.com/lbs/geocoding/geocode?key=%s&query=%s&maxResults=%d';
+    const GEOCODE_ENDPOINT_URL = 'https://api.tomtom.com/lbs/services/geocode/4/geocode?key=%s&query=%s&maxResults=%d';
 
     /**
      * @var string

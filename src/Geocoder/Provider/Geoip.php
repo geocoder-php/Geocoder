@@ -58,7 +58,7 @@ class Geoip extends AbstractProvider implements Provider
         $region   = @geoip_region_name_by_code($results['country_code'], $results['region']) ?: $results['region'];
 
         return $this->returnResults([
-            array_merge($this->getDefaults(), [
+            $this->fixEncoding(array_merge($this->getDefaults(), [
                 'latitude'    => $results['latitude'],
                 'longitude'   => $results['longitude'],
                 'locality'    => $results['city'],
@@ -68,7 +68,7 @@ class Geoip extends AbstractProvider implements Provider
                 'country'     => $results['country_name'],
                 'countryCode' => $results['country_code'],
                 'timezone'    => $timezone,
-            ])
+            ]))
         ]);
     }
 

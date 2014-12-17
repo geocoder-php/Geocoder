@@ -86,7 +86,7 @@ class ArcGISOnlineTest extends TestCase
         $this->assertEquals(48.863279997000461, $result->getLatitude(), '', 0.0001);
         $this->assertEquals(2.3890199980004354, $result->getLongitude(), '', 0.0001);
         $this->assertEquals(10, $result->getStreetNumber());
-        $this->assertEquals('10 Avenue Gambetta, 75020, Paris', $result->getStreetName());
+        $this->assertEquals('10 Avenue Gambetta, 75020, 20e Arrondissement, Paris, Île-de-France', $result->getStreetName());
         $this->assertEquals(75020, $result->getPostalCode());
         $this->assertEquals('Paris', $result->getLocality());
         $this->assertEquals('Île-de-France', $result->getRegion()->getName());
@@ -115,7 +115,7 @@ class ArcGISOnlineTest extends TestCase
         $this->assertEquals(48.863279997000461, $result->getLatitude(), '', 0.0001);
         $this->assertEquals(2.3890199980004354, $result->getLongitude(), '', 0.0001);
         $this->assertEquals(10, $result->getStreetNumber());
-        $this->assertEquals('10 Avenue Gambetta, 75020, Paris', $result->getStreetName());
+        $this->assertEquals('10 Avenue Gambetta, 75020, 20e Arrondissement, Paris, Île-de-France', $result->getStreetName());
         $this->assertEquals(75020, $result->getPostalCode());
         $this->assertEquals('Paris', $result->getLocality());
         $this->assertEquals('Paris', $result->getCounty()->getName());
@@ -137,7 +137,7 @@ class ArcGISOnlineTest extends TestCase
      */
     public function testGeocodeWithInvalidAddressForSourceCountry()
     {
-        $provider = new ArcGISOnline($this->getAdapter(), 'USA');
+        $provider = new ArcGISOnline($this->getAdapter(), 'Denmark');
         $provider->geocode('10 avenue Gambetta, Paris, France');
     }
 
@@ -147,7 +147,7 @@ class ArcGISOnlineTest extends TestCase
      */
     public function testGeocodeWithInvalidAddressWithHttpsForSourceCountry()
     {
-        $provider = new ArcGISOnline($this->getAdapter(), 'USA', true);
+        $provider = new ArcGISOnline($this->getAdapter(), 'Denmark', true);
         $provider->geocode('10 avenue Gambetta, Paris, France');
     }
 
@@ -188,8 +188,8 @@ class ArcGISOnlineTest extends TestCase
         $this->assertEquals('3 Avenue Gambetta', $result->getStreetName());
         $this->assertEquals(75020, $result->getPostalCode());
         $this->assertEquals('Paris', $result->getLocality());
-        $this->assertEquals('Paris', $result->getCounty()->getName());
-        $this->assertEquals('Île-de-France', $result->getRegion()->getName());
+        $this->assertNull($result->getCounty()->getName());
+        $this->assertNull($result->getRegion()->getName());
         $this->assertEquals('FRA', $result->getCountry()->getCode());
 
         $this->assertFalse($result->getBounds()->isDefined());
@@ -217,8 +217,8 @@ class ArcGISOnlineTest extends TestCase
         $this->assertEquals('3 Avenue Gambetta', $result->getStreetName());
         $this->assertEquals(75020, $result->getPostalCode());
         $this->assertEquals('Paris', $result->getLocality());
-        $this->assertEquals('Paris', $result->getCounty()->getName());
-        $this->assertEquals('Île-de-France', $result->getRegion()->getName());
+        $this->assertNull($result->getCounty()->getName());
+        $this->assertNull($result->getRegion()->getName());
         $this->assertEquals('FRA', $result->getCountry()->getCode());
 
         $this->assertFalse($result->getBounds()->isDefined());
@@ -243,11 +243,11 @@ class ArcGISOnlineTest extends TestCase
         $this->assertEquals(52.370518568000477, $result->getLatitude(), '', 0.0001);
         $this->assertEquals(9.7332166860004463, $result->getLongitude(), '', 0.0001);
         $this->assertNull($result->getStreetNumber());
-        $this->assertEquals('Hannover, Lower Saxony, Germany', $result->getStreetName());
+        $this->assertEquals('Hannover, Niedersachsen, Deutschland', $result->getStreetName());
         $this->assertNull($result->getPostalCode());
         $this->assertNull($result->getLocality());
         $this->assertNull($result->getCounty()->getName());
-        $this->assertEquals('Lower Saxony', $result->getRegion()->getName());
+        $this->assertEquals('Niedersachsen', $result->getRegion()->getName());
         $this->assertEquals('DEU', $result->getCountry()->getCode());
 
         $this->assertFalse($result->getBounds()->isDefined());
@@ -260,42 +260,42 @@ class ArcGISOnlineTest extends TestCase
         /** @var \Geocoder\Model\Address $result */
         $result = $results[1];
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(52.370518568, $result->getLatitude(), '', 0.0001);
-        $this->assertEquals(9.7332166860004, $result->getLongitude(), '', 0.0001);
-        $this->assertEquals('Hannover, Lower Saxony, Germany', $result->getStreetName());
-        $this->assertEquals('Hannover', $result->getLocality());
-        $this->assertEquals('Lower Saxony', $result->getRegion()->getName());
-        $this->assertEquals('DEU', $result->getCountry()->getCode());
-
-        /** @var \Geocoder\Model\Address $result */
-        $result = $results[2];
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(47.111386795, $result->getLatitude(), '', 0.0001);
-        $this->assertEquals(-101.426539157, $result->getLongitude(), '', 0.0001);
+        $this->assertEquals(47.111386795000499, $result->getLatitude(), '', 0.0001);
+        $this->assertEquals(-101.4265391569997, $result->getLongitude(), '', 0.0001);
         $this->assertEquals('Hannover, North Dakota, United States', $result->getStreetName());
         $this->assertNull($result->getLocality());
         $this->assertEquals('North Dakota', $result->getRegion()->getName());
         $this->assertEquals('USA', $result->getCountry()->getCode());
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[3];
+        $result = $results[2];
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(39.391768472, $result->getLatitude(), '', 0.0001);
-        $this->assertEquals(-77.440257129, $result->getLongitude(), '', 0.0001);
+        $this->assertEquals(39.391768472000479, $result->getLatitude(), '', 0.0001);
+        $this->assertEquals(-77.440257128999633, $result->getLongitude(), '', 0.0001);
         $this->assertEquals('Hannover, Maryland, United States', $result->getStreetName());
+        $this->assertNull($result->getLocality());
         $this->assertEquals('Maryland', $result->getRegion()->getName());
         $this->assertEquals('USA', $result->getCountry()->getCode());
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[4];
+        $result = $results[3];
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(53.174198173, $result->getLatitude(), '', 0.0001);
         $this->assertEquals(8.5069383810005, $result->getLongitude(), '', 0.0001);
-        $this->assertEquals('Hannöver, Lower Saxony, Germany', $result->getStreetName());
+        $this->assertEquals('Hannöver, Niedersachsen, Deutschland', $result->getStreetName());
         $this->assertNull($result->getLocality());
-        $this->assertEquals('Lower Saxony', $result->getRegion()->getName());
+        $this->assertEquals('Niedersachsen', $result->getRegion()->getName());
         $this->assertNull($result->getCounty()->getName());
         $this->assertEquals('DEU', $result->getCountry()->getCode());
+
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[4];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(-26.281805980999593, $result->getLatitude(), '', 0.0001);
+        $this->assertEquals(-48.849389793999649, $result->getLongitude(), '', 0.0001);
+        $this->assertEquals('Hannover', $result->getStreetName());
+        $this->assertEquals('Sul', $result->getRegion()->getName());
+        $this->assertEquals('BRA', $result->getCountry()->getCode());
     }
 
     /**

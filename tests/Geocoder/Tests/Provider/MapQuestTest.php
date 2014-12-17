@@ -66,7 +66,7 @@ class MapQuestTest extends TestCase
         $this->assertEquals(48.866205, $result->getLatitude(), '', 0.01);
         $this->assertEquals(2.389089, $result->getLongitude(), '', 0.01);
         $this->assertEquals('10 Avenue Gambetta', $result->getStreetName());
-        $this->assertEquals(75011, $result->getPostalCode());
+        $this->assertEquals(75020, $result->getPostalCode());
         $this->assertEquals('Paris', $result->getLocality());
         $this->assertEquals('Paris', $result->getCounty()->getName());
         $this->assertEquals('Ile-de-France', $result->getRegion()->getName());
@@ -109,7 +109,7 @@ class MapQuestTest extends TestCase
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(54.0484068, $result->getLatitude(), '', 0.001);
         $this->assertEquals(-2.7990345, $result->getLongitude(), '', 0.001);
-        $this->assertEquals('Mary Street', $result->getStreetName());
+        $this->assertEquals('Lancaster Gate', $result->getStreetName());
         $this->assertEquals('LA1 1LZ', $result->getPostalCode());
         $this->assertEquals('Lancaster', $result->getLocality());
         $this->assertEquals('Lancashire', $result->getCounty()->getName());
@@ -142,38 +142,38 @@ class MapQuestTest extends TestCase
         $this->assertEquals(9.738553, $result->getLongitude(), '', 0.01);
         $this->assertEquals('Hanover', $result->getLocality());
         $this->assertEquals('Region Hannover', $result->getCounty()->getName());
-        $this->assertEquals('Niedersachsen (Landmasse)', $result->getRegion()->getName());
+        $this->assertEquals('Lower Saxony', $result->getRegion()->getName());
         $this->assertEquals('DE', $result->getCountry()->getName());
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results[0];
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(18.383715, $result->getLatitude(), '', 0.01);
-        $this->assertEquals(-78.131484, $result->getLongitude(), '', 0.01);
-        $this->assertNull($result->getLocality());
-        $this->assertEquals('Hanover', $result->getCounty()->getName());
-        $this->assertEquals('PA', $result->getRegion()->getName());
-        $this->assertEquals('JM', $result->getCountry()->getName());
+        $this->assertEquals(52.374478000000003, $result->getLatitude(), '', 0.01);
+        $this->assertEquals(9.7385529999999996, $result->getLongitude(), '', 0.01);
+        $this->assertEquals('Hanover', $result->getLocality());
+        $this->assertEquals('Region Hannover', $result->getCounty()->getName());
+        $this->assertEquals('Lower Saxony', $result->getRegion()->getName());
+        $this->assertEquals('DE', $result->getCountry()->getName());
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results[0];
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(43.703307, $result->getLatitude(), '', 0.01);
-        $this->assertEquals(-72.288566, $result->getLongitude(), '', 0.01);
+        $this->assertEquals(52.374478000000003, $result->getLatitude(), '', 0.01);
+        $this->assertEquals(9.7385529999999996, $result->getLongitude(), '', 0.01);
         $this->assertEquals('Hanover', $result->getLocality());
-        $this->assertEquals('Grafton County', $result->getCounty()->getName());
-        $this->assertEquals('NH', $result->getRegion()->getName());
-        $this->assertEquals('US', $result->getCountry()->getName());
+        $this->assertEquals('Region Hannover', $result->getCounty()->getName());
+        $this->assertEquals('Lower Saxony', $result->getRegion()->getName());
+        $this->assertEquals('DE', $result->getCountry()->getName());
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results[0];
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(39.806325, $result->getLatitude(), '', 0.01);
-        $this->assertEquals(-76.984274, $result->getLongitude(), '', 0.01);
+        $this->assertEquals(52.374478000000003, $result->getLatitude(), '', 0.01);
+        $this->assertEquals(9.7385529999999996, $result->getLongitude(), '', 0.01);
         $this->assertEquals('Hanover', $result->getLocality());
-        $this->assertEquals('York County', $result->getCounty()->getName());
-        $this->assertEquals('PA', $result->getRegion()->getName());
-        $this->assertEquals('US', $result->getCountry()->getName());
+        $this->assertEquals('Region Hannover', $result->getCounty()->getName());
+        $this->assertEquals('Lower Saxony', $result->getRegion()->getName());
+        $this->assertEquals('DE', $result->getCountry()->getName());
     }
 
     public function testGeocodeWithCityDistrict()
@@ -196,7 +196,7 @@ class MapQuestTest extends TestCase
         $this->assertEquals('Kalbacher Hauptstraße 10', $result->getStreetName());
         $this->assertEquals(60437, $result->getPostalCode());
         $this->assertEquals('Frankfurt', $result->getLocality());
-        $this->assertEquals('Frankfurt', $result->getCounty()->getName());
+        $this->assertNull($result->getCounty()->getName());
         $this->assertEquals('Hesse', $result->getRegion()->getName());
         $this->assertEquals('DE', $result->getCountry()->getName());
 

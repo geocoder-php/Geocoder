@@ -46,7 +46,7 @@ Provider  | Name | IPv4? | IPv6? | Terms | Notes
 [IpInfoDB](http://ipinfodb.com/)            | `ip_info_db` | yes | no | requires API key. | city precision
 Geoip | `geoip` | | | | wrapper around the [PHP extension](http://php.net/manual/en/book.geoip.php) which must be installed
 [MaxMind](https://www.maxmind.com/) web service | `maxmind` | yes | yes | requires Omni API key | City/ISP/Org and Omni services, IPv6 on country level
-MaxMind Binary file | `maxmind_binary` | yes | yes | | needs locally installed database files
+MaxMind Binary file | `maxmind_binary` | yes | no | | needs locally installed database files
 
 **Important:** the [Geocoder
 Extra](https://github.com/geocoder-php/geocoder-extra) library contains even
@@ -514,7 +514,6 @@ following lines and add your own API keys:
     <!-- <server name="GEOIPS_API_KEY" value="YOUR_API_KEY" /> -->
     <!-- <server name="MAXMIND_API_KEY" value="YOUR_API_KEY" /> -->
     <!-- <server name="GEONAMES_USERNAME" value="YOUR_USERNAME" /> -->
-    <!-- <server name="TOMTOM_GEOCODING_KEY" value="YOUR_GEOCODING_KEY" /> -->
     <!-- <server name="TOMTOM_MAP_KEY" value="YOUR_MAP_KEY" /> -->
     <!-- <server name="GOOGLE_GEOCODING_KEY" value="YOUR_GEOCODING_KEY" /> -->
     <!-- <server name="OPENCAGE_API_KEY" value="YOUR_API_KEY" /> -->

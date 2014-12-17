@@ -26,7 +26,7 @@ class TomTomTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "https://api.tomtom.com/lbs/geocoding/geocode?key=api_key&query=&maxResults=5".
+     * @expectedExceptionMessage Could not execute query "https://api.tomtom.com/lbs/services/geocode/4/geocode?key=api_key&query=&maxResults=5".
      */
     public function testGeocodeWithNull()
     {
@@ -36,7 +36,7 @@ class TomTomTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "https://api.tomtom.com/lbs/geocoding/geocode?key=api_key&query=&maxResults=5".
+     * @expectedExceptionMessage Could not execute query "https://api.tomtom.com/lbs/services/geocode/4/geocode?key=api_key&query=&maxResults=5".
      */
     public function testGeocodeWithEmpty()
     {
@@ -46,7 +46,7 @@ class TomTomTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "https://api.tomtom.com/lbs/geocoding/geocode?key=api_key&query=Tagensvej%2047%2C%202200%20K%C3%B8benhavn%20N&maxResults=5".
+     * @expectedExceptionMessage Could not execute query "https://api.tomtom.com/lbs/services/geocode/4/geocode?key=api_key&query=Tagensvej%2047%2C%202200%20K%C3%B8benhavn%20N&maxResults=5".
      */
     public function testGeocodeWithAddressContentReturnNull()
     {
@@ -56,7 +56,7 @@ class TomTomTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "https://api.tomtom.com/lbs/geocoding/geocode?key=api_key&query=Tagensvej%2047%2C%202200%20K%C3%B8benhavn%20N&maxResults=5".
+     * @expectedExceptionMessage Could not execute query "https://api.tomtom.com/lbs/services/geocode/4/geocode?key=api_key&query=Tagensvej%2047%2C%202200%20K%C3%B8benhavn%20N&maxResults=5".
      */
     public function testGeocodeWithAddress()
     {
@@ -66,7 +66,7 @@ class TomTomTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "https://api.tomtom.com/lbs/geocoding/geocode?key=api_key&query=foo&maxResults=5".
+     * @expectedExceptionMessage Could not execute query "https://api.tomtom.com/lbs/services/geocode/4/geocode?key=api_key&query=foo&maxResults=5".
      */
     public function testGeocodeNoResult()
     {
@@ -80,11 +80,11 @@ XML;
 
     public function testGeocodeWithRealAddress()
     {
-        if (!isset($_SERVER['TOMTOM_GEOCODING_KEY'])) {
-            $this->markTestSkipped('You need to configure the TOMTOM_GEOCODING_KEY value in phpunit.xml');
+        if (!isset($_SERVER['TOMTOM_MAP_KEY'])) {
+            $this->markTestSkipped('You need to configure the TOMTOM_MAP_KEY value in phpunit.xml');
         }
 
-        $provider = new TomTom($this->getAdapter(), $_SERVER['TOMTOM_GEOCODING_KEY']);
+        $provider = new TomTom($this->getAdapter(), $_SERVER['TOMTOM_MAP_KEY']);
         $results  = $provider->geocode('Tagensvej 47, 2200 København N');
 
         $this->assertInternalType('array', $results);
@@ -110,11 +110,11 @@ XML;
 
     public function testGeocodeWithRealAddressWithFrenchLocale()
     {
-        if (!isset($_SERVER['TOMTOM_GEOCODING_KEY'])) {
-            $this->markTestSkipped('You need to configure the TOMTOM_GEOCODING_KEY value in phpunit.xml');
+        if (!isset($_SERVER['TOMTOM_MAP_KEY'])) {
+            $this->markTestSkipped('You need to configure the TOMTOM_MAP_KEY value in phpunit.xml');
         }
 
-        $provider = new TomTom($this->getAdapter(), $_SERVER['TOMTOM_GEOCODING_KEY'], 'fr_FR');
+        $provider = new TomTom($this->getAdapter(), $_SERVER['TOMTOM_MAP_KEY'], 'fr_FR');
         $results  = $provider->geocode('Tagensvej 47, 2200 København N');
 
         $this->assertInternalType('array', $results);
@@ -138,13 +138,13 @@ XML;
         $this->assertNull($result->getTimezone());
     }
 
-    public function testGeocodeWithRealAddressWithSwidishLocale()
+    public function testGeocodeWithRealAddressWithSwedishLocale()
     {
-        if (!isset($_SERVER['TOMTOM_GEOCODING_KEY'])) {
-            $this->markTestSkipped('You need to configure the TOMTOM_GEOCODING_KEY value in phpunit.xml');
+        if (!isset($_SERVER['TOMTOM_MAP_KEY'])) {
+            $this->markTestSkipped('You need to configure the TOMTOM_MAP_KEY value in phpunit.xml');
         }
 
-        $provider = new TomTom($this->getAdapter(), $_SERVER['TOMTOM_GEOCODING_KEY'], 'sv-SE');
+        $provider = new TomTom($this->getAdapter(), $_SERVER['TOMTOM_MAP_KEY'], 'sv-SE');
         $results  = $provider->geocode('Tagensvej 47, 2200 København N');
 
         $this->assertInternalType('array', $results);
@@ -163,18 +163,18 @@ XML;
         $this->assertNull($result->getSubLocality());
         $this->assertNull($result->getRegion()->getName());
         $this->assertNull($result->getRegion()->getCode());
-        $this->assertEquals('Dania', $result->getCountry()->getName());
+        $this->assertEquals('Danmark', $result->getCountry()->getName());
         $this->assertEquals('DNK', $result->getCountry()->getCode());
         $this->assertNull($result->getTimezone());
     }
 
     public function testGeocodeWithRealAddressReturnsMultipleResults()
     {
-        if (!isset($_SERVER['TOMTOM_GEOCODING_KEY'])) {
-            $this->markTestSkipped('You need to configure the TOMTOM_GEOCODING_KEY value in phpunit.xml');
+        if (!isset($_SERVER['TOMTOM_MAP_KEY'])) {
+            $this->markTestSkipped('You need to configure the TOMTOM_MAP_KEY value in phpunit.xml');
         }
 
-        $provider = new TomTom($this->getAdapter(), $_SERVER['TOMTOM_GEOCODING_KEY']);
+        $provider = new TomTom($this->getAdapter(), $_SERVER['TOMTOM_MAP_KEY']);
         $results  = $provider->geocode('Paris');
 
         $this->assertInternalType('array', $results);
