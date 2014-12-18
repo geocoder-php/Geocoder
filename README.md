@@ -436,6 +436,28 @@ You can write your own `provider` by implementing the `Provider` interface.
 
 You can provide your own `dumper` by implementing the `Dumper` interface.
 
+TimedGeocoder
+-------------
+
+We introduced a new feature in Geocoder 3. The `TimedGeocoder` profiles
+each `geocode` and `reverse` call. So you can easily figure out how many
+time/memory was spent for each geocoder/reverse call.
+
+```php
+// configure you geocoder object
+
+$stopwatch = new \Symfony\Component\Stopwatch\Stopwatch();
+$geocoder = new \Geocoder\TimedGeocoder($geocoder, $stopwatch);
+
+$geocoder->geocode('Paris, France');
+
+// Now you can debug your application
+```
+
+We use the [symfony/stopwatch](http://symfony.com/doc/current/components/stopwatch.html)
+component under the hood. Which means, if you use the symfony framework the
+geocoder calls will appear in your timeline section in the webprofiler.
+
 
 Versioning
 ----------
