@@ -10,8 +10,21 @@ CHANGELOG
 * Added: new HTTP layer thanks to `egeloen/http-adapter` library
 * Added: `TimedGeocoder` implementation (works with StopWatch Symfony component)
 * Added: `AbstractHttpProvider` (extending `AbstractProvider`)
+* Added: provide a way to use IpInfoDB country precision
+* Added: cached responses for BingMaps provider (tests)
+* Added: cached reponse for GoogleMaps provider (tests)
+* Added: `ProviderAggregator` (replacing the former `Geocoder` class)
+* Added: ability to change providers locale at runtime
+
+* Documentation: almost entirely rewritten
+* Documentation: a note on versioning has been added
+* Documentation: a Contributor Code of Conduct has been added for the entire
+  Geocoder project
+
 * Fixed: phpdoc, wording
 * Fixed: providers are now highly configurable, even at runtime
+* Fixed: `FreeGeoIp` property because of an API change
+
 * Moved: IGN OpenLS provider to geocoder-extra (#339)
 * Moved: OIORest provider to geocoder-extra (#336)
 * Moved: GeoCoder.us provider to geocoder-extra (#338)
@@ -19,16 +32,23 @@ CHANGELOG
 * Moved: DataScienceToolkit provider to geocoder-extra (#340)
 * Moved: Baidu provider to geocoder-extra (#341)
 * Moved: IpGeoBase provider to geocoder-extra (#342)
+
 * Renamed: properties such as:
     - city => locality
     - cityDistrict => subLocality
     - zipcode => postalCode
+
 * Refactored: dumpers (remove Interface suffix, define a new method signature)
 * Refactored: class names!
+* Refactored: all providers now implement the `Geocoder` interface
+* Refactored: exception messages are a bit more verbose
+
 * Removed: `Provider`, `Dumper`, `Interface`, and `Exception` suffixes
 * Removed: `autoload.php` file
 * Removed: `OpenStreetMapsProvider` class (#335)
 * Removed: HTTP adapters layer
+* Removed: the `Geocoder` class does not exist anymore and has been replaced by
+  the `ProviderAggregator` class
 
 ### 2.8.1 (2014-12-08)
 
