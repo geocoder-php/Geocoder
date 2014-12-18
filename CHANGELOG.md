@@ -3,7 +3,7 @@ CHANGELOG
 
 ## 3.0.0
 
-### 3.0.0-alpha1
+### 3.0.0-alpha1 (2014-12-18)
 
 * Added: `using()` method now throws an exception if provider not found
 * Added: new Result classes (`Address`, `Bounds`, `Region`, `Country`, `County`, `Coordinates`)
