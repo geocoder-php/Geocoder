@@ -7,6 +7,15 @@ use Geocoder\Provider\IpInfoDb;
 
 class IpInfoDbTest extends TestCase
 {
+    /**
+     * @expectedException \Geocoder\Exception\InvalidArgument
+     * @expectedExceptionMessage Invalid precision value "foo" (allowed values: "city", "country").
+     */
+    public function testConstructWithInvalidPrecision()
+    {
+        new IpInfoDb($this->getMockAdapter($this->never()), 'api_key', 'foo');
+    }
+
     public function testGetName()
     {
         $provider = new IpInfoDb($this->getMockAdapter($this->never()), 'api_key');
@@ -136,7 +145,7 @@ class IpInfoDbTest extends TestCase
         $this->assertEquals('CALIFORNIA', $result->getRegion()->getName());
         $this->assertEquals('UNITED STATES', $result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
-        $this->assertEquals('America/Denver', $result->getTimezone());
+        $this->assertEquals('America/Los_Angeles', $result->getTimezone());
     }
 
     /**
@@ -151,6 +160,34 @@ class IpInfoDbTest extends TestCase
 
         $provider = new IpInfoDb($this->getAdapter(), $_SERVER['IPINFODB_API_KEY']);
         $provider->geocode('::ffff:74.125.45.100');
+    }
+
+    /**
+     * @group temp
+     */
+    public function testGetGeocodedDataWithCountryPrecision()
+    {
+        if (!isset($_SERVER['IPINFODB_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the IPINFODB_API_KEY value in phpunit.xml');
+        }
+
+        $provider = new IpInfoDb($this->getAdapter(), $_SERVER['IPINFODB_API_KEY'], 'country');
+        $results = $provider->geocode('74.125.45.100');
+
+        $this->assertInternalType('array', $results);
+        $this->assertCount(1, $results);
+
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results[0];
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertNull($result->getLatitude());
+        $this->assertNull($result->getLongitude());
+        $this->assertNull($result->getPostalCode());
+        $this->assertNull($result->getLocality());
+        $this->assertNull($result->getRegion()->getName());
+        $this->assertEquals('UNITED STATES', $result->getCountry()->getName());
+        $this->assertEquals('US', $result->getCountry()->getCode());
+        $this->assertNull($result->getTimezone());
     }
 
     /**

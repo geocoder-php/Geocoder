@@ -6,6 +6,7 @@ use Ivory\HttpAdapter\AbstractHttpAdapter;
 use Ivory\HttpAdapter\HttpAdapterInterface;
 use Ivory\HttpAdapter\Message\InternalRequestInterface;
 use Ivory\HttpAdapter\Message\Stream\StringStream;
+use Ivory\HttpAdapter\Message\RequestInterface;
 
 class CachedResponseAdapter extends AbstractHttpAdapter
 {
@@ -44,7 +45,7 @@ class CachedResponseAdapter extends AbstractHttpAdapter
             $body    = new StringStream($content);
 
             $response = $this->adapter->getConfiguration()->getMessageFactory()->createResponse(
-                200, 'OK', '1.1', [], $body
+                200, 'OK', RequestInterface::PROTOCOL_VERSION_1_1, [], $body
             );
 
             if (!empty($content)) {
