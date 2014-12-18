@@ -439,7 +439,7 @@ You can provide your own `dumper` by implementing the `Dumper` interface.
 TimedGeocoder
 -------------
 
-We introduced a new feature in Geocoder 3. The `TimedGeocoder` profile
+We introduced a new feature in Geocoder 3. The `TimedGeocoder` profiles
 each `geocode` and `reverse` call. So you can easily figure out how many
 time/memory was spent for each geocoder/reverse call.
 
