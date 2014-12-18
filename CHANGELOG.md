@@ -1,7 +1,9 @@
 CHANGELOG
 =========
 
-### 3.0.0 (????-??-??)
+## 3.0.0
+
+### 3.0.0-alpha1
 
 * Added: `using()` method now throws an exception if provider not found
 * Added: new Result classes (`Address`, `Bounds`, `Region`, `Country`, `County`, `Coordinates`)
@@ -43,6 +45,8 @@ CHANGELOG
 * Removed: HTTP adapters layer
 * Removed: the `Geocoder` class does not exist anymore and has been replaced by
   the `ProviderAggregator` class
+
+## 2.x
 
 ### 2.8.1 (2014-12-08)
 
