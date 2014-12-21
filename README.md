@@ -112,8 +112,10 @@ It also contains methods to control the number of results:
 * `limit($limit)`
 * `getLimit()`
 
-Both `geocode()` and `reverse()` methods return an array of `Address` objects,
-each providing the following API:
+### Address & AddressCollection
+
+Both `geocode()` and `reverse()` methods return a collection of `Address`
+objects (`AddressCollection`), each providing the following API:
 
 * `getCoordinates()` will return a `Coordinates` object (with `latitude` and
   `longitude` properties);
@@ -136,6 +138,16 @@ each providing the following API:
   properties);
 * `getCountryCode()` will return the ISO `country` code;
 * `getTimezone()` will return the `timezone`.
+
+The `AddressCollection` exposes the following methods:
+
+* `count()` (this class implements `Countable`);
+* `first()` retrieves the first `Address`;
+* `slice($offset, $length = null)` returns `Address` objects between `$offset`
+  and `length`;
+* `get($index)` fetches an `Address` using its `$index`;
+* `all()` returns all `Address` objects;
+* `getIterator()` (this class implements `IteratorAggregate`).
 
 ### Locale Aware Providers
 
@@ -208,7 +220,7 @@ $reader   = new \GeoIp2\Database\Reader('/path/to/database');
 $adapter  = new \Geocoder\Adapter\GeoIP2Adapter($reader);
 $geocoder = new \Geocoder\Provider\GeoIP2($adapter);
 
-$address   = $geocoder->geocode('74.200.247.59');
+$address   = $geocoder->geocode('74.200.247.59')->first();
 ```
 
 ### TomTom

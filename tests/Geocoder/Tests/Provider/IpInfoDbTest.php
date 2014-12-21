@@ -76,11 +76,11 @@ class IpInfoDbTest extends TestCase
         $provider = new IpInfoDb($this->getMockAdapter($this->never()), 'api_key');
         $results  = $provider->geocode('127.0.0.1');
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertNull($result->getLatitude());
         $this->assertNull($result->getLongitude());
@@ -132,11 +132,11 @@ class IpInfoDbTest extends TestCase
         $provider = new IpInfoDb($this->getAdapter(), $_SERVER['IPINFODB_API_KEY']);
         $results  = $provider->geocode('74.125.45.100');
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(37.406, $result->getLatitude(), '', 0.001);
         $this->assertEquals(-122.079, $result->getLongitude(), '', 0.001);
@@ -174,11 +174,11 @@ class IpInfoDbTest extends TestCase
         $provider = new IpInfoDb($this->getAdapter(), $_SERVER['IPINFODB_API_KEY'], 'country');
         $results = $provider->geocode('74.125.45.100');
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertNull($result->getLatitude());
         $this->assertNull($result->getLongitude());

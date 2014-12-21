@@ -57,11 +57,11 @@ class MaxMindTest extends TestCase
         $provider = new MaxMind($this->getMockAdapter($this->never()), 'api_key');
         $results  = $provider->geocode('127.0.0.1');
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals('localhost', $result->getLocality());
         $this->assertEquals('localhost', $result->getCounty()->getName());
@@ -74,11 +74,11 @@ class MaxMindTest extends TestCase
         $provider = new MaxMind($this->getMockAdapter($this->never()), 'api_key');
         $results  = $provider->geocode('::1');
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals('localhost', $result->getLocality());
         $this->assertEquals('localhost', $result->getCounty()->getName());
@@ -131,11 +131,11 @@ class MaxMindTest extends TestCase
         $provider = new MaxMind($this->getMockAdapterReturns(',,,,,,,,,'), 'api_key');
         $results  = $provider->geocode('74.200.247.59');
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertNull($result->getLatitude());
         $this->assertNull($result->getLongitude());
@@ -159,11 +159,11 @@ class MaxMindTest extends TestCase
             'US,TX,Plano,75093,33.034698486328,-96.813400268555,,,,'), 'api_key');
         $results  = $provider->geocode('74.200.247.59');
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(33.034698486328, $result->getLatitude(), '', 0.0001);
         $this->assertEquals(-96.813400268555, $result->getLongitude(), '', 0.0001);
@@ -182,21 +182,21 @@ class MaxMindTest extends TestCase
 
         $provider2 = new MaxMind($this->getMockAdapterReturns('FR,,,,,,,,,'), 'api_key');
         $result2   = $provider2->geocode('74.200.247.59');
-        $this->assertEquals('France', $result2[0]->getCountry()->getName());
+        $this->assertEquals('France', $result2->first()->getCountry()->getName());
 
         $provider3 = new MaxMind($this->getMockAdapterReturns('GB,,,,,,,,,'), 'api_key');
         $result3   = $provider3->geocode('74.200.247.59');
-        $this->assertEquals('United Kingdom', $result3[0]->getCountry()->getName());
+        $this->assertEquals('United Kingdom', $result3->first()->getCountry()->getName());
 
         $provider4 = new MaxMind($this->getMockAdapterReturns(
             'US,CA,San Francisco,94110,37.748402,-122.415604,807,415,"Layered Technologies","Automattic"'), 'api_key');
         $results   = $provider4->geocode('74.200.247.59');
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(37.748402, $result->getLatitude(), '', 0.0001);
         $this->assertEquals(-122.415604, $result->getLongitude(), '', 0.0001);
@@ -306,11 +306,11 @@ class MaxMindTest extends TestCase
         $provider = new MaxMind($this->getAdapter(), $_SERVER['MAXMIND_API_KEY']);
         $results  = $provider->geocode('74.200.247.159');
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(33.034698, $result->getLatitude(), '', 0.1);
         $this->assertEquals(-96.813400, $result->getLongitude(), '', 0.1);
@@ -339,11 +339,11 @@ class MaxMindTest extends TestCase
             MaxMind::OMNI_SERVICE);
         $results  = $provider->geocode('74.200.247.159');
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(33.0347, $result->getLatitude(), '', 0.1);
         $this->assertEquals(-96.8134, $result->getLongitude(), '', 0.1);
@@ -371,11 +371,11 @@ class MaxMindTest extends TestCase
         $provider = new MaxMind($this->getAdapter(), $_SERVER['MAXMIND_API_KEY']);
         $results  = $provider->geocode('2002:4293:f4d6:0:0:0:0:0');
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(40.2181, $result->getLatitude(), '', 0.1);
         $this->assertEquals(-111.6133, $result->getLongitude(), '', 0.1);
@@ -404,11 +404,11 @@ class MaxMindTest extends TestCase
             MaxMind::OMNI_SERVICE, true);
         $results  = $provider->geocode('2002:4293:f4d6:0:0:0:0:0');
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(40.2181, $result->getLatitude(), '', 0.1);
         $this->assertEquals(-111.6133, $result->getLongitude(), '', 0.1);

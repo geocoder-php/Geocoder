@@ -88,7 +88,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
     {
         $addresses = (new AddressFactory())->createFromArray([ $data ]);
 
-        return 0 === count($addresses) ? null : $addresses[0];
+        return 0 === count($addresses) ? null : $addresses->first();
     }
 
     protected function createEmptyAddress()

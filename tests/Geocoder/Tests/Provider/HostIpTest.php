@@ -48,11 +48,11 @@ class HostIpTest extends TestCase
         $provider = new HostIp($this->getMockAdapter($this->never()));
         $results  = $provider->geocode('127.0.0.1');
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertNull($result->getLatitude());
         $this->assertNull($result->getLongitude());
@@ -100,11 +100,11 @@ class HostIpTest extends TestCase
         $provider = new HostIp($this->getAdapter());
         $results  = $provider->geocode('88.188.221.14');
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(45.5333, $result->getLatitude(), '', 0.0001);
         $this->assertEquals(2.6167, $result->getLongitude(), '', 0.0001);
@@ -140,11 +140,11 @@ class HostIpTest extends TestCase
         $provider = new HostIp($this->getAdapter());
         $results  = $provider->geocode('33.33.33.22');
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertNull($result->getLatitude());
         $this->assertNull($result->getLongitude());

@@ -57,11 +57,11 @@ class GeoipTest extends TestCase
         $provider = new Geoip();
         $results  = $provider->geocode('127.0.0.1');
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('Geocoder\Model\Address', $result);
         $this->assertNull($result->getLatitude());
         $this->assertNull($result->getLongitude());
