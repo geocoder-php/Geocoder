@@ -25,7 +25,7 @@ providing a powerful abstraction layer for geocoding manipulations.
 
 * [Installation](#installation)
 * [Usage](#usage)
-  - [Address & AddressCollection](#address--addresscollection)
+  - [Address & AddressCollection](#address-&-addresscollection)
   - [The ProviderAggregator](#the-provideraggregator)
   - [TimedGeocoder](#timedgeocoder)
   - [HTTP Adapters](#http-adapters)
