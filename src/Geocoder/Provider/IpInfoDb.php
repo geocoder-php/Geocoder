@@ -10,10 +10,10 @@
 
 namespace Geocoder\Provider;
 
+use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
-use Geocoder\Exception\InvalidArgument;
 use Ivory\HttpAdapter\HttpAdapterInterface;
 
 /**
@@ -117,7 +117,7 @@ class IpInfoDb extends AbstractHttpProvider implements Provider
     /**
      * @param string $query
      *
-     * @return \Geocoder\Model\Address[]
+     * @return \Geocoder\Model\AddressCollection
      */
     private function executeQuery($query)
     {
