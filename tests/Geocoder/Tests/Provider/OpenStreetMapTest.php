@@ -18,11 +18,11 @@ class OpenStreetMapTest extends TestCase
         $provider = new OpenStreetMap($this->getAdapter());
         $results  = $provider->geocode('Paris');
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(48.8565056, $result->getLatitude(), '', 0.01);
         $this->assertEquals(2.3521334, $result->getLongitude(), '', 0.01);
@@ -43,7 +43,7 @@ class OpenStreetMapTest extends TestCase
         $this->assertEquals('FR', $result->getCountry()->getCode());
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[1];
+        $result = $results->get(1);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(48.8588408, $result->getLatitude(), '', 0.01);
         $this->assertEquals(2.32003465529896, $result->getLongitude(), '', 0.01);
@@ -64,7 +64,7 @@ class OpenStreetMapTest extends TestCase
         $this->assertEquals('FR', $result->getCountry()->getCode());
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[2];
+        $result = $results->get(2);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(35.28687645, $result->getLatitude(), '', 0.01);
         $this->assertEquals(-93.7354879210082, $result->getLongitude(), '', 0.01);
@@ -85,7 +85,7 @@ class OpenStreetMapTest extends TestCase
         $this->assertEquals('US', $result->getCountry()->getCode());
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[3];
+        $result = $results->get(3);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(33.6751155, $result->getLatitude(), '', 0.01);
         $this->assertEquals(-95.5502662477703, $result->getLongitude(), '', 0.01);
@@ -106,7 +106,7 @@ class OpenStreetMapTest extends TestCase
         $this->assertEquals('US', $result->getCountry()->getCode());
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[4];
+        $result = $results->get(4);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(38.2097987, $result->getLatitude(), '', 0.01);
         $this->assertEquals(-84.2529869, $result->getLongitude(), '', 0.01);
@@ -132,11 +132,11 @@ class OpenStreetMapTest extends TestCase
         $provider = new OpenStreetMap($this->getAdapter(), 'fr_FR');
         $results  = $provider->geocode('10 allée Evariste Galois, Clermont ferrand');
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(2, $results);
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(45.7586841, $result->getLatitude(), '', 0.01);
         $this->assertEquals(3.1354075, $result->getLongitude(), '', 0.01);
@@ -157,7 +157,7 @@ class OpenStreetMapTest extends TestCase
         $this->assertEquals('FR', $result->getCountry()->getCode());
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[1];
+        $result = $results->get(1);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(45.7586841, $result->getLatitude(), '', 0.01);
         $this->assertEquals(3.1354075, $result->getLongitude(), '', 0.01);
@@ -183,11 +183,11 @@ class OpenStreetMapTest extends TestCase
         $provider = new OpenStreetMap($this->getAdapter());
         $results  = $provider->reverse(60.4539471728726, 22.2567841926781);
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(60.4539, $result->getLatitude(), '', 0.001);
         $this->assertEquals(22.2568, $result->getLongitude(), '', 0.001);
@@ -218,11 +218,11 @@ class OpenStreetMapTest extends TestCase
         $provider = new OpenStreetMap($this->getAdapter(), 'de_DE');
         $results  = $provider->geocode('Kalbacher Hauptstraße, 60437 Frankfurt, Germany');
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(50.1856803, $result->getLatitude(), '', 0.01);
         $this->assertEquals(8.6506285, $result->getLongitude(), '', 0.01);
@@ -243,7 +243,7 @@ class OpenStreetMapTest extends TestCase
         $this->assertEquals('DE', $result->getCountry()->getCode());
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[1];
+        $result = $results->get(1);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(50.1845911, $result->getLatitude(), '', 0.01);
         $this->assertEquals(8.6540194, $result->getLongitude(), '', 0.01);
@@ -264,7 +264,7 @@ class OpenStreetMapTest extends TestCase
         $this->assertEquals('DE', $result->getCountry()->getCode());
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[2];
+        $result = $results->get(2);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(50.1862884, $result->getLatitude(), '', 0.01);
         $this->assertEquals(8.6493167, $result->getLongitude(), '', 0.01);
@@ -285,7 +285,7 @@ class OpenStreetMapTest extends TestCase
         $this->assertEquals('DE', $result->getCountry()->getCode());
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[3];
+        $result = $results->get(3);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(50.1861344, $result->getLatitude(), '', 0.01);
         $this->assertEquals(8.649578, $result->getLongitude(), '', 0.01);
@@ -311,11 +311,11 @@ class OpenStreetMapTest extends TestCase
         $provider = new OpenStreetMap($this->getMockAdapter($this->never()));
         $results  = $provider->geocode('127.0.0.1');
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals('localhost', $result->getLocality());
         $this->assertEquals('localhost', $result->getCounty()->getName());
@@ -338,11 +338,11 @@ class OpenStreetMapTest extends TestCase
         $provider = new OpenStreetMap($this->getAdapter());
         $results  = $provider->geocode('88.188.221.14');
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(43.6189768, $result->getLatitude(), '', 0.01);
         $this->assertEquals(1.4564493, $result->getLongitude(), '', 0.01);
@@ -368,11 +368,11 @@ class OpenStreetMapTest extends TestCase
         $provider = new OpenStreetMap($this->getAdapter(), 'da_DK');
         $results  = $provider->geocode('88.188.221.14');
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(43.6155351, $result->getLatitude(), '', 0.01);
         $this->assertEquals(1.4525647, $result->getLongitude(), '', 0.01);
@@ -477,11 +477,11 @@ XML;
         $provider = new OpenStreetMap($this->getAdapter(), 'fr_FR');
         $results  = $provider->reverse(48.86, 2.35);
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals('Rue Quincampoix', $result->getStreetName());
     }

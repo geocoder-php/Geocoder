@@ -48,10 +48,10 @@ class GeoPluginTest extends TestCase
         $provider = new GeoPlugin($this->getMockAdapter($this->never()));
         $results  = $provider->geocode('127.0.0.1');
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        $result = $results[0];
+        $result = $results->first();
         $this->assertEquals('localhost', $result->getLocality());
         $this->assertEquals('localhost', $result->getCounty()->getName());
         $this->assertEquals('localhost', $result->getRegion()->getName());
@@ -63,10 +63,10 @@ class GeoPluginTest extends TestCase
         $provider = new GeoPlugin($this->getMockAdapter($this->never()));
         $results  = $provider->geocode('::1');
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        $result = $results[0];
+        $result = $results->first();
         $this->assertEquals('localhost', $result->getLocality());
         $this->assertEquals('localhost', $result->getCounty()->getName());
         $this->assertEquals('localhost', $result->getRegion()->getName());
@@ -98,10 +98,10 @@ class GeoPluginTest extends TestCase
         $provider = new GeoPlugin($this->getAdapter());
         $results  = $provider->geocode('66.147.244.214');
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        $result = $results[0];
+        $result = $results->first();
 
         $this->assertEquals(40.711101999999997, $result->getLatitude(), '', 0.0001);
         $this->assertEquals(-73.946899000000002, $result->getLongitude(), '', 0.0001);

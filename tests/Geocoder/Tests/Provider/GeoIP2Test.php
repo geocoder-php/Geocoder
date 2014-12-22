@@ -47,11 +47,11 @@ class GeoIP2Test extends TestCase
     {
         $results  = $this->provider->geocode('127.0.0.1');
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals('localhost', $result->getLocality());
         $this->assertEquals('localhost', $result->getCounty()->getName());
@@ -137,11 +137,11 @@ class GeoIP2Test extends TestCase
 
         $results = $provider->geocode($address);
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals($expectedGeodata['latitude'], $result->getLatitude());
         $this->assertEquals($expectedGeodata['longitude'], $result->getLongitude());

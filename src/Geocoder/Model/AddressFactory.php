@@ -52,7 +52,7 @@ final class AddressFactory
             );
         }
 
-        return $addresses;
+        return new AddressCollection($addresses);
     }
 
     /**

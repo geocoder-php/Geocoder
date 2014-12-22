@@ -48,11 +48,11 @@ class FreeGeoIpTest extends TestCase
         $provider = new FreeGeoIp($this->getMockAdapter($this->never()));
         $results  = $provider->geocode('127.0.0.1');
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals('localhost', $result->getLocality());
         $this->assertEquals('localhost', $result->getCounty()->getName());
@@ -65,11 +65,11 @@ class FreeGeoIpTest extends TestCase
         $provider = new FreeGeoIp($this->getMockAdapter($this->never()));
         $results  = $provider->geocode('::1');
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals('localhost', $result->getLocality());
         $this->assertEquals('localhost', $result->getCounty()->getName());
@@ -102,11 +102,11 @@ class FreeGeoIpTest extends TestCase
         $provider = new FreeGeoIp($this->getAdapter());
         $results  = $provider->geocode('74.200.247.59');
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(33.0347, $result->getLatitude(), '', 0.01);
         $this->assertEquals(-96.8134, $result->getLongitude(), '', 0.01);
@@ -122,11 +122,11 @@ class FreeGeoIpTest extends TestCase
         $provider = new FreeGeoIp($this->getAdapter());
         $results  = $provider->geocode('::ffff:74.200.247.59');
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(33.0347, $result->getLatitude(), '', 0.01);
         $this->assertEquals(-96.8134, $result->getLongitude(), '', 0.01);
@@ -152,10 +152,10 @@ class FreeGeoIpTest extends TestCase
         $provider = new FreeGeoIp($this->getAdapter());
         $results  = $provider->geocode('74.200.247.59');
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        $this->assertEquals('48', $results[0]->getRegion()->getCode());
+        $this->assertEquals('48', $results->first()->getRegion()->getCode());
     }
 
     public function testGeocodeWithUSIPv6()
@@ -163,10 +163,10 @@ class FreeGeoIpTest extends TestCase
         $provider = new FreeGeoIp($this->getAdapter());
         $results  = $provider->geocode('::ffff:74.200.247.59');
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        $this->assertEquals('48', $results[0]->getRegion()->getCode());
+        $this->assertEquals('48', $results->first()->getRegion()->getCode());
     }
 
     public function testGeocodeWithUKIPv4()
@@ -174,10 +174,10 @@ class FreeGeoIpTest extends TestCase
         $provider = new FreeGeoIp($this->getAdapter());
         $results  = $provider->geocode('132.185.255.60');
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        $this->assertEquals('H9', $results[0]->getRegion()->getCode());
+        $this->assertEquals('H9', $results->first()->getRegion()->getCode());
     }
 
     public function testGeocodeWithUKIPv6()
@@ -185,10 +185,10 @@ class FreeGeoIpTest extends TestCase
         $provider = new FreeGeoIp($this->getAdapter());
         $results  = $provider->geocode('::ffff:132.185.255.60');
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        $this->assertEquals('H9', $results[0]->getRegion()->getCode());
+        $this->assertEquals('H9', $results->first()->getRegion()->getCode());
     }
 
     /**

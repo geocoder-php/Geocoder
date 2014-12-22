@@ -46,11 +46,11 @@ class MaxMindBinaryTest extends TestCase
         $provider = new MaxMindBinary($this->binaryFile);
         $results  = $provider->geocode('24.24.24.24');
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
 
         $this->assertEquals('43.089200000000005', $result->getLatitude(), '', 0.001);
@@ -75,11 +75,11 @@ class MaxMindBinaryTest extends TestCase
         $provider = new MaxMindBinary($this->binaryFile);
         $results  = $provider->geocode('80.24.24.24');
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
 
         $this->assertEquals('41.543299999999988', $result->getLatitude(), '', 0.001);
@@ -107,11 +107,11 @@ class MaxMindBinaryTest extends TestCase
         $provider = new MaxMindBinary($this->binaryFile);
         $results  = $provider->geocode($ip);
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals($expectedCity, $result->getLocality());
         $this->assertEquals($expectedCountry, $result->getCountry()->getName());
@@ -123,7 +123,7 @@ class MaxMindBinaryTest extends TestCase
         $results  = $provider->geocode('212.51.181.237');
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertSame('Châlette-sur-loing', $result->getLocality());
     }

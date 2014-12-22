@@ -57,11 +57,11 @@ class GeoIPsTest extends TestCase
         $provider = new GeoIPs($this->getMockAdapter($this->never()), 'api_key');
         $results  = $provider->geocode('127.0.0.1');
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals('localhost', $result->getLocality());
         $this->assertEquals('localhost', $result->getCounty()->getName());
@@ -130,11 +130,11 @@ class GeoIPsTest extends TestCase
         $provider = new GeoIPs($this->getMockAdapterReturns($json), 'api_key');
         $results  = $provider->geocode('66.147.244.214');
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertNull($result->getLatitude());
         $this->assertNull($result->getLongitude());
@@ -173,11 +173,11 @@ class GeoIPsTest extends TestCase
         $provider = new GeoIPs($this->getMockAdapterReturns($json), 'api_key');
         $results  = $provider->geocode('66.147.244.214');
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(40.3402, $result->getLatitude(), '', 0.0001);
         $this->assertEquals(-111.6073, $result->getLongitude(), '', 0.0001);
@@ -331,11 +331,11 @@ class GeoIPsTest extends TestCase
         $provider = new GeoIPs($this->getAdapter(), $_SERVER['GEOIPS_API_KEY']);
         $results  = $provider->geocode('66.147.244.214');
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(40.3402, $result->getLatitude(), '', 0.0001);
         $this->assertEquals(-111.6073, $result->getLongitude(), '', 0.0001);

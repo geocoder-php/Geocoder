@@ -91,11 +91,11 @@ JSON;
         $provider = new BingMaps($this->getMockAdapterReturns($json), 'api_key', 'fr_FR');
         $results  = $provider->geocode('10 avenue Gambetta, Paris, France');
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(3, $results);
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(48.86321675999999, $result->getLatitude(), '', 0.01);
         $this->assertEquals(2.3887721299999995, $result->getLongitude(), '', 0.01);
@@ -116,7 +116,7 @@ JSON;
         $this->assertNull($result->getTimezone());
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[1];
+        $result = $results->get(1);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(48.81342781, $result->getLatitude(), '', 0.01);
         $this->assertEquals(2.32503767, $result->getLongitude(), '', 0.01);
@@ -134,7 +134,7 @@ JSON;
         $this->assertEquals('France', $result->getCountry()->getName());
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[2];
+        $result = $results->get(2);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(48.81014147, $result->getLatitude(), '', 0.01);
         $this->assertEquals(2.43568048, $result->getLongitude(), '', 0.01);
@@ -161,11 +161,11 @@ JSON;
         $provider = new BingMaps($this->getMockAdapterReturns($json), 'api_key');
         $results  = $provider->reverse(48.86321648955345, 2.3887719959020615);
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(48.86321648955345, $result->getLatitude(), '', 0.0001);
         $this->assertEquals(2.3887719959020615, $result->getLongitude(), '', 0.0001);
@@ -195,11 +195,11 @@ JSON;
         $provider = new BingMaps($this->getAdapter(), $_SERVER['BINGMAPS_API_KEY'], 'fr-FR');
         $results  = $provider->geocode('10 avenue Gambetta, Paris, France');
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(3, $results);
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(48.86321675999999, $result->getLatitude(), '', 0.01);
         $this->assertEquals(2.3887721299999995, $result->getLongitude(), '', 0.01);
@@ -220,7 +220,7 @@ JSON;
         $this->assertNull($result->getTimezone());
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[1];
+        $result = $results->get(1);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(48.81342781, $result->getLatitude(), '', 0.01);
         $this->assertEquals(2.32503767, $result->getLongitude(), '', 0.01);
@@ -238,7 +238,7 @@ JSON;
         $this->assertEquals('France', $result->getCountry()->getName());
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[2];
+        $result = $results->get(2);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(48.81014147, $result->getLatitude(), '', 0.01);
         $this->assertEquals(2.43568048, $result->getLongitude(), '', 0.01);
@@ -285,11 +285,11 @@ JSON;
         $provider = new BingMaps($this->getAdapter(), $_SERVER['BINGMAPS_API_KEY']);
         $results  = $provider->reverse(48.86321648955345, 2.3887719959020615);
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(48.86321648955345, $result->getLatitude(), '', 0.0001);
         $this->assertEquals(2.3887719959020615, $result->getLongitude(), '', 0.0001);

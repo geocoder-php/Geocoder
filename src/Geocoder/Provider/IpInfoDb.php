@@ -42,8 +42,8 @@ class IpInfoDb extends AbstractHttpProvider implements Provider
     private $endpointUrl;
 
     /**
-     * @param HttpAdapterInterface $adapter An HTTP adapter.
-     * @param string               $apiKey  An API key.
+     * @param HttpAdapterInterface $adapter   An HTTP adapter.
+     * @param string               $apiKey    An API key.
      * @param string               $precision The endpoint precision. Either "city" or "country" (faster)
      *
      * @throws Geocoder\Exception\InvalidArgument

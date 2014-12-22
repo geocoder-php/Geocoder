@@ -87,11 +87,11 @@ XML;
         $provider = new TomTom($this->getAdapter(), $_SERVER['TOMTOM_MAP_KEY']);
         $results  = $provider->geocode('Tagensvej 47, 2200 København N');
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(55.704389, $result->getLatitude(), '', 0.0001);
         $this->assertEquals(12.546129, $result->getLongitude(), '', 0.0001);
@@ -117,11 +117,11 @@ XML;
         $provider = new TomTom($this->getAdapter(), $_SERVER['TOMTOM_MAP_KEY'], 'fr_FR');
         $results  = $provider->geocode('Tagensvej 47, 2200 København N');
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(55.704389, $result->getLatitude(), '', 0.0001);
         $this->assertEquals(12.546129, $result->getLongitude(), '', 0.0001);
@@ -147,11 +147,11 @@ XML;
         $provider = new TomTom($this->getAdapter(), $_SERVER['TOMTOM_MAP_KEY'], 'sv-SE');
         $results  = $provider->geocode('Tagensvej 47, 2200 København N');
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(55.704389, $result->getLatitude(), '', 0.0001);
         $this->assertEquals(12.546129, $result->getLongitude(), '', 0.0001);
@@ -177,11 +177,11 @@ XML;
         $provider = new TomTom($this->getAdapter(), $_SERVER['TOMTOM_MAP_KEY']);
         $results  = $provider->geocode('Paris');
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(48.856898, $result->getLatitude(), '', 0.0001);
         $this->assertEquals(2.350844, $result->getLongitude(), '', 0.0001);
@@ -198,7 +198,7 @@ XML;
         $this->assertNull($result->getTimezone());
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[1];
+        $result = $results->get(1);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(33.661426, $result->getLatitude(), '', 0.0001);
         $this->assertEquals(-95.556321, $result->getLongitude(), '', 0.0001);
@@ -208,7 +208,7 @@ XML;
         $this->assertEquals('USA', $result->getCountry()->getCode());
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[2];
+        $result = $results->get(2);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(36.302754, $result->getLatitude(), '', 0.0001);
         $this->assertEquals(-88.326359, $result->getLongitude(), '', 0.0001);
@@ -218,7 +218,7 @@ XML;
         $this->assertEquals('USA', $result->getCountry()->getCode());
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[3];
+        $result = $results->get(3);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(-19.039448, $result->getLatitude(), '', 0.0001);
         $this->assertEquals(29.560445, $result->getLongitude(), '', 0.0001);
@@ -228,7 +228,7 @@ XML;
         $this->assertEquals('ZWE', $result->getCountry()->getCode());
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[4];
+        $result = $results->get(4);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(35.292105, $result->getLatitude(), '', 0.0001);
         $this->assertEquals(-93.729922, $result->getLongitude(), '', 0.0001);
@@ -355,11 +355,11 @@ XML;
         $provider = new TomTom($this->getAdapter(), $_SERVER['TOMTOM_MAP_KEY']);
         $results  = $provider->reverse(48.86321648955345, 2.3887719959020615);
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(48.86323, $result->getLatitude(), '', 0.001);
         $this->assertEquals(2.38877, $result->getLongitude(), '', 0.001);
@@ -385,11 +385,11 @@ XML;
         $provider = new TomTom($this->getAdapter(),  $_SERVER['TOMTOM_MAP_KEY']);
         $results  = $provider->reverse(56.5231, 10.0659);
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(56.52435, $result->getLatitude(), '', 0.001);
         $this->assertEquals(10.06744, $result->getLongitude(), '', 0.001);

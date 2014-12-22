@@ -57,11 +57,11 @@ class MapQuestTest extends TestCase
         $provider = new MapQuest($this->getAdapter(), $_SERVER['MAPQUEST_API_KEY']);
         $results  = $provider->geocode('10 avenue Gambetta, Paris, France');
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(48.866205, $result->getLatitude(), '', 0.01);
         $this->assertEquals(2.389089, $result->getLongitude(), '', 0.01);
@@ -101,11 +101,11 @@ class MapQuestTest extends TestCase
         $provider = new MapQuest($this->getAdapter(), $_SERVER['MAPQUEST_API_KEY']);
         $results  = $provider->reverse(54.0484068, -2.7990345);
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(54.0484068, $result->getLatitude(), '', 0.001);
         $this->assertEquals(-2.7990345, $result->getLongitude(), '', 0.001);
@@ -132,11 +132,11 @@ class MapQuestTest extends TestCase
         $provider = new MapQuest($this->getAdapter(), $_SERVER['MAPQUEST_API_KEY']);
         $results  = $provider->geocode('Hanover');
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(52.374478, $result->getLatitude(), '', 0.01);
         $this->assertEquals(9.738553, $result->getLongitude(), '', 0.01);
@@ -146,7 +146,7 @@ class MapQuestTest extends TestCase
         $this->assertEquals('DE', $result->getCountry()->getName());
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(52.374478000000003, $result->getLatitude(), '', 0.01);
         $this->assertEquals(9.7385529999999996, $result->getLongitude(), '', 0.01);
@@ -156,7 +156,7 @@ class MapQuestTest extends TestCase
         $this->assertEquals('DE', $result->getCountry()->getName());
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(52.374478000000003, $result->getLatitude(), '', 0.01);
         $this->assertEquals(9.7385529999999996, $result->getLongitude(), '', 0.01);
@@ -166,7 +166,7 @@ class MapQuestTest extends TestCase
         $this->assertEquals('DE', $result->getCountry()->getName());
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(52.374478000000003, $result->getLatitude(), '', 0.01);
         $this->assertEquals(9.7385529999999996, $result->getLongitude(), '', 0.01);
@@ -185,11 +185,11 @@ class MapQuestTest extends TestCase
         $provider = new MapQuest($this->getAdapter(), $_SERVER['MAPQUEST_API_KEY']);
         $results  = $provider->geocode('Kalbacher Hauptstraße 10, 60437 Frankfurt, Germany');
 
-        $this->assertInternalType('array', $results);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results[0];
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(50.189062, $result->getLatitude(), '', 0.01);
         $this->assertEquals(8.636567, $result->getLongitude(), '', 0.01);

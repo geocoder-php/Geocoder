@@ -27,7 +27,7 @@ class AddressFactoryTest extends TestCase
             [ 'streetNumber' => 3 ],
         ]);
 
-        $this->assertTrue(is_array($addresses));
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $addresses);
         $this->assertCount(3, $addresses);
 
         $i = 1;
@@ -52,8 +52,7 @@ class AddressFactoryTest extends TestCase
         $addresses = $this->factory->createFromArray([
             [ 'streetName' => '1st ave 1A' ],
         ]);
-        $address   = current($addresses);
 
-        $this->assertEquals('1st ave 1A', $address->getStreetName());
+        $this->assertEquals('1st ave 1A', $addresses->first()->getStreetName());
     }
 }
