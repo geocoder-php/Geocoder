@@ -1,7 +1,10 @@
 CHANGELOG
 =========
 
-## 3.0.0
+### 3.0.0-alpha2 (2014-12-22)
+
+* Added: Introduce `AddressCollection` class
+* Added: new documentation
 
 ### 3.0.0-alpha1 (2014-12-18)
 
