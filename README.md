@@ -8,65 +8,43 @@ Downloads](https://poser.pugx.org/willdurand/Geocoder/downloads.png)](https://pa
 [![Latest Stable
 Version](https://poser.pugx.org/willdurand/Geocoder/v/stable.png)](https://packagist.org/packages/willdurand/Geocoder)
 
+> **Important:** You are browsing the documentation of Geocoder **3.x**.
+Documentation for version **2.x** is available here: [Geocoder 2.x
+documentation](https://github.com/geocoder-php/Geocoder/blob/2.x/README.md).
+
+---
+
 **Geocoder** is a PHP library which helps you build geo-aware applications by
 providing a powerful abstraction layer for geocoding manipulations.
 
-Providers
----------
-
-Providers perform the geocoding black magic for you (talking to the APIs,
-fetching results, dealing with errors, etc.) an are highly configurable.
-
-### Address-based Providers
-
-Provider       | Name | Reverse? | SSL? | Coverage | Multiple? | Terms
-:------------- |:---- |:-------- |:---- |:-------- |:--------- |:-----
-[ArcGIS Online](https://developers.arcgis.com/en/features/geocoding/) | `arcgis_online` | yes | supported | worldwide | yes | requires API key. 1250 requests free
-[Bing Maps](http://msdn.microsoft.com/en-us/library/ff701713.aspx) | `bing_maps` | yes | no | worldwide | yes | requires API key. Limit 10,000 requests per month
-Chain | `chain` | | | | | meta provider which iterates over a list of providers
-[Geonames](http://www.geonames.org/commercial-webservices.html) | `geonames` | yes |no | worldwide | yes | requires registration, no free tier
-[Google Maps](https://developers.google.com/maps/documentation/geocoding/) | `google_maps` | yes | supported | worldwide | yes | requires API key. Limit 2500 requests per day
-[Google Maps for Business](https://developers.google.com/maps/documentation/business/) | `google_maps_business` | yes | supported | worldwide | yes | requires API key. Limit 100,000 requests per day
-[MapQuest](http://developer.mapquest.com/web/products/dev-services/geocoding-ws) | `map_quest` | yes | no | worldwide | yes | both open and [commercial service](http://platform.mapquest.com/geocoding/) require API key
-[Nominatim](http://wiki.openstreetmap.org/wiki/Nominatim) | `nominatim` | yes | supported | worldwide | yes | requires a domain name (e.g. local installation)
-[OpenCage](http://geocoder.opencagedata.com/) | `opencage` | yes | supported | worldwide | yes | requires API key. 2500 requests/day free
-[OpenStreetMap](http://wiki.openstreetmap.org/wiki/Nominatim) | `openstreetmap` | yes | no | worldwide | yes | heavy users (>1q/s) get banned
-[TomTom](https://geocoder.tomtom.com/app/view/index) | `tomtom` | yes | required | worldwide | yes | requires API key. First 2500 requests or 30 days free
-[Yandex](http://api.yandex.com/maps/) | `yandex` | yes | no | worldwide | yes
-
-### IP-based Providers
-
-Provider  | Name | IPv4? | IPv6? | Multiple? | Terms | Notes
-:-------- |:---- |:----- |:----- |:--------- |:----- |:-----
-[FreeGeoIp](http://freegeoip.net/) | `free_geo_ip` | yes | yes | no
-[GeoIPs](http://www.geoips.com/en/) | `geo_ips` | yes | no | no | requires API key
-[GeoIP2](https://www.maxmind.com/en/geoip2-databases) (Maxmind) | `maxmind_geoip2` | yes | yes | no
-[GeoPlugin](http://www.geoplugin.com/) | `geo_plugin` | yes | yes | no
-[HostIp](http://www.hostip.info/use.html) | `host_ip` | yes | no | no
-[IpInfoDB](http://ipinfodb.com/) | `ip_info_db` | yes | no | no | requires API key | city precision
-Geoip | `geoip` | yes | no | no | | wrapper around the [PHP extension](http://php.net/manual/en/book.geoip.php) which must be installed
-[MaxMind](https://www.maxmind.com/) web service | `maxmind` | yes | yes | no | requires Omni API key | City/ISP/Org and Omni services, IPv6 on country level
-MaxMind Binary file | `maxmind_binary` | yes | no | no | needs locally installed database files
-
-**Important:** the [Geocoder
-Extra](https://github.com/geocoder-php/geocoder-extra) library contains even
-more official providers!
-
-HTTP Adapters
--------------
-
-In order to talk to geocoding APIs, you need HTTP adapters. While it was part of
-the library in Geocoder 1.x and 2.x, Geocoder 3.x and upper now relies on the
-[PSR-7
-Standard](https://github.com/php-fig/fig-standards/blob/master/proposed/http-message.md)
-which defines how HTTP message should be implemented. Choose any library that
-follows this PSR and implement the specified interfaces to use with Geocoder.
-
-As making choices is rather hard, Geocoder ships with the
-[egeloen/http-adapter](https://github.com/egeloen/ivory-http-adapter) library by
-default, but it is up to you to choose a different implementation.
-
-**Note:** not all providers are HTTP-based.
+* [Installation](#installation)
+* [Usage](#usage)
+  - [Address & AddressCollection](#address--addresscollection)
+  - [The ProviderAggregator](#the-provideraggregator)
+  - [TimedGeocoder](#timedgeocoder)
+  - [HTTP Adapters](#http-adapters)
+  - [Providers](#providers)
+    - [Address-based Providers](#address-based-providers)
+      - [ArcGISOnline](#arcgisonline)
+      - [GeoIP2](#geoip2)
+      - [GoogleMaps](#googlemaps)
+      - [GoogleMapsBusiness](#googlemapsbusiness)
+      - [MaxMindBinary](#maxmindbinary)
+      - [Nominatim](#nominatim)
+      - [TomTom](#tomtom)
+      - [Yandex](#yandex)
+    - [IP-based Providers](#ip-based-providers)
+    - [Locale Aware Providers](#locale-aware-providers)
+    - [The Chain Provider](#the-chain-provider)
+  - [Dumpers](#dumpers)
+    - [GPS eXchange Format (GPX)](#gps-exchange-format-gpx)
+    - [GeoJSON](#geojson)
+    - [Keyhole Markup Language (KML)](#keyhole-markup-language-kml)
+    - [Well-Known Binary (WKB)](#well-known-binary-wkb)
+    - [Well-Known Text (WKT)](#well-known-text-wkt)
+  - [Formatters](#formatters)
+* [Extending Things](#extending-things)
+* [Versioning](#versioning)
 
 
 Installation
@@ -85,12 +63,12 @@ Usage
 
 [Geocoder](https://github.com/geocoder-php/Geocoder) and its companion
 [Geocoder Extra](https://github.com/geocoder-php/geocoder-extra) provides a lot
-of providers.
+of [providers](#providers).
 
 Choose the one that fits your need first. Let's say the `GoogleMaps` one is what
 you were looking for, so let's see how to use it. In the code snippet below,
-`curl` has been choosen as HTTP layer but it is up to you since each HTTP-based
-provider implements
+`curl` has been choosen as [HTTP layer](#http-adapters) but it is up to you
+since each HTTP-based provider implements
 [PSR-7](https://github.com/php-fig/fig-standards/blob/master/proposed/http-message.md).
 
 ```php
@@ -148,91 +126,6 @@ The `AddressCollection` exposes the following methods:
 * `get($index)` fetches an `Address` using its `$index`;
 * `all()` returns all `Address` objects;
 * `getIterator()` (this class implements `IteratorAggregate`).
-
-### Locale Aware Providers
-
-Providers that are _locale aware_ expose the following methods:
-
-```php
-$geocoder->setLocale('xyz');
-
-$locale = $geocoder->getLocale();
-```
-
-### GoogleMaps
-
-Locale and/or region can be specified:
-
-```php
-$geocoder = new \Geocoder\Provider\GoogleMaps(
-    $httpAdapter,
-    $locale,
-    $region,
-    $useSsl // true|false
-);
-```
-
-### GoogleMapsBusiness
-
-A valid `Client ID` is required. The private key is optional. This provider also
-supports SSL, and extends the `GoogleMaps` provider.
-
-### Nominatim
-
-Access to a Nominatim server is required. See the [Nominatim Wiki
-Page](http://wiki.openstreetmap.org/wiki/Nominatim) for more information.
-
-### Yandex
-
-The default language-locale is `ru-RU`, you can choose between `uk-UA`, `be-BY`,
-`en-US`, `en-BR` and `tr-TR`. This provider can also reverse information based
-on coordinates (latitude, longitude). It's possible to precise the toponym to
-get more accurate result for reverse geocoding: `house`, `street`, `metro`,
-`district` and `locality`.
-
-### MaxMindBinary
-
-This provider requires a data file, and the
-[geoip/geoip](https://packagist.org/packages/geoip/geoip) package must be
-installed.
-
-It is worth mentioning that this provider has **serious performance issues**,
-and should **not** be used in production. For more information, please read
-[issue #301](https://github.com/geocoder-php/Geocoder/issues/301).
-
-### GeoIP2
-
-It requires either the [database
-file](http://dev.maxmind.com/geoip/geoip2/geolite2/), or the
-[webservice](http://dev.maxmind.com/geoip/geoip2/web-services/) - represented by
-the GeoIP2 , which is injected to the `GeoIP2Adapter`. The
-[geoip2/geoip2](https://packagist.org/packages/geoip2/geoip2) package must be
-installed.
-
-This provider will only work with the corresponding `GeoIP2Adapter`:
-
-``` php
-<?php
-
-// Maxmind GeoIP2 Provider: e.g. the database reader
-$reader   = new \GeoIp2\Database\Reader('/path/to/database');
-
-$adapter  = new \Geocoder\Adapter\GeoIP2Adapter($reader);
-$geocoder = new \Geocoder\Provider\GeoIP2($adapter);
-
-$address   = $geocoder->geocode('74.200.247.59')->first();
-```
-
-### TomTom
-
-The default langage-locale is `en`, you can choose between `de`, `es`, `fr`,
-`it`, `nl`, `pl`, `pt` and `sv`.
-
-### ArcGISOnline
-
-It is possible to specify a `sourceCountry` to restrict result to this specific
-country thus reducing request time (note that this doesn't work on reverse
-geocoding).
 
 ### The ProviderAggregator
 
@@ -298,7 +191,169 @@ The `limit()` method allows you to configure the maximum number of results being
 returned. Depending on the provider you may not get as many results as expected,
 it is a maximum limit, not the expected number of results.
 
-### The Chain Provider
+### TimedGeocoder
+
+The `TimedGeocoder` class profiles each `geocode` and `reverse` call. So you can
+easily figure out how many time/memory was spent for each geocoder/reverse call.
+
+```php
+// configure you geocoder object
+
+$stopwatch = new \Symfony\Component\Stopwatch\Stopwatch();
+$geocoder = new \Geocoder\TimedGeocoder($geocoder, $stopwatch);
+
+$geocoder->geocode('Paris, France');
+
+// Now you can debug your application
+```
+
+We use the [symfony/stopwatch](http://symfony.com/doc/current/components/stopwatch.html)
+component under the hood. Which means, if you use the Symfony framework the
+geocoder calls will appear in your timeline section in the Web Profiler.
+
+### HTTP Adapters
+
+In order to talk to geocoding APIs, you need HTTP adapters. While it was part of
+the library in Geocoder 1.x and 2.x, Geocoder 3.x and upper now relies on the
+[PSR-7
+Standard](https://github.com/php-fig/fig-standards/blob/master/proposed/http-message.md)
+which defines how HTTP message should be implemented. Choose any library that
+follows this PSR and implement the specified interfaces to use with Geocoder.
+
+As making choices is rather hard, Geocoder ships with the
+[egeloen/http-adapter](https://github.com/egeloen/ivory-http-adapter) library by
+default, but it is up to you to choose a different implementation.
+
+**Note:** not all providers are HTTP-based.
+
+### Providers
+
+Providers perform the geocoding black magic for you (talking to the APIs,
+fetching results, dealing with errors, etc.) an are highly configurable.
+
+#### Address-based Providers
+
+Provider       | Name | Reverse? | SSL? | Coverage | Multiple? | Terms
+:------------- |:---- |:-------- |:---- |:-------- |:--------- |:-----
+[ArcGIS Online](https://developers.arcgis.com/en/features/geocoding/) | `arcgis_online` | yes | supported | worldwide | yes | requires API key. 1250 requests free
+[Bing Maps](http://msdn.microsoft.com/en-us/library/ff701713.aspx) | `bing_maps` | yes | no | worldwide | yes | requires API key. Limit 10,000 requests per month
+Chain | `chain` | | | | | meta provider which iterates over a list of providers
+[Geonames](http://www.geonames.org/commercial-webservices.html) | `geonames` | yes |no | worldwide | yes | requires registration, no free tier
+[Google Maps](https://developers.google.com/maps/documentation/geocoding/) | `google_maps` | yes | supported | worldwide | yes | requires API key. Limit 2500 requests per day
+[Google Maps for Business](https://developers.google.com/maps/documentation/business/) | `google_maps_business` | yes | supported | worldwide | yes | requires API key. Limit 100,000 requests per day
+[MapQuest](http://developer.mapquest.com/web/products/dev-services/geocoding-ws) | `map_quest` | yes | no | worldwide | yes | both open and [commercial service](http://platform.mapquest.com/geocoding/) require API key
+[Nominatim](http://wiki.openstreetmap.org/wiki/Nominatim) | `nominatim` | yes | supported | worldwide | yes | requires a domain name (e.g. local installation)
+[OpenCage](http://geocoder.opencagedata.com/) | `opencage` | yes | supported | worldwide | yes | requires API key. 2500 requests/day free
+[OpenStreetMap](http://wiki.openstreetmap.org/wiki/Nominatim) | `openstreetmap` | yes | no | worldwide | yes | heavy users (>1q/s) get banned
+[TomTom](https://geocoder.tomtom.com/app/view/index) | `tomtom` | yes | required | worldwide | yes | requires API key. First 2500 requests or 30 days free
+[Yandex](http://api.yandex.com/maps/) | `yandex` | yes | no | worldwide | yes
+
+Below, you will find more information for these providers.
+
+##### ArcGISOnline
+
+It is possible to specify a `sourceCountry` to restrict result to this specific
+country thus reducing request time (note that this doesn't work on reverse
+geocoding).
+
+##### GeoIP2
+
+It requires either the [database
+file](http://dev.maxmind.com/geoip/geoip2/geolite2/), or the
+[webservice](http://dev.maxmind.com/geoip/geoip2/web-services/) - represented by
+the GeoIP2 , which is injected to the `GeoIP2Adapter`. The
+[geoip2/geoip2](https://packagist.org/packages/geoip2/geoip2) package must be
+installed.
+
+This provider will only work with the corresponding `GeoIP2Adapter`:
+
+``` php
+<?php
+
+// Maxmind GeoIP2 Provider: e.g. the database reader
+$reader   = new \GeoIp2\Database\Reader('/path/to/database');
+
+$adapter  = new \Geocoder\Adapter\GeoIP2Adapter($reader);
+$geocoder = new \Geocoder\Provider\GeoIP2($adapter);
+
+$address   = $geocoder->geocode('74.200.247.59')->first();
+```
+
+##### GoogleMaps
+
+Locale and/or region can be specified:
+
+```php
+$geocoder = new \Geocoder\Provider\GoogleMaps(
+    $httpAdapter,
+    $locale,
+    $region,
+    $useSsl // true|false
+);
+```
+
+##### GoogleMapsBusiness
+
+A valid `Client ID` is required. The private key is optional. This provider also
+supports SSL, and extends the `GoogleMaps` provider.
+
+##### MaxMindBinary
+
+This provider requires a data file, and the
+[geoip/geoip](https://packagist.org/packages/geoip/geoip) package must be
+installed.
+
+It is worth mentioning that this provider has **serious performance issues**,
+and should **not** be used in production. For more information, please read
+[issue #301](https://github.com/geocoder-php/Geocoder/issues/301).
+
+##### Nominatim
+
+Access to a Nominatim server is required. See the [Nominatim Wiki
+Page](http://wiki.openstreetmap.org/wiki/Nominatim) for more information.
+
+##### TomTom
+
+The default langage-locale is `en`, you can choose between `de`, `es`, `fr`,
+`it`, `nl`, `pl`, `pt` and `sv`.
+
+##### Yandex
+
+The default language-locale is `ru-RU`, you can choose between `uk-UA`, `be-BY`,
+`en-US`, `en-BR` and `tr-TR`. This provider can also reverse information based
+on coordinates (latitude, longitude). It's possible to precise the toponym to
+get more accurate result for reverse geocoding: `house`, `street`, `metro`,
+`district` and `locality`.
+
+#### IP-based Providers
+
+Provider  | Name | IPv4? | IPv6? | Multiple? | Terms | Notes
+:-------- |:---- |:----- |:----- |:--------- |:----- |:-----
+[FreeGeoIp](http://freegeoip.net/) | `free_geo_ip` | yes | yes | no
+[GeoIPs](http://www.geoips.com/en/) | `geo_ips` | yes | no | no | requires API key
+[GeoIP2](https://www.maxmind.com/en/geoip2-databases) (Maxmind) | `maxmind_geoip2` | yes | yes | no
+[GeoPlugin](http://www.geoplugin.com/) | `geo_plugin` | yes | yes | no
+[HostIp](http://www.hostip.info/use.html) | `host_ip` | yes | no | no
+[IpInfoDB](http://ipinfodb.com/) | `ip_info_db` | yes | no | no | requires API key | city precision
+Geoip | `geoip` | yes | no | no | | wrapper around the [PHP extension](http://php.net/manual/en/book.geoip.php) which must be installed
+[MaxMind](https://www.maxmind.com/) web service | `maxmind` | yes | yes | no | requires Omni API key | City/ISP/Org and Omni services, IPv6 on country level
+MaxMind Binary file | `maxmind_binary` | yes | no | no | needs locally installed database files
+
+**Important:** the [Geocoder
+Extra](https://github.com/geocoder-php/geocoder-extra) library contains even
+more official providers!
+
+#### Locale Aware Providers
+
+Providers that are _locale aware_ expose the following methods:
+
+```php
+$geocoder->setLocale('xyz');
+
+$locale = $geocoder->getLocale();
+```
+
+#### The Chain Provider
 
 The `Chain` provider is a special provider that takes a list of providers and
 iterates over this list to get information. Note that it **stops** its iteration
@@ -329,34 +384,12 @@ try {
 
 Everything is ok, enjoy!
 
-### TimedGeocoder
+### Dumpers
 
-We introduced a new feature as of Geocoder v3.0.0. The `TimedGeocoder` class
-profiles each `geocode` and `reverse` call. So you can easily figure out how
-many time/memory was spent for each geocoder/reverse call.
+**Geocoder** provides dumpers that aim to transform an `Address` object in
+standard formats.
 
-```php
-// configure you geocoder object
-
-$stopwatch = new \Symfony\Component\Stopwatch\Stopwatch();
-$geocoder = new \Geocoder\TimedGeocoder($geocoder, $stopwatch);
-
-$geocoder->geocode('Paris, France');
-
-// Now you can debug your application
-```
-
-We use the [symfony/stopwatch](http://symfony.com/doc/current/components/stopwatch.html)
-component under the hood. Which means, if you use the Symfony framework the
-geocoder calls will appear in your timeline section in the Web Profiler.
-
-
-Dumpers
--------
-
-**Geocoder** provides dumpers that aim to transform an `Address` object in standard formats.
-
-### GPS eXchange Format (GPX) ###
+#### GPS eXchange Format (GPX)
 
 The **GPS eXchange** format is designed to share geolocated data like point of
 interests, tracks, ways, but also coordinates. **Geocoder** provides a dumper to
@@ -390,34 +423,31 @@ It will display:
 </gpx>
 ```
 
-### GeoJSON ###
+#### GeoJSON
 
 [GeoJSON](http://geojson.org/) is a format for encoding a variety of geographic
 data structures.
 
-
-### Keyhole Markup Language (KML) ###
+#### Keyhole Markup Language (KML)
 
 [Keyhole Markup Language](http://en.wikipedia.org/wiki/Keyhole_Markup_Language)
 is an XML notation for expressing geographic annotation and visualization within
 Internet-based, two-dimensional maps and three-dimensional Earth browsers.
 
 
-### Well-Known Binary (WKB) ###
+#### Well-Known Binary (WKB)
 
 The Well-Known Binary (WKB) representation for geometric values is defined by
 the OpenGIS specification.
 
 
-### Well-Known Text (WKT) ###
+#### Well-Known Text (WKT)
 
 Well-known text (WKT) is a text markup language for representing vector geometry
 objects on a map, spatial reference systems of spatial objects and
 transformations between spatial reference systems.
 
-
-Formatters
-----------
+### Formatters
 
 A common use case is to print geocoded data. Thanks to the `StringFormatter`
 class, it's simple to format an `Address` object as a string:

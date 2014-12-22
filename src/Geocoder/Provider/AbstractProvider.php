@@ -101,7 +101,7 @@ abstract class AbstractProvider
     /**
      * @param array $data An array of data.
      *
-     * @return \Geocoder\Model\Address[]
+     * @return \Geocoder\Model\AddressCollection
      */
     protected function returnResults(array $data = [])
     {
