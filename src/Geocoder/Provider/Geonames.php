@@ -13,6 +13,7 @@ namespace Geocoder\Provider;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Provider\LocaleTrait;
 use Ivory\HttpAdapter\HttpAdapterInterface;
 
 /**
@@ -30,15 +31,12 @@ class Geonames extends AbstractHttpProvider implements LocaleAwareProvider
      */
     const REVERSE_ENDPOINT_URL = 'http://api.geonames.org/findNearbyPlaceNameJSON?lat=%F&lng=%F&style=full&maxRows=%d&username=%s';
 
-    /**
-     * @var string
-     */
-    private $username;
+    use LocaleTrait;
 
     /**
      * @var string
      */
-    private $locale;
+    private $username;
 
     /**
      * @param HttpAdapterInterface $adapter  An HTTP adapter
@@ -92,24 +90,6 @@ class Geonames extends AbstractHttpProvider implements LocaleAwareProvider
     public function getName()
     {
         return 'geonames';
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getLocale()
-    {
-        return $this->locale;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setLocale($locale)
-    {
-        $this->locale = $locale;
-
-        return $this;
     }
 
     /**

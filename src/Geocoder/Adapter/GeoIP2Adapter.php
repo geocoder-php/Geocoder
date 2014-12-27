@@ -13,6 +13,7 @@ namespace Geocoder\Adapter;
 use GeoIp2\ProviderInterface;
 use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Provider\LocaleTrait;
 
 /**
  * @author Jens Wiese <jens@howtrueisfalse.de>
@@ -25,6 +26,8 @@ class GeoIP2Adapter
     const GEOIP2_MODEL_CITY    = 'city';
     const GEOIP2_MODEL_COUNTRY = 'country';
 
+    use LocaleTrait;
+
     /**
      * @var ProviderInterface
      */
@@ -34,11 +37,6 @@ class GeoIP2Adapter
      * @var string
      */
     protected $geoIP2Model;
-
-    /**
-     * @var string
-     */
-    protected $locale;
 
     /**
      * @param \GeoIp2\ProviderInterface $geoIpProvider
@@ -55,25 +53,6 @@ class GeoIP2Adapter
         }
 
         $this->geoIP2Model = $geoIP2Model;
-    }
-
-    /**
-     * @param  string        $locale
-     * @return GeoIP2Adapter
-     */
-    public function setLocale($locale)
-    {
-        $this->locale = $locale;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getLocale()
-    {
-        return $this->locale;
     }
 
     /**

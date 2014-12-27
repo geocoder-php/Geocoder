@@ -14,21 +14,19 @@ use GeoIp2\Exception\AddressNotFoundException;
 use Geocoder\Adapter\GeoIP2Adapter;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Provider\LocaleTrait;
 
 /**
  * @author Jens Wiese <jens@howtrueisfalse.de>
  */
 class GeoIP2 extends AbstractProvider implements LocaleAwareProvider
 {
+    use LocaleTrait;
+
     /**
      * @var GeoIP2Adapter
      */
     private $adapter;
-
-    /**
-     * @var string
-     */
-    private $locale;
 
     public function __construct(GeoIP2Adapter $adapter, $locale = 'en')
     {
@@ -92,24 +90,6 @@ class GeoIP2 extends AbstractProvider implements LocaleAwareProvider
     public function getName()
     {
         return 'geoip2';
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getLocale()
-    {
-        return $this->locale;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setLocale($locale)
-    {
-        $this->locale = $locale;
-
-        return $this;
     }
 
     /**

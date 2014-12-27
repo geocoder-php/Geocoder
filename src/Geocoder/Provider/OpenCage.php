@@ -13,6 +13,7 @@ namespace Geocoder\Provider;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Provider\LocaleTrait;
 use Ivory\HttpAdapter\HttpAdapterInterface;
 
 /**
@@ -25,6 +26,8 @@ class OpenCage extends AbstractHttpProvider implements LocaleAwareProvider
      */
     const GEOCODE_ENDPOINT_URL = '%s://api.opencagedata.com/geocode/v1/json?key=%s&query=%s&limit=%d&pretty=1';
 
+    use LocaleTrait;
+
     /**
      * @var string
      */
@@ -34,11 +37,6 @@ class OpenCage extends AbstractHttpProvider implements LocaleAwareProvider
      * @var string
      */
     private $apiKey;
-
-    /**
-     * @var string
-     */
-    private $locale;
 
     /**
      * @param HttpAdapterInterface $adapter An HTTP adapter.
@@ -82,24 +80,6 @@ class OpenCage extends AbstractHttpProvider implements LocaleAwareProvider
         $address = sprintf("%f, %f", $latitude, $longitude);
 
         return $this->geocode($address);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getLocale()
-    {
-        return $this->locale;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setLocale($locale)
-    {
-        $this->locale = $locale;
-
-        return $this;
     }
 
     /**

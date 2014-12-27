@@ -12,6 +12,7 @@ namespace Geocoder\Provider;
 
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Provider\LocaleTrait;
 use Ivory\HttpAdapter\HttpAdapterInterface;
 
 /**
@@ -19,15 +20,12 @@ use Ivory\HttpAdapter\HttpAdapterInterface;
  */
 class Nominatim extends AbstractHttpProvider implements LocaleAwareProvider
 {
-    /**
-     * @var string
-     */
-    private $rootUrl;
+    use LocaleTrait;
 
     /**
      * @var string
      */
-    private $locale;
+    private $rootUrl;
 
     /**
      * @param HttpAdapterInterface $adapter An HTTP adapter.
@@ -145,24 +143,6 @@ class Nominatim extends AbstractHttpProvider implements LocaleAwareProvider
     public function getName()
     {
         return 'nominatim';
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getLocale()
-    {
-        return $this->locale;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setLocale($locale)
-    {
-        $this->locale = $locale;
-
-        return $this;
     }
 
     /**
