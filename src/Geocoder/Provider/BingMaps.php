@@ -13,6 +13,7 @@ namespace Geocoder\Provider;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Provider\LocaleTrait;
 use Ivory\HttpAdapter\HttpAdapterInterface;
 
 /**
@@ -20,6 +21,8 @@ use Ivory\HttpAdapter\HttpAdapterInterface;
  */
 class BingMaps extends AbstractHttpProvider implements LocaleAwareProvider
 {
+    use LocaleTrait;
+
     /**
      * @var string
      */
@@ -34,11 +37,6 @@ class BingMaps extends AbstractHttpProvider implements LocaleAwareProvider
      * @var string
      */
     private $apiKey;
-
-    /**
-     * @var string
-     */
-    private $locale;
 
     /**
      * @param HttpAdapterInterface $adapter An HTTP adapter
@@ -92,24 +90,6 @@ class BingMaps extends AbstractHttpProvider implements LocaleAwareProvider
     public function getName()
     {
         return 'bing_maps';
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getLocale()
-    {
-        return $this->locale;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setLocale($locale)
-    {
-        $this->locale = $locale;
-
-        return $this;
     }
 
     /**

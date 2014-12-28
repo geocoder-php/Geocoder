@@ -7,6 +7,7 @@ use Geocoder\Model\Address;
 use Geocoder\Model\AddressFactory;
 use Geocoder\Provider\LocaleAwareProvider;
 use Geocoder\Provider\Provider;
+use Geocoder\Provider\LocaleTrait;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -189,19 +190,7 @@ class MockProvider implements Provider
 
 class MockLocaleAwareProvider extends MockProvider implements LocaleAwareProvider
 {
-    protected $locale;
-
-    public function getLocale()
-    {
-        return $this->locale;
-    }
-
-    public function setLocale($locale)
-    {
-        $this->locale = $locale;
-
-        return $this;
-    }
+    use LocaleTrait;
 }
 
 class MockProviderWithData extends MockProvider

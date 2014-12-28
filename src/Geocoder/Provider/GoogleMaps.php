@@ -14,6 +14,7 @@ use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\QuotaExceeded;
 use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Provider\LocaleTrait;
 use Ivory\HttpAdapter\HttpAdapterInterface;
 
 /**
@@ -31,10 +32,7 @@ class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvider
      */
     const ENDPOINT_URL_SSL = 'https://maps.googleapis.com/maps/api/geocode/json?address=%s';
 
-    /**
-     * @var string
-     */
-    private $locale;
+    use LocaleTrait;
 
     /**
      * @var string
@@ -101,24 +99,6 @@ class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvider
     public function getName()
     {
         return 'google_maps';
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getLocale()
-    {
-        return $this->locale;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setLocale($locale)
-    {
-        $this->locale = $locale;
-
-        return $this;
     }
 
     public function setRegion($region)
