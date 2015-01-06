@@ -139,7 +139,7 @@ class MaxMindProvider extends AbstractProvider implements ProviderInterface
             $data['country'] = $this->countryCodeToCountryName($data['countryCode']);
         }
 
-        return array(array_merge($this->getDefaults(), $data));
+        return array($this->fixEncoding(array_merge($this->getDefaults(), $data)));
     }
 
     /**

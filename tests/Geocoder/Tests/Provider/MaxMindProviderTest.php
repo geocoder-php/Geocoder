@@ -369,6 +369,38 @@ class MaxMindProviderTest extends TestCase
         $this->assertEquals('America/Chicago', $result['timezone']);
     }
 
+    public function testGeocodeOmniServiceWithRealIPv4WithSslAndEncoding()
+    {
+        if (!isset($_SERVER['MAXMIND_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the MAXMIND_API_KEY value in phpunit.xml');
+        }
+
+        $provider = new MaxMindProvider($this->getAdapter(), $_SERVER['MAXMIND_API_KEY'],
+            MaxMindProvider::OMNI_SERVICE, true);
+        $result   = $provider->getGeocodedData('189.26.128.80');
+
+        $this->assertInternalType('array', $result);
+        $this->assertCount(1, $result);
+
+        $result = $result[0];
+        $this->assertInternalType('array', $result);
+        $this->assertEquals(-27.5833, $result['latitude'], '', 0.1);
+        $this->assertEquals(-48.5666, $result['longitude'], '', 0.1);
+        $this->assertEquals('Florianópolis', $result['city']);
+        $this->assertNull($result['zipcode']);
+        $this->assertEquals('26', $result['regionCode']);
+        $this->assertEquals('Brazil', $result['country']);
+        $this->assertEquals('BR', $result['countryCode']);
+        $this->assertNull($result['bounds']);
+        $this->assertNull($result['streetNumber']);
+        $this->assertNull($result['streetName']);
+        $this->assertNull($result['cityDistrict']);
+        $this->assertNull($result['county']);
+        $this->assertNull($result['countyCode']);
+        $this->assertEquals('Santa Catarina', $result['region']);
+        $this->assertEquals('America/Sao_Paulo', $result['timezone']);
+    }
+
     public function testGetGeocodedDataWithRealIPv6()
     {
         if (!isset($_SERVER['MAXMIND_API_KEY'])) {
