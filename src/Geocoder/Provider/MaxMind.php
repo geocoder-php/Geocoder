@@ -147,7 +147,7 @@ class MaxMind extends AbstractHttpProvider implements Provider
         }
 
         return $this->returnResults([
-            array_merge($this->getDefaults(), $data)
+            $this->fixEncoding(array_merge($this->getDefaults(), $data))
         ]);
     }
 
