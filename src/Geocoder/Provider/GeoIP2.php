@@ -14,7 +14,6 @@ use GeoIp2\Exception\AddressNotFoundException;
 use Geocoder\Adapter\GeoIP2Adapter;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
-use Geocoder\Provider\LocaleTrait;
 
 /**
  * @author Jens Wiese <jens@howtrueisfalse.de>
