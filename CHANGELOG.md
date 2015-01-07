@@ -51,6 +51,10 @@ CHANGELOG
 
 ## 2.x
 
+### 2.8.2 (2015-01-07)
+
+* Fixed: encoding issue for `maxmind` provider
+
 ### 2.8.1 (2014-12-08)
 
 * Fixed: freegeoip `zip_code` property because of an API change
