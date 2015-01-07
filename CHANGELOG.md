@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+### 2.8.3 (????-??-??)
+
+n/a
+
 ### 2.8.2 (2015-01-07
 
 * Fixed: encoding issue for `maxmind` provider
