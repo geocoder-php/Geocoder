@@ -50,14 +50,17 @@ class GeoIP2 extends AbstractProvider implements LocaleAwareProvider
 
         $result = json_decode($this->executeQuery($address));
 
-        //Try to extract the region name and code
-        $region     = null;
-        $regionCode = null;
-        if (isset($result->subdivisions) && is_array($result->subdivisions) && !empty($result->subdivisions)) {
-            $lastSubdivision = array_pop($result->subdivisions);
+        $adminLevels = [];
 
-            $region     = (isset($lastSubdivision->names->{$this->locale}) ? $lastSubdivision->names->{$this->locale} : null);
-            $regionCode = (isset($lastSubdivision->iso_code) ? $lastSubdivision->iso_code : null);
+        if (isset($result->subdivisions) && is_array($result->subdivisions)) {
+            foreach ($result->subdivisions as $i => $subdivision) {
+                $name = (isset($subdivision->names->{$this->locale}) ? $subdivision->names->{$this->locale} : null);
+                $code = (isset($subdivision->iso_code) ? $subdivision->iso_code : null);
+
+                if (null !== $name || null !== $code) {
+                    $adminLevels[] = ['name' => $name, 'code' => $code, 'level' => $i + 1];
+                }
+            }
         }
 
         return $this->returnResults([
@@ -69,8 +72,7 @@ class GeoIP2 extends AbstractProvider implements LocaleAwareProvider
                 'longitude'   => (isset($result->location->longitude) ? $result->location->longitude : null),
                 'timezone'    => (isset($result->location->time_zone) ? $result->location->time_zone : null),
                 'postalCode'  => (isset($result->location->postal_code) ? $result->location->postal_code : null),
-                'region'      => $region,
-                'regionCode'  => $regionCode
+                'adminLevels' => $adminLevels,
             )))
         ]);
     }

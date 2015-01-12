@@ -21,8 +21,6 @@ class AbstractProviderTest extends TestCase
 
         $this->assertEquals(4, count($result));
         $this->assertEquals('localhost', $result['locality']);
-        $this->assertEquals('localhost', $result['region']);
-        $this->assertEquals('localhost', $result['county']);
         $this->assertEquals('localhost', $result['country']);
     }
 }

@@ -150,7 +150,7 @@ class TomTom extends AbstractHttpProvider implements LocaleAwareProvider
             'longitude'   => isset($data->longitude) ? (double) $data->longitude : null,
             'streetName'  => isset($data->street) ? (string) $data->street : null,
             'locality'    => isset($data->city) ? (string) $data->city : null,
-            'region'      => isset($data->state) ? (string) $data->state : null,
+            'adminLevels' => isset($data->state) ? [['name' => (string) $data->state, 'level' => 1]] : [],
             'country'     => isset($data->country) ? (string) $data->country : null,
             'countryCode' => isset($data->countryISO3) ? (string) $data->countryISO3 : null,
         ));

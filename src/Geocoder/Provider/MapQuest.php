@@ -141,15 +141,24 @@ class MapQuest extends AbstractHttpProvider implements Provider
         $results = [];
         foreach ($locations as $location) {
             if ($location['street'] || $location['postalCode'] || $location['adminArea5'] || $location['adminArea4'] || $location['adminArea3'] || $location['adminArea1']) {
+                $admins = [];
+
+                if ($location['adminArea3']) {
+                    $admins[] = ['name' => $location['adminArea3'], 'level' => 1];
+                }
+
+                if ($location['adminArea4']) {
+                    $admins[] = ['name' => $location['adminArea4'], 'level' => 2];
+                }
+
                 $results[] = array_merge($this->getDefaults(), array(
-                    'latitude'   => $location['latLng']['lat'],
-                    'longitude'  => $location['latLng']['lng'],
-                    'streetName' => $location['street'] ?: null,
-                    'locality'   => $location['adminArea5'] ?: null,
-                    'postalCode' => $location['postalCode'] ?: null,
-                    'county'     => $location['adminArea4'] ?: null,
-                    'region'     => $location['adminArea3'] ?: null,
-                    'country'    => $location['adminArea1'] ?: null,
+                    'latitude'    => $location['latLng']['lat'],
+                    'longitude'   => $location['latLng']['lng'],
+                    'streetName'  => $location['street'] ?: null,
+                    'locality'    => $location['adminArea5'] ?: null,
+                    'postalCode'  => $location['postalCode'] ?: null,
+                    'adminLevels' => $admins,
+                    'country'     => $location['adminArea1'] ?: null,
                 ));
             }
         }

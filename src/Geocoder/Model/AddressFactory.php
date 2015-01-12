@@ -24,6 +24,15 @@ final class AddressFactory
     {
         $addresses = [];
         foreach ($results as $result) {
+            $adminLevels = [];
+            foreach ($this->readArrayValue($result, 'adminLevels') as $adminLevel) {
+                $adminLevels[] = new AdminLevel(
+                    intval($this->readStringValue($adminLevel, 'level')),
+                    $this->readStringValue($adminLevel, 'name'),
+                    $this->readStringValue($adminLevel, 'code')
+                );
+            }
+
             $addresses[] = new Address(
                 $this->createCoordinates(
                     $this->readDoubleValue($result, 'latitude'),
@@ -40,14 +49,7 @@ final class AddressFactory
                 $this->readStringValue($result, 'postalCode'),
                 $this->readStringValue($result, 'locality'),
                 $this->readStringValue($result, 'subLocality'),
-                new County(
-                    $this->readStringValue($result, 'county'),
-                    $this->upperize(\igorw\get_in($result, ['countyCode']))
-                ),
-                new Region(
-                    $this->readStringValue($result, 'region'),
-                    $this->upperize(\igorw\get_in($result, ['regionCode']))
-                ),
+                new AdminLevelCollection($adminLevels),
                 new Country(
                     $this->readStringValue($result, 'country'),
                     $this->upperize(\igorw\get_in($result, ['countryCode']))
@@ -77,6 +79,16 @@ final class AddressFactory
     private function readStringValue(array $data, $key)
     {
         return $this->valueOrNull(\igorw\get_in($data, [ $key ]));
+    }
+
+    /**
+     * @param  array  $data
+     * @param  string $key
+     * @return array
+     */
+    private function readArrayValue(array $data, $key)
+    {
+        return \igorw\get_in($data, [ $key ]) ?: [];
     }
 
     /**

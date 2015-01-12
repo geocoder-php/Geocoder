@@ -86,10 +86,9 @@ class IpInfoDbTest extends TestCase
         $this->assertNull($result->getLongitude());
         $this->assertNull($result->getPostalCode());
         $this->assertNull($result->getTimezone());
+        $this->assertEmpty($result->getAdminLevels());
 
         $this->assertEquals('localhost', $result->getLocality());
-        $this->assertEquals('localhost', $result->getCounty()->getName());
-        $this->assertEquals('localhost', $result->getRegion()->getName());
         $this->assertEquals('localhost', $result->getCountry()->getName());
     }
 
@@ -141,9 +140,10 @@ class IpInfoDbTest extends TestCase
         $this->assertEquals(37.406, $result->getLatitude(), '', 0.001);
         $this->assertEquals(-122.079, $result->getLongitude(), '', 0.001);
         $this->assertEquals(94043, $result->getPostalCode());
-        $this->assertEquals('MOUNTAIN VIEW', $result->getLocality());
-        $this->assertEquals('CALIFORNIA', $result->getRegion()->getName());
-        $this->assertEquals('UNITED STATES', $result->getCountry()->getName());
+        $this->assertEquals('Mountain View', $result->getLocality());
+        $this->assertCount(1, $result->getAdminLevels());
+        $this->assertEquals('California', $result->getAdminLevels()->get(1)->getName());
+        $this->assertEquals('United States', $result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
         $this->assertEquals('America/Los_Angeles', $result->getTimezone());
     }
@@ -184,8 +184,8 @@ class IpInfoDbTest extends TestCase
         $this->assertNull($result->getLongitude());
         $this->assertNull($result->getPostalCode());
         $this->assertNull($result->getLocality());
-        $this->assertNull($result->getRegion()->getName());
-        $this->assertEquals('UNITED STATES', $result->getCountry()->getName());
+        $this->assertEmpty($result->getAdminLevels());
+        $this->assertEquals('United States', $result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
         $this->assertNull($result->getTimezone());
     }

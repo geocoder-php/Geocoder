@@ -132,9 +132,15 @@ class BingMaps extends AbstractHttpProvider implements LocaleAwareProvider
             $streetName   = property_exists($item->address, 'addressLine') ? (string) $item->address->addressLine : '';
             $zipcode      = property_exists($item->address, 'postalCode') ? (string) $item->address->postalCode : '';
             $city         = property_exists($item->address, 'locality') ? (string) $item->address->locality: '';
-            $county       = property_exists($item->address, 'adminDistrict2') ? (string) $item->address->adminDistrict2 : '';
-            $region       = property_exists($item->address, 'adminDistrict') ? (string) $item->address->adminDistrict: '';
             $country      = property_exists($item->address, 'countryRegion') ? (string) $item->address->countryRegion: '';
+
+            $adminLevels = [];
+
+            foreach (['adminDistrict', 'adminDistrict2'] as $i => $property) {
+                if (property_exists($item->address, $property)) {
+                    $adminLevels[] = ['name' => $item->address->{$property}, 'level' => $i + 1];
+                }
+            }
 
             $results[] = array_merge($this->getDefaults(), [
                 'latitude'     => $coordinates[0],
@@ -144,8 +150,7 @@ class BingMaps extends AbstractHttpProvider implements LocaleAwareProvider
                 'streetName'   => $streetName,
                 'locality'     => empty($city) ? null : $city,
                 'postalCode'   => empty($zipcode) ? null : $zipcode,
-                'county'       => empty($county) ? null : $county,
-                'region'       => empty($region) ? null : $region,
+                'adminLevels'  => $adminLevels,
                 'country'      => empty($country) ? null : $country,
             ]);
         }

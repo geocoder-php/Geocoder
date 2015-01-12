@@ -130,8 +130,8 @@ class GoogleMapsTest extends TestCase
         $this->assertEquals('Avenue Gambetta', $result->getStreetName());
         $this->assertEquals(75020, $result->getPostalCode());
         $this->assertEquals('Paris', $result->getLocality());
-        $this->assertEquals('Paris', $result->getCounty()->getName());
-        $this->assertEquals('Île-de-France', $result->getRegion()->getName());
+        $this->assertEquals('Paris', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('Île-de-France', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('France', $result->getCountry()->getName());
         $this->assertEquals('FR', $result->getCountry()->getCode());
 
@@ -161,8 +161,9 @@ class GoogleMapsTest extends TestCase
         $this->assertEquals('Avenue Gambetta', $result->getStreetName());
         $this->assertEquals(75020, $result->getPostalCode());
         $this->assertEquals('Paris', $result->getLocality());
-        $this->assertEquals('Paris', $result->getCounty()->getName());
-        $this->assertEquals('Île-de-France', $result->getRegion()->getName());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('Paris', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('Île-de-France', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('France', $result->getCountry()->getName());
         $this->assertEquals('FR', $result->getCountry()->getCode());
 
@@ -267,8 +268,9 @@ class GoogleMapsTest extends TestCase
         $this->assertEquals('Avenue Gambetta', $result->getStreetName());
         $this->assertEquals(75020, $result->getPostalCode());
         $this->assertEquals('Paris', $result->getLocality());
-        $this->assertEquals('Paris', $result->getCounty()->getName());
-        $this->assertEquals('Île-de-France', $result->getRegion()->getName());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('Paris', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('Île-de-France', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('France', $result->getCountry()->getName());
         $this->assertEquals('FR', $result->getCountry()->getCode());
     }
@@ -328,7 +330,8 @@ class GoogleMapsTest extends TestCase
         $this->assertTrue($result->getBounds()->isDefined());
         $this->assertEquals('New York', $result->getLocality());
         $this->assertEquals('Manhattan', $result->getSubLocality());
-        $this->assertEquals('New York', $result->getRegion()->getName());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('New York', $result->getAdminLevels()->get(1)->getName());
     }
 
     /**

@@ -134,6 +134,12 @@ class Yandex extends AbstractHttpProvider implements LocaleAwareProvider
 
             $coordinates = explode(' ', $details['pos']);
 
+            $adminLevels = [];
+
+            if (isset($details['AdministrativeAreaName'])) {
+                $adminLevels[] = ['name' => $details['AdministrativeAreaName'], 'level' => 1];
+            }
+
             $results[] = array_merge($this->getDefaults(), array(
                 'latitude'     => $coordinates[1],
                 'longitude'    => $coordinates[0],
@@ -142,7 +148,7 @@ class Yandex extends AbstractHttpProvider implements LocaleAwareProvider
                 'streetName'   => isset($details['ThoroughfareName']) ? $details['ThoroughfareName'] : null,
                 'subLocality'  => isset($details['DependentLocalityName']) ? $details['DependentLocalityName'] : null,
                 'locality'     => isset($details['LocalityName']) ? $details['LocalityName'] : null,
-                'region'       => isset($details['AdministrativeAreaName']) ? $details['AdministrativeAreaName'] : null,
+                'adminLevels'  => $adminLevels,
                 'country'      => isset($details['CountryName']) ? $details['CountryName'] : null,
                 'countryCode'  => isset($details['CountryNameCode']) ? $details['CountryNameCode'] : null,
             ));

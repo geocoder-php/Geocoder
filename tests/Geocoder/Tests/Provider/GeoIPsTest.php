@@ -64,8 +64,6 @@ class GeoIPsTest extends TestCase
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals('localhost', $result->getLocality());
-        $this->assertEquals('localhost', $result->getCounty()->getName());
-        $this->assertEquals('localhost', $result->getRegion()->getName());
         $this->assertEquals('localhost', $result->getCountry()->getName());
     }
 
@@ -140,7 +138,7 @@ class GeoIPsTest extends TestCase
         $this->assertNull($result->getLongitude());
         $this->assertNull($result->getPostalCode());
         $this->assertNull($result->getLocality());
-        $this->assertNull($result->getRegion()->getCode());
+        $this->assertEmpty($result->getAdminLevels());
         $this->assertNull($result->getCountry()->getName());
         $this->assertNull($result->getCountry()->getCode());
         $this->assertNull($result->getTimezone());
@@ -184,9 +182,10 @@ class GeoIPsTest extends TestCase
         $this->assertNull($result->getStreetName());
         $this->assertNull($result->getPostalCode());
         $this->assertEquals('PROVO', $result->getLocality());
-        $this->assertEquals('UTAH', $result->getCounty()->getName());
-        $this->assertEquals('UTAH', $result->getRegion()->getName());
-        $this->assertEquals('UT',$result->getRegion()->getCode());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('UTAH', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('UTAH', $result->getAdminLevels()->get(1)->getName());
+        $this->assertEquals('UT',$result->getAdminLevels()->get(1)->getCode());
         $this->assertEquals('UNITED STATES', $result->getCountry()->getName());
         $this->assertEquals('US',$result->getCountry()->getCode());
         $this->assertEquals('MST', $result->getTimezone());
@@ -342,9 +341,10 @@ class GeoIPsTest extends TestCase
         $this->assertNull($result->getStreetName());
         $this->assertNull($result->getPostalCode());
         $this->assertEquals('PROVO', $result->getLocality());
-        $this->assertEquals('UTAH', $result->getCounty()->getName());
-        $this->assertEquals('UTAH', $result->getRegion()->getName());
-        $this->assertEquals('UT',$result->getRegion()->getCode());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('UTAH', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('UTAH', $result->getAdminLevels()->get(1)->getName());
+        $this->assertEquals('UT',$result->getAdminLevels()->get(1)->getCode());
         $this->assertEquals('UNITED STATES', $result->getCountry()->getName());
         $this->assertEquals('US',$result->getCountry()->getCode());
         $this->assertEquals('MST', $result->getTimezone());

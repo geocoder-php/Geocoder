@@ -89,14 +89,15 @@ class ArcGISOnlineTest extends TestCase
         $this->assertEquals('10 Avenue Gambetta, 75020, 20e Arrondissement, Paris, Île-de-France', $result->getStreetName());
         $this->assertEquals(75020, $result->getPostalCode());
         $this->assertEquals('Paris', $result->getLocality());
-        $this->assertEquals('Île-de-France', $result->getRegion()->getName());
-        $this->assertEquals('Paris', $result->getCounty()->getName());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('Île-de-France', $result->getAdminLevels()->get(1)->getName());
+        $this->assertEquals('Paris', $result->getAdminLevels()->get(2)->getName());
         $this->assertEquals('FRA', $result->getCountry()->getCode());
 
         $this->assertFalse($result->getBounds()->isDefined());
         $this->assertNull($result->getSubLocality());
-        $this->assertNull($result->getCounty()->getCode());
-        $this->assertNull($result->getRegion()->getCode());
+        $this->assertNull($result->getAdminLevels()->get(2)->getCode());
+        $this->assertNull($result->getAdminLevels()->get(1)->getCode());
         $this->assertNull($result->getCountry()->getName());
         $this->assertNull($result->getTimezone());
     }
@@ -118,15 +119,16 @@ class ArcGISOnlineTest extends TestCase
         $this->assertEquals('10 Avenue Gambetta, 75020, 20e Arrondissement, Paris, Île-de-France', $result->getStreetName());
         $this->assertEquals(75020, $result->getPostalCode());
         $this->assertEquals('Paris', $result->getLocality());
-        $this->assertEquals('Paris', $result->getCounty()->getName());
-        $this->assertEquals('Île-de-France', $result->getRegion()->getName());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('Paris', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('Île-de-France', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('FRA', $result->getCountry()->getCode());
         $this->assertEquals(10, $result->getStreetNumber());
 
         $this->assertFalse($result->getBounds()->isDefined());
         $this->assertNull($result->getSubLocality());
-        $this->assertNull($result->getCounty()->getCode());
-        $this->assertNull($result->getRegion()->getCode());
+        $this->assertNull($result->getAdminLevels()->get(2)->getCode());
+        $this->assertNull($result->getAdminLevels()->get(1)->getCode());
         $this->assertNull($result->getCountry()->getName());
         $this->assertNull($result->getTimezone());
     }
@@ -188,14 +190,11 @@ class ArcGISOnlineTest extends TestCase
         $this->assertEquals('3 Avenue Gambetta', $result->getStreetName());
         $this->assertEquals(75020, $result->getPostalCode());
         $this->assertEquals('Paris', $result->getLocality());
-        $this->assertNull($result->getCounty()->getName());
-        $this->assertNull($result->getRegion()->getName());
         $this->assertEquals('FRA', $result->getCountry()->getCode());
 
         $this->assertFalse($result->getBounds()->isDefined());
         $this->assertNull($result->getSubLocality());
-        $this->assertNull($result->getCounty()->getCode());
-        $this->assertNull($result->getRegion()->getCode());
+        $this->assertEmpty($result->getAdminLevels());
         $this->assertNull($result->getCountry()->getName());
         $this->assertNull($result->getTimezone());
     }
@@ -217,14 +216,11 @@ class ArcGISOnlineTest extends TestCase
         $this->assertEquals('3 Avenue Gambetta', $result->getStreetName());
         $this->assertEquals(75020, $result->getPostalCode());
         $this->assertEquals('Paris', $result->getLocality());
-        $this->assertNull($result->getCounty()->getName());
-        $this->assertNull($result->getRegion()->getName());
         $this->assertEquals('FRA', $result->getCountry()->getCode());
 
         $this->assertFalse($result->getBounds()->isDefined());
         $this->assertNull($result->getSubLocality());
-        $this->assertNull($result->getCounty()->getCode());
-        $this->assertNull($result->getRegion()->getCode());
+        $this->assertEmpty($result->getAdminLevels());
         $this->assertNull($result->getCountry()->getName());
         $this->assertNull($result->getTimezone());
     }
@@ -246,14 +242,12 @@ class ArcGISOnlineTest extends TestCase
         $this->assertEquals('Hannover, Niedersachsen, Deutschland', $result->getStreetName());
         $this->assertNull($result->getPostalCode());
         $this->assertNull($result->getLocality());
-        $this->assertNull($result->getCounty()->getName());
-        $this->assertEquals('Niedersachsen', $result->getRegion()->getName());
+        $this->assertCount(1, $result->getAdminLevels());
+        $this->assertEquals('Niedersachsen', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('DEU', $result->getCountry()->getCode());
 
         $this->assertFalse($result->getBounds()->isDefined());
         $this->assertNull($result->getSubLocality());
-        $this->assertNull($result->getCounty()->getCode());
-        $this->assertNull($result->getRegion()->getCode());
         $this->assertNull($result->getCountry()->getName());
         $this->assertNull($result->getTimezone());
 
@@ -264,7 +258,8 @@ class ArcGISOnlineTest extends TestCase
         $this->assertEquals(-101.4265391569997, $result->getLongitude(), '', 0.0001);
         $this->assertEquals('Hannover, North Dakota, United States', $result->getStreetName());
         $this->assertNull($result->getLocality());
-        $this->assertEquals('North Dakota', $result->getRegion()->getName());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('North Dakota', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('USA', $result->getCountry()->getCode());
 
         /** @var \Geocoder\Model\Address $result */
@@ -274,7 +269,8 @@ class ArcGISOnlineTest extends TestCase
         $this->assertEquals(-77.440257128999633, $result->getLongitude(), '', 0.0001);
         $this->assertEquals('Hannover, Maryland, United States', $result->getStreetName());
         $this->assertNull($result->getLocality());
-        $this->assertEquals('Maryland', $result->getRegion()->getName());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('Maryland', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('USA', $result->getCountry()->getCode());
 
         /** @var \Geocoder\Model\Address $result */
@@ -284,8 +280,8 @@ class ArcGISOnlineTest extends TestCase
         $this->assertEquals(8.5069383810005, $result->getLongitude(), '', 0.0001);
         $this->assertEquals('Hannöver, Niedersachsen, Deutschland', $result->getStreetName());
         $this->assertNull($result->getLocality());
-        $this->assertEquals('Niedersachsen', $result->getRegion()->getName());
-        $this->assertNull($result->getCounty()->getName());
+        $this->assertCount(1, $result->getAdminLevels());
+        $this->assertEquals('Niedersachsen', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('DEU', $result->getCountry()->getCode());
 
         /** @var \Geocoder\Model\Address $result */
@@ -294,7 +290,8 @@ class ArcGISOnlineTest extends TestCase
         $this->assertEquals(-26.281805980999593, $result->getLatitude(), '', 0.0001);
         $this->assertEquals(-48.849389793999649, $result->getLongitude(), '', 0.0001);
         $this->assertEquals('Hannover', $result->getStreetName());
-        $this->assertEquals('Sul', $result->getRegion()->getName());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('Sul', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('BRA', $result->getCountry()->getCode());
     }
 

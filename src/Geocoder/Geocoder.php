@@ -34,7 +34,7 @@ interface Geocoder
     /**
      * Reverses geocode given latitude and longitude values.
      *
-     * @param double $latitude.
+     * @param double $latitude
      * @param double $longitude
      *
      * @return AddressCollection

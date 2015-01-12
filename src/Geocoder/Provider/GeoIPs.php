@@ -165,20 +165,31 @@ class GeoIPs extends AbstractHttpProvider implements Provider
             throw new NoResult(sprintf('Invalid response from GeoIPs API for query "%s".', $query));
         }
 
-        $locations   = [];
-        $location    = $response['location'];
-        $locations[] = array_merge($this->getDefaults(), array(
-            'country'     => '' === $location['country_name'] ? null : $location['country_name'],
-            'countryCode' => '' === $location['country_code'] ? null : $location['country_code'],
-            'region'      => '' === $location['region_name']  ? null : $location['region_name'],
-            'regionCode'  => '' === $location['region_code']  ? null : $location['region_code'],
-            'county'      => '' === $location['county_name']  ? null : $location['county_name'],
-            'locality'    => '' === $location['city_name']    ? null : $location['city_name'],
-            'latitude'    => '' === $location['latitude']     ? null : $location['latitude'],
-            'longitude'   => '' === $location['longitude']    ? null : $location['longitude'],
-            'timezone'    => '' === $location['timezone']     ? null : $location['timezone'],
+        $location = array_map(function ($value) {
+            return '' === $value ? null : $value;
+        }, $response['location']);
+
+        $adminLevels = [];
+
+        if (null !== $location['region_name'] || null !== $location['region_code']) {
+            $adminLevels[] = ['name' => $location['region_name'], 'code' => $location['region_code'], 'level' => 1];
+        }
+
+        if (null !== $location['county_name']) {
+            $adminLevels[] = ['name' => $location['county_name'], 'level' => 2];
+        }
+
+        $results   = [];
+        $results[] = array_merge($this->getDefaults(), array(
+            'country'     => $location['country_name'],
+            'countryCode' => $location['country_code'],
+            'adminLevels' => $adminLevels,
+            'locality'    => $location['city_name'],
+            'latitude'    => $location['latitude'],
+            'longitude'   => $location['longitude'],
+            'timezone'    => $location['timezone'],
         ));
 
-        return $this->returnResults($locations);
+        return $this->returnResults($results);
     }
 }

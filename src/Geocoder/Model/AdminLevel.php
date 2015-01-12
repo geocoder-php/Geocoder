@@ -13,8 +13,13 @@ namespace Geocoder\Model;
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-final class County
+final class AdminLevel
 {
+    /**
+     * @var int
+     */
+    private $level;
+
     /**
      * @var string
      */
@@ -26,17 +31,29 @@ final class County
     private $code;
 
     /**
+     * @param int $level
      * @param string $name
      * @param string $code
      */
-    public function __construct($name, $code)
+    public function __construct($level, $name, $code)
     {
+        $this->level = $level;
         $this->name = $name;
         $this->code = $code;
     }
 
     /**
-     * Returns the country name
+     * Returns the administrative level
+     *
+     * @return int Level number [1,5]
+     */
+    public function getLevel()
+    {
+        return $this->level;
+    }
+
+    /**
+     * Returns the administrative level name
      *
      * @return string
      */
@@ -46,7 +63,7 @@ final class County
     }
 
     /**
-     * Returns the county short name.
+     * Returns the administrative level short name.
      *
      * @return string
      */
@@ -56,7 +73,7 @@ final class County
     }
 
     /**
-     * Returns a string with the county name.
+     * Returns a string with the administrative level name.
      *
      * @return string
      */

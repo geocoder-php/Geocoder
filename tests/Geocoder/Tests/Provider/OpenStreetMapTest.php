@@ -36,9 +36,10 @@ class OpenStreetMapTest extends TestCase
         $this->assertEquals(75000, $result->getPostalCode());
         $this->assertNull($result->getSubLocality());
         $this->assertEquals('Paris', $result->getLocality());
-        $this->assertEquals('Paris', $result->getCounty()->getName());
-        $this->assertEquals('Île-de-France', $result->getRegion()->getName());
-        $this->assertNull($result->getRegion()->getCode());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('Paris', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('Île-de-France', $result->getAdminLevels()->get(1)->getName());
+        $this->assertNull($result->getAdminLevels()->get(1)->getCode());
         $this->assertEquals('France métropolitaine', $result->getCountry()->getName());
         $this->assertEquals('FR', $result->getCountry()->getCode());
 
@@ -57,9 +58,10 @@ class OpenStreetMapTest extends TestCase
         $this->assertNull($result->getPostalCode());
         $this->assertNull($result->getSubLocality());
         $this->assertNull($result->getLocality());
-        $this->assertEquals('Paris', $result->getCounty()->getName());
-        $this->assertEquals('Île-de-France', $result->getRegion()->getName());
-        $this->assertNull($result->getRegion()->getCode());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('Paris', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('Île-de-France', $result->getAdminLevels()->get(1)->getName());
+        $this->assertNull($result->getAdminLevels()->get(1)->getCode());
         $this->assertEquals('France métropolitaine', $result->getCountry()->getName());
         $this->assertEquals('FR', $result->getCountry()->getCode());
 
@@ -78,9 +80,10 @@ class OpenStreetMapTest extends TestCase
         $this->assertNull($result->getPostalCode());
         $this->assertNull($result->getSubLocality());
         $this->assertEquals('Paris', $result->getLocality());
-        $this->assertEquals('Logan County', $result->getCounty()->getName());
-        $this->assertEquals('Arkansas', $result->getRegion()->getName());
-        $this->assertNull($result->getRegion()->getCode());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('Logan County', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('Arkansas', $result->getAdminLevels()->get(1)->getName());
+        $this->assertNull($result->getAdminLevels()->get(1)->getCode());
         $this->assertEquals('United States of America', $result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
 
@@ -99,9 +102,10 @@ class OpenStreetMapTest extends TestCase
         $this->assertNull($result->getPostalCode());
         $this->assertNull($result->getSubLocality());
         $this->assertEquals('Paris', $result->getLocality());
-        $this->assertEquals('Lamar County', $result->getCounty()->getName());
-        $this->assertEquals('Texas', $result->getRegion()->getName());
-        $this->assertNull($result->getRegion()->getCode());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('Lamar County', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('Texas', $result->getAdminLevels()->get(1)->getName());
+        $this->assertNull($result->getAdminLevels()->get(1)->getCode());
         $this->assertEquals('United States of America', $result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
 
@@ -120,9 +124,10 @@ class OpenStreetMapTest extends TestCase
         $this->assertNull($result->getPostalCode());
         $this->assertNull($result->getSubLocality());
         $this->assertEquals('Paris', $result->getLocality());
-        $this->assertEquals('Bourbon County', $result->getCounty()->getName());
-        $this->assertEquals('Kentucky', $result->getRegion()->getName());
-        $this->assertNull($result->getRegion()->getCode());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('Bourbon County', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('Kentucky', $result->getAdminLevels()->get(1)->getName());
+        $this->assertNull($result->getAdminLevels()->get(1)->getCode());
         $this->assertEquals('United States of America', $result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
     }
@@ -150,9 +155,10 @@ class OpenStreetMapTest extends TestCase
         $this->assertEquals('63170', $result->getPostalCode());
         $this->assertEquals('La Pardieu', $result->getSubLocality());
         $this->assertEquals('Clermont-Ferrand', $result->getLocality());
-        $this->assertEquals('Clermont-Ferrand', $result->getCounty()->getName());
-        $this->assertEquals('Auvergne', $result->getRegion()->getName());
-        $this->assertNull($result->getRegion()->getCode());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('Clermont-Ferrand', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('Auvergne', $result->getAdminLevels()->get(1)->getName());
+        $this->assertNull($result->getAdminLevels()->get(1)->getCode());
         $this->assertEquals('France', $result->getCountry()->getName());
         $this->assertEquals('FR', $result->getCountry()->getCode());
 
@@ -171,9 +177,10 @@ class OpenStreetMapTest extends TestCase
         $this->assertEquals('63170', $result->getPostalCode());
         $this->assertEquals('Cap Sud', $result->getSubLocality());
         $this->assertEquals('Aubière', $result->getLocality());
-        $this->assertEquals('Clermont-Ferrand', $result->getCounty()->getName());
-        $this->assertEquals('Auvergne', $result->getRegion()->getName());
-        $this->assertNull($result->getRegion()->getCode());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('Clermont-Ferrand', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('Auvergne', $result->getAdminLevels()->get(1)->getName());
+        $this->assertNull($result->getAdminLevels()->get(1)->getCode());
         $this->assertEquals('France', $result->getCountry()->getName());
         $this->assertEquals('FR', $result->getCountry()->getCode());
     }
@@ -197,8 +204,9 @@ class OpenStreetMapTest extends TestCase
         $this->assertEquals(20100, $result->getPostalCode());
         $this->assertEquals('VII', $result->getSubLocality());
         $this->assertEquals('Turku', $result->getLocality());
-        $this->assertEquals('Lounais-Suomen aluehallintovirasto', $result->getRegion()->getName());
-        $this->assertNull( $result->getRegion()->getCode());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('Lounais-Suomen aluehallintovirasto', $result->getAdminLevels()->get(1)->getName());
+        $this->assertNull( $result->getAdminLevels()->get(1)->getCode());
         $this->assertEquals('Suomi', $result->getCountry()->getName());
         $this->assertEquals('FI', $result->getCountry()->getCode());
     }
@@ -236,9 +244,10 @@ class OpenStreetMapTest extends TestCase
         $this->assertEquals(60437, $result->getPostalCode());
         $this->assertEquals('Kalbach', $result->getSubLocality());
         $this->assertEquals('Frankfurt am Main', $result->getLocality());
-        $this->assertEquals('Frankfurt am Main', $result->getCounty()->getName());
-        $this->assertEquals('Hessen', $result->getRegion()->getName());
-        $this->assertNull($result->getRegion()->getCode());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('Frankfurt am Main', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('Hessen', $result->getAdminLevels()->get(1)->getName());
+        $this->assertNull($result->getAdminLevels()->get(1)->getCode());
         $this->assertEquals('Deutschland', $result->getCountry()->getName());
         $this->assertEquals('DE', $result->getCountry()->getCode());
 
@@ -257,9 +266,10 @@ class OpenStreetMapTest extends TestCase
         $this->assertEquals(60437, $result->getPostalCode());
         $this->assertEquals('Bonames', $result->getSubLocality());
         $this->assertEquals('Frankfurt am Main', $result->getLocality());
-        $this->assertEquals('Frankfurt am Main', $result->getCounty()->getName());
-        $this->assertEquals('Hessen', $result->getRegion()->getName());
-        $this->assertNull($result->getRegion()->getCode());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('Frankfurt am Main', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('Hessen', $result->getAdminLevels()->get(1)->getName());
+        $this->assertNull($result->getAdminLevels()->get(1)->getCode());
         $this->assertEquals('Deutschland', $result->getCountry()->getName());
         $this->assertEquals('DE', $result->getCountry()->getCode());
 
@@ -278,9 +288,10 @@ class OpenStreetMapTest extends TestCase
         $this->assertEquals(60437, $result->getPostalCode());
         $this->assertEquals('Kalbach', $result->getSubLocality());
         $this->assertEquals('Frankfurt am Main', $result->getLocality());
-        $this->assertEquals('Frankfurt am Main', $result->getCounty()->getName());
-        $this->assertEquals('Hessen', $result->getRegion()->getName());
-        $this->assertNull($result->getRegion()->getCode());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('Frankfurt am Main', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('Hessen', $result->getAdminLevels()->get(1)->getName());
+        $this->assertNull($result->getAdminLevels()->get(1)->getCode());
         $this->assertEquals('Deutschland', $result->getCountry()->getName());
         $this->assertEquals('DE', $result->getCountry()->getCode());
 
@@ -299,9 +310,10 @@ class OpenStreetMapTest extends TestCase
         $this->assertEquals(60437, $result->getPostalCode());
         $this->assertEquals('Kalbach', $result->getSubLocality());
         $this->assertEquals('Frankfurt am Main', $result->getLocality());
-        $this->assertEquals('Frankfurt am Main', $result->getCounty()->getName());
-        $this->assertEquals('Hessen', $result->getRegion()->getName());
-        $this->assertNull($result->getRegion()->getCode());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('Frankfurt am Main', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('Hessen', $result->getAdminLevels()->get(1)->getName());
+        $this->assertNull($result->getAdminLevels()->get(1)->getCode());
         $this->assertEquals('Deutschland', $result->getCountry()->getName());
         $this->assertEquals('DE', $result->getCountry()->getCode());
     }
@@ -318,8 +330,7 @@ class OpenStreetMapTest extends TestCase
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals('localhost', $result->getLocality());
-        $this->assertEquals('localhost', $result->getCounty()->getName());
-        $this->assertEquals('localhost', $result->getRegion()->getName());
+        $this->assertEmpty($result->getAdminLevels());
         $this->assertEquals('localhost', $result->getCountry()->getName());
     }
 
@@ -356,9 +367,10 @@ class OpenStreetMapTest extends TestCase
         $this->assertEquals(31506, $result->getPostalCode());
         $this->assertEquals(4, $result->getSubLocality());
         $this->assertEquals('Toulouse', $result->getLocality());
-        $this->assertEquals('Toulouse', $result->getCounty()->getName());
-        $this->assertEquals('Midi-Pyrénées', $result->getRegion()->getName());
-        $this->assertNull($result->getRegion()->getCode());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('Toulouse', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('Midi-Pyrénées', $result->getAdminLevels()->get(1)->getName());
+        $this->assertNull($result->getAdminLevels()->get(1)->getCode());
         $this->assertEquals('France métropolitaine', $result->getCountry()->getName());
         $this->assertEquals('FR', $result->getCountry()->getCode());
     }
@@ -386,9 +398,10 @@ class OpenStreetMapTest extends TestCase
         $this->assertEquals(31506, $result->getPostalCode());
         $this->assertEquals(4, $result->getSubLocality());
         $this->assertEquals('Toulouse', $result->getLocality());
-        $this->assertEquals('Toulouse', $result->getCounty()->getName());
-        $this->assertEquals('Midi-Pyrénées', $result->getRegion()->getName());
-        $this->assertNull($result->getRegion()->getCode());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('Toulouse', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('Midi-Pyrénées', $result->getAdminLevels()->get(1)->getName());
+        $this->assertNull($result->getAdminLevels()->get(1)->getCode());
         $this->assertEquals('Frankrig', $result->getCountry()->getName());
         $this->assertEquals('FR', $result->getCountry()->getCode());
     }

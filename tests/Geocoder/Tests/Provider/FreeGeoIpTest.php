@@ -55,8 +55,6 @@ class FreeGeoIpTest extends TestCase
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals('localhost', $result->getLocality());
-        $this->assertEquals('localhost', $result->getCounty()->getName());
-        $this->assertEquals('localhost', $result->getRegion()->getName());
         $this->assertEquals('localhost', $result->getCountry()->getName());
     }
 
@@ -72,8 +70,6 @@ class FreeGeoIpTest extends TestCase
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals('localhost', $result->getLocality());
-        $this->assertEquals('localhost', $result->getCounty()->getName());
-        $this->assertEquals('localhost', $result->getRegion()->getName());
         $this->assertEquals('localhost', $result->getCountry()->getName());
     }
 
@@ -112,7 +108,8 @@ class FreeGeoIpTest extends TestCase
         $this->assertEquals(-96.8134, $result->getLongitude(), '', 0.01);
         $this->assertEquals(75093, $result->getPostalCode());
         $this->assertEquals('Plano', $result->getLocality());
-        $this->assertEquals('Texas', $result->getRegion()->getName());
+        $this->assertCount(1, $result->getAdminLevels());
+        $this->assertEquals('Texas', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('United States', $result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
     }
@@ -132,7 +129,8 @@ class FreeGeoIpTest extends TestCase
         $this->assertEquals(-96.8134, $result->getLongitude(), '', 0.01);
         $this->assertEquals(75093, $result->getPostalCode());
         $this->assertEquals('Plano', $result->getLocality());
-        $this->assertEquals('Texas', $result->getRegion()->getName());
+        $this->assertCount(1, $result->getAdminLevels());
+        $this->assertEquals('Texas', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('United States', $result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
     }
@@ -155,7 +153,8 @@ class FreeGeoIpTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        $this->assertEquals('48', $results->first()->getRegion()->getCode());
+        $this->assertCount(1, $results->first()->getAdminLevels());
+        $this->assertEquals('48', $results->first()->getAdminLevels()->get(1)->getCode());
     }
 
     public function testGeocodeWithUSIPv6()
@@ -166,7 +165,8 @@ class FreeGeoIpTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        $this->assertEquals('48', $results->first()->getRegion()->getCode());
+        $this->assertCount(1, $results->first()->getAdminLevels());
+        $this->assertEquals('48', $results->first()->getAdminLevels()->get(1)->getCode());
     }
 
     public function testGeocodeWithUKIPv4()
@@ -177,7 +177,8 @@ class FreeGeoIpTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        $this->assertEquals('H9', $results->first()->getRegion()->getCode());
+        $this->assertCount(1, $results->first()->getAdminLevels());
+        $this->assertEquals('H9', $results->first()->getAdminLevels()->get(1)->getCode());
     }
 
     public function testGeocodeWithUKIPv6()
@@ -188,7 +189,8 @@ class FreeGeoIpTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        $this->assertEquals('H9', $results->first()->getRegion()->getCode());
+        $this->assertCount(1, $results->first()->getAdminLevels());
+        $this->assertEquals('H9', $results->first()->getAdminLevels()->get(1)->getCode());
     }
 
     /**
