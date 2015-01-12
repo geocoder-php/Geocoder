@@ -94,7 +94,7 @@ class GeoIP2Test extends TestCase
                     'regionCode' => 'HH',
                     'country' => 'Germany',
                     'countryCode' => 'DE',
-                    'timezone' => null,
+                    'timezone' => 'Europe/Berlin',
                 )
             ),
             'Response with all data null' => array(
