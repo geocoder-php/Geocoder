@@ -10,7 +10,7 @@
 
 namespace Geocoder;
 
-use Geocoder\Model\Address;
+use Geocoder\Model\AddressCollection;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -27,7 +27,7 @@ interface Geocoder
      *
      * @param string $value
      *
-     * @return Address[]
+     * @return AddressCollection
      */
     public function geocode($value);
 
@@ -37,7 +37,7 @@ interface Geocoder
      * @param double $latitude.
      * @param double $longitude
      *
-     * @return Address[]
+     * @return AddressCollection
      */
     public function reverse($latitude, $longitude);
 
