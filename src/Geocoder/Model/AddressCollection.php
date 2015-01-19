@@ -31,7 +31,7 @@ final class AddressCollection implements \IteratorAggregate, \Countable
     }
 
     /**
-     * @return Address
+     * @return Address|null
      */
     public function first()
     {
