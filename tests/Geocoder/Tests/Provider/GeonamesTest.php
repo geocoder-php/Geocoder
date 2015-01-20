@@ -66,7 +66,6 @@ class GeonamesTest extends TestCase
     /**
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage No places found for query "http://api.geonames.org/searchJSON?q=BlaBlaBla&maxRows=5&style=full&username=username".
-     * @
      */
     public function testGeocodeWithUnknownCity()
     {
