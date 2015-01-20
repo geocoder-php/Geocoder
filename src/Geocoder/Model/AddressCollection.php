@@ -9,6 +9,9 @@ final class AddressCollection implements \IteratorAggregate, \Countable
      */
     private $addresses;
 
+    /**
+     * @param Address[] $addresses
+     */
     public function __construct(array $addresses = [])
     {
         $this->addresses = array_values($addresses);
