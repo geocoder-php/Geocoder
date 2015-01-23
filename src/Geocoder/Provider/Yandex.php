@@ -52,7 +52,7 @@ class Yandex extends AbstractHttpProvider implements LocaleAwareProvider
     /**
      * {@inheritDoc}
      */
-    public function geocode($address)
+    public function geocode($address, $kind = null)
     {
         // This API doesn't handle IPs
         if (filter_var($address, FILTER_VALIDATE_IP)) {
@@ -60,6 +60,10 @@ class Yandex extends AbstractHttpProvider implements LocaleAwareProvider
         }
 
         $query = sprintf(self::GEOCODE_ENDPOINT_URL, urlencode($address));
+        
+        if (!empty($kind) && is_scalar($kind)) {
+            $query .= sprintf("&kind=%s", urlencode($kind));
+        }
 
         return $this->executeQuery($query);
     }
