@@ -104,6 +104,10 @@ class TomTom extends AbstractHttpProvider implements LocaleAwareProvider
 
         $content = (string) $this->getAdapter()->get($query)->getBody();
 
+        if (false !== stripos($content, "Developer Inactive")) {
+            throw new InvalidCredentials('Map API Key provided is not valid.');
+        }
+
         try {
             $xml = new \SimpleXmlElement($content);
         } catch (\Exception $e) {
