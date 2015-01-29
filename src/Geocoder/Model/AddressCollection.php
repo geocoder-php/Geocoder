@@ -54,7 +54,16 @@ final class AddressCollection implements \IteratorAggregate, \Countable
     }
 
     /**
+     * @return bool
+     */
+    public function has($index)
+    {
+        return isset($this->addresses[$index]);
+    }
+
+    /**
      * @return Address
+     * @throws \OutOfBoundsException
      */
     public function get($index)
     {
