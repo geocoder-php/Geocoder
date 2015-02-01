@@ -176,9 +176,7 @@ class FreeGeoIpTest extends TestCase
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
-
-        $this->assertCount(1, $results->first()->getAdminLevels());
-        $this->assertEquals('H9', $results->first()->getAdminLevels()->get(1)->getCode());
+        $this->assertEquals('GB', $results->first()->getCountry()->getCode());
     }
 
     public function testGeocodeWithUKIPv6()
@@ -188,9 +186,7 @@ class FreeGeoIpTest extends TestCase
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
-
-        $this->assertCount(1, $results->first()->getAdminLevels());
-        $this->assertEquals('H9', $results->first()->getAdminLevels()->get(1)->getCode());
+        $this->assertEquals('GB', $results->first()->getCountry()->getCode());
     }
 
     /**

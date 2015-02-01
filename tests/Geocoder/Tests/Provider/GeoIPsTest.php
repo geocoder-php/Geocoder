@@ -327,7 +327,7 @@ class GeoIPsTest extends TestCase
             $this->markTestSkipped('You need to configure the GEOIPS_API_KEY value in phpunit.xml');
         }
 
-        $provider = new GeoIPs($this->getAdapter(), $_SERVER['GEOIPS_API_KEY']);
+        $provider = new GeoIPs($this->getAdapter($_SERVER['GEOIPS_API_KEY']), $_SERVER['GEOIPS_API_KEY']);
         $results  = $provider->geocode('66.147.244.214');
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -359,7 +359,7 @@ class GeoIPsTest extends TestCase
             $this->markTestSkipped('You need to configure the GEOIPS_API_KEY value in phpunit.xml');
         }
 
-        $provider = new GeoIPs($this->getAdapter(), $_SERVER['GEOIPS_API_KEY']);
+        $provider = new GeoIPs($this->getAdapter($_SERVER['GEOIPS_API_KEY']), $_SERVER['GEOIPS_API_KEY']);
         $provider->geocode('255.255.150.96');
     }
 

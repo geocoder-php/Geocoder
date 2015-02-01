@@ -128,7 +128,7 @@ class IpInfoDbTest extends TestCase
             $this->markTestSkipped('You need to configure the IPINFODB_API_KEY value in phpunit.xml');
         }
 
-        $provider = new IpInfoDb($this->getAdapter(), $_SERVER['IPINFODB_API_KEY']);
+        $provider = new IpInfoDb($this->getAdapter($_SERVER['IPINFODB_API_KEY']), $_SERVER['IPINFODB_API_KEY']);
         $results  = $provider->geocode('74.125.45.100');
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -158,7 +158,7 @@ class IpInfoDbTest extends TestCase
             $this->markTestSkipped('You need to configure the IPINFODB_API_KEY value in phpunit.xml');
         }
 
-        $provider = new IpInfoDb($this->getAdapter(), $_SERVER['IPINFODB_API_KEY']);
+        $provider = new IpInfoDb($this->getAdapter($_SERVER['IPINFODB_API_KEY']), $_SERVER['IPINFODB_API_KEY']);
         $provider->geocode('::ffff:74.125.45.100');
     }
 
@@ -171,7 +171,7 @@ class IpInfoDbTest extends TestCase
             $this->markTestSkipped('You need to configure the IPINFODB_API_KEY value in phpunit.xml');
         }
 
-        $provider = new IpInfoDb($this->getAdapter(), $_SERVER['IPINFODB_API_KEY'], 'country');
+        $provider = new IpInfoDb($this->getAdapter($_SERVER['IPINFODB_API_KEY']), $_SERVER['IPINFODB_API_KEY'], 'country');
         $results = $provider->geocode('74.125.45.100');
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);

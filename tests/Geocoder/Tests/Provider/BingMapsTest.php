@@ -196,7 +196,7 @@ JSON;
             $this->markTestSkipped('You need to configure the BINGMAPS_API_KEY value in phpunit.xml');
         }
 
-        $provider = new BingMaps($this->getAdapter(), $_SERVER['BINGMAPS_API_KEY'], 'fr-FR');
+        $provider = new BingMaps($this->getAdapter($_SERVER['BINGMAPS_API_KEY']), $_SERVER['BINGMAPS_API_KEY'], 'fr-FR');
         $results  = $provider->geocode('10 avenue Gambetta, Paris, France');
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -234,7 +234,7 @@ JSON;
             $this->markTestSkipped('You need to configure the BINGMAPS_API_KEY value in phpunit.xml');
         }
 
-        $provider = new BingMaps($this->getAdapter(), $_SERVER['BINGMAPS_API_KEY'], 'fr-FR');
+        $provider = new BingMaps($this->getAdapter($_SERVER['BINGMAPS_API_KEY']), $_SERVER['BINGMAPS_API_KEY'], 'fr-FR');
         $results  = $provider->geocode('Castelnuovo, Italie');
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -362,7 +362,7 @@ JSON;
             $this->markTestSkipped('You need to configure the BINGMAPS_API_KEY value in phpunit.xml');
         }
 
-        $provider = new BingMaps($this->getAdapter(), $_SERVER['BINGMAPS_API_KEY']);
+        $provider = new BingMaps($this->getAdapter($_SERVER['BINGMAPS_API_KEY']), $_SERVER['BINGMAPS_API_KEY']);
         $results  = $provider->reverse(48.86321648955345, 2.3887719959020615);
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -401,7 +401,7 @@ JSON;
             $this->markTestSkipped('You need to configure the BINGMAPS_API_KEY value in phpunit.xml');
         }
 
-        $provider = new BingMaps($this->getAdapter(), $_SERVER['BINGMAPS_API_KEY']);
+        $provider = new BingMaps($this->getAdapter($_SERVER['BINGMAPS_API_KEY']), $_SERVER['BINGMAPS_API_KEY']);
         $provider->geocode('88.188.221.14');
     }
 
@@ -415,7 +415,7 @@ JSON;
             $this->markTestSkipped('You need to configure the BINGMAPS_API_KEY value in phpunit.xml');
         }
 
-        $provider = new BingMaps($this->getAdapter(), $_SERVER['BINGMAPS_API_KEY']);
+        $provider = new BingMaps($this->getAdapter($_SERVER['BINGMAPS_API_KEY']), $_SERVER['BINGMAPS_API_KEY']);
         $provider->geocode('::ffff:88.188.221.14');
     }
 }

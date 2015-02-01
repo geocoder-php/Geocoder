@@ -84,7 +84,7 @@ XML;
             $this->markTestSkipped('You need to configure the TOMTOM_MAP_KEY value in phpunit.xml');
         }
 
-        $provider = new TomTom($this->getAdapter(), $_SERVER['TOMTOM_MAP_KEY']);
+        $provider = new TomTom($this->getAdapter($_SERVER['TOMTOM_MAP_KEY']), $_SERVER['TOMTOM_MAP_KEY']);
         $results  = $provider->geocode('Tagensvej 47, 2200 København N');
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -113,7 +113,7 @@ XML;
             $this->markTestSkipped('You need to configure the TOMTOM_MAP_KEY value in phpunit.xml');
         }
 
-        $provider = new TomTom($this->getAdapter(), $_SERVER['TOMTOM_MAP_KEY'], 'fr_FR');
+        $provider = new TomTom($this->getAdapter($_SERVER['TOMTOM_MAP_KEY']), $_SERVER['TOMTOM_MAP_KEY'], 'fr_FR');
         $results  = $provider->geocode('Tagensvej 47, 2200 København N');
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -142,7 +142,7 @@ XML;
             $this->markTestSkipped('You need to configure the TOMTOM_MAP_KEY value in phpunit.xml');
         }
 
-        $provider = new TomTom($this->getAdapter(), $_SERVER['TOMTOM_MAP_KEY'], 'sv-SE');
+        $provider = new TomTom($this->getAdapter($_SERVER['TOMTOM_MAP_KEY']), $_SERVER['TOMTOM_MAP_KEY'], 'sv-SE');
         $results  = $provider->geocode('Tagensvej 47, 2200 København N');
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -171,7 +171,7 @@ XML;
             $this->markTestSkipped('You need to configure the TOMTOM_MAP_KEY value in phpunit.xml');
         }
 
-        $provider = new TomTom($this->getAdapter(), $_SERVER['TOMTOM_MAP_KEY']);
+        $provider = new TomTom($this->getAdapter($_SERVER['TOMTOM_MAP_KEY']), $_SERVER['TOMTOM_MAP_KEY']);
         $results  = $provider->geocode('Paris');
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -354,7 +354,7 @@ XML;
             $this->markTestSkipped('You need to configure the TOMTOM_MAP_KEY value in phpunit.xml');
         }
 
-        $provider = new TomTom($this->getAdapter(), $_SERVER['TOMTOM_MAP_KEY']);
+        $provider = new TomTom($this->getAdapter($_SERVER['TOMTOM_MAP_KEY']), $_SERVER['TOMTOM_MAP_KEY']);
         $results  = $provider->reverse(48.86321648955345, 2.3887719959020615);
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -383,7 +383,7 @@ XML;
             $this->markTestSkipped('You need to configure the TOMTOM_MAP_KEY value in phpunit.xml');
         }
 
-        $provider = new TomTom($this->getAdapter(),  $_SERVER['TOMTOM_MAP_KEY']);
+        $provider = new TomTom($this->getAdapter($_SERVER['TOMTOM_MAP_KEY']),  $_SERVER['TOMTOM_MAP_KEY']);
         $results  = $provider->reverse(56.5231, 10.0659);
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);

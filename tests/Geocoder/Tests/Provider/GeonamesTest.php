@@ -85,7 +85,7 @@ JSON;
             $this->markTestSkipped('You need to configure the GEONAMES_USERNAME value in phpunit.xml');
         }
 
-        $provider = new Geonames($this->getAdapter(), $_SERVER['GEONAMES_USERNAME']);
+        $provider = new Geonames($this->getAdapter($_SERVER['GEONAMES_USERNAME']), $_SERVER['GEONAMES_USERNAME']);
         $results  = $provider->geocode('London');
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -189,7 +189,7 @@ JSON;
             $this->markTestSkipped('You need to configure the GEONAMES_USERNAME value in phpunit.xml');
         }
 
-        $provider = new Geonames($this->getAdapter(), $_SERVER['GEONAMES_USERNAME'], 'it_IT');
+        $provider = new Geonames($this->getAdapter($_SERVER['GEONAMES_USERNAME']), $_SERVER['GEONAMES_USERNAME'], 'it_IT');
         $results  = $provider->geocode('London');
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -293,7 +293,7 @@ JSON;
             $this->markTestSkipped('You need to configure the GEONAMES_USERNAME value in phpunit.xml');
         }
 
-        $provider = new Geonames($this->getAdapter(), $_SERVER['GEONAMES_USERNAME']);
+        $provider = new Geonames($this->getAdapter($_SERVER['GEONAMES_USERNAME']), $_SERVER['GEONAMES_USERNAME']);
         $results  = $provider->reverse(51.50853, -0.12574);
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -319,7 +319,7 @@ JSON;
             $this->markTestSkipped('You need to configure the GEONAMES_USERNAME value in phpunit.xml');
         }
 
-        $provider = new Geonames($this->getAdapter(), $_SERVER['GEONAMES_USERNAME'], 'it_IT');
+        $provider = new Geonames($this->getAdapter($_SERVER['GEONAMES_USERNAME']), $_SERVER['GEONAMES_USERNAME'], 'it_IT');
         $results  = $provider->reverse(51.50853, -0.12574);
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);

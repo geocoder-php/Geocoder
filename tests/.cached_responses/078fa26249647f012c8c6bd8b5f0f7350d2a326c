@@ -1,4 +1,4 @@
-s:2067:"{
+s:2091:"{
    "results" : [
       {
          "address_components" : [
@@ -15,7 +15,7 @@ s:2067:"{
             {
                "long_name" : "Kalbach-Riedberg",
                "short_name" : "Kalbach-Riedberg",
-               "types" : [ "sublocality", "political" ]
+               "types" : [ "sublocality_level_1", "sublocality", "political" ]
             },
             {
                "long_name" : "Frankfurt",
@@ -28,7 +28,7 @@ s:2067:"{
                "types" : [ "administrative_area_level_2", "political" ]
             },
             {
-               "long_name" : "Hesse",
+               "long_name" : "Hessen",
                "short_name" : "HE",
                "types" : [ "administrative_area_level_1", "political" ]
             },

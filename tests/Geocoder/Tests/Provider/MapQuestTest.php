@@ -54,7 +54,7 @@ class MapQuestTest extends TestCase
             $this->markTestSkipped('You need to configure the MAPQUEST_API_KEY value in phpunit.xml');
         }
 
-        $provider = new MapQuest($this->getAdapter(), $_SERVER['MAPQUEST_API_KEY']);
+        $provider = new MapQuest($this->getAdapter($_SERVER['MAPQUEST_API_KEY']), $_SERVER['MAPQUEST_API_KEY']);
         $results  = $provider->geocode('10 avenue Gambetta, Paris, France');
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -99,7 +99,7 @@ class MapQuestTest extends TestCase
             $this->markTestSkipped('You need to configure the MAPQUEST_API_KEY value in phpunit.xml');
         }
 
-        $provider = new MapQuest($this->getAdapter(), $_SERVER['MAPQUEST_API_KEY']);
+        $provider = new MapQuest($this->getAdapter($_SERVER['MAPQUEST_API_KEY']), $_SERVER['MAPQUEST_API_KEY']);
         $results  = $provider->reverse(54.0484068, -2.7990345);
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -131,7 +131,7 @@ class MapQuestTest extends TestCase
             $this->markTestSkipped('You need to configure the MAPQUEST_API_KEY value in phpunit.xml');
         }
 
-        $provider = new MapQuest($this->getAdapter(), $_SERVER['MAPQUEST_API_KEY']);
+        $provider = new MapQuest($this->getAdapter($_SERVER['MAPQUEST_API_KEY']), $_SERVER['MAPQUEST_API_KEY']);
         $results  = $provider->geocode('Hanover');
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -188,7 +188,7 @@ class MapQuestTest extends TestCase
             $this->markTestSkipped('You need to configure the MAPQUEST_API_KEY value in phpunit.xml');
         }
 
-        $provider = new MapQuest($this->getAdapter(), $_SERVER['MAPQUEST_API_KEY']);
+        $provider = new MapQuest($this->getAdapter($_SERVER['MAPQUEST_API_KEY']), $_SERVER['MAPQUEST_API_KEY']);
         $results  = $provider->geocode('Kalbacher Hauptstraße 10, 60437 Frankfurt, Germany');
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);

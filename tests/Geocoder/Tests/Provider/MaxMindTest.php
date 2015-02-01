@@ -294,7 +294,7 @@ class MaxMindTest extends TestCase
             $this->markTestSkipped('You need to configure the MAXMIND_API_KEY value in phpunit.xml');
         }
 
-        $provider = new MaxMind($this->getAdapter(), $_SERVER['MAXMIND_API_KEY']);
+        $provider = new MaxMind($this->getAdapter($_SERVER['MAXMIND_API_KEY']), $_SERVER['MAXMIND_API_KEY']);
         $results  = $provider->geocode('74.200.247.159');
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -325,7 +325,7 @@ class MaxMindTest extends TestCase
             $this->markTestSkipped('You need to configure the MAXMIND_API_KEY value in phpunit.xml');
         }
 
-        $provider = new MaxMind($this->getAdapter(), $_SERVER['MAXMIND_API_KEY'],
+        $provider = new MaxMind($this->getAdapter($_SERVER['MAXMIND_API_KEY']), $_SERVER['MAXMIND_API_KEY'],
             MaxMind::OMNI_SERVICE);
         $results  = $provider->geocode('74.200.247.159');
 
@@ -357,7 +357,7 @@ class MaxMindTest extends TestCase
             $this->markTestSkipped('You need to configure the MAXMIND_API_KEY value in phpunit.xml');
         }
 
-        $provider = new MaxMind($this->getAdapter(), $_SERVER['MAXMIND_API_KEY'],
+        $provider = new MaxMind($this->getAdapter($_SERVER['MAXMIND_API_KEY']), $_SERVER['MAXMIND_API_KEY'],
             MaxMind::OMNI_SERVICE, true);
         $results  = $provider->geocode('189.26.128.80');
 
@@ -389,7 +389,7 @@ class MaxMindTest extends TestCase
             $this->markTestSkipped('You need to configure the MAXMIND_API_KEY value in phpunit.xml');
         }
 
-        $provider = new MaxMind($this->getAdapter(), $_SERVER['MAXMIND_API_KEY']);
+        $provider = new MaxMind($this->getAdapter($_SERVER['MAXMIND_API_KEY']), $_SERVER['MAXMIND_API_KEY']);
         $results  = $provider->geocode('2002:4293:f4d6:0:0:0:0:0');
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -420,7 +420,7 @@ class MaxMindTest extends TestCase
             $this->markTestSkipped('You need to configure the MAXMIND_API_KEY value in phpunit.xml');
         }
 
-        $provider = new MaxMind($this->getAdapter(), $_SERVER['MAXMIND_API_KEY'],
+        $provider = new MaxMind($this->getAdapter($_SERVER['MAXMIND_API_KEY']), $_SERVER['MAXMIND_API_KEY'],
             MaxMind::OMNI_SERVICE, true);
         $results  = $provider->geocode('2002:4293:f4d6:0:0:0:0:0');
 

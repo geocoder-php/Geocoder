@@ -1,4 +1,4 @@
-s:12784:"{
+s:12861:"{
    "results" : [
       {
          "address_components" : [
@@ -9,7 +9,7 @@ s:12784:"{
             },
             {
                "long_name" : "Avenue Gambetta",
-               "short_name" : "Av. Gambetta",
+               "short_name" : "Avenue Gambetta",
                "types" : [ "route" ]
             },
             {
@@ -66,9 +66,9 @@ s:12784:"{
                "types" : [ "neighborhood", "political" ]
             },
             {
-               "long_name" : "20e Arrondissement",
-               "short_name" : "20e Arrondissement",
-               "types" : [ "sublocality", "political" ]
+               "long_name" : "20th arrondissement",
+               "short_name" : "20th arrondissement",
+               "types" : [ "sublocality_level_1", "sublocality", "political" ]
             },
             {
                "long_name" : "Paris",
@@ -182,9 +182,9 @@ s:12784:"{
       {
          "address_components" : [
             {
-               "long_name" : "20e Arrondissement",
-               "short_name" : "20e Arrondissement",
-               "types" : [ "sublocality", "political" ]
+               "long_name" : "20th arrondissement",
+               "short_name" : "20th arrondissement",
+               "types" : [ "sublocality_level_1", "sublocality", "political" ]
             },
             {
                "long_name" : "Paris",
@@ -207,7 +207,7 @@ s:12784:"{
                "types" : [ "country", "political" ]
             }
          ],
-         "formatted_address" : "20e Arrondissement, Paris, France",
+         "formatted_address" : "20th arrondissement, Paris, France",
          "geometry" : {
             "bounds" : {
                "northeast" : {
@@ -235,7 +235,7 @@ s:12784:"{
                }
             }
          },
-         "types" : [ "sublocality", "political" ]
+         "types" : [ "sublocality_level_1", "sublocality", "political" ]
       },
       {
          "address_components" : [

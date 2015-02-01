@@ -82,7 +82,7 @@ class FreeGeoIp extends AbstractHttpProvider implements Provider
 
         $adminLevels = [];
 
-        if (isset($data['region_name']) || isset($data['region_code'])) {
+        if (! empty($data['region_name']) || ! empty($data['region_code'])) {
             $adminLevels[] = [
                 'name' => isset($data['region_name']) ? $data['region_name'] : null,
                 'code' => isset($data['region_code']) ? $data['region_code'] : null,
