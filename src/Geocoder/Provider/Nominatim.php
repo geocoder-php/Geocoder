@@ -116,10 +116,15 @@ class Nominatim extends AbstractHttpProvider implements LocaleAwareProvider
             }
         }
 
+        // get the first postal-code when there are many
+        $postalCode = current(explode(';',
+            $this->getNodeValue($addressNode->getElementsByTagName('postcode'))
+        ));
+
         $result = [
             'latitude'     => $resultNode->getAttribute('lat'),
             'longitude'    => $resultNode->getAttribute('lon'),
-            'postalCode'   => $this->getNodeValue($addressNode->getElementsByTagName('postcode')),
+            'postalCode'   => $postalCode,
             'adminLevels'  => $adminLevels,
             'streetNumber' => $this->getNodeValue($addressNode->getElementsByTagName('house_number')),
             'streetName'   => $this->getNodeValue($addressNode->getElementsByTagName('road')) ?: $this->getNodeValue($addressNode->getElementsByTagName('pedestrian')),
