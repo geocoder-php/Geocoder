@@ -108,13 +108,15 @@ class YandexTest extends TestCase
         $this->assertEquals('Avenue Gambetta', $result->getStreetName());
         $this->assertEquals('Париж', $result->getLocality());
         $this->assertEquals('XX округ', $result->getSubLocality());
-        $this->assertCount(1, $result->getAdminLevels());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('Париж', $result->getAdminLevels()->get(2)->getName());
         $this->assertEquals('Иль-Де-Франс', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('Франция', $result->getCountry()->getName());
         $this->assertEquals('FR', $result->getCountry()->getCode());
 
         // not provided
         $this->assertNull($result->getPostalCode());
+        $this->assertNull($result->getAdminLevels()->get(2)->getCode());
         $this->assertNull($result->getAdminLevels()->get(1)->getCode());
         $this->assertNull($result->getTimezone());
     }
@@ -140,7 +142,7 @@ class YandexTest extends TestCase
         $this->assertNull($result->getStreetNumber());
         $this->assertNull($result->getStreetName());
         $this->assertEquals('Копенгаген', $result->getLocality());
-        $this->assertCount(1, $result->getAdminLevels());
+        $this->assertCount(2, $result->getAdminLevels());
         $this->assertEquals('Столичная область', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('Данія', $result->getCountry()->getName());
         $this->assertEquals('DK', $result->getCountry()->getCode());
@@ -197,7 +199,8 @@ class YandexTest extends TestCase
         $this->assertEquals(1600, $result->getStreetNumber());
         $this->assertEquals('Pennsylvania Ave NW', $result->getStreetName());
         $this->assertEquals('Washington', $result->getLocality());
-        $this->assertCount(1, $result->getAdminLevels());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('District of Columbia', $result->getAdminLevels()->get(2)->getName());
         $this->assertEquals('District of Columbia', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('United States', $result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
@@ -293,13 +296,15 @@ class YandexTest extends TestCase
         $this->assertEquals('Avenue Gambetta', $result->getStreetName());
         $this->assertEquals('Париж', $result->getLocality());
         $this->assertEquals('XX округ', $result->getSubLocality());
-        $this->assertCount(1, $result->getAdminLevels());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('Париж', $result->getAdminLevels()->get(2)->getName());
         $this->assertEquals('Иль-Де-Франс', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('Франция', $result->getCountry()->getName());
         $this->assertEquals('FR', $result->getCountry()->getCode());
 
         // not provided
         $this->assertNull($result->getPostalCode());
+        $this->assertNull($result->getAdminLevels()->get(2)->getCode());
         $this->assertNull($result->getAdminLevels()->get(1)->getCode());
         $this->assertNull($result->getTimezone());
 
@@ -338,13 +343,15 @@ class YandexTest extends TestCase
         $this->assertEquals('Avenue Gambetta', $result->getStreetName());
         $this->assertEquals('20e Arrondissement', $result->getSubLocality());
         $this->assertEquals('Paris', $result->getLocality());
-        $this->assertCount(1, $result->getAdminLevels());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('Paris', $result->getAdminLevels()->get(2)->getName());
         $this->assertEquals('Ile-de-France', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('France', $result->getCountry()->getName());
         $this->assertEquals('FR', $result->getCountry()->getCode());
 
         // not provided
         $this->assertNull($result->getPostalCode());
+        $this->assertNull($result->getAdminLevels()->get(2)->getCode());
         $this->assertNull($result->getAdminLevels()->get(1)->getCode());
         $this->assertNull($result->getTimezone());
 
@@ -395,13 +402,15 @@ class YandexTest extends TestCase
         $this->assertEquals('Bangårdsgatan', $result->getStreetName());
         $this->assertEquals('Турку', $result->getLocality());
         $this->assertEquals('Кескуста', $result->getSubLocality());
-        $this->assertCount(1, $result->getAdminLevels());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('Исконная Финляндия', $result->getAdminLevels()->get(2)->getName());
         $this->assertEquals('Юго-Западная Финляндия', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('Фінляндія', $result->getCountry()->getName());
         $this->assertEquals('FI', $result->getCountry()->getCode());
 
         // not provided
         $this->assertNull($result->getPostalCode());
+        $this->assertNull($result->getAdminLevels()->get(2)->getCode());
         $this->assertNull($result->getAdminLevels()->get(1)->getCode());
         $this->assertNull($result->getTimezone());
     }
@@ -427,7 +436,8 @@ class YandexTest extends TestCase
         $this->assertNull($result->getStreetName());
         $this->assertNull($result->getStreetNumber());
         $this->assertEquals('Adalar', $result->getLocality());
-        $this->assertCount(1, $result->getAdminLevels());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('Adalar', $result->getAdminLevels()->get(2)->getName());
         $this->assertEquals('İstanbul', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('Türkiye', $result->getCountry()->getName());
         $this->assertEquals('TR', $result->getCountry()->getCode());
@@ -435,6 +445,7 @@ class YandexTest extends TestCase
         // not provided
         $this->assertNull($result->getPostalCode());
         $this->assertNull($result->getSubLocality());
+        $this->assertNull($result->getAdminLevels()->get(2)->getCode());
         $this->assertNull($result->getAdminLevels()->get(1)->getCode());
         $this->assertNull($result->getTimezone());
     }
