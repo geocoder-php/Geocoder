@@ -288,7 +288,8 @@ $geocoder = new \Geocoder\Provider\GoogleMaps(
     $httpAdapter,
     $locale,
     $region,
-    $useSsl // true|false
+    $useSsl, // true|false
+    $apiKey
 );
 ```
 
