@@ -60,11 +60,12 @@ class StringFormatter
             self::TIMEZONE      => $address->getTimezone(),
         ];
 
-        $adminLevels = $address->getAdminLevels();
-        $nullAdminLevel = new AdminLevel(null, null, null);
-
         for ($level = 1; $level <= AdminLevelCollection::MAX_LEVEL_DEPTH; ++ $level) {
-            $adminLevel = $adminLevels->has($level) ? $adminLevels->get($level) : $nullAdminLevel;
+            $tr[self::ADMIN_LEVEL . $level] = null;
+            $tr[self::ADMIN_LEVEL_CODE . $level] = null;
+        }
+
+        foreach ($address->getAdminLevels() as $level => $adminLevel) {
             $tr[self::ADMIN_LEVEL . $level] = $adminLevel->getName();
             $tr[self::ADMIN_LEVEL_CODE . $level] = $adminLevel->getCode();
         }
