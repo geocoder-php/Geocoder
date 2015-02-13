@@ -1,6 +1,13 @@
 CHANGELOG
 =========
 
+### 3.0.0-alpha3 (2015-02-13)
+
+* Added: `LocaleTrait` to reduce code duplication
+* Added: introduce admin levels concept (see PR #398)
+* Fixed: GeoIP2 results use underscore case
+* Merged: branch '2.x' (see releases 2.8.1 and 2.8.2 for more details)
+
 ### 3.0.0-alpha2 (2014-12-22)
 
 * Added: Introduce `AddressCollection` class
