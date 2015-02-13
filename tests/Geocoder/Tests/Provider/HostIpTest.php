@@ -58,10 +58,9 @@ class HostIpTest extends TestCase
         $this->assertNull($result->getLongitude());
         $this->assertNull($result->getPostalCode());
         $this->assertNull($result->getTimezone());
+        $this->assertEmpty($result->getAdminLevels());
 
         $this->assertEquals('localhost', $result->getLocality());
-        $this->assertEquals('localhost', $result->getCounty()->getName());
-        $this->assertEquals('localhost', $result->getRegion()->getName());
         $this->assertEquals('localhost', $result->getCountry()->getName());
     }
 
@@ -110,7 +109,7 @@ class HostIpTest extends TestCase
         $this->assertEquals(2.6167, $result->getLongitude(), '', 0.0001);
         $this->assertNull($result->getPostalCode());
         $this->assertEquals('Aulnat', $result->getLocality());
-        $this->assertNull($result->getRegion()->getName());
+        $this->assertEmpty($result->getAdminLevels());
         $this->assertEquals('FRANCE', $result->getCountry()->getName());
         $this->assertEquals('FR', $result->getCountry()->getCode());
     }

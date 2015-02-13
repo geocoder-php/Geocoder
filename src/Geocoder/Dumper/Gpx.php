@@ -69,20 +69,22 @@ GPX;
      */
     protected function formatName(Address $address)
     {
-        $name  = '';
+        $name  = [];
         $array = $address->toArray();
-        $attrs = array('streetNumber', 'streetName', 'postalCode', 'locality', 'county', 'region', 'country');
+        $attrs = [
+            ['streetNumber'],
+            ['streetName'],
+            ['postalCode'],
+            ['locality'],
+            ['adminLevels', 2, 'name'],
+            ['adminLevels', 1, 'name'],
+            ['country'],
+        ];
 
         foreach ($attrs as $attr) {
-            if (isset($array[$attr]) && !empty($array[$attr])) {
-                $name .= sprintf('%s, ', $array[$attr]);
-            }
+            $name[] = \igorw\get_in($array, $attr);
         }
 
-        if (strlen($name) > 1) {
-            $name = substr($name, 0, strlen($name) - 2);
-        }
-
-        return $name;
+        return implode(', ', array_filter($name));
     }
 }

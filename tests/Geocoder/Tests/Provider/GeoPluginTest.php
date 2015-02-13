@@ -53,8 +53,6 @@ class GeoPluginTest extends TestCase
 
         $result = $results->first();
         $this->assertEquals('localhost', $result->getLocality());
-        $this->assertEquals('localhost', $result->getCounty()->getName());
-        $this->assertEquals('localhost', $result->getRegion()->getName());
         $this->assertEquals('localhost', $result->getCountry()->getName());
     }
 
@@ -68,8 +66,6 @@ class GeoPluginTest extends TestCase
 
         $result = $results->first();
         $this->assertEquals('localhost', $result->getLocality());
-        $this->assertEquals('localhost', $result->getCounty()->getName());
-        $this->assertEquals('localhost', $result->getRegion()->getName());
         $this->assertEquals('localhost', $result->getCountry()->getName());
     }
 
@@ -106,8 +102,9 @@ class GeoPluginTest extends TestCase
         $this->assertEquals(40.711101999999997, $result->getLatitude(), '', 0.0001);
         $this->assertEquals(-73.946899000000002, $result->getLongitude(), '', 0.0001);
         $this->assertNull($result->getLocality());
-        $this->assertEquals('New York', $result->getRegion()->getName());
-        $this->assertEquals('NY', $result->getRegion()->getCode());
+        $this->assertCount(1, $result->getAdminLevels());
+        $this->assertEquals('New York', $result->getAdminLevels()->get(1)->getName());
+        $this->assertEquals('NY', $result->getAdminLevels()->get(1)->getCode());
         $this->assertEquals('United States', $result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
     }

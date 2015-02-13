@@ -50,14 +50,17 @@ class GeoIP2 extends AbstractProvider implements LocaleAwareProvider
 
         $result = json_decode($this->executeQuery($address));
 
-        //Try to extract the region name and code
-        $region     = null;
-        $regionCode = null;
-        if (isset($result->subdivisions) && is_array($result->subdivisions) && !empty($result->subdivisions)) {
-            $lastSubdivision = array_pop($result->subdivisions);
+        $adminLevels = [];
 
-            $region     = (isset($lastSubdivision->names->{$this->locale}) ? $lastSubdivision->names->{$this->locale} : null);
-            $regionCode = (isset($lastSubdivision->iso_code) ? $lastSubdivision->iso_code : null);
+        if (isset($result->subdivisions) && is_array($result->subdivisions)) {
+            foreach ($result->subdivisions as $i => $subdivision) {
+                $name = (isset($subdivision->names->{$this->locale}) ? $subdivision->names->{$this->locale} : null);
+                $code = (isset($subdivision->iso_code) ? $subdivision->iso_code : null);
+
+                if (null !== $name || null !== $code) {
+                    $adminLevels[] = ['name' => $name, 'code' => $code, 'level' => $i + 1];
+                }
+            }
         }
 
         return $this->returnResults([
@@ -67,10 +70,9 @@ class GeoIP2 extends AbstractProvider implements LocaleAwareProvider
                 'locality'    => (isset($result->city->names->{$this->locale}) ? $result->city->names->{$this->locale} : null),
                 'latitude'    => (isset($result->location->latitude) ? $result->location->latitude : null),
                 'longitude'   => (isset($result->location->longitude) ? $result->location->longitude : null),
-                'timezone'    => (isset($result->location->timezone) ? $result->location->timezone : null),
-                'postalCode'  => (isset($result->location->postalcode) ? $result->location->postalcode : null),
-                'region'      => $region,
-                'regionCode'  => $regionCode
+                'timezone'    => (isset($result->location->time_zone) ? $result->location->time_zone : null),
+                'postalCode'  => (isset($result->location->postal_code) ? $result->location->postal_code : null),
+                'adminLevels' => $adminLevels,
             )))
         ]);
     }

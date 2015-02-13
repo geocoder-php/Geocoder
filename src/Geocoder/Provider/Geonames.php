@@ -13,6 +13,7 @@ namespace Geocoder\Provider;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Model\AdminLevelCollection;
 use Ivory\HttpAdapter\HttpAdapterInterface;
 
 /**
@@ -134,13 +135,26 @@ class Geonames extends AbstractHttpProvider implements LocaleAwareProvider
                 );
             }
 
+            $adminLevels = [];
+
+            for ($level = 1; $level <= AdminLevelCollection::MAX_LEVEL_DEPTH; ++ $level) {
+                $adminNameProp = 'adminName' . $level;
+                $adminCodeProp = 'adminCode' . $level;
+                if (! empty($item->$adminNameProp) || ! empty($item->$adminCodeProp)) {
+                    $adminLevels[] = [
+                        'name' => empty($item->$adminNameProp) ? null : $item->$adminNameProp ,
+                        'code' => empty($item->$adminCodeProp) ? null : $item->$adminCodeProp,
+                        'level' => $level,
+                    ];
+                }
+            }
+
             $results[] = array_merge($this->getDefaults(), [
                 'latitude'    => isset($item->lat) ? $item->lat : null,
                 'longitude'   => isset($item->lng) ? $item->lng : null,
                 'bounds'      => $bounds,
                 'locality'    => isset($item->name) ? $item->name : null,
-                'county'      => isset($item->adminName2) ? $item->adminName2 : null,
-                'region'      => isset($item->adminName1) ? $item->adminName1 : null,
+                'adminLevels' => $adminLevels,
                 'country'     => isset($item->countryName) ? $item->countryName : null,
                 'countryCode' => isset($item->countryCode) ? $item->countryCode : null,
                 'timezone'    => isset($item->timezone->timeZoneId)  ? $item->timezone->timeZoneId : null,

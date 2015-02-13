@@ -227,14 +227,16 @@ class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvider
                 $resultSet['locality'] = $values->long_name;
                 break;
 
-            case 'administrative_area_level_2':
-                $resultSet['county'] = $values->long_name;
-                $resultSet['countyCode'] = $values->short_name;
-                break;
-
             case 'administrative_area_level_1':
-                $resultSet['region'] = $values->long_name;
-                $resultSet['regionCode'] = $values->short_name;
+            case 'administrative_area_level_2':
+            case 'administrative_area_level_3':
+            case 'administrative_area_level_4':
+            case 'administrative_area_level_5':
+                $resultSet['adminLevels'][]= [
+                    'name' => $values->long_name,
+                    'code' => $values->short_name,
+                    'level' => intval(substr($type, -1))
+                ];
                 break;
 
             case 'country':

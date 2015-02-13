@@ -9,6 +9,9 @@ final class AddressCollection implements \IteratorAggregate, \Countable
      */
     private $addresses;
 
+    /**
+     * @param Address[] $addresses
+     */
     public function __construct(array $addresses = [])
     {
         $this->addresses = array_values($addresses);
@@ -31,7 +34,7 @@ final class AddressCollection implements \IteratorAggregate, \Countable
     }
 
     /**
-     * @return Address
+     * @return Address|null
      */
     public function first()
     {
@@ -51,7 +54,16 @@ final class AddressCollection implements \IteratorAggregate, \Countable
     }
 
     /**
+     * @return bool
+     */
+    public function has($index)
+    {
+        return isset($this->addresses[$index]);
+    }
+
+    /**
      * @return Address
+     * @throws \OutOfBoundsException
      */
     public function get($index)
     {

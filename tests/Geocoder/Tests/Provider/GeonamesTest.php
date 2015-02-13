@@ -66,7 +66,6 @@ class GeonamesTest extends TestCase
     /**
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage No places found for query "http://api.geonames.org/searchJSON?q=BlaBlaBla&maxRows=5&style=full&username=username".
-     * @
      */
     public function testGeocodeWithUnknownCity()
     {
@@ -86,7 +85,7 @@ JSON;
             $this->markTestSkipped('You need to configure the GEONAMES_USERNAME value in phpunit.xml');
         }
 
-        $provider = new Geonames($this->getAdapter(), $_SERVER['GEONAMES_USERNAME']);
+        $provider = new Geonames($this->getAdapter($_SERVER['GEONAMES_USERNAME']), $_SERVER['GEONAMES_USERNAME']);
         $results  = $provider->geocode('London');
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -103,8 +102,9 @@ JSON;
         $this->assertEquals(51.865368153381, $result->getBounds()->getNorth(), '', 0.01);
         $this->assertEquals(0.45212493672386, $result->getBounds()->getEast(), '', 0.01);
         $this->assertEquals('London', $result->getLocality());
-        $this->assertEquals('Greater London', $result->getCounty()->getName());
-        $this->assertEquals('England', $result->getRegion()->getName());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('Greater London', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('England', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('United Kingdom', $result->getCountry()->getName());
         $this->assertEquals('GB', $result->getCountryCode());
         $this->assertEquals('Europe/London', $result->getTimezone());
@@ -120,8 +120,10 @@ JSON;
         $this->assertEquals(-32.925573728925, $result->getBounds()->getNorth(), '', 0.01);
         $this->assertEquals(28.018503381239, $result->getBounds()->getEast(), '', 0.01);
         $this->assertEquals('East London', $result->getLocality());
-        $this->assertEquals('Buffalo City Metropolitan Municipality', $result->getCounty()->getName());
-        $this->assertEquals('Eastern Cape', $result->getRegion()->getName());
+        $this->assertCount(3, $result->getAdminLevels());
+        $this->assertEquals('Buffalo City', $result->getAdminLevels()->get(3)->getName());
+        $this->assertEquals('Buffalo City Metropolitan Municipality', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('Eastern Cape', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('South Africa', $result->getCountry()->getName());
         $this->assertEquals('ZA', $result->getCountryCode());
         $this->assertEquals('Africa/Johannesburg', $result->getTimezone());
@@ -137,8 +139,10 @@ JSON;
         $this->assertEquals(51.869628267826, $result->getBounds()->getNorth(), '', 0.01);
         $this->assertEquals(0.48608279418978, $result->getBounds()->getEast(), '', 0.01);
         $this->assertEquals('City of London', $result->getLocality());
-        $this->assertEquals('Greater London', $result->getCounty()->getName());
-        $this->assertEquals('England', $result->getRegion()->getName());
+        $this->assertCount(3, $result->getAdminLevels());
+        $this->assertEquals('City of London', $result->getAdminLevels()->get(3)->getName());
+        $this->assertEquals('Greater London', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('England', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('United Kingdom', $result->getCountry()->getName());
         $this->assertEquals('GB', $result->getCountryCode());
         $this->assertEquals('Europe/London', $result->getTimezone());
@@ -154,8 +158,8 @@ JSON;
         $this->assertEquals(43.059702923237, $result->getBounds()->getNorth(), '', 0.01);
         $this->assertEquals(-81.128595097537, $result->getBounds()->getEast(), '', 0.01);
         $this->assertEquals('London', $result->getLocality());
-        $this->assertEquals('', $result->getCounty()->getName());
-        $this->assertEquals('Ontario', $result->getRegion()->getName());
+        $this->assertCount(1, $result->getAdminLevels());
+        $this->assertEquals('Ontario', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('Canada', $result->getCountry()->getName());
         $this->assertEquals('CA', $result->getCountryCode());
         $this->assertEquals('America/Toronto', $result->getTimezone());
@@ -171,8 +175,9 @@ JSON;
         $this->assertEquals(41.377219912096, $result->getBounds()->getNorth(), '', 0.01);
         $this->assertEquals(-72.070780545154, $result->getBounds()->getEast(), '', 0.01);
         $this->assertEquals('New London', $result->getLocality());
-        $this->assertEquals('New London County', $result->getCounty()->getName());
-        $this->assertEquals('Connecticut', $result->getRegion()->getName());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('New London County', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('Connecticut', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('United States', $result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountryCode());
         $this->assertEquals('America/New_York', $result->getTimezone());
@@ -184,7 +189,7 @@ JSON;
             $this->markTestSkipped('You need to configure the GEONAMES_USERNAME value in phpunit.xml');
         }
 
-        $provider = new Geonames($this->getAdapter(), $_SERVER['GEONAMES_USERNAME'], 'it_IT');
+        $provider = new Geonames($this->getAdapter($_SERVER['GEONAMES_USERNAME']), $_SERVER['GEONAMES_USERNAME'], 'it_IT');
         $results  = $provider->geocode('London');
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -201,8 +206,9 @@ JSON;
         $this->assertEquals(51.86537, $result->getBounds()->getNorth(), '', 0.01);
         $this->assertEquals(0.45212, $result->getBounds()->getEast(), '', 0.01);
         $this->assertEquals('Londra', $result->getLocality());
-        $this->assertEquals('Greater London', $result->getCounty()->getName());
-        $this->assertEquals('Inghilterra', $result->getRegion()->getName());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('Greater London', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('Inghilterra', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('Regno Unito', $result->getCountry()->getName());
         $this->assertEquals('GB', $result->getCountryCode());
         $this->assertEquals('Europe/London', $result->getTimezone());
@@ -218,8 +224,10 @@ JSON;
         $this->assertEquals(-32.925573728925, $result->getBounds()->getNorth(), '', 0.01);
         $this->assertEquals(28.018503381239, $result->getBounds()->getEast(), '', 0.01);
         $this->assertEquals('East London', $result->getLocality());
-        $this->assertEquals('Buffalo City Metropolitan Municipality', $result->getCounty()->getName());
-        $this->assertEquals('Eastern Cape', $result->getRegion()->getName());
+        $this->assertCount(3, $result->getAdminLevels());
+        $this->assertEquals('Buffalo City', $result->getAdminLevels()->get(3)->getName());
+        $this->assertEquals('Buffalo City Metropolitan Municipality', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('Eastern Cape', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('Sudafrica', $result->getCountry()->getName());
         $this->assertEquals('ZA', $result->getCountryCode());
         $this->assertEquals('Africa/Johannesburg', $result->getTimezone());
@@ -235,8 +243,10 @@ JSON;
         $this->assertEquals(51.869628267826, $result->getBounds()->getNorth(), '', 0.01);
         $this->assertEquals(0.48608279418978, $result->getBounds()->getEast(), '', 0.01);
         $this->assertEquals('Città di Londra', $result->getLocality());
-        $this->assertEquals('Greater London', $result->getCounty()->getName());
-        $this->assertEquals('Inghilterra', $result->getRegion()->getName());
+        $this->assertCount(3, $result->getAdminLevels());
+        $this->assertEquals('City of London', $result->getAdminLevels()->get(3)->getName());
+        $this->assertEquals('Greater London', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('Inghilterra', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('Regno Unito', $result->getCountry()->getName());
         $this->assertEquals('GB', $result->getCountryCode());
         $this->assertEquals('Europe/London', $result->getTimezone());
@@ -252,8 +262,8 @@ JSON;
         $this->assertEquals(43.059702923237, $result->getBounds()->getNorth(), '', 0.01);
         $this->assertEquals(-81.128595097537, $result->getBounds()->getEast(), '', 0.01);
         $this->assertEquals('London', $result->getLocality());
-        $this->assertEquals('', $result->getCounty()->getName());
-        $this->assertEquals('Ontario', $result->getRegion()->getName());
+        $this->assertCount(1, $result->getAdminLevels());
+        $this->assertEquals('Ontario', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('Canada', $result->getCountry()->getName());
         $this->assertEquals('CA', $result->getCountryCode());
         $this->assertEquals('America/Toronto', $result->getTimezone());
@@ -269,8 +279,9 @@ JSON;
         $this->assertEquals(41.377219912096, $result->getBounds()->getNorth(), '', 0.01);
         $this->assertEquals(-72.070780545154, $result->getBounds()->getEast(), '', 0.01);
         $this->assertEquals('New London', $result->getLocality());
-        $this->assertEquals('Contea di New London', $result->getCounty()->getName());
-        $this->assertEquals('Connecticut', $result->getRegion()->getName());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('Contea di New London', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('Connecticut', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('Stati Uniti', $result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountryCode());
         $this->assertEquals('America/New_York', $result->getTimezone());
@@ -282,7 +293,7 @@ JSON;
             $this->markTestSkipped('You need to configure the GEONAMES_USERNAME value in phpunit.xml');
         }
 
-        $provider = new Geonames($this->getAdapter(), $_SERVER['GEONAMES_USERNAME']);
+        $provider = new Geonames($this->getAdapter($_SERVER['GEONAMES_USERNAME']), $_SERVER['GEONAMES_USERNAME']);
         $results  = $provider->reverse(51.50853, -0.12574);
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -294,8 +305,9 @@ JSON;
         $this->assertEquals(51.50853, $result->getLatitude(), '', 0.01);
         $this->assertEquals(-0.12574, $result->getLongitude(), '', 0.01);
         $this->assertEquals('London', $result->getLocality());
-        $this->assertEquals('Greater London', $result->getCounty()->getName());
-        $this->assertEquals('England', $result->getRegion()->getName());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('Greater London', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('England', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('United Kingdom', $result->getCountry()->getName());
         $this->assertEquals('GB', $result->getCountryCode());
         $this->assertEquals('Europe/London', $result->getTimezone());
@@ -307,7 +319,7 @@ JSON;
             $this->markTestSkipped('You need to configure the GEONAMES_USERNAME value in phpunit.xml');
         }
 
-        $provider = new Geonames($this->getAdapter(), $_SERVER['GEONAMES_USERNAME'], 'it_IT');
+        $provider = new Geonames($this->getAdapter($_SERVER['GEONAMES_USERNAME']), $_SERVER['GEONAMES_USERNAME'], 'it_IT');
         $results  = $provider->reverse(51.50853, -0.12574);
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -319,8 +331,9 @@ JSON;
         $this->assertEquals(51.50853, $result->getLatitude(), '', 0.01);
         $this->assertEquals(-0.12574, $result->getLongitude(), '', 0.01);
         $this->assertEquals('Londra', $result->getLocality());
-        $this->assertEquals('Greater London', $result->getCounty()->getName());
-        $this->assertEquals('Inghilterra', $result->getRegion()->getName());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('Greater London', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('Inghilterra', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('Regno Unito', $result->getCountry()->getName());
         $this->assertEquals('GB', $result->getCountryCode());
         $this->assertEquals('Europe/London', $result->getTimezone());

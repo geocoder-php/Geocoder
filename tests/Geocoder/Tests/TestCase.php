@@ -71,9 +71,9 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
      *
      * @return HttpAdapterInterface
      */
-    protected function getAdapter()
+    protected function getAdapter($apiKey = null)
     {
-        return new CachedResponseAdapter(new CurlHttpAdapter(), $this->useCache());
+        return new CachedResponseAdapter(new CurlHttpAdapter(), $this->useCache(), $apiKey);
     }
 
     /**

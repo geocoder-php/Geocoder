@@ -146,6 +146,8 @@ class MaxMind extends AbstractHttpProvider implements Provider
             $data['country'] = $this->countryCodeToCountryName($data['countryCode']);
         }
 
+        $data = $this->replaceAdmins($data);
+
         return $this->returnResults([
             $this->fixEncoding(array_merge($this->getDefaults(), $data))
         ]);
@@ -156,6 +158,23 @@ class MaxMind extends AbstractHttpProvider implements Provider
         $countryNames = $this->getCountryNames();
 
         return $countryNames[$code];
+    }
+
+    private function replaceAdmins($data)
+    {
+        $adminLevels = [];
+
+        $region = \igorw\get_in($data, ['region']);
+        $regionCode = \igorw\get_in($data, ['regionCode']);
+        unset($data['region'], $data['regionCode']);
+
+        if (null !== $region || null !== $regionCode) {
+            $adminLevels[] = ['name' => $region, 'code' => $regionCode, 'level' => 1];
+        }
+
+        $data['adminLevels'] = $adminLevels;
+
+        return $data;
     }
 
     /**

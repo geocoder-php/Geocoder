@@ -53,23 +53,23 @@ class StringFormatterTest extends TestCase
                 '8001'
             ),
             array(
-                array('county' => 'Collin County'),
-                '%P',
+                array('adminLevels' => [['name' => 'Collin County', 'level' => 2]]),
+                '%A2',
                 'Collin County'
             ),
             array(
-                array('countyCode' => 'FC'),
-                '%p',
+                array('adminLevels' => [['code' => 'FC', 'level' => 2]]),
+                '%a2',
                 'FC'
             ),
             array(
-                array('region' => 'Auvergne'),
-                '%R',
+                array('adminLevels' => [['name' => 'Auvergne', 'level' => 1]]),
+                '%A1',
                 'Auvergne'
             ),
             array(
-                array('regionCode' => 'CA'),
-                '%r',
+                array('adminLevels' => [['code' => 'CA', 'level' => 1]]),
+                '%a1',
                 'CA'
             ),
             array(
@@ -119,7 +119,7 @@ class StringFormatterTest extends TestCase
                     'postalCode'   => 8001,
                     'locality'     => 'Zuerich',
                 ),
-                '<p>%S %n, %z <a href="#%L">%L</a></p><p>%P</p>',
+                '<p>%S %n, %z <a href="#%L">%L</a></p><p>%A2</p>',
                 '<p>Badenerstrasse 120, 8001 <a href="#Zuerich">Zuerich</a></p><p></p>'
             ),
         );

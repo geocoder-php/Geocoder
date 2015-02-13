@@ -23,8 +23,8 @@ class AddressFactoryTest extends TestCase
 
         $addresses = $this->factory->createFromArray([
             [ 'streetNumber' => 1 ],
-            [ 'streetNumber' => 2 ],
-            [ 'streetNumber' => 3 ],
+            [ 'streetNumber' => 2, 'adminLevels' => [['name' => 'admin 1', 'level' => 1]] ],
+            [ 'streetNumber' => 3, 'adminLevels' => [['name' => 'admin 2', 'level' => 2], ['name' => 'admin 1', 'level' => 1]] ],
         ]);
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $addresses);
@@ -33,10 +33,14 @@ class AddressFactoryTest extends TestCase
         $i = 1;
         foreach ($addresses as $address) {
             $this->assertInstanceOf('Geocoder\Model\Address', $address);
-            $this->assertNull($address->getCoordinates());
-            $this->assertInstanceOf('Geocoder\Model\County', $address->getCounty());
             $this->assertInstanceOf('Geocoder\Model\Country', $address->getCountry());
-            $this->assertInstanceOf('Geocoder\Model\Region', $address->getRegion());
+            $this->assertNull($address->getCoordinates());
+
+            foreach ($address->getAdminLevels() as $level => $adminLevel) {
+                $this->assertInstanceOf('Geocoder\Model\AdminLevel', $adminLevel);
+                $this->assertSame($level, $adminLevel->getLevel());
+                $this->assertEquals('admin ' . $level, $adminLevel->getName());
+            }
 
             $this->assertEquals($i++, $address->getStreetNumber());
         }

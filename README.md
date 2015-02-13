@@ -106,12 +106,8 @@ objects (`AddressCollection`), each providing the following API:
 * `getLocality()` will return the `locality` or `city`;
 * `getPostalCode()` will return the `postalCode` or `zipcode`;
 * `getSubLocality()` will return the `city district`, or `sublocality`;
-* `getCounty()` will return a `County` object (with `name` and `code`
-  properties);
-* `getCountyCode()` will return the `county` code (county short name);
-* `getRegion()` will return a `Region` object (with `name` and `code`
-  properties);
-* `getRegionCode()` will return the `region` code (region short name);
+* `getAdminLevels()` will return an ordered collection (`AdminLevelCollection`)
+  of `AdminLevel` object (with `level`, `name` and `code` properties);
 * `getCountry()` will return a `Country` object (with `name` and `code`
   properties);
 * `getCountryCode()` will return the ISO `country` code;
@@ -478,13 +474,9 @@ Here is the mapping:
 
 * Zipcode: `%z`
 
-* County: `%P`
+* Admin Level Name: `%A1`, `%A2`, `%A3`, `%A4`, `%A5`
 
-* County Code: `%p`
-
-* Region: `%R`
-
-* Region Code: `%r`
+* Admin Level Code: `%a1`, `%a2`, `%a3`, `%a4`, `%a5`
 
 * Country: `%C`
 

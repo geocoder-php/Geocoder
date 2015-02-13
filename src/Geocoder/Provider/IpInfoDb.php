@@ -144,7 +144,7 @@ class IpInfoDb extends AbstractHttpProvider implements Provider
                 'longitude'   => isset($data['longitude']) ? $data['longitude'] : null,
                 'locality'    => isset($data['cityName']) ? $data['cityName'] : null,
                 'postalCode'  => isset($data['zipCode']) ? $data['zipCode'] : null,
-                'region'      => isset($data['regionName']) ? $data['regionName'] : null,
+                'adminLevels' => isset($data['regionName']) ? [['name' => $data['regionName'], 'level' => 1]] : [],
                 'country'     => isset($data['countryName']) ? $data['countryName'] : null,
                 'countryCode' => isset($data['countryName']) ? $data['countryCode'] : null,
                 'timezone'    => $timezone,

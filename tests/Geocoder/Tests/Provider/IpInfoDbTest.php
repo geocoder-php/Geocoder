@@ -86,10 +86,9 @@ class IpInfoDbTest extends TestCase
         $this->assertNull($result->getLongitude());
         $this->assertNull($result->getPostalCode());
         $this->assertNull($result->getTimezone());
+        $this->assertEmpty($result->getAdminLevels());
 
         $this->assertEquals('localhost', $result->getLocality());
-        $this->assertEquals('localhost', $result->getCounty()->getName());
-        $this->assertEquals('localhost', $result->getRegion()->getName());
         $this->assertEquals('localhost', $result->getCountry()->getName());
     }
 
@@ -129,7 +128,7 @@ class IpInfoDbTest extends TestCase
             $this->markTestSkipped('You need to configure the IPINFODB_API_KEY value in phpunit.xml');
         }
 
-        $provider = new IpInfoDb($this->getAdapter(), $_SERVER['IPINFODB_API_KEY']);
+        $provider = new IpInfoDb($this->getAdapter($_SERVER['IPINFODB_API_KEY']), $_SERVER['IPINFODB_API_KEY']);
         $results  = $provider->geocode('74.125.45.100');
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -141,9 +140,10 @@ class IpInfoDbTest extends TestCase
         $this->assertEquals(37.406, $result->getLatitude(), '', 0.001);
         $this->assertEquals(-122.079, $result->getLongitude(), '', 0.001);
         $this->assertEquals(94043, $result->getPostalCode());
-        $this->assertEquals('MOUNTAIN VIEW', $result->getLocality());
-        $this->assertEquals('CALIFORNIA', $result->getRegion()->getName());
-        $this->assertEquals('UNITED STATES', $result->getCountry()->getName());
+        $this->assertEquals('Mountain View', $result->getLocality());
+        $this->assertCount(1, $result->getAdminLevels());
+        $this->assertEquals('California', $result->getAdminLevels()->get(1)->getName());
+        $this->assertEquals('United States', $result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
         $this->assertEquals('America/Los_Angeles', $result->getTimezone());
     }
@@ -158,7 +158,7 @@ class IpInfoDbTest extends TestCase
             $this->markTestSkipped('You need to configure the IPINFODB_API_KEY value in phpunit.xml');
         }
 
-        $provider = new IpInfoDb($this->getAdapter(), $_SERVER['IPINFODB_API_KEY']);
+        $provider = new IpInfoDb($this->getAdapter($_SERVER['IPINFODB_API_KEY']), $_SERVER['IPINFODB_API_KEY']);
         $provider->geocode('::ffff:74.125.45.100');
     }
 
@@ -171,7 +171,7 @@ class IpInfoDbTest extends TestCase
             $this->markTestSkipped('You need to configure the IPINFODB_API_KEY value in phpunit.xml');
         }
 
-        $provider = new IpInfoDb($this->getAdapter(), $_SERVER['IPINFODB_API_KEY'], 'country');
+        $provider = new IpInfoDb($this->getAdapter($_SERVER['IPINFODB_API_KEY']), $_SERVER['IPINFODB_API_KEY'], 'country');
         $results = $provider->geocode('74.125.45.100');
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -184,8 +184,8 @@ class IpInfoDbTest extends TestCase
         $this->assertNull($result->getLongitude());
         $this->assertNull($result->getPostalCode());
         $this->assertNull($result->getLocality());
-        $this->assertNull($result->getRegion()->getName());
-        $this->assertEquals('UNITED STATES', $result->getCountry()->getName());
+        $this->assertEmpty($result->getAdminLevels());
+        $this->assertEquals('United States', $result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
         $this->assertNull($result->getTimezone());
     }

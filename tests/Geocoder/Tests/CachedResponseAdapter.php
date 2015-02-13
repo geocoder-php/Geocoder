@@ -14,14 +14,17 @@ class CachedResponseAdapter extends AbstractHttpAdapter
 
     private $useCache;
 
+    private $apiKey;
+
     private $cacheDir;
 
-    public function __construct(HttpAdapterInterface $adapter, $useCache = false, $cacheDir = '.cached_responses')
+    public function __construct(HttpAdapterInterface $adapter, $useCache = false, $apiKey, $cacheDir = '.cached_responses')
     {
         parent::__construct();
 
         $this->adapter  = $adapter;
         $this->useCache = $useCache;
+        $this->apiKey   = $apiKey;
         $this->cacheDir = $cacheDir;
     }
 
@@ -38,7 +41,11 @@ class CachedResponseAdapter extends AbstractHttpAdapter
      */
     protected function doSend(InternalRequestInterface $internalRequest)
     {
-        $file = sprintf('%s/%s/%s', realpath(__DIR__ . '/../../'), $this->cacheDir, sha1($internalRequest->getUrl()));
+        $url = $internalRequest->getUrl();
+        if ($this->apiKey) {
+            $url = str_replace($this->apiKey, '[apikey]', $url);
+        }
+        $file = sprintf('%s/%s/%s', realpath(__DIR__ . '/../../'), $this->cacheDir, sha1($url));
 
         if ($this->useCache && is_file($file) && is_readable($file)) {
             $content = unserialize(file_get_contents($file));

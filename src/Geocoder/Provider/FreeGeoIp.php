@@ -80,14 +80,23 @@ class FreeGeoIp extends AbstractHttpProvider implements Provider
             $data['region_code'] = is_numeric($newRegionCode) ? $newRegionCode : null;
         }
 
+        $adminLevels = [];
+
+        if (! empty($data['region_name']) || ! empty($data['region_code'])) {
+            $adminLevels[] = [
+                'name' => isset($data['region_name']) ? $data['region_name'] : null,
+                'code' => isset($data['region_code']) ? $data['region_code'] : null,
+                'level' => 1
+            ];
+        }
+
         return $this->returnResults([
             array_merge($this->getDefaults(), array(
                 'latitude'    => isset($data['latitude']) ? $data['latitude'] : null,
                 'longitude'   => isset($data['longitude']) ? $data['longitude'] : null,
                 'locality'    => isset($data['city']) ? $data['city'] : null,
                 'postalCode'  => isset($data['zip_code']) ? $data['zip_code'] : null,
-                'region'      => isset($data['region_name']) ? $data['region_name'] : null,
-                'regionCode'  => isset($data['region_code']) ? $data['region_code'] : null,
+                'adminLevels' => $adminLevels,
                 'country'     => isset($data['country_name']) ? $data['country_name'] : null,
                 'countryCode' => isset($data['country_code']) ? $data['country_code'] : null,
             ))

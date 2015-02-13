@@ -120,10 +120,15 @@ GPX
             'east'  => 2.388911);
 
         $address = $this->createAddress([
-            'latitude'  => 48.8631507,
-            'longitude' => 2.3889114,
-            'bounds'    => $bounds,
-            'locality'      => 'Paris',
+            'latitude'     => 48.8631507,
+            'longitude'    => 2.3889114,
+            'bounds'       => $bounds,
+            'locality'     => 'Paris',
+            'streetName'   => 'Avenue Gambetta',
+            'streetNumber' => '10',
+            'subLocality'  => '20e Arrondissement',
+            'adminLevels'  => [['level' => 1, 'name' => 'Ile-de-France']],
+            'country'      => 'France'
         ]);
 
         $expected = sprintf(<<<GPX
@@ -136,7 +141,7 @@ version="1.0"
     xsi:schemaLocation="http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd">
     <bounds minlat="%01.6f" minlon="%01.6f" maxlat="%01.6f" maxlon="%01.6f"/>
     <wpt lat="%01.7f" lon="%01.7f">
-        <name><![CDATA[Paris]]></name>
+        <name><![CDATA[10, Avenue Gambetta, Paris, Ile-de-France, France]]></name>
         <type><![CDATA[Address]]></type>
     </wpt>
 </gpx>

@@ -73,10 +73,7 @@ abstract class AbstractProvider
             'locality'     => null,
             'postalCode'   => null,
             'subLocality'  => null,
-            'county'       => null,
-            'countyCode'   => null,
-            'region'       => null,
-            'regionCode'   => null,
+            'adminLevels'  => [],
             'country'      => null,
             'countryCode'  => null,
             'timezone'     => null,
@@ -92,8 +89,6 @@ abstract class AbstractProvider
     {
         return [
             'locality' => 'localhost',
-            'county'   => 'localhost',
-            'region'   => 'localhost',
             'country'  => 'localhost',
         ];
     }

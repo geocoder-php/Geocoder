@@ -87,11 +87,17 @@ class MaxMindBinary extends AbstractProvider implements Provider
             throw new NoResult(sprintf('No results found for IP address %s', $address));
         }
 
+        $adminLevels = [];
+
+        if ($geoIpRecord->region) {
+            $adminLevels[] = ['name' => $geoIpRecord->region, 'level' => 1];
+        }
+
         return $this->returnResults([
             $this->fixEncoding(array_merge($this->getDefaults(), [
                 'countryCode' => $geoIpRecord->country_code,
                 'country'     => $geoIpRecord->country_name,
-                'region'      => $geoIpRecord->region,
+                'adminLevels' => $adminLevels,
                 'locality'    => $geoIpRecord->city,
                 'latitude'    => $geoIpRecord->latitude,
                 'longitude'   => $geoIpRecord->longitude,

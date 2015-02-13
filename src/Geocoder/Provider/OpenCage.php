@@ -128,7 +128,15 @@ class OpenCage extends AbstractHttpProvider implements LocaleAwareProvider
                 ];
             }
 
-            $comp      = $location['components'];
+            $comp = $location['components'];
+
+            $adminLevels = [];
+            foreach (['state', 'county'] as $i => $component) {
+                if (isset($comp[$component])) {
+                    $adminLevels[] = ['name' => $comp[$component], 'level' => $i + 1];
+                }
+            }
+
             $results[] = array_merge($this->getDefaults(), array(
                 'latitude'     => $location['geometry']['lat'],
                 'longitude'    => $location['geometry']['lng'],
@@ -138,8 +146,7 @@ class OpenCage extends AbstractHttpProvider implements LocaleAwareProvider
                 'subLocality'  => isset($comp['suburb']      ) ? $comp['suburb']       : null,
                 'locality'     => isset($comp['city']        ) ? $comp['city']         : null,
                 'postalCode'   => isset($comp['postcode']    ) ? $comp['postcode']     : null,
-                'county'       => isset($comp['county']      ) ? $comp['county']       : null,
-                'region'       => isset($comp['state']       ) ? $comp['state']        : null,
+                'adminLevels'  => $adminLevels,
                 'country'      => isset($comp['country']     ) ? $comp['country']      : null,
                 'countryCode'  => isset($comp['country_code']) ? strtoupper($comp['country_code']) : null,
                 'timezone'     => isset($location['annotations']['timezone']['name']) ? $location['annotations']['timezone']['name'] : null,

@@ -92,7 +92,7 @@ class YandexTest extends TestCase
         $results  = $provider->geocode('10 avenue Gambetta, Paris, France');
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
-        $this->assertCount(5, $results);
+        $this->assertCount(1, $results);
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results->first();
@@ -106,40 +106,19 @@ class YandexTest extends TestCase
         $this->assertEquals(2.391064, $result->getBounds()->getEast(), '', 0.01);
         $this->assertEquals(10, $result->getStreetNumber());
         $this->assertEquals('Avenue Gambetta', $result->getStreetName());
-        $this->assertEquals('Иль-Де-Франс', $result->getRegion()->getName());
+        $this->assertEquals('Париж', $result->getLocality());
+        $this->assertEquals('XX округ', $result->getSubLocality());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('Париж', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('Иль-Де-Франс', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('Франция', $result->getCountry()->getName());
         $this->assertEquals('FR', $result->getCountry()->getCode());
 
         // not provided
         $this->assertNull($result->getPostalCode());
-        $this->assertNull($result->getSubLocality());
-        $this->assertNull($result->getLocality());
-        $this->assertNull($result->getRegion()->getCode());
+        $this->assertNull($result->getAdminLevels()->get(2)->getCode());
+        $this->assertNull($result->getAdminLevels()->get(1)->getCode());
         $this->assertNull($result->getTimezone());
-
-        /** @var \Geocoder\Model\Address $result */
-        $result = $results->get(1);
-        $this->assertInstanceOf('Geocoder\Model\Address', $result);
-        $this->assertEquals(48.810138, $result->getLatitude(), '', 0.01);
-        $this->assertEquals(2.435926, $result->getLongitude(), '', 0.01);
-
-        /** @var \Geocoder\Model\Address $result */
-        $result = $results->get(2);
-        $this->assertInstanceOf('Geocoder\Model\Address', $result);
-        $this->assertEquals(48.892773, $result->getLatitude(), '', 0.01);
-        $this->assertEquals(2.246174, $result->getLongitude(), '', 0.01);
-
-        /** @var \Geocoder\Model\Address $result */
-        $result = $results->get(3);
-        $this->assertInstanceOf('Geocoder\Model\Address', $result);
-        $this->assertEquals(48.844640, $result->getLatitude(), '', 0.01);
-        $this->assertEquals(2.420493, $result->getLongitude(), '', 0.01);
-
-        /** @var \Geocoder\Model\Address $result */
-        $result = $results->get(4);
-        $this->assertInstanceOf('Geocoder\Model\Address', $result);
-        $this->assertEquals(48.813520, $result->getLatitude(), '', 0.01);
-        $this->assertEquals(2.324642, $result->getLongitude(), '', 0.01);
     }
 
     public function testGeocodeWithRealAddressWithUALocale()
@@ -153,8 +132,8 @@ class YandexTest extends TestCase
         /** @var \Geocoder\Model\Address $result */
         $result = $results->first();
         $this->assertInstanceOf('Geocoder\Model\Address', $result);
-        $this->assertEquals(55.675682, $result->getLatitude(), '', 0.01);
-        $this->assertEquals(12.567602, $result->getLongitude(), '', 0.01);
+        $this->assertEquals(55.675676, $result->getLatitude(), '', 0.01);
+        $this->assertEquals(12.567593, $result->getLongitude(), '', 0.01);
         $this->assertTrue($result->getBounds()->isDefined());
         $this->assertEquals(55.614999, $result->getBounds()->getSouth(), '', 0.01);
         $this->assertEquals(12.45295, $result->getBounds()->getWest(), '', 0.01);
@@ -163,21 +142,22 @@ class YandexTest extends TestCase
         $this->assertNull($result->getStreetNumber());
         $this->assertNull($result->getStreetName());
         $this->assertEquals('Копенгаген', $result->getLocality());
-        $this->assertEquals('Столичная область', $result->getRegion()->getName());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('Столичная область', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('Данія', $result->getCountry()->getName());
         $this->assertEquals('DK', $result->getCountry()->getCode());
 
         // not provided
         $this->assertNull($result->getPostalCode());
         $this->assertNull($result->getSubLocality());
-        $this->assertNull($result->getRegion()->getCode());
+        $this->assertNull($result->getAdminLevels()->get(1)->getCode());
         $this->assertNull($result->getTimezone());
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results->get(1);
         $this->assertInstanceOf('Geocoder\Model\Address', $result);
-        $this->assertEquals(55.614439, $result->getLatitude(), '', 0.01);
-        $this->assertEquals(12.645351, $result->getLongitude(), '', 0.01);
+        $this->assertEquals(55.455739, $result->getLatitude(), '', 0.01);
+        $this->assertEquals(9.972854, $result->getLongitude(), '', 0.01);
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results->get(2);
@@ -209,24 +189,26 @@ class YandexTest extends TestCase
         /** @var \Geocoder\Model\Address $result */
         $result = $results->first();
         $this->assertInstanceOf('Geocoder\Model\Address', $result);
-        $this->assertEquals(38.898720, $result->getLatitude(), '', 0.01);
-        $this->assertEquals(-77.036384, $result->getLongitude(), '', 0.01);
+        $this->assertEquals(38.897695, $result->getLatitude(), '', 0.01);
+        $this->assertEquals(-77.038692, $result->getLongitude(), '', 0.01);
         $this->assertTrue($result->getBounds()->isDefined());
-        $this->assertEquals(38.897119, $result->getBounds()->getSouth(), '', 0.01);
-        $this->assertEquals(-77.058078, $result->getBounds()->getWest(), '', 0.01);
-        $this->assertEquals(38.90032, $result->getBounds()->getNorth(), '', 0.01);
-        $this->assertEquals(-77.012453, $result->getBounds()->getEast(), '', 0.01);
-        $this->assertNull($result->getStreetNumber());
+        $this->assertEquals(38.891265, $result->getBounds()->getSouth(), '', 0.01);
+        $this->assertEquals(-77.046921, $result->getBounds()->getWest(), '', 0.01);
+        $this->assertEquals(38.904125, $result->getBounds()->getNorth(), '', 0.01);
+        $this->assertEquals(-77.030464, $result->getBounds()->getEast(), '', 0.01);
+        $this->assertEquals(1600, $result->getStreetNumber());
         $this->assertEquals('Pennsylvania Ave NW', $result->getStreetName());
         $this->assertEquals('Washington', $result->getLocality());
-        $this->assertEquals('District of Columbia', $result->getRegion()->getName());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('District of Columbia', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('District of Columbia', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('United States', $result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
 
         // not provided
         $this->assertNull($result->getPostalCode());
         $this->assertNull($result->getSubLocality());
-        $this->assertNull($result->getRegion()->getCode());
+        $this->assertNull($result->getAdminLevels()->get(1)->getCode());
         $this->assertNull($result->getTimezone());
     }
 
@@ -251,14 +233,14 @@ class YandexTest extends TestCase
         $this->assertEquals(19, $result->getStreetNumber());
         $this->assertEquals('улица Ленина', $result->getStreetName());
         $this->assertEquals('Минск', $result->getLocality());
-        $this->assertNull($result->getRegion()->getName());
+        $this->assertCount(1, $result->getAdminLevels());
+        $this->assertEquals('Минск', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('Беларусь', $result->getCountry()->getName());
         $this->assertEquals('BY', $result->getCountry()->getCode());
 
         // not provided
         $this->assertNull($result->getPostalCode());
         $this->assertNull($result->getSubLocality());
-        $this->assertNull($result->getRegion()->getCode());
         $this->assertNull($result->getTimezone());
     }
 
@@ -298,7 +280,7 @@ class YandexTest extends TestCase
         $results  = $provider->reverse(48.863216489553, 2.388771995902061);
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
-        $this->assertCount(3, $results);
+        $this->assertCount(5, $results);
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results->first();
@@ -309,31 +291,34 @@ class YandexTest extends TestCase
         $this->assertEquals(48.86294, $result->getBounds()->getSouth(), '', 0.01);
         $this->assertEquals(2.387497, $result->getBounds()->getWest(), '', 0.01);
         $this->assertEquals(48.877038, $result->getBounds()->getNorth(), '', 0.01);
-        $this->assertEquals(2.423214, $result->getBounds()->getEast(), '', 0.01);
+        $this->assertEquals(2.406587, $result->getBounds()->getEast(), '', 0.01);
         $this->assertNull($result->getStreetNumber());
         $this->assertEquals('Avenue Gambetta', $result->getStreetName());
-        $this->assertEquals('Иль-Де-Франс', $result->getRegion()->getName());
+        $this->assertEquals('Париж', $result->getLocality());
+        $this->assertEquals('XX округ', $result->getSubLocality());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('Париж', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('Иль-Де-Франс', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('Франция', $result->getCountry()->getName());
         $this->assertEquals('FR', $result->getCountry()->getCode());
 
         // not provided
         $this->assertNull($result->getPostalCode());
-        $this->assertNull($result->getSubLocality());
-        $this->assertNull($result->getLocality());
-        $this->assertNull($result->getRegion()->getCode());
+        $this->assertNull($result->getAdminLevels()->get(2)->getCode());
+        $this->assertNull($result->getAdminLevels()->get(1)->getCode());
         $this->assertNull($result->getTimezone());
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results->get(1);
         $this->assertInstanceOf('Geocoder\Model\Address', $result);
-        $this->assertEquals(48.709273, $result->getLatitude(), '', 0.01);
-        $this->assertEquals(2.503371, $result->getLongitude(), '', 0.01);
+        $this->assertEquals(48.864848, $result->getLatitude(), '', 0.01);
+        $this->assertEquals(2.3993549, $result->getLongitude(), '', 0.01);
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results->get(2);
         $this->assertInstanceOf('Geocoder\Model\Address', $result);
-        $this->assertEquals(46.621810, $result->getLatitude(), '', 0.01);
-        $this->assertEquals(2.452113, $result->getLongitude(), '', 0.01);
+        $this->assertEquals(48.856929, $result->getLatitude(), '', 0.01);
+        $this->assertEquals(2.341197, $result->getLongitude(), '', 0.01);
     }
 
     public function testReverseWithRealCoordinatesWithUSLocaleAndStreeToponym()
@@ -353,18 +338,21 @@ class YandexTest extends TestCase
         $this->assertEquals(48.86294, $result->getBounds()->getSouth(), '', 0.01);
         $this->assertEquals(2.387497, $result->getBounds()->getWest(), '', 0.01);
         $this->assertEquals(48.877038, $result->getBounds()->getNorth(), '', 0.01);
-        $this->assertEquals(2.423214, $result->getBounds()->getEast(), '', 0.01);
+        $this->assertEquals(2.406587, $result->getBounds()->getEast(), '', 0.01);
         $this->assertNull($result->getStreetNumber());
         $this->assertEquals('Avenue Gambetta', $result->getStreetName());
-        $this->assertEquals('Ile-de-France', $result->getRegion()->getName());
+        $this->assertEquals('20e Arrondissement', $result->getSubLocality());
+        $this->assertEquals('Paris', $result->getLocality());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('Paris', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('Ile-de-France', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('France', $result->getCountry()->getName());
         $this->assertEquals('FR', $result->getCountry()->getCode());
 
         // not provided
         $this->assertNull($result->getPostalCode());
-        $this->assertNull($result->getSubLocality());
-        $this->assertNull($result->getLocality());
-        $this->assertNull($result->getRegion()->getCode());
+        $this->assertNull($result->getAdminLevels()->get(2)->getCode());
+        $this->assertNull($result->getAdminLevels()->get(1)->getCode());
         $this->assertNull($result->getTimezone());
 
         /** @var \Geocoder\Model\Address $result */
@@ -411,16 +399,19 @@ class YandexTest extends TestCase
         $this->assertEquals(60.455474, $result->getBounds()->getNorth(), '', 0.01);
         $this->assertEquals(22.258609, $result->getBounds()->getEast(), '', 0.01);
         $this->assertEquals(36, $result->getStreetNumber());
-        $this->assertEquals('Ratapihankatu', $result->getStreetName());
+        $this->assertEquals('Bangårdsgatan', $result->getStreetName());
         $this->assertEquals('Турку', $result->getLocality());
-        $this->assertEquals('Исконная Финляндия', $result->getRegion()->getName());
+        $this->assertEquals('Кескуста', $result->getSubLocality());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('Исконная Финляндия', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('Юго-Западная Финляндия', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('Фінляндія', $result->getCountry()->getName());
         $this->assertEquals('FI', $result->getCountry()->getCode());
 
         // not provided
         $this->assertNull($result->getPostalCode());
-        $this->assertNull($result->getSubLocality());
-        $this->assertNull($result->getRegion()->getCode());
+        $this->assertNull($result->getAdminLevels()->get(2)->getCode());
+        $this->assertNull($result->getAdminLevels()->get(1)->getCode());
         $this->assertNull($result->getTimezone());
     }
 
@@ -435,24 +426,27 @@ class YandexTest extends TestCase
         /** @var \Geocoder\Model\Address $result */
         $result = $results->first();
         $this->assertInstanceOf('Geocoder\Model\Address', $result);
-        $this->assertEquals(40.909452, $result->getLatitude(), '', 0.01);
-        $this->assertEquals(29.138608, $result->getLongitude(), '', 0.01);
+        $this->assertEquals(40.874651, $result->getLatitude(), '', 0.01);
+        $this->assertEquals(29.129562, $result->getLongitude(), '', 0.01);
         $this->assertTrue($result->getBounds()->isDefined());
         $this->assertEquals(40.860413, $result->getBounds()->getSouth(), '', 0.01);
-        $this->assertEquals(29.072708, $result->getBounds()->getWest(), '', 0.01);
-        $this->assertEquals(40.960403, $result->getBounds()->getNorth(), '', 0.01);
-        $this->assertEquals(29.204508, $result->getBounds()->getEast(), '', 0.01);
+        $this->assertEquals(29.107230, $result->getBounds()->getWest(), '', 0.01);
+        $this->assertEquals(40.876111, $result->getBounds()->getNorth(), '', 0.01);
+        $this->assertEquals(29.139021, $result->getBounds()->getEast(), '', 0.01);
         $this->assertNull($result->getStreetName());
         $this->assertNull($result->getStreetNumber());
-        $this->assertEquals('Dragos', $result->getLocality());
-        $this->assertEquals('İstanbul', $result->getRegion()->getName());
+        $this->assertEquals('Adalar', $result->getLocality());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('Adalar', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('İstanbul', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('Türkiye', $result->getCountry()->getName());
         $this->assertEquals('TR', $result->getCountry()->getCode());
 
         // not provided
         $this->assertNull($result->getPostalCode());
         $this->assertNull($result->getSubLocality());
-        $this->assertNull($result->getRegion()->getCode());
+        $this->assertNull($result->getAdminLevels()->get(2)->getCode());
+        $this->assertNull($result->getAdminLevels()->get(1)->getCode());
         $this->assertNull($result->getTimezone());
     }
 }

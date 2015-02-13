@@ -84,7 +84,7 @@ XML;
             $this->markTestSkipped('You need to configure the TOMTOM_MAP_KEY value in phpunit.xml');
         }
 
-        $provider = new TomTom($this->getAdapter(), $_SERVER['TOMTOM_MAP_KEY']);
+        $provider = new TomTom($this->getAdapter($_SERVER['TOMTOM_MAP_KEY']), $_SERVER['TOMTOM_MAP_KEY']);
         $results  = $provider->geocode('Tagensvej 47, 2200 København N');
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -101,8 +101,7 @@ XML;
         $this->assertNull($result->getPostalCode());
         $this->assertEquals('Copenhagen', $result->getLocality());
         $this->assertNull($result->getSubLocality());
-        $this->assertNull($result->getRegion()->getName());
-        $this->assertNull($result->getRegion()->getCode());
+        $this->assertCount(0, $result->getAdminLevels());
         $this->assertEquals('Denmark', $result->getCountry()->getName());
         $this->assertEquals('DNK', $result->getCountry()->getCode());
         $this->assertNull($result->getTimezone());
@@ -114,7 +113,7 @@ XML;
             $this->markTestSkipped('You need to configure the TOMTOM_MAP_KEY value in phpunit.xml');
         }
 
-        $provider = new TomTom($this->getAdapter(), $_SERVER['TOMTOM_MAP_KEY'], 'fr_FR');
+        $provider = new TomTom($this->getAdapter($_SERVER['TOMTOM_MAP_KEY']), $_SERVER['TOMTOM_MAP_KEY'], 'fr_FR');
         $results  = $provider->geocode('Tagensvej 47, 2200 København N');
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -131,8 +130,7 @@ XML;
         $this->assertNull($result->getPostalCode());
         $this->assertEquals('Copenhague', $result->getLocality());
         $this->assertNull($result->getSubLocality());
-        $this->assertNull($result->getRegion()->getName());
-        $this->assertNull($result->getRegion()->getCode());
+        $this->assertCount(0, $result->getAdminLevels());
         $this->assertEquals('Danemark', $result->getCountry()->getName());
         $this->assertEquals('DNK', $result->getCountry()->getCode());
         $this->assertNull($result->getTimezone());
@@ -144,7 +142,7 @@ XML;
             $this->markTestSkipped('You need to configure the TOMTOM_MAP_KEY value in phpunit.xml');
         }
 
-        $provider = new TomTom($this->getAdapter(), $_SERVER['TOMTOM_MAP_KEY'], 'sv-SE');
+        $provider = new TomTom($this->getAdapter($_SERVER['TOMTOM_MAP_KEY']), $_SERVER['TOMTOM_MAP_KEY'], 'sv-SE');
         $results  = $provider->geocode('Tagensvej 47, 2200 København N');
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -161,8 +159,7 @@ XML;
         $this->assertNull($result->getPostalCode());
         $this->assertEquals('Köpenhamn', $result->getLocality());
         $this->assertNull($result->getSubLocality());
-        $this->assertNull($result->getRegion()->getName());
-        $this->assertNull($result->getRegion()->getCode());
+        $this->assertCount(0, $result->getAdminLevels());
         $this->assertEquals('Danmark', $result->getCountry()->getName());
         $this->assertEquals('DNK', $result->getCountry()->getCode());
         $this->assertNull($result->getTimezone());
@@ -174,7 +171,7 @@ XML;
             $this->markTestSkipped('You need to configure the TOMTOM_MAP_KEY value in phpunit.xml');
         }
 
-        $provider = new TomTom($this->getAdapter(), $_SERVER['TOMTOM_MAP_KEY']);
+        $provider = new TomTom($this->getAdapter($_SERVER['TOMTOM_MAP_KEY']), $_SERVER['TOMTOM_MAP_KEY']);
         $results  = $provider->geocode('Paris');
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -191,8 +188,9 @@ XML;
         $this->assertNull($result->getPostalCode());
         $this->assertEquals('Paris', $result->getLocality());
         $this->assertNull($result->getSubLocality());
-        $this->assertEquals('Ile-de-France', $result->getRegion()->getName());
-        $this->assertNull($result->getRegion()->getCode());
+        $this->assertCount(1, $result->getAdminLevels());
+        $this->assertEquals('Ile-de-France', $result->getAdminLevels()->get(1)->getName());
+        $this->assertNull($result->getAdminLevels()->get(1)->getCode());
         $this->assertEquals('France', $result->getCountry()->getName());
         $this->assertEquals('FRA', $result->getCountry()->getCode());
         $this->assertNull($result->getTimezone());
@@ -203,7 +201,8 @@ XML;
         $this->assertEquals(33.661426, $result->getLatitude(), '', 0.0001);
         $this->assertEquals(-95.556321, $result->getLongitude(), '', 0.0001);
         $this->assertEquals('Paris', $result->getLocality());
-        $this->assertEquals('Texas', $result->getRegion()->getName());
+        $this->assertCount(1, $result->getAdminLevels());
+        $this->assertEquals('Texas', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('United States',$result->getCountry()->getName());
         $this->assertEquals('USA', $result->getCountry()->getCode());
 
@@ -213,7 +212,8 @@ XML;
         $this->assertEquals(36.302754, $result->getLatitude(), '', 0.0001);
         $this->assertEquals(-88.326359, $result->getLongitude(), '', 0.0001);
         $this->assertEquals('Paris', $result->getLocality());
-        $this->assertEquals('Tennessee', $result->getRegion()->getName());
+        $this->assertCount(1, $result->getAdminLevels());
+        $this->assertEquals('Tennessee', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('United States', $result->getCountry()->getName());
         $this->assertEquals('USA', $result->getCountry()->getCode());
 
@@ -223,7 +223,8 @@ XML;
         $this->assertEquals(-19.039448, $result->getLatitude(), '', 0.0001);
         $this->assertEquals(29.560445, $result->getLongitude(), '', 0.0001);
         $this->assertEquals('Paris', $result->getLocality());
-        $this->assertEquals('Midlands', $result->getRegion()->getName());
+        $this->assertCount(1, $result->getAdminLevels());
+        $this->assertEquals('Midlands', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('Zimbabwe', $result->getCountry()->getName());
         $this->assertEquals('ZWE', $result->getCountry()->getCode());
 
@@ -233,7 +234,8 @@ XML;
         $this->assertEquals(35.292105, $result->getLatitude(), '', 0.0001);
         $this->assertEquals(-93.729922, $result->getLongitude(), '', 0.0001);
         $this->assertEquals('Paris', $result->getLocality());
-        $this->assertEquals('Arkansas', $result->getRegion()->getName());
+        $this->assertCount(1, $result->getAdminLevels());
+        $this->assertEquals('Arkansas', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('United States', $result->getCountry()->getName());
         $this->assertEquals('USA', $result->getCountry()->getCode());
     }
@@ -352,7 +354,7 @@ XML;
             $this->markTestSkipped('You need to configure the TOMTOM_MAP_KEY value in phpunit.xml');
         }
 
-        $provider = new TomTom($this->getAdapter(), $_SERVER['TOMTOM_MAP_KEY']);
+        $provider = new TomTom($this->getAdapter($_SERVER['TOMTOM_MAP_KEY']), $_SERVER['TOMTOM_MAP_KEY']);
         $results  = $provider->reverse(48.86321648955345, 2.3887719959020615);
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -369,8 +371,7 @@ XML;
         $this->assertNull($result->getPostalCode());
         $this->assertEquals('20e Arrondissement Paris', $result->getLocality());
         $this->assertNull($result->getSubLocality());
-        $this->assertNull($result->getRegion()->getName());
-        $this->assertNull($result->getRegion()->getCode());
+        $this->assertCount(0, $result->getAdminLevels());
         $this->assertEquals('France', $result->getCountry()->getName());
         $this->assertEquals('FRA', $result->getCountry()->getCode());
         $this->assertNull($result->getTimezone());
@@ -382,7 +383,7 @@ XML;
             $this->markTestSkipped('You need to configure the TOMTOM_MAP_KEY value in phpunit.xml');
         }
 
-        $provider = new TomTom($this->getAdapter(),  $_SERVER['TOMTOM_MAP_KEY']);
+        $provider = new TomTom($this->getAdapter($_SERVER['TOMTOM_MAP_KEY']),  $_SERVER['TOMTOM_MAP_KEY']);
         $results  = $provider->reverse(56.5231, 10.0659);
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -399,8 +400,7 @@ XML;
         $this->assertNull($result->getPostalCode());
         $this->assertEquals('Spentrup', $result->getLocality());
         $this->assertNull($result->getSubLocality());
-        $this->assertNull($result->getRegion()->getName());
-        $this->assertNull($result->getRegion()->getCode());
+        $this->assertCount(0, $result->getAdminLevels());
         $this->assertEquals('Denmark', $result->getCountry()->getName());
         $this->assertEquals('DNK', $result->getCountry()->getCode());
         $this->assertNull($result->getTimezone());

@@ -51,14 +51,9 @@ final class Address
     private $postalCode;
 
     /**
-     * @var County
+     * @var AdminLevelCollection
      */
-    private $county;
-
-    /**
-     * @var Region
-     */
-    private $region;
+    private $adminLevels;
 
     /**
      * @var Country
@@ -78,17 +73,16 @@ final class Address
      * @param string $subLocality
      */
     public function __construct(
-        Coordinates $coordinates = null,
-        Bounds $bounds           = null,
-        $streetNumber            = null,
-        $streetName              = null,
-        $postalCode              = null,
-        $locality                = null,
-        $subLocality             = null,
-        County $county           = null,
-        Region $region           = null,
-        Country $country         = null,
-        $timezone                = null
+        Coordinates $coordinates          = null,
+        Bounds $bounds                    = null,
+        $streetNumber                     = null,
+        $streetName                       = null,
+        $postalCode                       = null,
+        $locality                         = null,
+        $subLocality                      = null,
+        AdminLevelCollection $adminLevels = null,
+        Country $country                  = null,
+        $timezone                         = null
     ) {
         $this->coordinates  = $coordinates;
         $this->bounds       = $bounds;
@@ -97,8 +91,7 @@ final class Address
         $this->postalCode   = $postalCode;
         $this->locality     = $locality;
         $this->subLocality  = $subLocality;
-        $this->county       = $county;
-        $this->region       = $region;
+        $this->adminLevels  = $adminLevels ?: new AdminLevelCollection();
         $this->country      = $country;
         $this->timezone     = $timezone;
     }
@@ -203,43 +196,13 @@ final class Address
     }
 
     /**
-     * Returns the county value.
+     * Returns the administrative levels.
      *
-     * @return County
+     * @return AdminLevelCollection
      */
-    public function getCounty()
+    public function getAdminLevels()
     {
-        return $this->county;
-    }
-
-    /**
-     * Returns the county short name.
-     *
-     * @return string
-     */
-    public function getCountyCode()
-    {
-        return $this->county->getCode();
-    }
-
-    /**
-     * Returns the region value.
-     *
-     * @return Region
-     */
-    public function getRegion()
-    {
-        return $this->region;
-    }
-
-    /**
-     * Returns the region short name.
-     *
-     * @return string
-     */
-    public function getRegionCode()
-    {
-        return $this->region->getCode();
+        return $this->adminLevels;
     }
 
     /**
@@ -279,6 +242,14 @@ final class Address
      */
     public function toArray()
     {
+        $adminLevels = [];
+        foreach ($this->adminLevels as $adminLevel) {
+            $adminLevels[$adminLevel->getLevel()] = [
+                'name'  => $adminLevel->getName(),
+                'code'  => $adminLevel->getCode()
+            ];
+        }
+
         return array(
             'latitude'     => $this->getLatitude(),
             'longitude'    => $this->getLongitude(),
@@ -288,10 +259,7 @@ final class Address
             'postalCode'   => $this->postalCode,
             'locality'     => $this->locality,
             'subLocality'  => $this->subLocality,
-            'county'       => $this->county->getName(),
-            'countyCode'   => $this->county->getCode(),
-            'region'       => $this->region->getName(),
-            'regionCode'   => $this->region->getCode(),
+            'adminLevels'  => $adminLevels,
             'country'      => $this->country->getName(),
             'countryCode'  => $this->country->getCode(),
             'timezone'     => $this->timezone,

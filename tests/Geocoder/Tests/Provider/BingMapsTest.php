@@ -108,8 +108,9 @@ JSON;
         $this->assertEquals('10 Avenue Gambetta', $result->getStreetName());
         $this->assertEquals(75020, $result->getPostalCode());
         $this->assertEquals('Paris', $result->getLocality());
-        $this->assertEquals('Paris', $result->getCounty()->getName());
-        $this->assertEquals('IdF', $result->getRegion()->getName());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('Paris', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('IdF', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('France', $result->getCountry()->getName());
 
         $this->assertNull($result->getCountry()->getCode());
@@ -129,8 +130,9 @@ JSON;
         $this->assertEquals('10 Avenue Léon Gambetta', $result->getStreetName());
         $this->assertEquals(92120, $result->getPostalCode());
         $this->assertEquals('Montrouge', $result->getLocality());
-        $this->assertEquals('Hauts-de-Seine', $result->getCounty()->getName());
-        $this->assertEquals('IdF', $result->getRegion()->getName());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('Hauts-de-Seine', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('IdF', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('France', $result->getCountry()->getName());
 
         /** @var \Geocoder\Model\Address $result */
@@ -147,8 +149,9 @@ JSON;
         $this->assertEquals('10 Avenue Gambetta', $result->getStreetName());
         $this->assertEquals(94700, $result->getPostalCode());
         $this->assertEquals('Maisons-Alfort', $result->getLocality());
-        $this->assertEquals('Val-De-Marne', $result->getCounty()->getName());
-        $this->assertEquals('IdF', $result->getRegion()->getName());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('Val-De-Marne', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('IdF', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('France', $result->getCountry()->getName());
     }
 
@@ -178,25 +181,26 @@ JSON;
         $this->assertEquals('10 Avenue Gambetta', $result->getStreetName());
         $this->assertEquals(75020, $result->getPostalCode());
         $this->assertEquals('20e Arrondissement', $result->getLocality());
-        $this->assertEquals('Paris', $result->getCounty()->getName());
-        $this->assertEquals('IdF', $result->getRegion()->getName());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('Paris', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('IdF', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('France', $result->getCountry()->getName());
 
         $this->assertNull($result->getCountry()->getCode());
         $this->assertNull($result->getTimezone());
     }
 
-    public function testGeocodeWithRealAddressReturnsMultipleResults()
+    public function testGeocodeWithRealAddressReturnsSingleResults()
     {
         if (!isset($_SERVER['BINGMAPS_API_KEY'])) {
             $this->markTestSkipped('You need to configure the BINGMAPS_API_KEY value in phpunit.xml');
         }
 
-        $provider = new BingMaps($this->getAdapter(), $_SERVER['BINGMAPS_API_KEY'], 'fr-FR');
+        $provider = new BingMaps($this->getAdapter($_SERVER['BINGMAPS_API_KEY']), $_SERVER['BINGMAPS_API_KEY'], 'fr-FR');
         $results  = $provider->geocode('10 avenue Gambetta, Paris, France');
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
-        $this->assertCount(3, $results);
+        $this->assertCount(1, $results);
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results->first();
@@ -212,48 +216,124 @@ JSON;
         $this->assertEquals('10 Avenue Gambetta', $result->getStreetName());
         $this->assertEquals(75020, $result->getPostalCode());
         $this->assertEquals('Paris', $result->getLocality());
-        $this->assertEquals('Paris', $result->getCounty()->getName());
-        $this->assertEquals('IdF', $result->getRegion()->getName());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('Paris', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('IdF', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('France', $result->getCountry()->getName());
 
+        $this->assertNull($result->getAdminLevels()->get(2)->getCode());
+        $this->assertNull($result->getAdminLevels()->get(1)->getCode());
         $this->assertNull($result->getCountry()->getCode());
         $this->assertNull($result->getTimezone());
+
+    }
+
+    public function testGeocodeWithRealAddressReturnsMultipleResults()
+    {
+        if (!isset($_SERVER['BINGMAPS_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the BINGMAPS_API_KEY value in phpunit.xml');
+        }
+
+        $provider = new BingMaps($this->getAdapter($_SERVER['BINGMAPS_API_KEY']), $_SERVER['BINGMAPS_API_KEY'], 'fr-FR');
+        $results  = $provider->geocode('Castelnuovo, Italie');
+
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertCount(5, $results);
+
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results->get(0);
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(44.786701202393, $result->getLatitude(), '', 0.01);
+        $this->assertEquals(8.2841901779175, $result->getLongitude(), '', 0.01);
+        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertEquals(44.775325775146, $result->getBounds()->getSouth(), '', 0.01);
+        $this->assertEquals(8.2711343765259, $result->getBounds()->getWest(), '', 0.01);
+        $this->assertEquals(44.795879364014, $result->getBounds()->getNorth(), '', 0.01);
+        $this->assertEquals(8.296314239502, $result->getBounds()->getEast(), '', 0.01);
+        $this->assertNull($result->getStreetNumber());
+        $this->assertEmpty($result->getStreetName());
+        $this->assertEmpty($result->getPostalCode());
+        $this->assertEquals('Castelnuovo Calcea', $result->getLocality());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('AT', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('Piem.', $result->getAdminLevels()->get(1)->getName());
+        $this->assertEquals('Italie', $result->getCountry()->getName());
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results->get(1);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(48.81342781, $result->getLatitude(), '', 0.01);
-        $this->assertEquals(2.32503767, $result->getLongitude(), '', 0.01);
+        $this->assertEquals(46.05179977417, $result->getLatitude(), '', 0.01);
+        $this->assertEquals(11.497699737549, $result->getLongitude(), '', 0.01);
         $this->assertTrue($result->getBounds()->isDefined());
-        $this->assertEquals(48.809565092429, $result->getBounds()->getSouth(), '', 0.01);
-        $this->assertEquals(2.3172171827738, $result->getBounds()->getWest(), '', 0.01);
-        $this->assertEquals(48.817290527571, $result->getBounds()->getNorth(), '', 0.01);
-        $this->assertEquals(2.3328581572262, $result->getBounds()->getEast(), '', 0.01);
+        $this->assertEquals(46.029235839844, $result->getBounds()->getSouth(), '', 0.01);
+        $this->assertEquals(11.473880767822, $result->getBounds()->getWest(), '', 0.01);
+        $this->assertEquals(46.07377243042, $result->getBounds()->getNorth(), '', 0.01);
+        $this->assertEquals(11.51912689209, $result->getBounds()->getEast(), '', 0.01);
         $this->assertNull($result->getStreetNumber());
-        $this->assertEquals('10 Avenue Léon Gambetta', $result->getStreetName());
-        $this->assertEquals(92120, $result->getPostalCode());
-        $this->assertEquals('Montrouge', $result->getLocality());
-        $this->assertEquals('Hauts-de-Seine', $result->getCounty()->getName());
-        $this->assertEquals('IdF', $result->getRegion()->getName());
-        $this->assertEquals('France', $result->getCountry()->getName());
+        $this->assertEmpty($result->getStreetName());
+        $this->assertEmpty($result->getPostalCode());
+        $this->assertEquals('Castelnuovo', $result->getLocality());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('TN', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('Tr.A.A.', $result->getAdminLevels()->get(1)->getName());
+        $this->assertEquals('Italie', $result->getCountry()->getName());
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results->get(2);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(48.81014147, $result->getLatitude(), '', 0.01);
-        $this->assertEquals(2.43568048, $result->getLongitude(), '', 0.01);
+        $this->assertEquals(44.987880706787, $result->getLatitude(), '', 0.01);
+        $this->assertEquals(9.442440032959, $result->getLongitude(), '', 0.01);
         $this->assertTrue($result->getBounds()->isDefined());
-        $this->assertEquals(48.806278752429, $result->getBounds()->getSouth(), '', 0.01);
-        $this->assertEquals(2.4278605052897, $result->getBounds()->getWest(), '', 0.01);
-        $this->assertEquals(48.814004187571, $result->getBounds()->getNorth(), '', 0.01);
-        $this->assertEquals(2.4435004547103, $result->getBounds()->getEast(), '', 0.01);
+        $this->assertEquals(44.958910323795, $result->getBounds()->getSouth(), '', 0.01);
+        $this->assertEquals(9.3878520826907, $result->getBounds()->getWest(), '', 0.01);
+        $this->assertEquals(45.01685108978, $result->getBounds()->getNorth(), '', 0.01);
+        $this->assertEquals(9.4970279832272, $result->getBounds()->getEast(), '', 0.01);
         $this->assertNull($result->getStreetNumber());
-        $this->assertEquals('10 Avenue Gambetta', $result->getStreetName());
-        $this->assertEquals(94700, $result->getPostalCode());
-        $this->assertEquals('Maisons-Alfort', $result->getLocality());
-        $this->assertEquals('Val-de-Marne', $result->getCounty()->getName());
-        $this->assertEquals('IdF', $result->getRegion()->getName());
-        $this->assertEquals('France', $result->getCountry()->getName());
+        $this->assertEmpty($result->getStreetName());
+        $this->assertEmpty($result->getPostalCode());
+        $this->assertEquals('Castelnuovo', $result->getLocality());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('PC', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('Em.Rom.', $result->getAdminLevels()->get(1)->getName());
+        $this->assertEquals('Italie', $result->getCountry()->getName());
+
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results->get(3);
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(43.82638168335, $result->getLatitude(), '', 0.01);
+        $this->assertEquals(11.068260192871, $result->getLongitude(), '', 0.01);
+        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertEquals(43.797411300357, $result->getBounds()->getSouth(), '', 0.01);
+        $this->assertEquals(11.014744487393, $result->getBounds()->getWest(), '', 0.01);
+        $this->assertEquals(43.855352066342, $result->getBounds()->getNorth(), '', 0.01);
+        $this->assertEquals(11.121775898349, $result->getBounds()->getEast(), '', 0.01);
+        $this->assertNull($result->getStreetNumber());
+        $this->assertEmpty($result->getStreetName());
+        $this->assertEmpty($result->getPostalCode());
+        $this->assertEquals('Castelnuovo', $result->getLocality());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('PO', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('Tosc.', $result->getAdminLevels()->get(1)->getName());
+        $this->assertEquals('Italie', $result->getCountry()->getName());
+
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results->get(4);
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(42.295810699463, $result->getLatitude(), '', 0.01);
+        $this->assertEquals(13.626440048218, $result->getLongitude(), '', 0.01);
+        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertEquals(42.26684031647, $result->getBounds()->getSouth(), '', 0.01);
+        $this->assertEquals(13.574242599134, $result->getBounds()->getWest(), '', 0.01);
+        $this->assertEquals(42.324781082455, $result->getBounds()->getNorth(), '', 0.01);
+        $this->assertEquals(13.678637497301, $result->getBounds()->getEast(), '', 0.01);
+        $this->assertNull($result->getStreetNumber());
+        $this->assertEmpty($result->getStreetName());
+        $this->assertEmpty($result->getPostalCode());
+        $this->assertEquals('Castelnuovo', $result->getLocality());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('AQ', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('Abr.', $result->getAdminLevels()->get(1)->getName());
+        $this->assertEquals('Italie', $result->getCountry()->getName());
     }
 
     /**
@@ -282,7 +362,7 @@ JSON;
             $this->markTestSkipped('You need to configure the BINGMAPS_API_KEY value in phpunit.xml');
         }
 
-        $provider = new BingMaps($this->getAdapter(), $_SERVER['BINGMAPS_API_KEY']);
+        $provider = new BingMaps($this->getAdapter($_SERVER['BINGMAPS_API_KEY']), $_SERVER['BINGMAPS_API_KEY']);
         $results  = $provider->reverse(48.86321648955345, 2.3887719959020615);
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -302,8 +382,9 @@ JSON;
         $this->assertEquals('10 Avenue Gambetta', $result->getStreetName());
         $this->assertEquals(75020, $result->getPostalCode());
         $this->assertEquals('Paris', $result->getLocality());
-        $this->assertEquals('Paris', $result->getCounty()->getName());
-        $this->assertEquals('IdF', $result->getRegion()->getName());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('Paris', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('IdF', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('France', $result->getCountry()->getName());
 
         $this->assertNull($result->getCountry()->getCode());
@@ -320,7 +401,7 @@ JSON;
             $this->markTestSkipped('You need to configure the BINGMAPS_API_KEY value in phpunit.xml');
         }
 
-        $provider = new BingMaps($this->getAdapter(), $_SERVER['BINGMAPS_API_KEY']);
+        $provider = new BingMaps($this->getAdapter($_SERVER['BINGMAPS_API_KEY']), $_SERVER['BINGMAPS_API_KEY']);
         $provider->geocode('88.188.221.14');
     }
 
@@ -334,7 +415,7 @@ JSON;
             $this->markTestSkipped('You need to configure the BINGMAPS_API_KEY value in phpunit.xml');
         }
 
-        $provider = new BingMaps($this->getAdapter(), $_SERVER['BINGMAPS_API_KEY']);
+        $provider = new BingMaps($this->getAdapter($_SERVER['BINGMAPS_API_KEY']), $_SERVER['BINGMAPS_API_KEY']);
         $provider->geocode('::ffff:88.188.221.14');
     }
 }

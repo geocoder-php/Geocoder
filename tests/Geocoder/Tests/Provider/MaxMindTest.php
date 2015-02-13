@@ -64,8 +64,6 @@ class MaxMindTest extends TestCase
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals('localhost', $result->getLocality());
-        $this->assertEquals('localhost', $result->getCounty()->getName());
-        $this->assertEquals('localhost', $result->getRegion()->getName());
         $this->assertEquals('localhost', $result->getCountry()->getName());
     }
 
@@ -81,8 +79,6 @@ class MaxMindTest extends TestCase
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals('localhost', $result->getLocality());
-        $this->assertEquals('localhost', $result->getCounty()->getName());
-        $this->assertEquals('localhost', $result->getRegion()->getName());
         $this->assertEquals('localhost', $result->getCountry()->getName());
     }
 
@@ -144,10 +140,7 @@ class MaxMindTest extends TestCase
         $this->assertNull($result->getPostalCode());
         $this->assertNull($result->getLocality());
         $this->assertNull($result->getSubLocality());
-        $this->assertNull($result->getCounty()->getName());
-        $this->assertNull($result->getCounty()->getCode());
-        $this->assertNull($result->getRegion()->getName());
-        $this->assertNull($result->getRegion()->getCode());
+        $this->assertEmpty($result->getAdminLevels());
         $this->assertNull($result->getCountry()->getName());
         $this->assertNull($result->getCountry()->getCode());
         $this->assertNull($result->getTimezone());
@@ -172,10 +165,9 @@ class MaxMindTest extends TestCase
         $this->assertEquals(75093, $result->getPostalCode());
         $this->assertEquals('Plano', $result->getLocality());
         $this->assertNull($result->getSubLocality());
-        $this->assertNull($result->getCounty()->getName());
-        $this->assertNull($result->getCounty()->getCode());
-        $this->assertNull($result->getRegion()->getName());
-        $this->assertEquals('TX', $result->getRegion()->getCode());
+        $this->assertCount(1, $result->getAdminLevels());
+        $this->assertNull($result->getAdminLevels()->get(1)->getName());
+        $this->assertEquals('TX', $result->getAdminLevels()->get(1)->getCode());
         $this->assertEquals('United States', $result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
         $this->assertNull($result->getTimezone());
@@ -205,10 +197,9 @@ class MaxMindTest extends TestCase
         $this->assertEquals(94110, $result->getPostalCode());
         $this->assertEquals('San Francisco', $result->getLocality());
         $this->assertNull($result->getSubLocality());
-        $this->assertNull($result->getCounty()->getName());
-        $this->assertNull($result->getCounty()->getCode());
-        $this->assertNull($result->getRegion()->getName());
-        $this->assertEquals('CA', $result->getRegion()->getCode());
+        $this->assertCount(1, $result->getAdminLevels());
+        $this->assertNull($result->getAdminLevels()->get(1)->getName());
+        $this->assertEquals('CA', $result->getAdminLevels()->get(1)->getCode());
         $this->assertEquals('United States', $result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
         $this->assertNull($result->getTimezone());
@@ -303,7 +294,7 @@ class MaxMindTest extends TestCase
             $this->markTestSkipped('You need to configure the MAXMIND_API_KEY value in phpunit.xml');
         }
 
-        $provider = new MaxMind($this->getAdapter(), $_SERVER['MAXMIND_API_KEY']);
+        $provider = new MaxMind($this->getAdapter($_SERVER['MAXMIND_API_KEY']), $_SERVER['MAXMIND_API_KEY']);
         $results  = $provider->geocode('74.200.247.159');
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -320,10 +311,9 @@ class MaxMindTest extends TestCase
         $this->assertEquals(75093, $result->getPostalCode());
         $this->assertEquals('Plano', $result->getLocality());
         $this->assertNull($result->getSubLocality());
-        $this->assertNull($result->getCounty()->getName());
-        $this->assertNull($result->getCounty()->getCode());
-        $this->assertNull($result->getRegion()->getName());
-        $this->assertEquals('TX', $result->getRegion()->getCode());
+        $this->assertCount(1, $result->getAdminLevels());
+        $this->assertNull($result->getAdminLevels()->get(1)->getName());
+        $this->assertEquals('TX', $result->getAdminLevels()->get(1)->getCode());
         $this->assertEquals('United States', $result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
         $this->assertNull($result->getTimezone());
@@ -335,7 +325,7 @@ class MaxMindTest extends TestCase
             $this->markTestSkipped('You need to configure the MAXMIND_API_KEY value in phpunit.xml');
         }
 
-        $provider = new MaxMind($this->getAdapter(), $_SERVER['MAXMIND_API_KEY'],
+        $provider = new MaxMind($this->getAdapter($_SERVER['MAXMIND_API_KEY']), $_SERVER['MAXMIND_API_KEY'],
             MaxMind::OMNI_SERVICE);
         $results  = $provider->geocode('74.200.247.159');
 
@@ -353,10 +343,9 @@ class MaxMindTest extends TestCase
         $this->assertEquals(75093, $result->getPostalCode());
         $this->assertEquals('Plano', $result->getLocality());
         $this->assertNull($result->getSubLocality());
-        $this->assertNull($result->getCounty()->getName());
-        $this->assertNull($result->getCounty()->getCode());
-        $this->assertEquals('Texas', $result->getRegion()->getName());
-        $this->assertEquals('TX', $result->getRegion()->getCode());
+        $this->assertCount(1, $result->getAdminLevels());
+        $this->assertEquals('Texas', $result->getAdminLevels()->get(1)->getName());
+        $this->assertEquals('TX', $result->getAdminLevels()->get(1)->getCode());
         $this->assertEquals('United States', $result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
         $this->assertEquals('America/Chicago', $result->getTimezone());
@@ -368,7 +357,7 @@ class MaxMindTest extends TestCase
             $this->markTestSkipped('You need to configure the MAXMIND_API_KEY value in phpunit.xml');
         }
 
-        $provider = new MaxMind($this->getAdapter(), $_SERVER['MAXMIND_API_KEY'],
+        $provider = new MaxMind($this->getAdapter($_SERVER['MAXMIND_API_KEY']), $_SERVER['MAXMIND_API_KEY'],
             MaxMind::OMNI_SERVICE, true);
         $results  = $provider->geocode('189.26.128.80');
 
@@ -386,10 +375,9 @@ class MaxMindTest extends TestCase
         $this->assertNull($result->getPostalCode());
         $this->assertEquals('Florianópolis', $result->getLocality());
         $this->assertNull($result->getSubLocality());
-        $this->assertNull($result->getCounty()->getName());
-        $this->assertNull($result->getCounty()->getCode());
-        $this->assertEquals('Santa Catarina', $result->getRegion()->getName());
-        $this->assertEquals('26', $result->getRegion()->getCode());
+        $this->assertCount(1, $result->getAdminLevels());
+        $this->assertEquals('Santa Catarina', $result->getAdminLevels()->get(1)->getName());
+        $this->assertEquals('26', $result->getAdminLevels()->get(1)->getCode());
         $this->assertEquals('Brazil', $result->getCountry()->getName());
         $this->assertEquals('BR', $result->getCountry()->getCode());
         $this->assertEquals('America/Sao_Paulo', $result->getTimezone());
@@ -401,7 +389,7 @@ class MaxMindTest extends TestCase
             $this->markTestSkipped('You need to configure the MAXMIND_API_KEY value in phpunit.xml');
         }
 
-        $provider = new MaxMind($this->getAdapter(), $_SERVER['MAXMIND_API_KEY']);
+        $provider = new MaxMind($this->getAdapter($_SERVER['MAXMIND_API_KEY']), $_SERVER['MAXMIND_API_KEY']);
         $results  = $provider->geocode('2002:4293:f4d6:0:0:0:0:0');
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -418,10 +406,9 @@ class MaxMindTest extends TestCase
         $this->assertEquals(84606, $result->getPostalCode());
         $this->assertEquals('Provo', $result->getLocality());
         $this->assertNull($result->getSubLocality());
-        $this->assertNull($result->getCounty()->getName());
-        $this->assertNull($result->getCounty()->getCode());
-        $this->assertNull($result->getRegion()->getName());
-        $this->assertEquals('UT', $result->getRegion()->getCode());
+        $this->assertCount(1, $result->getAdminLevels());
+        $this->assertNull($result->getAdminLevels()->get(1)->getName());
+        $this->assertEquals('UT', $result->getAdminLevels()->get(1)->getCode());
         $this->assertEquals('United States', $result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
         $this->assertNull($result->getTimezone());
@@ -433,7 +420,7 @@ class MaxMindTest extends TestCase
             $this->markTestSkipped('You need to configure the MAXMIND_API_KEY value in phpunit.xml');
         }
 
-        $provider = new MaxMind($this->getAdapter(), $_SERVER['MAXMIND_API_KEY'],
+        $provider = new MaxMind($this->getAdapter($_SERVER['MAXMIND_API_KEY']), $_SERVER['MAXMIND_API_KEY'],
             MaxMind::OMNI_SERVICE, true);
         $results  = $provider->geocode('2002:4293:f4d6:0:0:0:0:0');
 
@@ -451,10 +438,9 @@ class MaxMindTest extends TestCase
         $this->assertEquals(84606, $result->getPostalCode());
         $this->assertEquals('Provo', $result->getLocality());
         $this->assertNull($result->getSubLocality());
-        $this->assertNull($result->getCounty()->getName());
-        $this->assertNull($result->getCounty()->getCode());
-        $this->assertEquals('Utah', $result->getRegion()->getName());
-        $this->assertEquals('UT', $result->getRegion()->getCode());
+        $this->assertCount(1, $result->getAdminLevels());
+        $this->assertEquals('Utah', $result->getAdminLevels()->get(1)->getName());
+        $this->assertEquals('UT', $result->getAdminLevels()->get(1)->getCode());
         $this->assertEquals('United States', $result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
         $this->assertEquals('America/Denver', $result->getTimezone());

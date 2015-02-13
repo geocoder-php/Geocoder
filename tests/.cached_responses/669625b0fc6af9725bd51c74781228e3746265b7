@@ -1,0 +1,223 @@
+s:6548:"{
+   "licenses" : [
+      {
+         "name" : "CC-BY-SA",
+         "url" : "http://creativecommons.org/licenses/by-sa/3.0/"
+      },
+      {
+         "name" : "ODbL",
+         "url" : "http://opendatacommons.org/licenses/odbl/summary/"
+      }
+   ],
+   "rate" : {
+      "limit" : 2500,
+      "remaining" : 2479,
+      "reset" : 1422835200
+   },
+   "results" : [
+      {
+         "annotations" : {
+            "DMS" : {
+               "lat" : "48\u00b0 51' 47.49372'' N",
+               "lng" : "2\u00b0 23' 20.72184'' E"
+            },
+            "MGRS" : "31UDQ5519412427",
+            "Maidenhead" : "JN18eu67qd",
+            "Mercator" : {
+               "x" : 265952.215,
+               "y" : 6219481.698
+            },
+            "OSM" : {
+               "url" : "http://www.openstreetmap.org/?mlat=48.86319&mlon=2.38909#map=17/48.86319/2.38909"
+            },
+            "callingcode" : 33,
+            "geohash" : "u09tyr78tz64jdcgfnhe",
+            "sun" : {
+               "rise" : {
+                  "astronomical" : 1422768600,
+                  "civil" : 1422773100,
+                  "nautical" : 1422770820
+               },
+               "set" : {
+                  "astronomical" : 1422815940,
+                  "civil" : 1422811440,
+                  "nautical" : 1422813720
+               }
+            },
+            "timezone" : {
+               "name" : "Europe/Paris",
+               "now_in_dst" : 0,
+               "offset_sec" : 3600,
+               "offset_string" : 100,
+               "short_name" : "CET"
+            },
+            "what3words" : {
+               "words" : "listed.emphasis.greeting"
+            }
+         },
+         "bounds" : {
+            "northeast" : {
+               "lat" : 48.8632427,
+               "lng" : 2.3891394
+            },
+            "southwest" : {
+               "lat" : 48.8631427,
+               "lng" : 2.3890394
+            }
+         },
+         "components" : {
+            "city" : "Paris",
+            "city_district" : "20th Arrondissement",
+            "country" : "France",
+            "country_code" : "fr",
+            "county" : "Paris",
+            "house_number" : "10",
+            "neighbourhood" : "M\u00e9nilmontant",
+            "postcode" : "75020",
+            "road" : "Avenue Gambetta",
+            "state" : "Ile-de-France",
+            "suburb" : "P\u00e8re-Lachaise"
+         },
+         "confidence" : 10,
+         "formatted" : "10 Avenue Gambetta, 75020 Paris, France",
+         "geometry" : {
+            "lat" : 48.8631927,
+            "lng" : 2.3890894
+         }
+      },
+      {
+         "annotations" : {
+            "DMS" : {
+               "lat" : "48\u00b0 51' 57.03120'' N",
+               "lng" : "2\u00b0 24' 11.53440'' E"
+            },
+            "MGRS" : "31UDQ5623112713",
+            "Maidenhead" : "JN18eu87jt",
+            "Mercator" : {
+               "x" : 267523.446,
+               "y" : 6219928.706
+            },
+            "OSM" : {
+               "url" : "http://www.openstreetmap.org/?mlat=48.86584&mlon=2.40320#map=17/48.86584/2.40320"
+            },
+            "geohash" : "u09tyxvbntnvc0byxfwk",
+            "sun" : {
+               "rise" : {
+                  "astronomical" : 1422768600,
+                  "civil" : 1422773100,
+                  "nautical" : 1422770820
+               },
+               "set" : {
+                  "astronomical" : 1422815940,
+                  "civil" : 1422811440,
+                  "nautical" : 1422813720
+               }
+            },
+            "timezone" : {
+               "name" : "Europe/Paris",
+               "now_in_dst" : 0,
+               "offset_sec" : 3600,
+               "offset_string" : 100,
+               "short_name" : "CET"
+            },
+            "what3words" : {
+               "words" : "enormous.eminent.targeted"
+            }
+         },
+         "bounds" : {
+            "northeast" : {
+               "lat" : 2.417,
+               "lng" : 48.874933
+            },
+            "southwest" : {
+               "lat" : 2.389414,
+               "lng" : 48.856749
+            }
+         },
+         "components" : {
+            "suburb" : "Gambetta"
+         },
+         "confidence" : 7,
+         "formatted" : "Gambetta",
+         "geometry" : {
+            "lat" : 48.865842,
+            "lng" : 2.403204
+         }
+      },
+      {
+         "annotations" : {
+            "DMS" : {
+               "lat" : "48\u00b0 51' 12.27600'' N",
+               "lng" : "2\u00b0 20' 55.68000'' E"
+            },
+            "MGRS" : "31UDQ5223011364",
+            "Maidenhead" : "JN18eu14ut",
+            "Mercator" : {
+               "x" : 261467.22,
+               "y" : 6217831.297
+            },
+            "OSM" : {
+               "url" : "http://www.openstreetmap.org/?mlat=48.85341&mlon=2.34880#map=17/48.85341/2.34880"
+            },
+            "geohash" : "u09tvmqrep8np02g7x9y",
+            "sun" : {
+               "rise" : {
+                  "astronomical" : 1422768600,
+                  "civil" : 1422773100,
+                  "nautical" : 1422770820
+               },
+               "set" : {
+                  "astronomical" : 1422815940,
+                  "civil" : 1422811440,
+                  "nautical" : 1422813720
+               }
+            },
+            "timezone" : {
+               "name" : "Europe/Paris",
+               "now_in_dst" : 0,
+               "offset_sec" : 3600,
+               "offset_string" : 100,
+               "short_name" : "CET"
+            },
+            "what3words" : {
+               "words" : "estate.spells.blend"
+            }
+         },
+         "bounds" : {
+            "northeast" : {
+               "lat" : 48.921822,
+               "lng" : 2.485605
+            },
+            "southwest" : {
+               "lat" : 48.796009,
+               "lng" : 2.216784
+            }
+         },
+         "components" : {
+            "country" : "France",
+            "county" : "Paris",
+            "local administrative area" : "Paris",
+            "state" : "\u00cele-de-France",
+            "town" : "Paris"
+         },
+         "confidence" : 5,
+         "formatted" : "Paris, France",
+         "geometry" : {
+            "lat" : 48.85341,
+            "lng" : 2.3488
+         }
+      }
+   ],
+   "status" : {
+      "code" : 200,
+      "message" : "OK"
+   },
+   "thanks" : "For using an OpenCage Data API",
+   "timestamp" : {
+      "created_http" : "Sun, 01 Feb 2015 16:13:38 GMT",
+      "created_unix" : 1422807218
+   },
+   "total_results" : 3,
+   "we_are_hiring" : "http://lokku.com/#jobs"
+}
+";

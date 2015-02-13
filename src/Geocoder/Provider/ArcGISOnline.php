@@ -83,9 +83,14 @@ class ArcGISOnline extends AbstractHttpProvider implements Provider
             $streetNumber = !empty($data->AddNum) ? $data->AddNum : null;
             $city         = !empty($data->City) ? $data->City : null;
             $zipcode      = !empty($data->Postal) ? $data->Postal : null;
-            $region       = !empty($data->Region) ? $data->Region : null;
-            $county       = !empty($data->Subregion) ? $data->Subregion : null;
             $countryCode  = !empty($data->Country) ? $data->Country : null;
+
+            $adminLevels = [];
+            foreach (['Region', 'Subregion'] as $i => $property) {
+                if (! empty($data->{$property})) {
+                    $adminLevels[] = ['name' => $data->{$property}, 'level' => $i + 1];
+                }
+            }
 
             $results[] = array_merge($this->getDefaults(), [
                 'latitude'     => $coordinates['y'],
@@ -94,9 +99,8 @@ class ArcGISOnline extends AbstractHttpProvider implements Provider
                 'streetName'   => $streetName,
                 'locality'     => $city,
                 'postalCode'   => $zipcode,
-                'region'       => $region,
+                'adminLevels'  => $adminLevels,
                 'countryCode'  => $countryCode,
-                'county'       => $county,
             ]);
         }
 

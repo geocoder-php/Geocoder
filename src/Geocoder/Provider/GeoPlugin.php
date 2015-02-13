@@ -80,13 +80,21 @@ class GeoPlugin extends AbstractHttpProvider implements Provider
 
         $data = array_filter($json);
 
+        $adminLevels = [];
+
+        $region = \igorw\get_in($data, ['geoplugin_regionName']);
+        $regionCode = \igorw\get_in($data, ['geoplugin_regionCode']);
+
+        if (null !== $region || null !== $regionCode) {
+            $adminLevels[] = ['name' => $region, 'code' => $regionCode, 'level' => 1];
+        }
+
         $results   = [];
         $results[] = array_merge($this->getDefaults(), [
                 'locality'    => isset($data['geoplugin_city']) ? $data['geoplugin_city'] : null,
                 'country'     => isset($data['geoplugin_countryName']) ? $data['geoplugin_countryName'] : null,
                 'countryCode' => isset($data['geoplugin_countryCode']) ? $data['geoplugin_countryCode'] : null,
-                'region'      => isset($data['geoplugin_regionName']) ? $data['geoplugin_regionName'] : null,
-                'regionCode'  => isset($data['geoplugin_regionCode']) ? $data['geoplugin_regionCode'] : null,
+                'adminLevels' => $adminLevels,
                 'latitude'    => isset($data['geoplugin_latitude']) ? $data['geoplugin_latitude'] : null,
                 'longitude'   => isset($data['geoplugin_longitude']) ? $data['geoplugin_longitude'] : null,
         ]);

@@ -74,25 +74,7 @@ class Nominatim extends AbstractHttpProvider implements LocaleAwareProvider
 
         $results = [];
         foreach ($places as $place) {
-            $boundsAttr = $place->getAttribute('boundingbox');
-            $bounds     = [];
-
-            list($bounds['south'], $bounds['north'], $bounds['west'], $bounds['east']) = $boundsAttr ? explode(',', $boundsAttr) : null;
-
-            $results[] = array_merge($this->getDefaults(), array(
-                'latitude'     => $place->getAttribute('lat'),
-                'longitude'    => $place->getAttribute('lon'),
-                'bounds'       => $bounds,
-                'postalCode'   => $this->getNodeValue($place->getElementsByTagName('postcode')),
-                'county'       => $this->getNodeValue($place->getElementsByTagName('county')),
-                'region'       => $this->getNodeValue($place->getElementsByTagName('state')),
-                'streetNumber' => $this->getNodeValue($place->getElementsByTagName('house_number')),
-                'streetName'   => $this->getNodeValue($place->getElementsByTagName('road')) ?: $this->getNodeValue($place->getElementsByTagName('pedestrian')),
-                'locality'     => $this->getNodeValue($place->getElementsByTagName('city')),
-                'subLocality'  => $this->getNodeValue($place->getElementsByTagName('suburb')),
-                'country'      => $this->getNodeValue($place->getElementsByTagName('country')),
-                'countryCode'  => strtoupper($this->getNodeValue($place->getElementsByTagName('country_code'))),
-            ));
+            $results[] = array_merge($this->getDefaults(), $this->xmlResultToArray($place, $place));
         }
 
         return $this->returnResults($results);
@@ -120,20 +102,48 @@ class Nominatim extends AbstractHttpProvider implements LocaleAwareProvider
         $result       = $searchResult->getElementsByTagName('result')->item(0);
 
         return $this->returnResults([
-            array_merge($this->getDefaults(), [
-                'latitude'     => $result->getAttribute('lat'),
-                'longitude'    => $result->getAttribute('lon'),
-                'postalCode'   => $this->getNodeValue($addressParts->getElementsByTagName('postcode')),
-                'county'       => $this->getNodeValue($addressParts->getElementsByTagName('county')),
-                'region'       => $this->getNodeValue($addressParts->getElementsByTagName('state')),
-                'streetNumber' => $this->getNodeValue($addressParts->getElementsByTagName('house_number')),
-                'streetName'   => $this->getNodeValue($addressParts->getElementsByTagName('road')) ?: $this->getNodeValue($addressParts->getElementsByTagName('pedestrian')),
-                'locality'     => $this->getNodeValue($addressParts->getElementsByTagName('city')),
-                'subLocality'  => $this->getNodeValue($addressParts->getElementsByTagName('suburb')),
-                'country'      => $this->getNodeValue($addressParts->getElementsByTagName('country')),
-                'countryCode'  => strtoupper($this->getNodeValue($addressParts->getElementsByTagName('country_code'))),
-            ])
+            array_merge($this->getDefaults(), $this->xmlResultToArray($result, $addressParts))
         ]);
+    }
+
+    private function xmlResultToArray(\DOMElement $resultNode, \DOMElement $addressNode)
+    {
+        $adminLevels = [];
+
+        foreach (['state', 'county'] as $i => $tagName) {
+            if (null !== ($adminLevel = $this->getNodeValue($addressNode->getElementsByTagName($tagName)))) {
+                $adminLevels[] = ['name' => $adminLevel, 'level' => $i + 1];
+            }
+        }
+
+        // get the first postal-code when there are many
+        $postalCode = current(explode(';',
+            $this->getNodeValue($addressNode->getElementsByTagName('postcode'))
+        ));
+
+        $result = [
+            'latitude'     => $resultNode->getAttribute('lat'),
+            'longitude'    => $resultNode->getAttribute('lon'),
+            'postalCode'   => $postalCode,
+            'adminLevels'  => $adminLevels,
+            'streetNumber' => $this->getNodeValue($addressNode->getElementsByTagName('house_number')),
+            'streetName'   => $this->getNodeValue($addressNode->getElementsByTagName('road')) ?: $this->getNodeValue($addressNode->getElementsByTagName('pedestrian')),
+            'locality'     => $this->getNodeValue($addressNode->getElementsByTagName('city')),
+            'subLocality'  => $this->getNodeValue($addressNode->getElementsByTagName('suburb')),
+            'country'      => $this->getNodeValue($addressNode->getElementsByTagName('country')),
+            'countryCode'  => strtoupper($this->getNodeValue($addressNode->getElementsByTagName('country_code'))),
+        ];
+
+        $boundsAttr = $resultNode->getAttribute('boundingbox');
+        if ($boundsAttr) {
+            $bounds = [];
+
+            list($bounds['south'], $bounds['north'], $bounds['west'], $bounds['east']) = explode(',', $boundsAttr);
+
+            $result['bounds'] = $bounds;
+        }
+
+        return $result;
     }
 
     /**

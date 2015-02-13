@@ -61,10 +61,9 @@ class MaxMindBinaryTest extends TestCase
         $this->assertNull($result->getPostalCode());
         $this->assertEquals('East Syracuse', $result->getLocality());
         $this->assertNull($result->getSubLocality());
-        $this->assertNull($result->getCounty()->getName());
-        $this->assertNull($result->getCounty()->getCode());
-        $this->assertEquals('NY', $result->getRegion()->getName());
-        $this->assertNull($result->getRegion()->getCode());
+        $this->assertCount(1, $result->getAdminLevels());
+        $this->assertEquals('NY', $result->getAdminLevels()->get(1)->getName());
+        $this->assertNull($result->getAdminLevels()->get(1)->getCode());
         $this->assertEquals('United States', $result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
         $this->assertNull($result->getTimezone());
@@ -90,10 +89,9 @@ class MaxMindBinaryTest extends TestCase
         $this->assertNull($result->getPostalCode());
         $this->assertEquals('Sabadell', $result->getLocality());
         $this->assertNull($result->getSubLocality());
-        $this->assertNull($result->getCounty()->getName());
-        $this->assertNull($result->getCounty()->getCode());
-        $this->assertEquals('56', $result->getRegion()->getName());
-        $this->assertNull($result->getRegion()->getCode());
+        $this->assertCount(1, $result->getAdminLevels());
+        $this->assertEquals('56', $result->getAdminLevels()->get(1)->getName());
+        $this->assertNull($result->getAdminLevels()->get(1)->getCode());
         $this->assertEquals('Spain', $result->getCountry()->getName());
         $this->assertEquals('ES', $result->getCountry()->getCode());
         $this->assertNull($result->getTimezone());

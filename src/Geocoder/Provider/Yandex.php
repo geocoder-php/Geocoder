@@ -122,27 +122,34 @@ class Yandex extends AbstractHttpProvider implements LocaleAwareProvider
 
             if (! empty($details['lowerCorner'])) {
                 $coordinates = explode(' ', $details['lowerCorner']);
-                $bounds['south'] = $coordinates[1];
-                $bounds['west']  = $coordinates[0];
+                $bounds['south'] = (float) $coordinates[1];
+                $bounds['west']  = (float) $coordinates[0];
             }
 
             if (! empty($details['upperCorner'])) {
                 $coordinates = explode(' ', $details['upperCorner']);
-                $bounds['north'] = $coordinates[1];
-                $bounds['east']  = $coordinates[0];
+                $bounds['north'] = (float) $coordinates[1];
+                $bounds['east']  = (float) $coordinates[0];
             }
 
             $coordinates = explode(' ', $details['pos']);
 
+            $adminLevels = [];
+            foreach (['AdministrativeAreaName', 'SubAdministrativeAreaName'] as $i => $detail) {
+                if (isset($details[$detail])) {
+                    $adminLevels[] = ['name' => $details[$detail], 'level' => $i + 1];
+                }
+            }
+
             $results[] = array_merge($this->getDefaults(), array(
-                'latitude'     => $coordinates[1],
-                'longitude'    => $coordinates[0],
+                'latitude'     => (float) $coordinates[1],
+                'longitude'    => (float) $coordinates[0],
                 'bounds'       => $bounds,
                 'streetNumber' => isset($details['PremiseNumber']) ? $details['PremiseNumber'] : null,
                 'streetName'   => isset($details['ThoroughfareName']) ? $details['ThoroughfareName'] : null,
                 'subLocality'  => isset($details['DependentLocalityName']) ? $details['DependentLocalityName'] : null,
                 'locality'     => isset($details['LocalityName']) ? $details['LocalityName'] : null,
-                'region'       => isset($details['AdministrativeAreaName']) ? $details['AdministrativeAreaName'] : null,
+                'adminLevels'  => $adminLevels,
                 'country'      => isset($details['CountryName']) ? $details['CountryName'] : null,
                 'countryCode'  => isset($details['CountryNameCode']) ? $details['CountryNameCode'] : null,
             ));

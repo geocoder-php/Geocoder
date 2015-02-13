@@ -52,7 +52,7 @@ class OpenCageTest extends TestCase
             $this->markTestSkipped('You need to configure the OPENCAGE_API_KEY value in phpunit.xml');
         }
 
-        $provider = new OpenCage($this->getAdapter(), $_SERVER['OPENCAGE_API_KEY']);
+        $provider = new OpenCage($this->getAdapter($_SERVER['OPENCAGE_API_KEY']), $_SERVER['OPENCAGE_API_KEY']);
         $results  = $provider->geocode('10 avenue Gambetta, Paris, France');
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -72,8 +72,9 @@ class OpenCageTest extends TestCase
         $this->assertEquals('Avenue Gambetta', $result->getStreetName());
         $this->assertEquals(75020, $result->getPostalCode());
         $this->assertEquals('Paris', $result->getLocality());
-        $this->assertEquals('Paris', $result->getCounty()->getName());
-        $this->assertEquals('Ile-de-France', $result->getRegion()->getName());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('Paris', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('Ile-de-France', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('France', $result->getCountry()->getName());
         $this->assertEquals('FR', $result->getCountry()->getCode());
         $this->assertEquals('Europe/Paris', $result->getTimezone());
@@ -98,7 +99,7 @@ class OpenCageTest extends TestCase
             $this->markTestSkipped('You need to configure the OPENCAGE_API_KEY value in phpunit.xml');
         }
 
-        $provider = new OpenCage($this->getAdapter(), $_SERVER['OPENCAGE_API_KEY']);
+        $provider = new OpenCage($this->getAdapter($_SERVER['OPENCAGE_API_KEY']), $_SERVER['OPENCAGE_API_KEY']);
         $results  = $provider->reverse(54.0484068, -2.7990345);
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -118,8 +119,9 @@ class OpenCageTest extends TestCase
         $this->assertNull($result->getStreetName());
         $this->assertNull($result->getPostalCode());
         $this->assertEquals('Lancaster', $result->getLocality());
-        $this->assertEquals('Lancashire', $result->getCounty()->getName());
-        $this->assertEquals('England', $result->getRegion()->getName());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('Lancashire', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('England', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('United Kingdom', $result->getCountry()->getName());
         $this->assertEquals('GB', $result->getCountry()->getCode());
         $this->assertEquals('Europe/London' , $result->getTimezone());
@@ -131,7 +133,7 @@ class OpenCageTest extends TestCase
             $this->markTestSkipped('You need to configure the OPENCAGE_API_KEY value in phpunit.xml');
         }
 
-        $provider = new OpenCage($this->getAdapter(), $_SERVER['OPENCAGE_API_KEY']);
+        $provider = new OpenCage($this->getAdapter($_SERVER['OPENCAGE_API_KEY']), $_SERVER['OPENCAGE_API_KEY']);
         $results  = $provider->geocode('Hanover');
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -143,8 +145,9 @@ class OpenCageTest extends TestCase
         $this->assertEquals(52.374478, $result->getLatitude(), '', 0.01);
         $this->assertEquals(9.738553, $result->getLongitude(), '', 0.01);
         $this->assertEquals('Hanover', $result->getLocality());
-        $this->assertEquals('Region Hannover', $result->getCounty()->getName());
-        $this->assertEquals('Lower Saxony', $result->getRegion()->getName());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('Region Hannover', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('Lower Saxony', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('Germany', $result->getCountry()->getName());
 
         /** @var \Geocoder\Model\Address $result */
@@ -153,7 +156,8 @@ class OpenCageTest extends TestCase
         $this->assertEquals(37.744783, $result->getLatitude(), '', 0.01);
         $this->assertEquals(-77.4464165, $result->getLongitude(), '', 0.01);
         $this->assertNull($result->getLocality());
-        $this->assertEquals('Hanover', $result->getCounty()->getName());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('Hanover', $result->getAdminLevels()->get(2)->getName());
         $this->assertEquals('United States of America', $result->getCountry()->getName());
 
         /** @var \Geocoder\Model\Address $result */
@@ -162,7 +166,8 @@ class OpenCageTest extends TestCase
         $this->assertEquals(18.3840489, $result->getLatitude(), '', 0.01);
         $this->assertEquals(-78.131485, $result->getLongitude(), '', 0.01);
         $this->assertNull($result->getLocality());
-        $this->assertEquals('Hanover', $result->getCounty()->getName());
+        $this->assertTrue( $result->getAdminLevels()->has(2));
+        $this->assertEquals('Hanover', $result->getAdminLevels()->get(2)->getName());
         $this->assertEquals('Jamaica', $result->getCountry()->getName());
 
         /** @var \Geocoder\Model\Address $result */
@@ -171,8 +176,9 @@ class OpenCageTest extends TestCase
         $this->assertEquals(43.7033073, $result->getLatitude(), '', 0.01);
         $this->assertEquals(-72.2885663, $result->getLongitude(), '', 0.01);
         $this->assertEquals('Hanover', $result->getLocality());
-        $this->assertEquals('Grafton County', $result->getCounty()->getName());
-        $this->assertEquals('New Hampshire', $result->getRegion()->getName());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('Grafton County', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('New Hampshire', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('United States of America', $result->getCountry()->getName());
     }
 
@@ -182,7 +188,7 @@ class OpenCageTest extends TestCase
             $this->markTestSkipped('You need to configure the OPENCAGE_API_KEY value in phpunit.xml');
         }
 
-        $provider = new OpenCage($this->getAdapter(), $_SERVER['OPENCAGE_API_KEY']);
+        $provider = new OpenCage($this->getAdapter($_SERVER['OPENCAGE_API_KEY']), $_SERVER['OPENCAGE_API_KEY']);
         $results  = $provider->geocode('Kalbacher Hauptstraße 10, 60437 Frankfurt, Germany');
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -197,9 +203,10 @@ class OpenCageTest extends TestCase
         $this->assertEquals('Kalbacher Hauptstraße', $result->getStreetName());
         $this->assertEquals(60437, $result->getPostalCode());
         $this->assertEquals('Frankfurt', $result->getLocality());
-        $this->assertEquals('Frankfurt', $result->getCounty()->getName());
-        $this->assertEquals('Hesse', $result->getRegion()->getName());
-        $this->assertNull($result->getRegion()->getCode());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('Frankfurt', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('Hesse', $result->getAdminLevels()->get(1)->getName());
+        $this->assertNull($result->getAdminLevels()->get(1)->getCode());
         $this->assertEquals('Germany', $result->getCountry()->getName());
         $this->assertEquals('DE', $result->getCountry()->getCode());
         $this->assertEquals('Europe/Berlin', $result->getTimezone());
@@ -211,7 +218,7 @@ class OpenCageTest extends TestCase
             $this->markTestSkipped('You need to configure the OPENCAGE_API_KEY value in phpunit.xml');
         }
 
-        $provider = new OpenCage($this->getAdapter(), $_SERVER['OPENCAGE_API_KEY'], true, 'es');
+        $provider = new OpenCage($this->getAdapter($_SERVER['OPENCAGE_API_KEY']), $_SERVER['OPENCAGE_API_KEY'], true, 'es');
         $results  = $provider->geocode('London');
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -221,8 +228,9 @@ class OpenCageTest extends TestCase
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals('Londres', $result->getLocality());
-        $this->assertEquals('Londres', $result->getCounty()->getName());
-        $this->assertEquals('Inglaterra', $result->getRegion()->getName());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('Londres', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('Inglaterra', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('Reino Unido', $result->getCountry()->getName());
         $this->assertEquals('GB', $result->getCountry()->getCode());
     }

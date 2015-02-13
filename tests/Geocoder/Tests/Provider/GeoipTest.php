@@ -67,9 +67,8 @@ class GeoipTest extends TestCase
         $this->assertNull($result->getLongitude());
         $this->assertNull($result->getPostalCode());
         $this->assertNull($result->getTimezone());
+        $this->assertEmpty($result->getAdminLevels());
         $this->assertEquals('localhost', $result->getLocality());
-        $this->assertNotNull($result->getCounty());
-        $this->assertNotNull($result->getRegion());
         $this->assertNotNull($result->getCountry());
     }
 
