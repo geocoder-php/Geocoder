@@ -172,11 +172,18 @@ class GeoIPs extends AbstractHttpProvider implements Provider
         $adminLevels = [];
 
         if (null !== $location['region_name'] || null !== $location['region_code']) {
-            $adminLevels[] = ['name' => $location['region_name'], 'code' => $location['region_code'], 'level' => 1];
+            $adminLevels[] = [
+                'name' => $location['region_name'],
+                'code' => $location['region_code'],
+                'level' => 1
+            ];
         }
 
         if (null !== $location['county_name']) {
-            $adminLevels[] = ['name' => $location['county_name'], 'level' => 2];
+            $adminLevels[] = [
+                'name' => $location['county_name'],
+                'level' => 2
+            ];
         }
 
         $results   = [];

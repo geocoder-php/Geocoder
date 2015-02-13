@@ -49,7 +49,7 @@ class StringFormatter
      */
     public function format(Address $address, $format)
     {
-        $tr = [
+        $replace = [
             self::STREET_NUMBER => $address->getStreetNumber(),
             self::STREET_NAME   => $address->getStreetName(),
             self::LOCALITY      => $address->getLocality(),
@@ -60,16 +60,16 @@ class StringFormatter
             self::TIMEZONE      => $address->getTimezone(),
         ];
 
-        for ($level = 1; $level <= AdminLevelCollection::MAX_LEVEL_DEPTH; ++ $level) {
-            $tr[self::ADMIN_LEVEL . $level] = null;
-            $tr[self::ADMIN_LEVEL_CODE . $level] = null;
+        for ($level = 1; $level <= AdminLevelCollection::MAX_LEVEL_DEPTH; $level ++) {
+            $replace[self::ADMIN_LEVEL . $level] = null;
+            $replace[self::ADMIN_LEVEL_CODE . $level] = null;
         }
 
         foreach ($address->getAdminLevels() as $level => $adminLevel) {
-            $tr[self::ADMIN_LEVEL . $level] = $adminLevel->getName();
-            $tr[self::ADMIN_LEVEL_CODE . $level] = $adminLevel->getCode();
+            $replace[self::ADMIN_LEVEL . $level] = $adminLevel->getName();
+            $replace[self::ADMIN_LEVEL_CODE . $level] = $adminLevel->getCode();
         }
 
-        return strtr($format, $tr);
+        return strtr($format, $replace);
     }
 }
