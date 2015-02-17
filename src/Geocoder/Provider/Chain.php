@@ -16,8 +16,10 @@ use Geocoder\Exception\InvalidCredentials;
 /**
  * @author Markus Bachmann <markus.bachmann@bachi.biz>
  */
-class Chain implements Provider
+class Chain implements LocaleAwareProvider
 {
+    use LocaleTrait;
+
     /**
      * @var Provider[]
      */
@@ -38,6 +40,10 @@ class Chain implements Provider
     {
         $exceptions = [];
         foreach ($this->providers as $provider) {
+            if ($provider instanceof LocaleAwareProvider && $this->getLocale() !== null){
+                $provider = clone $provider;
+                $provider->setLocale($this->getLocale());
+            }
             try {
                 return $provider->geocode($address);
             } catch (InvalidCredentials $e) {
