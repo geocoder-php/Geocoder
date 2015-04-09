@@ -25,12 +25,12 @@ class BingMaps extends AbstractHttpProvider implements LocaleAwareProvider
     /**
      * @var string
      */
-    const GEOCODE_ENDPOINT_URL = 'http://dev.virtualearth.net/REST/v1/Locations/?maxResults=%d&q=%s&key=%s';
+    const GEOCODE_ENDPOINT_URL = 'http://dev.virtualearth.net/REST/v1/Locations/?maxResults=%d&q=%s&key=%s&incl=ciso2';
 
     /**
      * @var string
      */
-    const REVERSE_ENDPOINT_URL = 'http://dev.virtualearth.net/REST/v1/Locations/%F,%F?key=%s';
+    const REVERSE_ENDPOINT_URL = 'http://dev.virtualearth.net/REST/v1/Locations/%F,%F?key=%s&incl=ciso2';
 
     /**
      * @var string
@@ -133,7 +133,8 @@ class BingMaps extends AbstractHttpProvider implements LocaleAwareProvider
             $zipcode      = property_exists($item->address, 'postalCode') ? (string) $item->address->postalCode : '';
             $city         = property_exists($item->address, 'locality') ? (string) $item->address->locality: '';
             $country      = property_exists($item->address, 'countryRegion') ? (string) $item->address->countryRegion: '';
-
+            $countryCode  = property_exists($item->address, 'countryRegionIso2') ? (string) $item->address->countryRegionIso2: '';
+            
             $adminLevels = [];
 
             foreach (['adminDistrict', 'adminDistrict2'] as $i => $property) {
@@ -152,6 +153,7 @@ class BingMaps extends AbstractHttpProvider implements LocaleAwareProvider
                 'postalCode'   => empty($zipcode) ? null : $zipcode,
                 'adminLevels'  => $adminLevels,
                 'country'      => empty($country) ? null : $country,
+                'countryCode'  => empty($countryCode) ? null : $countryCode,
             ]);
         }
 
