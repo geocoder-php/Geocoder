@@ -13,7 +13,7 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "egeloen/http-adapter": "0.5.*",
+        "egeloen/http-adapter": "0.7.*",
         "igorw/get-in": "~1.0"
     },
     "require-dev": {
