@@ -40,7 +40,7 @@ class MockHttpAdapter extends AbstractHttpAdapter
         return 'mock_http_adapter';
     }
 
-    protected function doSend(InternalRequestInterface $internalRequest)
+    protected function sendInternalRequest(InternalRequestInterface $internalRequest)
     {
     }
 }

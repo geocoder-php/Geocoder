@@ -5,7 +5,6 @@ namespace Geocoder\Tests;
 use Ivory\HttpAdapter\AbstractHttpAdapter;
 use Ivory\HttpAdapter\HttpAdapterInterface;
 use Ivory\HttpAdapter\Message\InternalRequestInterface;
-use Ivory\HttpAdapter\Message\Stream\StringStream;
 use Ivory\HttpAdapter\Message\RequestInterface;
 
 class CachedResponseAdapter extends AbstractHttpAdapter
@@ -39,28 +38,27 @@ class CachedResponseAdapter extends AbstractHttpAdapter
     /**
      * {@inheritDoc}
      */
-    protected function doSend(InternalRequestInterface $internalRequest)
+    protected function sendInternalRequest(InternalRequestInterface $internalRequest)
     {
-        $url = $internalRequest->getUrl();
+        $url = (string) $internalRequest->getUri();
         if ($this->apiKey) {
             $url = str_replace($this->apiKey, '[apikey]', $url);
         }
+
         $file = sprintf('%s/%s/%s', realpath(__DIR__ . '/../../'), $this->cacheDir, sha1($url));
 
         if ($this->useCache && is_file($file) && is_readable($file)) {
             $content = unserialize(file_get_contents($file));
-            $body    = new StringStream($content);
-
-            $response = $this->adapter->getConfiguration()->getMessageFactory()->createResponse(
-                200, 'OK', RequestInterface::PROTOCOL_VERSION_1_1, [], $body
-            );
 
             if (!empty($content)) {
-                return $response;
+                return $this->adapter
+                    ->getConfiguration()
+                    ->getMessageFactory()
+                    ->createResponse(200, RequestInterface::PROTOCOL_VERSION_1_1, [], $content);
             }
         }
 
-        $response = $this->adapter->get($internalRequest->getUrl());
+        $response = $this->adapter->get($url);
 
         if ($this->useCache) {
             file_put_contents($file, serialize((string) $response->getBody()));
