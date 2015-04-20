@@ -1,6 +1,13 @@
 CHANGELOG
 =========
 
+### 3.0.0 (2015-04-20)
+
+* Added: Introduce a `CollectionIsEmpty` exception, thrown when `AddressCollection` is empty. (Fix #412)
+* Added: countrycode to Bing api calls
+* Added: allow locale change with chain
+
+
 ### 3.0.0-alpha3 (2015-02-13)
 
 * Added: `LocaleTrait` to reduce code duplication
