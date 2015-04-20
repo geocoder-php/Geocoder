@@ -2,6 +2,8 @@
 
 namespace Geocoder\Model;
 
+use Geocoder\Exception\CollectionIsEmpty;
+
 final class AddressCollection implements \IteratorAggregate, \Countable
 {
     /**
@@ -34,12 +36,12 @@ final class AddressCollection implements \IteratorAggregate, \Countable
     }
 
     /**
-     * @return Address|null
+     * @return Address
      */
     public function first()
     {
         if (empty($this->addresses)) {
-            return null;
+            throw new CollectionIsEmpty('The AddressCollection instance is empty.');
         }
 
         return reset($this->addresses);

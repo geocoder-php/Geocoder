@@ -59,4 +59,17 @@ class AddressFactoryTest extends TestCase
 
         $this->assertEquals('1st ave 1A', $addresses->first()->getStreetName());
     }
+
+    /**
+     * @expectedException \Geocoder\Exception\CollectionIsEmpty
+     */
+    public function testCreateFromEmptyArray()
+    {
+        $addresses = $this->factory->createFromArray([]);
+
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $addresses);
+        $this->assertCount(0, $addresses);
+
+        $addresses->first(); // expecting exception here
+    }
 }
