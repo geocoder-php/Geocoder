@@ -31,7 +31,7 @@ final class AdminLevel
     private $code;
 
     /**
-     * @param int $level
+     * @param int    $level
      * @param string $name
      * @param string $code
      */

@@ -40,7 +40,7 @@ class Chain implements LocaleAwareProvider
     {
         $exceptions = [];
         foreach ($this->providers as $provider) {
-            if ($provider instanceof LocaleAwareProvider && $this->getLocale() !== null){
+            if ($provider instanceof LocaleAwareProvider && $this->getLocale() !== null) {
                 $provider = clone $provider;
                 $provider->setLocale($this->getLocale());
             }

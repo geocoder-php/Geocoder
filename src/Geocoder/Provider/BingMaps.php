@@ -134,7 +134,7 @@ class BingMaps extends AbstractHttpProvider implements LocaleAwareProvider
             $city         = property_exists($item->address, 'locality') ? (string) $item->address->locality: '';
             $country      = property_exists($item->address, 'countryRegion') ? (string) $item->address->countryRegion: '';
             $countryCode  = property_exists($item->address, 'countryRegionIso2') ? (string) $item->address->countryRegionIso2: '';
-            
+
             $adminLevels = [];
 
             foreach (['adminDistrict', 'adminDistrict2'] as $i => $property) {

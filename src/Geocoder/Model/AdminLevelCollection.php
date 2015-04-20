@@ -104,7 +104,7 @@ final class AdminLevelCollection implements \IteratorAggregate, \Countable
     }
 
     /**
-     * @param integer $level
+     * @param  integer               $level
      * @throws \OutOfBoundsException
      */
     private function checkLevel($level)

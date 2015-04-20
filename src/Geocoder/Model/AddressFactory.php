@@ -17,7 +17,7 @@ namespace Geocoder\Model;
 final class AddressFactory
 {
     /**
-     * @param array $results
+     * @param  array                             $results
      * @return \Geocoder\Model\AddressCollection
      */
     public function createFromArray(array $results)
