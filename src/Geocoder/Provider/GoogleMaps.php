@@ -105,6 +105,11 @@ class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvider
         return 'google_maps';
     }
 
+    /**
+     * @param $region
+     *
+     * @return $this
+     */
     public function setRegion($region)
     {
         $this->region = $region;
@@ -155,6 +160,8 @@ class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvider
 
     /**
      * @param string $query
+     *
+     * @return \Geocoder\Model\AddressCollection
      */
     private function executeQuery($query)
     {
