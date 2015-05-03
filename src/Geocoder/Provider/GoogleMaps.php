@@ -152,7 +152,10 @@ class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvider
         }
 
         if (!empty($this->componentFilters)) {
-            $query = sprintf('%s&key=%s', $query, $this->getComponentFilterString());
+            $componentFilters = $this->componentFilters;
+            $query = sprintf('%s&key=%s', $query, implode('|', array_map(function($key) use ($componentFilters) {
+                return $key.':'.urlencode($componentFilters[$key]);
+            }, array_keys($componentFilters))));
         }
 
         return $query;
@@ -291,19 +294,5 @@ class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvider
         }
 
         return $resultSet;
-    }
-
-    /**
-     * @return string
-     */
-    private function getComponentFilterString()
-    {
-        $parts = [];
-
-        foreach ($this->componentFilters as $component => $value) {
-            $parts[] = "$component:$value";
-        }
-
-        return join('|', $parts);
     }
 }
