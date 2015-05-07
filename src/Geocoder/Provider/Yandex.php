@@ -24,12 +24,12 @@ class Yandex extends AbstractHttpProvider implements LocaleAwareProvider
     /**
      * @var string
      */
-    const GEOCODE_ENDPOINT_URL = 'http://geocode-maps.yandex.ru/1.x/?format=json&geocode=%s';
+    const GEOCODE_ENDPOINT_URL = 'https://geocode-maps.yandex.ru/1.x/?format=json&geocode=%s';
 
     /**
      * @var string
      */
-    const REVERSE_ENDPOINT_URL = 'http://geocode-maps.yandex.ru/1.x/?format=json&geocode=%F,%F';
+    const REVERSE_ENDPOINT_URL = 'https://geocode-maps.yandex.ru/1.x/?format=json&geocode=%F,%F';
 
     /**
      * @var string
