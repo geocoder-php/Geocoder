@@ -69,7 +69,7 @@ Choose the one that fits your need first. Let's say the `GoogleMaps` one is what
 you were looking for, so let's see how to use it. In the code snippet below,
 `curl` has been choosen as [HTTP layer](#http-adapters) but it is up to you
 since each HTTP-based provider implements
-[PSR-7](https://github.com/php-fig/fig-standards/blob/master/proposed/http-message.md).
+[PSR-7](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-7-http-message.md).
 
 ```php
 $curl     = new \Ivory\HttpAdapter\CurlHttpAdapter();
@@ -212,7 +212,7 @@ geocoder calls will appear in your timeline section in the Web Profiler.
 In order to talk to geocoding APIs, you need HTTP adapters. While it was part of
 the library in Geocoder 1.x and 2.x, Geocoder 3.x and upper now relies on the
 [PSR-7
-Standard](https://github.com/php-fig/fig-standards/blob/master/proposed/http-message.md)
+Standard](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-7-http-message.md)
 which defines how HTTP message should be implemented. Choose any library that
 follows this PSR and implement the specified interfaces to use with Geocoder.
 
