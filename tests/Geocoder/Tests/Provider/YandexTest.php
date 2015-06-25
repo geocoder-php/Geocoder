@@ -38,7 +38,7 @@ class YandexTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "http://geocode-maps.yandex.ru/1.x/?format=json&geocode=&results=5".
+     * @expectedExceptionMessage Could not execute query "https://geocode-maps.yandex.ru/1.x/?format=json&geocode=&results=5".
      */
     public function testGeocodeWithNull()
     {
@@ -48,7 +48,7 @@ class YandexTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "http://geocode-maps.yandex.ru/1.x/?format=json&geocode=&results=5".
+     * @expectedExceptionMessage Could not execute query "https://geocode-maps.yandex.ru/1.x/?format=json&geocode=&results=5".
      */
     public function testGeocodeWithEmpty()
     {
@@ -58,7 +58,7 @@ class YandexTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "http://geocode-maps.yandex.ru/1.x/?format=json&geocode=foobar&results=5".
+     * @expectedExceptionMessage Could not execute query "https://geocode-maps.yandex.ru/1.x/?format=json&geocode=foobar&results=5".
      */
     public function testGeocodeWithInvalidData()
     {
@@ -68,7 +68,7 @@ class YandexTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "http://geocode-maps.yandex.ru/1.x/?format=json&geocode=Kabasakal+Caddesi%2C+Istanbul%2C+Turkey&results=5".
+     * @expectedExceptionMessage Could not execute query "https://geocode-maps.yandex.ru/1.x/?format=json&geocode=Kabasakal+Caddesi%2C+Istanbul%2C+Turkey&results=5".
      */
     public function testGeocodeWithAddressGetsNullContent()
     {
@@ -78,7 +78,7 @@ class YandexTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "http://geocode-maps.yandex.ru/1.x/?format=json&geocode=foobar&results=5".
+     * @expectedExceptionMessage Could not execute query "https://geocode-maps.yandex.ru/1.x/?format=json&geocode=foobar&results=5".
      */
     public function testGeocodeWithFakeAddress()
     {
@@ -246,7 +246,7 @@ class YandexTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "http://geocode-maps.yandex.ru/1.x/?format=json&geocode=2.000000,1.000000&results=5".
+     * @expectedExceptionMessage Could not execute query "https://geocode-maps.yandex.ru/1.x/?format=json&geocode=2.000000,1.000000&results=5".
      */
     public function testReverse()
     {
@@ -256,7 +256,7 @@ class YandexTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "http://geocode-maps.yandex.ru/1.x/?format=json&geocode=0.000000,0.000000&results=5".
+     * @expectedExceptionMessage Could not execute query "https://geocode-maps.yandex.ru/1.x/?format=json&geocode=0.000000,0.000000&results=5".
      */
     public function testReverseWithInvalidData()
     {
@@ -266,7 +266,7 @@ class YandexTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "http://geocode-maps.yandex.ru/1.x/?format=json&geocode=2.388772,48.863216&results=5".
+     * @expectedExceptionMessage Could not execute query "https://geocode-maps.yandex.ru/1.x/?format=json&geocode=2.388772,48.863216&results=5".
      */
     public function testReverseWithAddressGetsNullContent()
     {
@@ -435,7 +435,7 @@ class YandexTest extends TestCase
         $this->assertEquals(29.139021, $result->getBounds()->getEast(), '', 0.01);
         $this->assertNull($result->getStreetName());
         $this->assertNull($result->getStreetNumber());
-        $this->assertEquals('Adalar', $result->getLocality());
+        $this->assertEquals('Büyükada', $result->getLocality());
         $this->assertCount(2, $result->getAdminLevels());
         $this->assertEquals('Adalar', $result->getAdminLevels()->get(2)->getName());
         $this->assertEquals('İstanbul', $result->getAdminLevels()->get(1)->getName());
