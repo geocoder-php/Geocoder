@@ -23,6 +23,16 @@ class GoogleMapsBusiness extends GoogleMaps implements Provider
     /**
      * @var string
      */
+    const ENDPOINT_URL = 'http://maps.google.com/maps/api/geocode/json?address=%s';
+
+    /**
+     * @var string
+     */
+    const ENDPOINT_URL_SSL = 'https://maps.google.com/maps/api/geocode/json?address=%s';
+
+    /**
+     * @var string
+     */
     private $clientId;
 
     /**

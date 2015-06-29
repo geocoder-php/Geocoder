@@ -77,7 +77,7 @@ class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvider
         }
 
         $query = sprintf(
-            $this->useSsl ? self::ENDPOINT_URL_SSL : self::ENDPOINT_URL,
+            $this->useSsl ? static::ENDPOINT_URL_SSL : static::ENDPOINT_URL,
             rawurlencode($address)
         );
 
