@@ -25,7 +25,7 @@ providing a powerful abstraction layer for geocoding manipulations.
 
 * [Installation](#installation)
 * [Usage](#usage)
-  - [Address & AddressCollection](#address-&-addresscollection)
+  - [Address & AddressCollection](#address--addresscollection)
   - [The ProviderAggregator](#the-provideraggregator)
   - [TimedGeocoder](#timedgeocoder)
   - [HTTP Adapters](#http-adapters)
@@ -75,7 +75,7 @@ Choose the one that fits your need first. Let's say the `GoogleMaps` one is what
 you were looking for, so let's see how to use it. In the code snippet below,
 `curl` has been choosen as [HTTP layer](#http-adapters) but it is up to you
 since each HTTP-based provider implements
-[PSR-7](https://github.com/php-fig/fig-standards/blob/master/proposed/http-message.md).
+[PSR-7](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-7-http-message.md).
 
 ```php
 $curl     = new \Ivory\HttpAdapter\CurlHttpAdapter();
@@ -112,12 +112,8 @@ objects (`AddressCollection`), each providing the following API:
 * `getLocality()` will return the `locality` or `city`;
 * `getPostalCode()` will return the `postalCode` or `zipcode`;
 * `getSubLocality()` will return the `city district`, or `sublocality`;
-* `getCounty()` will return a `County` object (with `name` and `code`
-  properties);
-* `getCountyCode()` will return the `county` code (county short name);
-* `getRegion()` will return a `Region` object (with `name` and `code`
-  properties);
-* `getRegionCode()` will return the `region` code (region short name);
+* `getAdminLevels()` will return an ordered collection (`AdminLevelCollection`)
+  of `AdminLevel` object (with `level`, `name` and `code` properties);
 * `getCountry()` will return a `Country` object (with `name` and `code`
   properties);
 * `getCountryCode()` will return the ISO `country` code;
@@ -222,7 +218,7 @@ geocoder calls will appear in your timeline section in the Web Profiler.
 In order to talk to geocoding APIs, you need HTTP adapters. While it was part of
 the library in Geocoder 1.x and 2.x, Geocoder 3.x and upper now relies on the
 [PSR-7
-Standard](https://github.com/php-fig/fig-standards/blob/master/proposed/http-message.md)
+Standard](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-7-http-message.md)
 which defines how HTTP message should be implemented. Choose any library that
 follows this PSR and implement the specified interfaces to use with Geocoder.
 
@@ -294,7 +290,8 @@ $geocoder = new \Geocoder\Provider\GoogleMaps(
     $httpAdapter,
     $locale,
     $region,
-    $useSsl // true|false
+    $useSsl, // true|false
+    $apiKey
 );
 ```
 
@@ -483,13 +480,9 @@ Here is the mapping:
 
 * Zipcode: `%z`
 
-* County: `%P`
+* Admin Level Name: `%A1`, `%A2`, `%A3`, `%A4`, `%A5`
 
-* County Code: `%p`
-
-* Region: `%R`
-
-* Region Code: `%r`
+* Admin Level Code: `%a1`, `%a2`, `%a3`, `%a4`, `%a5`
 
 * Country: `%C`
 
@@ -504,133 +497,3 @@ Extending Things
 You can write your own `provider` by implementing the `Provider` interface.
 
 You can provide your own `dumper` by implementing the `Dumper` interface.
-
-
-Versioning
-----------
-
-Geocoder follows [Semantic Versioning](http://semver.org/).
-
-### End Of Life
-
-As of December 2014, branch `1.7` is not officially supported anymore, meaning
-major version `1` reached end of life. Last version is:
-[1.7.1](https://github.com/geocoder-php/Geocoder/releases/tag/1.7.1). This
-branch did not receive any new fixes over the last year, and all plugins/modules
-require Geocoder `~2.0`.
-
-### Stable Version
-
-Stable version
-[2.0.0](https://github.com/geocoder-php/Geocoder/releases/tag/2.0.0) has been
-released on July 2013, and it is the only known stable major version. Branch
-[`2.x`](https://github.com/geocoder-php/Geocoder/tree/2.x) is used to contribute
-bug and/or security fixes, and that is the one you should use in order to
-contribute.
-
-Latest version is:
-[2.8.1](https://github.com/geocoder-php/Geocoder/releases/tag/2.8.1).
-
-**Important:** as of December 2014, this version is in a **feature freeze**
-state. All new features should be contributed to (upcoming) version 3.0.
-
-**Important:** version 2.0.0 does not have any EOL date scheduled yet.
-
-### Next Version
-
-Version 3.0.0 is the next major version of Geocoder. You can take a look at the
-[`master`](https://github.com/geocoder-php/Geocoder/tree/master) branch in order
-to follow its development. That is also why it is a bad idea to require
-`dev-master` into your `composer.json` file.
-
-Branch `2.x` is merged into `master` time to time, so that all bug/security
-fixes contributed to the current stable version will also appear in the next
-version.
-
-
-Contributing
-------------
-
-See
-[`CONTRIBUTING`](https://github.com/geocoder-php/Geocoder/blob/master/CONTRIBUTING.md#contributing)
-file.
-
-
-Unit Tests
-----------
-
-In order to run the test suite, install the developement dependencies:
-
-```
-$ composer install --dev
-```
-
-Then, run the following command:
-
-```
-$ phpunit
-```
-
-You'll obtain some _skipped_ unit tests due to the need of API keys.
-
-Rename the `phpunit.xml.dist` file to `phpunit.xml`, then uncomment the
-following lines and add your own API keys:
-
-``` xml
-<php>
-    <!-- <server name="IPINFODB_API_KEY" value="YOUR_API_KEY" /> -->
-    <!-- <server name="BINGMAPS_API_KEY" value="YOUR_API_KEY" /> -->
-    <!-- <server name="GEOIPS_API_KEY" value="YOUR_API_KEY" /> -->
-    <!-- <server name="MAXMIND_API_KEY" value="YOUR_API_KEY" /> -->
-    <!-- <server name="GEONAMES_USERNAME" value="YOUR_USERNAME" /> -->
-    <!-- <server name="TOMTOM_MAP_KEY" value="YOUR_MAP_KEY" /> -->
-    <!-- <server name="GOOGLE_GEOCODING_KEY" value="YOUR_GEOCODING_KEY" /> -->
-    <!-- <server name="OPENCAGE_API_KEY" value="YOUR_API_KEY" /> -->
-</php>
-```
-
-You're done.
-
-
-Credits
--------
-
-* William Durand <william.durand1@gmail.com>
-* [All contributors](https://github.com/geocoder-php/Geocoder/contributors)
-
-
-Contributor Code of Conduct
----------------------------
-
-As contributors and maintainers of this project, we pledge to respect all people
-who contribute through reporting issues, posting feature requests, updating
-documentation, submitting pull requests or patches, and other activities.
-
-We are committed to making participation in this project a harassment-free
-experience for everyone, regardless of level of experience, gender, gender
-identity and expression, sexual orientation, disability, personal appearance,
-body size, race, age, or religion.
-
-Examples of unacceptable behavior by participants include the use of sexual
-language or imagery, derogatory comments or personal attacks, trolling, public
-or private harassment, insults, or other unprofessional conduct.
-
-Project maintainers have the right and responsibility to remove, edit, or reject
-comments, commits, code, wiki edits, issues, and other contributions that are
-not aligned to this Code of Conduct. Project maintainers who do not follow the
-Code of Conduct may be removed from the project team.
-
-Instances of abusive, harassing, or otherwise unacceptable behavior may be
-reported by opening an issue or contacting one or more of the project
-maintainers.
-
-This Code of Conduct is adapted from the [Contributor
-Covenant](http:contributor-covenant.org), version 1.0.0, available at
-[http://contributor-covenant.org/version/1/0/0/](http://contributor-covenant.org/version/1/0/0/)
-
-
-License
--------
-
-Geocoder is released under the MIT License. See the bundled LICENSE file for
-details.
