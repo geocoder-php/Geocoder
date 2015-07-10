@@ -504,23 +504,19 @@ Geocoder follows [Semantic Versioning](http://semver.org/).
 
 As of December 2014, branch `1.7` is not officially supported anymore, meaning
 major version `1` reached end of life. Last version is:
-[1.7.1](https://github.com/geocoder-php/Geocoder/releases/tag/1.7.1). This
-branch did not receive any new fixes over the last year, and all plugins/modules
-require Geocoder `~2.0`.
+[1.7.1](https://github.com/geocoder-php/Geocoder/releases/tag/1.7.1).
 
 #### 2.x
 
-Version [2.0.0](https://github.com/geocoder-php/Geocoder/releases/tag/2.0.0) has been
-released on July 2013. Latest version is: [2.8.1](https://github.com/geocoder-php/Geocoder/releases/tag/2.8.1).
+As of December 2014, version [2.0.0](https://github.com/geocoder-php/Geocoder/releases/tag/2.0.0)
+is in a **feature frozen** state. All new features should be contributed to version 3.0 and upper.
+Last version is: [2.8.1](https://github.com/geocoder-php/Geocoder/releases/tag/2.8.1).
 
-As of December 2014, this version is in a **feature frozen** state. All new features
-should be contributed to version 3.0 and upper.
-
-Branch `2.x` will reach end of life on December 2015.
+Major version `2` will reach **end of life on December 2015**.
 
 ### Stable Version
 
-Version `3.x` is the current stable version of Geocoder.
+Version `3.x` is the current major stable version of Geocoder.
 
 
 Contributing
