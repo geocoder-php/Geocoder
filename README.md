@@ -508,9 +508,10 @@ major version `1` reached end of life. Last version is:
 
 #### 2.x
 
-As of December 2014, version [2.0.0](https://github.com/geocoder-php/Geocoder/releases/tag/2.0.0)
-is in a **feature frozen** state. All new features should be contributed to version 3.0 and upper.
-Last version is: [2.8.1](https://github.com/geocoder-php/Geocoder/releases/tag/2.8.1).
+As of December 2014, version [2.x](https://github.com/geocoder-php/Geocoder/tree/2.x)
+is in a **feature frozen** state. All new features should be contributed to version 3.0
+and upper. Last version is:
+[2.8.1](https://github.com/geocoder-php/Geocoder/releases/tag/2.8.1).
 
 Major version `2` will reach **end of life on December 2015**.
 
