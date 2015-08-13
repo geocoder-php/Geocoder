@@ -26,7 +26,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
             ->expects($this->any())
             ->method('getBody')
             ->will($this->returnValue(
-                $this->getMock('Psr\Http\Message\StreamableInterface')
+                $this->getMock('Psr\Http\Message\StreamInterface')
             ));
 
         $adapter = $this->getMock('Ivory\HttpAdapter\HttpAdapterInterface');
@@ -44,7 +44,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
      */
     protected function getMockAdapterReturns($returnValue)
     {
-        $body = $this->getMock('Psr\Http\Message\StreamableInterface');
+        $body = $this->getMock('Psr\Http\Message\StreamInterface');
         $body
             ->expects($this->once())
             ->method('__toString')
