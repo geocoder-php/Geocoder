@@ -1,6 +1,13 @@
 CHANGELOG
 =========
 
+### 3.1.0 (2015-08-13)
+
+* Added: show more API error messages in `GoogleMaps`
+* Fixed: require `http-adapter` `~0.8`
+* Fixed: use `https` transport in Yandex provider (#431)
+* Updated: documentation
+
 ### 3.0.0 (2015-04-20)
 
 * Added: Introduce a `CollectionIsEmpty` exception, thrown when `AddressCollection` is empty. (Fix #412)
