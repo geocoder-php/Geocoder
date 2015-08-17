@@ -127,6 +127,24 @@ class OpenCageTest extends TestCase
         $this->assertEquals('Europe/London' , $result->getTimezone());
     }
 
+    public function testReverseWithVillage()
+    {
+        if (!isset($_SERVER['OPENCAGE_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the OPENCAGE_API_KEY value in phpunit.xml');
+        }
+
+        $provider = new OpenCage($this->getAdapter($_SERVER['OPENCAGE_API_KEY']), $_SERVER['OPENCAGE_API_KEY']);
+        $results  = $provider->reverse(49.1390924, 1.6572462);
+
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertCount(1, $results);
+
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results->first();
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals('Bray-et-Lû', $result->getLocality());
+    }
+
     public function testGeocodeWithCity()
     {
         if (!isset($_SERVER['OPENCAGE_API_KEY'])) {

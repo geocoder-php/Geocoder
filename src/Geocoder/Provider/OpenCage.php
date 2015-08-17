@@ -89,7 +89,8 @@ class OpenCage extends AbstractHttpProvider implements LocaleAwareProvider
     }
 
     /**
-     * @param string $query
+     * @param $query
+     * @return \Geocoder\Model\AddressCollection
      */
     private function executeQuery($query)
     {
@@ -141,8 +142,8 @@ class OpenCage extends AbstractHttpProvider implements LocaleAwareProvider
                 'longitude' => $location['geometry']['lng'],
                 'bounds' => $bounds ?: [],
                 'streetNumber' => isset($comp['house_number']) ? $comp['house_number'] : null,
-                'streetName' => isset($comp['road']) ? $comp['road']         : null,
-                'subLocality' => isset($comp['suburb']) ? $comp['suburb']       : null,
+                'streetName' => $this->guessStreetName($comp),
+                'subLocality' => $this->guessSubLocality($comp),
                 'locality' => $this->guessLocality($comp),
                 'postalCode' => isset($comp['postcode']) ? $comp['postcode']     : null,
                 'adminLevels' => $adminLevels,
@@ -164,12 +165,47 @@ class OpenCage extends AbstractHttpProvider implements LocaleAwareProvider
     {
         $localityKeys = array('city', 'town' , 'village', 'hamlet');
 
-        foreach ($localityKeys as $key) {
-            if (isset($components[$key])) {
+        return $this->guessBestComponent($components, $localityKeys);
+    }
+
+    /**
+     * @param array $components
+     *
+     * @return null|string
+     */
+    protected function guessStreetName(array $components)
+    {
+        $streetNameKeys = array('road', 'street', 'street_name', 'residential');
+
+        return $this->guessBestComponent($components, $streetNameKeys);
+    }
+
+    /**
+     * @param array $components
+     *
+     * @return null|string
+     */
+    protected function guessSubLocality(array $components)
+    {
+        $subLocalityKeys = array('suburb', 'neighbourhood', 'city_district');
+
+        return $this->guessBestComponent($components, $subLocalityKeys);
+    }
+
+    /**
+     * @param array $components
+     * @param array $keys
+     *
+     * @return null|string
+     */
+    protected function guessBestComponent(array $components, array $keys)
+    {
+        foreach ($keys as $key) {
+            if (isset($components[$key]) && !empty($components[$key])) {
                 return $components[$key];
             }
         }
 
-        return;
+        return null;
     }
 }
