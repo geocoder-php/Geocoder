@@ -164,7 +164,7 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvid
     /**
      * @param string $query
      */
-    private function executeQuery($query)
+    protected function executeQuery($query)
     {
         $query   = $this->buildQuery($query);
         $request = $this->getMessageFactory()->createRequest('GET', $query);
@@ -205,8 +205,12 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvid
             throw new NoResult(sprintf('Could not execute query "%s".', $query));
         }
 
+        return $this->returnResults($this->getResults($json->results));
+    }
+
+    protected function getResults($responseResults) {
         $results = [];
-        foreach ($json->results as $result) {
+        foreach ($responseResults as $result) {
             $resultSet = $this->getDefaults();
 
             // update address components
@@ -242,7 +246,7 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvid
             $results[] = array_merge($this->getDefaults(), $resultSet);
         }
 
-        return $this->returnResults($results);
+        return $results;
     }
 
     /**
