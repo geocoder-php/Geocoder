@@ -137,15 +137,4 @@ class GoogleMapsPlacesTest extends TestCase
         $this->assertNotNull($result->getLatitude());
         $this->assertNotNull($result->getLongitude());
     }
-
-    /**
-     * @expectedException \Geocoder\Exception\InvalidCredentials
-     * @expectedExceptionMessage API key is invalid https://maps.googleapis.com/maps/api/place/textsearch/json?query=Columbia%20University&key=fake_key
-     */
-    public function testGeocodeWithRealInvalidApiKey()
-    {
-        $provider = new GoogleMapsPlaces($this->getAdapter(), $this->testAPIKey);
-
-        $provider->geocode('Columbia University');
-    }
 }

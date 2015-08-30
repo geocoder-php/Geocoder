@@ -208,7 +208,8 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvid
         return $this->returnResults($this->getResults($json->results));
     }
 
-    protected function getResults($responseResults) {
+    protected function getResults($responseResults)
+    {
         $results = [];
         foreach ($responseResults as $result) {
             $resultSet = $this->getDefaults();
