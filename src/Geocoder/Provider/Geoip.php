@@ -54,8 +54,13 @@ class Geoip extends AbstractProvider implements Provider
             throw new NoResult(sprintf('Could not find "%s" IP address in database.', $address));
         }
 
-        $timezone = @geoip_time_zone_by_country_and_region($results['country_code'], $results['region']) ?: null;
-        $region   = @geoip_region_name_by_code($results['country_code'], $results['region']) ?: $results['region'];
+        if (!empty($results['region']) && !empty($results['country_code'])) {
+            $timezone = @geoip_time_zone_by_country_and_region($results['country_code'], $results['region']) ?: null;
+            $region   = @geoip_region_name_by_code($results['country_code'], $results['region']) ?: $results['region'];
+        } else {
+            $timezone = null;
+            $region = $results['region'];
+        }
 
         return $this->returnResults([
             $this->fixEncoding(array_merge($this->getDefaults(), [
