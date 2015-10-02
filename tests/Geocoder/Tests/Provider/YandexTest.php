@@ -42,7 +42,7 @@ class YandexTest extends TestCase
      */
     public function testGeocodeWithNull()
     {
-        $provider = new Yandex($this->getMockAdapter());
+        $provider = new Yandex($this->getMockAdapterReturns('{"error":{"status":"400","message":"missing geocode parameter"}}'));
         $provider->geocode(null);
     }
 
@@ -52,7 +52,7 @@ class YandexTest extends TestCase
      */
     public function testGeocodeWithEmpty()
     {
-        $provider = new Yandex($this->getMockAdapter());
+        $provider = new Yandex($this->getMockAdapterReturns('{"error":{"status":"400","message":"missing geocode parameter"}}'));
         $provider->geocode('');
     }
 
