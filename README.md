@@ -67,7 +67,7 @@ of [providers](#providers).
 
 Choose the one that fits your need first. Let's say the `GoogleMaps` one is what
 you were looking for, so let's see how to use it. In the code snippet below,
-`curl` has been choosen as [HTTP layer](#http-adapters) but it is up to you
+`curl` has been chosen as [HTTP layer](#http-adapters) but it is up to you
 since each HTTP-based provider implements
 [PSR-7](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-7-http-message.md).
 
@@ -225,7 +225,7 @@ default, but it is up to you to choose a different implementation.
 ### Providers
 
 Providers perform the geocoding black magic for you (talking to the APIs,
-fetching results, dealing with errors, etc.) an are highly configurable.
+fetching results, dealing with errors, etc.) and are highly configurable.
 
 #### Address-based Providers
 
@@ -311,7 +311,7 @@ Page](http://wiki.openstreetmap.org/wiki/Nominatim) for more information.
 
 ##### TomTom
 
-The default langage-locale is `en`, you can choose between `de`, `es`, `fr`,
+The default language-locale is `en`, you can choose between `de`, `es`, `fr`,
 `it`, `nl`, `pl`, `pt` and `sv`.
 
 ##### Yandex
@@ -329,7 +329,7 @@ Provider  | Name | IPv4? | IPv6? | Multiple? | Terms | Notes
 [FreeGeoIp](http://freegeoip.net/) | `free_geo_ip` | yes | yes | no
 [GeoIPs](http://www.geoips.com/en/) | `geo_ips` | yes | no | no | requires API key
 [GeoIP2](https://www.maxmind.com/en/geoip2-databases) (Maxmind) | `maxmind_geoip2` | yes | yes | no
-[GeoPlugin](http://www.geoplugin.com/) | `geo_plugin` | yes | yes | no
+[GeoPlugin](http://www.geoplugin.com/) | `geo_plugin` | yes | yes | no
 [HostIp](http://www.hostip.info/use.html) | `host_ip` | yes | no | no
 [IpInfoDB](http://ipinfodb.com/) | `ip_info_db` | yes | no | no | requires API key | city precision
 Geoip | `geoip` | yes | no | no | | wrapper around the [PHP extension](http://php.net/manual/en/book.geoip.php) which must be installed
@@ -531,7 +531,7 @@ file.
 Unit Tests
 ----------
 
-In order to run the test suite, install the developement dependencies:
+In order to run the test suite, install the development dependencies:
 
 ```
 $ composer install --dev
