@@ -1,6 +1,14 @@
 CHANGELOG
 =========
 
+### 3.2.0 (2015-10-09)
+
+* Added: add __toString() methods in AdminLevel and Country
+* Added: __toString to StreamInterface mock
+* Fixed: postal code for GeoIP2 provider
+* Fixed: Make sure we check for an error in the response of the Yandex provider
+* Fixed: emergency message "You need to specify the country and region codes."
+
 ### 3.1.0 (2015-08-13)
 
 * Added: show more API error messages in `GoogleMaps`

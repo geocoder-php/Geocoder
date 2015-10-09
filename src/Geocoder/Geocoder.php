@@ -20,7 +20,7 @@ interface Geocoder
     /**
      * Version
      */
-    const VERSION = '3.1.1-dev';
+    const VERSION = '3.2.0';
 
     /**
      * Geocodes a given value.
