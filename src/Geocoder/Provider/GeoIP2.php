@@ -71,7 +71,7 @@ class GeoIP2 extends AbstractProvider implements LocaleAwareProvider
                 'latitude'    => (isset($result->location->latitude) ? $result->location->latitude : null),
                 'longitude'   => (isset($result->location->longitude) ? $result->location->longitude : null),
                 'timezone'    => (isset($result->location->time_zone) ? $result->location->time_zone : null),
-                'postalCode'  => (isset($result->location->postal_code) ? $result->location->postal_code : null),
+                'postalCode'  => (isset($result->postal->code) ? $result->postal->code : null),
                 'adminLevels' => $adminLevels,
             )))
         ]);
