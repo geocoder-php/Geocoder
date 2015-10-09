@@ -100,7 +100,9 @@ class Yandex extends AbstractHttpProvider implements LocaleAwareProvider
         $content = (string) $this->getAdapter()->get($query)->getBody();
         $json    = (array) json_decode($content, true);
 
-        if (empty($json) || '0' === $json['response']['GeoObjectCollection']['metaDataProperty']['GeocoderResponseMetaData']['found']) {
+        if (empty($json) || isset($json['error']) ||
+            (isset($json['response']) &&  '0' === $json['response']['GeoObjectCollection']['metaDataProperty']['GeocoderResponseMetaData']['found'])
+        ) {
             throw new NoResult(sprintf('Could not execute query "%s".', $query));
         }
 
