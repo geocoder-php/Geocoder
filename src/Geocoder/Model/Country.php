@@ -64,4 +64,14 @@ final class Country
     {
         return $this->getName();
     }
+
+    /**
+     * Returns a string with the country name.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->toString();
+    }
 }
