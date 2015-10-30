@@ -344,4 +344,64 @@ class GoogleMapsTest extends TestCase
 
         $provider->geocode('Columbia University');
     }
+
+    /**
+     * @expectedException \Geocoder\Exception\NoResult
+     * @expectedExceptionMessage Could not execute query
+     */
+    public function testGeocodeWithComponentFiltersInvalidCountry()
+    {
+        $provider = new GoogleMaps($this->getAdapter(), 'fr-FR', 'Île-de-France');
+        $arrFilters = ['country' => 'ru', 'postal_code' => '75020'];
+        $provider->setComponentFilters($arrFilters);
+
+        $provider->geocode('10 avenue Gambetta, Paris, France');
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\NoResult
+     * @expectedExceptionMessage Could not execute query
+     */
+    public function testGeocodeWithComponentFiltersInvalidZipCode()
+    {
+        $provider = new GoogleMaps($this->getAdapter(), 'fr-FR', 'Île-de-France');
+        $arrFilters = ['country' => 'fr', 'postal_code' => '00000'];
+        $provider->setComponentFilters($arrFilters);
+
+        $provider->geocode('10 avenue Gambetta, Paris, France');
+    }
+
+    public function testGeocodeWithValidComponentFilters()
+    {
+        $provider = new GoogleMaps($this->getAdapter(), 'fr-FR', 'Île-de-France');
+        $arrFilters = ['country' => 'fr', 'postal_code' => '75020'];
+        $provider->setComponentFilters($arrFilters);
+
+        $results  = $provider->geocode('10 avenue Gambetta, Paris, France');
+
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertCount(1, $results);
+
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results->first();
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(48.8630462, $result->getLatitude(), '', 0.001);
+        $this->assertEquals(2.3882487, $result->getLongitude(), '', 0.001);
+        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertEquals(48.8630462, $result->getBounds()->getSouth(), '', 0.001);
+        $this->assertEquals(2.3882487, $result->getBounds()->getWest(), '', 0.001);
+        $this->assertEquals(48.8630462, $result->getBounds()->getNorth(), '', 0.001);
+        $this->assertEquals(2.3882487, $result->getBounds()->getEast(), '', 0.001);
+        $this->assertEquals(10, $result->getStreetNumber());
+        $this->assertEquals('Avenue Gambetta', $result->getStreetName());
+        $this->assertEquals(75020, $result->getPostalCode());
+        $this->assertEquals('Paris', $result->getLocality());
+        $this->assertEquals('Paris', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('Île-de-France', $result->getAdminLevels()->get(1)->getName());
+        $this->assertEquals('France', $result->getCountry()->getName());
+        $this->assertEquals('FR', $result->getCountry()->getCode());
+        // not provided
+        $this->assertNull($result->getTimezone());
+    }
+
 }

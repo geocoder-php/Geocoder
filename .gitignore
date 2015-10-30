@@ -4,3 +4,4 @@ composer.lock
 composer.phar
 phpunit.xml
 php-cs-fixer.phar
+tests/.cached_responses/
