@@ -99,6 +99,7 @@ class FreeGeoIp extends AbstractHttpProvider implements Provider
                 'adminLevels' => $adminLevels,
                 'country'     => isset($data['country_name']) ? $data['country_name'] : null,
                 'countryCode' => isset($data['country_code']) ? $data['country_code'] : null,
+                'timezone'    => isset($data['time_zone']) ? $data['time_zone'] : null,
             ))
         ]);
     }
