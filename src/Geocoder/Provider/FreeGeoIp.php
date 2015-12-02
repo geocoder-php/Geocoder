@@ -59,6 +59,8 @@ class FreeGeoIp extends AbstractHttpProvider implements Provider
 
     /**
      * @param string $query
+     *
+     * @return \Geocoder\Model\AddressCollection
      */
     private function executeQuery($query)
     {
