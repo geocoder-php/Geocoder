@@ -154,7 +154,7 @@ class FreeGeoIpTest extends TestCase
         $this->assertCount(1, $results);
 
         $this->assertCount(1, $results->first()->getAdminLevels());
-        $this->assertEquals('48', $results->first()->getAdminLevels()->get(1)->getCode());
+        $this->assertEquals('TX', $results->first()->getAdminLevels()->get(1)->getCode());
     }
 
     public function testGeocodeWithUSIPv6()
@@ -166,23 +166,26 @@ class FreeGeoIpTest extends TestCase
         $this->assertCount(1, $results);
 
         $this->assertCount(1, $results->first()->getAdminLevels());
-        $this->assertEquals('48', $results->first()->getAdminLevels()->get(1)->getCode());
+        $this->assertEquals('TX', $results->first()->getAdminLevels()->get(1)->getCode());
     }
 
     public function testGeocodeWithUKIPv4()
     {
         $provider = new FreeGeoIp($this->getAdapter());
-        $results  = $provider->geocode('132.185.255.60');
+        $results  = $provider->geocode('129.67.242.154');
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
         $this->assertEquals('GB', $results->first()->getCountry()->getCode());
+
+        $this->assertCount(1, $results->first()->getAdminLevels());
+        $this->assertEquals('ENG', $results->first()->getAdminLevels()->get(1)->getCode());
     }
 
     public function testGeocodeWithUKIPv6()
     {
         $provider = new FreeGeoIp($this->getAdapter());
-        $results  = $provider->geocode('::ffff:132.185.255.60');
+        $results  = $provider->geocode('::ffff:129.67.242.154');
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
