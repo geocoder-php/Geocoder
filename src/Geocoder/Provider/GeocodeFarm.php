@@ -222,7 +222,6 @@ class GeocodeFarm extends AbstractHttpProvider implements LocaleAwareProvider
             $resultset['latitude'] = $coordinates->latitude;
             $resultset['longitude'] = $coordinates->longitude;
 
-
             $resultset['timezone'] = isset($result->LOCATION_DETAILS) && isset($result->LOCATION_DETAILS->timezone_short) ? $result->LOCATION_DETAILS->timezone_short : null;
 
             $resultset['accuracy'] = $this->getAccuracy($result->accuracy);
