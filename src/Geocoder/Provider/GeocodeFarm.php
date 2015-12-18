@@ -246,7 +246,6 @@ class GeocodeFarm extends AbstractHttpProvider implements LocaleAwareProvider
 
             }
 
-
             $results[] = array_merge($this->getDefaults(), $resultset);
         }
 
