@@ -134,6 +134,7 @@ class BingMaps extends AbstractHttpProvider implements LocaleAwareProvider
             $city         = property_exists($item->address, 'locality') ? (string) $item->address->locality: '';
             $country      = property_exists($item->address, 'countryRegion') ? (string) $item->address->countryRegion: '';
             $countryCode  = property_exists($item->address, 'countryRegionIso2') ? (string) $item->address->countryRegionIso2: '';
+            $accuracy     = isset($item->confidence) ? $this->getAccuracy((string) $item->confidence) : null;
 
             $adminLevels = [];
 
@@ -154,9 +155,35 @@ class BingMaps extends AbstractHttpProvider implements LocaleAwareProvider
                 'adminLevels'  => $adminLevels,
                 'country'      => empty($country) ? null : $country,
                 'countryCode'  => empty($countryCode) ? null : $countryCode,
+                'accuracy'     => empty($accuracy) ? null : $accuracy
             ]);
         }
 
         return $this->returnResults($results);
+    }
+
+    protected function getAccuracy($accuracyTerm){
+        $accuracy = 0;
+
+
+        switch ($accuracyTerm) {
+            case 'High':
+                $accuracy = 1;
+                break;
+
+            case 'Medium':
+                $accuracy = 0.7;
+                break;
+
+            case 'Low':
+                $accuracy = 0.3;
+                break;
+
+
+
+            default:
+        }
+        return $accuracy;
+
     }
 }

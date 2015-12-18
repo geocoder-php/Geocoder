@@ -66,6 +66,13 @@ final class Address
     private $timezone;
 
     /**
+     * @var string
+     */
+    private $accuracy;
+
+
+
+    /**
      * @param string $streetNumber
      * @param string $streetName
      * @param string $postalCode
@@ -82,7 +89,8 @@ final class Address
         $subLocality                      = null,
         AdminLevelCollection $adminLevels = null,
         Country $country                  = null,
-        $timezone                         = null
+        $timezone                         = null,
+        $accuracy                         = null
     ) {
         $this->coordinates  = $coordinates;
         $this->bounds       = $bounds;
@@ -94,6 +102,7 @@ final class Address
         $this->adminLevels  = $adminLevels ?: new AdminLevelCollection();
         $this->country      = $country;
         $this->timezone     = $timezone;
+        $this->accuracy     = $accuracy;
     }
 
     /**
@@ -236,6 +245,16 @@ final class Address
     }
 
     /**
+     * @return string
+     */
+    public function getAccuracy()
+    {
+        return $this->accuracy;
+    }
+
+
+
+    /**
      * Returns an array with data indexed by name.
      *
      * @return array
@@ -263,6 +282,7 @@ final class Address
             'country'      => $this->country->getName(),
             'countryCode'  => $this->country->getCode(),
             'timezone'     => $this->timezone,
+            'accuracy'     => $this->accuracy,
         );
     }
 }

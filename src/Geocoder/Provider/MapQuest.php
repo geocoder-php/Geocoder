@@ -151,6 +151,8 @@ class MapQuest extends AbstractHttpProvider implements Provider
                     $admins[] = ['name' => $location['adminArea4'], 'level' => 2];
                 }
 
+                $accuracy = isset($location['geocodeQuality']) ? $this->getAccuracy($location['geocodeQuality']) : null;
+
                 $results[] = array_merge($this->getDefaults(), array(
                     'latitude'    => $location['latLng']['lat'],
                     'longitude'   => $location['latLng']['lng'],
@@ -159,6 +161,7 @@ class MapQuest extends AbstractHttpProvider implements Provider
                     'postalCode'  => $location['postalCode'] ?: null,
                     'adminLevels' => $admins,
                     'country'     => $location['adminArea1'] ?: null,
+                    'accuracy'     => $accuracy ?: null,
                 ));
             }
         }
@@ -168,5 +171,61 @@ class MapQuest extends AbstractHttpProvider implements Provider
         }
 
         return $this->returnResults($results);
+    }
+
+    protected function getAccuracy($accuracyTerm){
+        $accuracy = null;
+
+
+        switch ($accuracyTerm) {
+            case 'POINT':
+                $accuracy = 1;
+                break;
+
+            case 'ADDRESS':
+                $accuracy = 0.95;
+                break;
+
+            case 'STREET':
+                $accuracy = 0.8;
+                break;
+
+            case 'INTERSECTION':
+                $accuracy = 0.7;
+                break;
+
+            case 'NEIGHBORHOOD':
+                $accuracy = 0.5;
+                break;
+
+            case 'ZIP':
+                $accuracy = 0.3;
+                break;
+
+            case 'CITY':
+                $accuracy = 0.25;
+                break;
+
+            case 'ZIP_EXTENDED':
+                $accuracy = 0.2;
+                break;
+
+            case 'COUNTY':
+                $accuracy = 0.15;
+                break;
+
+            case 'STATE':
+                $accuracy = 0.1;
+                break;
+
+            case 'COUNTRY':
+                $accuracy = 0.05;
+                break;
+
+
+            default:
+        }
+        return $accuracy;
+
     }
 }

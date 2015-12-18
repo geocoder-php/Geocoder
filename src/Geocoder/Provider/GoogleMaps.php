@@ -207,6 +207,8 @@ class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvider
                 );
             }
 
+            $resultSet['accuracy'] = $this->getAccuracy($result->location_type);
+
             $results[] = array_merge($this->getDefaults(), $resultSet);
         }
 
@@ -267,4 +269,37 @@ class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvider
 
         return $resultSet;
     }
+
+    protected function getAccuracy($accuracyTerm){
+        $accuracy = null;
+
+
+        switch ($accuracyTerm) {
+            // "ROOFTOP" indicates that the returned result is a precise geocode for which we have location information accurate down to street address precision.
+            case 'ROOFTOP':
+                $accuracy = 1;
+                break;
+
+            // "RANGE_INTERPOLATED" indicates that the returned result reflects an approximation (usually on a road) interpolated between two precise points (such as intersections). Interpolated results are generally returned when rooftop geocodes are unavailable for a street address.
+            case 'RANGE_INTERPOLATED':
+                $accuracy = 0.8;
+                break;
+
+            // "GEOMETRIC_CENTER" indicates that the returned result is the geometric center of a result such as a polyline (for example, a street) or polygon (region).
+            case 'GEOMETRIC_CENTER':
+                $accuracy = 0.5;
+                break;
+
+            // APPROXIMATE —  indicates that the returned result is approximate
+            case 'APPROXIMATE':
+                $accuracy = 0.2;
+                break;
+
+
+            default:
+        }
+        return $accuracy;
+
+    }
+
 }
