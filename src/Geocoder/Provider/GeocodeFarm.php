@@ -243,7 +243,6 @@ class GeocodeFarm extends AbstractHttpProvider implements LocaleAwareProvider
                     'north' => $coordinates->latitude,
                     'east' => $coordinates->longitude
                 );
-
             }
 
             $results[] = array_merge($this->getDefaults(), $resultset);
