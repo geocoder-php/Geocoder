@@ -72,25 +72,26 @@ class GeocodeFarm extends AbstractHttpProvider implements LocaleAwareProvider
      * @param bool $useSsl Whether to use an SSL connection (optional)
      * @param string $apiKey Google Geocoding API key (optional)
      */
-    public function __construct(HttpAdapterInterface $adapter, $locale = null, $region = null,  $useSsl = false, $apiKey = null)
+    public function __construct(HttpAdapterInterface $adapter, $locale = null, $region = null, $useSsl = false, $apiKey = null)
     {
         parent::__construct($adapter, $locale);
 
 
         $this->lang = 'en';
-        if(strpos(strtolower($locale), 'de')){
+        if (strpos(strtolower($locale), 'de')) {
             $this->lang = 'de';
         }
         $this->region = $region;
         $this->useSsl = $useSsl;
         $this->apiKey = $apiKey;
-        $this->protocol    = $useSsl ? 'https' : 'http';
+        $this->protocol = $useSsl ? 'https' : 'http';
     }
 
     /**
      * {@inheritDoc}
      */
-    public function geocode($address){
+    public function geocode($address)
+    {
         return $this->getGeocodedData(self::ENDPOINT_URL, array($address));
     }
 
@@ -110,7 +111,7 @@ class GeocodeFarm extends AbstractHttpProvider implements LocaleAwareProvider
     {
         $data = array_map('rawurlencode', $data);
         array_unshift($data, $this->protocol);
-        $query = vsprintf($url,$data);
+        $query = vsprintf($url, $data);
 
         return $this->executeQuery($query);
     }
@@ -163,7 +164,7 @@ class GeocodeFarm extends AbstractHttpProvider implements LocaleAwareProvider
         $query = $this->buildQuery($query);
 
 
-        $content =  (string) $this->getAdapter()->get($query)->getBody();
+        $content = (string)$this->getAdapter()->get($query)->getBody();
 
         if (null === $content) {
             throw new NoResult(sprintf('Could not execute query %s', $query));
@@ -265,20 +266,22 @@ class GeocodeFarm extends AbstractHttpProvider implements LocaleAwareProvider
 
         switch ($type) {
             case 'postal_code':
-                $resultset['zipcode'] = $value;
+                $resultset['postalCode'] = $value;
                 break;
 
             case 'locality':
-                $resultset['city'] = $value;
-                break;
-
-            case 'admin_2':
-                $resultset['county'] = $value;
+                $resultset['locality'] = $value;
                 break;
 
             case 'admin_1':
-                $resultset['region'] = $value;
+            case 'admin_2':
+            case 'admin_3':
+                $resultSet['adminLevels'][] = [
+                    'name' => $value,
+                    'level' => intval(substr($type, -1))
+                ];
                 break;
+
 
             case 'country':
                 $resultset['country'] = $value;
@@ -292,12 +295,8 @@ class GeocodeFarm extends AbstractHttpProvider implements LocaleAwareProvider
                 $resultset['streetName'] = $value;
                 break;
 
-            case 'admin_3':
-                $resultset['cityDistrict'] = $value;
-                break;
-
             case 'neighborhood':
-                $resultset['cityDistrict'] = $value;
+                $resultset['subLocality'] = $value;
                 break;
 
 
@@ -328,7 +327,8 @@ class GeocodeFarm extends AbstractHttpProvider implements LocaleAwareProvider
         return $this->count;
     }
 
-    protected function getAccuracy($accuracyTerm){
+    protected function getAccuracy($accuracyTerm)
+    {
         $accuracy = null;
 
 
@@ -360,7 +360,8 @@ class GeocodeFarm extends AbstractHttpProvider implements LocaleAwareProvider
 
     }
 
-    protected function getMatch($matchTerm){
+    protected function getMatch($matchTerm)
+    {
         $match = null;
 
 
