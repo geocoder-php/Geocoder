@@ -74,7 +74,7 @@ class GeocodeFarm extends AbstractHttpProvider implements LocaleAwareProvider
      */
     public function __construct(HttpAdapterInterface $adapter, $locale = null, $region = null, $useSsl = false, $apiKey = null)
     {
-        parent::__construct($adapter, $locale);
+        parent::__construct($adapter);
 
 
         $this->lang = 'en';
@@ -83,6 +83,7 @@ class GeocodeFarm extends AbstractHttpProvider implements LocaleAwareProvider
         }
         $this->region = $region;
         $this->useSsl = $useSsl;
+        $this->locale = $locale;
         $this->apiKey = $apiKey;
         $this->protocol = $useSsl ? 'https' : 'http';
     }
@@ -248,7 +249,6 @@ class GeocodeFarm extends AbstractHttpProvider implements LocaleAwareProvider
                 );
             }
 
-            print_r($resultset);
 
             $results[] = array_merge($this->getDefaults(), $resultset);
         }
@@ -280,7 +280,7 @@ class GeocodeFarm extends AbstractHttpProvider implements LocaleAwareProvider
             case 'admin_1':
             case 'admin_2':
             case 'admin_3':
-                $resultSet['adminLevels'][] = [
+                $resultset['adminLevels'][] = [
                     'name' => $value,
                     'level' => intval(substr($type, -1))
                 ];
