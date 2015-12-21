@@ -218,6 +218,8 @@ class GeocodeFarm extends AbstractHttpProvider implements LocaleAwareProvider
                 $this->updateAddressComponent($resultset, $type, $value);
             }
 
+
+
             // update coordinates
             $coordinates = $result->COORDINATES;
             $resultset['latitude'] = $coordinates->latitude;
@@ -245,6 +247,8 @@ class GeocodeFarm extends AbstractHttpProvider implements LocaleAwareProvider
                     'east' => $coordinates->longitude
                 );
             }
+
+            print_r($resultset);
 
             $results[] = array_merge($this->getDefaults(), $resultset);
         }

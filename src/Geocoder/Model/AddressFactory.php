@@ -55,7 +55,8 @@ final class AddressFactory
                     $this->upperize(\igorw\get_in($result, ['countryCode']))
                 ),
                 \igorw\get_in($result, ['timezone']),
-                $this->readDoubleValue($result, 'accuracy')
+                $this->readDoubleValue($result, 'accuracy'),
+                $this->readDoubleValue($result, 'match')
             );
         }
 
