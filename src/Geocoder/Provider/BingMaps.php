@@ -39,8 +39,8 @@ class BingMaps extends AbstractHttpProvider implements LocaleAwareProvider
 
     /**
      * @param HttpAdapterInterface $adapter An HTTP adapter
-     * @param string               $apiKey  An API key
-     * @param string               $locale  A locale (optional)
+     * @param string $apiKey An API key
+     * @param string $locale A locale (optional)
      */
     public function __construct(HttpAdapterInterface $adapter, $apiKey, $locale = null)
     {
@@ -100,7 +100,7 @@ class BingMaps extends AbstractHttpProvider implements LocaleAwareProvider
             $query = sprintf('%s&culture=%s', $query, str_replace('_', '-', $this->getLocale()));
         }
 
-        $content = (string) $this->getAdapter()->get($query)->getBody();
+        $content = (string)$this->getAdapter()->get($query)->getBody();
 
         if (empty($content)) {
             throw new NoResult(sprintf('Could not execute query "%s".', $query));
@@ -112,29 +112,30 @@ class BingMaps extends AbstractHttpProvider implements LocaleAwareProvider
             throw new NoResult(sprintf('Could not execute query "%s".', $query));
         }
 
-        $data = (array) $json->resourceSets[0]->resources;
+        $data = (array)$json->resourceSets[0]->resources;
 
         $results = [];
         foreach ($data as $item) {
-            $coordinates = (array) $item->geocodePoints[0]->coordinates;
+            $coordinates = (array)$item->geocodePoints[0]->coordinates;
 
             $bounds = null;
             if (isset($item->bbox) && is_array($item->bbox) && count($item->bbox) > 0) {
                 $bounds = [
                     'south' => $item->bbox[0],
-                    'west'  => $item->bbox[1],
+                    'west' => $item->bbox[1],
                     'north' => $item->bbox[2],
-                    'east'  => $item->bbox[3]
+                    'east' => $item->bbox[3]
                 ];
             }
 
             $streetNumber = null;
-            $streetName   = property_exists($item->address, 'addressLine') ? (string) $item->address->addressLine : '';
-            $zipcode      = property_exists($item->address, 'postalCode') ? (string) $item->address->postalCode : '';
-            $city         = property_exists($item->address, 'locality') ? (string) $item->address->locality: '';
-            $country      = property_exists($item->address, 'countryRegion') ? (string) $item->address->countryRegion: '';
-            $countryCode  = property_exists($item->address, 'countryRegionIso2') ? (string) $item->address->countryRegionIso2: '';
-            $accuracy     = isset($item->confidence) ? $this->getAccuracy((string) $item->confidence) : null;
+            $streetName = property_exists($item->address, 'addressLine') ? (string)$item->address->addressLine : '';
+            $zipcode = property_exists($item->address, 'postalCode') ? (string)$item->address->postalCode : '';
+            $city = property_exists($item->address, 'locality') ? (string)$item->address->locality : '';
+            $country = property_exists($item->address, 'countryRegion') ? (string)$item->address->countryRegion : '';
+            $countryCode = property_exists($item->address, 'countryRegionIso2') ? (string)$item->address->countryRegionIso2 : '';
+            $accuracy = isset($item->matchCodes) ? $this->getAccuracy($item->matchCodes) : null;
+            $match = isset($item->confidence) ? $this->getMatch((string)$item->confidence) : null;
 
             $adminLevels = [];
 
@@ -145,45 +146,65 @@ class BingMaps extends AbstractHttpProvider implements LocaleAwareProvider
             }
 
             $results[] = array_merge($this->getDefaults(), [
-                'latitude'     => $coordinates[0],
-                'longitude'    => $coordinates[1],
-                'bounds'       => $bounds,
+                'latitude' => $coordinates[0],
+                'longitude' => $coordinates[1],
+                'bounds' => $bounds,
                 'streetNumber' => $streetNumber,
-                'streetName'   => $streetName,
-                'locality'     => empty($city) ? null : $city,
-                'postalCode'   => empty($zipcode) ? null : $zipcode,
-                'adminLevels'  => $adminLevels,
-                'country'      => empty($country) ? null : $country,
-                'countryCode'  => empty($countryCode) ? null : $countryCode,
-                'accuracy'     => empty($accuracy) ? null : $accuracy
+                'streetName' => $streetName,
+                'locality' => empty($city) ? null : $city,
+                'postalCode' => empty($zipcode) ? null : $zipcode,
+                'adminLevels' => $adminLevels,
+                'country' => empty($country) ? null : $country,
+                'countryCode' => empty($countryCode) ? null : $countryCode,
+                'accuracy' => empty($accuracy) ? null : $accuracy,
+                'match' => empty($match) ? null : $match
             ]);
         }
 
         return $this->returnResults($results);
     }
 
-    protected function getAccuracy($accuracyTerm){
+    protected function getAccuracy($accuracyTerms)
+    {
         $accuracy = 0;
 
+        if (is_array($accuracyTerms) && count($accuracyTerms) > 0) {
 
-        switch ($accuracyTerm) {
-            case 'High':
+            if (in_array('Good', $accuracyTerms)) {
                 $accuracy = 1;
+            } elseif (in_array('Ambiguous', $accuracyTerms)) {
+                $accuracy = 0.5;
+            } elseif (in_array('UpHierarchy', $accuracyTerms)) {
+                $accuracy = 0.2;
+            }
+        }
+
+        return $accuracy;
+
+    }
+
+    protected function getMatch($matchTerm)
+    {
+        $match = 0;
+
+
+        switch ($matchTerm) {
+            case 'High':
+                $match = 1;
                 break;
 
             case 'Medium':
-                $accuracy = 0.7;
+                $match = 0.7;
                 break;
 
             case 'Low':
-                $accuracy = 0.3;
+                $match = 0.3;
                 break;
-
 
 
             default:
         }
-        return $accuracy;
+        return $match;
 
     }
 }

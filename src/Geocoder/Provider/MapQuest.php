@@ -153,6 +153,8 @@ class MapQuest extends AbstractHttpProvider implements Provider
 
                 $accuracy = isset($location['geocodeQuality']) ? $this->getAccuracy($location['geocodeQuality']) : null;
 
+                $match = 1.0 - (min(count($locations) - 1, 4)/5);
+
                 $results[] = array_merge($this->getDefaults(), array(
                     'latitude'    => $location['latLng']['lat'],
                     'longitude'   => $location['latLng']['lng'],
@@ -161,7 +163,8 @@ class MapQuest extends AbstractHttpProvider implements Provider
                     'postalCode'  => $location['postalCode'] ?: null,
                     'adminLevels' => $admins,
                     'country'     => $location['adminArea1'] ?: null,
-                    'accuracy'     => $accuracy ?: null,
+                    'accuracy'    => $accuracy ?: null,
+                    'match'       => $match ?: null,
                 ));
             }
         }

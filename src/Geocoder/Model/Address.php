@@ -70,6 +70,13 @@ final class Address
      */
     private $accuracy;
 
+    /**
+     * @var string
+     */
+    private $match;
+
+
+
 
 
     /**
@@ -90,7 +97,8 @@ final class Address
         AdminLevelCollection $adminLevels = null,
         Country $country                  = null,
         $timezone                         = null,
-        $accuracy                         = null
+        $accuracy                         = null,
+        $match                            = null
     ) {
         $this->coordinates  = $coordinates;
         $this->bounds       = $bounds;
@@ -103,6 +111,7 @@ final class Address
         $this->country      = $country;
         $this->timezone     = $timezone;
         $this->accuracy     = $accuracy;
+        $this->match        = $match;
     }
 
     /**
@@ -252,6 +261,14 @@ final class Address
         return $this->accuracy;
     }
 
+    /**
+     * @return string
+     */
+    public function getMatch()
+    {
+        return $this->match;
+    }
+
 
 
     /**
@@ -283,6 +300,7 @@ final class Address
             'countryCode'  => $this->country->getCode(),
             'timezone'     => $this->timezone,
             'accuracy'     => $this->accuracy,
+            'match'        => $this->match,
         );
     }
 }

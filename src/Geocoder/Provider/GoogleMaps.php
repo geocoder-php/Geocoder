@@ -209,6 +209,8 @@ class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvider
 
             $resultSet['accuracy'] = $this->getAccuracy($result->geometry->location_type);
 
+            $resultSet['match'] = isset($result->geometry->partial_match) && $result->geometry->partial_match ? 0.5 : 1;
+
             $results[] = array_merge($this->getDefaults(), $resultSet);
         }
 

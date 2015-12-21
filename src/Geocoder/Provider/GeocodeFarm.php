@@ -225,6 +225,7 @@ class GeocodeFarm extends AbstractHttpProvider implements LocaleAwareProvider
             $resultset['timezone'] = isset($result->LOCATION_DETAILS) && isset($result->LOCATION_DETAILS->timezone_short) ? $result->LOCATION_DETAILS->timezone_short : null;
 
             $resultset['accuracy'] = $this->getAccuracy($result->accuracy);
+            $resultset['match'] = $this->getMatch($result->accuracy);
 
             $resultset['bounds'] = null;
             if (isset($result->BOUNDARIES)) {
@@ -247,7 +248,7 @@ class GeocodeFarm extends AbstractHttpProvider implements LocaleAwareProvider
             $results[] = array_merge($this->getDefaults(), $resultset);
         }
 
-        return $results;
+        return $this->returnResults($results);
     }
 
     /**
@@ -356,6 +357,38 @@ class GeocodeFarm extends AbstractHttpProvider implements LocaleAwareProvider
             default:
         }
         return $accuracy;
+
+    }
+
+    protected function getMatch($matchTerm){
+        $match = null;
+
+
+        switch ($matchTerm) {
+            // EXACT_MATCH — This is the highest level of accuracy and usually indicates a spot-on match.
+            case 'EXACT_MATCH':
+                $match = 1;
+                break;
+
+            // HIGH_ACCURACY — This is the second highest level of accuracy and usually indicates a range match, within a few hundred feet most.
+            case 'HIGH_ACCURACY':
+                $match = 0.7;
+                break;
+
+            // MEDIUM_ACCURACY — This is the third level of accuracy and usually indicates a geographical area match, such as the metro area, town, or city.
+            case 'MEDIUM_ACCURACY':
+                $match = 0.4;
+                break;
+
+            // UNKNOWN_ACCURACY — The accuracy of this result is unable to be determined and an exact match may or may not have
+            case 'UNKNOWN_ACCURACY':
+                $match = 0.2;
+                break;
+
+
+            default:
+        }
+        return $match;
 
     }
 

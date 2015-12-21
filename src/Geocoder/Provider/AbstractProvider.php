@@ -78,6 +78,7 @@ abstract class AbstractProvider
             'countryCode'  => null,
             'timezone'     => null,
             'accuracy'     => null,
+            'match'        => null
         ];
     }
 
