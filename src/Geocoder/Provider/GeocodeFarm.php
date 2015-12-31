@@ -354,7 +354,7 @@ class GeocodeFarm extends AbstractHttpProvider implements LocaleAwareProvider
 
             // UNKNOWN_ACCURACY — The accuracy of this result is unable to be determined and an exact match may or may not have
             case 'UNKNOWN_ACCURACY':
-                $accuracy = null;
+                $accuracy = 0.1;
                 break;
 
 
