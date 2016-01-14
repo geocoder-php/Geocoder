@@ -111,8 +111,8 @@ final class AdminLevelCollection implements \IteratorAggregate, \Countable
     {
         if ($level <= 0 || $level > self::MAX_LEVEL_DEPTH) {
             throw new \OutOfBoundsException(sprintf(
-                self::MAX_LEVEL_DEPTH,
                 "Administrative level should be an integer in [1,%d], %d given",
+                self::MAX_LEVEL_DEPTH,
                 $level
             ));
         }

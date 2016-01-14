@@ -1,6 +1,14 @@
 CHANGELOG
 =========
 
+### 3.3.0 (2015-12-06)
+
+* Added: timezone field for `FreeGeoIp` provider
+* Added: guess method for street and suburb
+* Added: use city, town village or hamlet as locality
+* Added: return ISO 3166-2 region codes for the US and the rest of the world
+* Fixed: `AdminLevelCollection::checkLevel()` (#468)
+
 ### 3.2.0 (2015-10-09)
 
 * Added: add __toString() methods in AdminLevel and Country
