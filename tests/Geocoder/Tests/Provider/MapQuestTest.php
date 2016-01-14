@@ -72,11 +72,11 @@ class MapQuestTest extends TestCase
         $this->assertEquals('Paris', $result->getAdminLevels()->get(2)->getName());
         $this->assertEquals('Ile-de-France', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('FR', $result->getCountry()->getName());
+        $this->assertEquals('FR', $result->getCountry()->getCode());
 
         $this->assertFalse($result->getBounds()->isDefined());
         $this->assertNull($result->getStreetNumber());
         $this->assertNull($result->getAdminLevels()->get(1)->getCode());
-        $this->assertNull($result->getCountry()->getCode());
         $this->assertNull($result->getTimezone());
     }
 
@@ -117,11 +117,11 @@ class MapQuestTest extends TestCase
         $this->assertEquals('Lancashire', $result->getAdminLevels()->get(2)->getName());
         $this->assertEquals('England', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('GB', $result->getCountry()->getName());
+        $this->assertEquals('GB', $result->getCountry()->getCode());
 
         $this->assertFalse($result->getBounds()->isDefined());
         $this->assertNull($result->getStreetNumber());
         $this->assertNull($result->getAdminLevels()->get(1)->getCode());
-        $this->assertNull($result->getCountry()->getCode());
         $this->assertNull($result->getTimezone());
     }
 
@@ -147,6 +147,7 @@ class MapQuestTest extends TestCase
         $this->assertEquals('Region Hannover', $result->getAdminLevels()->get(2)->getName());
         $this->assertEquals('Lower Saxony', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('DE', $result->getCountry()->getName());
+        $this->assertEquals('DE', $result->getCountry()->getCode());
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results->first();
@@ -158,6 +159,7 @@ class MapQuestTest extends TestCase
         $this->assertEquals('Region Hannover', $result->getAdminLevels()->get(2)->getName());
         $this->assertEquals('Lower Saxony', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('DE', $result->getCountry()->getName());
+        $this->assertEquals('DE', $result->getCountry()->getCode());
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results->first();
@@ -169,6 +171,7 @@ class MapQuestTest extends TestCase
         $this->assertEquals('Region Hannover', $result->getAdminLevels()->get(2)->getName());
         $this->assertEquals('Lower Saxony', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('DE', $result->getCountry()->getName());
+        $this->assertEquals('DE', $result->getCountry()->getCode());
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results->first();
@@ -180,6 +183,7 @@ class MapQuestTest extends TestCase
         $this->assertEquals('Region Hannover', $result->getAdminLevels()->get(2)->getName());
         $this->assertEquals('Lower Saxony', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('DE', $result->getCountry()->getName());
+        $this->assertEquals('DE', $result->getCountry()->getCode());
     }
 
     public function testGeocodeWithCityDistrict()
@@ -205,11 +209,11 @@ class MapQuestTest extends TestCase
         $this->assertCount(1, $result->getAdminLevels());
         $this->assertEquals('Hesse', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('DE', $result->getCountry()->getName());
+        $this->assertEquals('DE', $result->getCountry()->getCode());
 
         $this->assertFalse($result->getBounds()->isDefined());
         $this->assertNull($result->getStreetNumber());
         $this->assertNull($result->getAdminLevels()->get(1)->getCode());
-        $this->assertNull($result->getCountry()->getCode());
         $this->assertNull($result->getTimezone());
     }
 

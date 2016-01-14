@@ -230,6 +230,7 @@ class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvider
                 break;
 
             case 'locality':
+            case 'postal_town':
                 $resultSet['locality'] = $values->long_name;
                 break;
 

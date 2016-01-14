@@ -13,7 +13,7 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "egeloen/http-adapter": "~0.8",
+        "egeloen/http-adapter": "~0.8|~1.0",
         "igorw/get-in": "~1.0"
     },
     "require-dev": {
@@ -31,7 +31,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "3.2-dev"
+            "dev-master": "3.3-dev"
         }
     }
 }

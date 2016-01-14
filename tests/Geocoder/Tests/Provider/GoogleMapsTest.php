@@ -344,4 +344,18 @@ class GoogleMapsTest extends TestCase
 
         $provider->geocode('Columbia University');
     }
+
+    public function testGeocodePostalTown()
+    {
+        $provider = new GoogleMaps($this->getAdapter());
+        $results  = $provider->geocode('CF37, United Kingdom');
+
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertCount(1, $results);
+
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results->first();
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals('Pontypridd', $result->getLocality());
+    }
 }

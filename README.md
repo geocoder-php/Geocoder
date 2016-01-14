@@ -7,6 +7,7 @@ Status](https://secure.travis-ci.org/geocoder-php/Geocoder.png)](http://travis-c
 Downloads](https://poser.pugx.org/willdurand/Geocoder/downloads.png)](https://packagist.org/packages/willdurand/Geocoder)
 [![Latest Stable
 Version](https://poser.pugx.org/willdurand/Geocoder/v/stable.png)](https://packagist.org/packages/willdurand/Geocoder)
+![PHP7 ready](https://img.shields.io/badge/PHP7-ready-green.svg)
 
 > **Important:** You are browsing the documentation of Geocoder **3.x**.
 Documentation for version **2.x** is available here: [Geocoder 2.x
