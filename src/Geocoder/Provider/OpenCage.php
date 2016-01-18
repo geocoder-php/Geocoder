@@ -13,7 +13,7 @@ use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\QuotaExceeded;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
-use Ivory\HttpAdapter\HttpAdapterInterface;
+use Http\Client\HttpClient;
 
 /**
  * @author mtm <mtm@opencagedata.com>
@@ -38,14 +38,14 @@ class OpenCage extends AbstractHttpProvider implements LocaleAwareProvider
     private $apiKey;
 
     /**
-     * @param HttpAdapterInterface $adapter An HTTP adapter.
+     * @param HttpClient $client An HTTP adapter.
      * @param string               $apiKey  An API key.
      * @param bool                 $useSsl  Whether to use an SSL connection (optional).
      * @param string|null          $locale  A locale (optional).
      */
-    public function __construct(HttpAdapterInterface $adapter, $apiKey, $useSsl = false, $locale = null)
+    public function __construct(HttpClient $client, $apiKey, $useSsl = false, $locale = null)
     {
-        parent::__construct($adapter);
+        parent::__construct($client);
 
         $this->apiKey = $apiKey;
         $this->scheme = $useSsl ? 'https' : 'http';
@@ -99,7 +99,8 @@ class OpenCage extends AbstractHttpProvider implements LocaleAwareProvider
             $query = sprintf('%s&language=%s', $query, $this->getLocale());
         }
 
-        $content = (string) $this->getAdapter()->get($query)->getBody();
+        $request = $this->factory->createRequest($query);
+        $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
 
         if (empty($content)) {
             throw new NoResult(sprintf('Could not execute query "%s".', $query));
