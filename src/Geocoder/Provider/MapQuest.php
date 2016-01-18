@@ -13,7 +13,7 @@ namespace Geocoder\Provider;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
-use Ivory\HttpAdapter\HttpAdapterInterface;
+use Http\Client\HttpClient;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -54,13 +54,13 @@ class MapQuest extends AbstractHttpProvider implements Provider
     private $apiKey;
 
     /**
-     * @param HttpAdapterInterface $adapter  An HTTP adapter.
+     * @param HttpClient $client  An HTTP adapter.
      * @param string               $apiKey   An API key.
      * @param bool                 $licensed True to use MapQuest's licensed endpoints, default is false to use the open endpoints (optional).
      */
-    public function __construct(HttpAdapterInterface $adapter, $apiKey, $licensed = false)
+    public function __construct(HttpClient $client, $apiKey, $licensed = false)
     {
-        parent::__construct($adapter);
+        parent::__construct($client);
 
         $this->apiKey   = $apiKey;
         $this->licensed = $licensed;
@@ -120,7 +120,8 @@ class MapQuest extends AbstractHttpProvider implements Provider
      */
     private function executeQuery($query)
     {
-        $content = (string) $this->getAdapter()->get($query)->getBody();
+        $request = $this->factory->createRequest($query);
+        $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
 
         if (empty($content)) {
             throw new NoResult(sprintf('Could not execute query "%s".', $query));

@@ -10,7 +10,7 @@
 
 namespace Geocoder\Provider;
 
-use Ivory\HttpAdapter\HttpAdapterInterface;
+use Http\Client\HttpClient;
 
 /**
  * Google Maps for Business
@@ -31,14 +31,14 @@ class GoogleMapsBusiness extends GoogleMaps implements Provider
     private $privateKey;
 
     /**
-     * @param HttpAdapterInterface $adapter    An HTTP adapter.
+     * @param HttpClient $client    An HTTP adapter.
      * @param string               $clientId   Your Client ID.
      * @param string               $privateKey Your Private Key (optional).
      * @param string               $locale     A locale (optional).
      * @param string               $region     Region biasing (optional).
      * @param bool                 $useSsl     Whether to use an SSL connection (optional)
      */
-    public function __construct(HttpAdapterInterface $adapter, $clientId, $privateKey = null, $locale = null, $region = null, $useSsl = false)
+    public function __construct(HttpClient $client, $clientId, $privateKey = null, $locale = null, $region = null, $useSsl = false)
     {
         parent::__construct($adapter, $locale, $region, $useSsl);
 
