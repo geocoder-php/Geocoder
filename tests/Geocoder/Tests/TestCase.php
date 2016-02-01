@@ -28,7 +28,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
             ->method('__toString')
             ->will($this->returnValue(''));
 
-        $response = $this->getMock('Psr\Http\Message\MessageInterface');
+        $response = $this->getMock('Psr\Http\Message\ResponseInterface');
         $response
             ->expects($this->any())
             ->method('getBody')
@@ -52,7 +52,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
             ->method('__toString')
             ->will($this->returnValue((string) $returnValue));
 
-        $response = $this->getMock('Psr\Http\Message\MessageInterface');
+        $response = $this->getMock('Psr\Http\Message\ResponseInterface');
         $response
             ->expects($this->once())
             ->method('getBody')

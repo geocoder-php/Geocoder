@@ -5,6 +5,11 @@
         "bootstrap-file": "vendor/autoload.php"
     },
     "packages": {
+        "clue/stream-filter": {
+            "install-path": "vendor/clue/stream-filter",
+            "installer": "composer",
+            "env": "dev"
+        },
         "geoip2/geoip2": {
             "install-path": "vendor/geoip2/geoip2",
             "installer": "composer",
@@ -44,23 +49,8 @@
             "installer": "composer",
             "env": "dev"
         },
-        "padraic/humbug_get_contents": {
-            "install-path": "vendor/padraic/humbug_get_contents",
-            "installer": "composer",
-            "env": "dev"
-        },
-        "padraic/phar-updater": {
-            "install-path": "vendor/padraic/phar-updater",
-            "installer": "composer",
-            "env": "dev"
-        },
         "php-http/client-common": {
             "install-path": "vendor/php-http/client-common",
-            "installer": "composer",
-            "env": "dev"
-        },
-        "php-http/curl-client": {
-            "install-path": "vendor/php-http/curl-client",
             "installer": "composer",
             "env": "dev"
         },
@@ -76,6 +66,11 @@
         },
         "php-http/httplug": {
             "install-path": "vendor/php-http/httplug",
+            "installer": "composer",
+            "env": "dev"
+        },
+        "php-http/message": {
+            "install-path": "vendor/php-http/message",
             "installer": "composer",
             "env": "dev"
         },
@@ -102,11 +97,6 @@
             "installer": "composer",
             "env": "dev"
         },
-        "puli/cli": {
-            "install-path": "vendor/puli/cli",
-            "installer": "composer",
-            "env": "dev"
-        },
         "puli/composer-plugin": {
             "install-path": "vendor/puli/composer-plugin",
             "installer": "composer",
@@ -114,11 +104,6 @@
         },
         "puli/discovery": {
             "install-path": "vendor/puli/discovery",
-            "installer": "composer",
-            "env": "dev"
-        },
-        "puli/manager": {
-            "install-path": "vendor/puli/manager",
             "installer": "composer",
             "env": "dev"
         },
@@ -142,26 +127,6 @@
             "installer": "composer",
             "env": "dev"
         },
-        "symfony/console": {
-            "install-path": "vendor/symfony/console",
-            "installer": "composer",
-            "env": "dev"
-        },
-        "symfony/event-dispatcher": {
-            "install-path": "vendor/symfony/event-dispatcher",
-            "installer": "composer",
-            "env": "dev"
-        },
-        "symfony/filesystem": {
-            "install-path": "vendor/symfony/filesystem",
-            "installer": "composer",
-            "env": "dev"
-        },
-        "symfony/polyfill-mbstring": {
-            "install-path": "vendor/symfony/polyfill-mbstring",
-            "installer": "composer",
-            "env": "dev"
-        },
         "symfony/process": {
             "install-path": "vendor/symfony/process",
             "installer": "composer",
@@ -174,11 +139,6 @@
         },
         "webmozart/assert": {
             "install-path": "vendor/webmozart/assert",
-            "installer": "composer",
-            "env": "dev"
-        },
-        "webmozart/console": {
-            "install-path": "vendor/webmozart/console",
             "installer": "composer",
             "env": "dev"
         },
@@ -197,18 +157,8 @@
             "installer": "composer",
             "env": "dev"
         },
-        "webmozart/key-value-store": {
-            "install-path": "vendor/webmozart/key-value-store",
-            "installer": "composer",
-            "env": "dev"
-        },
         "webmozart/path-util": {
             "install-path": "vendor/webmozart/path-util",
-            "installer": "composer",
-            "env": "dev"
-        },
-        "zendframework/zend-diactoros": {
-            "install-path": "vendor/zendframework/zend-diactoros",
             "installer": "composer",
             "env": "dev"
         }

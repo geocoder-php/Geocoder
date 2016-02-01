@@ -13,7 +13,8 @@ class AbstractProviderTest extends TestCase
 {
     public function testGetLocalhostDefaults()
     {
-        $provider = new MockProvider(new Client());
+        $client = $this->prophesize('Http\Client\HttpClient');
+        $provider = new MockProvider($client->reveal());
         $result   = $provider->getLocalhostDefaults();
 
         $this->assertEquals(2, count($result));

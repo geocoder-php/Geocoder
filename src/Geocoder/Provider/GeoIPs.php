@@ -107,7 +107,7 @@ class GeoIPs extends AbstractHttpProvider implements Provider
      */
     private function executeQuery($query)
     {
-        $request = $this->factory->createRequest($query);
+        $request = $this->factory->createRequest('GET', $query);
         $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
 
         if (empty($content)) {

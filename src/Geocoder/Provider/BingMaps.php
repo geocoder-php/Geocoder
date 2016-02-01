@@ -10,6 +10,7 @@
 
 namespace Geocoder\Provider;
 
+use Http\Client\HttpClient;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;

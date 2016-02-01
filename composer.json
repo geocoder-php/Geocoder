@@ -16,13 +16,16 @@
         "igorw/get-in": "~1.0",
         "psr/http-message-implementation": "^1.0",
         "php-http/client-implementation": "^1.0",
-        "php-http/message-factory": "^1.0"
+        "php-http/message-factory": "^1.0",
+        "php-http/httplug": "^1.0"
     },
     "require-dev": {
         "geoip2/geoip2": "~2.0",
         "symfony/stopwatch": "~2.5",
-        "php-http/discovery": "^0.6.4",
-        "php-http/mock-client": "^0.1.1"
+        "php-http/mock-client": "^0.2",
+        "php-http/message": "^1.0",
+        "php-http/guzzle6-adapter": "^1.0",
+        "php-http/discovery": "^0.7.0"
     },
     "suggest": {
         "ext-geoip": "Enabling the geoip extension allows you to use the MaxMindProvider.",

@@ -4,7 +4,8 @@ namespace Geocoder\Tests;
 
 use Http\Client\HttpClient;
 use Psr\Http\Message\RequestInterface;
-use Http\Discovery\MessageFactoryDiscovery;
+use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\Psr7;
 
 class CachedResponseClient implements HttpClient
 {
@@ -37,7 +38,7 @@ class CachedResponseClient implements HttpClient
         $file = sprintf('%s/%s/%s', realpath(__DIR__ . '/../../'), $this->cacheDir, sha1($url));
 
         if ($this->useCache && is_file($file) && is_readable($file)) {
-            return new Response(200, [], stream_for(fopen($file)));
+            return new Response(200, [], Psr7\stream_for(unserialize(file_get_contents($file))));
         }
 
         $response = $this->delegate->sendRequest($request);

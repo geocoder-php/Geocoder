@@ -40,7 +40,7 @@ class GoogleMapsBusiness extends GoogleMaps implements Provider
      */
     public function __construct(HttpClient $client, $clientId, $privateKey = null, $locale = null, $region = null, $useSsl = false)
     {
-        parent::__construct($adapter, $locale, $region, $useSsl);
+        parent::__construct($client, $locale, $region, $useSsl);
 
         $this->clientId   = $clientId;
         $this->privateKey = $privateKey;
