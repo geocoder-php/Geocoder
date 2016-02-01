@@ -136,7 +136,7 @@ class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvider
     private function executeQuery($query)
     {
         $query   = $this->buildQuery($query);
-        $request = $this->factory->createRequest('GET', $query);
+        $request = $this->messageFactory->createRequest('GET', $query);
         $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
 
         // Throw exception if invalid clientID and/or privateKey used with GoogleMapsBusinessProvider

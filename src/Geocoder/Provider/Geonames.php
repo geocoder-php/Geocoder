@@ -102,7 +102,7 @@ class Geonames extends AbstractHttpProvider implements LocaleAwareProvider
             $query = sprintf('%s&lang=%s', $query, substr($this->getLocale(), 0, 2));
         }
 
-        $request = $this->factory->createRequest('GET', $query);
+        $request = $this->messageFactory->createRequest('GET', $query);
         $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
 
         if (empty($content)) {
