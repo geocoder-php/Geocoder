@@ -1,10 +1,10 @@
 <?php
 
-namespace Geocoder\Provider\CacheStrategy;
+namespace Geocoder\CacheStrategy;
 
 use Psr\Cache\CacheItemPoolInterface;
 
-class StaleIfError implements Stragegy
+class Expire implements Strategy
 {
     private $cache;
 
@@ -18,24 +18,19 @@ class StaleIfError implements Stragegy
 
     public function invoke($key, callable $function)
     {
-        $item = $this->cache->get($key);
+        $item = $this->cache->getItem($key);
 
-        try {
-            $data = call_user_func($function);
-        } catch (\Exception $e) {
-            if (!$item->isHit()) {
-                throw $e;
-            }
-
+        if ($item->isHit()) {
             return $item->get();
         }
 
-        $item->set($data);
+        $data = call_user_func($function);
 
         if ($this->ttl) {
             $item->expiresAfter($this->ttl);
         }
 
+        $item->set($data);
         $this->cache->save($item);
 
         return $data;

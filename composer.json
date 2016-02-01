@@ -14,7 +14,8 @@
     "require": {
         "php": ">=5.4.0",
         "egeloen/http-adapter": "~0.8|~1.0",
-        "igorw/get-in": "~1.0"
+        "igorw/get-in": "~1.0",
+        "psr/cache": "^1.0"
     },
     "require-dev": {
         "geoip2/geoip2": "~2.0",

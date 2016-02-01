@@ -10,8 +10,7 @@
 
 namespace Geocoder\Provider;
 
-use CacheStrategy\Strategy;
-use Geocoder\Exception\InvalidCredentials;
+use Geocoder\CacheStrategy\Strategy;
 
 /**
  * @author Markus Bachmann <markus.bachmann@bachi.biz>
@@ -57,7 +56,7 @@ class Cache implements LocaleAwareProvider
      */
     public function reverse($latitude, $longitude)
     {
-        $key = $this->generateKey($latitude.$longitude);
+        $key = $this->generateKey(serialize([$latitude, $longitude]));
 
         return $this->strategy->invoke($key, function() use ($latitude, $longitude) {
             return $this->delegate->reverse($latitude, $longitude);
@@ -91,12 +90,12 @@ class Cache implements LocaleAwareProvider
     /**
      * Generate a key.
      *
-     * @param mixed $value
+     * @param string $value
      *
      * @return string
      */
     private function generateKey($value)
     {
-        return 'geocoder_'.sha1(serialize($value));
+        return 'geocoder_'.sha1($value);
     }
 }

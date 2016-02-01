@@ -1,8 +1,10 @@
 <?php
 
-namespace Geocoder\Provider\CacheStrategy;
+namespace Geocoder\CacheStrategy;
 
-class Expire implements Stragegy
+use Psr\Cache\CacheItemPoolInterface;
+
+class StaleIfError implements Strategy
 {
     private $cache;
 
@@ -14,22 +16,26 @@ class Expire implements Stragegy
         $this->ttl = $ttl;
     }
 
-    public function invoke($key, callable $function, CacheItemPoolInterface $cache)
+    public function invoke($key, callable $function)
     {
-        $key = $this->generateKey($address);
         $item = $this->cache->getItem($key);
 
-        if ($item->isHit()) {
+        try {
+            $data = call_user_func($function);
+        } catch (\Exception $e) {
+            if (!$item->isHit()) {
+                throw $e;
+            }
+
             return $item->get();
         }
 
-        $data = call_user_func($function);
+        $item->set($data);
 
         if ($this->ttl) {
             $item->expiresAfter($this->ttl);
         }
 
-        $item->set($data);
         $this->cache->save($item);
 
         return $data;
