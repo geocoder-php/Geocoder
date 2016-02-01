@@ -23,7 +23,12 @@ class AbstractHttpProvider extends AbstractProvider
     /**
      * @var HttpClient
      */
-    private $client;
+    protected $client;
+
+    /**
+     * @var MessageFactory
+     */
+    protected $messageFactory;
 
     /**
      * @param HttpClient $client An HTTP adapter
@@ -33,7 +38,7 @@ class AbstractHttpProvider extends AbstractProvider
         parent::__construct();
 
         $this->client = $client ?: HttpClientDiscovery::find();
-        $this->factory = $factory ?: MessageFactoryDiscovery::find();
+        $this->messageFactory = $factory ?: MessageFactoryDiscovery::find();
     }
 
     /**
