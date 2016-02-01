@@ -163,8 +163,8 @@ class Nominatim extends AbstractHttpProvider implements LocaleAwareProvider
             $query = sprintf('%s&accept-language=%s', $query, $this->getLocale());
         }
 
-        $request = $this->factory->createRequest($query);
-        
+        $request = $this->factory->createRequest('GET', $query);
+
         return (string) $this->getHttpClient()->sendRequest($request)->getBody();
     }
 

@@ -12,7 +12,7 @@ namespace Geocoder\Provider;
 
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
-use Http\Client\HttpClientt;
+use Http\Client\HttpClient;
 
 /**
  * @author ALKOUM Dorian <baikunz@gmail.com>
@@ -167,7 +167,8 @@ class ArcGISOnline extends AbstractHttpProvider implements Provider
      */
     private function executeQuery($query)
     {
-        $request = $this->request->sendRequest('GET', $this->buildQuery($query));
+        $query = $this->buildQuery($query);
+        $request = $this->factory->createRequest('GET', $query);
         $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
 
         if (empty($content)) {
