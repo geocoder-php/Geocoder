@@ -10,11 +10,10 @@
 
 namespace Geocoder\Provider;
 
-use Http\Client\HttpClient;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
-use Http\Client\HttpClientt;
+use Http\Client\HttpClient;
 
 /**
  * @author David Guyon <dguyon@gmail.com>
