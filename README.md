@@ -485,6 +485,35 @@ Here is the mapping:
 
 * Timezone: `%T`
 
+### Cache
+
+Sometimes you want to implement a caching mechanism in your application to
+reduce your api requests. Geocoder provide two strategy to cache results:
+
+ * _Stale If Error_ - Strategy:
+   This means geocoder tries to ask the underlined provider, if they throws an exception
+   he tries to become a result from the cache.
+
+ * _Expire_ - Strategy:
+   This is the most used cache mechanism. Geocoder cache each request xxx seconds.
+
+Here an example:
+
+```
+// $cacheDriver is a PSR - 6 compatible driver.
+
+$provider = new GoogleMaps();
+$cache = new Cache(new ExpireCache($cacheDriver), $provider);
+
+$geocoder->registerProvider($cache);
+
+$geocoder->geocode('Berlin');
+$geocoder->geocode('Berlin'); // This uses the cache
+```
+
+Geocoder is [PSR - 6](http://www.php-fig.org/psr/psr-6/) compatible and expect
+an psr-6 cache driver.
+
 
 Extending Things
 ----------------
