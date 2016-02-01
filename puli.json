@@ -66,8 +66,7 @@
         },
         "php-http/httplug": {
             "install-path": "vendor/php-http/httplug",
-            "installer": "composer",
-            "env": "dev"
+            "installer": "composer"
         },
         "php-http/message": {
             "install-path": "vendor/php-http/message",
@@ -85,8 +84,7 @@
         },
         "php-http/promise": {
             "install-path": "vendor/php-http/promise",
-            "installer": "composer",
-            "env": "dev"
+            "installer": "composer"
         },
         "psr/http-message": {
             "install-path": "vendor/psr/http-message",
