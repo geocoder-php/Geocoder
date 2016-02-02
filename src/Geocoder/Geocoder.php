@@ -28,6 +28,7 @@ interface Geocoder
      * @param string $value
      *
      * @return AddressCollection
+     * @throws Geocoder\Exception\Exception
      */
     public function geocode($value);
 
@@ -38,6 +39,7 @@ interface Geocoder
      * @param double $longitude
      *
      * @return AddressCollection
+     * @throws Geocoder\Exception\Exception
      */
     public function reverse($latitude, $longitude);
 
