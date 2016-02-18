@@ -197,6 +197,13 @@ class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvider
                     'north' => $result->geometry->bounds->northeast->lat,
                     'east'  => $result->geometry->bounds->northeast->lng
                 );
+            } elseif (isset($result->geometry->viewport)) {
+                $resultSet['bounds'] = array(
+                    'south' => $result->geometry->viewport->southwest->lat,
+                    'west'  => $result->geometry->viewport->southwest->lng,
+                    'north' => $result->geometry->viewport->northeast->lat,
+                    'east'  => $result->geometry->viewport->northeast->lng
+                );
             } elseif ('ROOFTOP' === $result->geometry->location_type) {
                 // Fake bounds
                 $resultSet['bounds'] = array(

@@ -189,6 +189,24 @@ class GoogleMapsTest extends TestCase
         $this->assertEquals(2.4699209, $result->getBounds()->getEast(), '', 0.0001);
     }
 
+    public function testGeocodeBoundsWithRealAddressWithViewportOnly()
+    {
+        $provider = new GoogleMaps($this->getAdapter());
+        $results  = $provider->geocode('Sibbe, Netherlands');
+
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertCount(1, $results);
+
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results->first();
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertEquals(50.8376273, $result->getBounds()->getSouth(), '', 0.0001);
+        $this->assertEquals(5.8113035, $result->getBounds()->getWest(), '', 0.0001);
+        $this->assertEquals(50.8517182, $result->getBounds()->getNorth(), '', 0.0001);
+        $this->assertEquals(5.8433183, $result->getBounds()->getEast(), '', 0.0001);
+    }
+
     public function testGeocodeWithRealAddressReturnsMultipleResults()
     {
         $provider = new GoogleMaps($this->getAdapter());
