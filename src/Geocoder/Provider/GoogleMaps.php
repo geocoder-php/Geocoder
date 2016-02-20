@@ -15,7 +15,7 @@ use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\QuotaExceeded;
 use Geocoder\Exception\UnsupportedOperation;
-use Ivory\HttpAdapter\HttpAdapterInterface;
+use Http\Client\HttpClient;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -50,15 +50,15 @@ class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvider
     private $apiKey;
 
     /**
-     * @param HttpAdapterInterface $adapter An HTTP adapter
+     * @param HttpClient $client An HTTP adapter
      * @param string               $locale  A locale (optional)
      * @param string               $region  Region biasing (optional)
      * @param bool                 $useSsl  Whether to use an SSL connection (optional)
      * @param string               $apiKey  Google Geocoding API key (optional)
      */
-    public function __construct(HttpAdapterInterface $adapter, $locale = null, $region = null, $useSsl = false, $apiKey = null)
+    public function __construct(HttpClient $client, $locale = null, $region = null, $useSsl = false, $apiKey = null)
     {
-        parent::__construct($adapter);
+        parent::__construct($client);
 
         $this->locale = $locale;
         $this->region = $region;
@@ -136,7 +136,8 @@ class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvider
     private function executeQuery($query)
     {
         $query   = $this->buildQuery($query);
-        $content = (string) $this->getAdapter()->get($query)->getBody();
+        $request = $this->messageFactory->createRequest('GET', $query);
+        $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
 
         // Throw exception if invalid clientID and/or privateKey used with GoogleMapsBusinessProvider
         if (strpos($content, "Provided 'signature' is not valid for the provided client ID") !== false) {

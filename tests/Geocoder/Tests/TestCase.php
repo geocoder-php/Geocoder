@@ -3,8 +3,9 @@
 namespace Geocoder\Tests;
 
 use Geocoder\Model\AddressFactory;
-use Ivory\HttpAdapter\HttpAdapterInterface;
-use Ivory\HttpAdapter\CurlHttpAdapter;
+use Http\Client\HttpClient;
+use Http\Mock\Client as MockClient;
+use Http\Adapter\Guzzle6\Client as GuzzleClient;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -27,19 +28,16 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
             ->method('__toString')
             ->will($this->returnValue(''));
 
-        $response = $this->getMock('Psr\Http\Message\MessageInterface');
+        $response = $this->getMock('Psr\Http\Message\ResponseInterface');
         $response
             ->expects($this->any())
             ->method('getBody')
             ->will($this->returnValue($stream));
 
-        $adapter = $this->getMock('Ivory\HttpAdapter\HttpAdapterInterface');
-        $adapter
-            ->expects($expects)
-            ->method('get')
-            ->will($this->returnValue($response));
+        $client = new MockClient();
+        $client->addResponse($response);
 
-        return $adapter;
+        return $client;
     }
 
     /**
@@ -54,30 +52,31 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
             ->method('__toString')
             ->will($this->returnValue((string) $returnValue));
 
-        $response = $this->getMock('Psr\Http\Message\MessageInterface');
+        $response = $this->getMock('Psr\Http\Message\ResponseInterface');
         $response
             ->expects($this->once())
             ->method('getBody')
             ->will($this->returnValue($body));
 
-        $adapter = $this->getMock('Ivory\HttpAdapter\HttpAdapterInterface');
-        $adapter
-            ->expects($this->once())
-            ->method('get')
-            ->will($this->returnValue($response));
+        $client = new MockClient();
+        $client->addResponse($response);
 
-        return $adapter;
+        return $client;
     }
 
     /**
      * Because I was bored to fix the test suite because of
      * a change in a third-party API...
      *
-     * @return HttpAdapterInterface
+     * @return HttpClient
      */
     protected function getAdapter($apiKey = null)
     {
-        return new CachedResponseAdapter(new CurlHttpAdapter(), $this->useCache(), $apiKey);
+        return new CachedResponseClient(
+            new GuzzleClient(),
+            $this->useCache(),
+            $apiKey
+        );
     }
 
     /**
