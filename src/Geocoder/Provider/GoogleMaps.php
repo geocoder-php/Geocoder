@@ -50,6 +50,11 @@ class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvider
     private $apiKey;
 
     /**
+     * @var string
+     */
+    private $bounds = null;
+
+    /**
      * @param HttpAdapterInterface $adapter An HTTP adapter
      * @param string               $locale  A locale (optional)
      * @param string               $region  Region biasing (optional)
@@ -108,6 +113,13 @@ class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvider
         return $this;
     }
 
+    public function setBounds($bounds)
+    {
+        $this->bounds = $bounds;
+
+        return $this;
+    }
+
     /**
      * @param string $query
      *
@@ -125,6 +137,10 @@ class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvider
 
         if (null !== $this->apiKey) {
             $query = sprintf('%s&key=%s', $query, $this->apiKey);
+        }
+
+        if (null !== $this->bounds) {
+            $query = sprintf('%s&bounds=%s', $query, $this->bounds);
         }
 
         return $query;
