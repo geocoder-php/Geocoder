@@ -132,6 +132,8 @@ class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvider
 
     /**
      * @param string $query
+     * @return \Geocoder\Model\AddressCollection
+     * @throws Exception
      */
     private function executeQuery($query)
     {
@@ -176,7 +178,6 @@ class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvider
         $results = [];
         foreach ($json->results as $result) {
             $resultSet = $this->getDefaults();
-
             // update address components
             foreach ($result->address_components as $component) {
                 foreach ($component->types as $type) {
@@ -188,6 +189,7 @@ class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvider
             $coordinates = $result->geometry->location;
             $resultSet['latitude']  = $coordinates->lat;
             $resultSet['longitude'] = $coordinates->lng;
+            $resultSet['value'] = $result->formatted_address;
 
             $resultSet['bounds'] = null;
             if (isset($result->geometry->bounds)) {
