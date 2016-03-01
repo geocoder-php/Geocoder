@@ -1,5 +1,5 @@
 {
-    "name": "willdurand/geocoder",
+    "name": "nekulin/geocoder",
     "type": "library",
     "description": "The almost missing Geocoder PHP 5.4 library.",
     "keywords": ["geocoder", "geocoding", "abstraction", "geoip"],
