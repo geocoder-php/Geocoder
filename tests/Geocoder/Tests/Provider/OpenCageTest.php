@@ -253,6 +253,47 @@ class OpenCageTest extends TestCase
         $this->assertEquals('GB', $result->getCountry()->getCode());
     }
 
+
+    /**
+     * @expectedException \Geocoder\Exception\QuotaExceeded
+     * @expectedExceptionMessage Valid request but quota exceeded.
+     */
+    public function testGeocodeQuotaExceeded()
+    {
+        $provider = new OpenCage(
+            $this->getMockAdapterReturns(
+                '{
+                    "status": {
+                        "code": 402,
+                        "message": "quota exceeded"
+                    }
+                }'
+            ),
+            'api_key'
+        );
+        $provider->geocode('New York');
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\InvalidCredentials
+     * @expectedExceptionMessage Invalid or missing api key.
+     */
+    public function testGeocodeInvalidApiKey()
+    {
+        $provider = new OpenCage(
+            $this->getMockAdapterReturns(
+                '{
+                    "status": {
+                        "code": 403,
+                        "message": "invalid API key"
+                    }
+                }'
+            ),
+            'api_key'
+        );
+        $provider->geocode('New York');
+    }
+
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The OpenCage provider does not support IP addresses, only street addresses.
