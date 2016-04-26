@@ -10,6 +10,7 @@
 namespace Geocoder\Provider;
 
 use Geocoder\Exception\InvalidCredentials;
+use Geocoder\Exception\QuotaExceeded;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
 use Ivory\HttpAdapter\HttpAdapterInterface;
@@ -105,6 +106,18 @@ class OpenCage extends AbstractHttpProvider implements LocaleAwareProvider
         }
 
         $json = json_decode($content, true);
+
+        // https://geocoder.opencagedata.com/api#codes
+        if (isset($json['status'])) {
+            switch ($json['status']['code']) {
+                case 400:
+                    throw new InvalidArgument('Invalid request (a required parameter is missing).');
+                case 402:
+                    throw new QuotaExceeded('Valid request but quota exceeded.');
+                case 403:
+                    throw new InvalidCredentials('Invalid or missing api key.');
+            }
+        }
 
         if (!isset($json['total_results']) || $json['total_results'] == 0) {
             throw new NoResult(sprintf('Could not find results for query "%s".', $query));
