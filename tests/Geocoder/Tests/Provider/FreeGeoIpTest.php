@@ -4,6 +4,7 @@ namespace Geocoder\Tests\Provider;
 
 use Geocoder\Tests\TestCase;
 use Geocoder\Provider\FreeGeoIp;
+use Ivory\HttpAdapter\CurlHttpAdapter;
 
 class FreeGeoIpTest extends TestCase
 {
@@ -112,6 +113,55 @@ class FreeGeoIpTest extends TestCase
         $this->assertEquals('Texas', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('United States', $result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
+    }
+
+    public function testGeocodeWithRuLocale()
+    {
+        $provider = new FreeGeoIp(new CurlHttpAdapter(), 'ru');
+        $results  = $provider->geocode('74.200.247.59');
+
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertCount(1, $results);
+
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results->first();
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals('Планом', $result->getLocality());
+        $this->assertCount(1, $result->getAdminLevels());
+        $this->assertEquals('Техас', $result->getAdminLevels()->get(1)->getName());
+        $this->assertEquals('США', $result->getCountry()->getName());
+        $this->assertEquals('US', $result->getCountry()->getCode());
+    }
+
+    public function testGeocodeWithFrLocale()
+    {
+        $provider = new FreeGeoIp(new CurlHttpAdapter(), 'fr');
+        $results  = $provider->geocode('213.87.134.159');
+
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertCount(1, $results);
+
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results->first();
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals('Moscou', $result->getLocality());
+        $this->assertEquals('Russie', $result->getCountry()->getName());
+        $this->assertEquals('RU', $result->getCountry()->getCode());
+    }
+    public function testGeocodeWithDeLocale()
+    {
+        $provider = new FreeGeoIp(new CurlHttpAdapter(), 'de');
+        $results  = $provider->geocode('213.87.134.159');
+
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertCount(1, $results);
+
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results->first();
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals('Moskau', $result->getLocality());
+        $this->assertEquals('Russland', $result->getCountry()->getName());
+        $this->assertEquals('RU', $result->getCountry()->getCode());
     }
 
     public function testGeocodeWithRealIPv6()

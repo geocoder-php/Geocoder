@@ -13,16 +13,30 @@ namespace Geocoder\Provider;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Model\AddressCollection;
+use Ivory\HttpAdapter\HttpAdapterInterface;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
 class FreeGeoIp extends AbstractHttpProvider implements Provider
 {
+    use LocaleTrait;
+
     /**
      * @var string
      */
     const ENDPOINT_URL = 'http://freegeoip.net/json/%s';
+    
+    /**
+     * @param HttpAdapterInterface $adapter   An HTTP adapter.
+     * @param string               $locale  A locale (optional).
+     */
+    public function __construct(HttpAdapterInterface $adapter, $locale = 'en-US')
+    {
+        parent::__construct($adapter);
+
+        $this->locale  = $locale;
+    }
 
     /**
      * {@inheritDoc}
@@ -65,7 +79,7 @@ class FreeGeoIp extends AbstractHttpProvider implements Provider
      */
     private function executeQuery($query)
     {
-        $content = (string) $this->getAdapter()->get($query)->getBody();
+        $content = (string) $this->getAdapter()->get($query, ['Accept-Language' => $this->locale])->getBody();
 
         if (empty($content)) {
             throw new NoResult(sprintf('Could not execute query %s', $query));
