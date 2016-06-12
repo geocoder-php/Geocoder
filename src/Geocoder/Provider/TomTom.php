@@ -102,7 +102,7 @@ class TomTom extends AbstractHttpProvider implements LocaleAwareProvider
             $query = sprintf('%s&language=%s', $query, substr($this->getLocale(), 0, 2));
         }
 
-        $request = $this->messageFactory->createRequest('GET', $query);
+        $request = $this->getMessageFactory()->createRequest('GET', $query);
         $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
 
         if (false !== stripos($content, "Developer Inactive")) {

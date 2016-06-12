@@ -97,7 +97,7 @@ class Yandex extends AbstractHttpProvider implements LocaleAwareProvider
 
         $query = sprintf('%s&results=%d', $query, $this->getLimit());
 
-        $request = $this->messageFactory->createRequest('GET', $query);
+        $request = $this->getMessageFactory()->createRequest('GET', $query);
         $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
         $json    = (array) json_decode($content, true);
 

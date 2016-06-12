@@ -100,7 +100,7 @@ class BingMaps extends AbstractHttpProvider implements LocaleAwareProvider
             $query = sprintf('%s&culture=%s', $query, str_replace('_', '-', $this->getLocale()));
         }
 
-        $request = $this->messageFactory->createRequest('GET', $query);
+        $request = $this->getMessageFactory()->createRequest('GET', $query);
         $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
 
         if (empty($content)) {

@@ -62,7 +62,7 @@ class GeoPlugin extends AbstractHttpProvider implements Provider
      */
     private function executeQuery($query)
     {
-        $request = $this->messageFactory->createRequest('GET', $query);
+        $request = $this->getMessageFactory()->createRequest('GET', $query);
         $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
 
         if (empty($content)) {

@@ -23,22 +23,24 @@ class AbstractHttpProvider extends AbstractProvider
     /**
      * @var HttpClient
      */
-    protected $client;
+    private $client;
 
     /**
      * @var MessageFactory
      */
-    protected $messageFactory;
+    private $messageFactory;
 
     /**
-     * @param HttpClient $client An HTTP adapter
+     *
+     * @param HttpClient|null $client
+     * @param MessageFactory|null $factory
      */
-    public function __construct(HttpClient $client = null, MessageFactory $factory = null)
+    public function __construct(HttpClient $client, MessageFactory $factory = null)
     {
         parent::__construct();
 
-        $this->client = $client ?: HttpClientDiscovery::find();
-        $this->messageFactory = $factory ?: MessageFactoryDiscovery::find();
+        $this->client = $client;
+        $this->messageFactory = $factory;
     }
 
     /**
@@ -46,8 +48,44 @@ class AbstractHttpProvider extends AbstractProvider
      *
      * @return HttpClient
      */
-    public function getHttpClient()
+    protected function getHttpClient()
     {
         return $this->client;
+    }
+
+    /**
+     * @return MessageFactory
+     */
+    protected function getMessageFactory()
+    {
+        if ($this->messageFactory === null) {
+            $this->messageFactory = MessageFactoryDiscovery::find();
+        }
+
+        return $this->messageFactory;
+    }
+
+    /**
+     * @param HttpClient $client
+     *
+     * @return AbstractHttpProvider
+     */
+    public function setClient(HttpClient $client)
+    {
+        $this->client = $client;
+
+        return $this;
+    }
+
+    /**
+     * @param MessageFactory $messageFactory
+     *
+     * @return AbstractHttpProvider
+     */
+    public function setMessageFactory(MessageFactory $messageFactory)
+    {
+        $this->messageFactory = $messageFactory;
+
+        return $this;
     }
 }
