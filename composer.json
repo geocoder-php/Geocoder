@@ -17,15 +17,15 @@
         "psr/http-message-implementation": "^1.0",
         "php-http/client-implementation": "^1.0",
         "php-http/message-factory": "^1.0",
-        "php-http/httplug": "^1.0"
+        "php-http/httplug": "^1.0",
+        "php-http/discovery": "^0.8"
     },
     "require-dev": {
         "geoip2/geoip2": "~2.0",
         "symfony/stopwatch": "~2.5",
-        "php-http/mock-client": "^0.2",
         "php-http/message": "^1.0",
         "php-http/guzzle6-adapter": "^1.0",
-        "php-http/discovery": "^0.7.0",
+        "php-http/mock-client": "^0.3.0",
         "puli/composer-plugin": "^1.0.0@beta",
         "puli/discovery": "^1.0.0@beta",
         "puli/repository": "^1.0.0@beta",
