@@ -31,8 +31,7 @@ class AbstractHttpProvider extends AbstractProvider
     private $messageFactory;
 
     /**
-     *
-     * @param HttpClient|null $client
+     * @param HttpClient $client
      * @param MessageFactory|null $factory
      */
     public function __construct(HttpClient $client, MessageFactory $factory = null)
