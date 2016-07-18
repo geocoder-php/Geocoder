@@ -1,0 +1,3 @@
+s:473:"Unable to authenticate the request. Provided 'signature' is not valid for the provided client ID, or the provided 'client' is not valid.
+The signature was checked against the URL: /maps/api/geocode/json?address=Columbia%20University&client=foo&signature=9dJq1hPF7_iwafUpnqXUqEkP0gY=
+If this does not match the URL you requested, please ensure that your request is URL encoded correctly. Learn more: https://developers.google.com/maps/documentation/business/webservices/auth";

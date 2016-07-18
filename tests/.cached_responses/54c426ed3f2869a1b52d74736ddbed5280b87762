@@ -1,0 +1,349 @@
+s:10573:"{
+   "licenses" : [
+      {
+         "name" : "CC-BY-SA",
+         "url" : "http://creativecommons.org/licenses/by-sa/3.0/"
+      },
+      {
+         "name" : "ODbL",
+         "url" : "http://opendatacommons.org/licenses/odbl/summary/"
+      }
+   ],
+   "rate" : {
+      "limit" : 2500,
+      "remaining" : 2477,
+      "reset" : 1422835200
+   },
+   "results" : [
+      {
+         "annotations" : {
+            "DMS" : {
+               "lat" : "52\u00b0 22' 28.12044'' N",
+               "lng" : "9\u00b0 44' 18.79152'' E"
+            },
+            "MGRS" : "32UND5027702946",
+            "Maidenhead" : "JO42ui89pu",
+            "Mercator" : {
+               "x" : 1084090.783,
+               "y" : 6834256.383
+            },
+            "OSM" : {
+               "url" : "http://www.openstreetmap.org/?mlat=52.37448&mlon=9.73855#map=17/52.37448/9.73855"
+            },
+            "callingcode" : 49,
+            "geohash" : "u1qcvw7rkwrd4tdd9ej3",
+            "sun" : {
+               "rise" : {
+                  "astronomical" : 1422766980,
+                  "civil" : 1422771780,
+                  "nautical" : 1422769320
+               },
+               "set" : {
+                  "astronomical" : 1422814020,
+                  "civil" : 1422809220,
+                  "nautical" : 1422811680
+               }
+            },
+            "timezone" : {
+               "name" : "Europe/Berlin",
+               "now_in_dst" : 0,
+               "offset_sec" : 3600,
+               "offset_string" : 100,
+               "short_name" : "CET"
+            },
+            "what3words" : {
+               "words" : "arranged.unity.dripped"
+            }
+         },
+         "bounds" : {
+            "northeast" : {
+               "lat" : 52.4543349,
+               "lng" : 9.9186208
+            },
+            "southwest" : {
+               "lat" : 52.3051373,
+               "lng" : 9.60443
+            }
+         },
+         "components" : {
+            "city" : "Hanover",
+            "country" : "Germany",
+            "country_code" : "de",
+            "county" : "Region Hannover",
+            "state" : "Lower Saxony"
+         },
+         "confidence" : 5,
+         "formatted" : "Hanover, Region Hannover, Germany",
+         "geometry" : {
+            "lat" : 52.3744779,
+            "lng" : 9.7385532
+         }
+      },
+      {
+         "annotations" : {
+            "DMS" : {
+               "lat" : "37\u00b0 44' 41.21880'' N",
+               "lng" : "77\u00b0 26' 47.09940'' W"
+            },
+            "MGRS" : "18STG8445280316",
+            "Maidenhead" : "FM17gr68kr",
+            "Mercator" : {
+               "x" : -8621295.649,
+               "y" : 4517275.615
+            },
+            "OSM" : {
+               "url" : "http://www.openstreetmap.org/?mlat=37.74478&mlon=-77.44642#map=17/37.74478/-77.44642"
+            },
+            "callingcode" : 1,
+            "geohash" : "dq8ytxjpr9w2ccu2qg42",
+            "sun" : {
+               "rise" : {
+                  "astronomical" : 1422787320,
+                  "civil" : 1422791040,
+                  "nautical" : 1422789180
+               },
+               "set" : {
+                  "astronomical" : 1422749100,
+                  "civil" : 1422831780,
+                  "nautical" : 1422833640
+               }
+            },
+            "timezone" : {
+               "name" : "America/New_York",
+               "now_in_dst" : 0,
+               "offset_sec" : -18000,
+               "offset_string" : -500,
+               "short_name" : "EST"
+            },
+            "what3words" : {
+               "words" : "depends.tries.latches"
+            }
+         },
+         "bounds" : {
+            "northeast" : {
+               "lat" : 38.384783,
+               "lng" : -76.8064165
+            },
+            "southwest" : {
+               "lat" : 37.104783,
+               "lng" : -78.0864165
+            }
+         },
+         "components" : {
+            "country" : "United States of America",
+            "country_code" : "us",
+            "county" : "Hanover",
+            "state" : "Virginia"
+         },
+         "confidence" : 1,
+         "formatted" : "Hanover, Virginia, United States of America",
+         "geometry" : {
+            "lat" : 37.744783,
+            "lng" : -77.4464165
+         }
+      },
+      {
+         "annotations" : {
+            "DMS" : {
+               "lat" : "18\u00b0 23' 2.57604'' N",
+               "lng" : "78\u00b0 7' 53.34698'' W"
+            },
+            "MGRS" : "17QRA0310635070",
+            "Maidenhead" : "FK08wj42fe",
+            "Mercator" : {
+               "x" : -8697557.155,
+               "y" : 2069080.962
+            },
+            "OSM" : {
+               "url" : "http://www.openstreetmap.org/?mlat=18.38405&mlon=-78.13149#map=17/18.38405/-78.13149"
+            },
+            "callingcode" : 1,
+            "geohash" : "d722w4dqu7n5263h1jy1",
+            "sun" : {
+               "rise" : {
+                  "astronomical" : 1422786600,
+                  "civil" : 1422789720,
+                  "nautical" : 1422788160
+               },
+               "set" : {
+                  "astronomical" : 1422750180,
+                  "civil" : 1422833460,
+                  "nautical" : 1422835020
+               }
+            },
+            "timezone" : {
+               "name" : "America/Jamaica",
+               "now_in_dst" : 0,
+               "offset_sec" : -18000,
+               "offset_string" : -500,
+               "short_name" : "EST"
+            },
+            "what3words" : {
+               "words" : "gloom.endings.haste"
+            }
+         },
+         "bounds" : {
+            "northeast" : {
+               "lat" : 18.4629985,
+               "lng" : -77.9203782
+            },
+            "southwest" : {
+               "lat" : 18.3044313,
+               "lng" : -78.3450397
+            }
+         },
+         "components" : {
+            "country" : "Jamaica",
+            "country_code" : "jm",
+            "county" : "Hanover",
+            "state_district" : "Cornwall County"
+         },
+         "confidence" : 3,
+         "formatted" : "Hanover, Jamaica",
+         "geometry" : {
+            "lat" : 18.3840489,
+            "lng" : -78.131485271539
+         }
+      },
+      {
+         "annotations" : {
+            "DMS" : {
+               "lat" : "43\u00b0 42' 11.90628'' N",
+               "lng" : "72\u00b0 17' 18.83868'' W"
+            },
+            "MGRS" : "18TYP1847042493",
+            "Maidenhead" : "FN33uq58it",
+            "Mercator" : {
+               "x" : -8047126.391,
+               "y" : 5390110.179
+            },
+            "OSM" : {
+               "url" : "http://www.openstreetmap.org/?mlat=43.70331&mlon=-72.28857#map=17/43.70331/-72.28857"
+            },
+            "callingcode" : 1,
+            "geohash" : "dru8e5cn4qfnv2p2v8kr",
+            "sun" : {
+               "rise" : {
+                  "astronomical" : 1422786300,
+                  "civil" : 1422790380,
+                  "nautical" : 1422788340
+               },
+               "set" : {
+                  "astronomical" : 1422834060,
+                  "civil" : 1422829980,
+                  "nautical" : 1422832020
+               }
+            },
+            "timezone" : {
+               "name" : "America/New_York",
+               "now_in_dst" : 0,
+               "offset_sec" : -18000,
+               "offset_string" : -500,
+               "short_name" : "EST"
+            },
+            "what3words" : {
+               "words" : "slacks.decides.paying"
+            }
+         },
+         "bounds" : {
+            "northeast" : {
+               "lat" : 43.7709495,
+               "lng" : -72.075688
+            },
+            "southwest" : {
+               "lat" : 43.658591,
+               "lng" : -72.3051329
+            }
+         },
+         "components" : {
+            "city" : "Hanover",
+            "country" : "United States of America",
+            "country_code" : "us",
+            "county" : "Grafton County",
+            "state" : "New Hampshire"
+         },
+         "confidence" : 5,
+         "formatted" : "Hanover, Grafton County, New Hampshire, United States of America",
+         "geometry" : {
+            "lat" : 43.7033073,
+            "lng" : -72.2885663
+         }
+      },
+      {
+         "annotations" : {
+            "DMS" : {
+               "lat" : "39\u00b0 48' 22.76892'' N",
+               "lng" : "76\u00b0 59' 3.38460'' W"
+            },
+            "MGRS" : "18SUK3013908144",
+            "Maidenhead" : "FM19mt13vm",
+            "Mercator" : {
+               "x" : -8569850.125,
+               "y" : 4810477.842
+            },
+            "OSM" : {
+               "url" : "http://www.openstreetmap.org/?mlat=39.80632&mlon=-76.98427#map=17/39.80632/-76.98427"
+            },
+            "callingcode" : 1,
+            "geohash" : "dr162ntb8kv053u9scnp",
+            "sun" : {
+               "rise" : {
+                  "astronomical" : 1422787320,
+                  "civil" : 1422791160,
+                  "nautical" : 1422789180
+               },
+               "set" : {
+                  "astronomical" : 1422748920,
+                  "civil" : 1422831480,
+                  "nautical" : 1422833400
+               }
+            },
+            "timezone" : {
+               "name" : "America/New_York",
+               "now_in_dst" : 0,
+               "offset_sec" : -18000,
+               "offset_string" : -500,
+               "short_name" : "EST"
+            },
+            "what3words" : {
+               "words" : "smug.dating.opera"
+            }
+         },
+         "bounds" : {
+            "northeast" : {
+               "lat" : 39.832415,
+               "lng" : -76.9634509
+            },
+            "southwest" : {
+               "lat" : 39.791036,
+               "lng" : -76.9999439
+            }
+         },
+         "components" : {
+            "city" : "Hanover",
+            "country" : "United States of America",
+            "country_code" : "us",
+            "county" : "York County",
+            "state" : "Pennsylvania"
+         },
+         "confidence" : 7,
+         "formatted" : "Hanover, York County, Pennsylvania, United States of America",
+         "geometry" : {
+            "lat" : 39.8063247,
+            "lng" : -76.9842735
+         }
+      }
+   ],
+   "status" : {
+      "code" : 200,
+      "message" : "OK"
+   },
+   "thanks" : "For using an OpenCage Data API",
+   "timestamp" : {
+      "created_http" : "Sun, 01 Feb 2015 16:13:41 GMT",
+      "created_unix" : 1422807221
+   },
+   "total_results" : 5,
+   "we_are_hiring" : "http://lokku.com/#jobs"
+}
+";

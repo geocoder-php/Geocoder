@@ -1,0 +1,151 @@
+s:4438:"{
+   "licenses" : [
+      {
+         "name" : "CC-BY-SA",
+         "url" : "http://creativecommons.org/licenses/by-sa/3.0/"
+      },
+      {
+         "name" : "ODbL",
+         "url" : "http://opendatacommons.org/licenses/odbl/summary/"
+      }
+   ],
+   "rate" : {
+      "limit" : 2500,
+      "remaining" : 2476,
+      "reset" : 1422835200
+   },
+   "results" : [
+      {
+         "annotations" : {
+            "DMS" : {
+               "lat" : "50\u00b0 11' 20.62320'' N",
+               "lng" : "8\u00b0 38' 11.64123'' E"
+            },
+            "MGRS" : "32UMA7405659715",
+            "Maidenhead" : "JO40he65jj",
+            "Mercator" : {
+               "x" : 961418.242,
+               "y" : 6446240.668
+            },
+            "OSM" : {
+               "url" : "http://www.openstreetmap.org/?mlat=50.18906&mlon=8.63657#map=17/50.18906/8.63657"
+            },
+            "callingcode" : 49,
+            "geohash" : "u0yjs88uqx70ec4w60ur",
+            "sun" : {
+               "rise" : {
+                  "astronomical" : 1422767160,
+                  "civil" : 1422771780,
+                  "nautical" : 1422769440
+               },
+               "set" : {
+                  "astronomical" : 1422814380,
+                  "civil" : 1422809760,
+                  "nautical" : 1422812100
+               }
+            },
+            "timezone" : {
+               "name" : "Europe/Berlin",
+               "now_in_dst" : 0,
+               "offset_sec" : 3600,
+               "offset_string" : 100,
+               "short_name" : "CET"
+            },
+            "what3words" : {
+               "words" : "whips.plank.daylight"
+            }
+         },
+         "bounds" : {
+            "northeast" : {
+               "lat" : 50.1891212,
+               "lng" : 8.6366633
+            },
+            "southwest" : {
+               "lat" : 50.1890027,
+               "lng" : 8.6364707
+            }
+         },
+         "components" : {
+            "city" : "Frankfurt",
+            "city_district" : "Kalbach",
+            "country" : "Germany",
+            "country_code" : "de",
+            "county" : "Frankfurt",
+            "house_number" : "10",
+            "postcode" : "60437",
+            "road" : "Kalbacher Hauptstra\u00dfe",
+            "state" : "Hesse",
+            "state_district" : "Regierungsbezirk Darmstadt",
+            "suburb" : "Kalbach"
+         },
+         "confidence" : 10,
+         "formatted" : "Kalbacher Hauptstra\u00dfe 10, 60437 Frankfurt, Germany",
+         "geometry" : {
+            "lat" : 50.189062,
+            "lng" : 8.63656700808489
+         }
+      },
+      {
+         "annotations" : {
+            "DMS" : {
+               "lat" : "50\u00b0 11' 16.08000'' N",
+               "lng" : "8\u00b0 39' 47.52000'' E"
+            },
+            "MGRS" : "32UMA7595659565",
+            "Maidenhead" : "JO40he95ob",
+            "Mercator" : {
+               "x" : 964383.013,
+               "y" : 6446021.855
+            },
+            "OSM" : {
+               "url" : "http://www.openstreetmap.org/?mlat=50.18780&mlon=8.66320#map=17/50.18780/8.66320"
+            },
+            "geohash" : "u0yjt0km5hn07v28j4fu",
+            "sun" : {
+               "rise" : {
+                  "astronomical" : 1422767160,
+                  "civil" : 1422771780,
+                  "nautical" : 1422769440
+               },
+               "set" : {
+                  "astronomical" : 1422814380,
+                  "civil" : 1422809760,
+                  "nautical" : 1422812100
+               }
+            },
+            "timezone" : {
+               "name" : "Europe/Berlin",
+               "now_in_dst" : 0,
+               "offset_sec" : 3600,
+               "offset_string" : 100,
+               "short_name" : "CET"
+            },
+            "what3words" : {
+               "words" : "solder.lawn.smug"
+            }
+         },
+         "components" : {
+            "country" : "Germany",
+            "postcode" : "60437"
+         },
+         "confidence" : 0,
+         "formatted" : "60437, Germany",
+         "geometry" : {
+            "lat" : 50.1878,
+            "lng" : 8.6632
+         }
+      }
+   ],
+   "status" : {
+      "code" : 200,
+      "message" : "OK"
+   },
+   "thanks" : "For using an OpenCage Data API",
+   "timestamp" : {
+      "created_http" : "Sun, 01 Feb 2015 16:13:42 GMT",
+      "created_unix" : 1422807222
+   },
+   "total_results" : 2,
+   "we_are_hiring" : "http://lokku.com/#jobs"
+}
+";
