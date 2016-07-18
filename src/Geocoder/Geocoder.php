@@ -13,6 +13,7 @@ namespace Geocoder;
 use Geocoder\Provider\ProviderInterface;
 use Geocoder\Result\ResultFactoryInterface;
 use Geocoder\Result\DefaultResultFactory;
+use Geocoder\Result\ResultInterface;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
