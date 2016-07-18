@@ -222,6 +222,16 @@ class OpenStreetMapTest extends TestCase
         $provider->geocode('Hammm');
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\HttpError
+     * @expectedExceptionMessage Could not execute query "http://nominatim.openstreetmap.org/search?q=Kalbacher+Hauptstra%C3%9Fe%2C+60437+Frankfurt%2C+Germany&format=xml&addressdetails=1&limit=5&accept-language=de_DE".
+     */
+    public function testGeocodeWithAdaptorFailuresResultInGeocodingException()
+    {
+        $provider = new OpenStreetMap($this->getMockAdapterThrows('Ivory\HttpAdapter\HttpAdapterException'), 'de_DE');
+        $provider->geocode('Kalbacher Hauptstraße, 60437 Frankfurt, Germany');
+    }
+
     public function testReverseWithRealCoordinatesWithLocale()
     {
         $provider = new OpenStreetMap($this->getAdapter(), 'de_DE');

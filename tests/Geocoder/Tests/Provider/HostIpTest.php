@@ -43,6 +43,16 @@ class HostIpTest extends TestCase
         $provider->geocode('10 avenue Gambetta, Paris, France');
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\HttpError
+     * @expectedExceptionMessage Could not execute query "http://api.hostip.info/get_json.php?ip=88.188.221.14&position=true".
+     */
+    public function testGeocodeWithAdaptorFailuresResultInGeocodingException()
+    {
+        $provider = new HostIp($this->getMockAdapterThrows('Ivory\HttpAdapter\HttpAdapterException'));
+        $provider->geocode('88.188.221.14');
+    }
+
     public function testGeocodeWithLocalhostIPv4()
     {
         $provider = new HostIp($this->getMockAdapter($this->never()));

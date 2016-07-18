@@ -163,7 +163,7 @@ class Nominatim extends AbstractHttpProvider implements LocaleAwareProvider
             $query = sprintf('%s&accept-language=%s', $query, $this->getLocale());
         }
 
-        return (string) $this->getAdapter()->get($query)->getBody();
+        return $this->getQueryContent($query);
     }
 
     private function getGeocodeEndpointUrl()

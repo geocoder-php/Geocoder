@@ -120,7 +120,7 @@ class MapQuest extends AbstractHttpProvider implements Provider
      */
     private function executeQuery($query)
     {
-        $content = (string) $this->getAdapter()->get($query)->getBody();
+        $content = $this->getQueryContent($query);
 
         if (empty($content)) {
             throw new NoResult(sprintf('Could not execute query "%s".', $query));

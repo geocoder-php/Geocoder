@@ -116,7 +116,7 @@ class MaxMind extends AbstractHttpProvider implements Provider
      */
     private function executeQuery($query)
     {
-        $content = (string) $this->getAdapter()->get($query)->getBody();
+        $content = $this->getQueryContent($query);
         $fields  = $this->fieldsForService($this->service);
 
         if (null === $content || '' === $content) {

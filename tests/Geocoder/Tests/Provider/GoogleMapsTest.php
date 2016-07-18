@@ -108,6 +108,16 @@ class GoogleMapsTest extends TestCase
         $provider->geocode('10 avenue Gambetta, Paris, France');
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\HttpError
+     * @expectedExceptionMessage Could not execute query "http://maps.googleapis.com/maps/api/geocode/json?address=10%20avenue%20Gambetta%2C%20Paris%2C%20France&language=fr-FR&region=Île-de-France".
+     */
+    public function testGeocodeWithAdaptorFailuresResultInGeocodingException()
+    {
+        $provider = new GoogleMaps($this->getMockAdapterThrows('Ivory\HttpAdapter\HttpAdapterException'), 'fr-FR', 'Île-de-France');
+        $provider->geocode('10 avenue Gambetta, Paris, France');
+    }
+
     public function testGeocodeWithRealAddress()
     {
         $provider = new GoogleMaps($this->getAdapter(), 'fr-FR', 'Île-de-France');

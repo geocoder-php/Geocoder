@@ -97,6 +97,16 @@ class GeoIPsTest extends TestCase
         $provider->geocode('74.200.247.59');
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\HttpError
+     * @expectedExceptionMessage Could not execute query "http://api.geoips.com/ip/74.200.247.59/key/api_key/output/json/timezone/true/".
+     */
+    public function testGeocodeWithAdaptorFailuresResultInGeocodingException()
+    {
+        $provider = new GeoIPs($this->getMockAdapterThrows('Ivory\HttpAdapter\HttpAdapterException'), 'api_key');
+        $provider->geocode('74.200.247.59');
+    }
+
     public function testGeocodeWithRealIPv4GetsFakeContentFormattedEmpty()
     {
         $json = '{"response":{

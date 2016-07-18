@@ -70,6 +70,21 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param string $exception
+     * @return HttpAdapterInterface
+     */
+    protected function getMockAdapterThrows($exception)
+    {
+        $adapter = $this->getMock('Ivory\HttpAdapter\HttpAdapterInterface');
+        $adapter
+            ->expects($this->once())
+            ->method('get')
+            ->will($this->throwException(new $exception));
+
+        return $adapter;
+    }
+
+    /**
      * Because I was bored to fix the test suite because of
      * a change in a third-party API...
      *

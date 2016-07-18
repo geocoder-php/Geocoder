@@ -10,6 +10,8 @@
 
 namespace Geocoder\Provider;
 
+use Geocoder\Exception\HttpError;
+use Ivory\HttpAdapter\HttpAdapterException;
 use Ivory\HttpAdapter\HttpAdapterInterface;
 
 /**
@@ -40,5 +42,20 @@ class AbstractHttpProvider extends AbstractProvider
     public function getAdapter()
     {
         return $this->adapter;
+    }
+
+    /**
+     * @param string $query
+     *
+     * @return string
+     * @throws HttpError
+     */
+    protected function getQueryContent($query)
+    {
+        try {
+            return (string) $this->getAdapter()->get($query)->getBody();
+        } catch (HttpAdapterException $exception) {
+            throw new HttpError(sprintf('Could not execute query "%s".', $query), 0, $exception);
+        }
     }
 }

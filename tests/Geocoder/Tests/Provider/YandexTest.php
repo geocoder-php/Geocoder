@@ -86,6 +86,16 @@ class YandexTest extends TestCase
         $provider->geocode('foobar');
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\HttpError
+     * @expectedExceptionMessage Could not execute query "https://geocode-maps.yandex.ru/1.x/?format=json&geocode=foobar&results=5".
+     */
+    public function testGeocodeWithAdaptorFailuresResultInGeocodingException()
+    {
+        $provider = new Yandex($this->getMockAdapterThrows('Ivory\HttpAdapter\HttpAdapterException'));
+        $provider->geocode('foobar');
+    }
+
     public function testGeocodeWithRealAddress()
     {
         $provider = new Yandex($this->getAdapter());
