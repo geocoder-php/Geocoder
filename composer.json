@@ -12,13 +12,13 @@
         }
     ],
     "require": {
-        "php": "^5.4|^7.0",
+        "php": "^5.5 || ^7.0",
         "igorw/get-in": "~1.0",
         "psr/http-message-implementation": "^1.0",
         "php-http/client-implementation": "^1.0",
         "php-http/message-factory": "^1.0.2",
         "php-http/httplug": "^1.0",
-        "php-http/discovery": "^0.9"
+        "php-http/discovery": "^1.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^4.8",
