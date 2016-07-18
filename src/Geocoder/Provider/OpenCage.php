@@ -99,7 +99,7 @@ class OpenCage extends AbstractHttpProvider implements LocaleAwareProvider
             $query = sprintf('%s&language=%s', $query, $this->getLocale());
         }
 
-        $content = (string) $this->getAdapter()->get($query)->getBody();
+        $content = $this->getQueryContent($query);
 
         if (empty($content)) {
             throw new NoResult(sprintf('Could not execute query "%s".', $query));

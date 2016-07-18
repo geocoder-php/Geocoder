@@ -64,6 +64,16 @@ class GeonamesTest extends TestCase
     }
 
     /**
+     * @expectedException \Geocoder\Exception\HttpError
+     * @expectedExceptionMessage Could not execute query "http://api.geonames.org/searchJSON?q=London&maxRows=5&style=full&username=username".
+     */
+    public function testGeocodeWithAdaptorFailuresResultInGeocodingException()
+    {
+        $provider = new Geonames($this->getMockAdapterThrows('Ivory\HttpAdapter\HttpAdapterException'), 'username');
+        $provider->geocode('London');
+    }
+
+    /**
      * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage No places found for query "http://api.geonames.org/searchJSON?q=BlaBlaBla&maxRows=5&style=full&username=username".
      */

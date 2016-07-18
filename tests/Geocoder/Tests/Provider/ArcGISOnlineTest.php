@@ -72,6 +72,16 @@ class ArcGISOnlineTest extends TestCase
         $provider->geocode('10 avenue Gambetta, Paris, France');
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\HttpError
+     * @expectedExceptionMessage Could not execute query "http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find?text=10+avenue+Gambetta%2C+Paris%2C+France&maxLocations=5&f=json&outFields=*".
+     */
+    public function testGeocodeWithAdaptorFailuresResultInGeocodingException()
+    {
+        $provider = new ArcGISOnline($this->getMockAdapterThrows('Ivory\HttpAdapter\HttpAdapterException'));
+        $provider->geocode('10 avenue Gambetta, Paris, France');
+    }
+
     public function testGeocodeWithRealAddress()
     {
         $provider = new ArcGISOnline($this->getAdapter());

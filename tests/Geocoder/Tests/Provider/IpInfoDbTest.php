@@ -71,6 +71,16 @@ class IpInfoDbTest extends TestCase
         $provider->geocode('10 avenue Gambetta, Paris, France');
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\HttpError
+     * @expectedExceptionMessage Could not execute query "http://api.ipinfodb.com/v3/ip-city/?key=api_key&format=json&ip=74.125.45.100".
+     */
+    public function testGeocodeWithAdaptorFailuresResultInGeocodingException()
+    {
+        $provider = new IpInfoDb($this->getMockAdapterThrows('Ivory\HttpAdapter\HttpAdapterException'), 'api_key');
+        $provider->geocode('74.125.45.100');
+    }
+
     public function testGeocodeWithLocalhostIPv4()
     {
         $provider = new IpInfoDb($this->getMockAdapter($this->never()), 'api_key');

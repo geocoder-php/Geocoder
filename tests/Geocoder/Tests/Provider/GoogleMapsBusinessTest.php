@@ -90,4 +90,14 @@ class GoogleMapsBusinessTest extends TestCase
 
         $provider->geocode('Columbia University', true);
     }
+
+    /**
+     * @expectedException \Geocoder\Exception\HttpError
+     * @expectedExceptionMessage Could not execute query "http://maps.googleapis.com/maps/api/geocode/json?address=Columbia%20University&client=foo&signature=9dJq1hPF7_iwafUpnqXUqEkP0gY=".
+     */
+    public function testGeocodeWithAdaptorFailuresResultInGeocodingException()
+    {
+        $provider = new GoogleMapsBusiness($this->getMockAdapterThrows('Ivory\HttpAdapter\HttpAdapterException'), $this->testClientId, $this->testPrivateKey, null, null, false);
+        $provider->geocode('Columbia University', true);
+    }
 }

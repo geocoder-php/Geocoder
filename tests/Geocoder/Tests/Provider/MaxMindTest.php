@@ -52,6 +52,16 @@ class MaxMindTest extends TestCase
         $provider->geocode('10 avenue Gambetta, Paris, France');
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\HttpError
+     * @expectedExceptionMessage Could not execute query "http://geoip.maxmind.com/f?l=api_key&i=74.200.247.59".
+     */
+    public function testGeocodeWithAdaptorFailuresResultInGeocodingException()
+    {
+        $provider = new MaxMind($this->getMockAdapterThrows('Ivory\HttpAdapter\HttpAdapterException'), 'api_key');
+        $provider->geocode('74.200.247.59');
+    }
+
     public function testGeocodeWithLocalhostIPv4()
     {
         $provider = new MaxMind($this->getMockAdapter($this->never()), 'api_key');

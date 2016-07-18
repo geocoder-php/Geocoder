@@ -46,6 +46,16 @@ class OpenCageTest extends TestCase
         $provider->geocode('10 avenue Gambetta, Paris, France');
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\HttpError
+     * @expectedExceptionMessage Could not execute query "http://api.opencagedata.com/geocode/v1/json?key=api_key&query=10+avenue+Gambetta%2C+Paris%2C+France&limit=5&pretty=1".
+     */
+    public function testGeocodeWithAdaptorFailuresResultInGeocodingException()
+    {
+        $provider = new OpenCage($this->getMockAdapterThrows('Ivory\HttpAdapter\HttpAdapterException'), 'api_key');
+        $provider->geocode('10 avenue Gambetta, Paris, France');
+    }
+
     public function testGeocodeWithRealAddress()
     {
         if (!isset($_SERVER['OPENCAGE_API_KEY'])) {

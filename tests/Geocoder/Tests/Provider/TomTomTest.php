@@ -78,6 +78,16 @@ XML;
         $provider->geocode('foo');
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\HttpError
+     * @expectedExceptionMessage Could not execute query "https://api.tomtom.com/lbs/services/geocode/4/geocode?key=api_key&query=foo&maxResults=5".
+     */
+    public function testGeocodeWithAdaptorFailuresResultInGeocodingException()
+    {
+        $provider = new TomTom($this->getMockAdapterThrows('Ivory\HttpAdapter\HttpAdapterException'), 'api_key');
+        $provider->geocode('foo');
+    }
+
     public function testGeocodeWithRealAddress()
     {
         if (!isset($_SERVER['TOMTOM_MAP_KEY'])) {

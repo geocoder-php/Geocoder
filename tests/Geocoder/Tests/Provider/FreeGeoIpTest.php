@@ -93,6 +93,16 @@ class FreeGeoIpTest extends TestCase
         $provider->geocode('74.200.247.59');
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\HttpError
+     * @expectedExceptionMessage Could not execute query "http://freegeoip.net/json/74.200.247.59".
+     */
+    public function testGeocodeWithAdaptorFailuresResultInGeocodingException()
+    {
+        $provider = new FreeGeoIp($this->getMockAdapterThrows('Ivory\HttpAdapter\HttpAdapterException'));
+        $provider->geocode('74.200.247.59');
+    }
+
     public function testGeocodeWithRealIPv4()
     {
         $provider = new FreeGeoIp($this->getAdapter());

@@ -52,6 +52,16 @@ class GeoipTest extends TestCase
         $provider->geocode('10 avenue Gambetta, Paris, France');
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\HttpError
+     * @expectedExceptionMessage Could not execute query "http://dev.virtualearth.net/REST/v1/Locations/?maxResults=5&q=10+avenue+Gambetta%2C+Paris%2C+France&key=api_key&incl=ciso2".
+     */
+    public function testGeocodeWithAdaptorFailuresResultInGeocodingException()
+    {
+        $provider = new BingMaps($this->getMockAdapterThrows('Ivory\HttpAdapter\HttpAdapterException'), 'api_key');
+        $provider->geocode('10 avenue Gambetta, Paris, France');
+    }
+
     public function testGeocodeWithLocalhostIPv4()
     {
         $provider = new Geoip();

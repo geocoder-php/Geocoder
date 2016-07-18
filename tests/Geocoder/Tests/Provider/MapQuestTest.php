@@ -48,6 +48,16 @@ class MapQuestTest extends TestCase
         $provider->reverse(123, 456);
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\HttpError
+     * @expectedExceptionMessage Could not execute query "http://open.mapquestapi.com/geocoding/v1/address?location=10+avenue+Gambetta%2C+Paris%2C+France&outFormat=json&maxResults=5&key=api_key&thumbMaps=false".
+     */
+    public function testGeocodeWithAdaptorFailuresResultInGeocodingException()
+    {
+        $provider = new MapQuest($this->getMockAdapterThrows('Ivory\HttpAdapter\HttpAdapterException'), 'api_key');
+        $provider->geocode('10 avenue Gambetta, Paris, France');
+    }
+
     public function testGeocodeWithRealAddress()
     {
         if (!isset($_SERVER['MAPQUEST_API_KEY'])) {

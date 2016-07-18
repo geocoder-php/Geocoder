@@ -102,7 +102,7 @@ class TomTom extends AbstractHttpProvider implements LocaleAwareProvider
             $query = sprintf('%s&language=%s', $query, substr($this->getLocale(), 0, 2));
         }
 
-        $content = (string) $this->getAdapter()->get($query)->getBody();
+        $content = $this->getQueryContent($query);
 
         if (false !== stripos($content, "Developer Inactive")) {
             throw new InvalidCredentials('Map API Key provided is not valid.');

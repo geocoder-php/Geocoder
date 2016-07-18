@@ -89,6 +89,16 @@ class GeoPluginTest extends TestCase
         $provider->geocode('74.200.247.59');
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\HttpError
+     * @expectedExceptionMessage Could not execute query "http://www.geoplugin.net/json.gp?ip=74.200.247.59".
+     */
+    public function testGeocodeWithAdaptorFailuresResultInGeocodingException()
+    {
+        $provider = new GeoPlugin($this->getMockAdapterThrows('Ivory\HttpAdapter\HttpAdapterException'));
+        $provider->geocode('74.200.247.59');
+    }
+
     public function testGeocodeWithRealIPv4()
     {
         $provider = new GeoPlugin($this->getAdapter());
