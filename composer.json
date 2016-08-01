@@ -18,7 +18,7 @@
     },
     "require-dev": {
         "geoip2/geoip2": "~2.0",
-        "symfony/stopwatch": "~2.5"
+        "symfony/stopwatch": "~2.5|~3.0"
     },
     "suggest": {
         "ext-geoip": "Enabling the geoip extension allows you to use the MaxMindProvider.",
