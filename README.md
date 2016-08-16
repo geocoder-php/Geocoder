@@ -73,8 +73,8 @@ since each HTTP-based provider implements
 [PSR-7](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-7-http-message.md).
 
 ```php
-$curl     = new \Ivory\HttpAdapter\CurlHttpAdapter();
-$geocoder = new \Geocoder\Provider\GoogleMaps($curl);
+$adapter  = new \Http\Adapter\Guzzle6\Client();
+$geocoder = new \Geocoder\Provider\GoogleMaps($adapter);
 
 $geocoder->geocode(...);
 $geocoder->reverse(...);
@@ -214,14 +214,14 @@ In order to talk to geocoding APIs, you need HTTP adapters. While it was part of
 the library in Geocoder 1.x and 2.x, Geocoder 3.x and upper now relies on the
 [PSR-7
 Standard](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-7-http-message.md)
-which defines how HTTP message should be implemented. Choose any library that
-follows this PSR and implement the specified interfaces to use with Geocoder.
+which defines how HTTP message should be implemented. You can use any library to send HTTP messages
+that implements [php-http/client-implementation](https://packagist.org/providers/php-http/client-implementation).
 
-As making choices is rather hard, Geocoder ships with the
-[egeloen/http-adapter](https://github.com/egeloen/ivory-http-adapter) library by
-default, but it is up to you to choose a different implementation.
+To use Guzzle 6 you should run the follwing command:
 
-**Note:** not all providers are HTTP-based.
+```
+$ composer require php-http/guzzle6-adapter
+```
 
 ### Providers
 
@@ -360,7 +360,7 @@ when a provider returns a result. The result is returned by `GoogleMaps` because
 
 ``` php
 $geocoder = new \Geocoder\ProviderAggregator();
-$adapter  = new \Ivory\HttpAdapter\CurlHttpAdapter();
+$adapter  = new \Http\Adapter\Guzzle6\Client();
 
 $chain = new \Geocoder\Provider\Chain([
     new \Geocoder\Provider\FreeGeoIp($adapter),

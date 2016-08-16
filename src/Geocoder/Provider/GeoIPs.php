@@ -15,7 +15,7 @@ use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\QuotaExceeded;
 use Geocoder\Exception\UnsupportedOperation;
-use Ivory\HttpAdapter\HttpAdapterInterface;
+use Http\Client\HttpClient;
 
 /**
  * @author Andrea Cristaudo <andrea.cristaudo@gmail.com>
@@ -50,12 +50,12 @@ class GeoIPs extends AbstractHttpProvider implements Provider
     private $apiKey;
 
     /**
-     * @param HttpAdapterInterface $adapter An HTTP adapter
-     * @param string               $apiKey  An API key
+     * @param HttpClient $client An HTTP adapter
+     * @param string     $apiKey An API key
      */
-    public function __construct(HttpAdapterInterface $adapter, $apiKey)
+    public function __construct(HttpClient $client, $apiKey)
     {
-        parent::__construct($adapter);
+        parent::__construct($client);
 
         $this->apiKey = $apiKey;
     }
@@ -107,7 +107,8 @@ class GeoIPs extends AbstractHttpProvider implements Provider
      */
     private function executeQuery($query)
     {
-        $content = (string) $this->getAdapter()->get($query)->getBody();
+        $request = $this->getMessageFactory()->createRequest('GET', $query);
+        $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
 
         if (empty($content)) {
             throw new NoResult(sprintf('Invalid response from GeoIPs API for query "%s".', $query));

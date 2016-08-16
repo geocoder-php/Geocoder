@@ -12,7 +12,7 @@ namespace Geocoder\Provider;
 
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
-use Ivory\HttpAdapter\HttpAdapterInterface;
+use Http\Client\HttpClient;
 
 /**
  * @author Antoine Corcy <contact@sbin.dk>
@@ -37,13 +37,13 @@ class Yandex extends AbstractHttpProvider implements LocaleAwareProvider
     private $toponym;
 
     /**
-     * @param HttpAdapterInterface $adapter An HTTP adapter.
-     * @param string               $locale  A locale (optional).
-     * @param string               $toponym Toponym biasing only for reverse geocoding (optional).
+     * @param HttpClient $client  An HTTP adapter.
+     * @param string     $locale  A locale (optional).
+     * @param string     $toponym Toponym biasing only for reverse geocoding (optional).
      */
-    public function __construct(HttpAdapterInterface $adapter, $locale = null, $toponym = null)
+    public function __construct(HttpClient $client, $locale = null, $toponym = null)
     {
-        parent::__construct($adapter);
+        parent::__construct($client);
 
         $this->locale  = $locale;
         $this->toponym = $toponym;
@@ -97,7 +97,8 @@ class Yandex extends AbstractHttpProvider implements LocaleAwareProvider
 
         $query = sprintf('%s&results=%d', $query, $this->getLimit());
 
-        $content = (string) $this->getAdapter()->get($query)->getBody();
+        $request = $this->getMessageFactory()->createRequest('GET', $query);
+        $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
         $json    = (array) json_decode($content, true);
 
         if (empty($json) || isset($json['error']) ||

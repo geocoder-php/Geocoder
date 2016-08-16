@@ -3,10 +3,8 @@
 namespace Geocoder\Tests\Provider;
 
 use Geocoder\Tests\TestCase;
-
+use Http\Mock\Client;
 use Geocoder\Provider\AbstractProvider;
-use Ivory\HttpAdapter\AbstractHttpAdapter;
-use Ivory\HttpAdapter\Message\InternalRequestInterface;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -15,8 +13,8 @@ class AbstractProviderTest extends TestCase
 {
     public function testGetLocalhostDefaults()
     {
-        $adapter  = new MockHttpAdapter();
-        $provider = new MockProvider($adapter);
+        $client = $this->prophesize('Http\Client\HttpClient');
+        $provider = new MockProvider($client->reveal());
         $result   = $provider->getLocalhostDefaults();
 
         $this->assertEquals(2, count($result));
@@ -30,17 +28,5 @@ class MockProvider extends AbstractProvider
     public function getLocalhostDefaults()
     {
         return parent::getLocalhostDefaults();
-    }
-}
-
-class MockHttpAdapter extends AbstractHttpAdapter
-{
-    public function getName()
-    {
-        return 'mock_http_adapter';
-    }
-
-    protected function sendInternalRequest(InternalRequestInterface $internalRequest)
-    {
     }
 }
