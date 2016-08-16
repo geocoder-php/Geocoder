@@ -39,9 +39,9 @@ class Geonames extends AbstractHttpProvider implements LocaleAwareProvider
     private $username;
 
     /**
-     * @param HttpClient $client  An HTTP adapter
-     * @param string               $username Username login (Free registration at http://www.geonames.org/login)
-     * @param string               $locale   A locale (optional)
+     * @param HttpClient $client   An HTTP adapter
+     * @param string     $username Username login (Free registration at http://www.geonames.org/login)
+     * @param string     $locale   A locale (optional)
      */
     public function __construct(HttpClient $client, $username, $locale = null)
     {

@@ -51,7 +51,7 @@ class GeoIPs extends AbstractHttpProvider implements Provider
 
     /**
      * @param HttpClient $client An HTTP adapter
-     * @param string               $apiKey  An API key
+     * @param string     $apiKey An API key
      */
     public function __construct(HttpClient $client, $apiKey)
     {

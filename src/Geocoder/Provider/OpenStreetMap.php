@@ -24,7 +24,7 @@ class OpenStreetMap extends Nominatim
 
     /**
      * @param HttpClient $client An HTTP adapter.
-     * @param string               $locale  A locale (optional).
+     * @param string     $locale A locale (optional).
      */
     public function __construct(HttpClient $client, $locale = null)
     {

@@ -39,8 +39,8 @@ class BingMaps extends AbstractHttpProvider implements LocaleAwareProvider
 
     /**
      * @param HttpClient $client An HTTP adapter
-     * @param string               $apiKey  An API key
-     * @param string               $locale  A locale (optional)
+     * @param string     $apiKey An API key
+     * @param string     $locale A locale (optional)
      */
     public function __construct(HttpClient $client, $apiKey, $locale = null)
     {

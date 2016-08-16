@@ -56,10 +56,10 @@ class MaxMind extends AbstractHttpProvider implements Provider
     private $useSsl = false;
 
     /**
-     * @param HttpClient $client An HTTP adapter.
-     * @param string               $apiKey  An API key.
-     * @param string               $service The specific Maxmind service to use (optional).
-     * @param bool                 $useSsl  Whether to use an SSL connection (optional).
+     * @param HttpClient $client  An HTTP adapter.
+     * @param string     $apiKey  An API key.
+     * @param string     $service The specific Maxmind service to use (optional).
+     * @param bool       $useSsl  Whether to use an SSL connection (optional).
      */
     public function __construct(HttpClient $client, $apiKey, $service = self::CITY_EXTENDED_SERVICE, $useSsl = false)
     {

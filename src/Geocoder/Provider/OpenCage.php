@@ -38,10 +38,10 @@ class OpenCage extends AbstractHttpProvider implements LocaleAwareProvider
     private $apiKey;
 
     /**
-     * @param HttpClient $client An HTTP adapter.
-     * @param string               $apiKey  An API key.
-     * @param bool                 $useSsl  Whether to use an SSL connection (optional).
-     * @param string|null          $locale  A locale (optional).
+     * @param HttpClient  $client An HTTP adapter.
+     * @param string      $apiKey An API key.
+     * @param bool        $useSsl Whether to use an SSL connection (optional).
+     * @param string|null $locale A locale (optional).
      */
     public function __construct(HttpClient $client, $apiKey, $useSsl = false, $locale = null)
     {

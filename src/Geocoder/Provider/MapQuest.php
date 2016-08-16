@@ -54,9 +54,9 @@ class MapQuest extends AbstractHttpProvider implements Provider
     private $apiKey;
 
     /**
-     * @param HttpClient $client  An HTTP adapter.
-     * @param string               $apiKey   An API key.
-     * @param bool                 $licensed True to use MapQuest's licensed endpoints, default is false to use the open endpoints (optional).
+     * @param HttpClient $client   An HTTP adapter.
+     * @param string     $apiKey   An API key.
+     * @param bool       $licensed True to use MapQuest's licensed endpoints, default is false to use the open endpoints (optional).
      */
     public function __construct(HttpClient $client, $apiKey, $licensed = false)
     {

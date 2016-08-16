@@ -31,12 +31,12 @@ class GoogleMapsBusiness extends GoogleMaps implements Provider
     private $privateKey;
 
     /**
-     * @param HttpClient $client    An HTTP adapter.
-     * @param string               $clientId   Your Client ID.
-     * @param string               $privateKey Your Private Key (optional).
-     * @param string               $locale     A locale (optional).
-     * @param string               $region     Region biasing (optional).
-     * @param bool                 $useSsl     Whether to use an SSL connection (optional)
+     * @param HttpClient $client     An HTTP adapter.
+     * @param string     $clientId   Your Client ID.
+     * @param string     $privateKey Your Private Key (optional).
+     * @param string     $locale     A locale (optional).
+     * @param string     $region     Region biasing (optional).
+     * @param bool       $useSsl     Whether to use an SSL connection (optional)
      */
     public function __construct(HttpClient $client, $clientId, $privateKey = null, $locale = null, $region = null, $useSsl = false)
     {

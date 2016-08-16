@@ -27,9 +27,9 @@ class Nominatim extends AbstractHttpProvider implements LocaleAwareProvider
     private $rootUrl;
 
     /**
-     * @param HttpClient $client An HTTP adapter.
-     * @param string               $rootUrl Root URL of the nominatim server
-     * @param string               $locale  A locale (optional).
+     * @param HttpClient $client  An HTTP adapter.
+     * @param string     $rootUrl Root URL of the nominatim server
+     * @param string     $locale  A locale (optional).
      */
     public function __construct(HttpClient $client, $rootUrl, $locale = null)
     {

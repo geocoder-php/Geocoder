@@ -40,9 +40,9 @@ class ArcGISOnline extends AbstractHttpProvider implements Provider
     private $protocol;
 
     /**
-     * @param HttpClient $client       An HTTP adapter
-     * @param string               $sourceCountry Country biasing (optional)
-     * @param bool                 $useSsl        Whether to use an SSL connection (optional)
+     * @param HttpClient $client        An HTTP adapter
+     * @param string     $sourceCountry Country biasing (optional)
+     * @param bool       $useSsl        Whether to use an SSL connection (optional)
      */
     public function __construct(HttpClient $client, $sourceCountry = null, $useSsl = false)
     {

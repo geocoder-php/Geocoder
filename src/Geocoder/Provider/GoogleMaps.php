@@ -51,10 +51,10 @@ class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvider
 
     /**
      * @param HttpClient $client An HTTP adapter
-     * @param string               $locale  A locale (optional)
-     * @param string               $region  Region biasing (optional)
-     * @param bool                 $useSsl  Whether to use an SSL connection (optional)
-     * @param string               $apiKey  Google Geocoding API key (optional)
+     * @param string     $locale A locale (optional)
+     * @param string     $region Region biasing (optional)
+     * @param bool       $useSsl Whether to use an SSL connection (optional)
+     * @param string     $apiKey Google Geocoding API key (optional)
      */
     public function __construct(HttpClient $client, $locale = null, $region = null, $useSsl = false, $apiKey = null)
     {

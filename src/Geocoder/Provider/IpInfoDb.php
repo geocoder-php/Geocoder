@@ -42,11 +42,11 @@ class IpInfoDb extends AbstractHttpProvider implements Provider
     private $endpointUrl;
 
     /**
-     * @param HttpClient $client   An HTTP adapter.
-     * @param string               $apiKey    An API key.
-     * @param string               $precision The endpoint precision. Either "city" or "country" (faster)
+     * @param HttpClient $client    An HTTP adapter.
+     * @param string     $apiKey    An API key.
+     * @param string     $precision The endpoint precision. Either "city" or "country" (faster)
      *
-     * @throws Geocoder\Exception\InvalidArgument
+     * @throws \Geocoder\Exception\InvalidArgument
      */
     public function __construct(HttpClient $client, $apiKey, $precision = 'city')
     {

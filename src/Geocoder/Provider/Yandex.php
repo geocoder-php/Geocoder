@@ -37,9 +37,9 @@ class Yandex extends AbstractHttpProvider implements LocaleAwareProvider
     private $toponym;
 
     /**
-     * @param HttpClient $client An HTTP adapter.
-     * @param string               $locale  A locale (optional).
-     * @param string               $toponym Toponym biasing only for reverse geocoding (optional).
+     * @param HttpClient $client  An HTTP adapter.
+     * @param string     $locale  A locale (optional).
+     * @param string     $toponym Toponym biasing only for reverse geocoding (optional).
      */
     public function __construct(HttpClient $client, $locale = null, $toponym = null)
     {
