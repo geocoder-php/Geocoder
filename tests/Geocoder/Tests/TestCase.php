@@ -3,6 +3,7 @@
 namespace Geocoder\Tests;
 
 use Geocoder\Model\AddressFactory;
+use GuzzleHttp\Psr7\Response;
 use Http\Client\HttpClient;
 use Http\Mock\Client as MockClient;
 use Http\Adapter\Guzzle6\Client as GuzzleClient;
@@ -14,7 +15,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
 {
     /**
      * @param  null|object          $expects
-     * @return HttpAdapterInterface
+     * @return HttpClient
      */
     protected function getMockAdapter($expects = null)
     {
@@ -24,42 +25,24 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
 
         $stream = $this->getMock('Psr\Http\Message\StreamInterface');
         $stream
-            ->expects($this->any())
+            ->expects($expects)
             ->method('__toString')
             ->will($this->returnValue(''));
 
-        $response = $this->getMock('Psr\Http\Message\ResponseInterface');
-        $response
-            ->expects($this->any())
-            ->method('getBody')
-            ->will($this->returnValue($stream));
-
         $client = new MockClient();
-        $client->addResponse($response);
+        $client->addResponse(new Response(200, [], $stream));
 
         return $client;
     }
 
     /**
      * @param $returnValue
-     * @return HttpAdapterInterface
+     * @return HttpClient
      */
     protected function getMockAdapterReturns($returnValue)
     {
-        $body = $this->getMock('Psr\Http\Message\StreamInterface');
-        $body
-            ->expects($this->once())
-            ->method('__toString')
-            ->will($this->returnValue((string) $returnValue));
-
-        $response = $this->getMock('Psr\Http\Message\ResponseInterface');
-        $response
-            ->expects($this->once())
-            ->method('getBody')
-            ->will($this->returnValue($body));
-
         $client = new MockClient();
-        $client->addResponse($response);
+        $client->addResponse(new Response(200, [], (string) $returnValue));
 
         return $client;
     }
