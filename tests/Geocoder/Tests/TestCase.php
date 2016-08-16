@@ -3,8 +3,10 @@
 namespace Geocoder\Tests;
 
 use Geocoder\Model\AddressFactory;
-use Ivory\HttpAdapter\HttpAdapterInterface;
-use Ivory\HttpAdapter\CurlHttpAdapter;
+use GuzzleHttp\Psr7\Response;
+use Http\Client\HttpClient;
+use Http\Mock\Client as MockClient;
+use Http\Adapter\Guzzle6\Client as GuzzleClient;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -13,7 +15,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
 {
     /**
      * @param  null|object          $expects
-     * @return HttpAdapterInterface
+     * @return HttpClient
      */
     protected function getMockAdapter($expects = null)
     {
@@ -23,61 +25,41 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
 
         $stream = $this->getMock('Psr\Http\Message\StreamInterface');
         $stream
-            ->expects($this->any())
+            ->expects($expects)
             ->method('__toString')
             ->will($this->returnValue(''));
 
-        $response = $this->getMock('Psr\Http\Message\MessageInterface');
-        $response
-            ->expects($this->any())
-            ->method('getBody')
-            ->will($this->returnValue($stream));
+        $client = new MockClient();
+        $client->addResponse(new Response(200, [], $stream));
 
-        $adapter = $this->getMock('Ivory\HttpAdapter\HttpAdapterInterface');
-        $adapter
-            ->expects($expects)
-            ->method('get')
-            ->will($this->returnValue($response));
-
-        return $adapter;
+        return $client;
     }
 
     /**
      * @param $returnValue
-     * @return HttpAdapterInterface
+     * @return HttpClient
      */
     protected function getMockAdapterReturns($returnValue)
     {
-        $body = $this->getMock('Psr\Http\Message\StreamInterface');
-        $body
-            ->expects($this->once())
-            ->method('__toString')
-            ->will($this->returnValue((string) $returnValue));
+        $client = new MockClient();
+        $client->addResponse(new Response(200, [], (string) $returnValue));
 
-        $response = $this->getMock('Psr\Http\Message\MessageInterface');
-        $response
-            ->expects($this->once())
-            ->method('getBody')
-            ->will($this->returnValue($body));
-
-        $adapter = $this->getMock('Ivory\HttpAdapter\HttpAdapterInterface');
-        $adapter
-            ->expects($this->once())
-            ->method('get')
-            ->will($this->returnValue($response));
-
-        return $adapter;
+        return $client;
     }
 
     /**
      * Because I was bored to fix the test suite because of
      * a change in a third-party API...
      *
-     * @return HttpAdapterInterface
+     * @return HttpClient
      */
     protected function getAdapter($apiKey = null)
     {
-        return new CachedResponseAdapter(new CurlHttpAdapter(), $this->useCache(), $apiKey);
+        return new CachedResponseClient(
+            new GuzzleClient(),
+            $this->useCache(),
+            $apiKey
+        );
     }
 
     /**

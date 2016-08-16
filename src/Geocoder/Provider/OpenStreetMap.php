@@ -10,7 +10,7 @@
 
 namespace Geocoder\Provider;
 
-use Ivory\HttpAdapter\HttpAdapterInterface;
+use Http\Client\HttpClient;
 
 /**
  * @author Niklas Närhinen <niklas@narhinen.net>
@@ -23,12 +23,12 @@ class OpenStreetMap extends Nominatim
     const ROOT_URL = 'http://nominatim.openstreetmap.org';
 
     /**
-     * @param HttpAdapterInterface $adapter An HTTP adapter.
-     * @param string               $locale  A locale (optional).
+     * @param HttpClient $client An HTTP adapter.
+     * @param string     $locale A locale (optional).
      */
-    public function __construct(HttpAdapterInterface $adapter, $locale = null)
+    public function __construct(HttpClient $client, $locale = null)
     {
-        parent::__construct($adapter, static::ROOT_URL, $locale);
+        parent::__construct($client, static::ROOT_URL, $locale);
     }
 
     /**
