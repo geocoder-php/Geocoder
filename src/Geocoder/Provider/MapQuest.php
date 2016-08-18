@@ -159,7 +159,7 @@ class MapQuest extends AbstractHttpProvider implements Provider
                     'locality'    => $location['adminArea5'] ?: null,
                     'postalCode'  => $location['postalCode'] ?: null,
                     'adminLevels' => $admins,
-                    'country'     => $location['adminArea1'] ?: null,
+                    'country'     => $location['adminArea2'] ?: null,
                     'countryCode' => $location['adminArea1'] ?: null,
                 ));
             }
