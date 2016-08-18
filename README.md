@@ -495,9 +495,9 @@ library but we will show you an example how to properly cache responses with the
 HTTPlug [cache plugin](http://php-http.readthedocs.io/en/latest/plugins/cache.html):
 
 ```php
-
 use Cache\Adapter\Redis\RedisCachePool;
 use Http\Adapter\Guzzle6\Client as GuzzleClient;
+use Http\Client\Common\PluginClient;
 use Geocoder\Provider\GoogleMaps;
 
 // Get a PSR-6 cache pool
