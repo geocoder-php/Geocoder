@@ -208,6 +208,8 @@ class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvider
                 );
             }
 
+            $resultSet['formattedAddress'] = $result->formatted_address;
+
             $results[] = array_merge($this->getDefaults(), $resultSet);
         }
 

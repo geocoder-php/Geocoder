@@ -113,6 +113,7 @@ objects (`AddressCollection`), each providing the following API:
   properties);
 * `getCountryCode()` will return the ISO `country` code;
 * `getTimezone()` will return the `timezone`.
+* `getFormattedAddress()` will return the `formattedAddress`.
 
 The `AddressCollection` exposes the following methods:
 
