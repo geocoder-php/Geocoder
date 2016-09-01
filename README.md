@@ -526,7 +526,7 @@ Cookbook
 
 We have a small cookbook where you can find examples on common use cases: 
 
-* [Using cache](/docs/cookbook/cache.md)
+* [Caching responses](/docs/cookbook/cache.md)
 
 
 Contributing
