@@ -46,6 +46,7 @@ providing a powerful abstraction layer for geocoding manipulations.
   - [Formatters](#formatters)
 * [Extending Things](#extending-things)
 * [Versioning](#versioning)
+* [Cookbook](#cookbook)
 
 
 Installation
@@ -519,6 +520,14 @@ Major version `2` will reach **end of life on December 2015**.
 ### Stable Version
 
 Version `3.x` is the current major stable version of Geocoder.
+
+Cookbook
+--------
+
+We have a small cookbook where you can find examples on common use cases: 
+
+* [Caching responses](/docs/cookbook/cache.md)
+* [Configuring the HTTP client](/docs/cookbook/http-client.md)
 
 
 Contributing
