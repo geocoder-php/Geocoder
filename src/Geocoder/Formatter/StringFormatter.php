@@ -11,8 +11,9 @@
 namespace Geocoder\Formatter;
 
 use Geocoder\Model\Address;
+use Geocoder\Model\Position;
 use Geocoder\Model\AdminLevel;
-use Geocoder\Model\AdminLevelCollection;
+use Geocoder\Model\AdminLevelCollectionInterface;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -42,12 +43,12 @@ class StringFormatter
     /**
      * Transform an `Address` instance into a string representation.
      *
-     * @param Address $address
-     * @param string  $format
+     * @param Position $address
+     * @param string $format
      *
      * @return string
      */
-    public function format(Address $address, $format)
+    public function format(Position $address, $format)
     {
         $replace = [
             self::STREET_NUMBER => $address->getStreetNumber(),
@@ -60,7 +61,7 @@ class StringFormatter
             self::TIMEZONE      => $address->getTimezone(),
         ];
 
-        for ($level = 1; $level <= AdminLevelCollection::MAX_LEVEL_DEPTH; $level ++) {
+        for ($level = 1; $level <= AdminLevelCollectionInterface::MAX_LEVEL_DEPTH; $level ++) {
             $replace[self::ADMIN_LEVEL . $level] = null;
             $replace[self::ADMIN_LEVEL_CODE . $level] = null;
         }

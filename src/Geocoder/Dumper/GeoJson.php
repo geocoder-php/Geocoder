@@ -11,6 +11,7 @@
 namespace Geocoder\Dumper;
 
 use Geocoder\Model\Address;
+use Geocoder\Model\Position;
 
 /**
  * @author Jan Sorgalla <jsorgalla@googlemail.com>
@@ -20,7 +21,7 @@ class GeoJson implements Dumper
     /**
      * {@inheritDoc}
      */
-    public function dump(Address $address)
+    public function dump(Position $address)
     {
         $properties = array_filter($address->toArray(), function ($value) {
             return !empty($value);

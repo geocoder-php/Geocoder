@@ -11,6 +11,7 @@
 namespace Geocoder\Provider;
 
 use Geocoder\Geocoder;
+use Geocoder\GeocoderResult;
 use Geocoder\Model\AddressFactory;
 
 /**
@@ -96,7 +97,7 @@ abstract class AbstractProvider
     /**
      * @param array $data An array of data.
      *
-     * @return \Geocoder\Model\AddressCollection
+     * @return GeocoderResult
      */
     protected function returnResults(array $data = [])
     {

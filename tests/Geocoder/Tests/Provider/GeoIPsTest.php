@@ -2,6 +2,7 @@
 
 namespace Geocoder\Tests\Provider;
 
+use Geocoder\Model\Position;
 use Geocoder\Tests\TestCase;
 use Geocoder\Provider\GeoIPs;
 
@@ -60,7 +61,7 @@ class GeoIPsTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Position $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals('localhost', $result->getLocality());
@@ -131,7 +132,7 @@ class GeoIPsTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Position $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertNull($result->getLatitude());
@@ -174,7 +175,7 @@ class GeoIPsTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Position $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(40.3402, $result->getLatitude(), '', 0.0001);
@@ -333,7 +334,7 @@ class GeoIPsTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Position $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(40.3402, $result->getLatitude(), '', 0.0001);

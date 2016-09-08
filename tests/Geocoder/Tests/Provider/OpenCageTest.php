@@ -2,6 +2,7 @@
 
 namespace Geocoder\Tests\Provider;
 
+use Geocoder\Model\Position;
 use Geocoder\Tests\TestCase;
 use Geocoder\Provider\OpenCage;
 
@@ -58,7 +59,7 @@ class OpenCageTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(3, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Position $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(48.866205, $result->getLatitude(), '', 0.01);
@@ -105,7 +106,7 @@ class OpenCageTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Position $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(54.0484068, $result->getLatitude(), '', 0.001);
@@ -139,7 +140,7 @@ class OpenCageTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Position $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals('Bray-et-Lû', $result->getLocality());
@@ -157,7 +158,7 @@ class OpenCageTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Position $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(52.374478, $result->getLatitude(), '', 0.01);
@@ -168,7 +169,7 @@ class OpenCageTest extends TestCase
         $this->assertEquals('Lower Saxony', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('Germany', $result->getCountry()->getName());
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Position $result */
         $result = $results->get(1);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(37.744783, $result->getLatitude(), '', 0.01);
@@ -178,7 +179,7 @@ class OpenCageTest extends TestCase
         $this->assertEquals('Hanover', $result->getAdminLevels()->get(2)->getName());
         $this->assertEquals('United States of America', $result->getCountry()->getName());
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Position $result */
         $result = $results->get(2);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(18.3840489, $result->getLatitude(), '', 0.01);
@@ -188,7 +189,7 @@ class OpenCageTest extends TestCase
         $this->assertEquals('Hanover', $result->getAdminLevels()->get(2)->getName());
         $this->assertEquals('Jamaica', $result->getCountry()->getName());
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Position $result */
         $result = $results->get(3);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(43.7033073, $result->getLatitude(), '', 0.01);
@@ -212,7 +213,7 @@ class OpenCageTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(2, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Position $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(50.189062, $result->getLatitude(), '', 0.01);
@@ -242,7 +243,7 @@ class OpenCageTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Position $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals('Londres', $result->getLocality());

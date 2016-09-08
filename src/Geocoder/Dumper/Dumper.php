@@ -11,6 +11,7 @@
 namespace Geocoder\Dumper;
 
 use Geocoder\Model\Address;
+use Geocoder\Model\Position;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -21,9 +22,9 @@ interface Dumper
      * Dumps an `Address` object as a string representation of
      * the implemented format.
      *
-     * @param Address $address
+     * @param Position $address
      *
      * @return string
      */
-    public function dump(Address $address);
+    public function dump(Position $address);
 }

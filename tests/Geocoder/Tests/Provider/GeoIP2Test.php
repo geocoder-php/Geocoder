@@ -11,6 +11,7 @@
 namespace Geocoder\Tests\Provider;
 
 use Geocoder\Exception\NoResult;
+use Geocoder\Model\Position;
 use Geocoder\Provider\GeoIP2;
 use Geocoder\Tests\TestCase;
 
@@ -50,7 +51,7 @@ class GeoIP2Test extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Position $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals('localhost', $result->getLocality());
@@ -162,7 +163,7 @@ class GeoIP2Test extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Position $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals($expectedGeodata['latitude'], $result->getLatitude());
