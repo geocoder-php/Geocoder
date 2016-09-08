@@ -13,15 +13,15 @@ namespace Geocoder\Model;
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-final class Address
+final class Address implements Position
 {
     /**
-     * @var Coordinates
+     * @var CoordinatesInterface
      */
     private $coordinates;
 
     /**
-     * @var Bounds
+     * @var BoundsInterface
      */
     private $bounds;
 
@@ -51,12 +51,12 @@ final class Address
     private $postalCode;
 
     /**
-     * @var AdminLevelCollection
+     * @var AdminLevelCollectionInterface
      */
     private $adminLevels;
 
     /**
-     * @var Country
+     * @var CountryInterface
      */
     private $country;
 
@@ -73,15 +73,15 @@ final class Address
      * @param string $subLocality
      */
     public function __construct(
-        Coordinates $coordinates          = null,
-        Bounds $bounds                    = null,
+        CoordinatesInterface $coordinates          = null,
+        BoundsInterface $bounds                    = null,
         $streetNumber                     = null,
         $streetName                       = null,
         $postalCode                       = null,
         $locality                         = null,
         $subLocality                      = null,
-        AdminLevelCollection $adminLevels = null,
-        Country $country                  = null,
+        AdminLevelCollectionInterface $adminLevels = null,
+        CountryInterface $country                  = null,
         $timezone                         = null
     ) {
         $this->coordinates  = $coordinates;
@@ -99,7 +99,7 @@ final class Address
     /**
      * Returns an array of coordinates (latitude, longitude).
      *
-     * @return Coordinates
+     * @return CoordinatesInterface
      */
     public function getCoordinates()
     {
@@ -137,7 +137,7 @@ final class Address
     /**
      * Returns the bounds value.
      *
-     * @return Bounds
+     * @return BoundsInterface
      */
     public function getBounds()
     {
@@ -198,7 +198,7 @@ final class Address
     /**
      * Returns the administrative levels.
      *
-     * @return AdminLevelCollection
+     * @return AdminLevelCollectionInterface
      */
     public function getAdminLevels()
     {
@@ -208,7 +208,7 @@ final class Address
     /**
      * Returns the country value.
      *
-     * @return Country
+     * @return CountryInterface
      */
     public function getCountry()
     {

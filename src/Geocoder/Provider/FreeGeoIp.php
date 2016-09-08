@@ -12,7 +12,8 @@ namespace Geocoder\Provider;
 
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
-use Geocoder\Model\AddressCollection;
+use Geocoder\GeocoderResult;
+use Geocoder\Model\Address;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -61,7 +62,7 @@ final class FreeGeoIp extends AbstractHttpProvider implements Provider
     /**
      * @param string $query
      *
-     * @return AddressCollection
+     * @return GeocoderResult
      */
     private function executeQuery($query)
     {

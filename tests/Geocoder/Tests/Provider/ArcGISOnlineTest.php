@@ -2,6 +2,7 @@
 
 namespace Geocoder\Tests\Provider;
 
+use Geocoder\Model\Position;
 use Geocoder\Tests\TestCase;
 use Geocoder\Provider\ArcGISOnline;
 
@@ -80,7 +81,7 @@ class ArcGISOnlineTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Position $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(48.863279997000461, $result->getLatitude(), '', 0.0001);
@@ -181,7 +182,7 @@ class ArcGISOnlineTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Position $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(48.863279997000461, $result->getLatitude(), '', 0.0001);
@@ -233,7 +234,7 @@ class ArcGISOnlineTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Position $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(52.370518568000477, $result->getLatitude(), '', 0.0001);
@@ -251,7 +252,7 @@ class ArcGISOnlineTest extends TestCase
         $this->assertNull($result->getCountry()->getName());
         $this->assertNull($result->getTimezone());
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Position $result */
         $result = $results->get(1);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(47.111386795000499, $result->getLatitude(), '', 0.0001);
@@ -262,7 +263,7 @@ class ArcGISOnlineTest extends TestCase
         $this->assertEquals('North Dakota', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('USA', $result->getCountry()->getCode());
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Position $result */
         $result = $results->get(2);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(39.391768472000479, $result->getLatitude(), '', 0.0001);
@@ -273,7 +274,7 @@ class ArcGISOnlineTest extends TestCase
         $this->assertEquals('Maryland', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('USA', $result->getCountry()->getCode());
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Position $result */
         $result = $results->get(3);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(53.174198173, $result->getLatitude(), '', 0.0001);
@@ -284,7 +285,7 @@ class ArcGISOnlineTest extends TestCase
         $this->assertEquals('Niedersachsen', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('DEU', $result->getCountry()->getCode());
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Position $result */
         $result = $results->get(4);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(-26.281805980999593, $result->getLatitude(), '', 0.0001);

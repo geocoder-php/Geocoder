@@ -10,6 +10,8 @@
 
 namespace Geocoder\Model;
 
+use Geocoder\GeocoderResult;
+
 /**
  * @author Markus Bachmann <markus.bachmann@bachi.biz>
  * @author William Durand <william.durand1@gmail.com>
@@ -18,7 +20,7 @@ final class AddressFactory
 {
     /**
      * @param  array                             $results
-     * @return \Geocoder\Model\AddressCollection
+     * @return GeocoderResult
      */
     public function createFromArray(array $results)
     {
@@ -58,7 +60,7 @@ final class AddressFactory
             );
         }
 
-        return new AddressCollection($addresses);
+        return new Address($addresses);
     }
 
     /**

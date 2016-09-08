@@ -13,7 +13,7 @@ namespace Geocoder\Model;
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-final class AdminLevel
+final class AdminLevel implements AdminLevelInterface
 {
     /**
      * @var int
@@ -77,18 +77,8 @@ final class AdminLevel
      *
      * @return string
      */
-    public function toString()
-    {
-        return $this->getName();
-    }
-
-    /**
-     * Returns a string with the administrative level name.
-     *
-     * @return string
-     */
     public function __toString()
     {
-        return $this->toString();
+        return $this->getName();
     }
 }
