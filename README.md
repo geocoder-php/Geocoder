@@ -30,6 +30,7 @@ providing a powerful abstraction layer for geocoding manipulations.
       - [GeoIP2](#geoip2)
       - [GoogleMaps](#googlemaps)
       - [GoogleMapsBusiness](#googlemapsbusiness)
+      - [Mapzen](#mapzen)
       - [MaxMindBinary](#maxmindbinary)
       - [Nominatim](#nominatim)
       - [TomTom](#tomtom)
@@ -239,7 +240,8 @@ Chain | `chain` | | | | | meta provider which iterates over a list of providers
 [Geonames](http://www.geonames.org/commercial-webservices.html) | `geonames` | yes |no | worldwide | yes | requires registration, no free tier
 [Google Maps](https://developers.google.com/maps/documentation/geocoding/) | `google_maps` | yes | supported | worldwide | yes | requires API key. Limit 2500 requests per day
 [Google Maps for Business](https://developers.google.com/maps/documentation/business/) | `google_maps_business` | yes | supported | worldwide | yes | requires API key. Limit 100,000 requests per day
-[MapQuest](http://developer.mapquest.com/web/products/dev-services/geocoding-ws) | `map_quest` | yes | no | worldwide | yes | both open and [commercial service](http://platform.mapquest.com/geocoding/) require API key
+[MapQuest](http://developer.mapquest.com/web/products/dev-services/geocoding-ws) | `map_quest` | yes | no | worldwide | yes | both open and [commercial service](http://platform.mapquest.com/geocoding/) requires API key
+[Mapzen](https://mapzen.com/documentation/search/) | `mapzen` | yes | supported | worldwide | yes | requires API key; limited to 6 request/sec, 30,000 request/day
 [Nominatim](http://wiki.openstreetmap.org/wiki/Nominatim) | `nominatim` | yes | supported | worldwide | yes | requires a domain name (e.g. local installation)
 [OpenCage](http://geocoder.opencagedata.com/) | `opencage` | yes | supported | worldwide | yes | requires API key. 2500 requests/day free
 [OpenStreetMap](http://wiki.openstreetmap.org/wiki/Nominatim) | `openstreetmap` | yes | no | worldwide | yes | heavy users (>1q/s) get banned
@@ -295,6 +297,10 @@ $geocoder = new \Geocoder\Provider\GoogleMaps(
 
 A valid `Client ID` is required. The private key is optional. This provider also
 supports SSL, and extends the `GoogleMaps` provider.
+
+##### Mapzen
+
+A valid `API key` is required. This provider also supports SSL.
 
 ##### MaxMindBinary
 
@@ -524,7 +530,7 @@ Version `3.x` is the current major stable version of Geocoder.
 Cookbook
 --------
 
-We have a small cookbook where you can find examples on common use cases: 
+We have a small cookbook where you can find examples on common use cases:
 
 * [Caching responses](/docs/cookbook/cache.md)
 * [Configuring the HTTP client](/docs/cookbook/http-client.md)
