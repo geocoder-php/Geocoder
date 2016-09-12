@@ -44,7 +44,7 @@ class CachedResponseClient implements HttpClient
         $response = $this->delegate->sendRequest($request);
 
         if ($this->useCache) {
-            file_put_contents($file, $response->getBody()->getContents());
+            file_put_contents($file, serialize($response->getBody()->getContents()));
         }
 
         return $response;
