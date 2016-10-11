@@ -4,7 +4,10 @@ namespace Geocoder;
 use Geocoder\Model\Position;
 
 /**
- * This is the interface that is always return from a geocoder.
+ * This is the interface that is always return from a Geocoder.
+ *
+ * @author William Durand <william.durand1@gmail.com>
+ * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
 interface GeocoderResult extends \IteratorAggregate, \Countable
 {

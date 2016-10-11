@@ -60,7 +60,7 @@ final class AddressFactory
             );
         }
 
-        return new Address($addresses);
+        return new AddressCollection($addresses);
     }
 
     /**
