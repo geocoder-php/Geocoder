@@ -2,14 +2,17 @@
 namespace Geocoder\Model;
 
 /**
+ * A position is a single result from a Geocoder.
+ *
  * @author William Durand <william.durand1@gmail.com>
+ * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
 interface Position
 {
     /**
      * Returns an array of coordinates (latitude, longitude).
      *
-     * @return CoordinatesInterface
+     * @return Coordinates
      */
     public function getCoordinates();
 
@@ -30,7 +33,7 @@ interface Position
     /**
      * Returns the bounds value.
      *
-     * @return BoundsInterface
+     * @return Bounds
      */
     public function getBounds();
 
@@ -80,7 +83,7 @@ interface Position
     /**
      * Returns the country value.
      *
-     * @return CountryInterface
+     * @return Country
      */
     public function getCountry();
 

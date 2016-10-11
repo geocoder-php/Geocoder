@@ -5,7 +5,7 @@ namespace Geocoder\Model;
 use Geocoder\Exception\CollectionIsEmpty;
 use Geocoder\GeocoderResult;
 
-final class Address implements GeocoderResult
+final class AddressCollection implements GeocoderResult
 {
     /**
      * @var Position[]

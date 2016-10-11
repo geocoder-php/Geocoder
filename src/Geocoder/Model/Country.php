@@ -13,7 +13,7 @@ namespace Geocoder\Model;
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-final class Country implements CountryInterface
+final class Country
 {
     /**
      * @var string

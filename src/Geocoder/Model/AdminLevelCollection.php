@@ -16,6 +16,10 @@ final class AdminLevelCollection implements AdminLevelCollectionInterface
      */
     private $adminLevels;
 
+    /**
+     *
+     * @param AdminLevelInterface[] $adminLevels
+     */
     public function __construct(array $adminLevels = [])
     {
         $this->adminLevels = [];
