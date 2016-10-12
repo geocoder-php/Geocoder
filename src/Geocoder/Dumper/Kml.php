@@ -10,7 +10,6 @@
 
 namespace Geocoder\Dumper;
 
-use Geocoder\Model\Address;
 use Geocoder\Position;
 
 /**

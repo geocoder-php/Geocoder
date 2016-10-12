@@ -11,7 +11,6 @@
 namespace Geocoder\Dumper;
 
 use Geocoder\Geocoder;
-use Geocoder\Model\Address;
 use Geocoder\Position;
 
 /**
