@@ -11,7 +11,7 @@
 namespace Geocoder\Dumper;
 
 use Geocoder\Model\Address;
-use Geocoder\Model\Position;
+use Geocoder\Position;
 
 /**
  * @author Jan Sorgalla <jsorgalla@googlemail.com>
@@ -21,8 +21,8 @@ class Wkt implements Dumper
     /**
      * {@inheritDoc}
      */
-    public function dump(Position $address)
+    public function dump(Position $position)
     {
-        return sprintf('POINT(%F %F)', $address->getLongitude(), $address->getLatitude());
+        return sprintf('POINT(%F %F)', $position->getLongitude(), $position->getLatitude());
     }
 }

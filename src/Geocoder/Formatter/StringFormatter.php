@@ -10,10 +10,8 @@
 
 namespace Geocoder\Formatter;
 
-use Geocoder\Model\Address;
-use Geocoder\Model\Position;
-use Geocoder\Model\AdminLevel;
-use Geocoder\Model\AdminLevelCollectionInterface;
+use Geocoder\Model\AdminLevelCollection;
+use Geocoder\Position;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -43,30 +41,30 @@ class StringFormatter
     /**
      * Transform an `Address` instance into a string representation.
      *
-     * @param Position $address
+     * @param Position $position
      * @param string $format
      *
      * @return string
      */
-    public function format(Position $address, $format)
+    public function format(Position $position, $format)
     {
         $replace = [
-            self::STREET_NUMBER => $address->getStreetNumber(),
-            self::STREET_NAME   => $address->getStreetName(),
-            self::LOCALITY      => $address->getLocality(),
-            self::POSTAL_CODE   => $address->getPostalCode(),
-            self::SUB_LOCALITY  => $address->getSubLocality(),
-            self::COUNTRY       => $address->getCountry()->getName(),
-            self::COUNTRY_CODE  => $address->getCountry()->getCode(),
-            self::TIMEZONE      => $address->getTimezone(),
+            self::STREET_NUMBER => $position->getStreetNumber(),
+            self::STREET_NAME   => $position->getStreetName(),
+            self::LOCALITY      => $position->getLocality(),
+            self::POSTAL_CODE   => $position->getPostalCode(),
+            self::SUB_LOCALITY  => $position->getSubLocality(),
+            self::COUNTRY       => $position->getCountry()->getName(),
+            self::COUNTRY_CODE  => $position->getCountry()->getCode(),
+            self::TIMEZONE      => $position->getTimezone(),
         ];
 
-        for ($level = 1; $level <= AdminLevelCollectionInterface::MAX_LEVEL_DEPTH; $level ++) {
+        for ($level = 1; $level <= AdminLevelCollection::MAX_LEVEL_DEPTH; $level ++) {
             $replace[self::ADMIN_LEVEL . $level] = null;
             $replace[self::ADMIN_LEVEL_CODE . $level] = null;
         }
 
-        foreach ($address->getAdminLevels() as $level => $adminLevel) {
+        foreach ($position->getAdminLevels() as $level => $adminLevel) {
             $replace[self::ADMIN_LEVEL . $level] = $adminLevel->getName();
             $replace[self::ADMIN_LEVEL_CODE . $level] = $adminLevel->getCode();
         }
