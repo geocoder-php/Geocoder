@@ -13,7 +13,7 @@ namespace Geocoder\Model;
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-final class AdminLevel implements AdminLevelInterface
+final class AdminLevel
 {
     /**
      * @var int

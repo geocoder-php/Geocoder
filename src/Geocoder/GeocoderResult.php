@@ -1,7 +1,6 @@
 <?php
-namespace Geocoder;
 
-use Geocoder\Model\Position;
+namespace Geocoder;
 
 /**
  * This is the interface that is always return from a Geocoder.
