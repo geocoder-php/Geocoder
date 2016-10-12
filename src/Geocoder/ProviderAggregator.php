@@ -11,6 +11,7 @@
 namespace Geocoder;
 
 use Geocoder\Exception\ProviderNotRegistered;
+use Geocoder\Model\AddressCollection;
 use Geocoder\Provider\Provider;
 use Geocoder\Model\Address;
 
@@ -51,7 +52,7 @@ class ProviderAggregator implements Geocoder
 
         if (empty($value)) {
             // let's save a request
-            return new Address();
+            return new AddressCollection();
         }
 
         return $this->getProvider()
@@ -66,7 +67,7 @@ class ProviderAggregator implements Geocoder
     {
         if (empty($latitude) || empty($longitude)) {
             // let's save a request
-            return new Address();
+            return new AddressCollection();
         }
 
         return $this->getProvider()
