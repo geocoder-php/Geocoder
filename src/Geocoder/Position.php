@@ -1,5 +1,10 @@
 <?php
-namespace Geocoder\Model;
+namespace Geocoder;
+
+use Geocoder\Model\AdminLevelCollection;
+use Geocoder\Model\Bounds;
+use Geocoder\Model\Coordinates;
+use Geocoder\Model\Country;
 
 /**
  * A position is a single result from a Geocoder.
@@ -10,7 +15,9 @@ namespace Geocoder\Model;
 interface Position
 {
     /**
-     * Returns an array of coordinates (latitude, longitude).
+     * Will always return the coordinates value object.
+     *
+     * This method MUST NOT return null.
      *
      * @return Coordinates
      */
@@ -20,6 +27,7 @@ interface Position
      * Returns the latitude value.
      *
      * @return double
+     * @deprecated
      */
     public function getLatitude();
 
@@ -27,11 +35,14 @@ interface Position
      * Returns the longitude value.
      *
      * @return double
+     * @deprecated
      */
     public function getLongitude();
 
     /**
-     * Returns the bounds value.
+     * Returns the bounds value object.
+     *
+     * This method MUST NOT return null.
      *
      * @return Bounds
      */
@@ -76,12 +87,14 @@ interface Position
     /**
      * Returns the administrative levels.
      *
-     * @return AdminLevelCollectionInterface
+     * @return AdminLevelCollection
      */
     public function getAdminLevels();
 
     /**
-     * Returns the country value.
+     * Returns the country value object.
+     *
+     * This method MUST NOT return null.
      *
      * @return Country
      */
@@ -91,11 +104,14 @@ interface Position
      * Returns the country ISO code.
      *
      * @return string
+     * @deprecated
      */
     public function getCountryCode();
 
     /**
-     * Returns the timezone.
+     * Returns the timezone for the Position. The timezone MUST be in the list of supported timezones.
+     *
+     * {@link http://php.net/manual/en/timezones.php}
      *
      * @return string
      */

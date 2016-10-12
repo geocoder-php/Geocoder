@@ -7,18 +7,18 @@ use Geocoder\Exception\InvalidArgument;
 /**
  * @author Giorgio Premi <giosh94mhz@gmail.com>
  */
-final class AdminLevelCollection implements AdminLevelCollectionInterface
+final class AdminLevelCollection implements  \IteratorAggregate, \Countable
 {
     const MAX_LEVEL_DEPTH = 5;
 
     /**
-     * @var AdminLevelInterface[]
+     * @var AdminLevel[]
      */
     private $adminLevels;
 
     /**
      *
-     * @param AdminLevelInterface[] $adminLevels
+     * @param AdminLevel[] $adminLevels
      */
     public function __construct(array $adminLevels = [])
     {
@@ -56,7 +56,7 @@ final class AdminLevelCollection implements AdminLevelCollectionInterface
     }
 
     /**
-     * @return AdminLevelInterface|null
+     * @return AdminLevel|null
      */
     public function first()
     {
@@ -68,7 +68,7 @@ final class AdminLevelCollection implements AdminLevelCollectionInterface
     }
 
     /**
-     * @return AdminLevelInterface[]
+     * @return AdminLevel[]
      */
     public function slice($offset, $length = null)
     {
@@ -84,7 +84,7 @@ final class AdminLevelCollection implements AdminLevelCollectionInterface
     }
 
     /**
-     * @return AdminLevelInterface
+     * @return AdminLevel
      * @throws \OutOfBoundsException
      * @throws InvalidArgument
      */
@@ -100,7 +100,7 @@ final class AdminLevelCollection implements AdminLevelCollectionInterface
     }
 
     /**
-     * @return AdminLevelInterface[]
+     * @return AdminLevel[]
      */
     public function all()
     {

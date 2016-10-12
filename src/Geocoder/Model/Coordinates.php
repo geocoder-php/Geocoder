@@ -38,7 +38,7 @@ final class Coordinates
     /**
      * Returns the latitude.
      *
-     * @return double
+     * @return double|null
      */
     public function getLatitude()
     {
@@ -48,10 +48,20 @@ final class Coordinates
     /**
      * Returns the longitude.
      *
-     * @return double
+     * @return double|null
      */
     public function getLongitude()
     {
         return $this->longitude;
+    }
+
+    /**
+     * Returns true if we have coordinates for both longitude and latitude.
+     *
+     * @return bool
+     */
+    public function isDefined()
+    {
+        return !empty($this->latitude) && !empty($this->longitude);
     }
 }

@@ -10,18 +10,20 @@
 
 namespace Geocoder\Model;
 
+use Geocoder\Position;
+
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
 final class Address implements Position
 {
     /**
-     * @var CoordinatesInterface
+     * @var Coordinates
      */
     private $coordinates;
 
     /**
-     * @var BoundsInterface
+     * @var Bounds
      */
     private $bounds;
 
@@ -51,12 +53,12 @@ final class Address implements Position
     private $postalCode;
 
     /**
-     * @var AdminLevelCollectionInterface
+     * @var AdminLevelCollection
      */
     private $adminLevels;
 
     /**
-     * @var CountryInterface
+     * @var Country
      */
     private $country;
 
@@ -66,40 +68,46 @@ final class Address implements Position
     private $timezone;
 
     /**
-     * @param string $streetNumber
-     * @param string $streetName
-     * @param string $postalCode
-     * @param string $locality
-     * @param string $subLocality
+     *
+     * @param Coordinates|null $coordinates
+     * @param Bounds|null $bounds
+     * @param string|null $streetNumber
+     * @param string|null $streetName
+     * @param string|null $postalCode
+     * @param string|null $locality
+     * @param string|null $subLocality
+     * @param AdminLevelCollection|null $adminLevels
+     * @param Country|null $country
+     * @param string|null $timezone
      */
     public function __construct(
-        CoordinatesInterface $coordinates          = null,
-        BoundsInterface $bounds                    = null,
+        Coordinates $coordinates          = null,
+        Bounds $bounds                    = null,
         $streetNumber                     = null,
         $streetName                       = null,
         $postalCode                       = null,
         $locality                         = null,
         $subLocality                      = null,
-        AdminLevelCollectionInterface $adminLevels = null,
-        CountryInterface $country                  = null,
+        AdminLevelCollection $adminLevels = null,
+        Country $country                  = null,
         $timezone                         = null
     ) {
-        $this->coordinates  = $coordinates;
-        $this->bounds       = $bounds;
+        $this->coordinates  = $coordinates ?: new Coordinates(null, null);
+        $this->bounds       = $bounds ?: new Bounds(null, null, null, null);
         $this->streetNumber = $streetNumber;
         $this->streetName   = $streetName;
         $this->postalCode   = $postalCode;
         $this->locality     = $locality;
         $this->subLocality  = $subLocality;
         $this->adminLevels  = $adminLevels ?: new AdminLevelCollection();
-        $this->country      = $country;
+        $this->country      = $country ?: new Country(null, null);
         $this->timezone     = $timezone;
     }
 
     /**
      * Returns an array of coordinates (latitude, longitude).
      *
-     * @return CoordinatesInterface
+     * @return Coordinates
      */
     public function getCoordinates()
     {
@@ -137,7 +145,7 @@ final class Address implements Position
     /**
      * Returns the bounds value.
      *
-     * @return BoundsInterface
+     * @return Bounds
      */
     public function getBounds()
     {
@@ -198,7 +206,7 @@ final class Address implements Position
     /**
      * Returns the administrative levels.
      *
-     * @return AdminLevelCollectionInterface
+     * @return AdminLevelCollection
      */
     public function getAdminLevels()
     {
@@ -208,7 +216,7 @@ final class Address implements Position
     /**
      * Returns the country value.
      *
-     * @return CountryInterface
+     * @return Country
      */
     public function getCountry()
     {

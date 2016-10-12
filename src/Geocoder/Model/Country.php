@@ -62,6 +62,16 @@ final class Country
      */
     public function __toString()
     {
-        return $this->getName();
+        return $this->getName() ?: '';
+    }
+
+    /**
+     * Returns true if both name and code is defined.
+     *
+     * @return bool
+     */
+    public function isDefined()
+    {
+        return !empty($this->code) && !empty($this->name);
     }
 }

@@ -4,6 +4,7 @@ namespace Geocoder\Model;
 
 use Geocoder\Exception\CollectionIsEmpty;
 use Geocoder\GeocoderResult;
+use Geocoder\Position;
 
 final class AddressCollection implements GeocoderResult
 {
