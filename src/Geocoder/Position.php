@@ -87,6 +87,8 @@ interface Position
     /**
      * Returns the administrative levels.
      *
+     * This method MUST NOT return null.
+     *
      * @return AdminLevelCollection
      */
     public function getAdminLevels();
