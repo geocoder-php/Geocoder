@@ -13,7 +13,7 @@ namespace Geocoder\Provider;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
-use Geocoder\Model\AdminLevelCollectionInterface;
+use Geocoder\Model\AdminLevelCollection;
 use Http\Client\HttpClient;
 
 /**
@@ -138,7 +138,7 @@ final class Geonames extends AbstractHttpProvider implements LocaleAwareProvider
 
             $adminLevels = [];
 
-            for ($level = 1; $level <= AdminLevelCollectionInterface::MAX_LEVEL_DEPTH; ++ $level) {
+            for ($level = 1; $level <= AdminLevelCollection::MAX_LEVEL_DEPTH; ++ $level) {
                 $adminNameProp = 'adminName' . $level;
                 $adminCodeProp = 'adminCode' . $level;
                 if (! empty($item->$adminNameProp) || ! empty($item->$adminCodeProp)) {
