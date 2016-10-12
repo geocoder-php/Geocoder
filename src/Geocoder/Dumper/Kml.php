@@ -11,7 +11,7 @@
 namespace Geocoder\Dumper;
 
 use Geocoder\Model\Address;
-use Geocoder\Model\Position;
+use Geocoder\Position;
 
 /**
  * @author Jan Sorgalla <jsorgalla@googlemail.com>
@@ -21,9 +21,9 @@ class Kml extends Gpx implements Dumper
     /**
      * {@inheritDoc}
      */
-    public function dump(Position $address)
+    public function dump(Position $position)
     {
-        $name = $this->formatName($address);
+        $name = $this->formatName($position);
         $kml  = <<<KML
 <?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2">
@@ -39,6 +39,6 @@ class Kml extends Gpx implements Dumper
 </kml>
 KML;
 
-        return sprintf($kml, $name, $name, $address->getLongitude(), $address->getLatitude());
+        return sprintf($kml, $name, $name, $position->getLongitude(), $position->getLatitude());
     }
 }

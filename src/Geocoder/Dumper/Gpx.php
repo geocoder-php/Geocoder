@@ -12,7 +12,7 @@ namespace Geocoder\Dumper;
 
 use Geocoder\Geocoder;
 use Geocoder\Model\Address;
-use Geocoder\Model\Position;
+use Geocoder\Position;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -20,11 +20,11 @@ use Geocoder\Model\Position;
 class Gpx implements Dumper
 {
     /**
-     * @param Position $address
+     * @param Position $position
      *
      * @return string
      */
-    public function dump(Position $address)
+    public function dump(Position $position)
     {
         $gpx = sprintf(<<<GPX
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
@@ -38,8 +38,8 @@ version="1.0"
 GPX
         , Geocoder::VERSION);
 
-        if ($address->getBounds()->isDefined()) {
-            $bounds = $address->getBounds();
+        if ($position->getBounds()->isDefined()) {
+            $bounds = $position->getBounds();
             $gpx .= sprintf(<<<GPX
     <bounds minlat="%f" minlon="%f" maxlat="%f" maxlon="%f"/>
 
@@ -54,7 +54,7 @@ GPX
     </wpt>
 
 GPX
-        , $address->getLatitude(), $address->getLongitude(), $this->formatName($address));
+        , $position->getLatitude(), $position->getLongitude(), $this->formatName($position));
 
         $gpx .= <<<GPX
 </gpx>
