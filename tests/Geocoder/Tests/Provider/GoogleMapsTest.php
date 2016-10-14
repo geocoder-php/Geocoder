@@ -2,8 +2,11 @@
 
 namespace Geocoder\Tests\Provider;
 
+use Geocoder\Exception\NoResult;
 use Geocoder\Tests\TestCase;
 use Geocoder\Provider\GoogleMaps;
+use Http\Client\HttpClient;
+use Psr\Http\Message\RequestInterface;
 
 class GoogleMapsTest extends TestCase
 {
@@ -357,5 +360,71 @@ class GoogleMapsTest extends TestCase
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals('Pontypridd', $result->getLocality());
+    }
+
+    public function testBusinessQueryWithoutPrivateKey()
+    {
+        $uri = '';
+
+        $provider = GoogleMaps::business(
+            $this->getMockAdapterWithRequestCallback(
+                function (RequestInterface $request) use (&$uri) {
+                    $uri = $request->getUri();
+                }
+            ),
+            'foo'
+        );
+
+        try {
+            $provider->geocode('blah');
+        } catch (NoResult $e) {
+        }
+
+        $this->assertEquals('http://maps.googleapis.com/maps/api/geocode/json?address=blah&client=foo', $uri);
+    }
+
+    public function testBusinessQueryWithPrivateKey()
+    {
+        $uri = '';
+
+        $provider = GoogleMaps::business(
+            $this->getMockAdapterWithRequestCallback(
+                function (RequestInterface $request) use (&$uri) {
+                    $uri = (string)$request->getUri();
+                }
+            ),
+            'foo',
+            'bogus'
+        );
+
+        try {
+            $provider->geocode('blah');
+        } catch (NoResult $e) {
+        }
+
+        $this->assertEquals(
+            'http://maps.googleapis.com/maps/api/geocode/json?address=blah&client=foo&signature=9G2weMhhd4E2ciR681gp9YabvUg=',
+            $uri
+        );
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\InvalidCredentials
+     * @expectedExceptionMessage Invalid client ID / API Key https://maps.googleapis.com/maps/api/geocode/json?address=Columbia%20University&client=foo&signature=9dJq1hPF7_iwafUpnqXUqEkP0gY=
+     */
+    public function testGeocodeWithInvalidClientIdAndKey()
+    {
+        $provider = GoogleMaps::business($this->getAdapter(), 'foo', 'bogus', null, null, true);
+        $provider->geocode('Columbia University');
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\InvalidCredentials
+     * @expectedExceptionMessage Invalid client ID / API Key http://maps.googleapis.com/maps/api/geocode/json?address=Columbia%20University&client=foo&signature=9dJq1hPF7_iwafUpnqXUqEkP0gY=
+     */
+    public function testGeocodeWithInvalidClientIdAndKeyNoSsl()
+    {
+        $provider = GoogleMaps::business($this->getAdapter(), 'foo', 'bogus', null, null, false);
+        $provider->geocode('Columbia University');
     }
 }

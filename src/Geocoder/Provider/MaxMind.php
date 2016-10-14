@@ -18,7 +18,7 @@ use Http\Client\HttpClient;
 /**
  * @author Andrea Cristaudo <andrea.cristaudo@gmail.com>
  */
-class MaxMind extends AbstractHttpProvider implements Provider
+final class MaxMind extends AbstractHttpProvider implements Provider
 {
     /**
      * @var string Country, City, ISP and Organization

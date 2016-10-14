@@ -17,7 +17,7 @@ use Http\Client\HttpClient;
 /**
  * @author Niklas Närhinen <niklas@narhinen.net>
  */
-class Nominatim extends AbstractHttpProvider implements LocaleAwareProvider
+final class Nominatim extends AbstractHttpProvider implements LocaleAwareProvider
 {
     use LocaleTrait;
 
@@ -25,6 +25,16 @@ class Nominatim extends AbstractHttpProvider implements LocaleAwareProvider
      * @var string
      */
     private $rootUrl;
+
+    /**
+     * @param HttpClient  $client
+     * @param string|null $locale
+     * @return Nominatim
+     */
+    public static function withOpenStreetMapServer(HttpClient $client, $locale = null)
+    {
+        return new self($client, 'http://nominatim.openstreetmap.org', $locale);
+    }
 
     /**
      * @param HttpClient $client  An HTTP adapter.

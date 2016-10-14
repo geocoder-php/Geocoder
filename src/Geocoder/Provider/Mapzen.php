@@ -18,7 +18,7 @@ use Http\Client\HttpClient;
 /**
  * @author Gary Gale <gary@vicchi.org>
  */
-class Mapzen extends AbstractHttpProvider
+final class Mapzen extends AbstractHttpProvider
 {
     /**
      * @var string
@@ -69,7 +69,7 @@ class Mapzen extends AbstractHttpProvider
 
         $query = sprintf(self::GEOCODE_ENDPOINT_URL, $this->scheme, urlencode($address), $this->apiKey, $this->getLimit());
 
-            return $this->executeQuery($query);
+        return $this->executeQuery($query);
     }
 
     /**

@@ -19,7 +19,7 @@ use Http\Client\HttpClient;
 /**
  * @author Giovanni Pirrotta <giovanni.pirrotta@gmail.com>
  */
-class Geonames extends AbstractHttpProvider implements LocaleAwareProvider
+final class Geonames extends AbstractHttpProvider implements LocaleAwareProvider
 {
     /**
      * @var string

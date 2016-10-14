@@ -334,15 +334,3 @@ class OpenCageTest extends TestCase
         $provider->geocode('::ffff:74.200.247.59');
     }
 }
-
-class OpenCageMock extends OpenCage
-{
-    /**
-     * Short circuits so assertions can inspect the
-     * executed query URL
-     */
-    protected function executeQuery($query)
-    {
-        return $query;
-    }
-}

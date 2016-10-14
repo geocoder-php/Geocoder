@@ -17,7 +17,7 @@ use Http\Client\HttpClient;
 /**
  * @author ALKOUM Dorian <baikunz@gmail.com>
  */
-class ArcGISOnline extends AbstractHttpProvider implements Provider
+final class ArcGISOnline extends AbstractHttpProvider implements Provider
 {
     /**
      * @var string

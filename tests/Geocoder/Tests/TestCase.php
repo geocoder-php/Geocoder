@@ -7,6 +7,8 @@ use GuzzleHttp\Psr7\Response;
 use Http\Client\HttpClient;
 use Http\Mock\Client as MockClient;
 use Http\Adapter\Guzzle6\Client as GuzzleClient;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -43,6 +45,30 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
     {
         $client = new MockClient();
         $client->addResponse(new Response(200, [], (string) $returnValue));
+
+        return $client;
+    }
+
+    /**
+     * @param callable $requestCallback
+     * @return HttpClient
+     */
+    protected function getMockAdapterWithRequestCallback(callable $requestCallback)
+    {
+        $client = $this->getMockForAbstractClass(HttpClient::class);
+
+        $client
+            ->expects($this->once())
+            ->method('sendRequest')
+            ->willReturnCallback(function (RequestInterface $request) use ($requestCallback) {
+                $response = $requestCallback($request);
+
+                if (!$response instanceof ResponseInterface) {
+                    $response = new Response(200, [], (string) $response);
+                }
+
+                return $response;
+            });
 
         return $client;
     }
