@@ -18,7 +18,7 @@ use Http\Client\HttpClient;
 /**
  * @author mtm <mtm@opencagedata.com>
  */
-class OpenCage extends AbstractHttpProvider implements LocaleAwareProvider
+final class OpenCage extends AbstractHttpProvider implements LocaleAwareProvider
 {
     /**
      * @var string

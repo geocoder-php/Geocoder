@@ -16,7 +16,7 @@ use Geocoder\Exception\UnsupportedOperation;
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-class HostIp extends AbstractHttpProvider implements Provider
+final class HostIp extends AbstractHttpProvider implements Provider
 {
     /**
      * @var string

@@ -18,7 +18,7 @@ use Http\Client\HttpClient;
 /**
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class TomTom extends AbstractHttpProvider implements LocaleAwareProvider
+final class TomTom extends AbstractHttpProvider implements LocaleAwareProvider
 {
     use LocaleTrait;
 

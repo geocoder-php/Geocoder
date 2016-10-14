@@ -23,7 +23,7 @@ use Http\Client\HttpClient;
  *
  * @link http://www.geoips.com/en/developer/api-guide
  */
-class GeoIPs extends AbstractHttpProvider implements Provider
+final class GeoIPs extends AbstractHttpProvider implements Provider
 {
     /**
      * @var string

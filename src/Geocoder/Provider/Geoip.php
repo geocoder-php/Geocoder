@@ -19,7 +19,7 @@ use Geocoder\Exception\UnsupportedOperation;
  *
  * @link http://php.net/manual/ref.geoip.php
  */
-class Geoip extends AbstractProvider implements Provider
+final class Geoip extends AbstractProvider implements Provider
 {
     public function __construct()
     {

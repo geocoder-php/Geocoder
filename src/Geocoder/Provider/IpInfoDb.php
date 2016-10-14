@@ -19,7 +19,7 @@ use Http\Client\HttpClient;
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-class IpInfoDb extends AbstractHttpProvider implements Provider
+final class IpInfoDb extends AbstractHttpProvider implements Provider
 {
     /**
      * @var string
