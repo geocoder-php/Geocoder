@@ -17,7 +17,7 @@ use Geocoder\Model\AddressCollection;
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-class FreeGeoIp extends AbstractHttpProvider implements Provider
+final class FreeGeoIp extends AbstractHttpProvider implements Provider
 {
     /**
      * @var string

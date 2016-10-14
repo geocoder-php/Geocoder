@@ -18,7 +18,7 @@ use Http\Client\HttpClient;
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-class MapQuest extends AbstractHttpProvider implements Provider
+final class MapQuest extends AbstractHttpProvider implements Provider
 {
     /**
      * @var string

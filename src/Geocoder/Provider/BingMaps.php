@@ -18,7 +18,7 @@ use Http\Client\HttpClient;
 /**
  * @author David Guyon <dguyon@gmail.com>
  */
-class BingMaps extends AbstractHttpProvider implements LocaleAwareProvider
+final class BingMaps extends AbstractHttpProvider implements LocaleAwareProvider
 {
     use LocaleTrait;
 
