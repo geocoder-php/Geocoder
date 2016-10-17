@@ -66,6 +66,11 @@ final class Address
     private $timezone;
 
     /**
+     * @var string
+     */
+    private $formattedAddress;
+
+    /**
      * @param string $streetNumber
      * @param string $streetName
      * @param string $postalCode
@@ -82,18 +87,20 @@ final class Address
         $subLocality                      = null,
         AdminLevelCollection $adminLevels = null,
         Country $country                  = null,
-        $timezone                         = null
+        $timezone                         = null,
+        $formattedAddress                 = null
     ) {
-        $this->coordinates  = $coordinates;
-        $this->bounds       = $bounds;
-        $this->streetNumber = $streetNumber;
-        $this->streetName   = $streetName;
-        $this->postalCode   = $postalCode;
-        $this->locality     = $locality;
-        $this->subLocality  = $subLocality;
-        $this->adminLevels  = $adminLevels ?: new AdminLevelCollection();
-        $this->country      = $country;
-        $this->timezone     = $timezone;
+        $this->coordinates      = $coordinates;
+        $this->bounds           = $bounds;
+        $this->streetNumber     = $streetNumber;
+        $this->streetName       = $streetName;
+        $this->postalCode       = $postalCode;
+        $this->locality         = $locality;
+        $this->subLocality      = $subLocality;
+        $this->adminLevels      = $adminLevels ?: new AdminLevelCollection();
+        $this->country          = $country;
+        $this->timezone         = $timezone;
+        $this->formattedAddress = $formattedAddress;
     }
 
     /**
@@ -236,6 +243,16 @@ final class Address
     }
 
     /**
+     * Returns the formatted address.
+     *
+     * @return string
+     */
+    public function getFormattedAddress()
+    {
+        return $this->formattedAddress;
+    }
+
+    /**
      * Returns an array with data indexed by name.
      *
      * @return array
@@ -251,18 +268,19 @@ final class Address
         }
 
         return array(
-            'latitude'     => $this->getLatitude(),
-            'longitude'    => $this->getLongitude(),
-            'bounds'       => $this->bounds->toArray(),
-            'streetNumber' => $this->streetNumber,
-            'streetName'   => $this->streetName,
-            'postalCode'   => $this->postalCode,
-            'locality'     => $this->locality,
-            'subLocality'  => $this->subLocality,
-            'adminLevels'  => $adminLevels,
-            'country'      => $this->country->getName(),
-            'countryCode'  => $this->country->getCode(),
-            'timezone'     => $this->timezone,
+            'latitude'         => $this->getLatitude(),
+            'longitude'        => $this->getLongitude(),
+            'bounds'           => $this->bounds->toArray(),
+            'streetNumber'     => $this->streetNumber,
+            'streetName'       => $this->streetName,
+            'postalCode'       => $this->postalCode,
+            'locality'         => $this->locality,
+            'subLocality'      => $this->subLocality,
+            'adminLevels'      => $adminLevels,
+            'country'          => $this->country->getName(),
+            'countryCode'      => $this->country->getCode(),
+            'timezone'         => $this->timezone,
+            'formattedAddress' => $this->formattedAddress,
         );
     }
 }

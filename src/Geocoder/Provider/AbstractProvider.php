@@ -60,23 +60,24 @@ abstract class AbstractProvider
     protected function getDefaults()
     {
         return [
-            'latitude'     => null,
-            'longitude'    => null,
-            'bounds'       => [
+            'latitude'         => null,
+            'longitude'        => null,
+            'bounds'           => [
                 'south' => null,
                 'west'  => null,
                 'north' => null,
                 'east'  => null,
             ],
-            'streetNumber' => null,
-            'streetName'   => null,
-            'locality'     => null,
-            'postalCode'   => null,
-            'subLocality'  => null,
-            'adminLevels'  => [],
-            'country'      => null,
-            'countryCode'  => null,
-            'timezone'     => null,
+            'streetNumber'     => null,
+            'streetName'       => null,
+            'locality'         => null,
+            'postalCode'       => null,
+            'subLocality'      => null,
+            'adminLevels'      => [],
+            'country'          => null,
+            'countryCode'      => null,
+            'timezone'         => null,
+            'formattedAddress' => null,
         ];
     }
 
