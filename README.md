@@ -9,9 +9,14 @@ Downloads](https://poser.pugx.org/willdurand/Geocoder/downloads.png)](https://pa
 Version](https://poser.pugx.org/willdurand/Geocoder/v/stable.png)](https://packagist.org/packages/willdurand/Geocoder)
 ![PHP7 ready](https://img.shields.io/badge/PHP7-ready-green.svg)
 
-> **Important:** You are browsing the documentation of Geocoder **3.x**.
-Documentation for version **2.x** is available here: [Geocoder 2.x
-documentation](https://github.com/geocoder-php/Geocoder/blob/2.x/README.md).
+> **Important:** You are browsing the documentation of Geocoder **4.x** (not
+> released yet).
+>
+> Documentation for version **3.x** is available here: [Geocoder 3.x
+> documentation](https://github.com/geocoder-php/Geocoder/blob/3.x/README.md).
+>
+> Documentation for version **2.x** is available here: [Geocoder 2.x
+> documentation](https://github.com/geocoder-php/Geocoder/blob/2.x/README.md).
 
 ---
 
