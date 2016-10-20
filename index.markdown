@@ -25,7 +25,7 @@ providing a powerful abstraction layer for geocoding manipulations.
 
 * [Installation](#installation)
 * [Usage](#usage)
-  - [Address & AddressCollection](#address--addresscollection)
+  - [Address and AddressCollection](#address-and-addresscollection)
   - [The ProviderAggregator](#the-provideraggregator)
   - [TimedGeocoder](#timedgeocoder)
   - [HTTP Adapters](#http-adapters)
@@ -96,7 +96,7 @@ It also contains methods to control the number of results:
 * `limit($limit)`
 * `getLimit()`
 
-### Address & AddressCollection
+### Address and AddressCollection
 
 Both `geocode()` and `reverse()` methods return a collection of `Address`
 objects (`AddressCollection`), each providing the following API:
