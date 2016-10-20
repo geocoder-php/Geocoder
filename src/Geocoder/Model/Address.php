@@ -246,11 +246,12 @@ final class Address
         foreach ($this->adminLevels as $adminLevel) {
             $adminLevels[$adminLevel->getLevel()] = [
                 'name'  => $adminLevel->getName(),
-                'code'  => $adminLevel->getCode()
+                'code'  => $adminLevel->getCode(),
+                'level' => $adminLevel->getLevel(),
             ];
         }
 
-        return array(
+        return [
             'latitude'     => $this->getLatitude(),
             'longitude'    => $this->getLongitude(),
             'bounds'       => $this->bounds->toArray(),
@@ -263,6 +264,6 @@ final class Address
             'country'      => $this->country->getName(),
             'countryCode'  => $this->country->getCode(),
             'timezone'     => $this->timezone,
-        );
+        ];
     }
 }
