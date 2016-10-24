@@ -10,12 +10,12 @@
 
 namespace Geocoder\Model;
 
-use Geocoder\Position;
+use Geocoder\Location;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-final class Address implements Position
+final class Address implements Location
 {
     /**
      * @var Coordinates
@@ -92,15 +92,15 @@ final class Address implements Position
         Country $country                  = null,
         $timezone                         = null
     ) {
-        $this->coordinates  = $coordinates ?: new Coordinates(null, null);
-        $this->bounds       = $bounds ?: new Bounds(null, null, null, null);
+        $this->coordinates  = $coordinates ?: new Coordinates();
+        $this->bounds       = $bounds ?: new Bounds();
         $this->streetNumber = $streetNumber;
         $this->streetName   = $streetName;
         $this->postalCode   = $postalCode;
         $this->locality     = $locality;
         $this->subLocality  = $subLocality;
         $this->adminLevels  = $adminLevels ?: new AdminLevelCollection();
-        $this->country      = $country ?: new Country(null, null);
+        $this->country      = $country ?: new Country();
         $this->timezone     = $timezone;
     }
 

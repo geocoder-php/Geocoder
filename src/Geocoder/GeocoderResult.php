@@ -21,12 +21,12 @@ interface GeocoderResult extends \IteratorAggregate, \Countable
     public function count();
 
     /**
-     * @return Position
+     * @return Location
      */
     public function first();
 
     /**
-     * @return Position[]
+     * @return Location[]
      */
     public function slice($offset, $length = null);
 
@@ -36,13 +36,13 @@ interface GeocoderResult extends \IteratorAggregate, \Countable
     public function has($index);
 
     /**
-     * @return Position
+     * @return Location
      * @throws \OutOfBoundsException
      */
     public function get($index);
 
     /**
-     * @return Position[]
+     * @return Location[]
      */
     public function all();
 }

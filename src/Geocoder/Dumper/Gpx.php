@@ -11,7 +11,7 @@
 namespace Geocoder\Dumper;
 
 use Geocoder\Geocoder;
-use Geocoder\Position;
+use Geocoder\Location;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -19,11 +19,11 @@ use Geocoder\Position;
 class Gpx implements Dumper
 {
     /**
-     * @param Position $position
+     * @param Location $position
      *
      * @return string
      */
-    public function dump(Position $position)
+    public function dump(Location $position)
     {
         $gpx = sprintf(<<<GPX
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
@@ -63,11 +63,11 @@ GPX;
     }
 
     /**
-     * @param Position $address
+     * @param Location $address
      *
      * @return string
      */
-    protected function formatName(Position $address)
+    protected function formatName(Location $address)
     {
         $name  = [];
         $array = $address->toArray();
