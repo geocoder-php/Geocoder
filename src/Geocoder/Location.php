@@ -24,22 +24,6 @@ interface Location
     public function getCoordinates();
 
     /**
-     * Returns the latitude value.
-     *
-     * @return double
-     * @deprecated
-     */
-    public function getLatitude();
-
-    /**
-     * Returns the longitude value.
-     *
-     * @return double
-     * @deprecated
-     */
-    public function getLongitude();
-
-    /**
      * Returns the bounds value object.
      *
      * This method MUST NOT return null.
@@ -101,14 +85,6 @@ interface Location
      * @return Country
      */
     public function getCountry();
-
-    /**
-     * Returns the country ISO code.
-     *
-     * @return string
-     * @deprecated
-     */
-    public function getCountryCode();
 
     /**
      * Returns the timezone for the Position. The timezone MUST be in the list of supported timezones.

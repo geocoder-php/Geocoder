@@ -115,34 +115,6 @@ final class Address implements Location
     }
 
     /**
-     * Returns the latitude value.
-     *
-     * @return double
-     */
-    public function getLatitude()
-    {
-        if (null === $this->coordinates) {
-            return null;
-        }
-
-        return $this->coordinates->getLatitude();
-    }
-
-    /**
-     * Returns the longitude value.
-     *
-     * @return double
-     */
-    public function getLongitude()
-    {
-        if (null === $this->coordinates) {
-            return null;
-        }
-
-        return $this->coordinates->getLongitude();
-    }
-
-    /**
      * Returns the bounds value.
      *
      * @return Bounds
@@ -221,16 +193,6 @@ final class Address implements Location
     public function getCountry()
     {
         return $this->country;
-    }
-
-    /**
-     * Returns the country ISO code.
-     *
-     * @return string
-     */
-    public function getCountryCode()
-    {
-        return $this->country->getCode();
     }
 
     /**
