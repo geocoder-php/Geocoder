@@ -3,7 +3,7 @@
 namespace Geocoder\Tests\Model;
 
 use Geocoder\Model\AddressFactory;
-use Geocoder\Position;
+use Geocoder\Location;
 use Geocoder\Tests\TestCase;
 
 /**
@@ -34,7 +34,7 @@ class AddressFactoryTest extends TestCase
 
         $i = 1;
         foreach ($addresses as $address) {
-            /** @var $address Position */
+            /** @var $address Location */
             $this->assertInstanceOf('Geocoder\Model\Address', $address);
             $this->assertInstanceOf('Geocoder\Model\Country', $address->getCountry());
             $this->assertFalse($address->getCoordinates()->isDefined());

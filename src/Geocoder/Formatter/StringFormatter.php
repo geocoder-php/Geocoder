@@ -11,7 +11,7 @@
 namespace Geocoder\Formatter;
 
 use Geocoder\Model\AdminLevelCollection;
-use Geocoder\Position;
+use Geocoder\Location;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -41,12 +41,12 @@ class StringFormatter
     /**
      * Transform an `Address` instance into a string representation.
      *
-     * @param Position $position
+     * @param Location $position
      * @param string $format
      *
      * @return string
      */
-    public function format(Position $position, $format)
+    public function format(Location $position, $format)
     {
         $replace = [
             self::STREET_NUMBER => $position->getStreetNumber(),

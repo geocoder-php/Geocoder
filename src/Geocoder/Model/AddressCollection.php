@@ -4,17 +4,17 @@ namespace Geocoder\Model;
 
 use Geocoder\Exception\CollectionIsEmpty;
 use Geocoder\GeocoderResult;
-use Geocoder\Position;
+use Geocoder\Location;
 
 final class AddressCollection implements GeocoderResult
 {
     /**
-     * @var Position[]
+     * @var Location[]
      */
     private $addresses;
 
     /**
-     * @param Position[] $addresses
+     * @param Location[] $addresses
      */
     public function __construct(array $addresses = [])
     {
@@ -38,7 +38,7 @@ final class AddressCollection implements GeocoderResult
     }
 
     /**
-     * @return Position
+     * @return Location
      */
     public function first()
     {
@@ -50,7 +50,7 @@ final class AddressCollection implements GeocoderResult
     }
 
     /**
-     * @return Position[]
+     * @return Location[]
      */
     public function slice($offset, $length = null)
     {
@@ -66,7 +66,7 @@ final class AddressCollection implements GeocoderResult
     }
 
     /**
-     * @return Position
+     * @return Location
      * @throws \OutOfBoundsException
      */
     public function get($index)
@@ -79,7 +79,7 @@ final class AddressCollection implements GeocoderResult
     }
 
     /**
-     * @return Position[]
+     * @return Location[]
      */
     public function all()
     {

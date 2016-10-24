@@ -10,7 +10,7 @@
 
 namespace Geocoder\Dumper;
 
-use Geocoder\Position;
+use Geocoder\Location;
 
 /**
  * @author Jan Sorgalla <jsorgalla@googlemail.com>
@@ -20,7 +20,7 @@ class Wkb implements Dumper
     /**
      * {@inheritDoc}
      */
-    public function dump(Position $position)
+    public function dump(Location $position)
     {
         return pack('cLdd', 1, 1, $position->getLongitude(), $position->getLatitude());
     }

@@ -12,7 +12,7 @@ use Geocoder\Model\Country;
  * @author William Durand <william.durand1@gmail.com>
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-interface Position
+interface Location
 {
     /**
      * Will always return the coordinates value object.

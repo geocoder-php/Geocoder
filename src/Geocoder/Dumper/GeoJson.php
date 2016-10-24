@@ -10,7 +10,7 @@
 
 namespace Geocoder\Dumper;
 
-use Geocoder\Position;
+use Geocoder\Location;
 
 /**
  * @author Jan Sorgalla <jsorgalla@googlemail.com>
@@ -20,7 +20,7 @@ class GeoJson implements Dumper
     /**
      * {@inheritDoc}
      */
-    public function dump(Position $position)
+    public function dump(Location $position)
     {
         $properties = array_filter($position->toArray(), function ($value) {
             return !empty($value);
