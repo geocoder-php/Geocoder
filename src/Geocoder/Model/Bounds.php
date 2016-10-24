@@ -41,7 +41,7 @@ final class Bounds
      * @param double $north
      * @param double $east
      */
-    public function __construct($south, $west, $north, $east)
+    public function __construct($south = null, $west = null, $north = null, $east = null)
     {
         $this->south = $south;
         $this->west  = $west;

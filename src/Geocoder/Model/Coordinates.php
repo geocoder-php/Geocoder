@@ -29,7 +29,7 @@ final class Coordinates
      * @param double $latitude
      * @param double $longitude
      */
-    public function __construct($latitude, $longitude)
+    public function __construct($latitude = null, $longitude = null)
     {
         $this->latitude  = $latitude;
         $this->longitude = $longitude;

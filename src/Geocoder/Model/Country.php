@@ -29,7 +29,7 @@ final class Country
      * @param string $name
      * @param string $code
      */
-    public function __construct($name, $code)
+    public function __construct($name = null, $code = null)
     {
         $this->name = $name;
         $this->code = $code;
