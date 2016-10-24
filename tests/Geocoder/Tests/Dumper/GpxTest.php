@@ -64,7 +64,7 @@ version="1.0"
     </wpt>
 </gpx>
 GPX
-        , Geocoder::VERSION, $address->getLatitude(), $address->getLongitude());
+        , Geocoder::VERSION, $address->getCoordinates()->getLatitude(), $address->getCoordinates()->getLongitude());
 
         $result = $this->dumper->dump($address);
 

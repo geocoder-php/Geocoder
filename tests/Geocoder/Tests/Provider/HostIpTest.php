@@ -55,8 +55,8 @@ class HostIpTest extends TestCase
         /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertNull($result->getLatitude());
-        $this->assertNull($result->getLongitude());
+        $this->assertNull($result->getCoordinates()->getLatitude());
+        $this->assertNull($result->getCoordinates()->getLongitude());
         $this->assertNull($result->getPostalCode());
         $this->assertNull($result->getTimezone());
         $this->assertEmpty($result->getAdminLevels());
@@ -106,8 +106,8 @@ class HostIpTest extends TestCase
         /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(45.5333, $result->getLatitude(), '', 0.0001);
-        $this->assertEquals(2.6167, $result->getLongitude(), '', 0.0001);
+        $this->assertEquals(45.5333, $result->getCoordinates()->getLatitude(), '', 0.0001);
+        $this->assertEquals(2.6167, $result->getCoordinates()->getLongitude(), '', 0.0001);
         $this->assertNull($result->getPostalCode());
         $this->assertEquals('Aulnat', $result->getLocality());
         $this->assertEmpty($result->getAdminLevels());
@@ -146,7 +146,7 @@ class HostIpTest extends TestCase
         /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertNull($result->getLatitude());
-        $this->assertNull($result->getLongitude());
+        $this->assertNull($result->getCoordinates()->getLatitude());
+        $this->assertNull($result->getCoordinates()->getLongitude());
     }
 }

@@ -61,8 +61,8 @@ class MapzenTest extends TestCase
         /** @var \Geocoder\Model\Address $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(51.521124, $result->getLatitude(), '', 0.01);
-        $this->assertEquals(-0.20360200000000001, $result->getLongitude(), '', 0.01);
+        $this->assertEquals(51.521124, $result->getCoordinates()->getLatitude(), '', 0.01);
+        $this->assertEquals(-0.20360200000000001, $result->getCoordinates()->getLongitude(), '', 0.01);
         $this->assertEquals(240, $result->getStreetNumber());
         $this->assertEquals('Acklam Road', $result->getStreetName());
         $this->assertEquals('W10 5QT', $result->getPostalCode());
@@ -102,8 +102,8 @@ class MapzenTest extends TestCase
         /** @var \Geocoder\Model\Address $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(54.048411999999999, $result->getLatitude(), '', 0.001);
-        $this->assertEquals(-2.7989549999999999, $result->getLongitude(), '', 0.001);
+        $this->assertEquals(54.048411999999999, $result->getCoordinates()->getLatitude(), '', 0.001);
+        $this->assertEquals(-2.7989549999999999, $result->getCoordinates()->getLongitude(), '', 0.001);
         $this->assertNull($result->getStreetNumber());
         $this->assertEquals('Gage Street', $result->getStreetName());
         $this->assertNull($result->getPostalCode());
@@ -148,8 +148,8 @@ class MapzenTest extends TestCase
         /** @var \Geocoder\Model\Address $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(42.027323000000003, $result->getLatitude(), '', 0.01);
-        $this->assertEquals(-88.204203000000007, $result->getLongitude(), '', 0.01);
+        $this->assertEquals(42.027323000000003, $result->getCoordinates()->getLatitude(), '', 0.01);
+        $this->assertEquals(-88.204203000000007, $result->getCoordinates()->getLongitude(), '', 0.01);
         $this->assertNull($result->getLocality());
         $this->assertCount(2, $result->getAdminLevels());
         $this->assertEquals('United States', $result->getAdminLevels()->get(4)->getName());
@@ -159,8 +159,8 @@ class MapzenTest extends TestCase
         /** @var \Geocoder\Model\Address $result */
         $result = $results->get(1);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(18.393428, $result->getLatitude(), '', 0.01);
-        $this->assertEquals(-78.122906, $result->getLongitude(), '', 0.01);
+        $this->assertEquals(18.393428, $result->getCoordinates()->getLatitude(), '', 0.01);
+        $this->assertEquals(-78.122906, $result->getCoordinates()->getLongitude(), '', 0.01);
         $this->assertNull($result->getLocality());
         $this->assertCount(2, $result->getAdminLevels());
         $this->assertEquals('Hanover', $result->getAdminLevels()->get(1)->getName());
@@ -169,8 +169,8 @@ class MapzenTest extends TestCase
         /** @var \Geocoder\Model\Address $result */
         $result = $results->get(2);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(39.192889999999998, $result->getLatitude(), '', 0.01);
-        $this->assertEquals(-76.724140000000006, $result->getLongitude(), '', 0.01);
+        $this->assertEquals(39.192889999999998, $result->getCoordinates()->getLatitude(), '', 0.01);
+        $this->assertEquals(-76.724140000000006, $result->getCoordinates()->getLongitude(), '', 0.01);
         $this->assertEquals('Hanover', $result->getLocality());
         $this->assertTrue( $result->getAdminLevels()->has(4));
         $this->assertEquals('Hanover', $result->getAdminLevels()->get(2)->getName());
@@ -192,8 +192,8 @@ class MapzenTest extends TestCase
         /** @var \Geocoder\Model\Address $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(50.189017, $result->getLatitude(), '', 0.01);
-        $this->assertEquals(8.6367809999999992, $result->getLongitude(), '', 0.01);
+        $this->assertEquals(50.189017, $result->getCoordinates()->getLatitude(), '', 0.01);
+        $this->assertEquals(8.6367809999999992, $result->getCoordinates()->getLongitude(), '', 0.01);
         $this->assertEquals('10a', $result->getStreetNumber());
         $this->assertEquals('Kalbacher Hauptstraße', $result->getStreetName());
         $this->assertEquals(60437, $result->getPostalCode());
