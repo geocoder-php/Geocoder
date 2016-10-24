@@ -20,8 +20,8 @@ class Wkb implements Dumper
     /**
      * {@inheritDoc}
      */
-    public function dump(Location $position)
+    public function dump(Location $location)
     {
-        return pack('cLdd', 1, 1, $position->getLongitude(), $position->getLatitude());
+        return pack('cLdd', 1, 1, $location->getCoordinates()->getLongitude(), $location->getCoordinates()->getLatitude());
     }
 }

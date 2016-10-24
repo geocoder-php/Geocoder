@@ -41,22 +41,22 @@ class StringFormatter
     /**
      * Transform an `Address` instance into a string representation.
      *
-     * @param Location $position
+     * @param Location $location
      * @param string $format
      *
      * @return string
      */
-    public function format(Location $position, $format)
+    public function format(Location $location, $format)
     {
         $replace = [
-            self::STREET_NUMBER => $position->getStreetNumber(),
-            self::STREET_NAME   => $position->getStreetName(),
-            self::LOCALITY      => $position->getLocality(),
-            self::POSTAL_CODE   => $position->getPostalCode(),
-            self::SUB_LOCALITY  => $position->getSubLocality(),
-            self::COUNTRY       => $position->getCountry()->getName(),
-            self::COUNTRY_CODE  => $position->getCountry()->getCode(),
-            self::TIMEZONE      => $position->getTimezone(),
+            self::STREET_NUMBER => $location->getStreetNumber(),
+            self::STREET_NAME   => $location->getStreetName(),
+            self::LOCALITY      => $location->getLocality(),
+            self::POSTAL_CODE   => $location->getPostalCode(),
+            self::SUB_LOCALITY  => $location->getSubLocality(),
+            self::COUNTRY       => $location->getCountry()->getName(),
+            self::COUNTRY_CODE  => $location->getCountry()->getCode(),
+            self::TIMEZONE      => $location->getTimezone(),
         ];
 
         for ($level = 1; $level <= AdminLevelCollection::MAX_LEVEL_DEPTH; $level ++) {
@@ -64,7 +64,7 @@ class StringFormatter
             $replace[self::ADMIN_LEVEL_CODE . $level] = null;
         }
 
-        foreach ($position->getAdminLevels() as $level => $adminLevel) {
+        foreach ($location->getAdminLevels() as $level => $adminLevel) {
             $replace[self::ADMIN_LEVEL . $level] = $adminLevel->getName();
             $replace[self::ADMIN_LEVEL_CODE . $level] = $adminLevel->getCode();
         }

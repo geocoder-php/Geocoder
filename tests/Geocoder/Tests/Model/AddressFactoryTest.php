@@ -12,7 +12,7 @@ use Geocoder\Tests\TestCase;
  */
 class AddressFactoryTest extends TestCase
 {
-    /** @var  AddressFactory */
+    /** @var AddressFactory */
     private $factory;
 
     public function setUp()
@@ -33,19 +33,19 @@ class AddressFactoryTest extends TestCase
         $this->assertCount(3, $addresses);
 
         $i = 1;
-        foreach ($addresses as $address) {
-            /** @var $address Location */
-            $this->assertInstanceOf('Geocoder\Model\Address', $address);
-            $this->assertInstanceOf('Geocoder\Model\Country', $address->getCountry());
-            $this->assertFalse($address->getCoordinates()->isDefined());
+        foreach ($addresses as $location) {
+            /** @var $location Location */
+            $this->assertInstanceOf('Geocoder\Model\Address', $location);
+            $this->assertInstanceOf('Geocoder\Model\Country', $location->getCountry());
+            $this->assertFalse($location->getCoordinates()->isDefined());
 
-            foreach ($address->getAdminLevels() as $level => $adminLevel) {
+            foreach ($location->getAdminLevels() as $level => $adminLevel) {
                 $this->assertInstanceOf('Geocoder\Model\AdminLevel', $adminLevel);
                 $this->assertSame($level, $adminLevel->getLevel());
                 $this->assertEquals('admin ' . $level, $adminLevel->getName());
             }
 
-            $this->assertEquals($i++, $address->getStreetNumber());
+            $this->assertEquals($i++, $location->getStreetNumber());
         }
     }
 

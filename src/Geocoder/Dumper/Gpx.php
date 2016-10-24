@@ -19,11 +19,11 @@ use Geocoder\Location;
 class Gpx implements Dumper
 {
     /**
-     * @param Location $position
+     * @param Location $location
      *
      * @return string
      */
-    public function dump(Location $position)
+    public function dump(Location $location)
     {
         $gpx = sprintf(<<<GPX
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
@@ -37,8 +37,8 @@ version="1.0"
 GPX
         , Geocoder::VERSION);
 
-        if ($position->getBounds()->isDefined()) {
-            $bounds = $position->getBounds();
+        if ($location->getBounds()->isDefined()) {
+            $bounds = $location->getBounds();
             $gpx .= sprintf(<<<GPX
     <bounds minlat="%f" minlon="%f" maxlat="%f" maxlon="%f"/>
 
@@ -53,7 +53,7 @@ GPX
     </wpt>
 
 GPX
-        , $position->getLatitude(), $position->getLongitude(), $this->formatName($position));
+        , $location->getLatitude(), $location->getLongitude(), $this->formatName($location));
 
         $gpx .= <<<GPX
 </gpx>

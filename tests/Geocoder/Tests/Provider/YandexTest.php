@@ -2,7 +2,7 @@
 
 namespace Geocoder\Tests\Provider;
 
-use Geocoder\Model\Position;
+use Geocoder\Location;
 use Geocoder\Tests\TestCase;
 use Geocoder\Provider\Yandex;
 
@@ -95,7 +95,7 @@ class YandexTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var Position $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('Geocoder\Model\Address', $result);
         $this->assertEquals(48.863277, $result->getLatitude(), '', 0.01);
@@ -130,7 +130,7 @@ class YandexTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);;
 
-        /** @var Position $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('Geocoder\Model\Address', $result);
         $this->assertEquals(55.675676, $result->getLatitude(), '', 0.01);
@@ -154,25 +154,25 @@ class YandexTest extends TestCase
         $this->assertNull($result->getAdminLevels()->get(1)->getCode());
         $this->assertNull($result->getTimezone());
 
-        /** @var Position $result */
+        /** @var Location $result */
         $result = $results->get(1);
         $this->assertInstanceOf('Geocoder\Model\Address', $result);
         $this->assertEquals(55.455739, $result->getLatitude(), '', 0.01);
         $this->assertEquals(9.972854, $result->getLongitude(), '', 0.01);
 
-        /** @var Position $result */
+        /** @var Location $result */
         $result = $results->get(2);
         $this->assertInstanceOf('Geocoder\Model\Address', $result);
         $this->assertEquals(55.713258, $result->getLatitude(), '', 0.01);
         $this->assertEquals(12.534930, $result->getLongitude(), '', 0.01);
 
-        /** @var Position $result */
+        /** @var Location $result */
         $result = $results->get(3);
         $this->assertInstanceOf('Geocoder\Model\Address', $result);
         $this->assertEquals(55.698878, $result->getLatitude(), '', 0.01);
         $this->assertEquals(12.578211, $result->getLongitude(), '', 0.01);
 
-        /** @var Position $result */
+        /** @var Location $result */
         $result = $results->get(4);
         $this->assertInstanceOf('Geocoder\Model\Address', $result);
         $this->assertEquals(55.690380, $result->getLatitude(), '', 0.01);
@@ -187,7 +187,7 @@ class YandexTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
 
-        /** @var Position $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('Geocoder\Model\Address', $result);
         $this->assertEquals(38.897695, $result->getLatitude(), '', 0.01);
@@ -221,7 +221,7 @@ class YandexTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var Position $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('Geocoder\Model\Address', $result);
         $this->assertEquals(53.898077, $result->getLatitude(), '', 0.01);
@@ -283,7 +283,7 @@ class YandexTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
 
-        /** @var Position $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('Geocoder\Model\Address', $result);
         $this->assertEquals(48.863212, $result->getLatitude(), '', 0.01);
@@ -309,13 +309,13 @@ class YandexTest extends TestCase
         $this->assertNull($result->getAdminLevels()->get(1)->getCode());
         $this->assertNull($result->getTimezone());
 
-        /** @var Position $result */
+        /** @var Location $result */
         $result = $results->get(1);
         $this->assertInstanceOf('Geocoder\Model\Address', $result);
         $this->assertEquals(48.864848, $result->getLatitude(), '', 0.01);
         $this->assertEquals(2.3993549, $result->getLongitude(), '', 0.01);
 
-        /** @var Position $result */
+        /** @var Location $result */
         $result = $results->get(2);
         $this->assertInstanceOf('Geocoder\Model\Address', $result);
         $this->assertEquals(48.856929, $result->getLatitude(), '', 0.01);
@@ -330,7 +330,7 @@ class YandexTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
 
-        /** @var Position $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('Geocoder\Model\Address', $result);
         $this->assertEquals(48.87132, $result->getLatitude(), '', 0.01);
@@ -356,25 +356,25 @@ class YandexTest extends TestCase
         $this->assertNull($result->getAdminLevels()->get(1)->getCode());
         $this->assertNull($result->getTimezone());
 
-        /** @var Position $result */
+        /** @var Location $result */
         $result = $results->get(1);
         $this->assertInstanceOf('Geocoder\Model\Address', $result);
         $this->assertEquals(48.863230, $result->getLatitude(), '', 0.01);
         $this->assertEquals(2.388261, $result->getLongitude(), '', 0.01);
 
-        /** @var Position $result */
+        /** @var Location $result */
         $result = $results->get(2);
         $this->assertInstanceOf('Geocoder\Model\Address', $result);
         $this->assertEquals(48.866022, $result->getLatitude(), '', 0.01);
         $this->assertEquals(2.389662, $result->getLongitude(), '', 0.01);
 
-        /** @var Position $result */
+        /** @var Location $result */
         $result = $results->get(3);
         $this->assertInstanceOf('Geocoder\Model\Address', $result);
         $this->assertEquals(48.863918, $result->getLatitude(), '', 0.01);
         $this->assertEquals(2.387767, $result->getLongitude(), '', 0.01);
 
-        /** @var Position $result */
+        /** @var Location $result */
         $result = $results->get(4);
         $this->assertInstanceOf('Geocoder\Model\Address', $result);
         $this->assertEquals(48.863787, $result->getLatitude(), '', 0.01);
@@ -389,7 +389,7 @@ class YandexTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
 
-        /** @var Position $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('Geocoder\Model\Address', $result);
         $this->assertEquals(60.454462, $result->getLatitude(), '', 0.01);
@@ -424,7 +424,7 @@ class YandexTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
 
-        /** @var Position $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('Geocoder\Model\Address', $result);
         $this->assertEquals(40.874651, $result->getLatitude(), '', 0.01);

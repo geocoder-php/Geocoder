@@ -2,7 +2,7 @@
 
 namespace Geocoder\Tests\Provider;
 
-use Geocoder\Model\Position;
+use Geocoder\Location;
 use Geocoder\Tests\TestCase;
 use Geocoder\Provider\MapQuest;
 
@@ -61,7 +61,7 @@ class MapQuestTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var Position $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(48.866205, $result->getLatitude(), '', 0.01);
@@ -106,7 +106,7 @@ class MapQuestTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var Position $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(54.0484068, $result->getLatitude(), '', 0.001);
@@ -138,7 +138,7 @@ class MapQuestTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
 
-        /** @var Position $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(52.374478, $result->getLatitude(), '', 0.01);
@@ -150,7 +150,7 @@ class MapQuestTest extends TestCase
         $this->assertEquals('DE', $result->getCountry()->getName());
         $this->assertEquals('DE', $result->getCountry()->getCode());
 
-        /** @var Position $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(52.374478000000003, $result->getLatitude(), '', 0.01);
@@ -162,7 +162,7 @@ class MapQuestTest extends TestCase
         $this->assertEquals('DE', $result->getCountry()->getName());
         $this->assertEquals('DE', $result->getCountry()->getCode());
 
-        /** @var Position $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(52.374478000000003, $result->getLatitude(), '', 0.01);
@@ -174,7 +174,7 @@ class MapQuestTest extends TestCase
         $this->assertEquals('DE', $result->getCountry()->getName());
         $this->assertEquals('DE', $result->getCountry()->getCode());
 
-        /** @var Position $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(52.374478000000003, $result->getLatitude(), '', 0.01);
@@ -199,7 +199,7 @@ class MapQuestTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var Position $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(50.189062, $result->getLatitude(), '', 0.01);
