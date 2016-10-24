@@ -53,7 +53,7 @@ GPX
     </wpt>
 
 GPX
-        , $location->getLatitude(), $location->getLongitude(), $this->formatName($location));
+        , $location->getCoordinates()->getLatitude(), $location->getCoordinates()->getLongitude(), $this->formatName($location));
 
         $gpx .= <<<GPX
 </gpx>
