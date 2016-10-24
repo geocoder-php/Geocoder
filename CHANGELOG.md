@@ -3,13 +3,16 @@ CHANGELOG
 
 ### 4.0.0 (2016-xx-xx)
 
-* Added: Interface for `Geocoder\Model\AddressCollection` called `Geocoder\GeocoderResult`. 
-* Added: Interface for `Geocoder\Model\Address` called `Geocoder\Location`. 
+* Added: Interface for `Geocoder\Model\AddressCollection` called `Geocoder\GeocoderResult`. Public APIs are updated to type hint for `Geocoder\GeocoderResult`.
+* Added: Interface for `Geocoder\Model\Address` called `Geocoder\Location`. Public APIs are updated to type hint for `Geocoder\Location`.
 * Added: `Country::isDefined`
 * Added: `Cordinates::isDefined`
-* Changed: `Location::getCorrdinates`, `Location::getBounds` and `Location::getCountry` will never return null.
+* Changed: `Location::getCoordinates`, `Location::getBounds` and `Location::getCountry` will never return null.
 * Removed: `AdminLevel::toString` in favor for `AdminLevel::__toString`.
 * Removed: `Country::toString` in favor for `Country::__toString`.
+* Removed: `Address::getCountryCode` in favor for `Address::getCountry()->getCode()`.
+* Removed: `Address::getLongitude` in favor for `Address::getCoordinates()->getLongitude()`.
+* Removed: `Address::getLatitude` in favor for `Address::getCoordinates()->getLatitude()`.
 
 
 ### 3.3.0 (2015-12-06)
