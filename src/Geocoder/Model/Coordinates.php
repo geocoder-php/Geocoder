@@ -62,6 +62,6 @@ final class Coordinates
      */
     public function isDefined()
     {
-        return !empty($this->latitude) && !empty($this->longitude);
+        return $this->latitude !== null && $this->longitude !== null;
     }
 }
