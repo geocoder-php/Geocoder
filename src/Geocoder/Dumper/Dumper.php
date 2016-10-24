@@ -18,12 +18,12 @@ use Geocoder\Location;
 interface Dumper
 {
     /**
-     * Dumps an `Position` object as a string representation of
+     * Dumps an `Location` object as a string representation of
      * the implemented format.
      *
-     * @param Location $position
+     * @param Location $location
      *
      * @return string
      */
-    public function dump(Location $position);
+    public function dump(Location $location);
 }

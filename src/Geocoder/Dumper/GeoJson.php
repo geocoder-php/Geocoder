@@ -20,9 +20,9 @@ class GeoJson implements Dumper
     /**
      * {@inheritDoc}
      */
-    public function dump(Location $position)
+    public function dump(Location $location)
     {
-        $properties = array_filter($position->toArray(), function ($value) {
+        $properties = array_filter($location->toArray(), function ($value) {
             return !empty($value);
         });
 
@@ -40,12 +40,12 @@ class GeoJson implements Dumper
             'type' => 'Feature',
             'geometry' => [
                 'type'          => 'Point',
-                'coordinates'   => [ $position->getLongitude(), $position->getLatitude() ]
+                'coordinates'   => [$location->getCoordinates()->getLongitude(), $location->getCoordinates()->getLatitude()]
             ],
             'properties' => $properties,
         ];
 
-        if (null !== $bounds = $position->getBounds()) {
+        if (null !== $bounds = $location->getBounds()) {
             if ($bounds->isDefined()) {
                 $json['bounds'] = $bounds->toArray();
             }

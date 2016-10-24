@@ -2,7 +2,7 @@
 
 namespace Geocoder\Tests\Provider;
 
-use Geocoder\Model\Position;
+use Geocoder\Location;
 use Geocoder\Tests\TestCase;
 use Geocoder\Provider\Geonames;
 
@@ -92,6 +92,7 @@ JSON;
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
 
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(51.508528775863, $result->getLatitude(), '', 0.01);
@@ -109,6 +110,7 @@ JSON;
         $this->assertEquals('GB', $result->getCountryCode());
         $this->assertEquals('Europe/London', $result->getTimezone());
 
+        /** @var Location $result */
         $result = $results->get(1);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(-33.015285093464, $result->getLatitude(), '', 0.01);
@@ -127,7 +129,7 @@ JSON;
         $this->assertEquals('ZA', $result->getCountryCode());
         $this->assertEquals('Africa/Johannesburg', $result->getTimezone());
 
-        /** @var Position $result */
+        /** @var Location $result */
         $result = $results->get(2);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(51.512788890295, $result->getLatitude(), '', 0.01);
@@ -146,7 +148,7 @@ JSON;
         $this->assertEquals('GB', $result->getCountryCode());
         $this->assertEquals('Europe/London', $result->getTimezone());
 
-        /** @var Position $result */
+        /** @var Location $result */
         $result = $results->get(3);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(42.983389283, $result->getLatitude(), '', 0.01);
@@ -163,7 +165,7 @@ JSON;
         $this->assertEquals('CA', $result->getCountryCode());
         $this->assertEquals('America/Toronto', $result->getTimezone());
 
-        /** @var Position $result */
+        /** @var Location $result */
         $result = $results->get(4);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(41.3556539, $result->getLatitude(), '', 0.01);
@@ -194,7 +196,7 @@ JSON;
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
 
-        /** @var Position $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(51.50853, $result->getLatitude(), '', 0.01);
@@ -212,7 +214,7 @@ JSON;
         $this->assertEquals('GB', $result->getCountryCode());
         $this->assertEquals('Europe/London', $result->getTimezone());
 
-        /** @var Position $result */
+        /** @var Location $result */
         $result = $results->get(1);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(-33.015285093464, $result->getLatitude(), '', 0.01);
@@ -231,7 +233,7 @@ JSON;
         $this->assertEquals('ZA', $result->getCountryCode());
         $this->assertEquals('Africa/Johannesburg', $result->getTimezone());
 
-        /** @var Position $result */
+        /** @var Location $result */
         $result = $results->get(2);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(51.512788890295, $result->getLatitude(), '', 0.01);
@@ -250,7 +252,7 @@ JSON;
         $this->assertEquals('GB', $result->getCountryCode());
         $this->assertEquals('Europe/London', $result->getTimezone());
 
-        /** @var Position $result */
+        /** @var Location $result */
         $result = $results->get(3);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(42.983389283, $result->getLatitude(), '', 0.01);
@@ -267,7 +269,7 @@ JSON;
         $this->assertEquals('CA', $result->getCountryCode());
         $this->assertEquals('America/Toronto', $result->getTimezone());
 
-        /** @var Position $result */
+        /** @var Location $result */
         $result = $results->get(4);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(41.3556539, $result->getLatitude(), '', 0.01);
@@ -298,7 +300,7 @@ JSON;
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var Position $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(51.50853, $result->getLatitude(), '', 0.01);
@@ -324,7 +326,7 @@ JSON;
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var Position $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(51.50853, $result->getLatitude(), '', 0.01);

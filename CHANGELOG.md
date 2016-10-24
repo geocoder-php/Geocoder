@@ -1,6 +1,17 @@
 CHANGELOG
 =========
 
+### 4.0.0 (2016-xx-xx)
+
+* Added: Interface for `Geocoder\Model\AddressCollection` called `Geocoder\GeocoderResult`. 
+* Added: Interface for `Geocoder\Model\Address` called `Geocoder\Location`. 
+* Added: `Country::isDefined`
+* Added: `Cordinates::isDefined`
+* Changed: `Location::getCorrdinates`, `Location::getBounds` and `Location::getCountry` will never return null.
+* Removed: `AdminLevel::toString` in favor for `AdminLevel::__toString`.
+* Removed: `Country::toString` in favor for `Country::__toString`.
+
+
 ### 3.3.0 (2015-12-06)
 
 * Added: timezone field for `FreeGeoIp` provider

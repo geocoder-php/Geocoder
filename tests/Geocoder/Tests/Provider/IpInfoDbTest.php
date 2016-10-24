@@ -2,7 +2,7 @@
 
 namespace Geocoder\Tests\Provider;
 
-use Geocoder\Model\Position;
+use Geocoder\Location;
 use Geocoder\Tests\TestCase;
 use Geocoder\Provider\IpInfoDb;
 
@@ -80,7 +80,7 @@ class IpInfoDbTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var Position $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertNull($result->getLatitude());
@@ -135,7 +135,7 @@ class IpInfoDbTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var Position $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(37.406, $result->getLatitude(), '', 0.001);
@@ -178,7 +178,7 @@ class IpInfoDbTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var Position $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertNull($result->getLatitude());

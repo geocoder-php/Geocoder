@@ -2,7 +2,7 @@
 
 namespace Geocoder\Tests\Provider;
 
-use Geocoder\Model\Position;
+use Geocoder\Location;
 use Geocoder\Tests\TestCase;
 use Geocoder\Provider\MaxMind;
 
@@ -61,7 +61,7 @@ class MaxMindTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var Position $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals('localhost', $result->getLocality());
@@ -76,7 +76,7 @@ class MaxMindTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var Position $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals('localhost', $result->getLocality());
@@ -131,7 +131,7 @@ class MaxMindTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var Position $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertNull($result->getLatitude());
@@ -156,7 +156,7 @@ class MaxMindTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var Position $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(33.034698486328, $result->getLatitude(), '', 0.0001);
@@ -188,7 +188,7 @@ class MaxMindTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var Position $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(37.748402, $result->getLatitude(), '', 0.0001);
@@ -301,7 +301,7 @@ class MaxMindTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var Position $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(33.034698, $result->getLatitude(), '', 0.1);
@@ -333,7 +333,7 @@ class MaxMindTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var Position $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(33.0347, $result->getLatitude(), '', 0.1);
@@ -365,6 +365,7 @@ class MaxMindTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(-27.5833, $result->getLatitude(), '', 0.1);
@@ -395,7 +396,7 @@ class MaxMindTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var Position $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(40.2181, $result->getLatitude(), '', 0.1);
@@ -427,7 +428,7 @@ class MaxMindTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var Position $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(40.2181, $result->getLatitude(), '', 0.1);

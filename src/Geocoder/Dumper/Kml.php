@@ -20,9 +20,9 @@ class Kml extends Gpx implements Dumper
     /**
      * {@inheritDoc}
      */
-    public function dump(Location $position)
+    public function dump(Location $location)
     {
-        $name = $this->formatName($position);
+        $name = $this->formatName($location);
         $kml  = <<<KML
 <?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2">
@@ -38,6 +38,6 @@ class Kml extends Gpx implements Dumper
 </kml>
 KML;
 
-        return sprintf($kml, $name, $name, $position->getLongitude(), $position->getLatitude());
+        return sprintf($kml, $name, $name, $location->getCoordinates()->getLongitude(), $location->getCoordinates()->getLatitude());
     }
 }
