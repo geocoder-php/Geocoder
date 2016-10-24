@@ -166,8 +166,8 @@ class GeoIP2Test extends TestCase
         /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals($expectedGeodata['latitude'], $result->getLatitude());
-        $this->assertEquals($expectedGeodata['longitude'], $result->getLongitude());
+        $this->assertEquals($expectedGeodata['latitude'], $result->getCoordinates()->getLatitude());
+        $this->assertEquals($expectedGeodata['longitude'], $result->getCoordinates()->getLongitude());
         $this->assertEquals($expectedGeodata['boundsDefined'], $result->getBounds()->isDefined());
         $this->assertEquals($expectedGeodata['streetNumber'], $result->getStreetNumber());
         $this->assertEquals($expectedGeodata['streetName'], $result->getStreetName());

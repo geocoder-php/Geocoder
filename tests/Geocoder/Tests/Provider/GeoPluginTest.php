@@ -99,8 +99,8 @@ class GeoPluginTest extends TestCase
 
         $result = $results->first();
 
-        $this->assertEquals(40.711101999999997, $result->getLatitude(), '', 0.0001);
-        $this->assertEquals(-73.946899000000002, $result->getLongitude(), '', 0.0001);
+        $this->assertEquals(40.711101999999997, $result->getCoordinates()->getLatitude(), '', 0.0001);
+        $this->assertEquals(-73.946899000000002, $result->getCoordinates()->getLongitude(), '', 0.0001);
         $this->assertNull($result->getLocality());
         $this->assertCount(1, $result->getAdminLevels());
         $this->assertEquals('New York', $result->getAdminLevels()->get(1)->getName());

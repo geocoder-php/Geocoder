@@ -221,8 +221,8 @@ final class Address implements Location
         }
 
         return array(
-            'latitude'     => $this->getLatitude(),
-            'longitude'    => $this->getLongitude(),
+            'latitude'     => $this->getCoordinates()->getLatitude(),
+            'longitude'    => $this->getCoordinates()->getLongitude(),
             'bounds'       => $this->bounds->toArray(),
             'streetNumber' => $this->streetNumber,
             'streetName'   => $this->streetName,
