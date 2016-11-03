@@ -15,7 +15,7 @@ use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
 
-class MaxMindBinary extends AbstractProvider implements Provider
+final class MaxMindBinary extends AbstractProvider implements Provider
 {
     /**
      * @var string

@@ -10,7 +10,10 @@
 
 namespace Geocoder\Provider;
 
-use Ivory\HttpAdapter\HttpAdapterInterface;
+use Http\Message\MessageFactory;
+use Http\Discovery\HttpClientDiscovery;
+use Http\Discovery\MessageFactoryDiscovery;
+use Http\Client\HttpClient;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -18,27 +21,70 @@ use Ivory\HttpAdapter\HttpAdapterInterface;
 class AbstractHttpProvider extends AbstractProvider
 {
     /**
-     * @var HttpAdapterInterface
+     * @var HttpClient
      */
-    private $adapter;
+    private $client;
 
     /**
-     * @param HttpAdapterInterface $adapter An HTTP adapter
+     * @var MessageFactory
      */
-    public function __construct(HttpAdapterInterface $adapter)
+    private $messageFactory;
+
+    /**
+     * @param HttpClient          $client
+     * @param MessageFactory|null $factory
+     */
+    public function __construct(HttpClient $client, MessageFactory $factory = null)
     {
         parent::__construct();
 
-        $this->adapter = $adapter;
+        $this->client = $client;
+        $this->messageFactory = $factory;
     }
 
     /**
      * Returns the HTTP adapter.
      *
-     * @return HttpAdapterInterface
+     * @return HttpClient
      */
-    public function getAdapter()
+    protected function getHttpClient()
     {
-        return $this->adapter;
+        return $this->client;
+    }
+
+    /**
+     * @return MessageFactory
+     */
+    protected function getMessageFactory()
+    {
+        if ($this->messageFactory === null) {
+            $this->messageFactory = MessageFactoryDiscovery::find();
+        }
+
+        return $this->messageFactory;
+    }
+
+    /**
+     * @param HttpClient $client
+     *
+     * @return AbstractHttpProvider
+     */
+    public function setClient(HttpClient $client)
+    {
+        $this->client = $client;
+
+        return $this;
+    }
+
+    /**
+     * @param MessageFactory $messageFactory
+     *
+     * @return AbstractHttpProvider
+     */
+    public function setMessageFactory(MessageFactory $messageFactory)
+    {
+        $this->messageFactory = $messageFactory;
+
+        return $this;
     }
 }

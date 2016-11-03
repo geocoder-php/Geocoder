@@ -14,12 +14,12 @@ use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Model\AdminLevelCollection;
-use Ivory\HttpAdapter\HttpAdapterInterface;
+use Http\Client\HttpClient;
 
 /**
  * @author Giovanni Pirrotta <giovanni.pirrotta@gmail.com>
  */
-class Geonames extends AbstractHttpProvider implements LocaleAwareProvider
+final class Geonames extends AbstractHttpProvider implements LocaleAwareProvider
 {
     /**
      * @var string
@@ -39,13 +39,13 @@ class Geonames extends AbstractHttpProvider implements LocaleAwareProvider
     private $username;
 
     /**
-     * @param HttpAdapterInterface $adapter  An HTTP adapter
-     * @param string               $username Username login (Free registration at http://www.geonames.org/login)
-     * @param string               $locale   A locale (optional)
+     * @param HttpClient $client   An HTTP adapter
+     * @param string     $username Username login (Free registration at http://www.geonames.org/login)
+     * @param string     $locale   A locale (optional)
      */
-    public function __construct(HttpAdapterInterface $adapter, $username, $locale = null)
+    public function __construct(HttpClient $client, $username, $locale = null)
     {
-        parent::__construct($adapter);
+        parent::__construct($client);
 
         $this->username = $username;
         $this->locale   = $locale;
@@ -102,7 +102,8 @@ class Geonames extends AbstractHttpProvider implements LocaleAwareProvider
             $query = sprintf('%s&lang=%s', $query, substr($this->getLocale(), 0, 2));
         }
 
-        $content = (string) $this->getAdapter()->get($query)->getBody();
+        $request = $this->getMessageFactory()->createRequest('GET', $query);
+        $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
 
         if (empty($content)) {
             throw new NoResult(sprintf('Could not execute query "%s".', $query));

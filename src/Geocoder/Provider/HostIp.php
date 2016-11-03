@@ -16,7 +16,7 @@ use Geocoder\Exception\UnsupportedOperation;
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-class HostIp extends AbstractHttpProvider implements Provider
+final class HostIp extends AbstractHttpProvider implements Provider
 {
     /**
      * @var string
@@ -69,7 +69,8 @@ class HostIp extends AbstractHttpProvider implements Provider
      */
     private function executeQuery($query)
     {
-        $content = (string) $this->getAdapter()->get($query)->getBody();
+        $request = $this->getMessageFactory()->createRequest('GET', $query);
+        $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
 
         $data = json_decode($content, true);
 

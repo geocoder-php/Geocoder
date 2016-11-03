@@ -13,12 +13,12 @@ namespace Geocoder\Provider;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
-use Ivory\HttpAdapter\HttpAdapterInterface;
+use Http\Client\HttpClient;
 
 /**
  * @author David Guyon <dguyon@gmail.com>
  */
-class BingMaps extends AbstractHttpProvider implements LocaleAwareProvider
+final class BingMaps extends AbstractHttpProvider implements LocaleAwareProvider
 {
     use LocaleTrait;
 
@@ -38,13 +38,13 @@ class BingMaps extends AbstractHttpProvider implements LocaleAwareProvider
     private $apiKey;
 
     /**
-     * @param HttpAdapterInterface $adapter An HTTP adapter
-     * @param string               $apiKey  An API key
-     * @param string               $locale  A locale (optional)
+     * @param HttpClient $client An HTTP adapter
+     * @param string     $apiKey An API key
+     * @param string     $locale A locale (optional)
      */
-    public function __construct(HttpAdapterInterface $adapter, $apiKey, $locale = null)
+    public function __construct(HttpClient $client, $apiKey, $locale = null)
     {
-        parent::__construct($adapter);
+        parent::__construct($client);
 
         $this->apiKey = $apiKey;
         $this->locale = $locale;
@@ -100,7 +100,8 @@ class BingMaps extends AbstractHttpProvider implements LocaleAwareProvider
             $query = sprintf('%s&culture=%s', $query, str_replace('_', '-', $this->getLocale()));
         }
 
-        $content = (string) $this->getAdapter()->get($query)->getBody();
+        $request = $this->getMessageFactory()->createRequest('GET', $query);
+        $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
 
         if (empty($content)) {
             throw new NoResult(sprintf('Could not execute query "%s".', $query));

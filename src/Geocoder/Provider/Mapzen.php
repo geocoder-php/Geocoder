@@ -16,16 +16,19 @@ use Geocoder\Exception\UnsupportedOperation;
 use Http\Client\HttpClient;
 
 /**
- * @author mtm <mtm@opencagedata.com>
+ * @author Gary Gale <gary@vicchi.org>
  */
-final class OpenCage extends AbstractHttpProvider implements LocaleAwareProvider
+final class Mapzen extends AbstractHttpProvider
 {
     /**
      * @var string
      */
-    const GEOCODE_ENDPOINT_URL = '%s://api.opencagedata.com/geocode/v1/json?key=%s&query=%s&limit=%d&pretty=1';
+    const GEOCODE_ENDPOINT_URL = '%s://search.mapzen.com/v1/search?text=%s&key=%s&size=%d';
 
-    use LocaleTrait;
+    /**
+     * @var string
+     */
+    const REVERSE_ENDPOINT_URL = '%s://search.mapzen.com/v1/reverse?point.lat=%f&point.lon=%f&key=%s&size=%d';
 
     /**
      * @var string
@@ -41,15 +44,13 @@ final class OpenCage extends AbstractHttpProvider implements LocaleAwareProvider
      * @param HttpClient  $client An HTTP adapter.
      * @param string      $apiKey An API key.
      * @param bool        $useSsl Whether to use an SSL connection (optional).
-     * @param string|null $locale A locale (optional).
      */
-    public function __construct(HttpClient $client, $apiKey, $useSsl = false, $locale = null)
+    public function __construct(HttpClient $client, $apiKey, $useSSL = true)
     {
         parent::__construct($client);
 
         $this->apiKey = $apiKey;
-        $this->scheme = $useSsl ? 'https' : 'http';
-        $this->locale = $locale;
+        $this->scheme = $useSSL ? 'https' : 'http';
     }
 
     /**
@@ -63,10 +64,10 @@ final class OpenCage extends AbstractHttpProvider implements LocaleAwareProvider
 
         // This API doesn't handle IPs
         if (filter_var($address, FILTER_VALIDATE_IP)) {
-            throw new UnsupportedOperation('The OpenCage provider does not support IP addresses, only street addresses.');
+            throw new UnsupportedOperation('The Mapzen provider does not support IP addresses, only street addresses.');
         }
 
-        $query = sprintf(self::GEOCODE_ENDPOINT_URL, $this->scheme, $this->apiKey, urlencode($address), $this->getLimit());
+        $query = sprintf(self::GEOCODE_ENDPOINT_URL, $this->scheme, urlencode($address), $this->apiKey, $this->getLimit());
 
         return $this->executeQuery($query);
     }
@@ -76,9 +77,13 @@ final class OpenCage extends AbstractHttpProvider implements LocaleAwareProvider
      */
     public function reverse($latitude, $longitude)
     {
-        $address = sprintf('%f, %f', $latitude, $longitude);
+        if (null === $this->apiKey) {
+            throw new InvalidCredentials('No API Key provided.');
+        }
 
-        return $this->geocode($address);
+        $query = sprintf(self::REVERSE_ENDPOINT_URL, $this->scheme, $latitude, $longitude, $this->apiKey, $this->getLimit());
+
+        return $this->executeQuery($query);
     }
 
     /**
@@ -86,7 +91,7 @@ final class OpenCage extends AbstractHttpProvider implements LocaleAwareProvider
      */
     public function getName()
     {
-        return 'opencage';
+        return 'mapzen';
     }
 
     /**
@@ -95,10 +100,6 @@ final class OpenCage extends AbstractHttpProvider implements LocaleAwareProvider
      */
     private function executeQuery($query)
     {
-        if (null !== $this->getLocale()) {
-            $query = sprintf('%s&language=%s', $query, $this->getLocale());
-        }
-
         $request = $this->getMessageFactory()->createRequest('GET', $query);
         $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
 
@@ -108,23 +109,21 @@ final class OpenCage extends AbstractHttpProvider implements LocaleAwareProvider
 
         $json = json_decode($content, true);
 
-        // https://geocoder.opencagedata.com/api#codes
-        if (isset($json['status'])) {
-            switch ($json['status']['code']) {
-                case 400:
-                    throw new InvalidArgument('Invalid request (a required parameter is missing).');
-                case 402:
-                    throw new QuotaExceeded('Valid request but quota exceeded.');
+        // See https://mapzen.com/documentation/search/api-keys-rate-limits/
+        if (isset($json['meta'])) {
+            switch ($json['meta']['status_code']) {
                 case 403:
                     throw new InvalidCredentials('Invalid or missing api key.');
+                case 429:
+                    throw new QuotaExceeded('Valid request but quota exceeded.');
             }
         }
 
-        if (!isset($json['total_results']) || $json['total_results'] == 0) {
+        if (!isset($json['type']) || $json['type'] !== 'FeatureCollection' || !isset($json['features']) || count($json['features']) === 0) {
             throw new NoResult(sprintf('Could not find results for query "%s".', $query));
         }
 
-        $locations = $json['results'];
+        $locations = $json['features'];
 
         if (empty($locations)) {
             throw new NoResult(sprintf('Could not find results for query "%s".', $query));
@@ -133,37 +132,36 @@ final class OpenCage extends AbstractHttpProvider implements LocaleAwareProvider
         $results = [];
         foreach ($locations as $location) {
             $bounds = [];
-            if (isset($location['bounds'])) {
+            if (isset($location['bbox'])) {
                 $bounds = [
-                    'south' => $location['bounds']['southwest']['lat'],
-                    'west' => $location['bounds']['southwest']['lng'],
-                    'north' => $location['bounds']['northeast']['lat'],
-                    'east' => $location['bounds']['northeast']['lng'],
+                    'south' => $location['bbox'][3],
+                    'west' => $location['bbox'][2],
+                    'north' => $location['bbox'][1],
+                    'east' => $location['bbox'][0],
                 ];
             }
 
-            $comp = $location['components'];
+            $props = $location['properties'];
 
             $adminLevels = [];
-            foreach (['state', 'county'] as $i => $component) {
-                if (isset($comp[$component])) {
-                    $adminLevels[] = ['name' => $comp[$component], 'level' => $i + 1];
+            foreach (['region', 'locality', 'macroregion', 'country'] as $i => $component) {
+                if (isset($props[$component])) {
+                    $adminLevels[] = ['name' => $props[$component], 'level' => $i + 1];
                 }
             }
 
             $results[] = array_merge($this->getDefaults(), array(
-                'latitude' => $location['geometry']['lat'],
-                'longitude' => $location['geometry']['lng'],
+                'latitude' => $location['geometry']['coordinates'][1],
+                'longitude' => $location['geometry']['coordinates'][0],
                 'bounds' => $bounds ?: [],
-                'streetNumber' => isset($comp['house_number']) ? $comp['house_number'] : null,
-                'streetName' => $this->guessStreetName($comp),
-                'subLocality' => $this->guessSubLocality($comp),
-                'locality' => $this->guessLocality($comp),
-                'postalCode' => isset($comp['postcode']) ? $comp['postcode']     : null,
+                'streetNumber' => isset($props['housenumber']) ? $props['housenumber'] : null,
+                'streetName' => isset($props['street']) ? $props['street'] : null,
+                'subLocality' => isset($props['neighbourhood']) ? $props['neighbourhood'] : null,
+                'locality' => isset($props['locality']) ? $props['locality'] : null,
+                'postalCode' => isset($props['postalcode']) ? $props['postalcode'] : null,
                 'adminLevels' => $adminLevels,
-                'country' => isset($comp['country']) ? $comp['country']      : null,
-                'countryCode' => isset($comp['country_code']) ? strtoupper($comp['country_code']) : null,
-                'timezone' => isset($location['annotations']['timezone']['name']) ? $location['annotations']['timezone']['name'] : null,
+                'country' => isset($props['country']) ? $props['country'] : null,
+                'countryCode' => isset($props['country_a']) ? strtoupper($props['country_a']) : null
             ));
         }
 
@@ -201,7 +199,7 @@ final class OpenCage extends AbstractHttpProvider implements LocaleAwareProvider
      */
     protected function guessSubLocality(array $components)
     {
-        $subLocalityKeys = array('suburb', 'neighbourhood', 'city_district');
+        $subLocalityKeys = array('neighbourhood', 'city_district');
 
         return $this->guessBestComponent($components, $subLocalityKeys);
     }

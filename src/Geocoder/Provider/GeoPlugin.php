@@ -16,7 +16,7 @@ use Geocoder\Exception\UnsupportedOperation;
 /**
  * @author Andrea Cristaudo <andrea.cristaudo@gmail.com>
  */
-class GeoPlugin extends AbstractHttpProvider implements Provider
+final class GeoPlugin extends AbstractHttpProvider implements Provider
 {
     /**
      * @var string
@@ -62,7 +62,8 @@ class GeoPlugin extends AbstractHttpProvider implements Provider
      */
     private function executeQuery($query)
     {
-        $content = (string) $this->getAdapter()->get($query)->getBody();
+        $request = $this->getMessageFactory()->createRequest('GET', $query);
+        $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
 
         if (empty($content)) {
             throw new NoResult(sprintf('Could not execute query "%s".', $query));

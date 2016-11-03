@@ -13,12 +13,12 @@ namespace Geocoder\Provider;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
-use Ivory\HttpAdapter\HttpAdapterInterface;
+use Http\Client\HttpClient;
 
 /**
  * @author Andrea Cristaudo <andrea.cristaudo@gmail.com>
  */
-class MaxMind extends AbstractHttpProvider implements Provider
+final class MaxMind extends AbstractHttpProvider implements Provider
 {
     /**
      * @var string Country, City, ISP and Organization
@@ -56,14 +56,14 @@ class MaxMind extends AbstractHttpProvider implements Provider
     private $useSsl = false;
 
     /**
-     * @param HttpAdapterInterface $adapter An HTTP adapter.
-     * @param string               $apiKey  An API key.
-     * @param string               $service The specific Maxmind service to use (optional).
-     * @param bool                 $useSsl  Whether to use an SSL connection (optional).
+     * @param HttpClient $client  An HTTP adapter.
+     * @param string     $apiKey  An API key.
+     * @param string     $service The specific Maxmind service to use (optional).
+     * @param bool       $useSsl  Whether to use an SSL connection (optional).
      */
-    public function __construct(HttpAdapterInterface $adapter, $apiKey, $service = self::CITY_EXTENDED_SERVICE, $useSsl = false)
+    public function __construct(HttpClient $client, $apiKey, $service = self::CITY_EXTENDED_SERVICE, $useSsl = false)
     {
-        parent::__construct($adapter);
+        parent::__construct($client);
 
         $this->apiKey  = $apiKey;
         $this->service = $service;
@@ -116,7 +116,8 @@ class MaxMind extends AbstractHttpProvider implements Provider
      */
     private function executeQuery($query)
     {
-        $content = (string) $this->getAdapter()->get($query)->getBody();
+        $request = $this->getMessageFactory()->createRequest('GET', $query);
+        $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
         $fields  = $this->fieldsForService($this->service);
 
         if (null === $content || '' === $content) {

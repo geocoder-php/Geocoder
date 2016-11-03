@@ -16,7 +16,7 @@ use Geocoder\Exception\InvalidCredentials;
 /**
  * @author Markus Bachmann <markus.bachmann@bachi.biz>
  */
-class Chain implements LocaleAwareProvider
+final class Chain implements LocaleAwareProvider
 {
     use LocaleTrait;
 

@@ -13,12 +13,12 @@ namespace Geocoder\Provider;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
-use Ivory\HttpAdapter\HttpAdapterInterface;
+use Http\Client\HttpClient;
 
 /**
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class TomTom extends AbstractHttpProvider implements LocaleAwareProvider
+final class TomTom extends AbstractHttpProvider implements LocaleAwareProvider
 {
     use LocaleTrait;
 
@@ -38,13 +38,13 @@ class TomTom extends AbstractHttpProvider implements LocaleAwareProvider
     private $apiKey;
 
     /**
-     * @param HttpAdapterInterface $adapter An HTTP adapter.
-     * @param string               $apiKey  An API key.
-     * @param string               $locale  A locale (optional).
+     * @param HttpClient $client An HTTP adapter.
+     * @param string     $apiKey An API key.
+     * @param string     $locale A locale (optional).
      */
-    public function __construct(HttpAdapterInterface $adapter, $apiKey, $locale = null)
+    public function __construct(HttpClient $client, $apiKey, $locale = null)
     {
-        parent::__construct($adapter);
+        parent::__construct($client);
 
         $this->apiKey = $apiKey;
         $this->locale = $locale;
@@ -102,7 +102,8 @@ class TomTom extends AbstractHttpProvider implements LocaleAwareProvider
             $query = sprintf('%s&language=%s', $query, substr($this->getLocale(), 0, 2));
         }
 
-        $content = (string) $this->getAdapter()->get($query)->getBody();
+        $request = $this->getMessageFactory()->createRequest('GET', $query);
+        $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
 
         if (false !== stripos($content, "Developer Inactive")) {
             throw new InvalidCredentials('Map API Key provided is not valid.');

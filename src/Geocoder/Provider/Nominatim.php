@@ -12,12 +12,12 @@ namespace Geocoder\Provider;
 
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
-use Ivory\HttpAdapter\HttpAdapterInterface;
+use Http\Client\HttpClient;
 
 /**
  * @author Niklas Närhinen <niklas@narhinen.net>
  */
-class Nominatim extends AbstractHttpProvider implements LocaleAwareProvider
+final class Nominatim extends AbstractHttpProvider implements LocaleAwareProvider
 {
     use LocaleTrait;
 
@@ -27,13 +27,23 @@ class Nominatim extends AbstractHttpProvider implements LocaleAwareProvider
     private $rootUrl;
 
     /**
-     * @param HttpAdapterInterface $adapter An HTTP adapter.
-     * @param string               $rootUrl Root URL of the nominatim server
-     * @param string               $locale  A locale (optional).
+     * @param HttpClient  $client
+     * @param string|null $locale
+     * @return Nominatim
      */
-    public function __construct(HttpAdapterInterface $adapter, $rootUrl, $locale = null)
+    public static function withOpenStreetMapServer(HttpClient $client, $locale = null)
     {
-        parent::__construct($adapter);
+        return new self($client, 'http://nominatim.openstreetmap.org', $locale);
+    }
+
+    /**
+     * @param HttpClient $client  An HTTP adapter.
+     * @param string     $rootUrl Root URL of the nominatim server
+     * @param string     $locale  A locale (optional).
+     */
+    public function __construct(HttpClient $client, $rootUrl, $locale = null)
+    {
+        parent::__construct($client);
 
         $this->rootUrl = rtrim($rootUrl, '/');
         $this->locale  = $locale;
@@ -163,7 +173,9 @@ class Nominatim extends AbstractHttpProvider implements LocaleAwareProvider
             $query = sprintf('%s&accept-language=%s', $query, $this->getLocale());
         }
 
-        return (string) $this->getAdapter()->get($query)->getBody();
+        $request = $this->getMessageFactory()->createRequest('GET', $query);
+
+        return (string) $this->getHttpClient()->sendRequest($request)->getBody();
     }
 
     private function getGeocodeEndpointUrl()

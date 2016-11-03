@@ -17,7 +17,7 @@ use Geocoder\Model\AddressCollection;
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-class FreeGeoIp extends AbstractHttpProvider implements Provider
+final class FreeGeoIp extends AbstractHttpProvider implements Provider
 {
     /**
      * @var string
@@ -65,7 +65,8 @@ class FreeGeoIp extends AbstractHttpProvider implements Provider
      */
     private function executeQuery($query)
     {
-        $content = (string) $this->getAdapter()->get($query)->getBody();
+        $request = $this->getMessageFactory()->createRequest('GET', $query);
+        $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
 
         if (empty($content)) {
             throw new NoResult(sprintf('Could not execute query %s', $query));

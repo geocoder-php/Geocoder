@@ -12,12 +12,12 @@ namespace Geocoder\Provider;
 
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
-use Ivory\HttpAdapter\HttpAdapterInterface;
+use Http\Client\HttpClient;
 
 /**
  * @author ALKOUM Dorian <baikunz@gmail.com>
  */
-class ArcGISOnline extends AbstractHttpProvider implements Provider
+final class ArcGISOnline extends AbstractHttpProvider implements Provider
 {
     /**
      * @var string
@@ -40,13 +40,13 @@ class ArcGISOnline extends AbstractHttpProvider implements Provider
     private $protocol;
 
     /**
-     * @param HttpAdapterInterface $adapter       An HTTP adapter
-     * @param string               $sourceCountry Country biasing (optional)
-     * @param bool                 $useSsl        Whether to use an SSL connection (optional)
+     * @param HttpClient $client        An HTTP adapter
+     * @param string     $sourceCountry Country biasing (optional)
+     * @param bool       $useSsl        Whether to use an SSL connection (optional)
      */
-    public function __construct(HttpAdapterInterface $adapter, $sourceCountry = null, $useSsl = false)
+    public function __construct(HttpClient $client, $sourceCountry = null, $useSsl = false)
     {
-        parent::__construct($adapter);
+        parent::__construct($client);
 
         $this->sourceCountry = $sourceCountry;
         $this->protocol      = $useSsl ? 'https' : 'http';
@@ -167,8 +167,9 @@ class ArcGISOnline extends AbstractHttpProvider implements Provider
      */
     private function executeQuery($query)
     {
-        $query   = $this->buildQuery($query);
-        $content = (string) $this->getAdapter()->get($query)->getBody();
+        $query = $this->buildQuery($query);
+        $request = $this->getMessageFactory()->createRequest('GET', $query);
+        $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
 
         if (empty($content)) {
             throw new NoResult(sprintf('Could not execute query "%s".', $query));

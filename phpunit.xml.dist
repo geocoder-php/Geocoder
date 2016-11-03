@@ -27,6 +27,7 @@
         <!-- <server name="TOMTOM_MAP_KEY" value="YOUR_MAP_KEY" /> -->
         <!-- <server name="GOOGLE_GEOCODING_KEY" value="YOUR_GEOCODING_KEY" /> -->
         <!-- <server name="OPENCAGE_API_KEY" value="YOUR_GEOCODING_KEY" /> -->
+        <!-- <server name="MAPZEN_API_KEY" value="YOUR_MAPZEN_API_KEY" /> -->
 
     </php>
     <testsuites>

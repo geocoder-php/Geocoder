@@ -14,12 +14,12 @@ use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
-use Ivory\HttpAdapter\HttpAdapterInterface;
+use Http\Client\HttpClient;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-class IpInfoDb extends AbstractHttpProvider implements Provider
+final class IpInfoDb extends AbstractHttpProvider implements Provider
 {
     /**
      * @var string
@@ -42,15 +42,15 @@ class IpInfoDb extends AbstractHttpProvider implements Provider
     private $endpointUrl;
 
     /**
-     * @param HttpAdapterInterface $adapter   An HTTP adapter.
-     * @param string               $apiKey    An API key.
-     * @param string               $precision The endpoint precision. Either "city" or "country" (faster)
+     * @param HttpClient $client    An HTTP adapter.
+     * @param string     $apiKey    An API key.
+     * @param string     $precision The endpoint precision. Either "city" or "country" (faster)
      *
-     * @throws Geocoder\Exception\InvalidArgument
+     * @throws \Geocoder\Exception\InvalidArgument
      */
-    public function __construct(HttpAdapterInterface $adapter, $apiKey, $precision = 'city')
+    public function __construct(HttpClient $client, $apiKey, $precision = 'city')
     {
-        parent::__construct($adapter);
+        parent::__construct($client);
 
         $this->apiKey = $apiKey;
         switch ($precision) {
@@ -121,7 +121,8 @@ class IpInfoDb extends AbstractHttpProvider implements Provider
      */
     private function executeQuery($query)
     {
-        $content = (string) $this->getAdapter()->get($query)->getBody();
+        $request = $this->getMessageFactory()->createRequest('GET', $query);
+        $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
 
         if (empty($content)) {
             throw new NoResult(sprintf('Could not execute query "%s".', $query));
