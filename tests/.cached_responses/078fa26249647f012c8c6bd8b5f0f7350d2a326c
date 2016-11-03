@@ -1,0 +1,69 @@
+s:2091:"{
+   "results" : [
+      {
+         "address_components" : [
+            {
+               "long_name" : "10",
+               "short_name" : "10",
+               "types" : [ "street_number" ]
+            },
+            {
+               "long_name" : "Kalbacher Hauptstraße",
+               "short_name" : "Kalbacher Hauptstraße",
+               "types" : [ "route" ]
+            },
+            {
+               "long_name" : "Kalbach-Riedberg",
+               "short_name" : "Kalbach-Riedberg",
+               "types" : [ "sublocality_level_1", "sublocality", "political" ]
+            },
+            {
+               "long_name" : "Frankfurt",
+               "short_name" : "Frankfurt",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "Darmstadt",
+               "short_name" : "DA",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "Hessen",
+               "short_name" : "HE",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "Germany",
+               "short_name" : "DE",
+               "types" : [ "country", "political" ]
+            },
+            {
+               "long_name" : "60437",
+               "short_name" : "60437",
+               "types" : [ "postal_code" ]
+            }
+         ],
+         "formatted_address" : "Kalbacher Hauptstraße 10, 60437 Frankfurt, Germany",
+         "geometry" : {
+            "location" : {
+               "lat" : 50.1889896,
+               "lng" : 8.6366675
+            },
+            "location_type" : "ROOFTOP",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 50.1903385802915,
+                  "lng" : 8.638016480291503
+               },
+               "southwest" : {
+                  "lat" : 50.1876406197085,
+                  "lng" : 8.635318519708498
+               }
+            }
+         },
+         "types" : [ "street_address" ]
+      }
+   ],
+   "status" : "OK"
+}
+";

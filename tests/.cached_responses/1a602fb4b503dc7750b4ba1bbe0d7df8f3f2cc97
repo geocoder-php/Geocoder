@@ -1,0 +1,29 @@
+s:587:"{
+"response": {
+"status": "Propper Request",
+"message": "Success",
+"notes": "The following results has been returned",
+"code": "200_1",
+"location": {
+"ip": "66.147.244.214",
+"owner": "UNIFIED LAYER",
+"continent_name": "NORTH AMERICA",
+"continent_code": "NA",
+"country_name": "UNITED STATES",
+"country_code": "US",
+"region_name": "UTAH",
+"region_code": "UT",
+"county_name": "UTAH",
+"city_name": "PROVO",
+"latitude": "40.3402",
+"longitude": "-111.6073",
+"timezone": "MST"
+},
+"unit_test": {
+"api_calls": "100",
+"current_calls": "10",
+"elapsed_time": "0.0184",
+"memory_usage": "1.88MB"
+}
+}
+}";
