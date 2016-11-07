@@ -64,7 +64,7 @@ class OpenCageTest extends TestCase
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(48.866205, $result->getCoordinates()->getLatitude(), '', 0.01);
         $this->assertEquals(2.389089, $result->getCoordinates()->getLongitude(), '', 0.01);
-        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertNotNull($result->getBounds());
         $this->assertEquals(48.863142699999997, $result->getBounds()->getSouth());
         $this->assertEquals(2.3890394000000001, $result->getBounds()->getWest());
         $this->assertEquals(48.863242700000001, $result->getBounds()->getNorth());
@@ -111,7 +111,7 @@ class OpenCageTest extends TestCase
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(54.0484068, $result->getCoordinates()->getLatitude(), '', 0.001);
         $this->assertEquals(-2.7990345, $result->getCoordinates()->getLongitude(), '', 0.001);
-        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertNotNull($result->getBounds());
         $this->assertEquals(54.048273100000003, $result->getBounds()->getSouth());
         $this->assertEquals(-2.7998815000000001, $result->getBounds()->getWest());
         $this->assertEquals(54.0494992, $result->getBounds()->getNorth());

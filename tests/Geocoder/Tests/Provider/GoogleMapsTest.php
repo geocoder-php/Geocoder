@@ -125,7 +125,7 @@ class GoogleMapsTest extends TestCase
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(48.8630462, $result->getCoordinates()->getLatitude(), '', 0.001);
         $this->assertEquals(2.3882487, $result->getCoordinates()->getLongitude(), '', 0.001);
-        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertNotNull($result->getBounds());
         $this->assertEquals(48.8630462, $result->getBounds()->getSouth(), '', 0.001);
         $this->assertEquals(2.3882487, $result->getBounds()->getWest(), '', 0.001);
         $this->assertEquals(48.8630462, $result->getBounds()->getNorth(), '', 0.001);
@@ -156,7 +156,7 @@ class GoogleMapsTest extends TestCase
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(48.8630462, $result->getCoordinates()->getLatitude(), '', 0.001);
         $this->assertEquals(2.3882487, $result->getCoordinates()->getLongitude(), '', 0.001);
-        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertNotNull($result->getBounds());
         $this->assertEquals(48.8630462, $result->getBounds()->getSouth(), '', 0.001);
         $this->assertEquals(2.3882487, $result->getBounds()->getWest(), '', 0.001);
         $this->assertEquals(48.8630462, $result->getBounds()->getNorth(), '', 0.001);
@@ -186,7 +186,7 @@ class GoogleMapsTest extends TestCase
         /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertNotNull($result->getBounds());
         $this->assertEquals(48.815573, $result->getBounds()->getSouth(), '', 0.0001);
         $this->assertEquals(2.224199, $result->getBounds()->getWest(), '', 0.0001);
         $this->assertEquals(48.902145, $result->getBounds()->getNorth(), '', 0.0001);
@@ -331,7 +331,7 @@ class GoogleMapsTest extends TestCase
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertNotNull($result->getCoordinates()->getLatitude());
         $this->assertNotNull($result->getCoordinates()->getLongitude());
-        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertNotNull($result->getBounds());
         $this->assertEquals('New York', $result->getLocality());
         $this->assertEquals('Manhattan', $result->getSubLocality());
         $this->assertCount(2, $result->getAdminLevels());

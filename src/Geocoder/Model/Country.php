@@ -10,6 +10,8 @@
 
 namespace Geocoder\Model;
 
+use Geocoder\Assert;
+
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
@@ -29,7 +31,7 @@ final class Country
      * @param string $name
      * @param string $code
      */
-    public function __construct($name = null, $code = null)
+    public function __construct($name, $code)
     {
         $this->name = $name;
         $this->code = $code;
@@ -63,15 +65,5 @@ final class Country
     public function __toString()
     {
         return $this->getName() ?: '';
-    }
-
-    /**
-     * Returns true if both name and code is defined.
-     *
-     * @return bool
-     */
-    public function isDefined()
-    {
-        return !empty($this->code) && !empty($this->name);
     }
 }

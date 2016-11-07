@@ -22,6 +22,13 @@ class Wkb implements Dumper
      */
     public function dump(Location $location)
     {
-        return pack('cLdd', 1, 1, $location->getCoordinates()->getLongitude(), $location->getCoordinates()->getLatitude());
+        $lat = null;
+        $lon = null;
+        if (null !== $coordinates = $location->getCoordinates()) {
+            $lat = $coordinates->getLatitude();
+            $lon = $coordinates->getLongitude();
+        }
+
+        return pack('cLdd', 1, 1, $lon, $lat);
     }
 }

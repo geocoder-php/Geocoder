@@ -92,22 +92,22 @@ final class Address implements Location
         Country $country                  = null,
         $timezone                         = null
     ) {
-        $this->coordinates  = $coordinates ?: new Coordinates();
-        $this->bounds       = $bounds ?: new Bounds();
+        $this->coordinates  = $coordinates;
+        $this->bounds       = $bounds;
         $this->streetNumber = $streetNumber;
         $this->streetName   = $streetName;
         $this->postalCode   = $postalCode;
         $this->locality     = $locality;
         $this->subLocality  = $subLocality;
         $this->adminLevels  = $adminLevels ?: new AdminLevelCollection();
-        $this->country      = $country ?: new Country();
+        $this->country      = $country;
         $this->timezone     = $timezone;
     }
 
     /**
-     * Returns an array of coordinates (latitude, longitude).
+     * Returns the coordinates for this address.
      *
-     * @return Coordinates
+     * @return Coordinates|null
      */
     public function getCoordinates()
     {
@@ -115,9 +115,9 @@ final class Address implements Location
     }
 
     /**
-     * Returns the bounds value.
+     * Returns the bounds.
      *
-     * @return Bounds
+     * @return Bounds|null
      */
     public function getBounds()
     {
@@ -188,7 +188,7 @@ final class Address implements Location
     /**
      * Returns the country value.
      *
-     * @return Country
+     * @return Country|null
      */
     public function getCountry()
     {
@@ -220,18 +220,39 @@ final class Address implements Location
             ];
         }
 
+        $lat = null;
+        $lon = null;
+        if (null !== $coordinates = $this->getCoordinates()) {
+            $lat = $coordinates->getLatitude();
+            $lon = $coordinates->getLongitude();
+        }
+
+        $countryName = null;
+        $countryCode = null;
+        if (null !== $country = $this->getCountry()) {
+            $countryName = $country->getName();
+            $countryCode = $country->getCode();
+        }
+
+        $noBounds = [
+            'south' => null,
+            'west'  => null,
+            'north' => null,
+            'east'  => null,
+        ];
+
         return array(
-            'latitude'     => $this->getCoordinates()->getLatitude(),
-            'longitude'    => $this->getCoordinates()->getLongitude(),
-            'bounds'       => $this->bounds->toArray(),
+            'latitude'     => $lat,
+            'longitude'    => $lon,
+            'bounds'       => null !== $this->bounds ? $this->bounds->toArray() : $noBounds,
             'streetNumber' => $this->streetNumber,
             'streetName'   => $this->streetName,
             'postalCode'   => $this->postalCode,
             'locality'     => $this->locality,
             'subLocality'  => $this->subLocality,
             'adminLevels'  => $adminLevels,
-            'country'      => $this->country->getName(),
-            'countryCode'  => $this->country->getCode(),
+            'country'      => $countryName,
+            'countryCode'  => $countryCode,
             'timezone'     => $this->timezone,
         );
     }

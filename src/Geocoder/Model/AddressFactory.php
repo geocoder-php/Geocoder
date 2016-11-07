@@ -35,12 +35,13 @@ final class AddressFactory
                 );
             }
 
+
             $addresses[] = new Address(
                 $this->createCoordinates(
                     $this->readDoubleValue($result, 'latitude'),
                     $this->readDoubleValue($result, 'longitude')
                 ),
-                new Bounds(
+                $this->createBounds(
                     $this->readDoubleValue($result, 'bounds.south'),
                     $this->readDoubleValue($result, 'bounds.west'),
                     $this->readDoubleValue($result, 'bounds.north'),
@@ -116,6 +117,8 @@ final class AddressFactory
     /**
      * @param double $latitude
      * @param double $longitude
+     *
+     * @return Coordinates|null
      */
     private function createCoordinates($latitude, $longitude)
     {
@@ -124,5 +127,21 @@ final class AddressFactory
         }
 
         return new Coordinates((double) $latitude, (double) $longitude);
+    }
+
+    /**
+     * @param double $south
+     * @param double $west
+     * @param double $north
+      *
+     * @return Bounds|null
+     */
+    private function createBounds($south, $west, $north, $east)
+    {
+        if (null === $south || null === $west || null === $north || null === $east) {
+            return null;
+        }
+
+        return new Bounds((double) $south, (double) $west, (double) $north, (double) $east);
     }
 }

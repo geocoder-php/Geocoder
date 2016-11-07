@@ -37,13 +37,19 @@ version="1.0"
 GPX
         , Geocoder::VERSION);
 
-        if ($location->getBounds()->isDefined()) {
-            $bounds = $location->getBounds();
+        if (null !== $bounds = $location->getBounds()) {
             $gpx .= sprintf(<<<GPX
     <bounds minlat="%f" minlon="%f" maxlat="%f" maxlon="%f"/>
 
 GPX
             , $bounds->getWest(), $bounds->getSouth(), $bounds->getEast(), $bounds->getNorth());
+        }
+
+        $lat = null;
+        $lon = null;
+        if (null !== $coordinates = $location->getCoordinates()) {
+            $lat = $coordinates->getLatitude();
+            $lon = $coordinates->getLongitude();
         }
 
         $gpx .= sprintf(<<<GPX
@@ -53,7 +59,7 @@ GPX
     </wpt>
 
 GPX
-        , $location->getCoordinates()->getLatitude(), $location->getCoordinates()->getLongitude(), $this->formatName($location));
+        , $lat, $lon, $this->formatName($location));
 
         $gpx .= <<<GPX
 </gpx>

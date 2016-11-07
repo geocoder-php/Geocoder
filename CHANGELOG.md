@@ -7,7 +7,8 @@ CHANGELOG
 * Added: Interface for `Geocoder\Model\Address` called `Geocoder\Location`. Public APIs are updated to type hint for `Geocoder\Location`.
 * Added: `Country::isDefined`
 * Added: `Cordinates::isDefined`
-* Changed: `Location::getCoordinates`, `Location::getBounds` and `Location::getCountry` will never return null.
+* Changed: `Location::getCoordinates` will return null or a `Coordinates` object with coordinates data. It will never return `Coordinates` without data. 
+* Changed: `Location::getBounds` will return null or a `Bounds` object with coordinates data. It will never return `Bounds` without data. 
 * Removed: `AdminLevel::toString` in favor for `AdminLevel::__toString`.
 * Removed: `Country::toString` in favor for `Country::__toString`.
 * Removed: `Address::getCountryCode` in favor for `Address::getCountry()->getCode()`.

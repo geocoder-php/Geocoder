@@ -38,6 +38,13 @@ class Kml extends Gpx implements Dumper
 </kml>
 KML;
 
-        return sprintf($kml, $name, $name, $location->getCoordinates()->getLongitude(), $location->getCoordinates()->getLatitude());
+        $lat = null;
+        $lon = null;
+        if (null !== $coordinates = $location->getCoordinates()) {
+            $lat = $coordinates->getLatitude();
+            $lon = $coordinates->getLongitude();
+        }
+
+        return sprintf($kml, $name, $name, $lon, $lat);
     }
 }

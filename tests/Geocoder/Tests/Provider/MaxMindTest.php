@@ -134,8 +134,8 @@ class MaxMindTest extends TestCase
         /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertNull($result->getCoordinates()->getLatitude());
-        $this->assertNull($result->getCoordinates()->getLongitude());
+        $this->assertNull($result->getCoordinates());
+
         $this->assertNull($result->getStreetNumber());
         $this->assertNull($result->getStreetName());
         $this->assertNull($result->getPostalCode());
@@ -306,7 +306,7 @@ class MaxMindTest extends TestCase
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(33.034698, $result->getCoordinates()->getLatitude(), '', 0.1);
         $this->assertEquals(-96.813400, $result->getCoordinates()->getLongitude(), '', 0.1);
-        $this->assertFalse($result->getBounds()->isDefined());
+        $this->assertNull($result->getBounds());
         $this->assertNull($result->getStreetNumber());
         $this->assertNull($result->getStreetName());
         $this->assertEquals(75093, $result->getPostalCode());
@@ -338,7 +338,7 @@ class MaxMindTest extends TestCase
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(33.0347, $result->getCoordinates()->getLatitude(), '', 0.1);
         $this->assertEquals(-96.8134, $result->getCoordinates()->getLongitude(), '', 0.1);
-        $this->assertFalse($result->getBounds()->isDefined());
+        $this->assertNull($result->getBounds());
         $this->assertNull($result->getStreetNumber());
         $this->assertNull($result->getStreetName());
         $this->assertEquals(75093, $result->getPostalCode());
@@ -370,7 +370,7 @@ class MaxMindTest extends TestCase
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(-27.5833, $result->getCoordinates()->getLatitude(), '', 0.1);
         $this->assertEquals(-48.5666, $result->getCoordinates()->getLongitude(), '', 0.1);
-        $this->assertFalse($result->getBounds()->isDefined());
+        $this->assertNull($result->getBounds());
         $this->assertNull($result->getStreetNumber());
         $this->assertNull($result->getStreetName());
         $this->assertNull($result->getPostalCode());
@@ -401,7 +401,7 @@ class MaxMindTest extends TestCase
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(40.2181, $result->getCoordinates()->getLatitude(), '', 0.1);
         $this->assertEquals(-111.6133, $result->getCoordinates()->getLongitude(), '', 0.1);
-        $this->assertFalse($result->getBounds()->isDefined());
+        $this->assertNull($result->getBounds());
         $this->assertNull($result->getStreetNumber());
         $this->assertNull($result->getStreetName());
         $this->assertEquals(84606, $result->getPostalCode());
@@ -433,7 +433,7 @@ class MaxMindTest extends TestCase
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(40.2181, $result->getCoordinates()->getLatitude(), '', 0.1);
         $this->assertEquals(-111.6133, $result->getCoordinates()->getLongitude(), '', 0.1);
-        $this->assertFalse($result->getBounds()->isDefined());
+        $this->assertNull($result->getBounds());
         $this->assertNull($result->getStreetNumber());
         $this->assertNull($result->getStreetName());
         $this->assertEquals(84606, $result->getPostalCode());

@@ -10,6 +10,8 @@
 
 namespace Geocoder\Model;
 
+use Geocoder\Assert;
+
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
@@ -29,8 +31,14 @@ final class Coordinates
      * @param double $latitude
      * @param double $longitude
      */
-    public function __construct($latitude = null, $longitude = null)
+    public function __construct($latitude, $longitude)
     {
+        $latitude = (double) $latitude;
+        $longitude = (double) $longitude;
+
+        Assert::latitude($latitude);
+        Assert::longitude($longitude);
+
         $this->latitude  = $latitude;
         $this->longitude = $longitude;
     }
@@ -53,15 +61,5 @@ final class Coordinates
     public function getLongitude()
     {
         return $this->longitude;
-    }
-
-    /**
-     * Returns true if we have coordinates for both longitude and latitude.
-     *
-     * @return bool
-     */
-    public function isDefined()
-    {
-        return $this->latitude !== null && $this->longitude !== null;
     }
 }
