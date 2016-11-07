@@ -11,16 +11,6 @@ namespace Geocoder;
 interface Collection extends \IteratorAggregate, \Countable
 {
     /**
-     * {@inheritDoc}
-     */
-    public function getIterator();
-
-    /**
-     * {@inheritDoc}
-     */
-    public function count();
-
-    /**
      * @return Location
      */
     public function first();
