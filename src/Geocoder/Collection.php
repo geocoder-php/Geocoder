@@ -8,7 +8,7 @@ namespace Geocoder;
  * @author William Durand <william.durand1@gmail.com>
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-interface GeocoderResult extends \IteratorAggregate, \Countable
+interface Collection extends \IteratorAggregate, \Countable
 {
     /**
      * {@inheritDoc}

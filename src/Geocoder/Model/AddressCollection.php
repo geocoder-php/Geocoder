@@ -3,10 +3,10 @@
 namespace Geocoder\Model;
 
 use Geocoder\Exception\CollectionIsEmpty;
-use Geocoder\GeocoderResult;
+use Geocoder\Collection;
 use Geocoder\Location;
 
-final class AddressCollection implements GeocoderResult
+final class AddressCollection implements Collection
 {
     /**
      * @var Location[]
@@ -43,7 +43,7 @@ final class AddressCollection implements GeocoderResult
     public function first()
     {
         if (empty($this->addresses)) {
-            throw new CollectionIsEmpty('The GeocoderResult instance is empty.');
+            throw new CollectionIsEmpty('The Collection instance is empty.');
         }
 
         return reset($this->addresses);
