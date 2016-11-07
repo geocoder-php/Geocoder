@@ -37,7 +37,7 @@ class AddressFactoryTest extends TestCase
             /** @var $location Location */
             $this->assertInstanceOf('Geocoder\Model\Address', $location);
             $this->assertInstanceOf('Geocoder\Model\Country', $location->getCountry());
-            $this->assertFalse($location->getCoordinates()->isDefined());
+            $this->assertNull($location->getCoordinates());
 
             foreach ($location->getAdminLevels() as $level => $adminLevel) {
                 $this->assertInstanceOf('Geocoder\Model\AdminLevel', $adminLevel);

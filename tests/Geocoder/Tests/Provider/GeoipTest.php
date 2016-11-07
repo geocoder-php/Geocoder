@@ -64,8 +64,8 @@ class GeoipTest extends TestCase
         /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('Geocoder\Model\Address', $result);
-        $this->assertNull($result->getCoordinates()->getLatitude());
-        $this->assertNull($result->getCoordinates()->getLongitude());
+        $this->assertNull($result->getCoordinates());
+
         $this->assertNull($result->getPostalCode());
         $this->assertNull($result->getTimezone());
         $this->assertEmpty($result->getAdminLevels());

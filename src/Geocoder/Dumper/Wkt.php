@@ -22,6 +22,13 @@ class Wkt implements Dumper
      */
     public function dump(Location $location)
     {
-        return sprintf('POINT(%F %F)', $location->getCoordinates()->getLongitude(), $location->getCoordinates()->getLatitude());
+        $lat = null;
+        $lon = null;
+        if (null !== $coordinates = $location->getCoordinates()) {
+            $lat = $coordinates->getLatitude();
+            $lon = $coordinates->getLongitude();
+        }
+
+        return sprintf('POINT(%F %F)', $lon, $lat);
     }
 }

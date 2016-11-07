@@ -36,19 +36,24 @@ class GeoJson implements Dumper
             $properties = null;
         }
 
+        $lat = 0;
+        $lon = 0;
+        if (null !== $coordinates = $location->getCoordinates()) {
+            $lat = $coordinates->getLatitude();
+            $lon = $coordinates->getLongitude();
+        }
+
         $json = [
             'type' => 'Feature',
             'geometry' => [
                 'type'          => 'Point',
-                'coordinates'   => [$location->getCoordinates()->getLongitude(), $location->getCoordinates()->getLatitude()]
+                'coordinates'   => [$lon, $lat],
             ],
             'properties' => $properties,
         ];
 
         if (null !== $bounds = $location->getBounds()) {
-            if ($bounds->isDefined()) {
-                $json['bounds'] = $bounds->toArray();
-            }
+            $json['bounds'] = $bounds->toArray();
         }
 
         return json_encode($json);

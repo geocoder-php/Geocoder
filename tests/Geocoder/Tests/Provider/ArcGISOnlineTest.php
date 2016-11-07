@@ -95,7 +95,7 @@ class ArcGISOnlineTest extends TestCase
         $this->assertEquals('Paris', $result->getAdminLevels()->get(2)->getName());
         $this->assertEquals('FRA', $result->getCountry()->getCode());
 
-        $this->assertFalse($result->getBounds()->isDefined());
+        $this->assertNull($result->getBounds());
         $this->assertNull($result->getSubLocality());
         $this->assertNull($result->getAdminLevels()->get(2)->getCode());
         $this->assertNull($result->getAdminLevels()->get(1)->getCode());
@@ -126,7 +126,7 @@ class ArcGISOnlineTest extends TestCase
         $this->assertEquals('FRA', $result->getCountry()->getCode());
         $this->assertEquals(10, $result->getStreetNumber());
 
-        $this->assertFalse($result->getBounds()->isDefined());
+        $this->assertNull($result->getBounds());
         $this->assertNull($result->getSubLocality());
         $this->assertNull($result->getAdminLevels()->get(2)->getCode());
         $this->assertNull($result->getAdminLevels()->get(1)->getCode());
@@ -193,7 +193,7 @@ class ArcGISOnlineTest extends TestCase
         $this->assertEquals('Paris', $result->getLocality());
         $this->assertEquals('FRA', $result->getCountry()->getCode());
 
-        $this->assertFalse($result->getBounds()->isDefined());
+        $this->assertNull($result->getBounds());
         $this->assertNull($result->getSubLocality());
         $this->assertEmpty($result->getAdminLevels());
         $this->assertNull($result->getCountry()->getName());
@@ -219,7 +219,7 @@ class ArcGISOnlineTest extends TestCase
         $this->assertEquals('Paris', $result->getLocality());
         $this->assertEquals('FRA', $result->getCountry()->getCode());
 
-        $this->assertFalse($result->getBounds()->isDefined());
+        $this->assertNull($result->getBounds());
         $this->assertNull($result->getSubLocality());
         $this->assertEmpty($result->getAdminLevels());
         $this->assertNull($result->getCountry()->getName());
@@ -247,7 +247,7 @@ class ArcGISOnlineTest extends TestCase
         $this->assertEquals('Niedersachsen', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('DEU', $result->getCountry()->getCode());
 
-        $this->assertFalse($result->getBounds()->isDefined());
+        $this->assertNull($result->getBounds());
         $this->assertNull($result->getSubLocality());
         $this->assertNull($result->getCountry()->getName());
         $this->assertNull($result->getTimezone());

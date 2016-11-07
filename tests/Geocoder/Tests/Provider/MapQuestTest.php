@@ -75,7 +75,7 @@ class MapQuestTest extends TestCase
         $this->assertEquals('FR', $result->getCountry()->getName());
         $this->assertEquals('FR', $result->getCountry()->getCode());
 
-        $this->assertFalse($result->getBounds()->isDefined());
+        $this->assertNull($result->getBounds());
         $this->assertNull($result->getStreetNumber());
         $this->assertNull($result->getAdminLevels()->get(1)->getCode());
         $this->assertNull($result->getTimezone());
@@ -120,7 +120,7 @@ class MapQuestTest extends TestCase
         $this->assertEquals('GB', $result->getCountry()->getName());
         $this->assertEquals('GB', $result->getCountry()->getCode());
 
-        $this->assertFalse($result->getBounds()->isDefined());
+        $this->assertNull($result->getBounds());
         $this->assertNull($result->getStreetNumber());
         $this->assertNull($result->getAdminLevels()->get(1)->getCode());
         $this->assertNull($result->getTimezone());
@@ -212,7 +212,7 @@ class MapQuestTest extends TestCase
         $this->assertEquals('DE', $result->getCountry()->getName());
         $this->assertEquals('DE', $result->getCountry()->getCode());
 
-        $this->assertFalse($result->getBounds()->isDefined());
+        $this->assertNull($result->getBounds());
         $this->assertNull($result->getStreetNumber());
         $this->assertNull($result->getAdminLevels()->get(1)->getCode());
         $this->assertNull($result->getTimezone());
