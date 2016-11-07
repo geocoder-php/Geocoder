@@ -3,7 +3,7 @@ CHANGELOG
 
 ### 4.0.0 (2016-xx-xx)
 
-* Added: Interface for `Geocoder\Model\AddressCollection` called `Geocoder\GeocoderResult`. Public APIs are updated to type hint for `Geocoder\GeocoderResult`.
+* Added: Interface for `Geocoder\Model\AddressCollection` called `Geocoder\Collection`. Public APIs are updated to type hint for `Geocoder\GeocoderResult`.
 * Added: Interface for `Geocoder\Model\Address` called `Geocoder\Location`. Public APIs are updated to type hint for `Geocoder\Location`.
 * Added: `Country::isDefined`
 * Added: `Cordinates::isDefined`
