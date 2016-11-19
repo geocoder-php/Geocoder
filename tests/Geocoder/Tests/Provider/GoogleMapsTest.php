@@ -248,7 +248,7 @@ class GoogleMapsTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "http://maps.googleapis.com/maps/api/geocode/json?address=1.000000%2C2.000000".
+     * @expectedExceptionMessage Could not execute query "http://maps.googleapis.com/maps/api/geocode/json?latlng=1.000000,2.000000".
      */
     public function testReverse()
     {
@@ -267,7 +267,7 @@ class GoogleMapsTest extends TestCase
         /** @var \Geocoder\Model\Address $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(1, $result->getStreetNumber());
+        $this->assertEquals(12, $result->getStreetNumber());
         $this->assertEquals('Avenue Gambetta', $result->getStreetName());
         $this->assertEquals(75020, $result->getPostalCode());
         $this->assertEquals('Paris', $result->getLocality());
@@ -280,7 +280,7 @@ class GoogleMapsTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "http://maps.googleapis.com/maps/api/geocode/json?address=48.863151%2C2.388911".
+     * @expectedExceptionMessage Could not execute query "http://maps.googleapis.com/maps/api/geocode/json?latlng=48.863151,2.388911".
      */
     public function testReverseWithCoordinatesGetsNullContent()
     {
