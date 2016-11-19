@@ -111,6 +111,19 @@ class GoogleMapsTest extends TestCase
         $provider->geocode('10 avenue Gambetta, Paris, France');
     }
 
+    /**
+     * @expectedException \Exception
+     */
+    public function testReverseWithInvalidResultType()
+    {
+        $provider = new GoogleMaps($this->getMockAdapterReturns('{
+          "error_message": "Invalid request. Invalid \'result_type\' parameter.",
+          "results": [],
+          "status": "INVALID_REQUEST"
+        }'));
+        $provider->reverse(1, 2);
+    }
+
     public function testGeocodeWithRealAddress()
     {
         $provider = new GoogleMaps($this->getAdapter(), 'fr-FR', 'Île-de-France');
@@ -286,6 +299,76 @@ class GoogleMapsTest extends TestCase
     {
         $provider = new GoogleMaps($this->getMockAdapterReturns(null));
         $provider->reverse(48.8631507, 2.388911);
+    }
+
+    public function testReverseWithMultipleValidResultTypesAndLocationTypesProducesCorrectUri()
+    {
+        $uri = '';
+
+        $provider = new GoogleMaps(
+            $this->getMockAdapterWithRequestCallback(
+                function (RequestInterface $request) use (&$uri) {
+                    $uri = (string)$request->getUri();
+                }
+            ),
+            null,
+            null,
+            true,
+            $this->testAPIKey,
+            [
+                'sublocality',
+                'locality',
+            ],
+            [
+                'ROOFTOP',
+                'RANGE_INTERPOLATED',
+            ]
+        );
+
+        try {
+            $provider->reverse(1, 2);
+        } catch (NoResult $e) {
+        }
+
+        // @todo: use full url, but wait until https://github.com/geocoder-php/Geocoder/pull/551 is merged
+        $this->assertContains(
+            '&result_type=sublocality%7Clocality&location_type=ROOFTOP%7CRANGE_INTERPOLATED',
+            $uri
+        );
+    }
+
+    public function testReverseWithValidResultTypeAndLocationTypeProducesCorrectUri()
+    {
+        $uri = '';
+
+        $provider = new GoogleMaps(
+            $this->getMockAdapterWithRequestCallback(
+                function (RequestInterface $request) use (&$uri) {
+                    $uri = (string)$request->getUri();
+                }
+            ),
+            null,
+            null,
+            true,
+            $this->testAPIKey,
+            [
+                'sublocality',
+            ],
+            [
+                'ROOFTOP',
+            ]
+        );
+
+        try {
+            $provider->reverse(1, 2);
+        } catch (NoResult $e) {
+        }
+
+        // @todo: use full url, but wait until https://github.com/geocoder-php/Geocoder/pull/551 is merged
+        $this->assertContains(
+            '&result_type=sublocality&location_type=ROOFTOP',
+            $uri
+        );
     }
 
     public function testGeocodeWithCityDistrict()
