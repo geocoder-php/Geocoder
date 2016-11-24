@@ -108,6 +108,10 @@ final class BingMaps extends AbstractHttpProvider implements LocaleAwareProvider
         }
 
         $json = json_decode($content);
+        if($json->statusCode == 403) {
+            $err = implode(", ", $json->errorDetails);
+            throw new InvalidCredentialsException($err);
+        }
 
         if (!isset($json->resourceSets[0]) || !isset($json->resourceSets[0]->resources)) {
             throw new NoResult(sprintf('Could not execute query "%s".', $query));
