@@ -159,6 +159,7 @@ final class Geonames extends AbstractHttpProvider implements LocaleAwareProvider
                 'country'     => isset($item->countryName) ? $item->countryName : null,
                 'countryCode' => isset($item->countryCode) ? $item->countryCode : null,
                 'timezone'    => isset($item->timezone->timeZoneId)  ? $item->timezone->timeZoneId : null,
+                'population'  => isset($item->population) ? $item->population : null
             ]);
         }
 
