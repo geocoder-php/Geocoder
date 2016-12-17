@@ -50,6 +50,14 @@ final class Yandex extends AbstractHttpProvider implements LocaleAwareProvider
     }
 
     /**
+     * @param string               $toponym Toponym biasing only for reverse geocoding (optional).
+     */
+    public function setToponym($toponym = null)
+    {
+        $this->toponym = $toponym;
+    }
+    
+    /**
      * {@inheritDoc}
      */
     public function geocode($address)
