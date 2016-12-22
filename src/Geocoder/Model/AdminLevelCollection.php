@@ -7,7 +7,7 @@ use Geocoder\Exception\InvalidArgument;
 /**
  * @author Giorgio Premi <giosh94mhz@gmail.com>
  */
-final class AdminLevelCollection implements \IteratorAggregate, \Countable
+final class AdminLevelCollection implements  \IteratorAggregate, \Countable
 {
     const MAX_LEVEL_DEPTH = 5;
 
@@ -16,6 +16,10 @@ final class AdminLevelCollection implements \IteratorAggregate, \Countable
      */
     private $adminLevels;
 
+    /**
+     *
+     * @param AdminLevel[] $adminLevels
+     */
     public function __construct(array $adminLevels = [])
     {
         $this->adminLevels = [];

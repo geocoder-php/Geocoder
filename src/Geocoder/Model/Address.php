@@ -10,10 +10,12 @@
 
 namespace Geocoder\Model;
 
+use Geocoder\Location;
+
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-final class Address
+final class Address implements Location
 {
     /**
      * @var Coordinates
@@ -66,11 +68,17 @@ final class Address
     private $timezone;
 
     /**
-     * @param string $streetNumber
-     * @param string $streetName
-     * @param string $postalCode
-     * @param string $locality
-     * @param string $subLocality
+     *
+     * @param Coordinates|null $coordinates
+     * @param Bounds|null $bounds
+     * @param string|null $streetNumber
+     * @param string|null $streetName
+     * @param string|null $postalCode
+     * @param string|null $locality
+     * @param string|null $subLocality
+     * @param AdminLevelCollection|null $adminLevels
+     * @param Country|null $country
+     * @param string|null $timezone
      */
     public function __construct(
         Coordinates $coordinates          = null,
@@ -97,9 +105,9 @@ final class Address
     }
 
     /**
-     * Returns an array of coordinates (latitude, longitude).
+     * Returns the coordinates for this address.
      *
-     * @return Coordinates
+     * @return Coordinates|null
      */
     public function getCoordinates()
     {
@@ -107,37 +115,9 @@ final class Address
     }
 
     /**
-     * Returns the latitude value.
+     * Returns the bounds.
      *
-     * @return double
-     */
-    public function getLatitude()
-    {
-        if (null === $this->coordinates) {
-            return null;
-        }
-
-        return $this->coordinates->getLatitude();
-    }
-
-    /**
-     * Returns the longitude value.
-     *
-     * @return double
-     */
-    public function getLongitude()
-    {
-        if (null === $this->coordinates) {
-            return null;
-        }
-
-        return $this->coordinates->getLongitude();
-    }
-
-    /**
-     * Returns the bounds value.
-     *
-     * @return Bounds
+     * @return Bounds|null
      */
     public function getBounds()
     {
@@ -208,21 +188,11 @@ final class Address
     /**
      * Returns the country value.
      *
-     * @return Country
+     * @return Country|null
      */
     public function getCountry()
     {
         return $this->country;
-    }
-
-    /**
-     * Returns the country ISO code.
-     *
-     * @return string
-     */
-    public function getCountryCode()
-    {
-        return $this->country->getCode();
     }
 
     /**
@@ -250,18 +220,39 @@ final class Address
             ];
         }
 
+        $lat = null;
+        $lon = null;
+        if (null !== $coordinates = $this->getCoordinates()) {
+            $lat = $coordinates->getLatitude();
+            $lon = $coordinates->getLongitude();
+        }
+
+        $countryName = null;
+        $countryCode = null;
+        if (null !== $country = $this->getCountry()) {
+            $countryName = $country->getName();
+            $countryCode = $country->getCode();
+        }
+
+        $noBounds = [
+            'south' => null,
+            'west'  => null,
+            'north' => null,
+            'east'  => null,
+        ];
+
         return array(
-            'latitude'     => $this->getLatitude(),
-            'longitude'    => $this->getLongitude(),
-            'bounds'       => $this->bounds->toArray(),
+            'latitude'     => $lat,
+            'longitude'    => $lon,
+            'bounds'       => null !== $this->bounds ? $this->bounds->toArray() : $noBounds,
             'streetNumber' => $this->streetNumber,
             'streetName'   => $this->streetName,
             'postalCode'   => $this->postalCode,
             'locality'     => $this->locality,
             'subLocality'  => $this->subLocality,
             'adminLevels'  => $adminLevels,
-            'country'      => $this->country->getName(),
-            'countryCode'  => $this->country->getCode(),
+            'country'      => $countryName,
+            'countryCode'  => $countryCode,
             'timezone'     => $this->timezone,
         );
     }

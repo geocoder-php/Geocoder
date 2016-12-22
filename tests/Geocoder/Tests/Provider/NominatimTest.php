@@ -2,6 +2,7 @@
 
 namespace Geocoder\Tests\Provider;
 
+use Geocoder\Location;
 use Geocoder\Provider\Nominatim;
 use Geocoder\Tests\TestCase;
 
@@ -15,12 +16,12 @@ class NominatimTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(48.8565056, $result->getLatitude(), '', 0.01);
-        $this->assertEquals(2.3521334, $result->getLongitude(), '', 0.01);
-        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertEquals(48.8565056, $result->getCoordinates()->getLatitude(), '', 0.01);
+        $this->assertEquals(2.3521334, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertNotNull($result->getBounds());
         $this->assertEquals(48.8155250549316, $result->getBounds()->getSouth(), '', 0.01);
         $this->assertEquals(2.22412180900574, $result->getBounds()->getWest(), '', 0.01);
         $this->assertEquals(48.902156829834, $result->getBounds()->getNorth(), '', 0.01);
@@ -37,12 +38,12 @@ class NominatimTest extends TestCase
         $this->assertEquals('France', $result->getCountry()->getName());
         $this->assertEquals('FR', $result->getCountry()->getCode());
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Location $result */
         $result = $results->get(1);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(48.8588408, $result->getLatitude(), '', 0.01);
-        $this->assertEquals(2.32003465529896, $result->getLongitude(), '', 0.01);
-        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertEquals(48.8588408, $result->getCoordinates()->getLatitude(), '', 0.01);
+        $this->assertEquals(2.32003465529896, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertNotNull($result->getBounds());
         $this->assertEquals(48.8155250549316, $result->getBounds()->getSouth(), '', 0.01);
         $this->assertEquals(2.22412180900574, $result->getBounds()->getWest(), '', 0.01);
         $this->assertEquals(48.902156829834, $result->getBounds()->getNorth(), '', 0.01);
@@ -59,12 +60,12 @@ class NominatimTest extends TestCase
         $this->assertEquals('France', $result->getCountry()->getName());
         $this->assertEquals('FR', $result->getCountry()->getCode());
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Location $result */
         $result = $results->get(2);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(35.28687645, $result->getLatitude(), '', 0.01);
-        $this->assertEquals(-93.7354879210082, $result->getLongitude(), '', 0.01);
-        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertEquals(35.28687645, $result->getCoordinates()->getLatitude(), '', 0.01);
+        $this->assertEquals(-93.7354879210082, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertNotNull($result->getBounds());
         $this->assertEquals(35.2672462463379, $result->getBounds()->getSouth(), '', 0.01);
         $this->assertEquals(-93.7618103027344, $result->getBounds()->getWest(), '', 0.01);
         $this->assertEquals(35.3065032958984, $result->getBounds()->getNorth(), '', 0.01);
@@ -81,12 +82,12 @@ class NominatimTest extends TestCase
         $this->assertEquals('United States of America', $result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Location $result */
         $result = $results->get(3);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(33.6751155, $result->getLatitude(), '', 0.01);
-        $this->assertEquals(-95.5502662477703, $result->getLongitude(), '', 0.01);
-        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertEquals(33.6751155, $result->getCoordinates()->getLatitude(), '', 0.01);
+        $this->assertEquals(-95.5502662477703, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertNotNull($result->getBounds());
         $this->assertEquals(33.6118507385254, $result->getBounds()->getSouth(), '', 0.01);
         $this->assertEquals(-95.6279296875, $result->getBounds()->getWest(), '', 0.01);
         $this->assertEquals(33.7383804321289, $result->getBounds()->getNorth(), '', 0.01);
@@ -103,12 +104,12 @@ class NominatimTest extends TestCase
         $this->assertEquals('United States of America', $result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Location $result */
         $result = $results->get(4);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(38.2097987, $result->getLatitude(), '', 0.01);
-        $this->assertEquals(-84.2529869, $result->getLongitude(), '', 0.01);
-        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertEquals(38.2097987, $result->getCoordinates()->getLatitude(), '', 0.01);
+        $this->assertEquals(-84.2529869, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertNotNull($result->getBounds());
         $this->assertEquals(38.1649208068848, $result->getBounds()->getSouth(), '', 0.01);
         $this->assertEquals(-84.3073272705078, $result->getBounds()->getWest(), '', 0.01);
         $this->assertEquals(38.2382736206055, $result->getBounds()->getNorth(), '', 0.01);
@@ -134,12 +135,12 @@ class NominatimTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(2, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(45.7586841, $result->getLatitude(), '', 0.01);
-        $this->assertEquals(3.1354075, $result->getLongitude(), '', 0.01);
-        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertEquals(45.7586841, $result->getCoordinates()->getLatitude(), '', 0.01);
+        $this->assertEquals(3.1354075, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertNotNull($result->getBounds());
         $this->assertEquals(45.7576484680176, $result->getBounds()->getSouth(), '', 0.01);
         $this->assertEquals(3.13258004188538, $result->getBounds()->getWest(), '', 0.01);
         $this->assertEquals(45.7595367431641, $result->getBounds()->getNorth(), '', 0.01);
@@ -156,12 +157,12 @@ class NominatimTest extends TestCase
         $this->assertEquals('France', $result->getCountry()->getName());
         $this->assertEquals('FR', $result->getCountry()->getCode());
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Location $result */
         $result = $results->get(1);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(45.7586841, $result->getLatitude(), '', 0.01);
-        $this->assertEquals(3.1354075, $result->getLongitude(), '', 0.01);
-        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertEquals(45.7586841, $result->getCoordinates()->getLatitude(), '', 0.01);
+        $this->assertEquals(3.1354075, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertNotNull($result->getBounds());
         $this->assertEquals(45.7576484680176, $result->getBounds()->getSouth(), '', 0.01);
         $this->assertEquals(3.13258004188538, $result->getBounds()->getWest(), '', 0.01);
         $this->assertEquals(45.7595367431641, $result->getBounds()->getNorth(), '', 0.01);
@@ -187,12 +188,12 @@ class NominatimTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(60.4539, $result->getLatitude(), '', 0.001);
-        $this->assertEquals(22.2568, $result->getLongitude(), '', 0.001);
-        $this->assertFalse($result->getBounds()->isDefined());
+        $this->assertEquals(60.4539, $result->getCoordinates()->getLatitude(), '', 0.001);
+        $this->assertEquals(22.2568, $result->getCoordinates()->getLongitude(), '', 0.001);
+        $this->assertNull($result->getBounds());
         $this->assertEquals(35, $result->getStreetNumber());
         $this->assertEquals('Läntinen Pitkäkatu', $result->getStreetName());
         $this->assertEquals(20100, $result->getPostalCode());
@@ -224,12 +225,12 @@ class NominatimTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(50.1856803, $result->getLatitude(), '', 0.01);
-        $this->assertEquals(8.6506285, $result->getLongitude(), '', 0.01);
-        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertEquals(50.1856803, $result->getCoordinates()->getLatitude(), '', 0.01);
+        $this->assertEquals(8.6506285, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertNotNull($result->getBounds());
         $this->assertEquals(50.1851196289062, $result->getBounds()->getSouth(), '', 0.01);
         $this->assertEquals(8.64984607696533, $result->getBounds()->getWest(), '', 0.01);
         $this->assertEquals(50.1860122680664, $result->getBounds()->getNorth(), '', 0.01);
@@ -245,12 +246,12 @@ class NominatimTest extends TestCase
         $this->assertEquals('Deutschland', $result->getCountry()->getName());
         $this->assertEquals('DE', $result->getCountry()->getCode());
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Location $result */
         $result = $results->get(1);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(50.1845911, $result->getLatitude(), '', 0.01);
-        $this->assertEquals(8.6540194, $result->getLongitude(), '', 0.01);
-        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertEquals(50.1845911, $result->getCoordinates()->getLatitude(), '', 0.01);
+        $this->assertEquals(8.6540194, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertNotNull($result->getBounds());
         $this->assertEquals(50.1840019226074, $result->getBounds()->getSouth(), '', 0.01);
         $this->assertEquals(8.65207481384277, $result->getBounds()->getWest(), '', 0.01);
         $this->assertEquals(50.1851234436035, $result->getBounds()->getNorth(), '', 0.01);
@@ -266,12 +267,12 @@ class NominatimTest extends TestCase
         $this->assertEquals('Deutschland', $result->getCountry()->getName());
         $this->assertEquals('DE', $result->getCountry()->getCode());
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Location $result */
         $result = $results->get(2);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(50.1862884, $result->getLatitude(), '', 0.01);
-        $this->assertEquals(8.6493167, $result->getLongitude(), '', 0.01);
-        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertEquals(50.1862884, $result->getCoordinates()->getLatitude(), '', 0.01);
+        $this->assertEquals(8.6493167, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertNotNull($result->getBounds());
         $this->assertEquals(50.1862106323242, $result->getBounds()->getSouth(), '', 0.01);
         $this->assertEquals(8.64931583404541, $result->getBounds()->getWest(), '', 0.01);
         $this->assertEquals(50.1862907409668, $result->getBounds()->getNorth(), '', 0.01);
@@ -287,12 +288,12 @@ class NominatimTest extends TestCase
         $this->assertEquals('Deutschland', $result->getCountry()->getName());
         $this->assertEquals('DE', $result->getCountry()->getCode());
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Location $result */
         $result = $results->get(3);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(50.1861344, $result->getLatitude(), '', 0.01);
-        $this->assertEquals(8.649578, $result->getLongitude(), '', 0.01);
-        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertEquals(50.1861344, $result->getCoordinates()->getLatitude(), '', 0.01);
+        $this->assertEquals(8.649578, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertNotNull($result->getBounds());
         $this->assertEquals(50.1860084533691, $result->getBounds()->getSouth(), '', 0.01);
         $this->assertEquals(8.64943885803223, $result->getBounds()->getWest(), '', 0.01);
         $this->assertEquals(50.1862144470215, $result->getBounds()->getNorth(), '', 0.01);
@@ -317,7 +318,7 @@ class NominatimTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals('localhost', $result->getLocality());
@@ -343,12 +344,12 @@ class NominatimTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(43.6189768, $result->getLatitude(), '', 0.01);
-        $this->assertEquals(1.4564493, $result->getLongitude(), '', 0.01);
-        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertEquals(43.6189768, $result->getCoordinates()->getLatitude(), '', 0.01);
+        $this->assertEquals(1.4564493, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertNotNull($result->getBounds());
         $this->assertEquals(43.6159553527832, $result->getBounds()->getSouth(), '', 0.01);
         $this->assertEquals(1.45302963256836, $result->getBounds()->getWest(), '', 0.01);
         $this->assertEquals(43.623119354248, $result->getBounds()->getNorth(), '', 0.01);
@@ -374,12 +375,12 @@ class NominatimTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(43.6155351, $result->getLatitude(), '', 0.01);
-        $this->assertEquals(1.4525647, $result->getLongitude(), '', 0.01);
-        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertEquals(43.6155351, $result->getCoordinates()->getLatitude(), '', 0.01);
+        $this->assertEquals(1.4525647, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertNotNull($result->getBounds());
         $this->assertEquals(43.6154556274414, $result->getBounds()->getSouth(), '', 0.01);
         $this->assertEquals(1.4524964094162, $result->getBounds()->getWest(), '', 0.01);
         $this->assertEquals(43.6156005859375, $result->getBounds()->getNorth(), '', 0.01);
@@ -484,7 +485,7 @@ XML;
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals('Rue Quincampoix', $result->getStreetName());

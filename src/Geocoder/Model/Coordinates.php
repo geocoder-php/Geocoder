@@ -10,6 +10,8 @@
 
 namespace Geocoder\Model;
 
+use Geocoder\Assert;
+
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
@@ -31,6 +33,12 @@ final class Coordinates
      */
     public function __construct($latitude, $longitude)
     {
+        $latitude = (double) $latitude;
+        $longitude = (double) $longitude;
+
+        Assert::latitude($latitude);
+        Assert::longitude($longitude);
+
         $this->latitude  = $latitude;
         $this->longitude = $longitude;
     }
@@ -38,7 +46,7 @@ final class Coordinates
     /**
      * Returns the latitude.
      *
-     * @return double
+     * @return double|null
      */
     public function getLatitude()
     {
@@ -48,7 +56,7 @@ final class Coordinates
     /**
      * Returns the longitude.
      *
-     * @return double
+     * @return double|null
      */
     public function getLongitude()
     {

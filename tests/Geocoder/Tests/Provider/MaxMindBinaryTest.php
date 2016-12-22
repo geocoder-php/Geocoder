@@ -1,6 +1,7 @@
 <?php
 namespace Geocoder\Tests\Provider;
 
+use Geocoder\Location;
 use Geocoder\Tests\TestCase;
 use Geocoder\Provider\MaxMindBinary;
 
@@ -49,13 +50,13 @@ class MaxMindBinaryTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
 
-        $this->assertEquals('43.089200000000005', $result->getLatitude(), '', 0.001);
-        $this->assertEquals('-76.025000000000006', $result->getLongitude(), '', 0.001);
-        $this->assertFalse($result->getBounds()->isDefined());
+        $this->assertEquals('43.089200000000005', $result->getCoordinates()->getLatitude(), '', 0.001);
+        $this->assertEquals('-76.025000000000006', $result->getCoordinates()->getLongitude(), '', 0.001);
+        $this->assertNull($result->getBounds());
         $this->assertNull($result->getStreetNumber());
         $this->assertNull($result->getStreetName());
         $this->assertNull($result->getPostalCode());
@@ -77,13 +78,13 @@ class MaxMindBinaryTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
 
-        $this->assertEquals('41.543299999999988', $result->getLatitude(), '', 0.001);
-        $this->assertEquals('2.1093999999999937', $result->getLongitude(), '', 0.001);
-        $this->assertFalse($result->getBounds()->isDefined());
+        $this->assertEquals('41.543299999999988', $result->getCoordinates()->getLatitude(), '', 0.001);
+        $this->assertEquals('2.1093999999999937', $result->getCoordinates()->getLongitude(), '', 0.001);
+        $this->assertNull($result->getBounds());
         $this->assertNull($result->getStreetNumber());
         $this->assertNull($result->getStreetName());
         $this->assertNull($result->getPostalCode());
@@ -108,7 +109,7 @@ class MaxMindBinaryTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals($expectedCity, $result->getLocality());
@@ -120,7 +121,7 @@ class MaxMindBinaryTest extends TestCase
         $provider = new MaxMindBinary($this->binaryFile);
         $results  = $provider->geocode('212.51.181.237');
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertSame('Châlette-sur-loing', $result->getLocality());

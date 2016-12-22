@@ -3,6 +3,7 @@
 namespace Geocoder\Tests\Provider;
 
 use Geocoder\Exception\NoResult;
+use Geocoder\Location;
 use Geocoder\Tests\TestCase;
 use Geocoder\Provider\GoogleMaps;
 use Http\Client\HttpClient;
@@ -119,12 +120,12 @@ class GoogleMapsTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(48.8630462, $result->getLatitude(), '', 0.001);
-        $this->assertEquals(2.3882487, $result->getLongitude(), '', 0.001);
-        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertEquals(48.8630462, $result->getCoordinates()->getLatitude(), '', 0.001);
+        $this->assertEquals(2.3882487, $result->getCoordinates()->getLongitude(), '', 0.001);
+        $this->assertNotNull($result->getBounds());
         $this->assertEquals(48.8630462, $result->getBounds()->getSouth(), '', 0.001);
         $this->assertEquals(2.3882487, $result->getBounds()->getWest(), '', 0.001);
         $this->assertEquals(48.8630462, $result->getBounds()->getNorth(), '', 0.001);
@@ -150,12 +151,12 @@ class GoogleMapsTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(48.8630462, $result->getLatitude(), '', 0.001);
-        $this->assertEquals(2.3882487, $result->getLongitude(), '', 0.001);
-        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertEquals(48.8630462, $result->getCoordinates()->getLatitude(), '', 0.001);
+        $this->assertEquals(2.3882487, $result->getCoordinates()->getLongitude(), '', 0.001);
+        $this->assertNotNull($result->getBounds());
         $this->assertEquals(48.8630462, $result->getBounds()->getSouth(), '', 0.001);
         $this->assertEquals(2.3882487, $result->getBounds()->getWest(), '', 0.001);
         $this->assertEquals(48.8630462, $result->getBounds()->getNorth(), '', 0.001);
@@ -182,10 +183,10 @@ class GoogleMapsTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertNotNull($result->getBounds());
         $this->assertEquals(48.815573, $result->getBounds()->getSouth(), '', 0.0001);
         $this->assertEquals(2.224199, $result->getBounds()->getWest(), '', 0.0001);
         $this->assertEquals(48.902145, $result->getBounds()->getNorth(), '', 0.0001);
@@ -200,47 +201,47 @@ class GoogleMapsTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(48.856614, $result->getLatitude(), '', 0.001);
-        $this->assertEquals(2.3522219, $result->getLongitude(), '', 0.001);
+        $this->assertEquals(48.856614, $result->getCoordinates()->getLatitude(), '', 0.001);
+        $this->assertEquals(2.3522219, $result->getCoordinates()->getLongitude(), '', 0.001);
         $this->assertEquals('Paris', $result->getLocality());
         $this->assertEquals('France', $result->getCountry()->getName());
         $this->assertEquals('FR', $result->getCountry()->getCode());
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Location $result */
         $result = $results->get(1);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(33.6609389, $result->getLatitude(), '', 0.001);
-        $this->assertEquals(-95.555513, $result->getLongitude(), '', 0.001);
+        $this->assertEquals(33.6609389, $result->getCoordinates()->getLatitude(), '', 0.001);
+        $this->assertEquals(-95.555513, $result->getCoordinates()->getLongitude(), '', 0.001);
         $this->assertEquals('Paris', $result->getLocality());
         $this->assertEquals('United States', $result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Location $result */
         $result = $results->get(2);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(36.3020023, $result->getLatitude(), '', 0.001);
-        $this->assertEquals(-88.3267107, $result->getLongitude(), '', 0.001);
+        $this->assertEquals(36.3020023, $result->getCoordinates()->getLatitude(), '', 0.001);
+        $this->assertEquals(-88.3267107, $result->getCoordinates()->getLongitude(), '', 0.001);
         $this->assertEquals('Paris', $result->getLocality());
         $this->assertEquals('United States', $result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Location $result */
         $result = $results->get(3);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(39.611146, $result->getLatitude(), '', 0.001);
-        $this->assertEquals(-87.6961374, $result->getLongitude(), '', 0.001);
+        $this->assertEquals(39.611146, $result->getCoordinates()->getLatitude(), '', 0.001);
+        $this->assertEquals(-87.6961374, $result->getCoordinates()->getLongitude(), '', 0.001);
         $this->assertEquals('Paris', $result->getLocality());
         $this->assertEquals('United States', $result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Location $result */
         $result = $results->get(4);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(38.2097987, $result->getLatitude(), '', 0.001);
-        $this->assertEquals(-84.2529869, $result->getLongitude(), '', 0.001);
+        $this->assertEquals(38.2097987, $result->getCoordinates()->getLatitude(), '', 0.001);
+        $this->assertEquals(-84.2529869, $result->getCoordinates()->getLongitude(), '', 0.001);
         $this->assertEquals('Paris', $result->getLocality());
         $this->assertEquals('United States',$result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
@@ -264,7 +265,7 @@ class GoogleMapsTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(1, $result->getStreetNumber());
@@ -296,7 +297,7 @@ class GoogleMapsTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals('Kalbach-Riedberg', $result->getSubLocality());
@@ -325,12 +326,12 @@ class GoogleMapsTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertNotNull($result->getLatitude());
-        $this->assertNotNull($result->getLongitude());
-        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertNotNull($result->getCoordinates()->getLatitude());
+        $this->assertNotNull($result->getCoordinates()->getLongitude());
+        $this->assertNotNull($result->getBounds());
         $this->assertEquals('New York', $result->getLocality());
         $this->assertEquals('Manhattan', $result->getSubLocality());
         $this->assertCount(2, $result->getAdminLevels());
@@ -356,7 +357,7 @@ class GoogleMapsTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals('Pontypridd', $result->getLocality());

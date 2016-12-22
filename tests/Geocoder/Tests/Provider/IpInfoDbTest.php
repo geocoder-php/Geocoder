@@ -2,6 +2,7 @@
 
 namespace Geocoder\Tests\Provider;
 
+use Geocoder\Location;
 use Geocoder\Tests\TestCase;
 use Geocoder\Provider\IpInfoDb;
 
@@ -79,11 +80,11 @@ class IpInfoDbTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertNull($result->getLatitude());
-        $this->assertNull($result->getLongitude());
+        $this->assertNull($result->getCoordinates());
+
         $this->assertNull($result->getPostalCode());
         $this->assertNull($result->getTimezone());
         $this->assertEmpty($result->getAdminLevels());
@@ -134,11 +135,11 @@ class IpInfoDbTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(37.406, $result->getLatitude(), '', 0.001);
-        $this->assertEquals(-122.079, $result->getLongitude(), '', 0.001);
+        $this->assertEquals(37.406, $result->getCoordinates()->getLatitude(), '', 0.001);
+        $this->assertEquals(-122.079, $result->getCoordinates()->getLongitude(), '', 0.001);
         $this->assertEquals(94043, $result->getPostalCode());
         $this->assertEquals('Mountain View', $result->getLocality());
         $this->assertCount(1, $result->getAdminLevels());
@@ -177,11 +178,11 @@ class IpInfoDbTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertNull($result->getLatitude());
-        $this->assertNull($result->getLongitude());
+        $this->assertNull($result->getCoordinates());
+
         $this->assertNull($result->getPostalCode());
         $this->assertNull($result->getLocality());
         $this->assertEmpty($result->getAdminLevels());

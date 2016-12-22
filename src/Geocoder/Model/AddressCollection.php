@@ -3,16 +3,18 @@
 namespace Geocoder\Model;
 
 use Geocoder\Exception\CollectionIsEmpty;
+use Geocoder\Collection;
+use Geocoder\Location;
 
-final class AddressCollection implements \IteratorAggregate, \Countable
+final class AddressCollection implements Collection
 {
     /**
-     * @var Address[]
+     * @var Location[]
      */
     private $addresses;
 
     /**
-     * @param Address[] $addresses
+     * @param Location[] $addresses
      */
     public function __construct(array $addresses = [])
     {
@@ -36,19 +38,19 @@ final class AddressCollection implements \IteratorAggregate, \Countable
     }
 
     /**
-     * @return Address
+     * @return Location
      */
     public function first()
     {
         if (empty($this->addresses)) {
-            throw new CollectionIsEmpty('The AddressCollection instance is empty.');
+            throw new CollectionIsEmpty('The Collection instance is empty.');
         }
 
         return reset($this->addresses);
     }
 
     /**
-     * @return Address[]
+     * @return Location[]
      */
     public function slice($offset, $length = null)
     {
@@ -64,7 +66,7 @@ final class AddressCollection implements \IteratorAggregate, \Countable
     }
 
     /**
-     * @return Address
+     * @return Location
      * @throws \OutOfBoundsException
      */
     public function get($index)
@@ -77,7 +79,7 @@ final class AddressCollection implements \IteratorAggregate, \Countable
     }
 
     /**
-     * @return Address[]
+     * @return Location[]
      */
     public function all()
     {

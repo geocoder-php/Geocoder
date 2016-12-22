@@ -10,7 +10,7 @@
 
 namespace Geocoder\Dumper;
 
-use Geocoder\Model\Address;
+use Geocoder\Location;
 
 /**
  * @author Jan Sorgalla <jsorgalla@googlemail.com>
@@ -20,8 +20,15 @@ class Wkt implements Dumper
     /**
      * {@inheritDoc}
      */
-    public function dump(Address $address)
+    public function dump(Location $location)
     {
-        return sprintf('POINT(%F %F)', $address->getLongitude(), $address->getLatitude());
+        $lat = null;
+        $lon = null;
+        if (null !== $coordinates = $location->getCoordinates()) {
+            $lat = $coordinates->getLatitude();
+            $lon = $coordinates->getLongitude();
+        }
+
+        return sprintf('POINT(%F %F)', $lon, $lat);
     }
 }

@@ -10,7 +10,7 @@
 
 namespace Geocoder\Dumper;
 
-use Geocoder\Model\Address;
+use Geocoder\Location;
 
 /**
  * @author Jan Sorgalla <jsorgalla@googlemail.com>
@@ -20,9 +20,9 @@ class Kml extends Gpx implements Dumper
     /**
      * {@inheritDoc}
      */
-    public function dump(Address $address)
+    public function dump(Location $location)
     {
-        $name = $this->formatName($address);
+        $name = $this->formatName($location);
         $kml  = <<<KML
 <?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2">
@@ -38,6 +38,13 @@ class Kml extends Gpx implements Dumper
 </kml>
 KML;
 
-        return sprintf($kml, $name, $name, $address->getLongitude(), $address->getLatitude());
+        $lat = null;
+        $lon = null;
+        if (null !== $coordinates = $location->getCoordinates()) {
+            $lat = $coordinates->getLatitude();
+            $lon = $coordinates->getLongitude();
+        }
+
+        return sprintf($kml, $name, $name, $lon, $lat);
     }
 }

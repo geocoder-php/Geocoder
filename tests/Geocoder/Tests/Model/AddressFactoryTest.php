@@ -3,6 +3,7 @@
 namespace Geocoder\Tests\Model;
 
 use Geocoder\Model\AddressFactory;
+use Geocoder\Location;
 use Geocoder\Tests\TestCase;
 
 /**
@@ -11,6 +12,7 @@ use Geocoder\Tests\TestCase;
  */
 class AddressFactoryTest extends TestCase
 {
+    /** @var AddressFactory */
     private $factory;
 
     public function setUp()
@@ -31,18 +33,19 @@ class AddressFactoryTest extends TestCase
         $this->assertCount(3, $addresses);
 
         $i = 1;
-        foreach ($addresses as $address) {
-            $this->assertInstanceOf('Geocoder\Model\Address', $address);
-            $this->assertInstanceOf('Geocoder\Model\Country', $address->getCountry());
-            $this->assertNull($address->getCoordinates());
+        foreach ($addresses as $location) {
+            /** @var $location Location */
+            $this->assertInstanceOf('Geocoder\Model\Address', $location);
+            $this->assertInstanceOf('Geocoder\Model\Country', $location->getCountry());
+            $this->assertNull($location->getCoordinates());
 
-            foreach ($address->getAdminLevels() as $level => $adminLevel) {
+            foreach ($location->getAdminLevels() as $level => $adminLevel) {
                 $this->assertInstanceOf('Geocoder\Model\AdminLevel', $adminLevel);
                 $this->assertSame($level, $adminLevel->getLevel());
                 $this->assertEquals('admin ' . $level, $adminLevel->getName());
             }
 
-            $this->assertEquals($i++, $address->getStreetNumber());
+            $this->assertEquals($i++, $location->getStreetNumber());
         }
     }
 

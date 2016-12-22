@@ -14,6 +14,7 @@ use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Collection;
 use Http\Client\HttpClient;
 
 /**
@@ -117,7 +118,7 @@ final class IpInfoDb extends AbstractHttpProvider implements Provider
     /**
      * @param string $query
      *
-     * @return \Geocoder\Model\AddressCollection
+     * @return Collection
      */
     private function executeQuery($query)
     {

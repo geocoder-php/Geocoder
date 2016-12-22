@@ -2,6 +2,7 @@
 
 namespace Geocoder\Tests\Provider;
 
+use Geocoder\Location;
 use Geocoder\Tests\TestCase;
 use Geocoder\Provider\FreeGeoIp;
 
@@ -51,7 +52,7 @@ class FreeGeoIpTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals('localhost', $result->getLocality());
@@ -66,7 +67,7 @@ class FreeGeoIpTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals('localhost', $result->getLocality());
@@ -101,11 +102,11 @@ class FreeGeoIpTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(33.0347, $result->getLatitude(), '', 0.01);
-        $this->assertEquals(-96.8134, $result->getLongitude(), '', 0.01);
+        $this->assertEquals(33.0347, $result->getCoordinates()->getLatitude(), '', 0.01);
+        $this->assertEquals(-96.8134, $result->getCoordinates()->getLongitude(), '', 0.01);
         $this->assertEquals(75093, $result->getPostalCode());
         $this->assertEquals('Plano', $result->getLocality());
         $this->assertCount(1, $result->getAdminLevels());
@@ -122,11 +123,11 @@ class FreeGeoIpTest extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(33.0347, $result->getLatitude(), '', 0.01);
-        $this->assertEquals(-96.8134, $result->getLongitude(), '', 0.01);
+        $this->assertEquals(33.0347, $result->getCoordinates()->getLatitude(), '', 0.01);
+        $this->assertEquals(-96.8134, $result->getCoordinates()->getLongitude(), '', 0.01);
         $this->assertEquals(75093, $result->getPostalCode());
         $this->assertEquals('Plano', $result->getLocality());
         $this->assertCount(1, $result->getAdminLevels());

@@ -11,6 +11,7 @@
 namespace Geocoder\Tests\Provider;
 
 use Geocoder\Exception\NoResult;
+use Geocoder\Location;
 use Geocoder\Provider\GeoIP2;
 use Geocoder\Tests\TestCase;
 
@@ -50,7 +51,7 @@ class GeoIP2Test extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals('localhost', $result->getLocality());
@@ -162,12 +163,22 @@ class GeoIP2Test extends TestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals($expectedGeodata['latitude'], $result->getLatitude());
-        $this->assertEquals($expectedGeodata['longitude'], $result->getLongitude());
-        $this->assertEquals($expectedGeodata['boundsDefined'], $result->getBounds()->isDefined());
+        if (isset($expectedGeodata['latitude'])) {
+            $this->assertEquals($expectedGeodata['latitude'], $result->getCoordinates()->getLatitude());
+            $this->assertEquals($expectedGeodata['longitude'], $result->getCoordinates()->getLongitude());
+        } else {
+            $this->assertNull($result->getCoordinates());
+        }
+
+        if ($expectedGeodata['boundsDefined']) {
+            $this->assertNotNull($result->getBounds());
+        } else {
+            $this->assertNull($result->getBounds());
+        }
+
         $this->assertEquals($expectedGeodata['streetNumber'], $result->getStreetNumber());
         $this->assertEquals($expectedGeodata['streetName'], $result->getStreetName());
         $this->assertEquals($expectedGeodata['locality'], $result->getLocality());

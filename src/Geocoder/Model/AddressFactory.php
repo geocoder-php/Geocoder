@@ -10,6 +10,8 @@
 
 namespace Geocoder\Model;
 
+use Geocoder\Collection;
+
 /**
  * @author Markus Bachmann <markus.bachmann@bachi.biz>
  * @author William Durand <william.durand1@gmail.com>
@@ -18,7 +20,7 @@ final class AddressFactory
 {
     /**
      * @param  array                             $results
-     * @return \Geocoder\Model\AddressCollection
+     * @return Collection
      */
     public function createFromArray(array $results)
     {
@@ -33,12 +35,13 @@ final class AddressFactory
                 );
             }
 
+
             $addresses[] = new Address(
                 $this->createCoordinates(
                     $this->readDoubleValue($result, 'latitude'),
                     $this->readDoubleValue($result, 'longitude')
                 ),
-                new Bounds(
+                $this->createBounds(
                     $this->readDoubleValue($result, 'bounds.south'),
                     $this->readDoubleValue($result, 'bounds.west'),
                     $this->readDoubleValue($result, 'bounds.north'),
@@ -114,6 +117,8 @@ final class AddressFactory
     /**
      * @param double $latitude
      * @param double $longitude
+     *
+     * @return Coordinates|null
      */
     private function createCoordinates($latitude, $longitude)
     {
@@ -122,5 +127,21 @@ final class AddressFactory
         }
 
         return new Coordinates((double) $latitude, (double) $longitude);
+    }
+
+    /**
+     * @param double $south
+     * @param double $west
+     * @param double $north
+      *
+     * @return Bounds|null
+     */
+    private function createBounds($south, $west, $north, $east)
+    {
+        if (null === $south || null === $west || null === $north || null === $east) {
+            return null;
+        }
+
+        return new Bounds((double) $south, (double) $west, (double) $north, (double) $east);
     }
 }

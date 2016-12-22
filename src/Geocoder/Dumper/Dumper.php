@@ -10,7 +10,7 @@
 
 namespace Geocoder\Dumper;
 
-use Geocoder\Model\Address;
+use Geocoder\Location;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -18,12 +18,12 @@ use Geocoder\Model\Address;
 interface Dumper
 {
     /**
-     * Dumps an `Address` object as a string representation of
+     * Dumps an `Location` object as a string representation of
      * the implemented format.
      *
-     * @param Address $address
+     * @param Location $location
      *
      * @return string
      */
-    public function dump(Address $address);
+    public function dump(Location $location);
 }

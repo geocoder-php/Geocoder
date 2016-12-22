@@ -10,6 +10,8 @@
 
 namespace Geocoder\Model;
 
+use Geocoder\Assert;
+
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
@@ -43,6 +45,16 @@ final class Bounds
      */
     public function __construct($south, $west, $north, $east)
     {
+        $south = (double) $south;
+        $north = (double) $north;
+        $west = (double) $west;
+        $east = (double) $east;
+
+        Assert::latitude($south);
+        Assert::latitude($north);
+        Assert::longitude($west);
+        Assert::longitude($east);
+
         $this->south = $south;
         $this->west  = $west;
         $this->north = $north;
@@ -87,16 +99,6 @@ final class Bounds
     public function getEast()
     {
         return $this->east;
-    }
-
-    /**
-     * Returns whether or not bounds are defined
-     *
-     * @return bool
-     */
-    public function isDefined()
-    {
-        return !empty($this->south) && !empty($this->east) && !empty($this->north) && !empty($this->west);
     }
 
     /**

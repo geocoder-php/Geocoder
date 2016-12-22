@@ -2,6 +2,7 @@
 
 namespace Geocoder\Tests\Provider;
 
+use Geocoder\Location;
 use Geocoder\Tests\TestCase;
 use Geocoder\Provider\BingMaps;
 
@@ -94,12 +95,12 @@ JSON;
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(3, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(48.86321675999999, $result->getLatitude(), '', 0.01);
-        $this->assertEquals(2.3887721299999995, $result->getLongitude(), '', 0.01);
-        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertEquals(48.86321675999999, $result->getCoordinates()->getLatitude(), '', 0.01);
+        $this->assertEquals(2.3887721299999995, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertNotNull($result->getBounds());
         $this->assertEquals(48.859354042429, $result->getBounds()->getSouth(), '', 0.01);
         $this->assertEquals(2.3809438666389, $result->getBounds()->getWest(), '', 0.01);
         $this->assertEquals(48.867079477571, $result->getBounds()->getNorth(), '', 0.01);
@@ -116,12 +117,12 @@ JSON;
 
         $this->assertNull($result->getTimezone());
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Location $result */
         $result = $results->get(1);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(48.81342781, $result->getLatitude(), '', 0.01);
-        $this->assertEquals(2.32503767, $result->getLongitude(), '', 0.01);
-        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertEquals(48.81342781, $result->getCoordinates()->getLatitude(), '', 0.01);
+        $this->assertEquals(2.32503767, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertNotNull($result->getBounds());
         $this->assertEquals(48.809565092429, $result->getBounds()->getSouth(), '', 0.01);
         $this->assertEquals(2.3172171827738, $result->getBounds()->getWest(), '', 0.01);
         $this->assertEquals(48.817290527571, $result->getBounds()->getNorth(), '', 0.01);
@@ -136,12 +137,12 @@ JSON;
         $this->assertEquals('France', $result->getCountry()->getName());
         $this->assertEquals('FR', $result->getCountry()->getCode());
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Location $result */
         $result = $results->get(2);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(48.81014147, $result->getLatitude(), '', 0.01);
-        $this->assertEquals(2.43568048, $result->getLongitude(), '', 0.01);
-        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertEquals(48.81014147, $result->getCoordinates()->getLatitude(), '', 0.01);
+        $this->assertEquals(2.43568048, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertNotNull($result->getBounds());
         $this->assertEquals(48.806278752429, $result->getBounds()->getSouth(), '', 0.01);
         $this->assertEquals(2.4278605052897, $result->getBounds()->getWest(), '', 0.01);
         $this->assertEquals(48.814004187571, $result->getBounds()->getNorth(), '', 0.01);
@@ -169,12 +170,12 @@ JSON;
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(48.86321648955345, $result->getLatitude(), '', 0.0001);
-        $this->assertEquals(2.3887719959020615, $result->getLongitude(), '', 0.0001);
-        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertEquals(48.86321648955345, $result->getCoordinates()->getLatitude(), '', 0.0001);
+        $this->assertEquals(2.3887719959020615, $result->getCoordinates()->getLongitude(), '', 0.0001);
+        $this->assertNotNull($result->getBounds());
         $this->assertEquals(48.859353771983, $result->getBounds()->getSouth(), '', 0.0001);
         $this->assertEquals(2.3809437325833, $result->getBounds()->getWest(), '', 0.0001);
         $this->assertEquals(48.867079207124, $result->getBounds()->getNorth(), '', 0.0001);
@@ -204,12 +205,12 @@ JSON;
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(48.86321675999999, $result->getLatitude(), '', 0.01);
-        $this->assertEquals(2.3887721299999995, $result->getLongitude(), '', 0.01);
-        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertEquals(48.86321675999999, $result->getCoordinates()->getLatitude(), '', 0.01);
+        $this->assertEquals(2.3887721299999995, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertNotNull($result->getBounds());
         $this->assertEquals(48.859354042429, $result->getBounds()->getSouth(), '', 0.01);
         $this->assertEquals(2.3809438666389, $result->getBounds()->getWest(), '', 0.01);
         $this->assertEquals(48.867079477571, $result->getBounds()->getNorth(), '', 0.01);
@@ -242,12 +243,12 @@ JSON;
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Location $result */
         $result = $results->get(0);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(44.786701202393, $result->getLatitude(), '', 0.01);
-        $this->assertEquals(8.2841901779175, $result->getLongitude(), '', 0.01);
-        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertEquals(44.786701202393, $result->getCoordinates()->getLatitude(), '', 0.01);
+        $this->assertEquals(8.2841901779175, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertNotNull($result->getBounds());
         $this->assertEquals(44.775325775146, $result->getBounds()->getSouth(), '', 0.01);
         $this->assertEquals(8.2711343765259, $result->getBounds()->getWest(), '', 0.01);
         $this->assertEquals(44.795879364014, $result->getBounds()->getNorth(), '', 0.01);
@@ -262,12 +263,12 @@ JSON;
         $this->assertEquals('Italie', $result->getCountry()->getName());
         $this->assertEquals('IT', $result->getCountry()->getCode());
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Location $result */
         $result = $results->get(1);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(46.05179977417, $result->getLatitude(), '', 0.01);
-        $this->assertEquals(11.497699737549, $result->getLongitude(), '', 0.01);
-        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertEquals(46.05179977417, $result->getCoordinates()->getLatitude(), '', 0.01);
+        $this->assertEquals(11.497699737549, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertNotNull($result->getBounds());
         $this->assertEquals(46.029235839844, $result->getBounds()->getSouth(), '', 0.01);
         $this->assertEquals(11.473880767822, $result->getBounds()->getWest(), '', 0.01);
         $this->assertEquals(46.07377243042, $result->getBounds()->getNorth(), '', 0.01);
@@ -282,12 +283,12 @@ JSON;
         $this->assertEquals('Italie', $result->getCountry()->getName());
         $this->assertEquals('IT', $result->getCountry()->getCode());
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Location $result */
         $result = $results->get(2);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(44.987880706787, $result->getLatitude(), '', 0.01);
-        $this->assertEquals(9.442440032959, $result->getLongitude(), '', 0.01);
-        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertEquals(44.987880706787, $result->getCoordinates()->getLatitude(), '', 0.01);
+        $this->assertEquals(9.442440032959, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertNotNull($result->getBounds());
         $this->assertEquals(44.958910323795, $result->getBounds()->getSouth(), '', 0.01);
         $this->assertEquals(9.3878520826907, $result->getBounds()->getWest(), '', 0.01);
         $this->assertEquals(45.01685108978, $result->getBounds()->getNorth(), '', 0.01);
@@ -302,12 +303,12 @@ JSON;
         $this->assertEquals('Italie', $result->getCountry()->getName());
         $this->assertEquals('IT', $result->getCountry()->getCode());
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Location $result */
         $result = $results->get(3);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(43.82638168335, $result->getLatitude(), '', 0.01);
-        $this->assertEquals(11.068260192871, $result->getLongitude(), '', 0.01);
-        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertEquals(43.82638168335, $result->getCoordinates()->getLatitude(), '', 0.01);
+        $this->assertEquals(11.068260192871, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertNotNull($result->getBounds());
         $this->assertEquals(43.797411300357, $result->getBounds()->getSouth(), '', 0.01);
         $this->assertEquals(11.014744487393, $result->getBounds()->getWest(), '', 0.01);
         $this->assertEquals(43.855352066342, $result->getBounds()->getNorth(), '', 0.01);
@@ -322,12 +323,12 @@ JSON;
         $this->assertEquals('Italie', $result->getCountry()->getName());
         $this->assertEquals('IT', $result->getCountry()->getCode());
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Location $result */
         $result = $results->get(4);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(42.295810699463, $result->getLatitude(), '', 0.01);
-        $this->assertEquals(13.626440048218, $result->getLongitude(), '', 0.01);
-        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertEquals(42.295810699463, $result->getCoordinates()->getLatitude(), '', 0.01);
+        $this->assertEquals(13.626440048218, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertNotNull($result->getBounds());
         $this->assertEquals(42.26684031647, $result->getBounds()->getSouth(), '', 0.01);
         $this->assertEquals(13.574242599134, $result->getBounds()->getWest(), '', 0.01);
         $this->assertEquals(42.324781082455, $result->getBounds()->getNorth(), '', 0.01);
@@ -375,12 +376,12 @@ JSON;
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(48.86321648955345, $result->getLatitude(), '', 0.0001);
-        $this->assertEquals(2.3887719959020615, $result->getLongitude(), '', 0.0001);
-        $this->assertTrue($result->getBounds()->isDefined());
+        $this->assertEquals(48.86321648955345, $result->getCoordinates()->getLatitude(), '', 0.0001);
+        $this->assertEquals(2.3887719959020615, $result->getCoordinates()->getLongitude(), '', 0.0001);
+        $this->assertNotNull($result->getBounds());
         $this->assertEquals(48.859353771983, $result->getBounds()->getSouth(), '', 0.0001);
         $this->assertEquals(2.3809437325833, $result->getBounds()->getWest(), '', 0.0001);
         $this->assertEquals(48.867079207124, $result->getBounds()->getNorth(), '', 0.0001);

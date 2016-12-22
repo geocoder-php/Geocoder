@@ -13,6 +13,7 @@ use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\QuotaExceeded;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Collection;
 use Http\Client\HttpClient;
 
 /**
@@ -91,7 +92,7 @@ final class OpenCage extends AbstractHttpProvider implements LocaleAwareProvider
 
     /**
      * @param $query
-     * @return \Geocoder\Model\AddressCollection
+     * @return Collection
      */
     private function executeQuery($query)
     {

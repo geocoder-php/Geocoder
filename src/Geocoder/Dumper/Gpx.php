@@ -11,7 +11,7 @@
 namespace Geocoder\Dumper;
 
 use Geocoder\Geocoder;
-use Geocoder\Model\Address;
+use Geocoder\Location;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -19,11 +19,11 @@ use Geocoder\Model\Address;
 class Gpx implements Dumper
 {
     /**
-     * @param Address $address
+     * @param Location $location
      *
      * @return string
      */
-    public function dump(Address $address)
+    public function dump(Location $location)
     {
         $gpx = sprintf(<<<GPX
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
@@ -37,13 +37,19 @@ version="1.0"
 GPX
         , Geocoder::VERSION);
 
-        if ($address->getBounds()->isDefined()) {
-            $bounds = $address->getBounds();
+        if (null !== $bounds = $location->getBounds()) {
             $gpx .= sprintf(<<<GPX
     <bounds minlat="%f" minlon="%f" maxlat="%f" maxlon="%f"/>
 
 GPX
             , $bounds->getWest(), $bounds->getSouth(), $bounds->getEast(), $bounds->getNorth());
+        }
+
+        $lat = null;
+        $lon = null;
+        if (null !== $coordinates = $location->getCoordinates()) {
+            $lat = $coordinates->getLatitude();
+            $lon = $coordinates->getLongitude();
         }
 
         $gpx .= sprintf(<<<GPX
@@ -53,7 +59,7 @@ GPX
     </wpt>
 
 GPX
-        , $address->getLatitude(), $address->getLongitude(), $this->formatName($address));
+        , $lat, $lon, $this->formatName($location));
 
         $gpx .= <<<GPX
 </gpx>
@@ -63,11 +69,11 @@ GPX;
     }
 
     /**
-     * @param Address $address
+     * @param Location $address
      *
      * @return string
      */
-    protected function formatName(Address $address)
+    protected function formatName(Location $address)
     {
         $name  = [];
         $array = $address->toArray();

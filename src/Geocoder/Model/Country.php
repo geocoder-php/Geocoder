@@ -10,6 +10,8 @@
 
 namespace Geocoder\Model;
 
+use Geocoder\Assert;
+
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
@@ -60,18 +62,8 @@ final class Country
      *
      * @return string
      */
-    public function toString()
-    {
-        return $this->getName();
-    }
-
-    /**
-     * Returns a string with the country name.
-     *
-     * @return string
-     */
     public function __toString()
     {
-        return $this->toString();
+        return $this->getName() ?: '';
     }
 }

@@ -10,7 +10,7 @@
 
 namespace Geocoder\Dumper;
 
-use Geocoder\Model\Address;
+use Geocoder\Location;
 
 /**
  * @author Jan Sorgalla <jsorgalla@googlemail.com>
@@ -20,9 +20,9 @@ class GeoJson implements Dumper
     /**
      * {@inheritDoc}
      */
-    public function dump(Address $address)
+    public function dump(Location $location)
     {
-        $properties = array_filter($address->toArray(), function ($value) {
+        $properties = array_filter($location->toArray(), function ($value) {
             return !empty($value);
         });
 
@@ -36,19 +36,24 @@ class GeoJson implements Dumper
             $properties = null;
         }
 
+        $lat = 0;
+        $lon = 0;
+        if (null !== $coordinates = $location->getCoordinates()) {
+            $lat = $coordinates->getLatitude();
+            $lon = $coordinates->getLongitude();
+        }
+
         $json = [
             'type' => 'Feature',
             'geometry' => [
                 'type'          => 'Point',
-                'coordinates'   => [ $address->getLongitude(), $address->getLatitude() ]
+                'coordinates'   => [$lon, $lat],
             ],
             'properties' => $properties,
         ];
 
-        if (null !== $bounds = $address->getBounds()) {
-            if ($bounds->isDefined()) {
-                $json['bounds'] = $bounds->toArray();
-            }
+        if (null !== $bounds = $location->getBounds()) {
+            $json['bounds'] = $bounds->toArray();
         }
 
         return json_encode($json);

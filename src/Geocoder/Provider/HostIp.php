@@ -12,6 +12,7 @@ namespace Geocoder\Provider;
 
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Collection;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -65,7 +66,7 @@ final class HostIp extends AbstractHttpProvider implements Provider
     /**
      * @param string $query
      *
-     * @return \Geocoder\Model\AddressCollection
+     * @return Collection
      */
     private function executeQuery($query)
     {

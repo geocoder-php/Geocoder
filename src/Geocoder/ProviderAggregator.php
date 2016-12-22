@@ -11,8 +11,9 @@
 namespace Geocoder;
 
 use Geocoder\Exception\ProviderNotRegistered;
-use Geocoder\Provider\Provider;
 use Geocoder\Model\AddressCollection;
+use Geocoder\Provider\Provider;
+use Geocoder\Model\Address;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
