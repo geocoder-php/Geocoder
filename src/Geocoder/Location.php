@@ -7,7 +7,7 @@ use Geocoder\Model\Coordinates;
 use Geocoder\Model\Country;
 
 /**
- * A position is a single result from a Geocoder.
+ * A location is a single result from a Geocoder.
  *
  * @author William Durand <william.durand1@gmail.com>
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
@@ -87,7 +87,7 @@ interface Location
     public function getCountry();
 
     /**
-     * Returns the timezone for the Position. The timezone MUST be in the list of supported timezones.
+     * Returns the timezone for the Location. The timezone MUST be in the list of supported timezones.
      *
      * {@link http://php.net/manual/en/timezones.php}
      *
