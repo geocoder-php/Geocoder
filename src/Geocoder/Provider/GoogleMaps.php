@@ -50,6 +50,11 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvid
     private $region;
 
     /**
+     * @var array
+     */
+    private $componentFilters;
+
+    /**
      * @var bool
      */
     private $useSsl;
@@ -148,9 +153,29 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvid
         return 'google_maps';
     }
 
+    /**
+     * @param $region
+     *
+     * @return $this
+     */
     public function setRegion($region)
     {
         $this->region = $region;
+
+        return $this;
+    }
+
+    /**
+     * Add components for filtering.
+     * https://developers.google.com/maps/documentation/geocoding/#ComponentFiltering
+     *
+     * @param array $filters
+     *
+     * @return $this
+     */
+    public function setComponentFilters(array $filters)
+    {
+        $this->componentFilters = $filters;
 
         return $this;
     }
@@ -182,11 +207,21 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvid
             }
         }
 
+        if (!empty($this->componentFilters)) {
+            $componentFilters = $this->componentFilters;
+
+            $query = sprintf('%s&key=%s&components=%s', $query, $this->apiKey, implode('|', array_map(function($key) use ($componentFilters) {
+                return $key.':'.urlencode($componentFilters[$key]);
+            }, array_keys($componentFilters))));
+        }
+
         return $query;
     }
 
     /**
      * @param string $query
+     * @return \Geocoder\Model\AddressCollection
+     * @throws Exception
      */
     private function executeQuery($query)
     {
