@@ -50,6 +50,16 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvid
     private $region;
 
     /**
+     * @var array
+     */
+    private $resultType;
+
+    /**
+     * @var array
+     */
+    private $locationType;
+
+    /**
      * @var bool
      */
     private $useSsl;
@@ -80,11 +90,13 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvid
      * @param string     $region Region biasing (optional)
      * @param bool       $useSsl Whether to use an SSL connection (optional)
      * @param string     $apiKey Google Geocoding API key (optional)
+     * @param array      $resultType One or more address types (optional)
+     * @param array      $locationType One or more location types (optional)
      * @return GoogleMaps
      */
-    public static function business(HttpClient $client, $clientId, $privateKey = null, $locale = null, $region = null, $useSsl = false, $apiKey = null)
+    public static function business(HttpClient $client, $clientId, $privateKey = null, $locale = null, $region = null, $useSsl = false, $apiKey = null, $resultType = [], $locationType = [])
     {
-        $provider = new self($client, $locale, $region, $useSsl, $apiKey);
+        $provider = new self($client, $locale, $region, $useSsl, $apiKey, $resultType, $locationType);
         $provider->clientId = $clientId;
         $provider->privateKey = $privateKey;
 
@@ -97,8 +109,10 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvid
      * @param string     $region Region biasing (optional)
      * @param bool       $useSsl Whether to use an SSL connection (optional)
      * @param string     $apiKey Google Geocoding API key (optional)
+     * @param array      $resultType One or more address types - only for reserve (optional)
+     * @param array      $locationType One or more location types - only for reserve (optional)
      */
-    public function __construct(HttpClient $client, $locale = null, $region = null, $useSsl = false, $apiKey = null)
+    public function __construct(HttpClient $client, $locale = null, $region = null, $useSsl = false, $apiKey = null, $resultType = [], $locationType = [])
     {
         parent::__construct($client);
 
@@ -106,6 +120,8 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvid
         $this->region = $region;
         $this->useSsl = $useSsl;
         $this->apiKey = $apiKey;
+        $this->resultType = $resultType;
+        $this->locationType = $locationType;
     }
 
     /**
@@ -156,6 +172,28 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvid
     }
 
     /**
+     * @param array $resultType One or more address types - only for reserve
+     * @return $this
+     */
+    public function setResultType($resultType)
+    {
+        $this->resultType = $resultType;
+
+        return $this;
+    }
+
+    /**
+     * @param array $locationType One or more location types - only for reserve
+     * @return $this
+     */
+    public function setLocationType($locationType)
+    {
+        $this->locationType = $locationType;
+
+        return $this;
+    }
+
+    /**
      * @param string $query
      *
      * @return string query with extra params
@@ -168,6 +206,14 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvid
 
         if (null !== $this->region) {
             $query = sprintf('%s&region=%s', $query, $this->region);
+        }
+
+        if (!empty($this->resultType) && is_array($this->resultType)) {
+            $query = sprintf('%s&result_type=%s', $query, implode("|", $this->resultType));
+        }
+
+        if (!empty($this->locationType) && is_array($this->locationType)) {
+            $query = sprintf('%s&location_type=%s', $query, implode("|", $this->locationType));
         }
 
         if (null !== $this->apiKey) {
@@ -216,6 +262,11 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvid
 
         if ('REQUEST_DENIED' === $json->status) {
             throw new Exception(sprintf('API access denied. Request: %s - Message: %s',
+                $query, $json->error_message));
+        }
+
+        if ('INVALID_REQUEST' === $json->status) {
+            throw new Exception(sprintf('Sent invalid parameter. Request: %s - Message: %s',
                 $query, $json->error_message));
         }
 
