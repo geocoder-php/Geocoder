@@ -19,7 +19,7 @@ class MapQuestTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not find results for query "http://open.mapquestapi.com/geocoding/v1/address?location=foobar&outFormat=json&maxResults=5&key=api_key&thumbMaps=false".
+     * @expectedExceptionMessage Could not find results for query "https://open.mapquestapi.com/geocoding/v1/address?location=foobar&outFormat=json&maxResults=5&key=api_key&thumbMaps=false".
      */
     public function testGeocode()
     {
@@ -29,7 +29,7 @@ class MapQuestTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "http://open.mapquestapi.com/geocoding/v1/address?location=10+avenue+Gambetta%2C+Paris%2C+France&outFormat=json&maxResults=5&key=api_key&thumbMaps=false".
+     * @expectedExceptionMessage Could not execute query "https://open.mapquestapi.com/geocoding/v1/address?location=10+avenue+Gambetta%2C+Paris%2C+France&outFormat=json&maxResults=5&key=api_key&thumbMaps=false".
      */
     public function testGeocodeWithAddressGetsNullContent()
     {
@@ -39,7 +39,7 @@ class MapQuestTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not find results for query "http://open.mapquestapi.com/geocoding/v1/reverse?key=api_key&lat=123.000000&lng=456.000000".
+     * @expectedExceptionMessage Could not find results for query "https://open.mapquestapi.com/geocoding/v1/reverse?key=api_key&lat=123.000000&lng=456.000000".
      */
     public function testGetNotRelevantData()
     {
