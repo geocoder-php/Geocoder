@@ -19,9 +19,9 @@ class OpenCageTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not find results for query "http://api.opencagedata.com/geocode/v1/json?key=api_key&query=foobar&limit=5&pretty=1".
+     * @expectedExceptionMessage Could not find results for query "https://api.opencagedata.com/geocode/v1/json?key=api_key&query=foobar&limit=5&pretty=1".
      */
-    public function testGeocode()
+    public function testSslSchema()
     {
         $provider = new OpenCage($this->getMockAdapterReturns('{}'), 'api_key');
         $provider->geocode('foobar');
@@ -29,17 +29,7 @@ class OpenCageTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not find results for query "https://api.opencagedata.com/geocode/v1/json?key=api_key&query=foobar&limit=5&pretty=1".
-     */
-    public function testSslSchema()
-    {
-        $provider = new OpenCage($this->getMockAdapterReturns('{}'), 'api_key', true);
-        $provider->geocode('foobar');
-    }
-
-    /**
-     * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "http://api.opencagedata.com/geocode/v1/json?key=api_key&query=10+avenue+Gambetta%2C+Paris%2C+France&limit=5&pretty=1".
+     * @expectedExceptionMessage Could not execute query "https://api.opencagedata.com/geocode/v1/json?key=api_key&query=10+avenue+Gambetta%2C+Paris%2C+France&limit=5&pretty=1".
      */
     public function testGeocodeWithAddressGetsNullContent()
     {
@@ -237,7 +227,7 @@ class OpenCageTest extends TestCase
             $this->markTestSkipped('You need to configure the OPENCAGE_API_KEY value in phpunit.xml');
         }
 
-        $provider = new OpenCage($this->getAdapter($_SERVER['OPENCAGE_API_KEY']), $_SERVER['OPENCAGE_API_KEY'], true, 'es');
+        $provider = new OpenCage($this->getAdapter($_SERVER['OPENCAGE_API_KEY']), $_SERVER['OPENCAGE_API_KEY'], 'es');
         $results  = $provider->geocode('London');
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);

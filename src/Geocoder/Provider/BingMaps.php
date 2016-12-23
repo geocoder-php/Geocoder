@@ -25,12 +25,12 @@ final class BingMaps extends AbstractHttpProvider implements LocaleAwareProvider
     /**
      * @var string
      */
-    const GEOCODE_ENDPOINT_URL = 'http://dev.virtualearth.net/REST/v1/Locations/?maxResults=%d&q=%s&key=%s&incl=ciso2';
+    const GEOCODE_ENDPOINT_URL = 'https://dev.virtualearth.net/REST/v1/Locations/?maxResults=%d&q=%s&key=%s&incl=ciso2';
 
     /**
      * @var string
      */
-    const REVERSE_ENDPOINT_URL = 'http://dev.virtualearth.net/REST/v1/Locations/%F,%F?key=%s&incl=ciso2';
+    const REVERSE_ENDPOINT_URL = 'https://dev.virtualearth.net/REST/v1/Locations/%F,%F?key=%s&incl=ciso2';
 
     /**
      * @var string

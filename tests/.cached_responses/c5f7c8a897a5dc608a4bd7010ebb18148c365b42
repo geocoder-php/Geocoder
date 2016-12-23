@@ -1,0 +1,60 @@
+s:1732:"{
+   "results" : [
+      {
+         "address_components" : [
+            {
+               "long_name" : "CF37",
+               "short_name" : "CF37",
+               "types" : [ "postal_code", "postal_code_prefix" ]
+            },
+            {
+               "long_name" : "Pontypridd",
+               "short_name" : "Pontypridd",
+               "types" : [ "postal_town" ]
+            },
+            {
+               "long_name" : "Wales",
+               "short_name" : "Wales",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "United Kingdom",
+               "short_name" : "GB",
+               "types" : [ "country", "political" ]
+            }
+         ],
+         "formatted_address" : "Pontypridd CF37, UK",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : 51.67344079999999,
+                  "lng" : -3.2729262
+               },
+               "southwest" : {
+                  "lat" : 51.5623438,
+                  "lng" : -3.4280718
+               }
+            },
+            "location" : {
+               "lat" : 51.6252313,
+               "lng" : -3.349155300000001
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 51.67344079999999,
+                  "lng" : -3.2729262
+               },
+               "southwest" : {
+                  "lat" : 51.5623438,
+                  "lng" : -3.4280718
+               }
+            }
+         },
+         "place_id" : "ChIJJeD_wSsWbkgRpq5kg77iHSw",
+         "types" : [ "postal_code", "postal_code_prefix" ]
+      }
+   ],
+   "status" : "OK"
+}
+";

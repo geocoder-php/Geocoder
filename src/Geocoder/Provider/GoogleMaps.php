@@ -25,17 +25,7 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvid
     /**
      * @var string
      */
-    const GEOCODE_ENDPOINT_URL = 'http://maps.googleapis.com/maps/api/geocode/json?address=%s';
-
-    /**
-     * @var string
-     */
     const GEOCODE_ENDPOINT_URL_SSL = 'https://maps.googleapis.com/maps/api/geocode/json?address=%s';
-
-    /**
-     * @var string
-     */
-    const REVERSE_ENDPOINT_URL = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=%F,%F';
 
     /**
      * @var string
@@ -48,11 +38,6 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvid
      * @var string
      */
     private $region;
-
-    /**
-     * @var bool
-     */
-    private $useSsl;
 
     /**
      * @var string
@@ -78,13 +63,12 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvid
      * @param string     $privateKey Your Private Key (optional)
      * @param string     $locale A locale (optional)
      * @param string     $region Region biasing (optional)
-     * @param bool       $useSsl Whether to use an SSL connection (optional)
      * @param string     $apiKey Google Geocoding API key (optional)
      * @return GoogleMaps
      */
-    public static function business(HttpClient $client, $clientId, $privateKey = null, $locale = null, $region = null, $useSsl = false, $apiKey = null)
+    public static function business(HttpClient $client, $clientId, $privateKey = null, $locale = null, $region = null, $apiKey = null)
     {
-        $provider = new self($client, $locale, $region, $useSsl, $apiKey);
+        $provider = new self($client, $locale, $region, $apiKey);
         $provider->clientId = $clientId;
         $provider->privateKey = $privateKey;
 
@@ -95,16 +79,14 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvid
      * @param HttpClient $client An HTTP adapter
      * @param string     $locale A locale (optional)
      * @param string     $region Region biasing (optional)
-     * @param bool       $useSsl Whether to use an SSL connection (optional)
      * @param string     $apiKey Google Geocoding API key (optional)
      */
-    public function __construct(HttpClient $client, $locale = null, $region = null, $useSsl = false, $apiKey = null)
+    public function __construct(HttpClient $client, $locale = null, $region = null, $apiKey = null)
     {
         parent::__construct($client);
 
         $this->locale = $locale;
         $this->region = $region;
-        $this->useSsl = $useSsl;
         $this->apiKey = $apiKey;
     }
 
@@ -119,10 +101,7 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvid
             throw new UnsupportedOperation('The GoogleMaps provider does not support IP addresses, only street addresses.');
         }
 
-        $query = sprintf(
-            $this->useSsl ? self::GEOCODE_ENDPOINT_URL_SSL : self::GEOCODE_ENDPOINT_URL,
-            rawurlencode($address)
-        );
+        $query = sprintf(self::GEOCODE_ENDPOINT_URL_SSL, rawurlencode($address));
 
         return $this->executeQuery($query);
     }
@@ -132,10 +111,7 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvid
      */
     public function reverse($latitude, $longitude)
     {
-        $query = sprintf(
-            $this->useSsl ? self::REVERSE_ENDPOINT_URL_SSL : self::REVERSE_ENDPOINT_URL,
-            $latitude, $longitude
-        );
+        $query = sprintf(self::REVERSE_ENDPOINT_URL_SSL, $latitude, $longitude);
 
         return $this->executeQuery($query);
     }

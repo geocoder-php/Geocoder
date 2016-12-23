@@ -65,7 +65,7 @@ class ArcGISOnlineTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find?text=10+avenue+Gambetta%2C+Paris%2C+France&maxLocations=5&f=json&outFields=*".
+     * @expectedExceptionMessage Could not execute query "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find?text=10+avenue+Gambetta%2C+Paris%2C+France&maxLocations=5&f=json&outFields=*".
      */
     public function testGeocodeWithAddressGetsNullContent()
     {
@@ -136,16 +136,6 @@ class ArcGISOnlineTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage No results found for query "http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find?text=10+avenue+Gambetta%2C+Paris%2C+France".
-     */
-    public function testGeocodeWithInvalidAddressForSourceCountry()
-    {
-        $provider = new ArcGISOnline($this->getAdapter(), 'Denmark');
-        $provider->geocode('10 avenue Gambetta, Paris, France');
-    }
-
-    /**
-     * @expectedException \Geocoder\Exception\NoResult
      * @expectedExceptionMessage No results found for query "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find?text=10+avenue+Gambetta%2C+Paris%2C+France".
      */
     public function testGeocodeWithInvalidAddressWithHttpsForSourceCountry()
@@ -156,7 +146,7 @@ class ArcGISOnlineTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/reverseGeocode?location=2.000000,1.000000&maxLocations=5&f=json&outFields=*".
+     * @expectedExceptionMessage Could not execute query "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/reverseGeocode?location=2.000000,1.000000&maxLocations=5&f=json&outFields=*".
      */
     public function testReverseWithInvalid()
     {
@@ -166,7 +156,7 @@ class ArcGISOnlineTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/reverseGeocode?location=2.389020,48.863280&maxLocations=5&f=json&outFields=*".
+     * @expectedExceptionMessage Could not execute query "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/reverseGeocode?location=2.389020,48.863280&maxLocations=5&f=json&outFields=*".
      */
     public function testReverseWithCoordinatesContentReturnNull()
     {
@@ -174,35 +164,10 @@ class ArcGISOnlineTest extends TestCase
         $provider->reverse(48.863279997000461, 2.3890199980004354);
     }
 
-    public function testReverseWithRealCoordinates()
-    {
-        $provider = new ArcGISOnline($this->getAdapter());
-        $results  = $provider->reverse(48.863279997000461, 2.3890199980004354);
-
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
-        $this->assertCount(1, $results);
-
-        /** @var Location $result */
-        $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(48.863279997000461, $result->getCoordinates()->getLatitude(), '', 0.0001);
-        $this->assertEquals(2.3890199980004354, $result->getCoordinates()->getLongitude(), '', 0.0001);
-        $this->assertNull($result->getStreetNumber());
-        $this->assertEquals('3 Avenue Gambetta', $result->getStreetName());
-        $this->assertEquals(75020, $result->getPostalCode());
-        $this->assertEquals('Paris', $result->getLocality());
-        $this->assertEquals('FRA', $result->getCountry()->getCode());
-
-        $this->assertNull($result->getBounds());
-        $this->assertNull($result->getSubLocality());
-        $this->assertEmpty($result->getAdminLevels());
-        $this->assertNull($result->getCountry()->getName());
-        $this->assertNull($result->getTimezone());
-    }
 
     public function testReverseWithRealCoordinatesWithHttps()
     {
-        $provider = new ArcGISOnline($this->getAdapter(), null, true);
+        $provider = new ArcGISOnline($this->getAdapter(), null);
         $results  = $provider->reverse(48.863279997000461, 2.3890199980004354);
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);

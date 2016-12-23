@@ -10,6 +10,7 @@
 
 namespace Geocoder\Provider;
 
+use Geocoder\Collection;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
@@ -33,11 +34,6 @@ final class MaxMind extends AbstractHttpProvider implements Provider
     /**
      * @var string
      */
-    const GEOCODE_ENDPOINT_URL = 'http://geoip.maxmind.com/%s?l=%s&i=%s';
-
-    /**
-     * @var string
-     */
     const GEOCODE_ENDPOINT_URL_SSL = 'https://geoip.maxmind.com/%s?l=%s&i=%s';
 
     /**
@@ -51,23 +47,16 @@ final class MaxMind extends AbstractHttpProvider implements Provider
     private $service = null;
 
     /**
-     * @var bool
-     */
-    private $useSsl = false;
-
-    /**
      * @param HttpClient $client  An HTTP adapter.
      * @param string     $apiKey  An API key.
      * @param string     $service The specific Maxmind service to use (optional).
-     * @param bool       $useSsl  Whether to use an SSL connection (optional).
      */
-    public function __construct(HttpClient $client, $apiKey, $service = self::CITY_EXTENDED_SERVICE, $useSsl = false)
+    public function __construct(HttpClient $client, $apiKey, $service = self::CITY_EXTENDED_SERVICE)
     {
         parent::__construct($client);
 
         $this->apiKey  = $apiKey;
         $this->service = $service;
-        $this->useSsl  = $useSsl;
     }
 
     /**
@@ -87,10 +76,7 @@ final class MaxMind extends AbstractHttpProvider implements Provider
             return $this->returnResults([ $this->getLocalhostDefaults() ]);
         }
 
-        $query = sprintf(
-            $this->useSsl ? self::GEOCODE_ENDPOINT_URL_SSL : self::GEOCODE_ENDPOINT_URL,
-            $this->service, $this->apiKey, $address
-        );
+        $query = sprintf(self::GEOCODE_ENDPOINT_URL_SSL, $this->service, $this->apiKey, $address);
 
         return $this->executeQuery($query);
     }
@@ -113,6 +99,8 @@ final class MaxMind extends AbstractHttpProvider implements Provider
 
     /**
      * @param string $query
+     *
+     * @return Collection
      */
     private function executeQuery($query)
     {
