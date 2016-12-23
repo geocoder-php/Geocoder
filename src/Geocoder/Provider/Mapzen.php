@@ -9,6 +9,7 @@
  */
 namespace Geocoder\Provider;
 
+use Geocoder\Collection;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\QuotaExceeded;
 use Geocoder\Exception\NoResult;
@@ -23,17 +24,12 @@ final class Mapzen extends AbstractHttpProvider
     /**
      * @var string
      */
-    const GEOCODE_ENDPOINT_URL = '%s://search.mapzen.com/v1/search?text=%s&key=%s&size=%d';
+    const GEOCODE_ENDPOINT_URL = 'https://search.mapzen.com/v1/search?text=%s&key=%s&size=%d';
 
     /**
      * @var string
      */
-    const REVERSE_ENDPOINT_URL = '%s://search.mapzen.com/v1/reverse?point.lat=%f&point.lon=%f&key=%s&size=%d';
-
-    /**
-     * @var string
-     */
-    private $scheme;
+    const REVERSE_ENDPOINT_URL = 'https://search.mapzen.com/v1/reverse?point.lat=%f&point.lon=%f&key=%s&size=%d';
 
     /**
      * @var string
@@ -43,14 +39,12 @@ final class Mapzen extends AbstractHttpProvider
     /**
      * @param HttpClient  $client An HTTP adapter.
      * @param string      $apiKey An API key.
-     * @param bool        $useSsl Whether to use an SSL connection (optional).
      */
-    public function __construct(HttpClient $client, $apiKey, $useSSL = true)
+    public function __construct(HttpClient $client, $apiKey)
     {
         parent::__construct($client);
 
         $this->apiKey = $apiKey;
-        $this->scheme = $useSSL ? 'https' : 'http';
     }
 
     /**
@@ -67,7 +61,7 @@ final class Mapzen extends AbstractHttpProvider
             throw new UnsupportedOperation('The Mapzen provider does not support IP addresses, only street addresses.');
         }
 
-        $query = sprintf(self::GEOCODE_ENDPOINT_URL, $this->scheme, urlencode($address), $this->apiKey, $this->getLimit());
+        $query = sprintf(self::GEOCODE_ENDPOINT_URL, urlencode($address), $this->apiKey, $this->getLimit());
 
         return $this->executeQuery($query);
     }
@@ -81,7 +75,7 @@ final class Mapzen extends AbstractHttpProvider
             throw new InvalidCredentials('No API Key provided.');
         }
 
-        $query = sprintf(self::REVERSE_ENDPOINT_URL, $this->scheme, $latitude, $longitude, $this->apiKey, $this->getLimit());
+        $query = sprintf(self::REVERSE_ENDPOINT_URL, $latitude, $longitude, $this->apiKey, $this->getLimit());
 
         return $this->executeQuery($query);
     }
@@ -96,7 +90,7 @@ final class Mapzen extends AbstractHttpProvider
 
     /**
      * @param $query
-     * @return \Geocoder\Model\AddressCollection
+     * @return Collection
      */
     private function executeQuery($query)
     {

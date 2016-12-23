@@ -22,34 +22,28 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
     /**
      * @var string
      */
-    const ENDPOINT_URL = '%s://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find?text=%s';
+    const ENDPOINT_URL = 'https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find?text=%s';
 
     /**
      * @var string
      */
-    const REVERSE_ENDPOINT_URL = '%s://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/reverseGeocode?location=%F,%F';
+    const REVERSE_ENDPOINT_URL = 'https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/reverseGeocode?location=%F,%F';
 
     /**
      * @var string
      */
     private $sourceCountry;
 
-    /**
-     * @var string
-     */
-    private $protocol;
 
     /**
      * @param HttpClient $client        An HTTP adapter
      * @param string     $sourceCountry Country biasing (optional)
-     * @param bool       $useSsl        Whether to use an SSL connection (optional)
      */
-    public function __construct(HttpClient $client, $sourceCountry = null, $useSsl = false)
+    public function __construct(HttpClient $client, $sourceCountry = null)
     {
         parent::__construct($client);
 
         $this->sourceCountry = $sourceCountry;
-        $this->protocol      = $useSsl ? 'https' : 'http';
     }
 
     /**
@@ -66,7 +60,7 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
             throw new NoResult('Invalid address.');
         }
 
-        $query = sprintf(self::ENDPOINT_URL, $this->protocol, urlencode($address));
+        $query = sprintf(self::ENDPOINT_URL, urlencode($address));
         $json  = $this->executeQuery($query);
 
         // no result
@@ -112,7 +106,7 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
      */
     public function reverse($latitude, $longitude)
     {
-        $query = sprintf(self::REVERSE_ENDPOINT_URL, $this->protocol, $longitude, $latitude);
+        $query = sprintf(self::REVERSE_ENDPOINT_URL, $longitude, $latitude);
         $json  = $this->executeQuery($query);
 
         if (property_exists($json, 'error')) {

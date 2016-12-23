@@ -24,14 +24,9 @@ final class OpenCage extends AbstractHttpProvider implements LocaleAwareProvider
     /**
      * @var string
      */
-    const GEOCODE_ENDPOINT_URL = '%s://api.opencagedata.com/geocode/v1/json?key=%s&query=%s&limit=%d&pretty=1';
+    const GEOCODE_ENDPOINT_URL = 'https://api.opencagedata.com/geocode/v1/json?key=%s&query=%s&limit=%d&pretty=1';
 
     use LocaleTrait;
-
-    /**
-     * @var string
-     */
-    private $scheme;
 
     /**
      * @var string
@@ -44,12 +39,11 @@ final class OpenCage extends AbstractHttpProvider implements LocaleAwareProvider
      * @param bool        $useSsl Whether to use an SSL connection (optional).
      * @param string|null $locale A locale (optional).
      */
-    public function __construct(HttpClient $client, $apiKey, $useSsl = false, $locale = null)
+    public function __construct(HttpClient $client, $apiKey, $locale = null)
     {
         parent::__construct($client);
 
         $this->apiKey = $apiKey;
-        $this->scheme = $useSsl ? 'https' : 'http';
         $this->locale = $locale;
     }
 
@@ -67,7 +61,7 @@ final class OpenCage extends AbstractHttpProvider implements LocaleAwareProvider
             throw new UnsupportedOperation('The OpenCage provider does not support IP addresses, only street addresses.');
         }
 
-        $query = sprintf(self::GEOCODE_ENDPOINT_URL, $this->scheme, $this->apiKey, urlencode($address), $this->getLimit());
+        $query = sprintf(self::GEOCODE_ENDPOINT_URL, $this->apiKey, urlencode($address), $this->getLimit());
 
         return $this->executeQuery($query);
     }

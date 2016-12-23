@@ -24,7 +24,7 @@ class GoogleMapsTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "http://maps.googleapis.com/maps/api/geocode/json?address=foobar".
+     * @expectedExceptionMessage Could not execute query "https://maps.googleapis.com/maps/api/geocode/json?address=foobar".
      */
     public function testGeocode()
     {
@@ -34,7 +34,7 @@ class GoogleMapsTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "http://maps.googleapis.com/maps/api/geocode/json?address=".
+     * @expectedExceptionMessage Could not execute query "https://maps.googleapis.com/maps/api/geocode/json?address=".
      */
     public function testGeocodeWithNull()
     {
@@ -44,7 +44,7 @@ class GoogleMapsTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "http://maps.googleapis.com/maps/api/geocode/json?address=".
+     * @expectedExceptionMessage Could not execute query "https://maps.googleapis.com/maps/api/geocode/json?address=".
      */
     public function testGeocodeWithEmpty()
     {
@@ -84,7 +84,7 @@ class GoogleMapsTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "http://maps.googleapis.com/maps/api/geocode/json?address=10%20avenue%20Gambetta%2C%20Paris%2C%20France".
+     * @expectedExceptionMessage Could not execute query "https://maps.googleapis.com/maps/api/geocode/json?address=10%20avenue%20Gambetta%2C%20Paris%2C%20France".
      */
     public function testGeocodeWithAddressGetsNullContent()
     {
@@ -94,7 +94,7 @@ class GoogleMapsTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "http://maps.googleapis.com/maps/api/geocode/json?address=10%20avenue%20Gambetta%2C%20Paris%2C%20France".
+     * @expectedExceptionMessage Could not execute query "https://maps.googleapis.com/maps/api/geocode/json?address=10%20avenue%20Gambetta%2C%20Paris%2C%20France".
      */
     public function testGeocodeWithAddressGetsEmptyContent()
     {
@@ -104,7 +104,7 @@ class GoogleMapsTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\QuotaExceeded
-     * @expectedExceptionMessage Daily quota exceeded http://maps.googleapis.com/maps/api/geocode/json?address=10%20avenue%20Gambetta%2C%20Paris%2C%20France
+     * @expectedExceptionMessage Daily quota exceeded https://maps.googleapis.com/maps/api/geocode/json?address=10%20avenue%20Gambetta%2C%20Paris%2C%20France
      */
     public function testGeocodeWithQuotaExceeded()
     {
@@ -145,7 +145,7 @@ class GoogleMapsTest extends TestCase
 
     public function testGeocodeWithRealAddressWithSsl()
     {
-        $provider = new GoogleMaps($this->getAdapter(), null, null, true);
+        $provider = new GoogleMaps($this->getAdapter(), null, null);
         $results  = $provider->geocode('10 avenue Gambetta, Paris, France');
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -196,60 +196,61 @@ class GoogleMapsTest extends TestCase
     public function testGeocodeWithRealAddressReturnsMultipleResults()
     {
         $provider = new GoogleMaps($this->getAdapter());
-        $results  = $provider->geocode('Paris');
+        $results  = $provider->geocode('i');
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+
         $this->assertCount(5, $results);
 
         /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(48.856614, $result->getCoordinates()->getLatitude(), '', 0.001);
-        $this->assertEquals(2.3522219, $result->getCoordinates()->getLongitude(), '', 0.001);
-        $this->assertEquals('Paris', $result->getLocality());
-        $this->assertEquals('France', $result->getCountry()->getName());
-        $this->assertEquals('FR', $result->getCountry()->getCode());
-
-        /** @var Location $result */
-        $result = $results->get(1);
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(33.6609389, $result->getCoordinates()->getLatitude(), '', 0.001);
-        $this->assertEquals(-95.555513, $result->getCoordinates()->getLongitude(), '', 0.001);
-        $this->assertEquals('Paris', $result->getLocality());
+        $this->assertEquals(34.037444399999998, $result->getCoordinates()->getLatitude(), '', 0.001);
+        $this->assertEquals(-117.08613630000001, $result->getCoordinates()->getLongitude(), '', 0.001);
+        $this->assertEquals('Yucaipa', $result->getLocality());
         $this->assertEquals('United States', $result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
 
         /** @var Location $result */
+        $result = $results->get(1);
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(29.4850089, $result->getCoordinates()->getLatitude(), '', 0.001);
+        $this->assertEquals(57.643904799999987, $result->getCoordinates()->getLongitude(), '', 0.001);
+        $this->assertEquals(null, $result->getLocality());
+        $this->assertEquals('Iran', $result->getCountry()->getName());
+        $this->assertEquals('IR', $result->getCountry()->getCode());
+
+        /** @var Location $result */
         $result = $results->get(2);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(36.3020023, $result->getCoordinates()->getLatitude(), '', 0.001);
-        $this->assertEquals(-88.3267107, $result->getCoordinates()->getLongitude(), '', 0.001);
-        $this->assertEquals('Paris', $result->getLocality());
+        $this->assertEquals(37.824995700000002, $result->getCoordinates()->getLatitude(), '', 0.001);
+        $this->assertEquals(-122.0063758, $result->getCoordinates()->getLongitude(), '', 0.001);
+        $this->assertEquals('Danville', $result->getLocality());
         $this->assertEquals('United States', $result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
 
         /** @var Location $result */
         $result = $results->get(3);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(39.611146, $result->getCoordinates()->getLatitude(), '', 0.001);
-        $this->assertEquals(-87.6961374, $result->getCoordinates()->getLongitude(), '', 0.001);
-        $this->assertEquals('Paris', $result->getLocality());
+        $this->assertEquals(40.591144200000002, $result->getCoordinates()->getLatitude(), '', 0.001);
+        $this->assertEquals(-73.938031199999998, $result->getCoordinates()->getLongitude(), '', 0.001);
+        $this->assertEquals(null, $result->getLocality());
         $this->assertEquals('United States', $result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
 
         /** @var Location $result */
         $result = $results->get(4);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(38.2097987, $result->getCoordinates()->getLatitude(), '', 0.001);
-        $this->assertEquals(-84.2529869, $result->getCoordinates()->getLongitude(), '', 0.001);
-        $this->assertEquals('Paris', $result->getLocality());
+        $this->assertEquals(43.827444900000003, $result->getCoordinates()->getLatitude(), '', 0.001);
+        $this->assertEquals(-111.79725120000001, $result->getCoordinates()->getLongitude(), '', 0.001);
+        $this->assertEquals('Rexburg', $result->getLocality());
         $this->assertEquals('United States',$result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
     }
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "http://maps.googleapis.com/maps/api/geocode/json?latlng=1.000000,2.000000".
+     * @expectedExceptionMessage Could not execute query "https://maps.googleapis.com/maps/api/geocode/json?latlng=1.000000,2.000000".
      */
     public function testReverse()
     {
@@ -281,7 +282,7 @@ class GoogleMapsTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "http://maps.googleapis.com/maps/api/geocode/json?latlng=48.863151,2.388911".
+     * @expectedExceptionMessage Could not execute query "https://maps.googleapis.com/maps/api/geocode/json?latlng=48.863151,2.388911".
      */
     public function testReverseWithCoordinatesGetsNullContent()
     {
@@ -305,7 +306,7 @@ class GoogleMapsTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\InvalidCredentials
-     * @expectedExceptionMessage API key is invalid http://maps.googleapis.com/maps/api/geocode/json?address=10%20avenue%20Gambetta%2C%20Paris%2C%20France
+     * @expectedExceptionMessage API key is invalid https://maps.googleapis.com/maps/api/geocode/json?address=10%20avenue%20Gambetta%2C%20Paris%2C%20France
      */
     public function testGeocodeWithInavlidApiKey()
     {
@@ -319,7 +320,7 @@ class GoogleMapsTest extends TestCase
             $this->markTestSkipped('You need to configure the GOOGLE_GEOCODING_KEY value in phpunit.xml');
         }
 
-        $provider = new GoogleMaps($this->getAdapter($_SERVER['GOOGLE_GEOCODING_KEY']), null, null, true, $_SERVER['GOOGLE_GEOCODING_KEY']);
+        $provider = new GoogleMaps($this->getAdapter($_SERVER['GOOGLE_GEOCODING_KEY']), null, null, $_SERVER['GOOGLE_GEOCODING_KEY']);
 
         $results = $provider->geocode('Columbia University');
 
@@ -344,7 +345,7 @@ class GoogleMapsTest extends TestCase
      */
     public function testGeocodeWithRealInvalidApiKey()
     {
-        $provider = new GoogleMaps($this->getAdapter(), null, null, true, $this->testAPIKey);
+        $provider = new GoogleMaps($this->getAdapter(), null, null,  $this->testAPIKey);
 
         $provider->geocode('Columbia University');
     }
@@ -381,7 +382,7 @@ class GoogleMapsTest extends TestCase
         } catch (NoResult $e) {
         }
 
-        $this->assertEquals('http://maps.googleapis.com/maps/api/geocode/json?address=blah&client=foo', $uri);
+        $this->assertEquals('https://maps.googleapis.com/maps/api/geocode/json?address=blah&client=foo', $uri);
     }
 
     public function testBusinessQueryWithPrivateKey()
@@ -404,7 +405,7 @@ class GoogleMapsTest extends TestCase
         }
 
         $this->assertEquals(
-            'http://maps.googleapis.com/maps/api/geocode/json?address=blah&client=foo&signature=9G2weMhhd4E2ciR681gp9YabvUg=',
+            'https://maps.googleapis.com/maps/api/geocode/json?address=blah&client=foo&signature=9G2weMhhd4E2ciR681gp9YabvUg=',
             $uri
         );
     }
@@ -415,17 +416,17 @@ class GoogleMapsTest extends TestCase
      */
     public function testGeocodeWithInvalidClientIdAndKey()
     {
-        $provider = GoogleMaps::business($this->getAdapter(), 'foo', 'bogus', null, null, true);
+        $provider = GoogleMaps::business($this->getAdapter(), 'foo', 'bogus');
         $provider->geocode('Columbia University');
     }
 
     /**
      * @expectedException \Geocoder\Exception\InvalidCredentials
-     * @expectedExceptionMessage Invalid client ID / API Key http://maps.googleapis.com/maps/api/geocode/json?address=Columbia%20University&client=foo&signature=9dJq1hPF7_iwafUpnqXUqEkP0gY=
+     * @expectedExceptionMessage Invalid client ID / API Key https://maps.googleapis.com/maps/api/geocode/json?address=Columbia%20University&client=foo&signature=9dJq1hPF7_iwafUpnqXUqEkP0gY=
      */
     public function testGeocodeWithInvalidClientIdAndKeyNoSsl()
     {
-        $provider = GoogleMaps::business($this->getAdapter(), 'foo', 'bogus', null, null, false);
+        $provider = GoogleMaps::business($this->getAdapter(), 'foo', 'bogus');
         $provider->geocode('Columbia University');
     }
 }

@@ -105,7 +105,7 @@ class MaxMindTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "http://geoip.maxmind.com/f?l=api_key&i=74.200.247.59".
+     * @expectedExceptionMessage Could not execute query "https://geoip.maxmind.com/f?l=api_key&i=74.200.247.59".
      */
     public function testGeocodeWithRealIPv4GetsNullContent()
     {
@@ -115,7 +115,7 @@ class MaxMindTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "http://geoip.maxmind.com/f?l=api_key&i=74.200.247.59".
+     * @expectedExceptionMessage Could not execute query "https://geoip.maxmind.com/f?l=api_key&i=74.200.247.59".
      */
     public function testGeocodeWithRealIPv4GetsEmptyContent()
     {
@@ -359,7 +359,7 @@ class MaxMindTest extends TestCase
         }
 
         $provider = new MaxMind($this->getAdapter($_SERVER['MAXMIND_API_KEY']), $_SERVER['MAXMIND_API_KEY'],
-            MaxMind::OMNI_SERVICE, true);
+            MaxMind::OMNI_SERVICE);
         $results  = $provider->geocode('189.26.128.80');
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -384,36 +384,6 @@ class MaxMindTest extends TestCase
         $this->assertEquals('America/Sao_Paulo', $result->getTimezone());
     }
 
-    public function testGeocodeWithRealIPv6()
-    {
-        if (!isset($_SERVER['MAXMIND_API_KEY'])) {
-            $this->markTestSkipped('You need to configure the MAXMIND_API_KEY value in phpunit.xml');
-        }
-
-        $provider = new MaxMind($this->getAdapter($_SERVER['MAXMIND_API_KEY']), $_SERVER['MAXMIND_API_KEY']);
-        $results  = $provider->geocode('2002:4293:f4d6:0:0:0:0:0');
-
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
-        $this->assertCount(1, $results);
-
-        /** @var Location $result */
-        $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(40.2181, $result->getCoordinates()->getLatitude(), '', 0.1);
-        $this->assertEquals(-111.6133, $result->getCoordinates()->getLongitude(), '', 0.1);
-        $this->assertNull($result->getBounds());
-        $this->assertNull($result->getStreetNumber());
-        $this->assertNull($result->getStreetName());
-        $this->assertEquals(84606, $result->getPostalCode());
-        $this->assertEquals('Provo', $result->getLocality());
-        $this->assertNull($result->getSubLocality());
-        $this->assertCount(1, $result->getAdminLevels());
-        $this->assertNull($result->getAdminLevels()->get(1)->getName());
-        $this->assertEquals('UT', $result->getAdminLevels()->get(1)->getCode());
-        $this->assertEquals('United States', $result->getCountry()->getName());
-        $this->assertEquals('US', $result->getCountry()->getCode());
-        $this->assertNull($result->getTimezone());
-    }
 
     public function testGeocodeOmniServiceWithRealIPv6WithSsl()
     {
@@ -422,7 +392,7 @@ class MaxMindTest extends TestCase
         }
 
         $provider = new MaxMind($this->getAdapter($_SERVER['MAXMIND_API_KEY']), $_SERVER['MAXMIND_API_KEY'],
-            MaxMind::OMNI_SERVICE, true);
+            MaxMind::OMNI_SERVICE);
         $results  = $provider->geocode('2002:4293:f4d6:0:0:0:0:0');
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
