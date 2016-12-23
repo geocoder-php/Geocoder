@@ -53,7 +53,7 @@ class GeoArray implements Dumper
         ];
 
         if (null !== $bounds = $location->getBounds()) {
-            $json['bounds'] = $bounds->toArray();
+            $array['bounds'] = $bounds->toArray();
         }
 
         return $array;
