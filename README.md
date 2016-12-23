@@ -46,6 +46,7 @@ providing a powerful abstraction layer for geocoding manipulations.
   - [Dumpers](#dumpers)
     - [GPS eXchange Format (GPX)](#gps-exchange-format-gpx)
     - [GeoJSON](#geojson)
+    - [GeoArray](#geoarray)
     - [Keyhole Markup Language (KML)](#keyhole-markup-language-kml)
     - [Well-Known Binary (WKB)](#well-known-binary-wkb)
     - [Well-Known Text (WKT)](#well-known-text-wkt)
@@ -437,6 +438,10 @@ It will display:
 
 [GeoJSON](http://geojson.org/) is a format for encoding a variety of geographic
 data structures.
+
+#### GeoArray
+
+Simple PHP array format for using with your own encoders.
 
 #### Keyhole Markup Language (KML)
 
