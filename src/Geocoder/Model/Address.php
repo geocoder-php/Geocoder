@@ -18,37 +18,37 @@ use Geocoder\Location;
 final class Address implements Location
 {
     /**
-     * @var Coordinates
+     * @var Coordinates|null
      */
     private $coordinates;
 
     /**
-     * @var Bounds
+     * @var Bounds|null
      */
     private $bounds;
 
     /**
-     * @var string|int
+     * @var string|int|null
      */
     private $streetNumber;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $streetName;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $subLocality;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $locality;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $postalCode;
 
@@ -58,12 +58,12 @@ final class Address implements Location
     private $adminLevels;
 
     /**
-     * @var Country
+     * @var Country|null
      */
     private $country;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $timezone;
 
@@ -105,9 +105,7 @@ final class Address implements Location
     }
 
     /**
-     * Returns the coordinates for this address.
-     *
-     * @return Coordinates|null
+     * {@inheritDoc}
      */
     public function getCoordinates()
     {
@@ -115,9 +113,7 @@ final class Address implements Location
     }
 
     /**
-     * Returns the bounds.
-     *
-     * @return Bounds|null
+     * {@inheritDoc}
      */
     public function getBounds()
     {
@@ -125,9 +121,7 @@ final class Address implements Location
     }
 
     /**
-     * Returns the street number value.
-     *
-     * @return string|int
+     * {@inheritDoc}
      */
     public function getStreetNumber()
     {
@@ -135,9 +129,7 @@ final class Address implements Location
     }
 
     /**
-     * Returns the street name value.
-     *
-     * @return string
+     * {@inheritDoc}
      */
     public function getStreetName()
     {
@@ -145,9 +137,7 @@ final class Address implements Location
     }
 
     /**
-     * Returns the city or locality value.
-     *
-     * @return string
+     * {@inheritDoc}
      */
     public function getLocality()
     {
@@ -155,9 +145,7 @@ final class Address implements Location
     }
 
     /**
-     * Returns the postal code or zipcode value.
-     *
-     * @return string
+     * {@inheritDoc}
      */
     public function getPostalCode()
     {
@@ -165,10 +153,7 @@ final class Address implements Location
     }
 
     /**
-     * Returns the locality district, or
-     * sublocality, or neighborhood.
-     *
-     * @return string
+     * {@inheritDoc}
      */
     public function getSubLocality()
     {
@@ -176,9 +161,7 @@ final class Address implements Location
     }
 
     /**
-     * Returns the administrative levels.
-     *
-     * @return AdminLevelCollection
+     * {@inheritDoc}
      */
     public function getAdminLevels()
     {
@@ -186,9 +169,7 @@ final class Address implements Location
     }
 
     /**
-     * Returns the country value.
-     *
-     * @return Country|null
+     * {@inheritDoc}
      */
     public function getCountry()
     {
@@ -196,9 +177,7 @@ final class Address implements Location
     }
 
     /**
-     * Returns the timezone.
-     *
-     * @return string
+     * {@inheritDoc}
      */
     public function getTimezone()
     {
@@ -206,9 +185,7 @@ final class Address implements Location
     }
 
     /**
-     * Returns an array with data indexed by name.
-     *
-     * @return array
+     * {@inheritDoc}
      */
     public function toArray()
     {

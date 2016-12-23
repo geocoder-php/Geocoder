@@ -17,46 +17,42 @@ interface Location
     /**
      * Will always return the coordinates value object.
      *
-     * This method MUST NOT return null.
-     *
-     * @return Coordinates
+     * @return Coordinates|null
      */
     public function getCoordinates();
 
     /**
      * Returns the bounds value object.
      *
-     * This method MUST NOT return null.
-     *
-     * @return Bounds
+     * @return Bounds|null
      */
     public function getBounds();
 
     /**
      * Returns the street number value.
      *
-     * @return string|int
+     * @return string|int|null
      */
     public function getStreetNumber();
 
     /**
      * Returns the street name value.
      *
-     * @return string
+     * @return string|null
      */
     public function getStreetName();
 
     /**
      * Returns the city or locality value.
      *
-     * @return string
+     * @return string|null
      */
     public function getLocality();
 
     /**
      * Returns the postal code or zipcode value.
      *
-     * @return string
+     * @return string|null
      */
     public function getPostalCode();
 
@@ -64,7 +60,7 @@ interface Location
      * Returns the locality district, or
      * sublocality, or neighborhood.
      *
-     * @return string
+     * @return string|null
      */
     public function getSubLocality();
 
@@ -80,9 +76,7 @@ interface Location
     /**
      * Returns the country value object.
      *
-     * This method MUST NOT return null.
-     *
-     * @return Country
+     * @return Country|null
      */
     public function getCountry();
 
@@ -91,7 +85,7 @@ interface Location
      *
      * {@link http://php.net/manual/en/timezones.php}
      *
-     * @return string
+     * @return string|null
      */
     public function getTimezone();
 
