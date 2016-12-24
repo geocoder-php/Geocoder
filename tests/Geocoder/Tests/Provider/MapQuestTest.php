@@ -111,11 +111,10 @@ class MapQuestTest extends TestCase
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(54.0484068, $result->getCoordinates()->getLatitude(), '', 0.001);
         $this->assertEquals(-2.7990345, $result->getCoordinates()->getLongitude(), '', 0.001);
-        $this->assertEquals('Lancaster Gate', $result->getStreetName());
-        $this->assertEquals('LA1 1LZ', $result->getPostalCode());
+        $this->assertEquals('Collegian W.M.C.', $result->getStreetName());
+        $this->assertEquals('LA1 1NP', $result->getPostalCode());
         $this->assertEquals('Lancaster', $result->getLocality());
-        $this->assertCount(2, $result->getAdminLevels());
-        $this->assertEquals('Lancashire', $result->getAdminLevels()->get(2)->getName());
+        $this->assertCount(1, $result->getAdminLevels());
         $this->assertEquals('England', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('GB', $result->getCountry()->getName());
         $this->assertEquals('GB', $result->getCountry()->getCode());
