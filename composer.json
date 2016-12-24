@@ -35,11 +35,14 @@
         "symfony/stopwatch": "If you want to use the TimedGeocoder"
     },
     "autoload": {
-        "psr-0": { "Geocoder": "src/" }
+        "psr-4": { "Geocoder\\": "src/" }
+    },
+    "autoload-dev": {
+        "psr-4": { "Geocoder\\Tests\\": "tests/" }
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "3.3-dev"
+            "dev-master": "4.0-dev"
         }
     }
 }

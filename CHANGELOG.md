@@ -8,7 +8,8 @@ CHANGELOG
 * Added: GeoArray dumper
 * Changed: `Location::getCoordinates` will return null or a `Coordinates` object with coordinates data. It will never return `Coordinates` without data. 
 * Changed: `Location::getBounds` will return null or a `Bounds` object with coordinates data. It will never return `Bounds` without data. 
-* Change: Support for unsecure transfer protocol was removed. The providers only support HTTPS. 
+* Changed: Support for unsecure transfer protocol was removed. The providers only support HTTPS.
+* Changed: Using PSR-4 instead of PSR-0 for autoloading.  
 * Removed: `AdminLevel::toString` in favor for `AdminLevel::__toString`.
 * Removed: `Country::toString` in favor for `Country::__toString`.
 * Removed: `Address::getCountryCode` in favor for `Address::getCountry()->getCode()`.
