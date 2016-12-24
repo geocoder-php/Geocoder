@@ -1,0 +1,122 @@
+s:3751:"{
+   "documentation" : "https://geocoder.opencagedata.com/api",
+   "licenses" : [
+      {
+         "name" : "CC-BY-SA",
+         "url" : "http://creativecommons.org/licenses/by-sa/3.0/"
+      },
+      {
+         "name" : "ODbL",
+         "url" : "http://opendatacommons.org/licenses/odbl/summary/"
+      }
+   ],
+   "rate" : {
+      "limit" : 2500,
+      "remaining" : 2487,
+      "reset" : 1482624000
+   },
+   "results" : [
+      {
+         "annotations" : {
+            "DMS" : {
+               "lat" : "49\u00b0 8' 20.73264'' N",
+               "lng" : "1\u00b0 39' 26.08632'' E"
+            },
+            "MGRS" : "31UDQ0206243786",
+            "Maidenhead" : "JN09td83uj",
+            "Mercator" : {
+               "x" : 184483.803,
+               "y" : 6266161.941
+            },
+            "OSM" : {
+               "edit_url" : "https://www.openstreetmap.org/edit?node=1564292039#map=17/49.13909/1.65725",
+               "url" : "https://www.openstreetmap.org/?mlat=49.13909&mlon=1.65725#map=17/49.13909/1.65725"
+            },
+            "callingcode" : 33,
+            "currency" : {
+               "alternate_symbols" : [],
+               "decimal_mark" : ",",
+               "html_entity" : "&#x20AC;",
+               "iso_code" : "EUR",
+               "iso_numeric" : 978,
+               "name" : "Euro",
+               "smallest_denomination" : 1,
+               "subunit" : "Cent",
+               "subunit_to_unit" : 100,
+               "symbol" : "\u20ac",
+               "symbol_first" : 1,
+               "thousands_separator" : "."
+            },
+            "geohash" : "u09pt9qzbwsrft58uhm6",
+            "qibla" : 118.67,
+            "sun" : {
+               "rise" : {
+                  "apparent" : 1482565620,
+                  "astronomical" : 1482558600,
+                  "civil" : 1482563340,
+                  "nautical" : 1482560940
+               },
+               "set" : {
+                  "apparent" : 1482595200,
+                  "astronomical" : 1482602220,
+                  "civil" : 1482597420,
+                  "nautical" : 1482599880
+               }
+            },
+            "timezone" : {
+               "name" : "Europe/Paris",
+               "now_in_dst" : 0,
+               "offset_sec" : 3600,
+               "offset_string" : 100,
+               "short_name" : "CET"
+            },
+            "what3words" : {
+               "words" : "washes.strategist.essential"
+            }
+         },
+         "bounds" : {
+            "northeast" : {
+               "lat" : 49.1391924,
+               "lng" : 1.6573462
+            },
+            "southwest" : {
+               "lat" : 49.1389924,
+               "lng" : 1.6571462
+            }
+         },
+         "components" : {
+            "_type" : "restaurant",
+            "country" : "France",
+            "country_code" : "fr",
+            "county" : "Pontoise",
+            "postcode" : "95710",
+            "residential" : "Route de Vernon",
+            "restaurant" : "Les Jardins d'\u00c9picure",
+            "road" : "Grande Rue",
+            "state" : "Ile-de-France",
+            "village" : "Bray-et-L\u00fb"
+         },
+         "confidence" : 10,
+         "formatted" : "Les Jardins d'\u00c9picure, Grande Rue, 95710 Bray-et-L\u00fb, France",
+         "geometry" : {
+            "lat" : 49.1390924,
+            "lng" : 1.6572462
+         }
+      }
+   ],
+   "status" : {
+      "code" : 200,
+      "message" : "OK"
+   },
+   "stay_informed" : {
+      "blog" : "http://blog.opencagedata.com",
+      "twitter" : "https://twitter.com/opencagedata"
+   },
+   "thanks" : "For using an OpenCage Data API",
+   "timestamp" : {
+      "created_http" : "Sat, 24 Dec 2016 00:08:01 GMT",
+      "created_unix" : 1482538081
+   },
+   "total_results" : 1
+}
+";
