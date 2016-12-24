@@ -101,6 +101,7 @@ final class MaxMindBinary extends AbstractProvider implements Provider
                 'locality'    => $geoIpRecord->city,
                 'latitude'    => $geoIpRecord->latitude,
                 'longitude'   => $geoIpRecord->longitude,
+                'postalCode'  => $geoIpRecord->postal_code,
             ]))
         ]);
     }

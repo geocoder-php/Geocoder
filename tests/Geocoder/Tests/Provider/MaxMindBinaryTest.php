@@ -59,7 +59,7 @@ class MaxMindBinaryTest extends TestCase
         $this->assertNull($result->getBounds());
         $this->assertNull($result->getStreetNumber());
         $this->assertNull($result->getStreetName());
-        $this->assertNull($result->getPostalCode());
+        $this->assertEquals('13057', $result->getPostalCode());
         $this->assertEquals('East Syracuse', $result->getLocality());
         $this->assertNull($result->getSubLocality());
         $this->assertCount(1, $result->getAdminLevels());
