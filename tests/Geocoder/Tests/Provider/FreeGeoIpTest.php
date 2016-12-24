@@ -76,7 +76,7 @@ class FreeGeoIpTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query http://freegeoip.net/json/74.200.247.59
+     * @expectedExceptionMessage Could not execute query https://freegeoip.net/json/74.200.247.59
      */
     public function testGeocodeWithRealIPv4GetsNullContent()
     {
@@ -86,7 +86,7 @@ class FreeGeoIpTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query http://freegeoip.net/json/74.200.247.59
+     * @expectedExceptionMessage Could not execute query https://freegeoip.net/json/74.200.247.59
      */
     public function testGeocodeWithRealIPv4GetsEmptyContent()
     {
@@ -138,7 +138,7 @@ class FreeGeoIpTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query http://freegeoip.net/json/::ffff:74.200.247.59
+     * @expectedExceptionMessage Could not execute query https://freegeoip.net/json/::ffff:74.200.247.59
      */
     public function testGeocodeWithRealIPv6GetsNullContent()
     {

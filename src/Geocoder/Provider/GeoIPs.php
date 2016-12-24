@@ -28,7 +28,7 @@ final class GeoIPs extends AbstractHttpProvider implements Provider
     /**
      * @var string
      */
-    const GEOCODE_ENDPOINT_URL  = 'http://api.geoips.com/ip/%s/key/%s/output/json/timezone/true/';
+    const GEOCODE_ENDPOINT_URL  = 'https://api.geoips.com/ip/%s/key/%s/output/json/timezone/true/';
 
     const CODE_SUCCESS          = '200_1'; // The following results has been returned.
 

@@ -1,0 +1,128 @@
+s:3946:"{
+   "documentation" : "https://geocoder.opencagedata.com/api",
+   "licenses" : [
+      {
+         "name" : "CC-BY-SA",
+         "url" : "http://creativecommons.org/licenses/by-sa/3.0/"
+      },
+      {
+         "name" : "ODbL",
+         "url" : "http://opendatacommons.org/licenses/odbl/summary/"
+      }
+   ],
+   "rate" : {
+      "limit" : 2500,
+      "remaining" : 2488,
+      "reset" : 1482624000
+   },
+   "results" : [
+      {
+         "annotations" : {
+            "DMS" : {
+               "lat" : "54\u00b0 2' 55.97826'' N",
+               "lng" : "2\u00b0 47' 56.10085'' W"
+            },
+            "MGRS" : "30UWE1316588979",
+            "Maidenhead" : "IO84ob41dr",
+            "Mercator" : {
+               "x" : -311574.004,
+               "y" : 7144804.341
+            },
+            "OSGB" : {
+               "easting" : 347789.104,
+               "gridref" : "SD 477 617",
+               "northing" : 461729.696
+            },
+            "OSM" : {
+               "edit_url" : "https://www.openstreetmap.org/edit?way=159807140#map=17/54.04888/-2.79892",
+               "url" : "https://www.openstreetmap.org/?mlat=54.04888&mlon=-2.79892#map=17/54.04888/-2.79892"
+            },
+            "callingcode" : 44,
+            "currency" : {
+               "alternate_symbols" : [],
+               "decimal_mark" : ".",
+               "html_entity" : "&#x00A3;",
+               "iso_code" : "GBP",
+               "iso_numeric" : 826,
+               "name" : "British Pound",
+               "smallest_denomination" : 1,
+               "subunit" : "Penny",
+               "subunit_to_unit" : 100,
+               "symbol" : "\u00a3",
+               "symbol_first" : 1,
+               "thousands_separator" : ","
+            },
+            "geohash" : "gcw52r3csd02c23bwucn",
+            "qibla" : 118.34,
+            "sun" : {
+               "rise" : {
+                  "apparent" : 1482568200,
+                  "astronomical" : 1482560160,
+                  "civil" : 1482565560,
+                  "nautical" : 1482562800
+               },
+               "set" : {
+                  "apparent" : 1482594780,
+                  "astronomical" : 1482602760,
+                  "civil" : 1482597360,
+                  "nautical" : 1482600180
+               }
+            },
+            "timezone" : {
+               "name" : "Europe/London",
+               "now_in_dst" : 0,
+               "offset_sec" : 0,
+               "offset_string" : 0,
+               "short_name" : "GMT"
+            },
+            "what3words" : {
+               "words" : "heave.dock.wage"
+            }
+         },
+         "bounds" : {
+            "northeast" : {
+               "lat" : 54.049472,
+               "lng" : -2.7980926
+            },
+            "southwest" : {
+               "lat" : 54.0482635,
+               "lng" : -2.7997874
+            }
+         },
+         "components" : {
+            "_type" : "building",
+            "building" : "Saint Nicholas Arcades",
+            "city" : "Lancaster",
+            "country" : "United Kingdom",
+            "country_code" : "gb",
+            "county" : "Lancashire",
+            "pedestrian" : "Lancaster Gate",
+            "postcode" : "LA1 1LZ",
+            "state" : "England",
+            "state_district" : "North West England",
+            "suburb" : "Vale"
+         },
+         "confidence" : 10,
+         "formatted" : "Saint Nicholas Arcades, Lancaster Gate, Lancaster LA1 1LZ, United Kingdom",
+         "geometry" : {
+            "lat" : 54.0488828,
+            "lng" : -2.7989169
+         }
+      }
+   ],
+   "status" : {
+      "code" : 200,
+      "message" : "OK"
+   },
+   "stay_informed" : {
+      "blog" : "http://blog.opencagedata.com",
+      "twitter" : "https://twitter.com/opencagedata"
+   },
+   "thanks" : "For using an OpenCage Data API",
+   "timestamp" : {
+      "created_http" : "Sat, 24 Dec 2016 00:08:01 GMT",
+      "created_unix" : 1482538081
+   },
+   "total_results" : 1
+}
+";

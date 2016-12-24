@@ -1,0 +1,190 @@
+s:5805:"{
+   "documentation" : "https://geocoder.opencagedata.com/api",
+   "licenses" : [
+      {
+         "name" : "CC-BY-SA",
+         "url" : "http://creativecommons.org/licenses/by-sa/3.0/"
+      },
+      {
+         "name" : "ODbL",
+         "url" : "http://opendatacommons.org/licenses/odbl/summary/"
+      }
+   ],
+   "rate" : {
+      "limit" : 2500,
+      "remaining" : 2489,
+      "reset" : 1482624000
+   },
+   "results" : [
+      {
+         "annotations" : {
+            "DMS" : {
+               "lat" : "48\u00b0 51' 47.49372'' N",
+               "lng" : "2\u00b0 23' 20.72184'' E"
+            },
+            "MGRS" : "31UDQ5519412427",
+            "Maidenhead" : "JN18eu67qd",
+            "Mercator" : {
+               "x" : 265952.215,
+               "y" : 6219481.698
+            },
+            "OSM" : {
+               "edit_url" : "https://www.openstreetmap.org/edit?node=1988097192#map=17/48.86319/2.38909",
+               "url" : "https://www.openstreetmap.org/?mlat=48.86319&mlon=2.38909#map=17/48.86319/2.38909"
+            },
+            "callingcode" : 33,
+            "currency" : {
+               "alternate_symbols" : [],
+               "decimal_mark" : ",",
+               "html_entity" : "&#x20AC;",
+               "iso_code" : "EUR",
+               "iso_numeric" : 978,
+               "name" : "Euro",
+               "smallest_denomination" : 1,
+               "subunit" : "Cent",
+               "subunit_to_unit" : 100,
+               "symbol" : "\u20ac",
+               "symbol_first" : 1,
+               "thousands_separator" : "."
+            },
+            "geohash" : "u09tyr78tz64jdcgfnhe",
+            "qibla" : 119.21,
+            "sun" : {
+               "rise" : {
+                  "apparent" : 1482565380,
+                  "astronomical" : 1482558420,
+                  "civil" : 1482563160,
+                  "nautical" : 1482560700
+               },
+               "set" : {
+                  "apparent" : 1482595080,
+                  "astronomical" : 1482602040,
+                  "civil" : 1482597300,
+                  "nautical" : 1482599760
+               }
+            },
+            "timezone" : {
+               "name" : "Europe/Paris",
+               "now_in_dst" : 0,
+               "offset_sec" : 3600,
+               "offset_string" : 100,
+               "short_name" : "CET"
+            },
+            "what3words" : {
+               "words" : "listed.emphasis.greeting"
+            }
+         },
+         "bounds" : {
+            "northeast" : {
+               "lat" : 48.8632427,
+               "lng" : 2.3891394
+            },
+            "southwest" : {
+               "lat" : 48.8631427,
+               "lng" : 2.3890394
+            }
+         },
+         "components" : {
+            "_type" : "building",
+            "city" : "Paris",
+            "city_district" : "20th Arrondissement",
+            "country" : "France",
+            "country_code" : "fr",
+            "county" : "Paris",
+            "house_number" : "10",
+            "postcode" : "75020",
+            "road" : "Avenue Gambetta",
+            "state" : "Ile-de-France",
+            "suburb" : "St-Fargeau"
+         },
+         "confidence" : 10,
+         "formatted" : "10 Avenue Gambetta, 75020 Paris, France",
+         "geometry" : {
+            "lat" : 48.8631927,
+            "lng" : 2.3890894
+         }
+      },
+      {
+         "annotations" : {
+            "DMS" : {
+               "lat" : "48\u00b0 51' 12.27600'' N",
+               "lng" : "2\u00b0 20' 55.68000'' E"
+            },
+            "MGRS" : "31UDQ5223011364",
+            "Maidenhead" : "JN18eu14ut",
+            "Mercator" : {
+               "x" : 261467.22,
+               "y" : 6217831.297
+            },
+            "OSM" : {
+               "url" : "https://www.openstreetmap.org/?mlat=48.85341&mlon=2.34880#map=17/48.85341/2.34880"
+            },
+            "geohash" : "u09tvmqrep8np02g7x9y",
+            "qibla" : 119.16,
+            "sun" : {
+               "rise" : {
+                  "apparent" : 1482565380,
+                  "astronomical" : 1482558420,
+                  "civil" : 1482563160,
+                  "nautical" : 1482560700
+               },
+               "set" : {
+                  "apparent" : 1482595080,
+                  "astronomical" : 1482602100,
+                  "civil" : 1482597360,
+                  "nautical" : 1482599760
+               }
+            },
+            "timezone" : {
+               "name" : "Europe/Paris",
+               "now_in_dst" : 0,
+               "offset_sec" : 3600,
+               "offset_string" : 100,
+               "short_name" : "CET"
+            },
+            "what3words" : {
+               "words" : "estate.spells.blend"
+            }
+         },
+         "bounds" : {
+            "northeast" : {
+               "lat" : 48.9016495,
+               "lng" : 2.416342
+            },
+            "southwest" : {
+               "lat" : 48.815857,
+               "lng" : 2.2237277
+            }
+         },
+         "components" : {
+            "_type" : "local_administrative_area",
+            "country" : "France",
+            "county" : "Paris",
+            "local_administrative_area" : "Paris",
+            "state" : "\u00cele-de-France",
+            "town" : "Paris"
+         },
+         "confidence" : 6,
+         "formatted" : "Paris, France",
+         "geometry" : {
+            "lat" : 48.85341,
+            "lng" : 2.3488
+         }
+      }
+   ],
+   "status" : {
+      "code" : 200,
+      "message" : "OK"
+   },
+   "stay_informed" : {
+      "blog" : "http://blog.opencagedata.com",
+      "twitter" : "https://twitter.com/opencagedata"
+   },
+   "thanks" : "For using an OpenCage Data API",
+   "timestamp" : {
+      "created_http" : "Sat, 24 Dec 2016 00:08:00 GMT",
+      "created_unix" : 1482538080
+   },
+   "total_results" : 2
+}
+";

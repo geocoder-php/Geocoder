@@ -25,12 +25,12 @@ final class IpInfoDb extends AbstractHttpProvider implements Provider
     /**
      * @var string
      */
-    const CITY_PRECISION_ENDPOINT_URL = 'http://api.ipinfodb.com/v3/ip-city/?key=%s&format=json&ip=%s';
+    const CITY_PRECISION_ENDPOINT_URL = 'https://api.ipinfodb.com/v3/ip-city/?key=%s&format=json&ip=%s';
 
     /**
      * @var string
      */
-    const COUNTRY_PRECISION_ENDPOINT_URL = 'http://api.ipinfodb.com/v3/ip-country/?key=%s&format=json&ip=%s';
+    const COUNTRY_PRECISION_ENDPOINT_URL = 'https://api.ipinfodb.com/v3/ip-country/?key=%s&format=json&ip=%s';
 
     /**
      * @var string

@@ -105,7 +105,7 @@ class IpInfoDbTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "http://api.ipinfodb.com/v3/ip-city/?key=api_key&format=json&ip=74.125.45.100".
+     * @expectedExceptionMessage Could not execute query "https://api.ipinfodb.com/v3/ip-city/?key=api_key&format=json&ip=74.125.45.100".
      */
     public function testGeocodeWithRealIPv4GetsNullContent()
     {
@@ -115,7 +115,7 @@ class IpInfoDbTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "http://api.ipinfodb.com/v3/ip-city/?key=api_key&format=json&ip=74.125.45.100".
+     * @expectedExceptionMessage Could not execute query "https://api.ipinfodb.com/v3/ip-city/?key=api_key&format=json&ip=74.125.45.100".
      */
     public function testGeocodeWithRealIPv4GetsEmptyContent()
     {

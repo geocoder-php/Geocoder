@@ -23,22 +23,22 @@ final class MapQuest extends AbstractHttpProvider implements Provider
     /**
      * @var string
      */
-    const OPEN_GEOCODE_ENDPOINT_URL = 'http://open.mapquestapi.com/geocoding/v1/address?location=%s&outFormat=json&maxResults=%d&key=%s&thumbMaps=false';
+    const OPEN_GEOCODE_ENDPOINT_URL = 'https://open.mapquestapi.com/geocoding/v1/address?location=%s&outFormat=json&maxResults=%d&key=%s&thumbMaps=false';
 
     /**
      * @var string
      */
-    const OPEN_REVERSE_ENDPOINT_URL = 'http://open.mapquestapi.com/geocoding/v1/reverse?key=%s&lat=%F&lng=%F';
+    const OPEN_REVERSE_ENDPOINT_URL = 'https://open.mapquestapi.com/geocoding/v1/reverse?key=%s&lat=%F&lng=%F';
 
     /**
      * @var string
      */
-    const LICENSED_GEOCODE_ENDPOINT_URL = 'http://www.mapquestapi.com/geocoding/v1/address?location=%s&outFormat=json&maxResults=%d&key=%s&thumbMaps=false';
+    const LICENSED_GEOCODE_ENDPOINT_URL = 'https://www.mapquestapi.com/geocoding/v1/address?location=%s&outFormat=json&maxResults=%d&key=%s&thumbMaps=false';
 
     /**
      * @var string
      */
-    const LICENSED_REVERSE_ENDPOINT_URL = 'http://www.mapquestapi.com/geocoding/v1/reverse?key=%s&lat=%F&lng=%F';
+    const LICENSED_REVERSE_ENDPOINT_URL = 'https://www.mapquestapi.com/geocoding/v1/reverse?key=%s&lat=%F&lng=%F';
 
     /**
      * MapQuest offers two geocoding endpoints one commercial (true) and one open (false)

@@ -1,0 +1,465 @@
+s:15028:"{
+   "documentation" : "https://geocoder.opencagedata.com/api",
+   "licenses" : [
+      {
+         "name" : "CC-BY-SA",
+         "url" : "http://creativecommons.org/licenses/by-sa/3.0/"
+      },
+      {
+         "name" : "ODbL",
+         "url" : "http://opendatacommons.org/licenses/odbl/summary/"
+      }
+   ],
+   "rate" : {
+      "limit" : 2500,
+      "remaining" : 2486,
+      "reset" : 1482624000
+   },
+   "results" : [
+      {
+         "annotations" : {
+            "DMS" : {
+               "lat" : "52\u00b0 22' 28.12044'' N",
+               "lng" : "9\u00b0 44' 18.79152'' E"
+            },
+            "MGRS" : "32UND5027702946",
+            "Maidenhead" : "JO42ui89pu",
+            "Mercator" : {
+               "x" : 1084090.783,
+               "y" : 6834256.383
+            },
+            "OSM" : {
+               "edit_url" : "https://www.openstreetmap.org/edit?relation=59418#map=17/52.37448/9.73855",
+               "url" : "https://www.openstreetmap.org/?mlat=52.37448&mlon=9.73855#map=17/52.37448/9.73855"
+            },
+            "callingcode" : 49,
+            "currency" : {
+               "alternate_symbols" : [],
+               "decimal_mark" : ",",
+               "html_entity" : "&#x20AC;",
+               "iso_code" : "EUR",
+               "iso_numeric" : 978,
+               "name" : "Euro",
+               "smallest_denomination" : 1,
+               "subunit" : "Cent",
+               "subunit_to_unit" : 100,
+               "symbol" : "\u20ac",
+               "symbol_first" : 1,
+               "thousands_separator" : "."
+            },
+            "geohash" : "u1qcvw7rkwrd4tdd9ej3",
+            "qibla" : 131.64,
+            "sun" : {
+               "rise" : {
+                  "apparent" : 1482564660,
+                  "astronomical" : 1482556980,
+                  "civil" : 1482562140,
+                  "nautical" : 1482559500
+               },
+               "set" : {
+                  "apparent" : 1482592320,
+                  "astronomical" : 1482599940,
+                  "civil" : 1482594780,
+                  "nautical" : 1482597420
+               }
+            },
+            "timezone" : {
+               "name" : "Europe/Berlin",
+               "now_in_dst" : 0,
+               "offset_sec" : 3600,
+               "offset_string" : 100,
+               "short_name" : "CET"
+            },
+            "what3words" : {
+               "words" : "arranged.unity.dripped"
+            },
+            "wikidata" : "Q1715"
+         },
+         "bounds" : {
+            "northeast" : {
+               "lat" : 52.4543349,
+               "lng" : 9.9186208
+            },
+            "southwest" : {
+               "lat" : 52.3051373,
+               "lng" : 9.60443
+            }
+         },
+         "components" : {
+            "_type" : "city",
+            "city" : "Hanover",
+            "country" : "Germany",
+            "country_code" : "de",
+            "county" : "Region Hannover",
+            "state" : "Lower Saxony"
+         },
+         "confidence" : 5,
+         "formatted" : "Hanover, Lower Saxony, Germany",
+         "geometry" : {
+            "lat" : 52.3744779,
+            "lng" : 9.7385532
+         }
+      },
+      {
+         "annotations" : {
+            "DMS" : {
+               "lat" : "18\u00b0 23' 2.57604'' N",
+               "lng" : "78\u00b0 7' 53.34710'' W"
+            },
+            "MGRS" : "17QRA0310635070",
+            "Maidenhead" : "FK08wj42fe",
+            "Mercator" : {
+               "x" : -8697557.159,
+               "y" : 2069080.962
+            },
+            "OSM" : {
+               "edit_url" : "https://www.openstreetmap.org/edit?relation=319347#map=17/18.38405/-78.13149",
+               "url" : "https://www.openstreetmap.org/?mlat=18.38405&mlon=-78.13149#map=17/18.38405/-78.13149"
+            },
+            "callingcode" : 1,
+            "currency" : {
+               "alternate_symbols" : [
+                  "J$"
+               ],
+               "decimal_mark" : ".",
+               "disambiguate_symbol" : "J$",
+               "html_entity" : "$",
+               "iso_code" : "JMD",
+               "iso_numeric" : 388,
+               "name" : "Jamaican Dollar",
+               "smallest_denomination" : 1,
+               "subunit" : "Cent",
+               "subunit_to_unit" : 100,
+               "symbol" : "$",
+               "symbol_first" : 1,
+               "thousands_separator" : ","
+            },
+            "geohash" : "d722w4dqu7jgr6qspmy9",
+            "qibla" : 59.51,
+            "sun" : {
+               "rise" : {
+                  "apparent" : 1482579660,
+                  "astronomical" : 1482574980,
+                  "civil" : 1482578220,
+                  "nautical" : 1482576600
+               },
+               "set" : {
+                  "apparent" : 1482619380,
+                  "astronomical" : 1482537660,
+                  "civil" : 1482620820,
+                  "nautical" : 1482622440
+               }
+            },
+            "timezone" : {
+               "name" : "America/Jamaica",
+               "now_in_dst" : 0,
+               "offset_sec" : -18000,
+               "offset_string" : -500,
+               "short_name" : "EST"
+            },
+            "what3words" : {
+               "words" : "gloom.endings.haste"
+            },
+            "wikidata" : "Q1131779"
+         },
+         "bounds" : {
+            "northeast" : {
+               "lat" : 18.4629985,
+               "lng" : -77.9203783
+            },
+            "southwest" : {
+               "lat" : 18.3044313,
+               "lng" : -78.3450397
+            }
+         },
+         "components" : {
+            "_type" : "county",
+            "country" : "Jamaica",
+            "country_code" : "jm",
+            "county" : "Hanover",
+            "state_district" : "Cornwall County"
+         },
+         "confidence" : 3,
+         "formatted" : "Hanover, Jamaica",
+         "geometry" : {
+            "lat" : 18.3840489,
+            "lng" : -78.1314853
+         }
+      },
+      {
+         "annotations" : {
+            "DMS" : {
+               "lat" : "43\u00b0 42' 13.03920'' N",
+               "lng" : "72\u00b0 17' 19.19724'' W"
+            },
+            "MGRS" : "18TYP1846142528",
+            "Maidenhead" : "FN33uq58iu",
+            "Mercator" : {
+               "x" : -8047137.478,
+               "y" : 5390158.468
+            },
+            "OSM" : {
+               "edit_url" : "https://www.openstreetmap.org/edit?relation=2027183#map=17/43.70362/-72.28867",
+               "url" : "https://www.openstreetmap.org/?mlat=43.70362&mlon=-72.28867#map=17/43.70362/-72.28867"
+            },
+            "callingcode" : 1,
+            "currency" : {
+               "alternate_symbols" : [
+                  "US$"
+               ],
+               "decimal_mark" : ".",
+               "disambiguate_symbol" : "US$",
+               "html_entity" : "$",
+               "iso_code" : "USD",
+               "iso_numeric" : 840,
+               "name" : "United States Dollar",
+               "smallest_denomination" : 1,
+               "subunit" : "Cent",
+               "subunit_to_unit" : 100,
+               "symbol" : "$",
+               "symbol_first" : 1,
+               "thousands_separator" : ","
+            },
+            "geohash" : "dru8eh0bpcxuhbmceghb",
+            "qibla" : 59.59,
+            "sun" : {
+               "rise" : {
+                  "apparent" : 1482582060,
+                  "astronomical" : 1482575760,
+                  "civil" : 1482580080,
+                  "nautical" : 1482577860
+               },
+               "set" : {
+                  "apparent" : 1482614220,
+                  "astronomical" : 1482620460,
+                  "civil" : 1482616200,
+                  "nautical" : 1482618360
+               }
+            },
+            "timezone" : {
+               "name" : "America/New_York",
+               "now_in_dst" : 0,
+               "offset_sec" : -18000,
+               "offset_string" : -500,
+               "short_name" : "EST"
+            },
+            "what3words" : {
+               "words" : "presenters.listed.remains"
+            },
+            "wikidata" : "Q131908"
+         },
+         "bounds" : {
+            "northeast" : {
+               "lat" : 43.7709495,
+               "lng" : -72.075688
+            },
+            "southwest" : {
+               "lat" : 43.658591,
+               "lng" : -72.3051329
+            }
+         },
+         "components" : {
+            "_type" : "city",
+            "city" : "Hanover",
+            "country" : "United States of America",
+            "country_code" : "us",
+            "county" : "Grafton County",
+            "state" : "New Hampshire"
+         },
+         "confidence" : 5,
+         "formatted" : "Hanover, Grafton County, New Hampshire, United States of America",
+         "geometry" : {
+            "lat" : 43.703622,
+            "lng" : -72.2886659
+         }
+      },
+      {
+         "annotations" : {
+            "DMS" : {
+               "lat" : "39\u00b0 48' 22.76892'' N",
+               "lng" : "76\u00b0 59' 3.38424'' W"
+            },
+            "MGRS" : "18SUK3013908144",
+            "Maidenhead" : "FM19mt13vm",
+            "Mercator" : {
+               "x" : -8569850.114,
+               "y" : 4810477.842
+            },
+            "OSM" : {
+               "edit_url" : "https://www.openstreetmap.org/edit?relation=187717#map=17/39.80632/-76.98427",
+               "url" : "https://www.openstreetmap.org/?mlat=39.80632&mlon=-76.98427#map=17/39.80632/-76.98427"
+            },
+            "callingcode" : 1,
+            "currency" : {
+               "alternate_symbols" : [
+                  "US$"
+               ],
+               "decimal_mark" : ".",
+               "disambiguate_symbol" : "US$",
+               "html_entity" : "$",
+               "iso_code" : "USD",
+               "iso_numeric" : 840,
+               "name" : "United States Dollar",
+               "smallest_denomination" : 1,
+               "subunit" : "Cent",
+               "subunit_to_unit" : 100,
+               "symbol" : "$",
+               "symbol_first" : 1,
+               "thousands_separator" : ","
+            },
+            "geohash" : "dr162ntb8kv0jcc1831x",
+            "qibla" : 56.53,
+            "sun" : {
+               "rise" : {
+                  "apparent" : 1482582420,
+                  "astronomical" : 1482576540,
+                  "civil" : 1482580560,
+                  "nautical" : 1482578520
+               },
+               "set" : {
+                  "apparent" : 1482616080,
+                  "astronomical" : 1482621900,
+                  "civil" : 1482617940,
+                  "nautical" : 1482619980
+               }
+            },
+            "timezone" : {
+               "name" : "America/New_York",
+               "now_in_dst" : 0,
+               "offset_sec" : -18000,
+               "offset_string" : -500,
+               "short_name" : "EST"
+            },
+            "what3words" : {
+               "words" : "smug.dating.opera"
+            },
+            "wikidata" : "Q1182166"
+         },
+         "bounds" : {
+            "northeast" : {
+               "lat" : 39.832415,
+               "lng" : -76.9634509
+            },
+            "southwest" : {
+               "lat" : 39.791036,
+               "lng" : -76.9999439
+            }
+         },
+         "components" : {
+            "_type" : "city",
+            "city" : "Hanover",
+            "country" : "United States of America",
+            "country_code" : "us",
+            "county" : "York County",
+            "state" : "Pennsylvania"
+         },
+         "confidence" : 7,
+         "formatted" : "Hanover, York County, Pennsylvania, United States of America",
+         "geometry" : {
+            "lat" : 39.8063247,
+            "lng" : -76.9842734
+         }
+      },
+      {
+         "annotations" : {
+            "DMS" : {
+               "lat" : "37\u00b0 44' 41.21880'' N",
+               "lng" : "77\u00b0 26' 47.09904'' W"
+            },
+            "MGRS" : "18STG8445280316",
+            "Maidenhead" : "FM17gr68kr",
+            "Mercator" : {
+               "x" : -8621295.637,
+               "y" : 4517275.615
+            },
+            "OSM" : {
+               "edit_url" : "https://www.openstreetmap.org/edit?relation=2534182#map=17/37.74478/-77.44642",
+               "url" : "https://www.openstreetmap.org/?mlat=37.74478&mlon=-77.44642#map=17/37.74478/-77.44642"
+            },
+            "callingcode" : 1,
+            "currency" : {
+               "alternate_symbols" : [
+                  "US$"
+               ],
+               "decimal_mark" : ".",
+               "disambiguate_symbol" : "US$",
+               "html_entity" : "$",
+               "iso_code" : "USD",
+               "iso_numeric" : 840,
+               "name" : "United States Dollar",
+               "smallest_denomination" : 1,
+               "subunit" : "Cent",
+               "subunit_to_unit" : 100,
+               "symbol" : "$",
+               "symbol_first" : 1,
+               "thousands_separator" : ","
+            },
+            "geohash" : "dq8ytxjpr9w2u3bb65jb",
+            "qibla" : 56.39,
+            "sun" : {
+               "rise" : {
+                  "apparent" : 1482582120,
+                  "astronomical" : 1482576480,
+                  "civil" : 1482580380,
+                  "nautical" : 1482578400
+               },
+               "set" : {
+                  "apparent" : 1482616560,
+                  "astronomical" : 1482622200,
+                  "civil" : 1482618300,
+                  "nautical" : 1482620280
+               }
+            },
+            "timezone" : {
+               "name" : "America/New_York",
+               "now_in_dst" : 0,
+               "offset_sec" : -18000,
+               "offset_string" : -500,
+               "short_name" : "EST"
+            },
+            "what3words" : {
+               "words" : "depends.tries.latches"
+            },
+            "wikidata" : "Q341679"
+         },
+         "bounds" : {
+            "northeast" : {
+               "lat" : 38.008057,
+               "lng" : -77.1083369
+            },
+            "southwest" : {
+               "lat" : 37.539116,
+               "lng" : -77.8004379
+            }
+         },
+         "components" : {
+            "_type" : "county",
+            "country" : "United States of America",
+            "country_code" : "us",
+            "county" : "Hanover County",
+            "state" : "Virginia"
+         },
+         "confidence" : 1,
+         "formatted" : "Hanover County, Virginia, United States of America",
+         "geometry" : {
+            "lat" : 37.744783,
+            "lng" : -77.4464164
+         }
+      }
+   ],
+   "status" : {
+      "code" : 200,
+      "message" : "OK"
+   },
+   "stay_informed" : {
+      "blog" : "http://blog.opencagedata.com",
+      "twitter" : "https://twitter.com/opencagedata"
+   },
+   "thanks" : "For using an OpenCage Data API",
+   "timestamp" : {
+      "created_http" : "Sat, 24 Dec 2016 00:08:02 GMT",
+      "created_unix" : 1482538082
+   },
+   "total_results" : 5
+}
+";

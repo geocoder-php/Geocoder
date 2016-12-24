@@ -19,7 +19,7 @@ class MapQuestTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not find results for query "http://open.mapquestapi.com/geocoding/v1/address?location=foobar&outFormat=json&maxResults=5&key=api_key&thumbMaps=false".
+     * @expectedExceptionMessage Could not find results for query "https://open.mapquestapi.com/geocoding/v1/address?location=foobar&outFormat=json&maxResults=5&key=api_key&thumbMaps=false".
      */
     public function testGeocode()
     {
@@ -29,7 +29,7 @@ class MapQuestTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "http://open.mapquestapi.com/geocoding/v1/address?location=10+avenue+Gambetta%2C+Paris%2C+France&outFormat=json&maxResults=5&key=api_key&thumbMaps=false".
+     * @expectedExceptionMessage Could not execute query "https://open.mapquestapi.com/geocoding/v1/address?location=10+avenue+Gambetta%2C+Paris%2C+France&outFormat=json&maxResults=5&key=api_key&thumbMaps=false".
      */
     public function testGeocodeWithAddressGetsNullContent()
     {
@@ -39,7 +39,7 @@ class MapQuestTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not find results for query "http://open.mapquestapi.com/geocoding/v1/reverse?key=api_key&lat=123.000000&lng=456.000000".
+     * @expectedExceptionMessage Could not find results for query "https://open.mapquestapi.com/geocoding/v1/reverse?key=api_key&lat=123.000000&lng=456.000000".
      */
     public function testGetNotRelevantData()
     {
@@ -111,11 +111,10 @@ class MapQuestTest extends TestCase
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(54.0484068, $result->getCoordinates()->getLatitude(), '', 0.001);
         $this->assertEquals(-2.7990345, $result->getCoordinates()->getLongitude(), '', 0.001);
-        $this->assertEquals('Lancaster Gate', $result->getStreetName());
-        $this->assertEquals('LA1 1LZ', $result->getPostalCode());
+        $this->assertEquals('Collegian W.M.C.', $result->getStreetName());
+        $this->assertEquals('LA1 1NP', $result->getPostalCode());
         $this->assertEquals('Lancaster', $result->getLocality());
-        $this->assertCount(2, $result->getAdminLevels());
-        $this->assertEquals('Lancashire', $result->getAdminLevels()->get(2)->getName());
+        $this->assertCount(1, $result->getAdminLevels());
         $this->assertEquals('England', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('GB', $result->getCountry()->getName());
         $this->assertEquals('GB', $result->getCountry()->getCode());

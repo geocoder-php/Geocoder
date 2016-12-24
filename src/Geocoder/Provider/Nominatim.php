@@ -33,7 +33,7 @@ final class Nominatim extends AbstractHttpProvider implements LocaleAwareProvide
      */
     public static function withOpenStreetMapServer(HttpClient $client, $locale = null)
     {
-        return new self($client, 'http://nominatim.openstreetmap.org', $locale);
+        return new self($client, 'https://nominatim.openstreetmap.org', $locale);
     }
 
     /**

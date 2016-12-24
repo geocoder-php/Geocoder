@@ -1,0 +1,177 @@
+s:5448:"{
+   "documentation" : "https://geocoder.opencagedata.com/api",
+   "licenses" : [
+      {
+         "name" : "CC-BY-SA",
+         "url" : "http://creativecommons.org/licenses/by-sa/3.0/"
+      },
+      {
+         "name" : "ODbL",
+         "url" : "http://opendatacommons.org/licenses/odbl/summary/"
+      }
+   ],
+   "rate" : {
+      "limit" : 2500,
+      "remaining" : 2485,
+      "reset" : 1482624000
+   },
+   "results" : [
+      {
+         "annotations" : {
+            "DMS" : {
+               "lat" : "50\u00b0 11' 20.56434'' N",
+               "lng" : "8\u00b0 38' 11.79531'' E"
+            },
+            "MGRS" : "32UMA7405959713",
+            "Maidenhead" : "JO40he65ji",
+            "Mercator" : {
+               "x" : 961423.006,
+               "y" : 6446237.833
+            },
+            "OSM" : {
+               "edit_url" : "https://www.openstreetmap.org/edit?way=109282123#map=17/50.18905/8.63661",
+               "url" : "https://www.openstreetmap.org/?mlat=50.18905&mlon=8.63661#map=17/50.18905/8.63661"
+            },
+            "callingcode" : 49,
+            "currency" : {
+               "alternate_symbols" : [],
+               "decimal_mark" : ",",
+               "html_entity" : "&#x20AC;",
+               "iso_code" : "EUR",
+               "iso_numeric" : 978,
+               "name" : "Euro",
+               "smallest_denomination" : 1,
+               "subunit" : "Cent",
+               "subunit_to_unit" : 100,
+               "symbol" : "\u20ac",
+               "symbol_first" : 1,
+               "thousands_separator" : "."
+            },
+            "geohash" : "u0yjs88urs5p105mgpjw",
+            "qibla" : 128.09,
+            "sun" : {
+               "rise" : {
+                  "apparent" : 1482564240,
+                  "astronomical" : 1482557040,
+                  "civil" : 1482561900,
+                  "nautical" : 1482559380
+               },
+               "set" : {
+                  "apparent" : 1482593220,
+                  "astronomical" : 1482600420,
+                  "civil" : 1482595560,
+                  "nautical" : 1482598080
+               }
+            },
+            "timezone" : {
+               "name" : "Europe/Berlin",
+               "now_in_dst" : 0,
+               "offset_sec" : 3600,
+               "offset_string" : 100,
+               "short_name" : "CET"
+            },
+            "what3words" : {
+               "words" : "graceful.retrial.blitz"
+            }
+         },
+         "bounds" : {
+            "northeast" : {
+               "lat" : 50.1891029,
+               "lng" : 8.6367004
+            },
+            "southwest" : {
+               "lat" : 50.1889883,
+               "lng" : 8.6365192
+            }
+         },
+         "components" : {
+            "_type" : "building",
+            "city" : "Frankfurt",
+            "city_district" : "Kalbach",
+            "country" : "Germany",
+            "country_code" : "de",
+            "house_number" : "10",
+            "postcode" : "60437",
+            "road" : "Kalbacher Hauptstra\u00dfe",
+            "state" : "Hesse",
+            "state_district" : "Regierungsbezirk Darmstadt",
+            "suburb" : "Kalbach"
+         },
+         "confidence" : 10,
+         "formatted" : "Kalbacher Hauptstra\u00dfe 10, 60437 Frankfurt, Germany",
+         "geometry" : {
+            "lat" : 50.1890456,
+            "lng" : 8.6366098
+         }
+      },
+      {
+         "annotations" : {
+            "DMS" : {
+               "lat" : "50\u00b0 11' 16.08000'' N",
+               "lng" : "8\u00b0 39' 47.52000'' E"
+            },
+            "MGRS" : "32UMA7595659565",
+            "Maidenhead" : "JO40he95ob",
+            "Mercator" : {
+               "x" : 964383.013,
+               "y" : 6446021.855
+            },
+            "OSM" : {
+               "url" : "https://www.openstreetmap.org/?mlat=50.18780&mlon=8.66320#map=17/50.18780/8.66320"
+            },
+            "geohash" : "u0yjt0km5hn07v28j4fu",
+            "qibla" : 128.12,
+            "sun" : {
+               "rise" : {
+                  "apparent" : 1482564240,
+                  "astronomical" : 1482557040,
+                  "civil" : 1482561900,
+                  "nautical" : 1482559380
+               },
+               "set" : {
+                  "apparent" : 1482593220,
+                  "astronomical" : 1482600420,
+                  "civil" : 1482595560,
+                  "nautical" : 1482598080
+               }
+            },
+            "timezone" : {
+               "name" : "Europe/Berlin",
+               "now_in_dst" : 0,
+               "offset_sec" : 3600,
+               "offset_string" : 100,
+               "short_name" : "CET"
+            },
+            "what3words" : {
+               "words" : "solder.lawn.smug"
+            }
+         },
+         "components" : {
+            "_type" : "postcode",
+            "country" : "Germany",
+            "postcode" : "60437"
+         },
+         "confidence" : 10,
+         "formatted" : "60437, Germany",
+         "geometry" : {
+            "lat" : 50.1878,
+            "lng" : 8.6632
+         }
+      }
+   ],
+   "status" : {
+      "code" : 200,
+      "message" : "OK"
+   },
+   "stay_informed" : {
+      "blog" : "http://blog.opencagedata.com",
+      "twitter" : "https://twitter.com/opencagedata"
+   },
+   "thanks" : "For using an OpenCage Data API",
+   "timestamp" : {
+      "created_http" : "Sat, 24 Dec 2016 00:08:02 GMT",
+      "created_unix" : 1482538082
+   },
+   "total_results" : 2
+}
+";

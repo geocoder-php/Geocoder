@@ -80,7 +80,7 @@ class GeoIPsTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Invalid response from GeoIPs API for query "http://api.geoips.com/ip/74.200.247.59/key/api_key/output/json/timezone/true/".
+     * @expectedExceptionMessage Invalid response from GeoIPs API for query "https://api.geoips.com/ip/74.200.247.59/key/api_key/output/json/timezone/true/".
      */
     public function testGeocodeWithRealIPv4GetsNullContent()
     {
@@ -90,7 +90,7 @@ class GeoIPsTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Invalid response from GeoIPs API for query "http://api.geoips.com/ip/74.200.247.59/key/api_key/output/json/timezone/true/".
+     * @expectedExceptionMessage Invalid response from GeoIPs API for query "https://api.geoips.com/ip/74.200.247.59/key/api_key/output/json/timezone/true/".
      */
     public function testGeocodeWithRealIPv4GetsEmptyContent()
     {

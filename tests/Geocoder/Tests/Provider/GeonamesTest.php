@@ -107,7 +107,7 @@ JSON;
         $this->assertEquals('Greater London', $result->getAdminLevels()->get(2)->getName());
         $this->assertEquals('England', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('United Kingdom', $result->getCountry()->getName());
-        $this->assertEquals('GB', $result->getCountryCode());
+        $this->assertEquals('GB', $result->getCountry()->getCode());
         $this->assertEquals('Europe/London', $result->getTimezone());
 
         /** @var Location $result */
@@ -126,7 +126,7 @@ JSON;
         $this->assertEquals('Buffalo City Metropolitan Municipality', $result->getAdminLevels()->get(2)->getName());
         $this->assertEquals('Eastern Cape', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('South Africa', $result->getCountry()->getName());
-        $this->assertEquals('ZA', $result->getCountryCode());
+        $this->assertEquals('ZA', $result->getCountry()->getCode());
         $this->assertEquals('Africa/Johannesburg', $result->getTimezone());
 
         /** @var Location $result */
@@ -145,7 +145,7 @@ JSON;
         $this->assertEquals('Greater London', $result->getAdminLevels()->get(2)->getName());
         $this->assertEquals('England', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('United Kingdom', $result->getCountry()->getName());
-        $this->assertEquals('GB', $result->getCountryCode());
+        $this->assertEquals('GB', $result->getCountry()->getCode());
         $this->assertEquals('Europe/London', $result->getTimezone());
 
         /** @var Location $result */
@@ -162,7 +162,7 @@ JSON;
         $this->assertCount(1, $result->getAdminLevels());
         $this->assertEquals('Ontario', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('Canada', $result->getCountry()->getName());
-        $this->assertEquals('CA', $result->getCountryCode());
+        $this->assertEquals('CA', $result->getCountry()->getCode());
         $this->assertEquals('America/Toronto', $result->getTimezone());
 
         /** @var Location $result */
@@ -180,7 +180,7 @@ JSON;
         $this->assertEquals('New London County', $result->getAdminLevels()->get(2)->getName());
         $this->assertEquals('Connecticut', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('United States', $result->getCountry()->getName());
-        $this->assertEquals('US', $result->getCountryCode());
+        $this->assertEquals('US', $result->getCountry()->getCode());
         $this->assertEquals('America/New_York', $result->getTimezone());
     }
 
@@ -211,7 +211,7 @@ JSON;
         $this->assertEquals('Greater London', $result->getAdminLevels()->get(2)->getName());
         $this->assertEquals('Inghilterra', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('Regno Unito', $result->getCountry()->getName());
-        $this->assertEquals('GB', $result->getCountryCode());
+        $this->assertEquals('GB', $result->getCountry()->getCode());
         $this->assertEquals('Europe/London', $result->getTimezone());
 
         /** @var Location $result */
@@ -230,7 +230,7 @@ JSON;
         $this->assertEquals('Buffalo City Metropolitan Municipality', $result->getAdminLevels()->get(2)->getName());
         $this->assertEquals('Eastern Cape', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('Sudafrica', $result->getCountry()->getName());
-        $this->assertEquals('ZA', $result->getCountryCode());
+        $this->assertEquals('ZA', $result->getCountry()->getCode());
         $this->assertEquals('Africa/Johannesburg', $result->getTimezone());
 
         /** @var Location $result */
@@ -249,7 +249,7 @@ JSON;
         $this->assertEquals('Greater London', $result->getAdminLevels()->get(2)->getName());
         $this->assertEquals('Inghilterra', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('Regno Unito', $result->getCountry()->getName());
-        $this->assertEquals('GB', $result->getCountryCode());
+        $this->assertEquals('GB', $result->getCountry()->getCode());
         $this->assertEquals('Europe/London', $result->getTimezone());
 
         /** @var Location $result */
@@ -266,7 +266,7 @@ JSON;
         $this->assertCount(1, $result->getAdminLevels());
         $this->assertEquals('Ontario', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('Canada', $result->getCountry()->getName());
-        $this->assertEquals('CA', $result->getCountryCode());
+        $this->assertEquals('CA', $result->getCountry()->getCode());
         $this->assertEquals('America/Toronto', $result->getTimezone());
 
         /** @var Location $result */
@@ -284,7 +284,7 @@ JSON;
         $this->assertEquals('Contea di New London', $result->getAdminLevels()->get(2)->getName());
         $this->assertEquals('Connecticut', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('Stati Uniti', $result->getCountry()->getName());
-        $this->assertEquals('US', $result->getCountryCode());
+        $this->assertEquals('US', $result->getCountry()->getCode());
         $this->assertEquals('America/New_York', $result->getTimezone());
     }
 
@@ -310,7 +310,7 @@ JSON;
         $this->assertEquals('Greater London', $result->getAdminLevels()->get(2)->getName());
         $this->assertEquals('England', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('United Kingdom', $result->getCountry()->getName());
-        $this->assertEquals('GB', $result->getCountryCode());
+        $this->assertEquals('GB', $result->getCountry()->getCode());
         $this->assertEquals('Europe/London', $result->getTimezone());
     }
 
@@ -336,7 +336,7 @@ JSON;
         $this->assertEquals('Greater London', $result->getAdminLevels()->get(2)->getName());
         $this->assertEquals('Inghilterra', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('Regno Unito', $result->getCountry()->getName());
-        $this->assertEquals('GB', $result->getCountryCode());
+        $this->assertEquals('GB', $result->getCountry()->getCode());
         $this->assertEquals('Europe/London', $result->getTimezone());
     }
 
