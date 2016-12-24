@@ -1,0 +1,55 @@
+s:1635:"{
+   "results" : [
+      {
+         "address_components" : [
+            {
+               "long_name" : "Sibbe",
+               "short_name" : "Sibbe",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "Valkenburg aan de Geul",
+               "short_name" : "Valkenburg aan de Geul",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "Limburg",
+               "short_name" : "LI",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "Netherlands",
+               "short_name" : "NL",
+               "types" : [ "country", "political" ]
+            },
+            {
+               "long_name" : "6301",
+               "short_name" : "6301",
+               "types" : [ "postal_code_prefix", "postal_code" ]
+            }
+         ],
+         "formatted_address" : "6301 Sibbe, Netherlands",
+         "geometry" : {
+            "location" : {
+               "lat" : 50.8446733,
+               "lng" : 5.8273109
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 50.8517182,
+                  "lng" : 5.843318300000001
+               },
+               "southwest" : {
+                  "lat" : 50.83762730000001,
+                  "lng" : 5.8113035
+               }
+            }
+         },
+         "place_id" : "ChIJUUaJ68rqwEcRSLq_ZKlr2WY",
+         "types" : [ "locality", "political" ]
+      }
+   ],
+   "status" : "OK"
+}
+";
