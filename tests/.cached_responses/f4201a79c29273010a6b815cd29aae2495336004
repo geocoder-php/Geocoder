@@ -1,0 +1,263 @@
+s:8201:"{
+   "documentation" : "https://geocoder.opencagedata.com/api",
+   "licenses" : [
+      {
+         "name" : "CC-BY-SA",
+         "url" : "http://creativecommons.org/licenses/by-sa/3.0/"
+      },
+      {
+         "name" : "ODbL",
+         "url" : "http://opendatacommons.org/licenses/odbl/summary/"
+      }
+   ],
+   "rate" : {
+      "limit" : 2500,
+      "remaining" : 2494,
+      "reset" : 1482710400
+   },
+   "results" : [
+      {
+         "annotations" : {
+            "DMS" : {
+               "lat" : "51\u00b0 30' 12.38490'' N",
+               "lng" : "0\u00b0 7' 39.74919'' E"
+            },
+            "MGRS" : "30UXC9933909723",
+            "Maidenhead" : "IO91wm40qt",
+            "Mercator" : {
+               "x" : -14216.402,
+               "y" : 6677371.368
+            },
+            "OSGB" : {
+               "easting" : 530044.64,
+               "gridref" : "TQ 300 799",
+               "northing" : 179939.726
+            },
+            "OSM" : {
+               "edit_url" : "https://www.openstreetmap.org/edit?relation=1879842#map=17/51.50344/-0.12771",
+               "url" : "https://www.openstreetmap.org/?mlat=51.50344&mlon=-0.12771#map=17/51.50344/-0.12771"
+            },
+            "callingcode" : 44,
+            "currency" : {
+               "alternate_symbols" : [],
+               "decimal_mark" : ".",
+               "html_entity" : "&#x00A3;",
+               "iso_code" : "GBP",
+               "iso_numeric" : 826,
+               "name" : "British Pound",
+               "smallest_denomination" : 1,
+               "subunit" : "Penny",
+               "subunit_to_unit" : 100,
+               "symbol" : "\u00a3",
+               "symbol_first" : 1,
+               "thousands_separator" : ","
+            },
+            "geohash" : "gcpuvpgj21jujy3ytfp1",
+            "qibla" : 118.98,
+            "sun" : {
+               "rise" : {
+                  "apparent" : 1482653160,
+                  "astronomical" : 1482645660,
+                  "civil" : 1482650700,
+                  "nautical" : 1482648120
+               },
+               "set" : {
+                  "apparent" : 1482681420,
+                  "astronomical" : 1482688860,
+                  "civil" : 1482683820,
+                  "nautical" : 1482686400
+               }
+            },
+            "timezone" : {
+               "name" : "Europe/London",
+               "now_in_dst" : 0,
+               "offset_sec" : 0,
+               "offset_string" : 0,
+               "short_name" : "GMT"
+            },
+            "what3words" : {
+               "words" : "onions.toned.active"
+            },
+            "wikidata" : "Q169101"
+         },
+         "bounds" : {
+            "northeast" : {
+               "lat" : 51.5036483,
+               "lng" : -0.1273037
+            },
+            "southwest" : {
+               "lat" : 51.5032573,
+               "lng" : -0.1278355
+            }
+         },
+         "components" : {
+            "_type" : "attraction",
+            "attraction" : "10 Downing Street",
+            "city" : "Westminster",
+            "country" : "United Kingdom",
+            "country_code" : "gb",
+            "house_number" : "10",
+            "neighbourhood" : "St. James's",
+            "postcode" : "SW1A 2AA",
+            "road" : "Downing Street",
+            "state" : "England",
+            "state_district" : "Greater London",
+            "suburb" : "Covent Garden"
+         },
+         "confidence" : 10,
+         "formatted" : "10 Downing Street, Westminster SW1A 2AA, United Kingdom",
+         "geometry" : {
+            "lat" : 51.5034402,
+            "lng" : -0.1277081
+         }
+      },
+      {
+         "annotations" : {
+            "DMS" : {
+               "lat" : "51\u00b0 30' 30.70800'' N",
+               "lng" : "0\u00b0 7' 32.66400'' E"
+            },
+            "MGRS" : "30UXC9945410295",
+            "Maidenhead" : "IO91wm42vb",
+            "Mercator" : {
+               "x" : -13997.313,
+               "y" : 6678279.278
+            },
+            "OSGB" : {
+               "easting" : 530166.726,
+               "gridref" : "TQ 301 805",
+               "northing" : 180509.206
+            },
+            "OSM" : {
+               "url" : "https://www.openstreetmap.org/?mlat=51.50853&mlon=-0.12574#map=17/51.50853/-0.12574"
+            },
+            "geohash" : "gcpvj0u6yjcmwxz8bn43",
+            "qibla" : 118.99,
+            "sun" : {
+               "rise" : {
+                  "apparent" : 1482653160,
+                  "astronomical" : 1482645660,
+                  "civil" : 1482650700,
+                  "nautical" : 1482648120
+               },
+               "set" : {
+                  "apparent" : 1482681360,
+                  "astronomical" : 1482688860,
+                  "civil" : 1482683820,
+                  "nautical" : 1482686400
+               }
+            },
+            "timezone" : {
+               "name" : "Europe/London",
+               "now_in_dst" : 0,
+               "offset_sec" : 0,
+               "offset_string" : 0,
+               "short_name" : "GMT"
+            },
+            "what3words" : {
+               "words" : "thing.then.link"
+            }
+         },
+         "bounds" : {
+            "northeast" : {
+               "lat" : 51.6913847,
+               "lng" : 0.3356759
+            },
+            "southwest" : {
+               "lat" : 51.2862242,
+               "lng" : -0.5088138
+            }
+         },
+         "components" : {
+            "_type" : "city",
+            "country" : "United Kingdom",
+            "county" : "Greater London",
+            "state" : "England",
+            "town" : "London"
+         },
+         "confidence" : 1,
+         "formatted" : "London, Greater London, United Kingdom",
+         "geometry" : {
+            "lat" : 51.50853,
+            "lng" : -0.12574
+         }
+      },
+      {
+         "annotations" : {
+            "DMS" : {
+               "lat" : "51\u00b0 30' 11.71224'' N",
+               "lng" : "0\u00b0 7' 40.61280'' E"
+            },
+            "MGRS" : "30UXC9932409702",
+            "Maidenhead" : "IO91wm40ps",
+            "Mercator" : {
+               "x" : -14243.106,
+               "y" : 6677338.04
+            },
+            "OSGB" : {
+               "easting" : 530028.523,
+               "gridref" : "TQ 300 799",
+               "northing" : 179918.522
+            },
+            "OSM" : {
+               "url" : "https://www.openstreetmap.org/?mlat=51.50325&mlon=-0.12795#map=17/51.50325/-0.12795"
+            },
+            "geohash" : "gcpuvpfu4w719g1smt17",
+            "qibla" : 118.98,
+            "sun" : {
+               "rise" : {
+                  "apparent" : 1482653160,
+                  "astronomical" : 1482645660,
+                  "civil" : 1482650700,
+                  "nautical" : 1482648120
+               },
+               "set" : {
+                  "apparent" : 1482681420,
+                  "astronomical" : 1482688860,
+                  "civil" : 1482683820,
+                  "nautical" : 1482686400
+               }
+            },
+            "timezone" : {
+               "name" : "Europe/London",
+               "now_in_dst" : 0,
+               "offset_sec" : 0,
+               "offset_string" : 0,
+               "short_name" : "GMT"
+            },
+            "what3words" : {
+               "words" : "target.fingernails.jacket"
+            }
+         },
+         "components" : {
+            "_type" : "building",
+            "country" : "United Kingdom",
+            "country_code" : "uk",
+            "house_number" : "10",
+            "road" : "Downing Street",
+            "town" : "London"
+         },
+         "confidence" : 10,
+         "formatted" : "10 Downing Street, London, United Kingdom",
+         "geometry" : {
+            "lat" : 51.5032534,
+            "lng" : -0.127948
+         }
+      }
+   ],
+   "status" : {
+      "code" : 200,
+      "message" : "OK"
+   },
+   "stay_informed" : {
+      "blog" : "http://blog.opencagedata.com",
+      "twitter" : "https://twitter.com/opencagedata"
+   },
+   "thanks" : "For using an OpenCage Data API",
+   "timestamp" : {
+      "created_http" : "Sun, 25 Dec 2016 01:12:45 GMT",
+      "created_unix" : 1482628365
+   },
+   "total_results" : 3
+}
+";

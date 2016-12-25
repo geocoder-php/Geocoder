@@ -1,0 +1,70 @@
+s:2162:"{
+   "results" : [
+      {
+         "address_components" : [
+            {
+               "long_name" : "10 Downing Street",
+               "short_name" : "10 Downing Street",
+               "types" : [ "establishment", "point_of_interest" ]
+            },
+            {
+               "long_name" : "10",
+               "short_name" : "10",
+               "types" : [ "street_number" ]
+            },
+            {
+               "long_name" : "Downing Street",
+               "short_name" : "Downing St",
+               "types" : [ "route" ]
+            },
+            {
+               "long_name" : "London",
+               "short_name" : "London",
+               "types" : [ "postal_town" ]
+            },
+            {
+               "long_name" : "Greater London",
+               "short_name" : "Greater London",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "England",
+               "short_name" : "England",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "United Kingdom",
+               "short_name" : "GB",
+               "types" : [ "country", "political" ]
+            },
+            {
+               "long_name" : "SW1A 2AA",
+               "short_name" : "SW1A 2AA",
+               "types" : [ "postal_code" ]
+            }
+         ],
+         "formatted_address" : "10 Downing Street, 10 Downing St, London SW1A 2AA, UK",
+         "geometry" : {
+            "location" : {
+               "lat" : 51.5033635,
+               "lng" : -0.1276248
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 51.5047124802915,
+                  "lng" : -0.126275819708498
+               },
+               "southwest" : {
+                  "lat" : 51.5020145197085,
+                  "lng" : -0.128973780291502
+               }
+            }
+         },
+         "place_id" : "ChIJRxzRQcUEdkgRGVaKyzmkgvg",
+         "types" : [ "establishment", "point_of_interest" ]
+      }
+   ],
+   "status" : "OK"
+}
+";

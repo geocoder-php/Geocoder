@@ -1,0 +1,29 @@
+s:613:"{
+"response": {
+"status": "Propper Request",
+"message": "Success",
+"notes": "The following results has been returned",
+"code": "200_1",
+"location": {
+"ip": "8.8.8.8",
+"owner": "LEVEL 3 COMMUNICATIONS INC",
+"continent_name": "NORTH AMERICA",
+"continent_code": "NA",
+"country_name": "UNITED STATES",
+"country_code": "US",
+"region_name": "CALIFORNIA",
+"region_code": "CA",
+"county_name": "SANTA CLARA",
+"city_name": "MOUNTAIN VIEW",
+"latitude": "37.3801",
+"longitude": "-122.0865",
+"timezone": "PST"
+},
+"unit_test": {
+"api_calls": "100",
+"current_calls": "1",
+"elapsed_time": "0.0059",
+"memory_usage": "0.66MB"
+}
+}
+}";
