@@ -1,0 +1,70 @@
+s:2187:"{
+   "results" : [
+      {
+         "address_components" : [
+            {
+               "long_name" : "367",
+               "short_name" : "367",
+               "types" : [ "street_number" ]
+            },
+            {
+               "long_name" : "Rue Saint Paul Est",
+               "short_name" : "Rue Saint Paul E",
+               "types" : [ "route" ]
+            },
+            {
+               "long_name" : "Ville-Marie",
+               "short_name" : "Ville-Marie",
+               "types" : [ "political", "sublocality", "sublocality_level_1" ]
+            },
+            {
+               "long_name" : "Montréal",
+               "short_name" : "Montréal",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "Communauté-Urbaine-de-Montréal",
+               "short_name" : "Communauté-Urbaine-de-Montréal",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "Québec",
+               "short_name" : "QC",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "Canada",
+               "short_name" : "CA",
+               "types" : [ "country", "political" ]
+            },
+            {
+               "long_name" : "H2Y 1H3",
+               "short_name" : "H2Y 1H3",
+               "types" : [ "postal_code" ]
+            }
+         ],
+         "formatted_address" : "367 Rue Saint Paul E, Montréal, QC H2Y 1H3, Canada",
+         "geometry" : {
+            "location" : {
+               "lat" : 45.5094724,
+               "lng" : -73.5516994
+            },
+            "location_type" : "ROOFTOP",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 45.5108213802915,
+                  "lng" : -73.55035041970851
+               },
+               "southwest" : {
+                  "lat" : 45.5081234197085,
+                  "lng" : -73.55304838029151
+               }
+            }
+         },
+         "place_id" : "ChIJsWGdSlQayUwRVxucovwuP84",
+         "types" : [ "street_address" ]
+      }
+   ],
+   "status" : "OK"
+}
+";
