@@ -2,7 +2,7 @@ Geocoder
 ========
 
 [![Build
-Status](https://secure.travis-ci.org/geocoder-php/Geocoder.png)](http://travis-ci.org/geocoder-php/Geocoder)
+Status](https://travis-ci.org/geocoder-php/Geocoder.svg?branch=master)](http://travis-ci.org/geocoder-php/Geocoder)
 [![Total
 Downloads](https://poser.pugx.org/willdurand/Geocoder/downloads.png)](https://packagist.org/packages/willdurand/Geocoder)
 [![Latest Stable
