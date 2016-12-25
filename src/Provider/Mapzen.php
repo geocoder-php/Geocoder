@@ -19,7 +19,7 @@ use Http\Client\HttpClient;
 /**
  * @author Gary Gale <gary@vicchi.org>
  */
-final class Mapzen extends AbstractHttpProvider
+final class Mapzen extends AbstractHttpProvider implements Provider
 {
     /**
      * @var string
