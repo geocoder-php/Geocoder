@@ -77,16 +77,6 @@ class LiskovSubstitutionPrincipleTest extends \PHPUnit_Framework_TestCase
         $this->assertWellFormattedResult($geocoder->geocode('Paris'));
     }
 
-    /**
-     * @param Geocoder $geocoder
-     * @dataProvider getWorldWideProvider
-     * @expectedException \Geocoder\Exception\NoResult
-     */
-    public function testNoResult(Geocoder $geocoder)
-    {
-        $geocoder->geocode('foobar, bazbar, bizbar');
-    }
-
 
     /**
      * @param Geocoder $geocoder
@@ -100,10 +90,29 @@ class LiskovSubstitutionPrincipleTest extends \PHPUnit_Framework_TestCase
         // Close to the white house
         $this->assertWellFormattedResult($geocoder->reverse(38.900206, -77.036991));
 
-        // Out side Hawaii in Pacific ocean
-        $this->assertWellFormattedResult($geocoder->reverse(25.388300, 179.861719));
+
     }
 
+    /**
+     * @param Geocoder $geocoder
+     * @dataProvider getWorldWideProvider
+     * @expectedException \Geocoder\Exception\NoResult
+     */
+    public function testNoResult(Geocoder $geocoder)
+    {
+        $geocoder->geocode('foobar, bazbar, bizbar');
+    }
+
+    /**
+     * @param Geocoder $geocoder
+     * @dataProvider getWorldWideProvider
+     * @expectedException \Geocoder\Exception\NoResult
+     */
+    public function testNoResultReverse(Geocoder $geocoder)
+    {
+        // Out side Hawaii in Pacific ocean
+        $geocoder->reverse(25.388300, 179.861719);
+    }
 
     /**
      * @param Geocoder $geocoder
@@ -126,10 +135,10 @@ class LiskovSubstitutionPrincipleTest extends \PHPUnit_Framework_TestCase
             [new GoogleMaps($this->getAdapter($_SERVER['GOOGLE_GEOCODING_KEY']), 'en', null, $_SERVER['GOOGLE_GEOCODING_KEY'])],
             [new BingMaps($this->getAdapter($_SERVER['BINGMAPS_API_KEY']), $_SERVER['BINGMAPS_API_KEY'], 'en')],
             [new MapQuest($this->getAdapter($_SERVER['MAPQUEST_API_KEY']), $_SERVER['MAPQUEST_API_KEY'])],
-            [new Geonames($this->getAdapter($_SERVER['GEONAMES_USERNAME']), $_SERVER['GEONAMES_USERNAME'], 'en')],
-            [new TomTom($this->getAdapter($_SERVER['TOMTOM_MAP_KEY']), $_SERVER['TOMTOM_MAP_KEY'])],
+            //[new Geonames($this->getAdapter($_SERVER['GEONAMES_USERNAME']), $_SERVER['GEONAMES_USERNAME'], 'en')],
+            //[new TomTom($this->getAdapter($_SERVER['TOMTOM_MAP_KEY']), $_SERVER['TOMTOM_MAP_KEY'])],
             [new OpenCage($this->getAdapter($_SERVER['OPENCAGE_API_KEY']), $_SERVER['OPENCAGE_API_KEY'])],
-            [new Mapzen($this->getAdapter($_SERVER['MAPZEN_API_KEY']), $_SERVER['MAPZEN_API_KEY'])],
+            //[new Mapzen($this->getAdapter($_SERVER['MAPZEN_API_KEY']), $_SERVER['MAPZEN_API_KEY'])],
             [new ArcGISOnline($this->getAdapter())],
             [new Yandex($this->getAdapter())],
             [Nominatim::withOpenStreetMapServer($this->getAdapter(), 'en')],
@@ -238,20 +247,27 @@ class LiskovSubstitutionPrincipleTest extends \PHPUnit_Framework_TestCase
             }
 
             // Check country
-            if (null !== $location->getCountry()) {
+            if (null !== $country = $location->getCountry()) {
                 $this->assertInstanceOf(
                     Country::class,
-                    $location->getCountry(),
+                    $country,
                     'Location::getCountry MUST always return a Country or null'
                 );
-                $this->assertNotNull(
-                    $location->getCountry()->getCode(),
-                    'The Country should have a code.'
-                );
-                $this->assertNotNull(
-                    $location->getCountry()->getName(),
-                    'The Country should have a name.'
-                );
+                $this->assertFalse(null === $country->getCode() && null === $country->getName(), 'Both code and name cannot be empty');
+
+                if (null !== $country->getCode()) {
+                    $this->assertNotEmpty(
+                        $location->getCountry()->getCode(),
+                        'The Country should not have an empty code.'
+                    );
+                }
+
+                if (null !== $country->getName()) {
+                    $this->assertNotEmpty(
+                        $location->getCountry()->getName(),
+                        'The Country should not have an empty name.'
+                    );
+                }
             }
         }
     }

@@ -9,6 +9,7 @@
  */
 namespace Geocoder\Provider;
 
+use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\QuotaExceeded;
 use Geocoder\Exception\NoResult;
