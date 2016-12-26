@@ -566,7 +566,7 @@ $ composer install --dev
 Then, run the following command:
 
 ```
-$ phpunit
+$ composer test
 ```
 
 You'll obtain some _skipped_ unit tests due to the need of API keys.
