@@ -561,12 +561,13 @@ $ composer install --dev
 Then, run the following command:
 
 ```
-$ ./vendor/bin/phpunit
+$ composer test
 ```
 
 You'll obtain some _skipped_ unit tests due to the need of API keys.
 
-Uncomment the following lines in `phpunit.xml.dist` and add your own API keys:
+Rename the `phpunit.xml.dist` file to `phpunit.xml`, then uncomment the
+following lines and add your own API keys:
 
 ``` xml
 <php>

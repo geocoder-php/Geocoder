@@ -37,6 +37,9 @@
     "autoload": {
         "psr-0": { "Geocoder": "src/" }
     },
+    "scripts": {
+        "test": "vendor/bin/phpunit"
+    },
     "extra": {
         "branch-alias": {
             "dev-master": "3.3-dev"
