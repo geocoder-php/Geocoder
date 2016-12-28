@@ -16,7 +16,7 @@ use Ivory\HttpAdapter\HttpAdapterInterface;
 /**
  * @author Germán Mauricio Muñoz <mauricio@mapalesoftware.com>
  */
-class GoogleMapsPlaces extends GoogleMaps
+final class GoogleMapsPlaces extends GoogleMaps
 {
     /**
      * @var string
