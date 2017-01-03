@@ -16,7 +16,7 @@ use Geocoder\Exception\UnsupportedOperation;
 /**
  * @author Andrea Cristaudo <andrea.cristaudo@gmail.com>
  */
-final class GeoPlugin extends AbstractHttpProvider implements Provider
+final class GeoPlugin extends AbstractHttpProvider implements Provider, IpAddressGeocoder
 {
     /**
      * @var string
