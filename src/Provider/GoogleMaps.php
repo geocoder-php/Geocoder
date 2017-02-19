@@ -104,7 +104,7 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocod
 
         $url = sprintf(self::GEOCODE_ENDPOINT_URL_SSL, rawurlencode($query->getText()));
 
-        return $this->fetchUrl($query, $url);
+        return $this->fetchUrl($url, $query->getLocale(), $query->getLimit());
     }
 
     public function reverseQuery(ReverseQuery $query)
@@ -112,7 +112,7 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocod
         $coordinate = $query->getCoordinates();
         $url = sprintf(self::REVERSE_ENDPOINT_URL_SSL, $coordinate->getLatitude(), $coordinate->getLongitude());
 
-        return $this->fetchUrl($query, $url);
+        return $this->fetchUrl($url, $query->getLocale(), $query->getLimit());
     }
 
     /**
@@ -131,15 +131,15 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocod
     }
 
     /**
-     * @param Query $query
      * @param string $url
+     * @param string $locale
      *
      * @return string query with extra params
      */
-    private function buildQuery(Query $query, $url)
+    private function buildQuery($url, $locale)
     {
-        if (null !== $query->getLocale()) {
-            $url = sprintf('%s&language=%s', $url, $query->getLocale());
+        if (null !== $locale) {
+            $url = sprintf('%s&language=%s', $url, $locale);
         }
 
         if (null !== $this->region) {
@@ -162,15 +162,16 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocod
     }
 
     /**
-     * @param Query $query
      * @param string $url
+     * @param string $locale
+     * @param int $limit
      *
      * @return \Geocoder\Collection
      * @throws Exception
      */
-    private function fetchUrl(Query $query, $url)
+    private function fetchUrl($url, $locale, $limit)
     {
-        $url = $this->buildQuery($query, $url);
+        $url = $this->buildQuery($url, $locale);
         $request = $this->getMessageFactory()->createRequest('GET', $url);
         $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
 
@@ -245,7 +246,7 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocod
 
             $results[] = array_merge($this->getDefaults(), $resultSet);
 
-            if (count($results) >= $query->getLimit()) {
+            if (count($results) >= $limit) {
                 break;
             }
         }

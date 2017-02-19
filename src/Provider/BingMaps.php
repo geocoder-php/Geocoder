@@ -86,7 +86,7 @@ final class BingMaps extends AbstractHttpProvider implements LocaleAwareGeocoder
         $coordinates = $query->getCoordinates();
         $url = sprintf(self::REVERSE_ENDPOINT_URL, $coordinates->getLatitude(), $coordinates->getLongitude(), $this->apiKey);
 
-        return $this->executeQuery($query, $url);
+        return $this->executeQuery($url, $query->getLocale(), $query->getLimit());
     }
 
     /**
@@ -98,15 +98,16 @@ final class BingMaps extends AbstractHttpProvider implements LocaleAwareGeocoder
     }
 
     /**
-     * @param Query $query
      * @param string $url
+     * @param string $locale
+     * @param int $limit
      *
      * @return \Geocoder\Collection
      */
-    private function executeQuery(Query $query, $url)
+    private function executeQuery($url, $locale, $limit)
     {
-        if (null !== $query->getLocale()) {
-            $url = sprintf('%s&culture=%s', $url, str_replace('_', '-', $query->getLocale()));
+        if (null !== $locale) {
+            $url = sprintf('%s&culture=%s', $url, str_replace('_', '-', $locale));
         }
 
         $request = $this->getMessageFactory()->createRequest('GET', $url);
@@ -166,7 +167,7 @@ final class BingMaps extends AbstractHttpProvider implements LocaleAwareGeocoder
                 'countryCode'  => empty($countryCode) ? null : $countryCode,
             ]);
 
-            if (count($results) >= $query->getLimit()) {
+            if (count($results) >= $limit) {
                 break;
             }
         }
