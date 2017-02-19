@@ -17,7 +17,7 @@ use Geocoder\Collection;
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-final class HostIp extends AbstractHttpProvider implements Provider
+final class HostIp extends AbstractHttpProvider implements Provider, IpAddressGeocoder
 {
     /**
      * @var string
