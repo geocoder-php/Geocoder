@@ -209,7 +209,6 @@ class NominatimTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\ZeroResults
-     * @expectedExceptionMessage Could not execute query "https://nominatim.openstreetmap.org/search?q=Hammm&format=xml&addressdetails=1&limit=5".
      */
     public function testGeocodeWithUnknownCity()
     {
@@ -410,7 +409,6 @@ class NominatimTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\ZeroResults
-     * @expectedExceptionMessage Could not execute query "https://nominatim.openstreetmap.org/search?q=L%C3%A4ntinen+Pitk%C3%A4katu+35%2C+Turku&format=xml&addressdetails=1&limit=5".
      */
     public function testGeocodeWithAddressGetsNullContent()
     {
@@ -420,7 +418,6 @@ class NominatimTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\ZeroResults
-     * @expectedExceptionMessage Could not execute query "https://nominatim.openstreetmap.org/search?q=L%C3%A4ntinen+Pitk%C3%A4katu+35%2C+Turku&format=xml&addressdetails=1&limit=5".
      */
     public function testGeocodeWithAddressGetsEmptyContent()
     {
@@ -430,7 +427,6 @@ class NominatimTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\ZeroResults
-     * @expectedExceptionMessage Could not execute query "https://nominatim.openstreetmap.org/search?q=L%C3%A4ntinen+Pitk%C3%A4katu+35%2C+Turku&format=xml&addressdetails=1&limit=5".
      */
     public function testGeocodeWithAddressGetsEmptyXML()
     {

@@ -24,7 +24,6 @@ class GoogleMapsTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\ZeroResults
-     * @expectedExceptionMessage Could not execute query "https://maps.googleapis.com/maps/api/geocode/json?address=foobar".
      */
     public function testGeocode()
     {
@@ -34,7 +33,6 @@ class GoogleMapsTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\ZeroResults
-     * @expectedExceptionMessage Could not execute query "https://maps.googleapis.com/maps/api/geocode/json?address=".
      */
     public function testGeocodeWithNull()
     {
@@ -44,7 +42,6 @@ class GoogleMapsTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\ZeroResults
-     * @expectedExceptionMessage Could not execute query "https://maps.googleapis.com/maps/api/geocode/json?address=".
      */
     public function testGeocodeWithEmpty()
     {
@@ -54,7 +51,6 @@ class GoogleMapsTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The GoogleMaps provider does not support IP addresses, only street addresses.
      */
     public function testGeocodeWithLocalhostIPv4()
     {
@@ -84,7 +80,6 @@ class GoogleMapsTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\ZeroResults
-     * @expectedExceptionMessage Could not execute query "https://maps.googleapis.com/maps/api/geocode/json?address=10%20avenue%20Gambetta%2C%20Paris%2C%20France".
      */
     public function testGeocodeWithAddressGetsNullContent()
     {
@@ -94,7 +89,6 @@ class GoogleMapsTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\ZeroResults
-     * @expectedExceptionMessage Could not execute query "https://maps.googleapis.com/maps/api/geocode/json?address=10%20avenue%20Gambetta%2C%20Paris%2C%20France".
      */
     public function testGeocodeWithAddressGetsEmptyContent()
     {
@@ -250,7 +244,6 @@ class GoogleMapsTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\ZeroResults
-     * @expectedExceptionMessage Could not execute query "https://maps.googleapis.com/maps/api/geocode/json?latlng=1.000000,2.000000".
      */
     public function testReverse()
     {
@@ -282,7 +275,6 @@ class GoogleMapsTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\ZeroResults
-     * @expectedExceptionMessage Could not execute query "https://maps.googleapis.com/maps/api/geocode/json?latlng=48.863151,2.388911".
      */
     public function testReverseWithCoordinatesGetsNullContent()
     {
