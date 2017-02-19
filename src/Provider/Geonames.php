@@ -11,8 +11,10 @@
 namespace Geocoder\Provider;
 
 use Geocoder\Exception\InvalidCredentials;
+use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Exception\ZeroResults;
 use Geocoder\Model\AdminLevelCollection;
 use Http\Client\HttpClient;
 
@@ -106,21 +108,21 @@ final class Geonames extends AbstractHttpProvider implements LocaleAwareProvider
         $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
 
         if (empty($content)) {
-            throw new NoResult(sprintf('Could not execute query "%s".', $query));
+            throw InvalidServerResponse::create($query);
         }
 
         if (null === $json = json_decode($content)) {
-            throw new NoResult(sprintf('Could not execute query "%s".', $query));
+            throw InvalidServerResponse::create($query);
         }
 
         if (isset($json->totalResultsCount) && empty($json->totalResultsCount)) {
-            throw new NoResult(sprintf('No places found for query "%s".', $query));
+            throw ZeroResults::create($query);
         }
 
         $data = $json->geonames;
 
         if (empty($data)) {
-            throw new NoResult(sprintf('Could not execute query "%s".', $query));
+            throw ZeroResults::create($query);
         }
 
         $results = [];

@@ -2,7 +2,7 @@
 
 namespace Geocoder\Tests\Provider;
 
-use Geocoder\Exception\NoResult;
+use Geocoder\Exception\ZeroResults;
 use Geocoder\Location;
 use Geocoder\Tests\TestCase;
 use Geocoder\Provider\GoogleMaps;
@@ -23,8 +23,7 @@ class GoogleMapsTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "https://maps.googleapis.com/maps/api/geocode/json?address=foobar".
+     * @expectedException \Geocoder\Exception\ZeroResults
      */
     public function testGeocode()
     {
@@ -33,8 +32,7 @@ class GoogleMapsTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "https://maps.googleapis.com/maps/api/geocode/json?address=".
+     * @expectedException \Geocoder\Exception\ZeroResults
      */
     public function testGeocodeWithNull()
     {
@@ -43,8 +41,7 @@ class GoogleMapsTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "https://maps.googleapis.com/maps/api/geocode/json?address=".
+     * @expectedException \Geocoder\Exception\ZeroResults
      */
     public function testGeocodeWithEmpty()
     {
@@ -54,7 +51,6 @@ class GoogleMapsTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The GoogleMaps provider does not support IP addresses, only street addresses.
      */
     public function testGeocodeWithLocalhostIPv4()
     {
@@ -83,8 +79,7 @@ class GoogleMapsTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "https://maps.googleapis.com/maps/api/geocode/json?address=10%20avenue%20Gambetta%2C%20Paris%2C%20France".
+     * @expectedException \Geocoder\Exception\ZeroResults
      */
     public function testGeocodeWithAddressGetsNullContent()
     {
@@ -93,8 +88,7 @@ class GoogleMapsTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "https://maps.googleapis.com/maps/api/geocode/json?address=10%20avenue%20Gambetta%2C%20Paris%2C%20France".
+     * @expectedException \Geocoder\Exception\ZeroResults
      */
     public function testGeocodeWithAddressGetsEmptyContent()
     {
@@ -249,8 +243,7 @@ class GoogleMapsTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "https://maps.googleapis.com/maps/api/geocode/json?latlng=1.000000,2.000000".
+     * @expectedException \Geocoder\Exception\ZeroResults
      */
     public function testReverse()
     {
@@ -281,8 +274,7 @@ class GoogleMapsTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "https://maps.googleapis.com/maps/api/geocode/json?latlng=48.863151,2.388911".
+     * @expectedException \Geocoder\Exception\ZeroResults
      */
     public function testReverseWithCoordinatesGetsNullContent()
     {
@@ -379,7 +371,7 @@ class GoogleMapsTest extends TestCase
 
         try {
             $provider->geocode('blah');
-        } catch (NoResult $e) {
+        } catch (ZeroResults $e) {
         }
 
         $this->assertEquals('https://maps.googleapis.com/maps/api/geocode/json?address=blah&client=foo', $uri);
@@ -401,7 +393,7 @@ class GoogleMapsTest extends TestCase
 
         try {
             $provider->geocode('blah');
-        } catch (NoResult $e) {
+        } catch (ZeroResults $e) {
         }
 
         $this->assertEquals(

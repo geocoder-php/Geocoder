@@ -17,8 +17,7 @@ class MapzenTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not find results for query "https://search.mapzen.com/v1/search?text=foobar&key=api_key&size=5".
+     * @expectedException \Geocoder\Exception\ZeroResults
      */
     public function testGeocode()
     {
@@ -27,8 +26,7 @@ class MapzenTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not find results for query "https://search.mapzen.com/v1/search?text=foobar&key=api_key&size=5".
+     * @expectedException \Geocoder\Exception\ZeroResults
      */
     public function testSslSchema()
     {
@@ -37,8 +35,7 @@ class MapzenTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "https://search.mapzen.com/v1/search?text=242+Acklam+Road%2C+London%2C+United+Kingdom&key=api_key&size=5".
+     * @expectedException \Geocoder\Exception\ZeroResults
      */
     public function testGeocodeWithAddressGetsNullContent()
     {
@@ -75,7 +72,7 @@ class MapzenTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
+     * @expectedException \Geocoder\Exception\ZeroResults
      */
     public function testReverse()
     {

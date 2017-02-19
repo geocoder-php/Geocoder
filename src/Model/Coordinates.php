@@ -46,7 +46,7 @@ final class Coordinates
     /**
      * Returns the latitude.
      *
-     * @return double|null
+     * @return double
      */
     public function getLatitude()
     {
@@ -56,7 +56,7 @@ final class Coordinates
     /**
      * Returns the longitude.
      *
-     * @return double|null
+     * @return double
      */
     public function getLongitude()
     {

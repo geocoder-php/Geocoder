@@ -10,7 +10,7 @@
 
 namespace Geocoder\Tests\Provider;
 
-use Geocoder\Exception\NoResult;
+use Geocoder\Exception\ZeroResults;
 use Geocoder\Location;
 use Geocoder\Provider\GeoIP2;
 use Geocoder\Tests\TestCase;
@@ -194,12 +194,12 @@ class GeoIP2Test extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
+     * @expectedException \Geocoder\Exception\ZeroResults
      * @expectedExceptionMessage No results found for IP address 74.200.247.59
      */
     public function testRetrievingGeodataNotExistingLocation()
     {
-        $adapterReturn = new NoResult('No results found for IP address 74.200.247.59');
+        $adapterReturn = new ZeroResults('No results found for IP address 74.200.247.59');
         $adapter = $this->getGeoIP2AdapterMock($adapterReturn);
 
         $provider = new GeoIP2($adapter);

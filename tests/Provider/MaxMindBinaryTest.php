@@ -135,7 +135,7 @@ class MaxMindBinaryTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
+     * @expectedException \Geocoder\Exception\ZeroResults
      * @expectedExceptionMessage No results found for IP address 127.0.0.1
      */
     public function testThrowIfIpAddressCouldNotBeLocated()

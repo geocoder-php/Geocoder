@@ -11,15 +11,17 @@ namespace Geocoder\Provider;
 
 use Geocoder\Collection;
 use Geocoder\Exception\InvalidCredentials;
+use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\QuotaExceeded;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Exception\ZeroResults;
 use Http\Client\HttpClient;
 
 /**
  * @author Gary Gale <gary@vicchi.org>
  */
-final class Mapzen extends AbstractHttpProvider
+final class Mapzen extends AbstractHttpProvider implements Provider
 {
     /**
      * @var string
@@ -98,7 +100,7 @@ final class Mapzen extends AbstractHttpProvider
         $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
 
         if (empty($content)) {
-            throw new NoResult(sprintf('Could not execute query "%s".', $query));
+            throw InvalidServerResponse::create($query);
         }
 
         $json = json_decode($content, true);
@@ -114,13 +116,13 @@ final class Mapzen extends AbstractHttpProvider
         }
 
         if (!isset($json['type']) || $json['type'] !== 'FeatureCollection' || !isset($json['features']) || count($json['features']) === 0) {
-            throw new NoResult(sprintf('Could not find results for query "%s".', $query));
+            throw ZeroResults::create($query);
         }
 
         $locations = $json['features'];
 
         if (empty($locations)) {
-            throw new NoResult(sprintf('Could not find results for query "%s".', $query));
+            throw ZeroResults::create($query);
         }
 
         $results = [];

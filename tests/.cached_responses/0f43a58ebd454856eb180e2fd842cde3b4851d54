@@ -1,0 +1,305 @@
+s:9699:"{
+   "results" : [
+      {
+         "address_components" : [
+            {
+               "long_name" : "Khafraa",
+               "short_name" : "Khafraa",
+               "types" : [ "route" ]
+            },
+            {
+               "long_name" : "Nazlet El-Semman",
+               "short_name" : "Nazlet El-Semman",
+               "types" : [ "administrative_area_level_3", "political" ]
+            },
+            {
+               "long_name" : "Al Haram",
+               "short_name" : "Al Haram",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "Giza Governorate",
+               "short_name" : "Giza Governorate",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "Egypt",
+               "short_name" : "EG",
+               "types" : [ "country", "political" ]
+            }
+         ],
+         "formatted_address" : "Khafraa, Nazlet El-Semman, Al Haram, Giza Governorate, Egypt",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : 29.981267,
+                  "lng" : 31.1372737
+               },
+               "southwest" : {
+                  "lat" : 29.9810871,
+                  "lng" : 31.1370166
+               }
+            },
+            "location" : {
+               "lat" : 29.9811771,
+               "lng" : 31.1371451
+            },
+            "location_type" : "GEOMETRIC_CENTER",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 29.9825260302915,
+                  "lng" : 31.1384941302915
+               },
+               "southwest" : {
+                  "lat" : 29.9798280697085,
+                  "lng" : 31.1357961697085
+               }
+            }
+         },
+         "place_id" : "ChIJ-4w1U49FWBQRlbO8KWPfe0A",
+         "types" : [ "route" ]
+      },
+      {
+         "address_components" : [
+            {
+               "long_name" : "The Great Pyramid at Giza",
+               "short_name" : "The Great Pyramid at Giza",
+               "types" : [ "establishment", "point_of_interest" ]
+            },
+            {
+               "long_name" : "Al Haram",
+               "short_name" : "Al Haram",
+               "types" : [ "route" ]
+            },
+            {
+               "long_name" : "Nazlet El-Semman",
+               "short_name" : "Nazlet El-Semman",
+               "types" : [ "administrative_area_level_3", "political" ]
+            },
+            {
+               "long_name" : "Al Haram",
+               "short_name" : "Al Haram",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "Giza Governorate",
+               "short_name" : "Giza Governorate",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "Egypt",
+               "short_name" : "EG",
+               "types" : [ "country", "political" ]
+            }
+         ],
+         "formatted_address" : "The Great Pyramid at Giza, Al Haram, Nazlet El-Semman, Al Haram, Giza Governorate, Egypt",
+         "geometry" : {
+            "location" : {
+               "lat" : 29.9792345,
+               "lng" : 31.1342019
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 29.9805834802915,
+                  "lng" : 31.1355508802915
+               },
+               "southwest" : {
+                  "lat" : 29.9778855197085,
+                  "lng" : 31.1328529197085
+               }
+            }
+         },
+         "place_id" : "ChIJGymPrIdFWBQRJCSloj8vDIE",
+         "types" : [ "establishment", "point_of_interest", "premise" ]
+      },
+      {
+         "address_components" : [
+            {
+               "long_name" : "Nazlet El-Semman",
+               "short_name" : "Nazlet El-Semman",
+               "types" : [ "administrative_area_level_3", "political" ]
+            },
+            {
+               "long_name" : "Al Haram",
+               "short_name" : "Al Haram",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "Giza Governorate",
+               "short_name" : "Giza Governorate",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "Egypt",
+               "short_name" : "EG",
+               "types" : [ "country", "political" ]
+            }
+         ],
+         "formatted_address" : "Nazlet El-Semman, Al Haram, Giza Governorate, Egypt",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : 29.987639,
+                  "lng" : 31.1507083
+               },
+               "southwest" : {
+                  "lat" : 29.9744927,
+                  "lng" : 31.1245123
+               }
+            },
+            "location" : {
+               "lat" : 29.979583,
+               "lng" : 31.1381037
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 29.987639,
+                  "lng" : 31.1507083
+               },
+               "southwest" : {
+                  "lat" : 29.9744927,
+                  "lng" : 31.1245123
+               }
+            }
+         },
+         "place_id" : "ChIJPyzbTI9FWBQRFpr4xUEkMyE",
+         "types" : [ "administrative_area_level_3", "political" ]
+      },
+      {
+         "address_components" : [
+            {
+               "long_name" : "Al Haram",
+               "short_name" : "Al Haram",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "Giza Governorate",
+               "short_name" : "Giza Governorate",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "Egypt",
+               "short_name" : "EG",
+               "types" : [ "country", "political" ]
+            }
+         ],
+         "formatted_address" : "Al Haram, Giza Governorate, Egypt",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : 30.02906999999999,
+                  "lng" : 31.1674453
+               },
+               "southwest" : {
+                  "lat" : 29.9732799,
+                  "lng" : 31.1158776
+               }
+            },
+            "location" : {
+               "lat" : 29.9931676,
+               "lng" : 31.1309426
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 30.02906999999999,
+                  "lng" : 31.1674453
+               },
+               "southwest" : {
+                  "lat" : 29.9732799,
+                  "lng" : 31.1158776
+               }
+            }
+         },
+         "place_id" : "ChIJPyzbTI9FWBQRUTC_LOKM78c",
+         "types" : [ "administrative_area_level_2", "political" ]
+      },
+      {
+         "address_components" : [
+            {
+               "long_name" : "Giza Governorate",
+               "short_name" : "Giza Governorate",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "Egypt",
+               "short_name" : "EG",
+               "types" : [ "country", "political" ]
+            }
+         ],
+         "formatted_address" : "Giza Governorate, Egypt",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : 30.34039869999999,
+                  "lng" : 31.9402533
+               },
+               "southwest" : {
+                  "lat" : 27.6592744,
+                  "lng" : 27.2140591
+               }
+            },
+            "location" : {
+               "lat" : 28.7666216,
+               "lng" : 29.2320784
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 30.3397743,
+                  "lng" : 31.9402533
+               },
+               "southwest" : {
+                  "lat" : 27.6592744,
+                  "lng" : 27.2140591
+               }
+            }
+         },
+         "place_id" : "ChIJwR6eLwRBWBQRJqwgD9dpxfs",
+         "types" : [ "administrative_area_level_1", "political" ]
+      },
+      {
+         "address_components" : [
+            {
+               "long_name" : "Egypt",
+               "short_name" : "EG",
+               "types" : [ "country", "political" ]
+            }
+         ],
+         "formatted_address" : "Egypt",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : 31.8122,
+                  "lng" : 37.0569
+               },
+               "southwest" : {
+                  "lat" : 21.9999999,
+                  "lng" : 24.696775
+               }
+            },
+            "location" : {
+               "lat" : 26.820553,
+               "lng" : 30.802498
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 31.670987,
+                  "lng" : 36.8945446
+               },
+               "southwest" : {
+                  "lat" : 21.9999999,
+                  "lng" : 24.696775
+               }
+            }
+         },
+         "place_id" : "ChIJ6TZcw3aJNhQRRMTEJQmgRSw",
+         "types" : [ "country", "political" ]
+      }
+   ],
+   "status" : "OK"
+}
+";

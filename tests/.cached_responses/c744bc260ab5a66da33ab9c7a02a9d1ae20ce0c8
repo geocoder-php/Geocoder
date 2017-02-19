@@ -1,0 +1,380 @@
+s:12191:"{
+   "documentation" : "https://geocoder.opencagedata.com/api",
+   "licenses" : [
+      {
+         "name" : "CC-BY-SA",
+         "url" : "http://creativecommons.org/licenses/by-sa/3.0/"
+      },
+      {
+         "name" : "ODbL",
+         "url" : "http://opendatacommons.org/licenses/odbl/summary/"
+      }
+   ],
+   "rate" : {
+      "limit" : 2500,
+      "remaining" : 2498,
+      "reset" : 1487548800
+   },
+   "results" : [
+      {
+         "annotations" : {
+            "DMS" : {
+               "lat" : "48\u00b0 51' 23.79636'' N",
+               "lng" : "2\u00b0 21' 5.39712'' E"
+            },
+            "MGRS" : "31UDQ5243111718",
+            "Maidenhead" : "JN18eu25eo",
+            "Mercator" : {
+               "x" : 261767.694,
+               "y" : 6218371.137
+            },
+            "OSM" : {
+               "edit_url" : "https://www.openstreetmap.org/edit?relation=7444#map=17/48.85661/2.35150",
+               "url" : "https://www.openstreetmap.org/?mlat=48.85661&mlon=2.35150#map=17/48.85661/2.35150"
+            },
+            "callingcode" : 33,
+            "currency" : {
+               "alternate_symbols" : [],
+               "decimal_mark" : ",",
+               "html_entity" : "&#x20AC;",
+               "iso_code" : "EUR",
+               "iso_numeric" : 978,
+               "name" : "Euro",
+               "smallest_denomination" : 1,
+               "subunit" : "Cent",
+               "subunit_to_unit" : 100,
+               "symbol" : "\u20ac",
+               "symbol_first" : 1,
+               "thousands_separator" : "."
+            },
+            "geohash" : "u09tvw063uhzk7nrdqg6",
+            "qibla" : 119.16,
+            "sun" : {
+               "rise" : {
+                  "apparent" : 1487487060,
+                  "astronomical" : 1487480700,
+                  "civil" : 1487485080,
+                  "nautical" : 1487482920
+               },
+               "set" : {
+                  "apparent" : 1487524740,
+                  "astronomical" : 1487531040,
+                  "civil" : 1487526660,
+                  "nautical" : 1487528880
+               }
+            },
+            "timezone" : {
+               "name" : "Europe/Paris",
+               "now_in_dst" : 0,
+               "offset_sec" : 3600,
+               "offset_string" : 100,
+               "short_name" : "CET"
+            },
+            "what3words" : {
+               "words" : "jacuzzi.offer.crowns"
+            },
+            "wikidata" : "Q90"
+         },
+         "bounds" : {
+            "northeast" : {
+               "lat" : 48.902156,
+               "lng" : 2.4697602
+            },
+            "southwest" : {
+               "lat" : 48.8155755,
+               "lng" : 2.224122
+            }
+         },
+         "components" : {
+            "_type" : "city",
+            "city" : "Paris",
+            "country" : "France",
+            "country_code" : "fr",
+            "county" : "Paris",
+            "state" : "Ile-de-France"
+         },
+         "confidence" : 6,
+         "formatted" : "Paris, France",
+         "geometry" : {
+            "lat" : 48.8566101,
+            "lng" : 2.3514992
+         }
+      },
+      {
+         "annotations" : {
+            "DMS" : {
+               "lat" : "35\u00b0 17' 31.31700'' N",
+               "lng" : "93\u00b0 43' 47.70192'' W"
+            },
+            "MGRS" : "15SVV3363005673",
+            "Maidenhead" : "EM35dh20jc",
+            "Mercator" : {
+               "x" : -10433966.655,
+               "y" : 4178951.626
+            },
+            "OSM" : {
+               "edit_url" : "https://www.openstreetmap.org/edit?relation=6678712#map=17/35.29203/-93.72992",
+               "url" : "https://www.openstreetmap.org/?mlat=35.29203&mlon=-93.72992#map=17/35.29203/-93.72992"
+            },
+            "callingcode" : 1,
+            "currency" : {
+               "alternate_symbols" : [
+                  "US$"
+               ],
+               "decimal_mark" : ".",
+               "disambiguate_symbol" : "US$",
+               "html_entity" : "$",
+               "iso_code" : "USD",
+               "iso_numeric" : 840,
+               "name" : "United States Dollar",
+               "smallest_denomination" : 1,
+               "subunit" : "Cent",
+               "subunit_to_unit" : 100,
+               "symbol" : "$",
+               "symbol_first" : 1,
+               "thousands_separator" : ","
+            },
+            "geohash" : "9ym2g0eyyxsnhvnn4wu4",
+            "qibla" : 45.25,
+            "sun" : {
+               "rise" : {
+                  "apparent" : 1487508840,
+                  "astronomical" : 1487503800,
+                  "civil" : 1487507340,
+                  "nautical" : 1487505540
+               },
+               "set" : {
+                  "apparent" : 1487462460,
+                  "astronomical" : 1487467560,
+                  "civil" : 1487464020,
+                  "nautical" : 1487465820
+               }
+            },
+            "timezone" : {
+               "name" : "America/Chicago",
+               "now_in_dst" : 0,
+               "offset_sec" : -21600,
+               "offset_string" : -600,
+               "short_name" : "CST"
+            },
+            "what3words" : {
+               "words" : "earmuffs.revealing.glues"
+            },
+            "wikidata" : "Q79917"
+         },
+         "bounds" : {
+            "northeast" : {
+               "lat" : 35.3065029,
+               "lng" : -93.6750829
+            },
+            "southwest" : {
+               "lat" : 35.26725,
+               "lng" : -93.7618069
+            }
+         },
+         "components" : {
+            "_type" : "city",
+            "city" : "Paris",
+            "country" : "United States of America",
+            "country_code" : "us",
+            "county" : "Logan County",
+            "state" : "Arkansas"
+         },
+         "confidence" : 7,
+         "formatted" : "Paris, Logan County, Arkansas, United States of America",
+         "geometry" : {
+            "lat" : 35.2920325,
+            "lng" : -93.7299172
+         }
+      },
+      {
+         "annotations" : {
+            "DMS" : {
+               "lat" : "33\u00b0 39' 42.46632'' N",
+               "lng" : "95\u00b0 33' 19.84644'' W"
+            },
+            "MGRS" : "15STT6304227587",
+            "Maidenhead" : "EM23fp38it",
+            "Mercator" : {
+               "x" : -10637191.039,
+               "y" : 3959796.301
+            },
+            "OSM" : {
+               "edit_url" : "https://www.openstreetmap.org/edit?way=33299478#map=17/33.66180/-95.55551",
+               "url" : "https://www.openstreetmap.org/?mlat=33.66180&mlon=-95.55551#map=17/33.66180/-95.55551"
+            },
+            "callingcode" : 1,
+            "currency" : {
+               "alternate_symbols" : [
+                  "US$"
+               ],
+               "decimal_mark" : ".",
+               "disambiguate_symbol" : "US$",
+               "html_entity" : "$",
+               "iso_code" : "USD",
+               "iso_numeric" : 840,
+               "name" : "United States Dollar",
+               "smallest_denomination" : 1,
+               "subunit" : "Cent",
+               "subunit_to_unit" : 100,
+               "symbol" : "$",
+               "symbol_first" : 1,
+               "thousands_separator" : ","
+            },
+            "geohash" : "9vup3xfw5jt7ffc4rz31",
+            "qibla" : 44.25,
+            "sun" : {
+               "rise" : {
+                  "apparent" : 1487509200,
+                  "astronomical" : 1487504220,
+                  "civil" : 1487507700,
+                  "nautical" : 1487505960
+               },
+               "set" : {
+                  "apparent" : 1487463000,
+                  "astronomical" : 1487467980,
+                  "civil" : 1487464500,
+                  "nautical" : 1487466240
+               }
+            },
+            "timezone" : {
+               "name" : "America/Chicago",
+               "now_in_dst" : 0,
+               "offset_sec" : -21600,
+               "offset_string" : -600,
+               "short_name" : "CST"
+            },
+            "what3words" : {
+               "words" : "done.velocity.composers"
+            },
+            "wikidata" : "Q830149"
+         },
+         "bounds" : {
+            "northeast" : {
+               "lat" : 33.738378,
+               "lng" : -95.4354549
+            },
+            "southwest" : {
+               "lat" : 33.611853,
+               "lng" : -95.6279279
+            }
+         },
+         "components" : {
+            "_type" : "city",
+            "city" : "Paris",
+            "country" : "United States of America",
+            "country_code" : "us",
+            "county" : "Lamar County",
+            "state" : "Texas"
+         },
+         "confidence" : 5,
+         "formatted" : "Paris, Lamar County, Texas, United States of America",
+         "geometry" : {
+            "lat" : 33.6617962,
+            "lng" : -95.5555129
+         }
+      },
+      {
+         "annotations" : {
+            "DMS" : {
+               "lat" : "38\u00b0 12' 35.27532'' N",
+               "lng" : "84\u00b0 15' 10.75248'' W"
+            },
+            "MGRS" : "16SGH4051332660",
+            "Maidenhead" : "EM78uf90pi",
+            "Mercator" : {
+               "x" : -9378999.588,
+               "y" : 4582672.954
+            },
+            "OSM" : {
+               "edit_url" : "https://www.openstreetmap.org/edit?relation=130722#map=17/38.20980/-84.25299",
+               "url" : "https://www.openstreetmap.org/?mlat=38.20980&mlon=-84.25299#map=17/38.20980/-84.25299"
+            },
+            "callingcode" : 1,
+            "currency" : {
+               "alternate_symbols" : [
+                  "US$"
+               ],
+               "decimal_mark" : ".",
+               "disambiguate_symbol" : "US$",
+               "html_entity" : "$",
+               "iso_code" : "USD",
+               "iso_numeric" : 840,
+               "name" : "United States Dollar",
+               "smallest_denomination" : 1,
+               "subunit" : "Cent",
+               "subunit_to_unit" : 100,
+               "symbol" : "$",
+               "symbol_first" : 1,
+               "thousands_separator" : ","
+            },
+            "geohash" : "dnu16gbu5nexs25kd78e",
+            "qibla" : 51.67,
+            "sun" : {
+               "rise" : {
+                  "apparent" : 1487506800,
+                  "astronomical" : 1487501520,
+                  "civil" : 1487505180,
+                  "nautical" : 1487503380
+               },
+               "set" : {
+                  "apparent" : 1487546400,
+                  "astronomical" : 1487465280,
+                  "civil" : 1487548020,
+                  "nautical" : 1487463480
+               }
+            },
+            "timezone" : {
+               "name" : "America/New_York",
+               "now_in_dst" : 0,
+               "offset_sec" : -18000,
+               "offset_string" : -500,
+               "short_name" : "EST"
+            },
+            "what3words" : {
+               "words" : "exiled.affair.stuttering"
+            },
+            "wikidata" : "Q3181341"
+         },
+         "bounds" : {
+            "northeast" : {
+               "lat" : 38.238271,
+               "lng" : -84.2320889
+            },
+            "southwest" : {
+               "lat" : 38.164922,
+               "lng" : -84.3073259
+            }
+         },
+         "components" : {
+            "_type" : "city",
+            "city" : "Paris",
+            "country" : "United States of America",
+            "country_code" : "us",
+            "county" : "Bourbon County",
+            "state" : "Kentucky"
+         },
+         "confidence" : 7,
+         "formatted" : "Paris, Bourbon County, Kentucky, United States of America",
+         "geometry" : {
+            "lat" : 38.2097987,
+            "lng" : -84.2529868
+         }
+      }
+   ],
+   "status" : {
+      "code" : 200,
+      "message" : "OK"
+   },
+   "stay_informed" : {
+      "blog" : "http://blog.opencagedata.com",
+      "twitter" : "https://twitter.com/opencagedata"
+   },
+   "thanks" : "For using an OpenCage Data API",
+   "timestamp" : {
+      "created_http" : "Sun, 19 Feb 2017 14:31:27 GMT",
+      "created_unix" : 1487514687
+   },
+   "total_results" : 4
+}
+";

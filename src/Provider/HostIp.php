@@ -13,6 +13,7 @@ namespace Geocoder\Provider;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Collection;
+use Geocoder\Exception\ZeroResults;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -76,7 +77,7 @@ final class HostIp extends AbstractHttpProvider implements Provider, IpAddressGe
         $data = json_decode($content, true);
 
         if (!$data) {
-            throw new NoResult(sprintf('Could not execute query "%s".', $query));
+            throw ZeroResults::create($query);
         }
 
         return $this->returnResults([

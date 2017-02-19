@@ -13,6 +13,7 @@ namespace Geocoder\Provider;
 use Geocoder\Exception\ExtensionNotLoaded;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Exception\ZeroResults;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -51,7 +52,7 @@ final class Geoip extends AbstractProvider implements Provider, IpAddressGeocode
         $results = @geoip_record_by_name($address);
 
         if (!is_array($results)) {
-            throw new NoResult(sprintf('Could not find "%s" IP address in database.', $address));
+            throw new ZeroResults(sprintf('Could not find "%s" IP address in database.', $address));
         }
 
         if (!empty($results['region']) && !empty($results['country_code'])) {

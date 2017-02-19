@@ -10,8 +10,10 @@
 
 namespace Geocoder\Provider;
 
+use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Exception\ZeroResults;
 use Http\Client\HttpClient;
 
 /**
@@ -67,19 +69,19 @@ final class Nominatim extends AbstractHttpProvider implements LocaleAwareProvide
         $content = $this->executeQuery($query);
 
         if (empty($content)) {
-            throw new NoResult(sprintf('Could not execute query "%s".', $query));
+            throw InvalidServerResponse::create($query);
         }
 
         $doc = new \DOMDocument();
         if (!@$doc->loadXML($content) || null === $doc->getElementsByTagName('searchresults')->item(0)) {
-            throw new NoResult(sprintf('Could not execute query "%s".', $query));
+            throw InvalidServerResponse::create($query);
         }
 
         $searchResult = $doc->getElementsByTagName('searchresults')->item(0);
         $places = $searchResult->getElementsByTagName('place');
 
         if (null === $places || 0 === $places->length) {
-            throw new NoResult(sprintf('Could not execute query "%s".', $query));
+            throw ZeroResults::create($query);
         }
 
         $results = [];
@@ -99,12 +101,12 @@ final class Nominatim extends AbstractHttpProvider implements LocaleAwareProvide
         $content = $this->executeQuery($query);
 
         if (empty($content)) {
-            throw new NoResult(sprintf('Unable to find results for coordinates [ %f, %f ].', $latitude, $longitude));
+            throw new ZeroResults(sprintf('Unable to find results for coordinates [ %f, %f ].', $latitude, $longitude));
         }
 
         $doc = new \DOMDocument();
         if (!@$doc->loadXML($content) || $doc->getElementsByTagName('error')->length > 0) {
-            throw new NoResult(sprintf('Unable to find results for coordinates [ %f, %f ].', $latitude, $longitude));
+            throw new ZeroResults(sprintf('Unable to find results for coordinates [ %f, %f ].', $latitude, $longitude));
         }
 
         $searchResult = $doc->getElementsByTagName('reversegeocode')->item(0);

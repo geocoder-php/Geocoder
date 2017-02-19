@@ -26,8 +26,7 @@ class TomTomTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "https://api.tomtom.com/lbs/services/geocode/4/geocode?key=api_key&query=&maxResults=5".
+     * @expectedException \Geocoder\Exception\ZeroResults
      */
     public function testGeocodeWithNull()
     {
@@ -36,8 +35,7 @@ class TomTomTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "https://api.tomtom.com/lbs/services/geocode/4/geocode?key=api_key&query=&maxResults=5".
+     * @expectedException \Geocoder\Exception\ZeroResults
      */
     public function testGeocodeWithEmpty()
     {
@@ -46,8 +44,7 @@ class TomTomTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "https://api.tomtom.com/lbs/services/geocode/4/geocode?key=api_key&query=Tagensvej%2047%2C%202200%20K%C3%B8benhavn%20N&maxResults=5".
+     * @expectedException \Geocoder\Exception\ZeroResults
      */
     public function testGeocodeWithAddressContentReturnNull()
     {
@@ -56,8 +53,7 @@ class TomTomTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "https://api.tomtom.com/lbs/services/geocode/4/geocode?key=api_key&query=Tagensvej%2047%2C%202200%20K%C3%B8benhavn%20N&maxResults=5".
+     * @expectedException \Geocoder\Exception\ZeroResults
      */
     public function testGeocodeWithAddress()
     {
@@ -66,16 +62,15 @@ class TomTomTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "https://api.tomtom.com/lbs/services/geocode/4/geocode?key=api_key&query=foo&maxResults=5".
+     * @expectedException \Geocoder\Exception\ZeroResults
      */
-    public function testGeocodeNoResult()
+    public function testGeocodeZeroResults()
     {
-        $noResult = <<<XML
+        $ZeroResults = <<<XML
 <geoResponse duration="" debugInformation="" count="0" svnRevision="" version="" consolidatedMaps=""/>
 XML;
 
-        $provider = new TomTom($this->getMockAdapterReturns($noResult), 'api_key');
+        $provider = new TomTom($this->getMockAdapterReturns($ZeroResults), 'api_key');
         $provider->geocode('foo');
     }
 
@@ -292,8 +287,7 @@ XML;
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "https://api.tomtom.com/lbs/services/reverseGeocode/3/xml?key=api_key&point=1.000000,2.000000".
+     * @expectedException \Geocoder\Exception\ZeroResults
      */
     public function testReverse()
     {
@@ -302,8 +296,7 @@ XML;
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "https://api.tomtom.com/lbs/services/reverseGeocode/3/xml?key=api_key&point=48.863216,2.388772".
+     * @expectedException \Geocoder\Exception\ZeroResults
      */
     public function testReverseWithCoordinatesContentReturnNull()
     {
@@ -312,8 +305,7 @@ XML;
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "https://api.tomtom.com/lbs/services/reverseGeocode/3/xml?key=api_key&point=60.453947,22.256784".
+     * @expectedException \Geocoder\Exception\ZeroResults
      */
     public function testReverseWithCoordinatesGetsEmptyContent()
     {
@@ -322,8 +314,7 @@ XML;
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "https://api.tomtom.com/lbs/services/reverseGeocode/3/xml?key=api_key&point=1.000000,2.000000".
+     * @expectedException \Geocoder\Exception\ZeroResults
      */
     public function testReverseError400()
     {

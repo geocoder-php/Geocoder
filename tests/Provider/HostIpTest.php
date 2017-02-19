@@ -76,8 +76,7 @@ class HostIpTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "http://api.hostip.info/get_json.php?ip=88.188.221.14&position=true".
+     * @expectedException \Geocoder\Exception\ZeroResults
      */
     public function testGeocodeWithRealIPv4GetsNullContent()
     {
@@ -86,8 +85,7 @@ class HostIpTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "http://api.hostip.info/get_json.php?ip=88.188.221.14&position=true".
+     * @expectedException \Geocoder\Exception\ZeroResults
      */
     public function testGeocodeWithRealIPv4GetsEmptyContent()
     {

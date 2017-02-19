@@ -10,9 +10,11 @@
 
 namespace Geocoder\Provider;
 
+use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Collection;
+use Geocoder\Exception\ZeroResults;
 use Geocoder\Model\Address;
 
 /**
@@ -70,13 +72,13 @@ final class FreeGeoIp extends AbstractHttpProvider implements Provider, IpAddres
         $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
 
         if (empty($content)) {
-            throw new NoResult(sprintf('Could not execute query %s', $query));
+            throw InvalidServerResponse::create($query);
         }
 
         $data = (array) json_decode($content);
 
         if (empty($data)) {
-            throw new NoResult(sprintf('Could not execute query %s', $query));
+            throw ZeroResults::create($query);
         }
 
         $adminLevels = [];

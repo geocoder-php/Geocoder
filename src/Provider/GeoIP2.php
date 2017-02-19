@@ -10,6 +10,7 @@
 
 namespace Geocoder\Provider;
 
+use Geocoder\Exception\ZeroResults;
 use GeoIp2\Exception\AddressNotFoundException;
 use Geocoder\Adapter\GeoIP2Adapter;
 use Geocoder\Exception\NoResult;
@@ -105,7 +106,7 @@ final class GeoIP2 extends AbstractProvider implements LocaleAwareProvider, IpAd
                 ->setLocale($this->locale)
                 ->getContent($uri);
         } catch (AddressNotFoundException $e) {
-            throw new NoResult(sprintf('No results found for IP address "%s".', $address));
+            throw new ZeroResults(sprintf('No results found for IP address "%s".', $address));
         }
 
         return $result;

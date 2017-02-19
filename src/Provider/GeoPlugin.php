@@ -10,8 +10,10 @@
 
 namespace Geocoder\Provider;
 
+use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Exception\ZeroResults;
 
 /**
  * @author Andrea Cristaudo <andrea.cristaudo@gmail.com>
@@ -66,17 +68,17 @@ final class GeoPlugin extends AbstractHttpProvider implements Provider, IpAddres
         $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
 
         if (empty($content)) {
-            throw new NoResult(sprintf('Could not execute query "%s".', $query));
+            throw InvalidServerResponse::create($query);
         }
 
         $json = json_decode($content, true);
 
         if (!is_array($json) || !count($json)) {
-            throw new NoResult(sprintf('Could not execute query "%s".', $query));
+            throw InvalidServerResponse::create($query);
         }
 
         if (!array_key_exists('geoplugin_status', $json) || (200 !== $json['geoplugin_status'] && 206 !== $json['geoplugin_status'])) {
-            throw new NoResult(sprintf('Could not execute query "%s".', $query));
+            throw ZeroResults::create($query);
         }
 
         $data = array_filter($json);

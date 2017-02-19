@@ -24,8 +24,7 @@ class BingMapsTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "https://dev.virtualearth.net/REST/v1/Locations/?maxResults=5&q=foobar&key=api_key&incl=ciso2".
+     * @expectedException \Geocoder\Exception\ZeroResults
      */
     public function testGeocodeWithInvalidData()
     {
@@ -34,8 +33,7 @@ class BingMapsTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "https://dev.virtualearth.net/REST/v1/Locations/?maxResults=5&q=&key=api_key&incl=ciso2".
+     * @expectedException \Geocoder\Exception\ZeroResults
      */
     public function testGeocodeWithNull()
     {
@@ -44,8 +42,7 @@ class BingMapsTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "https://dev.virtualearth.net/REST/v1/Locations/?maxResults=5&q=&key=api_key&incl=ciso2".
+     * @expectedException \Geocoder\Exception\ZeroResults
      */
     public function testGeocodeWithEmpty()
     {
@@ -74,8 +71,7 @@ class BingMapsTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "https://dev.virtualearth.net/REST/v1/Locations/?maxResults=5&q=10+avenue+Gambetta%2C+Paris%2C+France&key=api_key&incl=ciso2".
+     * @expectedException \Geocoder\Exception\ZeroResults
      */
     public function testGeocodeWithAddressGetsNullContent()
     {
@@ -345,8 +341,7 @@ JSON;
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "https://dev.virtualearth.net/REST/v1/Locations/1.000000,2.000000?key=api_key&incl=ciso2".
+     * @expectedException \Geocoder\Exception\ZeroResults
      */
     public function testReverse()
     {
@@ -355,8 +350,7 @@ JSON;
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "https://dev.virtualearth.net/REST/v1/Locations/48.863216,2.388772?key=api_key&incl=ciso2".
+     * @expectedException \Geocoder\Exception\ZeroResults
      */
     public function testReverseWithCoordinatesContentReturnNull()
     {

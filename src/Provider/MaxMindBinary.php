@@ -14,6 +14,7 @@ use Geocoder\Exception\FunctionNotFound;
 use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Exception\ZeroResults;
 
 final class MaxMindBinary extends AbstractProvider implements Provider, IpAddressGeocoder
 {
@@ -84,7 +85,7 @@ final class MaxMindBinary extends AbstractProvider implements Provider, IpAddres
         geoip_close($geoIp);
 
         if (false === $geoIpRecord instanceof \GeoIpRecord) {
-            throw new NoResult(sprintf('No results found for IP address %s', $address));
+            throw new ZeroResults(sprintf('No results found for IP address %s', $address));
         }
 
         $adminLevels = [];

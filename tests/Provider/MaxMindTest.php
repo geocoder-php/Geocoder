@@ -104,8 +104,7 @@ class MaxMindTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "https://geoip.maxmind.com/f?l=api_key&i=74.200.247.59".
+     * @expectedException \Geocoder\Exception\ZeroResults
      */
     public function testGeocodeWithRealIPv4GetsNullContent()
     {
@@ -114,8 +113,7 @@ class MaxMindTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Could not execute query "https://geoip.maxmind.com/f?l=api_key&i=74.200.247.59".
+     * @expectedException \Geocoder\Exception\ZeroResults
      */
     public function testGeocodeWithRealIPv4GetsEmptyContent()
     {
@@ -259,7 +257,7 @@ class MaxMindTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
+     * @expectedException \Geocoder\Exception\ZeroResults
      * @expectedExceptionMessage Could not retrieve information for the supplied IP address.
      */
     public function testGeocodeWithRealIPv4GetsFakeContentWithIpNotFound()
@@ -269,7 +267,7 @@ class MaxMindTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
+     * @expectedException \Geocoder\Exception\ZeroResults
      * @expectedExceptionMessage Could not retrieve information for the supplied IP address.
      */
     public function testGeocodeOmniServiceWithRealIPv6GetsFakeContentWithIpNotFound()
@@ -280,8 +278,7 @@ class MaxMindTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
-     * @expectedExceptionMessage Invalid result returned by the API.
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
      */
     public function testGeocodeGetsFakeContentWithInvalidData()
     {

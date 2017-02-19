@@ -12,9 +12,11 @@ namespace Geocoder\Provider;
 
 use Exception;
 use Geocoder\Exception\InvalidCredentials;
+use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\QuotaExceeded;
 use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Exception\ZeroResults;
 use Http\Client\HttpClient;
 
 /**
@@ -176,14 +178,14 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvid
         }
 
         if (empty($content)) {
-            throw new NoResult(sprintf('Could not execute query "%s".', $query));
+            throw InvalidServerResponse::create($query);
         }
 
         $json = json_decode($content);
 
         // API error
         if (!isset($json)) {
-            throw new NoResult(sprintf('Could not execute query "%s".', $query));
+            throw InvalidServerResponse::create($query);
         }
 
         if ('REQUEST_DENIED' === $json->status && 'The provided API key is invalid.' === $json->error_message) {
@@ -202,7 +204,7 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvid
 
         // no result
         if (!isset($json->results) || !count($json->results) || 'OK' !== $json->status) {
-            throw new NoResult(sprintf('Could not execute query "%s".', $query));
+            throw ZeroResults::create($query);
         }
 
         $results = [];
