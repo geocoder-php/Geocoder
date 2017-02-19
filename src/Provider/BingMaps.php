@@ -160,6 +160,10 @@ final class BingMaps extends AbstractHttpProvider implements LocaleAwareProvider
             ]);
         }
 
+        if (empty($results)) {
+            throw ZeroResults::create($query);
+        }
+
         return $this->returnResults($results);
     }
 }

@@ -143,7 +143,7 @@ final class MapQuest extends AbstractHttpProvider implements Provider
 
         $results = [];
         foreach ($locations as $location) {
-            if ($location['street'] || $location['postalCode'] || $location['adminArea5'] || $location['adminArea4'] || $location['adminArea3'] || $location['adminArea1']) {
+            if ($location['street'] || $location['postalCode'] || $location['adminArea5'] || $location['adminArea4'] || $location['adminArea3']) {
                 $admins = [];
 
                 if ($location['adminArea3']) {
