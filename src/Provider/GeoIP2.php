@@ -19,9 +19,8 @@ use Geocoder\Exception\UnsupportedOperation;
 /**
  * @author Jens Wiese <jens@howtrueisfalse.de>
  */
-final class GeoIP2 extends AbstractProvider implements LocaleAwareProvider, IpAddressGeocoder
+final class GeoIP2 extends AbstractProvider implements LocaleAwareGeocoder, IpAddressGeocoder, Provider
 {
-    use LocaleTrait;
 
     /**
      * @var GeoIP2Adapter

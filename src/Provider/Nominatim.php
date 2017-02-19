@@ -19,9 +19,8 @@ use Http\Client\HttpClient;
 /**
  * @author Niklas Närhinen <niklas@narhinen.net>
  */
-final class Nominatim extends AbstractHttpProvider implements LocaleAwareProvider
+final class Nominatim extends AbstractHttpProvider implements LocaleAwareGeocoder, Provider
 {
-    use LocaleTrait;
 
     /**
      * @var string

@@ -22,14 +22,13 @@ use Http\Client\HttpClient;
 /**
  * @author mtm <mtm@opencagedata.com>
  */
-final class OpenCage extends AbstractHttpProvider implements LocaleAwareProvider
+final class OpenCage extends AbstractHttpProvider implements LocaleAwareGeocoder, Provider
 {
     /**
      * @var string
      */
     const GEOCODE_ENDPOINT_URL = 'https://api.opencagedata.com/geocode/v1/json?key=%s&query=%s&limit=%d&pretty=1';
 
-    use LocaleTrait;
 
     /**
      * @var string

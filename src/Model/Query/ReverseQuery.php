@@ -1,0 +1,139 @@
+<?php
+
+/**
+ * This file is part of the Geocoder package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license    MIT License
+ */
+
+namespace Geocoder\Model\Query;
+
+use Geocoder\Model\Coordinates;
+use Geocoder\Provider\Provider;
+
+/**
+ * @author Tobias Nyholm <tobias.nyholm@gmail.com>
+ */
+final class ReverseQuery implements Query
+{
+    /**
+     * @var Coordinates
+     */
+    private $coordinates;
+
+    /**
+     * @var int
+     */
+    private $limit;
+
+    /**
+     * @var string
+     */
+    private $locale;
+
+    /**
+     * @var array
+     */
+    private $data;
+
+    /**
+     * @param Coordinates $coordinates
+     */
+    private function __construct(Coordinates $coordinates)
+    {
+        $this->coordinates = $coordinates;
+        $this->data = [];
+        $this->limit = Provider::MAX_RESULTS;
+    }
+
+    /**
+     * @param Coordinates $coordinates
+     *
+     * @return ReverseQuery
+     */
+    public static function create(Coordinates $coordinates)
+    {
+        return new self($coordinates);
+    }
+    /**
+     * @param float $latitude
+     * @param float $longitude
+     *
+     * @return ReverseQuery
+     */
+    public static function fromCoordinates($latitude, $longitude)
+    {
+        return new self(new Coordinates($latitude, $longitude));
+    }
+
+    /**
+     * @param int $limit
+     *
+     * @return $this
+     */
+    public function withLimit($limit)
+    {
+        $this->limit = $limit;
+
+        return $this;
+    }
+
+    /**
+     * @param string $locale
+     *
+     * @return ReverseQuery
+     */
+    public function withLocale($locale)
+    {
+        $this->locale = $locale;
+
+        return $this;
+    }
+
+    /**
+     * @param string $name
+     * @param mixed  $value
+     *
+     * @return $this
+     */
+    public function withData($name, $value)
+    {
+        $this->data[$name] = $value;
+
+        return $this;
+    }
+
+    /**
+     * @return Coordinates
+     */
+    public function getCoordinates()
+    {
+        return $this->coordinates;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLimit()
+    {
+        return $this->limit;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLocale()
+    {
+        return $this->locale;
+    }
+
+    /**
+     * @return array
+     */
+    public function getData()
+    {
+        return $this->data;
+    }
+}

@@ -16,7 +16,7 @@ use Geocoder\Provider\GeoIPs;
 use Geocoder\Provider\Geonames;
 use Geocoder\Provider\GeoPlugin;
 use Geocoder\Provider\GoogleMaps;
-use Geocoder\Provider\LocaleAwareProvider;
+use Geocoder\Provider\LocaleAwareGeocoder;
 use Geocoder\Provider\MapQuest;
 use Geocoder\Provider\Mapzen;
 use Geocoder\Provider\Nominatim;
@@ -40,7 +40,7 @@ class LiskovSubstitutionPrincipleTest extends \PHPUnit_Framework_TestCase
      */
     public function testGeocodeWorldWideProvider(Geocoder $geocoder)
     {
-        if ($geocoder instanceof LocaleAwareProvider) {
+        if ($geocoder instanceof LocaleAwareGeocoder) {
             $geocoder->setLocale('en');
         }
 

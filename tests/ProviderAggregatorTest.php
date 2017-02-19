@@ -5,7 +5,7 @@ namespace Geocoder\Tests;
 use Geocoder\ProviderAggregator;
 use Geocoder\Model\Address;
 use Geocoder\Model\AddressFactory;
-use Geocoder\Provider\LocaleAwareProvider;
+use Geocoder\Provider\LocaleAwareGeocoder;
 use Geocoder\Provider\Provider;
 use Geocoder\Provider\LocaleTrait;
 
@@ -188,7 +188,7 @@ class MockProvider implements Provider
     }
 }
 
-class MockLocaleAwareProvider extends MockProvider implements LocaleAwareProvider
+class MockLocaleAwareProvider extends MockProvider implements LocaleAwareGeocoder
 {
     use LocaleTrait;
 }

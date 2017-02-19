@@ -21,7 +21,7 @@ use Http\Client\HttpClient;
 /**
  * @author Giovanni Pirrotta <giovanni.pirrotta@gmail.com>
  */
-final class Geonames extends AbstractHttpProvider implements LocaleAwareProvider
+final class Geonames extends AbstractHttpProvider implements LocaleAwareGeocoder, Provider
 {
     /**
      * @var string
@@ -33,7 +33,6 @@ final class Geonames extends AbstractHttpProvider implements LocaleAwareProvider
      */
     const REVERSE_ENDPOINT_URL = 'http://api.geonames.org/findNearbyPlaceNameJSON?lat=%F&lng=%F&style=full&maxRows=%d&username=%s';
 
-    use LocaleTrait;
 
     /**
      * @var string

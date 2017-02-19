@@ -17,12 +17,16 @@ use Geocoder\Exception\NoResult;
 use Geocoder\Exception\QuotaExceeded;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Exception\ZeroResults;
+use Geocoder\Model\AddressCollection;
+use Geocoder\Model\Query\GeocodeQuery;
+use Geocoder\Model\Query\Query;
+use Geocoder\Model\Query\ReverseQuery;
 use Http\Client\HttpClient;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvider
+final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocoder, Provider
 {
     /**
      * @var string
@@ -33,8 +37,6 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvid
      * @var string
      */
     const REVERSE_ENDPOINT_URL_SSL = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=%F,%F';
-
-    use LocaleTrait;
 
     /**
      * @var string
@@ -92,30 +94,25 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvid
         $this->apiKey = $apiKey;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function geocode($address)
+    public function geocodeQuery(GeocodeQuery $query)
     {
         // Google API returns invalid data if IP address given
         // This API doesn't handle IPs
-        if (filter_var($address, FILTER_VALIDATE_IP)) {
+        if (filter_var($query->getText(), FILTER_VALIDATE_IP)) {
             throw new UnsupportedOperation('The GoogleMaps provider does not support IP addresses, only street addresses.');
         }
 
-        $query = sprintf(self::GEOCODE_ENDPOINT_URL_SSL, rawurlencode($address));
+        $url = sprintf(self::GEOCODE_ENDPOINT_URL_SSL, rawurlencode($query->getText()));
 
-        return $this->executeQuery($query);
+        return $this->fetchUrl($query, $url);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function reverse($latitude, $longitude)
+    public function reverseQuery(ReverseQuery $query)
     {
-        $query = sprintf(self::REVERSE_ENDPOINT_URL_SSL, $latitude, $longitude);
+        $coordinate = $query->getCoordinates();
+        $url = sprintf(self::REVERSE_ENDPOINT_URL_SSL, $coordinate->getLatitude(), $coordinate->getLongitude());
 
-        return $this->executeQuery($query);
+        return $this->fetchUrl($query, $url);
     }
 
     /**
@@ -134,77 +131,82 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvid
     }
 
     /**
-     * @param string $query
+     * @param Query $query
+     * @param string $url
      *
      * @return string query with extra params
      */
-    private function buildQuery($query)
+    private function buildQuery(Query $query, $url)
     {
-        if (null !== $this->getLocale()) {
-            $query = sprintf('%s&language=%s', $query, $this->getLocale());
+        if (null !== $query->getLocale()) {
+            $url = sprintf('%s&language=%s', $url, $query->getLocale());
         }
 
         if (null !== $this->region) {
-            $query = sprintf('%s&region=%s', $query, $this->region);
+            $url = sprintf('%s&region=%s', $url, $this->region);
         }
 
         if (null !== $this->apiKey) {
-            $query = sprintf('%s&key=%s', $query, $this->apiKey);
+            $url = sprintf('%s&key=%s', $url, $this->apiKey);
         }
 
         if (null !== $this->clientId) {
-            $query = sprintf('%s&client=%s', $query, $this->clientId);
+            $url = sprintf('%s&client=%s', $url, $this->clientId);
 
             if (null !== $this->privateKey) {
-                $query = $this->signQuery($query);
+                $url = $this->signQuery($url);
             }
         }
 
-        return $query;
+        return $url;
     }
 
     /**
-     * @param string $query
+     * @param Query $query
+     * @param string $url
+     *
+     * @return \Geocoder\Collection
+     * @throws Exception
      */
-    private function executeQuery($query)
+    private function fetchUrl(Query $query, $url)
     {
-        $query   = $this->buildQuery($query);
-        $request = $this->getMessageFactory()->createRequest('GET', $query);
+        $url = $this->buildQuery($query, $url);
+        $request = $this->getMessageFactory()->createRequest('GET', $url);
         $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
 
         // Throw exception if invalid clientID and/or privateKey used with GoogleMapsBusinessProvider
         if (strpos($content, "Provided 'signature' is not valid for the provided client ID") !== false) {
-            throw new InvalidCredentials(sprintf('Invalid client ID / API Key %s', $query));
+            throw new InvalidCredentials(sprintf('Invalid client ID / API Key %s', $url));
         }
 
         if (empty($content)) {
-            throw InvalidServerResponse::create($query);
+            throw InvalidServerResponse::create($url);
         }
 
         $json = json_decode($content);
 
         // API error
         if (!isset($json)) {
-            throw InvalidServerResponse::create($query);
+            throw InvalidServerResponse::create($url);
         }
 
         if ('REQUEST_DENIED' === $json->status && 'The provided API key is invalid.' === $json->error_message) {
-            throw new InvalidCredentials(sprintf('API key is invalid %s', $query));
+            throw new InvalidCredentials(sprintf('API key is invalid %s', $url));
         }
 
         if ('REQUEST_DENIED' === $json->status) {
             throw new Exception(sprintf('API access denied. Request: %s - Message: %s',
-                $query, $json->error_message));
+                $url, $json->error_message));
         }
 
         // you are over your quota
         if ('OVER_QUERY_LIMIT' === $json->status) {
-            throw new QuotaExceeded(sprintf('Daily quota exceeded %s', $query));
+            throw new QuotaExceeded(sprintf('Daily quota exceeded %s', $url));
         }
 
         // no result
         if (!isset($json->results) || !count($json->results) || 'OK' !== $json->status) {
-            throw ZeroResults::create($query);
+            throw ZeroResults::create($url);
         }
 
         $results = [];
@@ -242,6 +244,10 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvid
             }
 
             $results[] = array_merge($this->getDefaults(), $resultSet);
+
+            if (count($results) >= $query->getLimit()) {
+                break;
+            }
         }
 
         return $this->returnResults($results);
