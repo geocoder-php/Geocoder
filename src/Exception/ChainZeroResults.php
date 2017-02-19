@@ -13,7 +13,7 @@ namespace Geocoder\Exception;
 /**
  * @author Ben Glassman <bglassman@gmail.com>
  */
-class ChainZeroResult extends ZeroResults
+class ChainZeroResults extends ZeroResults
 {
     /**
      * Exceptions from chained providers

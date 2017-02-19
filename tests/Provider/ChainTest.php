@@ -3,7 +3,7 @@
 namespace Geocoder\Tests\Provider;
 
 use Geocoder\Tests\TestCase;
-use Geocoder\Exception\ChainZeroResult;
+use Geocoder\Exception\ChainZeroResults;
 use Geocoder\Provider\Chain;
 
 /**
@@ -54,7 +54,7 @@ class ChainTest extends TestCase
 
         try {
             $chain->reverse('11', '22');
-        } catch (ChainZeroResult $e) {
+        } catch (ChainZeroResults $e) {
             $this->assertCount(2, $e->getExceptions());
         }
     }
@@ -88,7 +88,7 @@ class ChainTest extends TestCase
 
         try {
             $chain->geocode('Paris');
-        } catch (ChainZeroResult $e) {
+        } catch (ChainZeroResults $e) {
             $this->assertCount(2, $e->getExceptions());
         }
     }
