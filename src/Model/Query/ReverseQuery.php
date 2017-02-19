@@ -16,7 +16,7 @@ use Geocoder\Provider\Provider;
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-final class ReverseQuery implements Query
+final class ReverseQuery
 {
     /**
      * @var Coordinates
@@ -68,6 +68,12 @@ final class ReverseQuery implements Query
         return new self(new Coordinates($latitude, $longitude));
     }
 
+
+    public function __clone()
+    {
+        $this->coordinates = clone $this->coordinates;
+    }
+
     /**
      * @param int $limit
      *
@@ -75,9 +81,10 @@ final class ReverseQuery implements Query
      */
     public function withLimit($limit)
     {
-        $this->limit = $limit;
+        $new = clone $this;
+        $new->limit = $limit;
 
-        return $this;
+        return $new;
     }
 
     /**
@@ -87,9 +94,10 @@ final class ReverseQuery implements Query
      */
     public function withLocale($locale)
     {
-        $this->locale = $locale;
+        $new = clone $this;
+        $new->locale = $locale;
 
-        return $this;
+        return $new;
     }
 
     /**
@@ -100,9 +108,10 @@ final class ReverseQuery implements Query
      */
     public function withData($name, $value)
     {
-        $this->data[$name] = $value;
+        $new = clone $this;
+        $new->data[$name] = $value;
 
-        return $this;
+        return $new;
     }
 
     /**
