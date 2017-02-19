@@ -18,7 +18,7 @@ class OpenCageTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
+     * @expectedException \Geocoder\Exception\ZeroResults
      * @expectedExceptionMessage Could not find results for query "https://api.opencagedata.com/geocode/v1/json?key=api_key&query=foobar&limit=5&pretty=1".
      */
     public function testSslSchema()
@@ -28,7 +28,7 @@ class OpenCageTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
+     * @expectedException \Geocoder\Exception\ZeroResults
      * @expectedExceptionMessage Could not execute query "https://api.opencagedata.com/geocode/v1/json?key=api_key&query=10+avenue+Gambetta%2C+Paris%2C+France&limit=5&pretty=1".
      */
     public function testGeocodeWithAddressGetsNullContent()
@@ -72,7 +72,7 @@ class OpenCageTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
+     * @expectedException \Geocoder\Exception\ZeroResults
      */
     public function testReverse()
     {

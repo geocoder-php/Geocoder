@@ -10,8 +10,10 @@
 
 namespace Geocoder\Provider;
 
+use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Exception\ZeroResults;
 use Http\Client\HttpClient;
 
 /**
@@ -104,7 +106,7 @@ final class Yandex extends AbstractHttpProvider implements LocaleAwareProvider
         if (empty($json) || isset($json['error']) ||
             (isset($json['response']) &&  '0' === $json['response']['GeoObjectCollection']['metaDataProperty']['GeocoderResponseMetaData']['found'])
         ) {
-            throw new NoResult(sprintf('Could not execute query "%s".', $query));
+            throw ZeroResults::create($query);
         }
 
         $data = $json['response']['GeoObjectCollection']['featureMember'];

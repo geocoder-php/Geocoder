@@ -12,9 +12,11 @@ namespace Geocoder\Provider;
 
 use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\InvalidCredentials;
+use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\QuotaExceeded;
 use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Exception\ZeroResults;
 use Http\Client\HttpClient;
 
 /**
@@ -111,7 +113,7 @@ final class GeoIPs extends AbstractHttpProvider implements Provider
         $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
 
         if (empty($content)) {
-            throw new NoResult(sprintf('Invalid response from GeoIPs API for query "%s".', $query));
+            throw InvalidServerResponse::create($query);
         }
 
         $json = json_decode($content, true);
@@ -129,7 +131,7 @@ final class GeoIPs extends AbstractHttpProvider implements Provider
                 case static::CODE_LIMIT_EXCEEDED:
                     throw new QuotaExceeded('The service you have requested is over capacity.');
                 default:
-                    throw new NoResult(sprintf(
+                    throw new ZeroResults(sprintf(
                         'GeoIPs error %s%s%s%s - query: %s',
                         $json['error']['code'],
                         isset($json['error']['status']) ? ', ' . $json['error']['status'] : '',
@@ -141,20 +143,20 @@ final class GeoIPs extends AbstractHttpProvider implements Provider
         }
 
         if (!is_array($json) || empty($json) || empty($json['response']) || empty($json['response']['code'])) {
-            throw new NoResult(sprintf('Invalid response from GeoIPs API for query "%s".', $query));
+            throw InvalidServerResponse::create($query);
         }
 
         $response = $json['response'];
 
         // Check response code
         switch ($response['code']) {
-            case static::CODE_NOT_FOUND:
-                throw new NoResult();
             case static::CODE_SUCCESS;
                 // everything is ok
                 break;
+            case static::CODE_NOT_FOUND:
+                throw ZeroResults::create($query);
             default:
-                throw new NoResult(sprintf(
+                throw new InvalidServerResponse(sprintf(
                     'The GeoIPs API returned unknown result code "%s" for query: "%s".',
                     $response['code'],
                     $query
@@ -163,7 +165,7 @@ final class GeoIPs extends AbstractHttpProvider implements Provider
 
         // Make sure that we do have proper result array
         if (empty($response['location']) || !is_array($response['location'])) {
-            throw new NoResult(sprintf('Invalid response from GeoIPs API for query "%s".', $query));
+            throw ZeroResults::create($query);
         }
 
         $location = array_map(function ($value) {

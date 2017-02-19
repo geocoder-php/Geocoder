@@ -11,8 +11,10 @@
 namespace Geocoder\Provider;
 
 use Geocoder\Exception\InvalidCredentials;
+use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Exception\ZeroResults;
 use Http\Client\HttpClient;
 
 /**
@@ -112,13 +114,13 @@ final class TomTom extends AbstractHttpProvider implements LocaleAwareProvider
         try {
             $xml = new \SimpleXmlElement($content);
         } catch (\Exception $e) {
-            throw new NoResult(sprintf('Could not execute query "%s".', $query));
+            throw InvalidServerResponse::create($query);
         }
 
         $attributes = $xml->attributes();
 
         if (isset($attributes['count']) && 0 === (int) $attributes['count']) {
-            throw new NoResult(sprintf('Could not execute query "%s".', $query));
+            throw ZeroResults::create($query);
         }
 
         if (isset($attributes['errorCode'])) {
@@ -126,7 +128,7 @@ final class TomTom extends AbstractHttpProvider implements LocaleAwareProvider
                 throw new InvalidCredentials('Map API Key provided is not valid.');
             }
 
-            throw new NoResult(sprintf('Could not execute query "%s".', $query));
+            throw ZeroResults::create($query);
         }
 
         $data = isset($xml->geoResult) ? $xml->geoResult : $xml->reverseGeoResult;

@@ -70,7 +70,7 @@ class GeoPluginTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
+     * @expectedException \Geocoder\Exception\ZeroResults
      * @expectedExceptionMessage Could not execute query "http://www.geoplugin.net/json.gp?ip=74.200.247.59".
      */
     public function testGeocodeWithRealIPv4GetsNullContent()
@@ -80,7 +80,7 @@ class GeoPluginTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
+     * @expectedException \Geocoder\Exception\ZeroResults
      * @expectedExceptionMessage Could not execute query "http://www.geoplugin.net/json.gp?ip=74.200.247.59".
      */
     public function testGeocodeWithRealIPv4GetsEmptyContent()

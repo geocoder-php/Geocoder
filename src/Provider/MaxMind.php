@@ -11,9 +11,12 @@
 namespace Geocoder\Provider;
 
 use Geocoder\Collection;
+use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\InvalidCredentials;
+use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Exception\ZeroResults;
 use Http\Client\HttpClient;
 
 /**
@@ -109,7 +112,7 @@ final class MaxMind extends AbstractHttpProvider implements Provider
         $fields  = $this->fieldsForService($this->service);
 
         if (null === $content || '' === $content) {
-            throw new NoResult(sprintf('Could not execute query "%s".', $query));
+            throw InvalidServerResponse::create($query);
         }
 
         $data = str_getcsv($content);
@@ -119,11 +122,11 @@ final class MaxMind extends AbstractHttpProvider implements Provider
         }
 
         if ('IP_NOT_FOUND' === end($data)) {
-            throw new NoResult('Could not retrieve information for the supplied IP address.');
+            throw new ZeroResults('Could not retrieve information for the supplied IP address.');
         }
 
         if (count($fields) !== count($data)) {
-            throw new NoResult('Invalid result returned by the API.');
+            throw InvalidServerResponse::create($query);
         }
 
         $data = array_combine($fields, $data);

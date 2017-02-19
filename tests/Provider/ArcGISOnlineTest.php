@@ -15,7 +15,7 @@ class ArcGISOnlineTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
+     * @expectedException \Geocoder\Exception\ZeroResults
      */
     public function testGeocodeWithInvalidData()
     {
@@ -24,7 +24,7 @@ class ArcGISOnlineTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
+     * @expectedException \Geocoder\Exception\ZeroResults
      * @expectedExceptionMessage Invalid address.
      */
     public function testGeocodeWithNull()
@@ -34,7 +34,7 @@ class ArcGISOnlineTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
+     * @expectedException \Geocoder\Exception\ZeroResults
      * @expectedExceptionMessage Invalid address.
      */
     public function testGeocodeWithEmpty()
@@ -64,7 +64,7 @@ class ArcGISOnlineTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
+     * @expectedException \Geocoder\Exception\ZeroResults
      * @expectedExceptionMessage Could not execute query "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find?text=10+avenue+Gambetta%2C+Paris%2C+France&maxLocations=5&f=json&outFields=*".
      */
     public function testGeocodeWithAddressGetsNullContent()
@@ -135,7 +135,7 @@ class ArcGISOnlineTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
+     * @expectedException \Geocoder\Exception\ZeroResults
      * @expectedExceptionMessage No results found for query "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find?text=10+avenue+Gambetta%2C+Paris%2C+France".
      */
     public function testGeocodeWithInvalidAddressWithHttpsForSourceCountry()
@@ -145,7 +145,7 @@ class ArcGISOnlineTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
+     * @expectedException \Geocoder\Exception\ZeroResults
      * @expectedExceptionMessage Could not execute query "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/reverseGeocode?location=2.000000,1.000000&maxLocations=5&f=json&outFields=*".
      */
     public function testReverseWithInvalid()
@@ -155,7 +155,7 @@ class ArcGISOnlineTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
+     * @expectedException \Geocoder\Exception\ZeroResults
      * @expectedExceptionMessage Could not execute query "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/reverseGeocode?location=2.389020,48.863280&maxLocations=5&f=json&outFields=*".
      */
     public function testReverseWithCoordinatesContentReturnNull()

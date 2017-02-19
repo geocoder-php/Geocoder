@@ -10,8 +10,11 @@
 
 namespace Geocoder\Provider;
 
+use Geocoder\Exception\InvalidArgument;
+use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Exception\ZeroResults;
 use Http\Client\HttpClient;
 
 /**
@@ -57,7 +60,7 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
 
         // Save a request if no valid address entered
         if (empty($address)) {
-            throw new NoResult('Invalid address.');
+            throw new InvalidArgument('Address cannot be empty.');
         }
 
         $query = sprintf(self::ENDPOINT_URL, urlencode($address));
@@ -65,7 +68,7 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
 
         // no result
         if (empty($json->locations)) {
-            throw new NoResult(sprintf('No results found for query "%s".', $query));
+            throw ZeroResults::create($query);
         }
 
         $results = [];
@@ -110,7 +113,7 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
         $json  = $this->executeQuery($query);
 
         if (property_exists($json, 'error')) {
-            throw new NoResult(sprintf('No results found for query "%s".', $query));
+            throw ZeroResults::create($query);
         }
 
         $data = $json->address;
@@ -166,14 +169,14 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
         $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
 
         if (empty($content)) {
-            throw new NoResult(sprintf('Could not execute query "%s".', $query));
+            throw InvalidServerResponse::create($query);
         }
 
         $json = json_decode($content);
 
         // API error
         if (!isset($json)) {
-            throw new NoResult(sprintf('Could not execute query "%s".', $query));
+            throw InvalidServerResponse::create($query);
         }
 
         return $json;

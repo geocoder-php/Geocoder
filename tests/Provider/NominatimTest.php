@@ -208,7 +208,7 @@ class NominatimTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
+     * @expectedException \Geocoder\Exception\ZeroResults
      * @expectedExceptionMessage Could not execute query "https://nominatim.openstreetmap.org/search?q=Hammm&format=xml&addressdetails=1&limit=5".
      */
     public function testGeocodeWithUnknownCity()
@@ -409,7 +409,7 @@ class NominatimTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
+     * @expectedException \Geocoder\Exception\ZeroResults
      * @expectedExceptionMessage Could not execute query "https://nominatim.openstreetmap.org/search?q=L%C3%A4ntinen+Pitk%C3%A4katu+35%2C+Turku&format=xml&addressdetails=1&limit=5".
      */
     public function testGeocodeWithAddressGetsNullContent()
@@ -419,7 +419,7 @@ class NominatimTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
+     * @expectedException \Geocoder\Exception\ZeroResults
      * @expectedExceptionMessage Could not execute query "https://nominatim.openstreetmap.org/search?q=L%C3%A4ntinen+Pitk%C3%A4katu+35%2C+Turku&format=xml&addressdetails=1&limit=5".
      */
     public function testGeocodeWithAddressGetsEmptyContent()
@@ -429,7 +429,7 @@ class NominatimTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
+     * @expectedException \Geocoder\Exception\ZeroResults
      * @expectedExceptionMessage Could not execute query "https://nominatim.openstreetmap.org/search?q=L%C3%A4ntinen+Pitk%C3%A4katu+35%2C+Turku&format=xml&addressdetails=1&limit=5".
      */
     public function testGeocodeWithAddressGetsEmptyXML()
@@ -442,7 +442,7 @@ XML;
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
+     * @expectedException \Geocoder\Exception\ZeroResults
      * @expectedExceptionMessage Unable to find results for coordinates [ 60.453947, 22.256784 ].
      */
     public function testReverseWithCoordinatesGetsNullContent()
@@ -452,7 +452,7 @@ XML;
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
+     * @expectedException \Geocoder\Exception\ZeroResults
      * @expectedExceptionMessage Unable to find results for coordinates [ 60.453947, 22.256784 ].
      */
     public function testReverseWithCoordinatesGetsEmptyContent()
@@ -462,7 +462,7 @@ XML;
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
+     * @expectedException \Geocoder\Exception\ZeroResults
      * @expectedExceptionMessage Unable to find results for coordinates [ -80.000000, -170.000000 ].
      */
     public function testReverseWithCoordinatesGetsError()

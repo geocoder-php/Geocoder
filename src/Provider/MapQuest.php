@@ -11,8 +11,10 @@
 namespace Geocoder\Provider;
 
 use Geocoder\Exception\InvalidCredentials;
+use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Exception\ZeroResults;
 use Http\Client\HttpClient;
 
 /**
@@ -124,19 +126,19 @@ final class MapQuest extends AbstractHttpProvider implements Provider
         $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
 
         if (empty($content)) {
-            throw new NoResult(sprintf('Could not execute query "%s".', $query));
+            throw InvalidServerResponse::create($query);
         }
 
         $json = json_decode($content, true);
 
         if (!isset($json['results']) || empty($json['results'])) {
-            throw new NoResult(sprintf('Could not find results for query "%s".', $query));
+            throw ZeroResults::create($query);
         }
 
         $locations = $json['results'][0]['locations'];
 
         if (empty($locations)) {
-            throw new NoResult(sprintf('Could not find results for query "%s".', $query));
+            throw ZeroResults::create($query);
         }
 
         $results = [];
@@ -166,7 +168,7 @@ final class MapQuest extends AbstractHttpProvider implements Provider
         }
 
         if (empty($results)) {
-            throw new NoResult(sprintf('Could not find results for query "%s".', $query));
+            throw ZeroResults::create($query);
         }
 
         return $this->returnResults($results);

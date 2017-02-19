@@ -3,7 +3,7 @@
 namespace Geocoder\Tests\Provider;
 
 use Geocoder\Tests\TestCase;
-use Geocoder\Exception\ChainNoResult;
+use Geocoder\Exception\ChainZeroResult;
 use Geocoder\Provider\Chain;
 
 /**
@@ -43,7 +43,7 @@ class ChainTest extends TestCase
         $this->assertEquals(array('foo' => 'bar'), $chain->reverse('11', '22'));
     }
 
-    public function testReverseThrowsChainNoResult()
+    public function testReverseThrowsChainZeroResults()
     {
         $mockOne = $this->getMock('Geocoder\\Provider\\Provider');
         $mockOne->expects($this->exactly(2))
@@ -54,7 +54,7 @@ class ChainTest extends TestCase
 
         try {
             $chain->reverse('11', '22');
-        } catch (ChainNoResult $e) {
+        } catch (ChainZeroResult $e) {
             $this->assertCount(2, $e->getExceptions());
         }
     }
@@ -77,7 +77,7 @@ class ChainTest extends TestCase
         $this->assertEquals(array('foo' => 'bar'), $chain->geocode('Paris'));
     }
 
-    public function testGeocodeThrowsChainNoResult()
+    public function testGeocodeThrowsChainZeroResults()
     {
         $mockOne = $this->getMock('Geocoder\\Provider\\Provider');
         $mockOne->expects($this->exactly(2))
@@ -88,7 +88,7 @@ class ChainTest extends TestCase
 
         try {
             $chain->geocode('Paris');
-        } catch (ChainNoResult $e) {
+        } catch (ChainZeroResult $e) {
             $this->assertCount(2, $e->getExceptions());
         }
     }

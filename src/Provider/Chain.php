@@ -10,7 +10,7 @@
 
 namespace Geocoder\Provider;
 
-use Geocoder\Exception\ChainNoResult;
+use Geocoder\Exception\ChainZeroResult;
 use Geocoder\Exception\InvalidCredentials;
 
 /**
@@ -53,7 +53,7 @@ final class Chain implements LocaleAwareProvider
             }
         }
 
-        throw new ChainNoResult(sprintf('No provider could geocode address: "%s".', $address), $exceptions);
+        throw new ChainZeroResult(sprintf('No provider could geocode address: "%s".', $address), $exceptions);
     }
 
     /**
@@ -72,7 +72,7 @@ final class Chain implements LocaleAwareProvider
             }
         }
 
-        throw new ChainNoResult(sprintf('No provider could reverse coordinates: %f, %f.', $latitude, $longitude), $exceptions);
+        throw new ChainZeroResult(sprintf('No provider could reverse coordinates: %f, %f.', $latitude, $longitude), $exceptions);
     }
 
     /**

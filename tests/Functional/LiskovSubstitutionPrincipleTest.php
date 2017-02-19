@@ -96,7 +96,7 @@ class LiskovSubstitutionPrincipleTest extends \PHPUnit_Framework_TestCase
     /**
      * @param Geocoder $geocoder
      * @dataProvider getWorldWideProvider
-     * @expectedException \Geocoder\Exception\NoResult
+     * @expectedException \Geocoder\Exception\ZeroResults
      */
     public function testNoResult(Geocoder $geocoder)
     {
@@ -106,7 +106,7 @@ class LiskovSubstitutionPrincipleTest extends \PHPUnit_Framework_TestCase
     /**
      * @param Geocoder $geocoder
      * @dataProvider getWorldWideProvider
-     * @expectedException \Geocoder\Exception\NoResult
+     * @expectedException \Geocoder\Exception\ZeroResults
      */
     public function testNoResultReverse(Geocoder $geocoder)
     {

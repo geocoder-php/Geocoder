@@ -55,7 +55,7 @@ class GeonamesTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
+     * @expectedException \Geocoder\Exception\ZeroResults
      * @expectedExceptionMessage Could not execute query "http://api.geonames.org/searchJSON?q=&maxRows=5&style=full&username=username".
      */
     public function testGeocodeWithNull()
@@ -65,7 +65,7 @@ class GeonamesTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
+     * @expectedException \Geocoder\Exception\ZeroResults
      * @expectedExceptionMessage No places found for query "http://api.geonames.org/searchJSON?q=BlaBlaBla&maxRows=5&style=full&username=username".
      */
     public function testGeocodeWithUnknownCity()
@@ -341,7 +341,7 @@ JSON;
     }
 
     /**
-     * @expectedException \Geocoder\Exception\NoResult
+     * @expectedException \Geocoder\Exception\ZeroResults
      * @expectedExceptionMessage Could not execute query "http://api.geonames.org/findNearbyPlaceNameJSON?lat=-80.000000&lng=-170.000000&style=full&maxRows=5&username=username".
      */
     public function testReverseWithBadCoordinates()
