@@ -69,10 +69,6 @@ final class GeocodeQuery
         return new self($text);
     }
 
-    public function __clone()
-    {
-        $this->bounds = clone $this->bounds;
-    }
     /**
      * @param Bounds $bounds
      *

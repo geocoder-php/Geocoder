@@ -68,12 +68,6 @@ final class ReverseQuery
         return new self(new Coordinates($latitude, $longitude));
     }
 
-
-    public function __clone()
-    {
-        $this->coordinates = clone $this->coordinates;
-    }
-
     /**
      * @param int $limit
      *
