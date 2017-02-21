@@ -33,6 +33,15 @@ final class AddressFactory
                 );
             }
 
+            $subLocalityLevels = [];
+            foreach ($this->readArrayValue($result, 'subLocalityLevels') as $adminLevel) {
+                $subLocalityLevels[] = new AdminLevel(
+                    intval($this->readStringValue($adminLevel, 'level')),
+                    $this->readStringValue($adminLevel, 'name'),
+                    $this->readStringValue($adminLevel, 'code')
+                );
+            }
+
             $addresses[] = new Address(
                 $this->createCoordinates(
                     $this->readDoubleValue($result, 'latitude'),
@@ -50,6 +59,7 @@ final class AddressFactory
                 $this->readStringValue($result, 'locality'),
                 $this->readStringValue($result, 'subLocality'),
                 new AdminLevelCollection($adminLevels),
+                new SubLocalityLevelCollection($subLocalityLevels),
                 new Country(
                     $this->readStringValue($result, 'country'),
                     $this->upperize(\igorw\get_in($result, ['countryCode']))
