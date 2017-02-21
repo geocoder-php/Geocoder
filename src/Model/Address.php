@@ -58,6 +58,11 @@ final class Address implements Location
     private $adminLevels;
 
     /**
+     * @var SubLocalityLevelCollection
+     */
+    private $subLocalityLevels;
+
+    /**
      * @var Country|null
      */
     private $country;
@@ -77,31 +82,36 @@ final class Address implements Location
      * @param string|null $locality
      * @param string|null $subLocality
      * @param AdminLevelCollection|null $adminLevels
+     * @param SubLocalityLevelCollection|null $subLocalityLevels
      * @param Country|null $country
      * @param string|null $timezone
+     *
      */
     public function __construct(
-        Coordinates $coordinates          = null,
-        Bounds $bounds                    = null,
-        $streetNumber                     = null,
-        $streetName                       = null,
-        $postalCode                       = null,
-        $locality                         = null,
-        $subLocality                      = null,
+        Coordinates $coordinates = null,
+        Bounds $bounds = null,
+        $streetNumber = null,
+        $streetName = null,
+        $postalCode = null,
+        $locality = null,
+        $subLocality = null,
         AdminLevelCollection $adminLevels = null,
-        Country $country                  = null,
-        $timezone                         = null
-    ) {
-        $this->coordinates  = $coordinates;
-        $this->bounds       = $bounds;
+        SubLocalityLevelCollection $subLocalityLevels = null,
+        Country $country = null,
+        $timezone = null
+    )
+    {
+        $this->coordinates = $coordinates;
+        $this->bounds = $bounds;
         $this->streetNumber = $streetNumber;
-        $this->streetName   = $streetName;
-        $this->postalCode   = $postalCode;
-        $this->locality     = $locality;
-        $this->subLocality  = $subLocality;
-        $this->adminLevels  = $adminLevels ?: new AdminLevelCollection();
-        $this->country      = $country;
-        $this->timezone     = $timezone;
+        $this->streetName = $streetName;
+        $this->postalCode = $postalCode;
+        $this->locality = $locality;
+        $this->subLocality = $subLocality;
+        $this->adminLevels = $adminLevels ?: new AdminLevelCollection();
+        $this->subLocalityLevels = $subLocalityLevels ?: new SubLocalityLevelCollection();
+        $this->country = $country;
+        $this->timezone = $timezone;
     }
 
     /**
@@ -169,7 +179,19 @@ final class Address implements Location
     }
 
     /**
-     * {@inheritDoc}
+     * Returns the sublocality levels.
+     *
+     * @return SubLocalityLevelCollection
+     */
+    public function getSubLocalityLevels()
+    {
+        return $this->subLocalityLevels;
+    }
+
+    /**
+     * Returns the country value.
+     *
+     * @return Country
      */
     public function getCountry()
     {
@@ -192,8 +214,16 @@ final class Address implements Location
         $adminLevels = [];
         foreach ($this->adminLevels as $adminLevel) {
             $adminLevels[$adminLevel->getLevel()] = [
-                'name'  => $adminLevel->getName(),
-                'code'  => $adminLevel->getCode()
+                'name' => $adminLevel->getName(),
+                'code' => $adminLevel->getCode()
+            ];
+        }
+
+        $subLocalityLevels = [];
+        foreach ($this->subLocalityLevels as $sublocalityLevel) {
+            $subLocalityLevels[$sublocalityLevel->getLevel()] = [
+                'name' => $sublocalityLevel->getName(),
+                'code' => $sublocalityLevel->getCode()
             ];
         }
 
@@ -227,10 +257,39 @@ final class Address implements Location
             'postalCode'   => $this->postalCode,
             'locality'     => $this->locality,
             'subLocality'  => $this->subLocality,
+            'subLocalityLevels' => $subLocalityLevels,
             'adminLevels'  => $adminLevels,
             'country'      => $countryName,
             'countryCode'  => $countryCode,
             'timezone'     => $this->timezone,
         );
+    }
+
+    /**
+     * Returns the latitude value.
+     *
+     * @return double
+     */
+    public function getLatitude()
+    {
+        if (null === $this->coordinates) {
+            return null;
+        }
+
+        return $this->coordinates->getLatitude();
+    }
+
+    /**
+     * Returns the longitude value.
+     *
+     * @return double
+     */
+    public function getLongitude()
+    {
+        if (null === $this->coordinates) {
+            return null;
+        }
+
+        return $this->coordinates->getLongitude();
     }
 }
