@@ -71,8 +71,13 @@ final class Address implements Location
      * @var string|null
      */
     private $timezone;
+    /**
+     * @var string
+     */
+    private $neighborhood;
 
     /**
+<<<<<<< Updated upstream:src/Model/Address.php
      *
      * @param Coordinates|null $coordinates
      * @param Bounds|null $bounds
@@ -86,19 +91,34 @@ final class Address implements Location
      * @param Country|null $country
      * @param string|null $timezone
      *
+=======
+     * @param \Geocoder\Model\Coordinates                $coordinates
+     * @param \Geocoder\Model\Bounds                     $bounds
+     * @param string                                     $streetNumber
+     * @param string                                     $streetName
+     * @param string                                     $postalCode
+     * @param string                                     $locality
+     * @param string                                     $subLocality
+     * @param string                                     $neighborhood
+     * @param \Geocoder\Model\AdminLevelCollection       $adminLevels
+     * @param \Geocoder\Model\SubLocalityLevelCollection $subLocalityLevels
+     * @param \Geocoder\Model\Country                    $country
+     * @param null                                       $timezone
+>>>>>>> Stashed changes:src/Geocoder/Model/Address.php
      */
     public function __construct(
-        Coordinates $coordinates = null,
-        Bounds $bounds = null,
-        $streetNumber = null,
-        $streetName = null,
-        $postalCode = null,
-        $locality = null,
-        $subLocality = null,
-        AdminLevelCollection $adminLevels = null,
+        Coordinates $coordinates                      = null,
+        Bounds $bounds                                = null,
+        $streetNumber                                 = null,
+        $streetName                                   = null,
+        $postalCode                                   = null,
+        $locality                                     = null,
+        $subLocality                                  = null,
+        $neighborhood                                 = null,
+        AdminLevelCollection $adminLevels             = null,
         SubLocalityLevelCollection $subLocalityLevels = null,
-        Country $country = null,
-        $timezone = null
+        Country $country                              = null,
+        $timezone                                     = null
     )
     {
         $this->coordinates = $coordinates;
@@ -112,6 +132,7 @@ final class Address implements Location
         $this->subLocalityLevels = $subLocalityLevels ?: new SubLocalityLevelCollection();
         $this->country = $country;
         $this->timezone = $timezone;
+        $this->neighborhood = $neighborhood;
     }
 
     /**
@@ -201,6 +222,16 @@ final class Address implements Location
     /**
      * {@inheritDoc}
      */
+    public function getNeighborhood()
+    {
+        return $this->neighborhood;
+    }
+
+    /**
+     * Returns the timezone.
+     *
+     * @return string
+     */
     public function getTimezone()
     {
         return $this->timezone;
@@ -249,19 +280,20 @@ final class Address implements Location
         ];
 
         return array(
-            'latitude'     => $lat,
-            'longitude'    => $lon,
-            'bounds'       => null !== $this->bounds ? $this->bounds->toArray() : $noBounds,
-            'streetNumber' => $this->streetNumber,
-            'streetName'   => $this->streetName,
-            'postalCode'   => $this->postalCode,
-            'locality'     => $this->locality,
-            'subLocality'  => $this->subLocality,
+            'latitude'          => $lat,
+            'longitude'         => $lon,
+            'bounds'            => null !== $this->bounds ? $this->bounds->toArray() : $noBounds,
+            'streetNumber'      => $this->streetNumber,
+            'streetName'        => $this->streetName,
+            'postalCode'        => $this->postalCode,
+            'locality'          => $this->locality,
+            'neighborhood'      => $this->neighborhood,
+            'subLocality'       => $this->subLocality,
             'subLocalityLevels' => $subLocalityLevels,
-            'adminLevels'  => $adminLevels,
-            'country'      => $countryName,
-            'countryCode'  => $countryCode,
-            'timezone'     => $this->timezone,
+            'adminLevels'       => $adminLevels,
+            'country'           => $countryName,
+            'countryCode'       => $countryCode,
+            'timezone'          => $this->timezone,
         );
     }
 

@@ -11,7 +11,7 @@
 namespace Geocoder\Model;
 
 /**
- * @author William Durand <william.durand1@gmail.com>
+ * @author Alexander Janssen <a.janssen@tnajanssen.nl>
  */
 final class SubLocalityLevel
 {

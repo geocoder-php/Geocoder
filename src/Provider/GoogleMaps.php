@@ -297,6 +297,10 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvid
                 $resultSet['subLocality'] = $values->long_name;
                 break;
 
+            case 'neighborhood':
+                $resultSet['neighborhood'] = $values->long_name;
+                break;
+
             case 'sublocality_level_1':
             case 'sublocality_level_2':
             case 'sublocality_level_3':
