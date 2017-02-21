@@ -5,7 +5,7 @@ namespace Geocoder\Model;
 use Geocoder\Exception\InvalidArgument;
 
 /**
- * @author Giorgio Premi <giosh94mhz@gmail.com>
+ * @author Alexander Janssen <a.janssen@tnajanssen.nl>
  */
 final class SubLocalityLevelCollection implements \IteratorAggregate, \Countable
 {
