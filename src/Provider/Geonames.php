@@ -211,15 +211,15 @@ final class Geonames extends AbstractHttpProvider implements LocaleAwareProvider
         $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
 
         if (empty($content)) {
-            throw new NoResult(sprintf('Could not execute query "%s".', $query));
+            throw InvalidServerResponse::create($query);
         }
 
         if (null === $json = json_decode($content)) {
-            throw new NoResult(sprintf('Could not execute query "%s".', $query));
+            throw InvalidServerResponse::create($query);
         }
 
         if (isset($json->totalResultsCount) && empty($json->totalResultsCount)) {
-            throw new NoResult(sprintf('No places found for query "%s".', $query));
+            throw ZeroResults::create($query);
         }
         
         if (isset($json->status->value)) {
@@ -237,7 +237,7 @@ final class Geonames extends AbstractHttpProvider implements LocaleAwareProvider
         else
         {
             if (empty($data)) {
-                throw new NoResult(sprintf('Could not execute query "%s".', $query));
+                throw ZeroResults::create($query);
             }
         
         $results = [];
