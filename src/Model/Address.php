@@ -53,6 +53,12 @@ final class Address implements Location
     private $postalCode;
 
     /**
+     * @var string|null
+     */
+    private $locationType;
+
+
+    /**
      * @var AdminLevelCollection
      */
     private $adminLevels;
@@ -74,6 +80,7 @@ final class Address implements Location
      * @param string|null $streetNumber
      * @param string|null $streetName
      * @param string|null $postalCode
+     * @param string|null $locationType
      * @param string|null $locality
      * @param string|null $subLocality
      * @param AdminLevelCollection|null $adminLevels
@@ -86,6 +93,7 @@ final class Address implements Location
         $streetNumber                     = null,
         $streetName                       = null,
         $postalCode                       = null,
+        $locationType                     = null,
         $locality                         = null,
         $subLocality                      = null,
         AdminLevelCollection $adminLevels = null,
@@ -97,6 +105,7 @@ final class Address implements Location
         $this->streetNumber = $streetNumber;
         $this->streetName   = $streetName;
         $this->postalCode   = $postalCode;
+        $this->locationType = $locationType;
         $this->locality     = $locality;
         $this->subLocality  = $subLocality;
         $this->adminLevels  = $adminLevels ?: new AdminLevelCollection();
@@ -150,6 +159,14 @@ final class Address implements Location
     public function getPostalCode()
     {
         return $this->postalCode;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getLocationType()
+    {
+        return $this->locationType;
     }
 
     /**
