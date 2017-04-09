@@ -42,7 +42,7 @@ final class GeoIP2 extends AbstractProvider implements LocaleAwareGeocoder, IpAd
     public function geocodeQuery(GeocodeQuery $query)
     {
         $address = $query->getText();
-        $locale = $query->getLocale();
+        $locale = $query->getLocale() ?: 'en'; // Default to English
         if (!filter_var($address, FILTER_VALIDATE_IP)) {
             throw new UnsupportedOperation('The GeoIP2 provider does not support street addresses, only IP addresses.');
         }

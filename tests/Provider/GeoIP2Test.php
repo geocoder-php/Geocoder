@@ -222,7 +222,6 @@ class GeoIP2Test extends TestCase
             $returnValue = $this->returnValue($returnValue);
         }
 
-        $mock->expects($this->any())->method('setLocale')->will($this->returnSelf());
         $mock->expects($this->any())->method('getContent')->will($returnValue);
 
         return $mock;

@@ -90,8 +90,8 @@ class GoogleMapsTest extends TestCase
 
     public function testGeocodeWithRealAddress()
     {
-        $provider = new GoogleMaps($this->getAdapter(), 'fr-FR', 'Île-de-France');
-        $results  = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
+        $provider = new GoogleMaps($this->getAdapter(), 'Île-de-France');
+        $results  = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France')->withLocale('fr-FR'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -294,7 +294,7 @@ class GoogleMapsTest extends TestCase
             $this->markTestSkipped('You need to configure the GOOGLE_GEOCODING_KEY value in phpunit.xml');
         }
 
-        $provider = new GoogleMaps($this->getAdapter($_SERVER['GOOGLE_GEOCODING_KEY']), null, null, $_SERVER['GOOGLE_GEOCODING_KEY']);
+        $provider = new GoogleMaps($this->getAdapter($_SERVER['GOOGLE_GEOCODING_KEY']), null, $_SERVER['GOOGLE_GEOCODING_KEY']);
 
         $results = $provider->geocodeQuery(GeocodeQuery::create('Columbia University'));
 
@@ -319,7 +319,7 @@ class GoogleMapsTest extends TestCase
      */
     public function testGeocodeWithRealInvalidApiKey()
     {
-        $provider = new GoogleMaps($this->getAdapter(), null, null, $this->testAPIKey);
+        $provider = new GoogleMaps($this->getAdapter(), null, $this->testAPIKey);
 
         $provider->geocodeQuery(GeocodeQuery::create('Columbia University'));
     }

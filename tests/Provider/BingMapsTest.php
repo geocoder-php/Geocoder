@@ -217,8 +217,8 @@ JSON;
             $this->markTestSkipped('You need to configure the BINGMAPS_API_KEY value in phpunit.xml');
         }
 
-        $provider = new BingMaps($this->getAdapter($_SERVER['BINGMAPS_API_KEY']), $_SERVER['BINGMAPS_API_KEY'], 'fr-FR');
-        $results  = $provider->geocodeQuery(GeocodeQuery::create('Castelnuovo, Italie'));
+        $provider = new BingMaps($this->getAdapter($_SERVER['BINGMAPS_API_KEY']), $_SERVER['BINGMAPS_API_KEY']);
+        $results  = $provider->geocodeQuery(GeocodeQuery::create('Castelnuovo, Italie')->withLocale('fr-FR'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);

@@ -307,8 +307,8 @@ class YandexTest extends TestCase
 
     public function testReverseWithRealCoordinatesWithUSLocaleAndStreeToponym()
     {
-        $provider = new Yandex($this->getAdapter(), 'en-US', 'street');
-        $results  = $provider->reverseQuery(ReverseQuery::fromCoordinates(48.863216489553, 2.388771995902061));
+        $provider = new Yandex($this->getAdapter(), 'street');
+        $results  = $provider->reverseQuery(ReverseQuery::fromCoordinates(48.863216489553, 2.388771995902061)->withLocale('en-US'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
@@ -366,8 +366,8 @@ class YandexTest extends TestCase
 
     public function testReverseWithRealCoordinatesWithUALocaleAndHouseToponym()
     {
-        $provider = new Yandex($this->getAdapter(), 'uk-UA', 'house');
-        $results  = $provider->reverseQuery(ReverseQuery::fromCoordinates(60.4539471768582, 22.2567842183875));
+        $provider = new Yandex($this->getAdapter(), 'house');
+        $results  = $provider->reverseQuery(ReverseQuery::fromCoordinates(60.4539471768582, 22.2567842183875)->withLocale('uk-UA'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
@@ -401,8 +401,8 @@ class YandexTest extends TestCase
 
     public function testReverseWithRealCoordinatesWithTRLocaleAndLocalityToponym()
     {
-        $provider = new Yandex($this->getAdapter(), 'tr-TR', 'locality');
-        $results  = $provider->reverseQuery(ReverseQuery::fromCoordinates(40.900640, 29.198184));
+        $provider = new Yandex($this->getAdapter(), 'locality');
+        $results  = $provider->reverseQuery(ReverseQuery::fromCoordinates(40.900640, 29.198184)->withLocale('tr-TR'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);

@@ -4,6 +4,7 @@ namespace Geocoder\Tests\Provider;
 
 use Geocoder\Model\Query\GeocodeQuery;
 use Geocoder\Model\Query\ReverseQuery;
+use Geocoder\Provider\Provider;
 use Geocoder\Tests\TestCase;
 use Geocoder\Exception\ChainZeroResults;
 use Geocoder\Provider\Chain;
@@ -29,15 +30,14 @@ class ChainTest extends TestCase
 
     public function testReverse()
     {
-        $mockOne = $this->getMock('Geocoder\\Provider\\Provider');
+        $mockOne = $this->getMock(Provider::class);
         $mockOne->expects($this->once())
-            ->method('reverse')
+            ->method('reverseQuery')
             ->will($this->returnCallback(function () { throw new \Exception; }));
 
         $mockTwo = $this->getMock('Geocoder\\Provider\\Provider');
         $mockTwo->expects($this->once())
-            ->method('reverse')
-            ->with('11', '22')
+            ->method('reverseQuery')
             ->will($this->returnValue(array('foo' => 'bar')));
 
         $chain = new Chain(array($mockOne, $mockTwo));
@@ -49,7 +49,7 @@ class ChainTest extends TestCase
     {
         $mockOne = $this->getMock('Geocoder\\Provider\\Provider');
         $mockOne->expects($this->exactly(2))
-            ->method('reverse')
+            ->method('reverseQuery')
             ->will($this->returnCallback(function () { throw new \Exception; }));
 
         $chain = new Chain(array($mockOne, $mockOne));
@@ -63,27 +63,28 @@ class ChainTest extends TestCase
 
     public function testGeocode()
     {
+        $query = GeocodeQuery::create('Paris');
         $mockOne = $this->getMock('Geocoder\\Provider\\Provider');
         $mockOne->expects($this->once())
-            ->method('geocode')
+            ->method('geocodeQuery')
             ->will($this->returnCallback(function () { throw new \Exception; }));
 
         $mockTwo = $this->getMock('Geocoder\\Provider\\Provider');
         $mockTwo->expects($this->once())
-            ->method('geocode')
-            ->with('Paris')
+            ->method('geocodeQuery')
+            ->with($query)
             ->will($this->returnValue(array('foo' => 'bar')));
 
         $chain = new Chain(array($mockOne, $mockTwo));
 
-        $this->assertEquals(array('foo' => 'bar'), $chain->geocodeQuery(GeocodeQuery::create('Paris')));
+        $this->assertEquals(array('foo' => 'bar'), $chain->geocodeQuery($query));
     }
 
     public function testGeocodeThrowsChainZeroResults()
     {
         $mockOne = $this->getMock('Geocoder\\Provider\\Provider');
         $mockOne->expects($this->exactly(2))
-            ->method('geocode')
+            ->method('geocodeQuery')
             ->will($this->returnCallback(function () { throw new \Exception; }));
 
         $chain = new Chain(array($mockOne, $mockOne));
