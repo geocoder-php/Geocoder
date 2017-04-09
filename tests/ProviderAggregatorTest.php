@@ -2,6 +2,8 @@
 
 namespace Geocoder\Tests;
 
+use Geocoder\Model\Query\GeocodeQuery;
+use Geocoder\Model\Query\ReverseQuery;
 use Geocoder\ProviderAggregator;
 use Geocoder\Model\Address;
 use Geocoder\Model\AddressFactory;
@@ -159,12 +161,12 @@ class MockProvider implements Provider
         $this->name = $name;
     }
 
-    public function geocode($address)
+    public function geocodeQuery(GeocodeQuery $query)
     {
         return $this->returnResult(array());
     }
 
-    public function reverse($latitude, $longitude)
+    public function reverseQuery(ReverseQuery $query)
     {
         return $this->returnResult(array());
     }
@@ -190,7 +192,6 @@ class MockProvider implements Provider
 
 class MockLocaleAwareProvider extends MockProvider implements LocaleAwareGeocoder
 {
-    use LocaleTrait;
 }
 
 class MockProviderWithData extends MockProvider

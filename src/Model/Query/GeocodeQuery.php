@@ -100,7 +100,7 @@ final class GeocodeQuery
     /**
      * @param int $limit
      *
-     * @return $this
+     * @return GeocodeQuery
      */
     public function withLimit($limit)
     {
@@ -114,7 +114,7 @@ final class GeocodeQuery
      * @param string $name
      * @param mixed  $value
      *
-     * @return $this
+     * @return GeocodeQuery
      */
     public function withData($name, $value)
     {
