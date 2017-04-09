@@ -22,7 +22,7 @@ class MapzenTest extends TestCase
     public function testGeocode()
     {
         $provider = new Mapzen($this->getMockAdapterReturns('{}'), 'api_key');
-        $provider->geocode('foobar');
+        $provider->geocodeQuery(GeocodeQuery::create('foobar'));
     }
 
     /**
@@ -31,7 +31,7 @@ class MapzenTest extends TestCase
     public function testSslSchema()
     {
         $provider = new Mapzen($this->getMockAdapterReturns('{}'), 'api_key', true);
-        $provider->geocode('foobar');
+        $provider->geocodeQuery(GeocodeQuery::create('foobar'));
     }
 
     /**
@@ -40,7 +40,7 @@ class MapzenTest extends TestCase
     public function testGeocodeWithAddressGetsNullContent()
     {
         $provider = new Mapzen($this->getMockAdapterReturns(null), 'api_key');
-        $provider->geocode('242 Acklam Road, London, United Kingdom');
+        $provider->geocodeQuery(GeocodeQuery::create('242 Acklam Road, London, United Kingdom'));
     }
 
     public function testGeocodeWithRealAddress()
@@ -50,7 +50,7 @@ class MapzenTest extends TestCase
         }
 
         $provider = new Mapzen($this->getAdapter($_SERVER['MAPZEN_API_KEY']), $_SERVER['MAPZEN_API_KEY']);
-        $results  = $provider->geocode('242 Acklam Road, London, United Kingdom');
+        $results  = $provider->geocodeQuery(GeocodeQuery::create('242 Acklam Road, London, United Kingdom'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
@@ -81,7 +81,7 @@ class MapzenTest extends TestCase
         }
 
         $provider = new Mapzen($this->getMockAdapter(), $_SERVER['MAPZEN_API_KEY']);
-        $provider->reverse(1, 2);
+        $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
     }
 
     public function testReverseWithRealCoordinates()
@@ -91,7 +91,7 @@ class MapzenTest extends TestCase
         }
 
         $provider = new Mapzen($this->getAdapter($_SERVER['MAPZEN_API_KEY']), $_SERVER['MAPZEN_API_KEY']);
-        $results  = $provider->reverse(54.0484068, -2.7990345);
+        $results  = $provider->reverseQuery(ReverseQuery::fromCoordinates(54.0484068, -2.7990345));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
@@ -119,7 +119,7 @@ class MapzenTest extends TestCase
         }
 
         $provider = new Mapzen($this->getAdapter($_SERVER['MAPZEN_API_KEY']), $_SERVER['MAPZEN_API_KEY']);
-        $results  = $provider->reverse(49.1390924, 1.6572462);
+        $results  = $provider->reverseQuery(ReverseQuery::fromCoordinates(49.1390924, 1.6572462));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
@@ -137,7 +137,7 @@ class MapzenTest extends TestCase
         }
 
         $provider = new Mapzen($this->getAdapter($_SERVER['MAPZEN_API_KEY']), $_SERVER['MAPZEN_API_KEY']);
-        $results  = $provider->geocode('Hanover');
+        $results  = $provider->geocodeQuery(GeocodeQuery::create('Hanover'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
@@ -181,7 +181,7 @@ class MapzenTest extends TestCase
         }
 
         $provider = new Mapzen($this->getAdapter($_SERVER['MAPZEN_API_KEY']), $_SERVER['MAPZEN_API_KEY']);
-        $results  = $provider->geocode('Kalbacher Hauptstraße 10, 60437 Frankfurt, Germany');
+        $results  = $provider->geocodeQuery(GeocodeQuery::create('Kalbacher Hauptstraße 10, 60437 Frankfurt, Germany'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
@@ -226,7 +226,7 @@ class MapzenTest extends TestCase
             ),
             'api_key'
         );
-        $provider->geocode('New York');
+        $provider->geocodeQuery(GeocodeQuery::create('New York'));
     }
 
     /**
@@ -252,7 +252,7 @@ class MapzenTest extends TestCase
             ),
             'api_key'
         );
-        $provider->geocode('New York');
+        $provider->geocodeQuery(GeocodeQuery::create('New York'));
     }
 
     /**
@@ -262,7 +262,7 @@ class MapzenTest extends TestCase
     public function testGeocodeWithLocalhostIPv4()
     {
         $provider = new Mapzen($this->getMockAdapter($this->never()), 'api_key');
-        $provider->geocode('127.0.0.1');
+        $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
     }
 
     /**
@@ -272,7 +272,7 @@ class MapzenTest extends TestCase
     public function testGeocodeWithLocalhostIPv6()
     {
         $provider = new Mapzen($this->getMockAdapter($this->never()), 'api_key');
-        $provider->geocode('::1');
+        $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
     /**
@@ -282,7 +282,7 @@ class MapzenTest extends TestCase
     public function testGeocodeWithRealIPv4()
     {
         $provider = new Mapzen($this->getAdapter(), 'api_key');
-        $provider->geocode('74.200.247.59');
+        $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
     /**
@@ -292,6 +292,6 @@ class MapzenTest extends TestCase
     public function testGeocodeWithRealIPv6()
     {
         $provider = new Mapzen($this->getAdapter(), 'api_key');
-        $provider->geocode('::ffff:74.200.247.59');
+        $provider->geocodeQuery(GeocodeQuery::create('::ffff:74.200.247.59'));
     }
 }

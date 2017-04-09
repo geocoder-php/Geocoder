@@ -11,7 +11,7 @@
 namespace Geocoder\Tests\Provider;
 
 use Geocoder\Exception\ZeroResults;
-use Geocoder\Location;
+use Geocoder\Location;use Geocoder\Model\Query\GeocodeQuery;use Geocoder\Model\Query\ReverseQuery;
 use Geocoder\Provider\GeoIP2;
 use Geocoder\Tests\TestCase;
 
@@ -41,7 +41,7 @@ class GeoIP2Test extends TestCase
      */
     public function testQueryingReverseLeadsToException()
     {
-        $this->provider->reverse(50, 9);
+        $this->provider->reverseQuery(ReverseQuery::fromCoordinates(50, 9));
     }
 
     public function testGeocodeWithLocalhostIPv4()
@@ -158,7 +158,7 @@ class GeoIP2Test extends TestCase
         $adapter = $this->getGeoIP2AdapterMock($adapterResponse);
         $provider = new GeoIP2($adapter);
 
-        $results = $provider->geocode($address);
+        $results = $provider->geocodeQuery(GeocodeQuery::create($address));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -204,7 +204,7 @@ class GeoIP2Test extends TestCase
 
         $provider = new GeoIP2($adapter);
 
-        $provider->geocode('74.200.247.59');
+        $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
     /**

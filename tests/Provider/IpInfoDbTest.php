@@ -2,7 +2,7 @@
 
 namespace Geocoder\Tests\Provider;
 
-use Geocoder\Location;
+use Geocoder\Location;use Geocoder\Model\Query\GeocodeQuery;use Geocoder\Model\Query\ReverseQuery;
 use Geocoder\Tests\TestCase;
 use Geocoder\Provider\IpInfoDb;
 
@@ -29,7 +29,7 @@ class IpInfoDbTest extends TestCase
     public function testGetDataWithNullApiKey()
     {
         $provider = new IpInfoDb($this->getMock('Http\Client\HttpClient'), null);
-        $provider->geocode('foo');
+        $provider->geocodeQuery(GeocodeQuery::create('foo'));
     }
 
     /**
@@ -39,7 +39,7 @@ class IpInfoDbTest extends TestCase
     public function testGeocodeWithRandomString()
     {
         $provider = new IpInfoDb($this->getMockAdapter($this->never()), 'api_key');
-        $provider->geocode('foobar');
+        $provider->geocodeQuery(GeocodeQuery::create('foobar'));
     }
 
     /**
@@ -49,7 +49,7 @@ class IpInfoDbTest extends TestCase
     public function testGeocodeWithNull()
     {
         $provider = new IpInfoDb($this->getMockAdapter($this->never()), 'api_key');
-        $provider->geocode(null);
+        $provider->geocodeQuery(GeocodeQuery::create(null));
     }
 
     /**
@@ -59,7 +59,7 @@ class IpInfoDbTest extends TestCase
     public function testGeocodeWithEmpty()
     {
         $provider = new IpInfoDb($this->getMockAdapter($this->never()), 'api_key');
-        $provider->geocode('');
+        $provider->geocodeQuery(GeocodeQuery::create(''));
     }
 
     /**
@@ -69,13 +69,13 @@ class IpInfoDbTest extends TestCase
     public function testGeocodeWithAddress()
     {
         $provider = new IpInfoDb($this->getMockAdapter($this->never()), 'api_key');
-        $provider->geocode('10 avenue Gambetta, Paris, France');
+        $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
     }
 
     public function testGeocodeWithLocalhostIPv4()
     {
         $provider = new IpInfoDb($this->getMockAdapter($this->never()), 'api_key');
-        $results  = $provider->geocode('127.0.0.1');
+        $results  = $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -100,7 +100,7 @@ class IpInfoDbTest extends TestCase
     public function testGeocodeWithLocalhostIPv6()
     {
         $provider = new IpInfoDb($this->getMockAdapter($this->never()), 'api_key');
-        $provider->geocode('::1');
+        $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
     /**
@@ -109,7 +109,7 @@ class IpInfoDbTest extends TestCase
     public function testGeocodeWithRealIPv4GetsNullContent()
     {
         $provider = new IpInfoDb($this->getMockAdapterReturns(null), 'api_key');
-        $provider->geocode('74.125.45.100');
+        $provider->geocodeQuery(GeocodeQuery::create('74.125.45.100'));
     }
 
     /**
@@ -118,7 +118,7 @@ class IpInfoDbTest extends TestCase
     public function testGeocodeWithRealIPv4GetsEmptyContent()
     {
         $provider = new IpInfoDb($this->getMockAdapterReturns(''), 'api_key');
-        $provider->geocode('74.125.45.100');
+        $provider->geocodeQuery(GeocodeQuery::create('74.125.45.100'));
     }
 
     public function testGeocodeWithRealIPv4()
@@ -128,7 +128,7 @@ class IpInfoDbTest extends TestCase
         }
 
         $provider = new IpInfoDb($this->getAdapter($_SERVER['IPINFODB_API_KEY']), $_SERVER['IPINFODB_API_KEY']);
-        $results  = $provider->geocode('74.125.45.100');
+        $results  = $provider->geocodeQuery(GeocodeQuery::create('74.125.45.100'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -158,7 +158,7 @@ class IpInfoDbTest extends TestCase
         }
 
         $provider = new IpInfoDb($this->getAdapter($_SERVER['IPINFODB_API_KEY']), $_SERVER['IPINFODB_API_KEY']);
-        $provider->geocode('::ffff:74.125.45.100');
+        $provider->geocodeQuery(GeocodeQuery::create('::ffff:74.125.45.100'));
     }
 
     /**
@@ -171,7 +171,7 @@ class IpInfoDbTest extends TestCase
         }
 
         $provider = new IpInfoDb($this->getAdapter($_SERVER['IPINFODB_API_KEY']), $_SERVER['IPINFODB_API_KEY'], 'country');
-        $results = $provider->geocode('74.125.45.100');
+        $results = $provider->geocodeQuery(GeocodeQuery::create('74.125.45.100'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -196,6 +196,6 @@ class IpInfoDbTest extends TestCase
     public function testReverse()
     {
         $provider = new IpInfoDb($this->getMock('Http\Client\HttpClient'), 'api_key');
-        $provider->reverse(null, null);
+        $provider->reverseQuery(ReverseQuery::fromCoordinates(null, null));
     }
 }

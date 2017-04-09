@@ -2,7 +2,7 @@
 
 namespace Geocoder\Tests\Provider;
 
-use Geocoder\Location;
+use Geocoder\Location;use Geocoder\Model\Query\GeocodeQuery;use Geocoder\Model\Query\ReverseQuery;
 use Geocoder\Tests\TestCase;
 use Geocoder\Provider\MaxMind;
 
@@ -20,7 +20,7 @@ class MaxMindTest extends TestCase
     public function testGeocodeWithNullApiKey()
     {
         $provider = new MaxMind($this->getMockAdapter($this->never()), null);
-        $provider->geocode('foo');
+        $provider->geocodeQuery(GeocodeQuery::create('foo'));
     }
 
     /**
@@ -30,7 +30,7 @@ class MaxMindTest extends TestCase
     public function testGeocodeWithNull()
     {
         $provider = new MaxMind($this->getMockAdapter($this->never()), 'api_key');
-        $provider->geocode(null);
+        $provider->geocodeQuery(GeocodeQuery::create(null));
     }
 
     /**
@@ -40,7 +40,7 @@ class MaxMindTest extends TestCase
     public function testGeocodeWithEmpty()
     {
         $provider = new MaxMind($this->getMockAdapter($this->never()), 'api_key');
-        $provider->geocode('');
+        $provider->geocodeQuery(GeocodeQuery::create(''));
     }
 
     /**
@@ -50,13 +50,13 @@ class MaxMindTest extends TestCase
     public function testGeocodeWithAddress()
     {
         $provider = new MaxMind($this->getMockAdapter($this->never()), 'api_key');
-        $provider->geocode('10 avenue Gambetta, Paris, France');
+        $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
     }
 
     public function testGeocodeWithLocalhostIPv4()
     {
         $provider = new MaxMind($this->getMockAdapter($this->never()), 'api_key');
-        $results  = $provider->geocode('127.0.0.1');
+        $results  = $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -71,7 +71,7 @@ class MaxMindTest extends TestCase
     public function testGeocodeWithLocalhostIPv6()
     {
         $provider = new MaxMind($this->getMockAdapter($this->never()), 'api_key');
-        $results  = $provider->geocode('::1');
+        $results  = $provider->geocodeQuery(GeocodeQuery::create('::1'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -90,7 +90,7 @@ class MaxMindTest extends TestCase
     public function testGeocodeWithRealIPv4AndNotSupportedService()
     {
         $provider = new MaxMind($this->getMockAdapter(), 'api_key', 'foo');
-        $provider->geocode('74.200.247.59');
+        $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
     /**
@@ -100,7 +100,7 @@ class MaxMindTest extends TestCase
     public function testGeocodeWithRealIPv6AndNotSupportedService()
     {
         $provider = new MaxMind($this->getMockAdapter(), 'api_key', 12345);
-        $provider->geocode('::ffff:74.200.247.59');
+        $provider->geocodeQuery(GeocodeQuery::create('::ffff:74.200.247.59'));
     }
 
     /**
@@ -109,7 +109,7 @@ class MaxMindTest extends TestCase
     public function testGeocodeWithRealIPv4GetsNullContent()
     {
         $provider = new MaxMind($this->getMockAdapterReturns(null), 'api_key');
-        $provider->geocode('74.200.247.59');
+        $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
     /**
@@ -118,13 +118,13 @@ class MaxMindTest extends TestCase
     public function testGeocodeWithRealIPv4GetsEmptyContent()
     {
         $provider = new MaxMind($this->getMockAdapterReturns(''), 'api_key');
-        $provider->geocode('74.200.247.59');
+        $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
     public function testGeocodeWithRealIPv4GetsFakeContentFormattedEmpty()
     {
         $provider = new MaxMind($this->getMockAdapterReturns(',,,,,,,,,'), 'api_key');
-        $results  = $provider->geocode('74.200.247.59');
+        $results  = $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -149,7 +149,7 @@ class MaxMindTest extends TestCase
     {
         $provider = new MaxMind($this->getMockAdapterReturns(
             'US,TX,Plano,75093,33.034698486328,-96.813400268555,,,,'), 'api_key');
-        $results  = $provider->geocode('74.200.247.59');
+        $results  = $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -211,7 +211,7 @@ class MaxMindTest extends TestCase
     public function testGeocodeWithRealIPv4AndInvalidApiKeyGetsFakeContent()
     {
         $provider = new MaxMind($this->getMockAdapterReturns(',,,,,,,,,,INVALID_LICENSE_KEY'), 'api_key');
-        $provider->geocode('74.200.247.59');
+        $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
     /**
@@ -222,7 +222,7 @@ class MaxMindTest extends TestCase
     {
         $provider = new MaxMind($this->getMockAdapterReturns(',,,,,,,,,,,,,,,,,,,,,,,,INVALID_LICENSE_KEY'),
             'api_key', MaxMind::OMNI_SERVICE);
-        $provider->geocode('::ffff:74.200.247.59');
+        $provider->geocodeQuery(GeocodeQuery::create('::ffff:74.200.247.59'));
     }
 
     /**
@@ -232,7 +232,7 @@ class MaxMindTest extends TestCase
     public function testGeocodeWithRealIPv4AndInvalidApiKey()
     {
         $provider = new MaxMind($this->getAdapter(), 'api_key');
-        $provider->geocode('74.200.247.59');
+        $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
     /**
@@ -242,7 +242,7 @@ class MaxMindTest extends TestCase
     public function testGeocodeWithRealIPv4AndInvalidApiKeyGetsFakeContent2()
     {
         $provider = new MaxMind($this->getMockAdapterReturns(',,,,,,,,,,LICENSE_REQUIRED'), 'api_key');
-        $provider->geocode('74.200.247.59');
+        $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
     /**
@@ -253,7 +253,7 @@ class MaxMindTest extends TestCase
     {
         $provider = new MaxMind($this->getMockAdapterReturns(',,,,,,,,,,,,,,,,,,,,,,,INVALID_LICENSE_KEY'),
             'api_key', MaxMind::OMNI_SERVICE);
-        $provider->geocode('::ffff:74.200.247.59');
+        $provider->geocodeQuery(GeocodeQuery::create('::ffff:74.200.247.59'));
     }
 
     /**
@@ -263,7 +263,7 @@ class MaxMindTest extends TestCase
     public function testGeocodeWithRealIPv4GetsFakeContentWithIpNotFound()
     {
         $provider = new MaxMind($this->getMockAdapterReturns(',,,,,,,,,,IP_NOT_FOUND'), 'api_key');
-        $provider->geocode('74.200.247.59');
+        $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
     /**
@@ -274,7 +274,7 @@ class MaxMindTest extends TestCase
     {
         $provider = new MaxMind($this->getMockAdapterReturns(',,,,,,,,,,,,,,,,,,,,,,,IP_NOT_FOUND'),
             'api_key', MaxMind::OMNI_SERVICE);
-        $provider->geocode('::fff:74.200.247.59');
+        $provider->geocodeQuery(GeocodeQuery::create('::fff:74.200.247.59'));
     }
 
     /**
@@ -283,7 +283,7 @@ class MaxMindTest extends TestCase
     public function testGeocodeGetsFakeContentWithInvalidData()
     {
         $provider = new MaxMind($this->getMockAdapterReturns(',,,,,,,,,,'), 'api_key');
-        $provider->geocode('74.200.247.59');
+        $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
     public function testGeocodeServiceWithRealIPv4()
@@ -293,7 +293,7 @@ class MaxMindTest extends TestCase
         }
 
         $provider = new MaxMind($this->getAdapter($_SERVER['MAXMIND_API_KEY']), $_SERVER['MAXMIND_API_KEY']);
-        $results  = $provider->geocode('74.200.247.159');
+        $results  = $provider->geocodeQuery(GeocodeQuery::create('74.200.247.159'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -325,7 +325,7 @@ class MaxMindTest extends TestCase
 
         $provider = new MaxMind($this->getAdapter($_SERVER['MAXMIND_API_KEY']), $_SERVER['MAXMIND_API_KEY'],
             MaxMind::OMNI_SERVICE);
-        $results  = $provider->geocode('74.200.247.159');
+        $results  = $provider->geocodeQuery(GeocodeQuery::create('74.200.247.159'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -357,7 +357,7 @@ class MaxMindTest extends TestCase
 
         $provider = new MaxMind($this->getAdapter($_SERVER['MAXMIND_API_KEY']), $_SERVER['MAXMIND_API_KEY'],
             MaxMind::OMNI_SERVICE);
-        $results  = $provider->geocode('189.26.128.80');
+        $results  = $provider->geocodeQuery(GeocodeQuery::create('189.26.128.80'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -390,7 +390,7 @@ class MaxMindTest extends TestCase
 
         $provider = new MaxMind($this->getAdapter($_SERVER['MAXMIND_API_KEY']), $_SERVER['MAXMIND_API_KEY'],
             MaxMind::OMNI_SERVICE);
-        $results  = $provider->geocode('2002:4293:f4d6:0:0:0:0:0');
+        $results  = $provider->geocodeQuery(GeocodeQuery::create('2002:4293:f4d6:0:0:0:0:0'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -421,6 +421,6 @@ class MaxMindTest extends TestCase
     public function testReverse()
     {
         $provider = new MaxMind($this->getMockAdapter($this->never()), 'api_key');
-        $provider->reverse(1, 2);
+        $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
     }
 }

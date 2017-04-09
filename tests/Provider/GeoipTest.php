@@ -3,6 +3,8 @@
 namespace Geocoder\Tests\Provider;
 
 use Geocoder\Location;
+use Geocoder\Model\Query\GeocodeQuery;
+use Geocoder\Model\Query\ReverseQuery;
 use Geocoder\Tests\TestCase;
 use Geocoder\Provider\Geoip;
 
@@ -30,7 +32,7 @@ class GeoipTest extends TestCase
     public function testGeocodeWithNull()
     {
         $provider = new Geoip();
-        $provider->geocode(null);
+        $provider->geocodeQuery(GeocodeQuery::create(null));
     }
 
     /**
@@ -40,7 +42,7 @@ class GeoipTest extends TestCase
     public function testGeocodeWithEmpty()
     {
         $provider = new Geoip();
-        $provider->geocode('');
+        $provider->geocodeQuery(GeocodeQuery::create(''));
     }
 
     /**
@@ -50,13 +52,13 @@ class GeoipTest extends TestCase
     public function testGeocodeWithAddress()
     {
         $provider = new Geoip();
-        $provider->geocode('10 avenue Gambetta, Paris, France');
+        $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
     }
 
     public function testGeocodeWithLocalhostIPv4()
     {
         $provider = new Geoip();
-        $results  = $provider->geocode('127.0.0.1');
+        $results  = $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -80,7 +82,7 @@ class GeoipTest extends TestCase
     public function testGeocodeWithLocalhostIPv6()
     {
         $provider = new Geoip();
-        $provider->geocode('::1');
+        $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
     /**
@@ -90,7 +92,7 @@ class GeoipTest extends TestCase
     public function testGeocodeWithRealIPv6()
     {
         $provider = new Geoip();
-        $provider->geocode('::ffff:74.200.247.59');
+        $provider->geocodeQuery(GeocodeQuery::create('::ffff:74.200.247.59'));
     }
 
     /**
@@ -100,6 +102,6 @@ class GeoipTest extends TestCase
     public function testReverse()
     {
         $provider = new Geoip();
-        $provider->reverse(1, 2);
+        $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
     }
 }

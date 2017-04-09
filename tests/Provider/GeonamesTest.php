@@ -2,7 +2,7 @@
 
 namespace Geocoder\Tests\Provider;
 
-use Geocoder\Location;
+use Geocoder\Location;use Geocoder\Model\Query\GeocodeQuery;use Geocoder\Model\Query\ReverseQuery;
 use Geocoder\Tests\TestCase;
 use Geocoder\Provider\Geonames;
 
@@ -21,7 +21,7 @@ class GeonamesTest extends TestCase
     public function testGeocodeWithNullUsername()
     {
         $provider = new Geonames($this->getMock('Http\Client\HttpClient'), null);
-        $provider->geocode('foo');
+        $provider->geocodeQuery(GeocodeQuery::create('foo'));
     }
 
     /**
@@ -31,7 +31,7 @@ class GeonamesTest extends TestCase
     public function testReverseWithNullUsername()
     {
         $provider = new Geonames($this->getMock('Http\Client\HttpClient'), null);
-        $provider->reverse(1,2);
+        $provider->reverseQuery(ReverseQuery::fromCoordinates(1,2));
     }
 
     /**
@@ -41,7 +41,7 @@ class GeonamesTest extends TestCase
     public function testGeocodeWithLocalhostIPv4()
     {
         $provider = new Geonames($this->getMockAdapter($this->never()), 'username');
-        $provider->geocode('127.0.0.1');
+        $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
     }
 
     /**
@@ -51,7 +51,7 @@ class GeonamesTest extends TestCase
     public function testGeocodeWithLocalhostIPv6()
     {
         $provider = new Geonames($this->getMockAdapter($this->never()), 'username');
-        $provider->geocode('::1');
+        $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
     /**
@@ -60,7 +60,7 @@ class GeonamesTest extends TestCase
     public function testGeocodeWithNull()
     {
         $provider = new Geonames($this->getMockAdapter(), 'username');
-        $provider->geocode(null);
+        $provider->geocodeQuery(GeocodeQuery::create(null));
     }
 
     /**
@@ -75,7 +75,7 @@ class GeonamesTest extends TestCase
 }
 JSON;
         $provider = new Geonames($this->getMockAdapterReturns($noPlacesFoundResponse), 'username');
-        $provider->geocode('BlaBlaBla');
+        $provider->geocodeQuery(GeocodeQuery::create('BlaBlaBla'));
     }
 
     public function testGeocodeWithRealPlace()
@@ -85,7 +85,7 @@ JSON;
         }
 
         $provider = new Geonames($this->getAdapter($_SERVER['GEONAMES_USERNAME']), $_SERVER['GEONAMES_USERNAME']);
-        $results  = $provider->geocode('London');
+        $results  = $provider->geocodeQuery(GeocodeQuery::create('London'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
@@ -189,7 +189,7 @@ JSON;
         }
 
         $provider = new Geonames($this->getAdapter($_SERVER['GEONAMES_USERNAME']), $_SERVER['GEONAMES_USERNAME'], 'it_IT');
-        $results  = $provider->geocode('London');
+        $results  = $provider->geocodeQuery(GeocodeQuery::create('London'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
@@ -293,7 +293,7 @@ JSON;
         }
 
         $provider = new Geonames($this->getAdapter($_SERVER['GEONAMES_USERNAME']), $_SERVER['GEONAMES_USERNAME']);
-        $results  = $provider->reverse(51.50853, -0.12574);
+        $results  = $provider->reverseQuery(ReverseQuery::fromCoordinates(51.50853, -0.12574));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -319,7 +319,7 @@ JSON;
         }
 
         $provider = new Geonames($this->getAdapter($_SERVER['GEONAMES_USERNAME']), $_SERVER['GEONAMES_USERNAME'], 'it_IT');
-        $results  = $provider->reverse(51.50853, -0.12574);
+        $results  = $provider->reverseQuery(ReverseQuery::fromCoordinates(51.50853, -0.12574));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -349,6 +349,6 @@ JSON;
 }
 JSON;
         $provider = new Geonames($this->getMockAdapterReturns($badCoordinateResponse), 'username');
-        $provider->reverse(-80.000000, -170.000000);
+        $provider->reverseQuery(ReverseQuery::fromCoordinates(-80.000000, -170.000000));
     }
 }

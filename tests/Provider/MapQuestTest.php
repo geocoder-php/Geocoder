@@ -2,7 +2,7 @@
 
 namespace Geocoder\Tests\Provider;
 
-use Geocoder\Location;
+use Geocoder\Location;use Geocoder\Model\Query\GeocodeQuery;use Geocoder\Model\Query\ReverseQuery;
 use Geocoder\Tests\TestCase;
 use Geocoder\Provider\MapQuest;
 
@@ -23,7 +23,7 @@ class MapQuestTest extends TestCase
     public function testGeocode()
     {
         $provider = new MapQuest($this->getMockAdapterReturns('{}'), 'api_key');
-        $provider->geocode('foobar');
+        $provider->geocodeQuery(GeocodeQuery::create('foobar'));
     }
 
     /**
@@ -32,7 +32,7 @@ class MapQuestTest extends TestCase
     public function testGeocodeWithAddressGetsNullContent()
     {
         $provider = new MapQuest($this->getMockAdapterReturns(null), 'api_key');
-        $provider->geocode('10 avenue Gambetta, Paris, France');
+        $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
     }
 
     /**
@@ -43,7 +43,7 @@ class MapQuestTest extends TestCase
         $json = '{"results":[{"locations":[{"street":"","postalCode":"","adminArea5":"","adminArea4":"","adminArea3":"","adminArea1":""}]}]}';
 
         $provider = new MapQuest($this->getMockAdapterReturns($json), 'api_key');
-        $provider->reverse(123, 456);
+        $provider->reverseQuery(ReverseQuery::fromCoordinates(123, 456));
     }
 
     public function testGeocodeWithRealAddress()
@@ -53,7 +53,7 @@ class MapQuestTest extends TestCase
         }
 
         $provider = new MapQuest($this->getAdapter($_SERVER['MAPQUEST_API_KEY']), $_SERVER['MAPQUEST_API_KEY']);
-        $results  = $provider->geocode('10 avenue Gambetta, Paris, France');
+        $results  = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -88,7 +88,7 @@ class MapQuestTest extends TestCase
         }
 
         $provider = new MapQuest($this->getMockAdapter(), $_SERVER['MAPQUEST_API_KEY']);
-        $provider->reverse(1, 2);
+        $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
     }
 
     public function testReverseWithRealCoordinates()
@@ -98,7 +98,7 @@ class MapQuestTest extends TestCase
         }
 
         $provider = new MapQuest($this->getAdapter($_SERVER['MAPQUEST_API_KEY']), $_SERVER['MAPQUEST_API_KEY']);
-        $results  = $provider->reverse(54.0484068, -2.7990345);
+        $results  = $provider->reverseQuery(ReverseQuery::fromCoordinates(54.0484068, -2.7990345));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -129,7 +129,7 @@ class MapQuestTest extends TestCase
         }
 
         $provider = new MapQuest($this->getAdapter($_SERVER['MAPQUEST_API_KEY']), $_SERVER['MAPQUEST_API_KEY']);
-        $results  = $provider->geocode('Hanover');
+        $results  = $provider->geocodeQuery(GeocodeQuery::create('Hanover'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
@@ -190,7 +190,7 @@ class MapQuestTest extends TestCase
         }
 
         $provider = new MapQuest($this->getAdapter($_SERVER['MAPQUEST_API_KEY']), $_SERVER['MAPQUEST_API_KEY']);
-        $results  = $provider->geocode('Kalbacher Hauptstraße 10, 60437 Frankfurt, Germany');
+        $results  = $provider->geocodeQuery(GeocodeQuery::create('Kalbacher Hauptstraße 10, 60437 Frankfurt, Germany'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -221,7 +221,7 @@ class MapQuestTest extends TestCase
     public function testGeocodeWithLocalhostIPv4()
     {
         $provider = new MapQuest($this->getMockAdapter($this->never()), 'api_key');
-        $provider->geocode('127.0.0.1');
+        $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
     }
 
     /**
@@ -231,7 +231,7 @@ class MapQuestTest extends TestCase
     public function testGeocodeWithLocalhostIPv6()
     {
         $provider = new MapQuest($this->getMockAdapter($this->never()), 'api_key');
-        $provider->geocode('::1');
+        $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
     /**
@@ -241,7 +241,7 @@ class MapQuestTest extends TestCase
     public function testGeocodeWithRealIPv4()
     {
         $provider = new MapQuest($this->getAdapter(), 'api_key');
-        $provider->geocode('74.200.247.59');
+        $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
     /**
@@ -251,6 +251,6 @@ class MapQuestTest extends TestCase
     public function testGeocodeWithRealIPv6()
     {
         $provider = new MapQuest($this->getAdapter(), 'api_key');
-        $provider->geocode('::ffff:74.200.247.59');
+        $provider->geocodeQuery(GeocodeQuery::create('::ffff:74.200.247.59'));
     }
 }
