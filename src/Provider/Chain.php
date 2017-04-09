@@ -12,6 +12,9 @@ namespace Geocoder\Provider;
 
 use Geocoder\Exception\ChainZeroResults;
 use Geocoder\Exception\InvalidCredentials;
+use Geocoder\Model\AddressCollection;
+use Geocoder\Model\Query\GeocodeQuery;
+use Geocoder\Model\Query\ReverseQuery;
 
 /**
  * @author Markus Bachmann <markus.bachmann@bachi.biz>
@@ -35,13 +38,15 @@ final class Chain implements LocaleAwareGeocoder, Provider
     /**
      * {@inheritDoc}
      */
-    public function geocode($address)
+    public function geocodeQuery(GeocodeQuery $query)
     {
+        $address = $query->getText();
+        $locale = $query->getLocale();
         $exceptions = [];
         foreach ($this->providers as $provider) {
-            if ($provider instanceof LocaleAwareGeocoder && $this->getLocale() !== null) {
+            if ($provider instanceof LocaleAwareGeocoder && $locale !== null) {
                 $provider = clone $provider;
-                $provider->setLocale($this->getLocale());
+                $provider->setLocale($locale);
             }
             try {
                 return $provider->geocode($address);
@@ -58,8 +63,11 @@ final class Chain implements LocaleAwareGeocoder, Provider
     /**
      * {@inheritDoc}
      */
-    public function reverse($latitude, $longitude)
+    public function reverseQuery(ReverseQuery $query)
     {
+        $coordinates = $query->getCoordinates();
+        $longitude = $coordinates->getLongitude();
+        $latitude = $coordinates->getLatitude();
         $exceptions = [];
         foreach ($this->providers as $provider) {
             try {

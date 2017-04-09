@@ -15,6 +15,8 @@ use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Exception\ZeroResults;
+use Geocoder\Model\Query\GeocodeQuery;
+use Geocoder\Model\Query\ReverseQuery;
 use Http\Client\HttpClient;
 
 /**
@@ -71,8 +73,9 @@ final class MapQuest extends AbstractHttpProvider implements Provider
     /**
      * {@inheritDoc}
      */
-    public function geocode($address)
+    public function geocodeQuery(GeocodeQuery $query)
     {
+        $address = $query->getText();
         if (null === $this->apiKey) {
             throw new InvalidCredentials('No API Key provided.');
         }
@@ -83,30 +86,33 @@ final class MapQuest extends AbstractHttpProvider implements Provider
         }
 
         if ($this->licensed) {
-            $query = sprintf(self::LICENSED_GEOCODE_ENDPOINT_URL, urlencode($address), $this->getLimit(), $this->apiKey);
+            $url = sprintf(self::LICENSED_GEOCODE_ENDPOINT_URL, urlencode($address), $this->getLimit(), $this->apiKey);
         } else {
-            $query = sprintf(self::OPEN_GEOCODE_ENDPOINT_URL, urlencode($address), $this->getLimit(), $this->apiKey);
+            $url = sprintf(self::OPEN_GEOCODE_ENDPOINT_URL, urlencode($address), $this->getLimit(), $this->apiKey);
         }
 
-        return $this->executeQuery($query);
+        return $this->executeQuery($url);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function reverse($latitude, $longitude)
+    public function reverseQuery(ReverseQuery $query)
     {
+        $coordinates = $query->getCoordinates();
+        $longitude = $coordinates->getLongitude();
+        $latitude = $coordinates->getLatitude();
         if (null === $this->apiKey) {
             throw new InvalidCredentials('No API Key provided.');
         }
 
         if ($this->licensed) {
-            $query = sprintf(self::LICENSED_REVERSE_ENDPOINT_URL, $this->apiKey, $latitude, $longitude);
+            $url = sprintf(self::LICENSED_REVERSE_ENDPOINT_URL, $this->apiKey, $latitude, $longitude);
         } else {
-            $query = sprintf(self::OPEN_REVERSE_ENDPOINT_URL, $this->apiKey, $latitude, $longitude);
+            $url = sprintf(self::OPEN_REVERSE_ENDPOINT_URL, $this->apiKey, $latitude, $longitude);
         }
 
-        return $this->executeQuery($query);
+        return $this->executeQuery($url);
     }
 
     /**

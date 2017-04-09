@@ -15,6 +15,9 @@ use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Exception\ZeroResults;
+use Geocoder\Model\AddressCollection;
+use Geocoder\Model\Query\GeocodeQuery;
+use Geocoder\Model\Query\ReverseQuery;
 use Http\Client\HttpClient;
 
 /**
@@ -52,8 +55,9 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
     /**
      * {@inheritDoc}
      */
-    public function geocode($address)
+    public function geocodeQuery(GeocodeQuery $query)
     {
+        $address = $query->getText();
         if (filter_var($address, FILTER_VALIDATE_IP)) {
             throw new UnsupportedOperation('The ArcGISOnline provider does not support IP addresses, only street addresses.');
         }
@@ -107,8 +111,12 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
     /**
      * {@inheritDoc}
      */
-    public function reverse($latitude, $longitude)
+    public function reverseQuery(ReverseQuery $query)
     {
+        $coordinates = $query->getCoordinates();
+        $longitude = $coordinates->getLongitude();
+        $latitude = $coordinates->getLatitude();
+
         $query = sprintf(self::REVERSE_ENDPOINT_URL, $longitude, $latitude);
         $json  = $this->executeQuery($query);
 

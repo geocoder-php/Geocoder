@@ -17,6 +17,8 @@ use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Collection;
 use Geocoder\Exception\ZeroResults;
+use Geocoder\Model\Query\GeocodeQuery;
+use Geocoder\Model\Query\ReverseQuery;
 use Http\Client\HttpClient;
 
 /**
@@ -76,8 +78,9 @@ final class IpInfoDb extends AbstractHttpProvider implements Provider, IpAddress
     /**
      * {@inheritDoc}
      */
-    public function geocode($address)
+    public function geocodeQuery(GeocodeQuery $query)
     {
+        $address = $query->getText();
         if (null === $this->apiKey) {
             throw new InvalidCredentials('No API Key provided.');
         }
@@ -96,15 +99,15 @@ final class IpInfoDb extends AbstractHttpProvider implements Provider, IpAddress
             return $this->returnResults([ $this->getLocalhostDefaults() ]);
         }
 
-        $query = sprintf($this->endpointUrl, $this->apiKey, $address);
+        $url = sprintf($this->endpointUrl, $this->apiKey, $address);
 
-        return $this->executeQuery($query);
+        return $this->executeQuery($url);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function reverse($latitude, $longitude)
+    public function reverseQuery(ReverseQuery $query)
     {
         throw new UnsupportedOperation('The IpInfoDb provider is not able to do reverse geocoding.');
     }

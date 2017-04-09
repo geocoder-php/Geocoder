@@ -81,15 +81,13 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocod
 
     /**
      * @param HttpClient $client An HTTP adapter
-     * @param string     $locale A locale (optional)
      * @param string     $region Region biasing (optional)
      * @param string     $apiKey Google Geocoding API key (optional)
      */
-    public function __construct(HttpClient $client, $locale = null, $region = null, $apiKey = null)
+    public function __construct(HttpClient $client, $region = null, $apiKey = null)
     {
         parent::__construct($client);
 
-        $this->locale = $locale;
         $this->region = $region;
         $this->apiKey = $apiKey;
     }
@@ -123,11 +121,17 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocod
         return 'google_maps';
     }
 
+    /**
+     * @param $region
+     *
+     * @return GoogleMaps
+     */
     public function setRegion($region)
     {
-        $this->region = $region;
+        $new = clone $this;
+        $new->region = $region;
 
-        return $this;
+        return $new;
     }
 
     /**

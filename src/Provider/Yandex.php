@@ -14,6 +14,8 @@ use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Exception\ZeroResults;
+use Geocoder\Model\Query\GeocodeQuery;
+use Geocoder\Model\Query\ReverseQuery;
 use Http\Client\HttpClient;
 
 /**
@@ -38,44 +40,46 @@ final class Yandex extends AbstractHttpProvider implements LocaleAwareGeocoder, 
 
     /**
      * @param HttpClient $client  An HTTP adapter.
-     * @param string     $locale  A locale (optional).
      * @param string     $toponym Toponym biasing only for reverse geocoding (optional).
      */
-    public function __construct(HttpClient $client, $locale = null, $toponym = null)
+    public function __construct(HttpClient $client, $toponym = null)
     {
         parent::__construct($client);
 
-        $this->locale  = $locale;
         $this->toponym = $toponym;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function geocode($address)
+    public function geocodeQuery(GeocodeQuery $query)
     {
+        $address = $query->getText();
         // This API doesn't handle IPs
         if (filter_var($address, FILTER_VALIDATE_IP)) {
             throw new UnsupportedOperation('The Yandex provider does not support IP addresses, only street addresses.');
         }
 
-        $query = sprintf(self::GEOCODE_ENDPOINT_URL, urlencode($address));
+        $url = sprintf(self::GEOCODE_ENDPOINT_URL, urlencode($address));
 
-        return $this->executeQuery($query);
+        return $this->executeQuery($url, $query->getLocale());
     }
 
     /**
      * {@inheritDoc}
      */
-    public function reverse($latitude, $longitude)
+    public function reverseQuery(ReverseQuery $query)
     {
-        $query = sprintf(self::REVERSE_ENDPOINT_URL, $longitude, $latitude);
+        $coordinates = $query->getCoordinates();
+        $longitude = $coordinates->getLongitude();
+        $latitude = $coordinates->getLatitude();
+        $url = sprintf(self::REVERSE_ENDPOINT_URL, $longitude, $latitude);
 
         if (null !== $this->toponym) {
-            $query = sprintf('%s&kind=%s', $query, $this->toponym);
+            $url = sprintf('%s&kind=%s', $url, $this->toponym);
         }
 
-        return $this->executeQuery($query);
+        return $this->executeQuery($url, $query->getLocale());
     }
 
     /**
@@ -88,11 +92,12 @@ final class Yandex extends AbstractHttpProvider implements LocaleAwareGeocoder, 
 
     /**
      * @param string $query
+     * @param string $locale
      */
-    private function executeQuery($query)
+    private function executeQuery($query, $locale)
     {
-        if (null !== $this->getLocale()) {
-            $query = sprintf('%s&lang=%s', $query, str_replace('_', '-', $this->getLocale()));
+        if (null !== $locale) {
+            $query = sprintf('%s&lang=%s', $query, str_replace('_', '-', $locale));
         }
 
         $query = sprintf('%s&results=%d', $query, $this->getLimit());

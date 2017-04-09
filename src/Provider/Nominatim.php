@@ -14,6 +14,8 @@ use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Exception\ZeroResults;
+use Geocoder\Model\Query\GeocodeQuery;
+use Geocoder\Model\Query\ReverseQuery;
 use Http\Client\HttpClient;
 
 /**
@@ -40,21 +42,20 @@ final class Nominatim extends AbstractHttpProvider implements LocaleAwareGeocode
     /**
      * @param HttpClient $client  An HTTP adapter.
      * @param string     $rootUrl Root URL of the nominatim server
-     * @param string     $locale  A locale (optional).
      */
-    public function __construct(HttpClient $client, $rootUrl, $locale = null)
+    public function __construct(HttpClient $client, $rootUrl)
     {
         parent::__construct($client);
 
         $this->rootUrl = rtrim($rootUrl, '/');
-        $this->locale  = $locale;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function geocode($address)
+    public function geocodeQuery(GeocodeQuery $query)
     {
+        $address = $query->getText();
         // This API does not support IPv6
         if (filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
             throw new UnsupportedOperation('The ' . get_called_class() . ' provider does not support IPv6 addresses.');
@@ -64,23 +65,23 @@ final class Nominatim extends AbstractHttpProvider implements LocaleAwareGeocode
             return $this->returnResults([ $this->getLocalhostDefaults() ]);
         }
 
-        $query   = sprintf($this->getGeocodeEndpointUrl(), urlencode($address), $this->getLimit());
-        $content = $this->executeQuery($query);
+        $url   = sprintf($this->getGeocodeEndpointUrl(), urlencode($address), $this->getLimit());
+        $content = $this->executeQuery($url);
 
         if (empty($content)) {
-            throw InvalidServerResponse::create($query);
+            throw InvalidServerResponse::create($url);
         }
 
         $doc = new \DOMDocument();
         if (!@$doc->loadXML($content) || null === $doc->getElementsByTagName('searchresults')->item(0)) {
-            throw InvalidServerResponse::create($query);
+            throw InvalidServerResponse::create($url);
         }
 
         $searchResult = $doc->getElementsByTagName('searchresults')->item(0);
         $places = $searchResult->getElementsByTagName('place');
 
         if (null === $places || 0 === $places->length) {
-            throw ZeroResults::create($query);
+            throw ZeroResults::create($url);
         }
 
         $results = [];
@@ -94,10 +95,13 @@ final class Nominatim extends AbstractHttpProvider implements LocaleAwareGeocode
     /**
      * {@inheritDoc}
      */
-    public function reverse($latitude, $longitude)
+    public function reverseQuery(ReverseQuery $query)
     {
-        $query   = sprintf($this->getReverseEndpointUrl(), $latitude, $longitude);
-        $content = $this->executeQuery($query);
+        $coordinates = $query->getCoordinates();
+        $longitude = $coordinates->getLongitude();
+        $latitude = $coordinates->getLatitude();
+        $url   = sprintf($this->getReverseEndpointUrl(), $latitude, $longitude);
+        $content = $this->executeQuery($url);
 
         if (empty($content)) {
             throw new ZeroResults(sprintf('Unable to find results for coordinates [ %f, %f ].', $latitude, $longitude));

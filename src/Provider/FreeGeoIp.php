@@ -16,6 +16,8 @@ use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Collection;
 use Geocoder\Exception\ZeroResults;
 use Geocoder\Model\Address;
+use Geocoder\Model\Query\GeocodeQuery;
+use Geocoder\Model\Query\ReverseQuery;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -26,12 +28,13 @@ final class FreeGeoIp extends AbstractHttpProvider implements Provider, IpAddres
      * @var string
      */
     const ENDPOINT_URL = 'https://freegeoip.net/json/%s';
-
+    
     /**
      * {@inheritDoc}
      */
-    public function geocode($address)
+    public function geocodeQuery(GeocodeQuery $query)
     {
+        $address = $query->getText();
         if (!filter_var($address, FILTER_VALIDATE_IP)) {
             throw new UnsupportedOperation('The FreeGeoIp provider does not support street addresses.');
         }
@@ -48,7 +51,7 @@ final class FreeGeoIp extends AbstractHttpProvider implements Provider, IpAddres
     /**
      * {@inheritDoc}
      */
-    public function reverse($latitude, $longitude)
+    public function reverseQuery(ReverseQuery $query)
     {
         throw new UnsupportedOperation('The FreeGeoIp provider is not able to do reverse geocoding.');
     }

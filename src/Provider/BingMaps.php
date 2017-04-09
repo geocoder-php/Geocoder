@@ -45,14 +45,12 @@ final class BingMaps extends AbstractHttpProvider implements LocaleAwareGeocoder
     /**
      * @param HttpClient $client An HTTP adapter
      * @param string     $apiKey An API key
-     * @param string     $locale A locale (optional)
      */
-    public function __construct(HttpClient $client, $apiKey, $locale = null)
+    public function __construct(HttpClient $client, $apiKey)
     {
         parent::__construct($client);
 
         $this->apiKey = $apiKey;
-        $this->locale = $locale;
     }
 
     /**
@@ -71,7 +69,7 @@ final class BingMaps extends AbstractHttpProvider implements LocaleAwareGeocoder
 
         $url = sprintf(self::GEOCODE_ENDPOINT_URL, $this->getLimit(), urlencode($query->getText()), $this->apiKey);
 
-        return $this->executeQuery($query, $url);
+        return $this->executeQuery($url, $query->getLocale(), $query->getLimit());
     }
 
     /**

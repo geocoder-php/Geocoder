@@ -11,6 +11,8 @@
 namespace Geocoder\Provider;
 
 use Geocoder\Exception\ZeroResults;
+use Geocoder\Model\Query\GeocodeQuery;
+use Geocoder\Model\Query\ReverseQuery;
 use GeoIp2\Exception\AddressNotFoundException;
 use Geocoder\Adapter\GeoIP2Adapter;
 use Geocoder\Exception\NoResult;
@@ -27,19 +29,20 @@ final class GeoIP2 extends AbstractProvider implements LocaleAwareGeocoder, IpAd
      */
     private $adapter;
 
-    public function __construct(GeoIP2Adapter $adapter, $locale = 'en')
+    public function __construct(GeoIP2Adapter $adapter)
     {
         parent::__construct();
 
         $this->adapter = $adapter;
-        $this->locale  = $locale;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function geocode($address)
+    public function geocodeQuery(GeocodeQuery $query)
     {
+        $address = $query->getText();
+        $locale = $query->getLocale();
         if (!filter_var($address, FILTER_VALIDATE_IP)) {
             throw new UnsupportedOperation('The GeoIP2 provider does not support street addresses, only IP addresses.');
         }
@@ -49,12 +52,11 @@ final class GeoIP2 extends AbstractProvider implements LocaleAwareGeocoder, IpAd
         }
 
         $result = json_decode($this->executeQuery($address));
-
         $adminLevels = [];
 
         if (isset($result->subdivisions) && is_array($result->subdivisions)) {
             foreach ($result->subdivisions as $i => $subdivision) {
-                $name = (isset($subdivision->names->{$this->locale}) ? $subdivision->names->{$this->locale} : null);
+                $name = (isset($subdivision->names->{$locale}) ? $subdivision->names->{$locale} : null);
                 $code = (isset($subdivision->iso_code) ? $subdivision->iso_code : null);
 
                 if (null !== $name || null !== $code) {
@@ -66,8 +68,8 @@ final class GeoIP2 extends AbstractProvider implements LocaleAwareGeocoder, IpAd
         return $this->returnResults([
             $this->fixEncoding(array_merge($this->getDefaults(), array(
                 'countryCode' => (isset($result->country->iso_code) ? $result->country->iso_code : null),
-                'country'     => (isset($result->country->names->{$this->locale}) ? $result->country->names->{$this->locale} : null),
-                'locality'    => (isset($result->city->names->{$this->locale}) ? $result->city->names->{$this->locale} : null),
+                'country'     => (isset($result->country->names->{$locale}) ? $result->country->names->{$locale} : null),
+                'locality'    => (isset($result->city->names->{$locale}) ? $result->city->names->{$locale} : null),
                 'latitude'    => (isset($result->location->latitude) ? $result->location->latitude : null),
                 'longitude'   => (isset($result->location->longitude) ? $result->location->longitude : null),
                 'timezone'    => (isset($result->location->time_zone) ? $result->location->time_zone : null),
@@ -80,7 +82,7 @@ final class GeoIP2 extends AbstractProvider implements LocaleAwareGeocoder, IpAd
     /**
      * {@inheritDoc}
      */
-    public function reverse($latitude, $longitude)
+    public function reverseQuery(ReverseQuery $query)
     {
         throw new UnsupportedOperation('The GeoIP2 provider is not able to do reverse geocoding.');
     }
@@ -101,9 +103,7 @@ final class GeoIP2 extends AbstractProvider implements LocaleAwareGeocoder, IpAd
         $uri = sprintf('file://geoip?%s', $address);
 
         try {
-            $result = $this->adapter
-                ->setLocale($this->locale)
-                ->getContent($uri);
+            $result = $this->adapter->getContent($uri);
         } catch (AddressNotFoundException $e) {
             throw new ZeroResults(sprintf('No results found for IP address "%s".', $address));
         }

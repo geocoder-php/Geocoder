@@ -17,6 +17,8 @@ use Geocoder\Exception\NoResult;
 use Geocoder\Exception\QuotaExceeded;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Exception\ZeroResults;
+use Geocoder\Model\Query\GeocodeQuery;
+use Geocoder\Model\Query\ReverseQuery;
 use Http\Client\HttpClient;
 
 /**
@@ -65,8 +67,9 @@ final class GeoIPs extends AbstractHttpProvider implements Provider, IpAddressGe
     /**
      * {@inheritDoc}
      */
-    public function geocode($address)
+    public function geocodeQuery(GeocodeQuery $query)
     {
+        $address = $query->getText();
         if (null === $this->apiKey) {
             throw new InvalidCredentials('No API key provided.');
         }
@@ -91,7 +94,7 @@ final class GeoIPs extends AbstractHttpProvider implements Provider, IpAddressGe
     /**
      * {@inheritDoc}
      */
-    public function reverse($latitude, $longitude)
+    public function reverseQuery(ReverseQuery $query)
     {
         throw new UnsupportedOperation('The GeoIPs provider is not able to do reverse geocoding.');
     }

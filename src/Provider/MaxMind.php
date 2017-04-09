@@ -17,6 +17,8 @@ use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Exception\ZeroResults;
+use Geocoder\Model\Query\GeocodeQuery;
+use Geocoder\Model\Query\ReverseQuery;
 use Http\Client\HttpClient;
 
 /**
@@ -65,8 +67,9 @@ final class MaxMind extends AbstractHttpProvider implements Provider, IpAddressG
     /**
      * {@inheritDoc}
      */
-    public function geocode($address)
+    public function geocodeQuery(GeocodeQuery $query)
     {
+        $address = $query->getText();
         if (null === $this->apiKey) {
             throw new InvalidCredentials('No API Key provided.');
         }
@@ -79,15 +82,15 @@ final class MaxMind extends AbstractHttpProvider implements Provider, IpAddressG
             return $this->returnResults([ $this->getLocalhostDefaults() ]);
         }
 
-        $query = sprintf(self::GEOCODE_ENDPOINT_URL_SSL, $this->service, $this->apiKey, $address);
+        $url = sprintf(self::GEOCODE_ENDPOINT_URL_SSL, $this->service, $this->apiKey, $address);
 
-        return $this->executeQuery($query);
+        return $this->executeQuery($url);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function reverse($latitude, $longitude)
+    public function reverseQuery(ReverseQuery $query)
     {
         throw new UnsupportedOperation('The MaxMind provider is not able to do reverse geocoding.');
     }

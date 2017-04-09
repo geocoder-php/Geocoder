@@ -21,6 +21,8 @@ use Geocoder\Provider\Provider;
 final class GeocodeQuery
 {
     /**
+     * The address or text that should be geocoded.
+     *
      * @var string
      */
     private $text;
@@ -155,6 +157,8 @@ final class GeocodeQuery
     }
 
     /**
+     * Return arbitrary data for this query.
+     *
      * @return array
      */
     public function getData()
