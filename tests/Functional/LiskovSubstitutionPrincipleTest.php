@@ -132,16 +132,16 @@ class LiskovSubstitutionPrincipleTest extends \PHPUnit_Framework_TestCase
     public function getWorldWideProvider()
     {
         return [
-            [new GoogleMaps($this->getAdapter($_SERVER['GOOGLE_GEOCODING_KEY']), 'en', null, $_SERVER['GOOGLE_GEOCODING_KEY'])],
-            [new BingMaps($this->getAdapter($_SERVER['BINGMAPS_API_KEY']), $_SERVER['BINGMAPS_API_KEY'], 'en')],
+            [new GoogleMaps($this->getAdapter($_SERVER['GOOGLE_GEOCODING_KEY']), null, $_SERVER['GOOGLE_GEOCODING_KEY'])],
+            [new BingMaps($this->getAdapter($_SERVER['BINGMAPS_API_KEY']), $_SERVER['BINGMAPS_API_KEY'])],
             //[new MapQuest($this->getAdapter($_SERVER['MAPQUEST_API_KEY']), $_SERVER['MAPQUEST_API_KEY'])],
-            //[new Geonames($this->getAdapter($_SERVER['GEONAMES_USERNAME']), $_SERVER['GEONAMES_USERNAME'], 'en')],
+            //[new Geonames($this->getAdapter($_SERVER['GEONAMES_USERNAME']), $_SERVER['GEONAMES_USERNAME'])],
             //[new TomTom($this->getAdapter($_SERVER['TOMTOM_MAP_KEY']), $_SERVER['TOMTOM_MAP_KEY'])],
             [new OpenCage($this->getAdapter($_SERVER['OPENCAGE_API_KEY']), $_SERVER['OPENCAGE_API_KEY'])],
             //[new Mapzen($this->getAdapter($_SERVER['MAPZEN_API_KEY']), $_SERVER['MAPZEN_API_KEY'])],
             //[new ArcGISOnline($this->getAdapter())],
             //[new Yandex($this->getAdapter())],
-            [Nominatim::withOpenStreetMapServer($this->getAdapter(), 'en')],
+            [Nominatim::withOpenStreetMapServer($this->getAdapter())],
             //[new MaxMind($this->getAdapter($_SERVER['MAXMIND_API_KEY']), $_SERVER['MAXMIND_API_KEY'])],
             //[new IpInfoDb($this->getAdapter($_SERVER['IPINFODB_API_KEY']), $_SERVER['IPINFODB_API_KEY'])],
         ];
