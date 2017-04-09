@@ -9,6 +9,8 @@ use Geocoder\Model\AdminLevelCollection;
 use Geocoder\Model\Bounds;
 use Geocoder\Model\Coordinates;
 use Geocoder\Model\Country;
+use Geocoder\Model\Query\GeocodeQuery;
+use Geocoder\Model\Query\ReverseQuery;
 use Geocoder\Provider\ArcGISOnline;
 use Geocoder\Provider\BingMaps;
 use Geocoder\Provider\FreeGeoIp;
@@ -21,6 +23,7 @@ use Geocoder\Provider\MapQuest;
 use Geocoder\Provider\Mapzen;
 use Geocoder\Provider\Nominatim;
 use Geocoder\Provider\OpenCage;
+use Geocoder\Provider\Provider;
 use Geocoder\Provider\TomTom;
 use Geocoder\Provider\Yandex;
 use Geocoder\Tests\CachedResponseClient;
@@ -35,19 +38,16 @@ use Http\Adapter\Guzzle6\Client as GuzzleClient;
 class LiskovSubstitutionPrincipleTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @param Geocoder $geocoder
+     * @param Provider $provider
      * @dataProvider getWorldWideProvider
      */
-    public function testGeocodeWorldWideProvider(Geocoder $geocoder)
+    public function testGeocodeWorldWideProvider(Provider $provider)
     {
-        if ($geocoder instanceof LocaleAwareGeocoder) {
-            $geocoder->setLocale('en');
-        }
-
         /*
          * Find the address for the British prime minister
          */
-        $result = $geocoder->geocode('10 Downing St, London, UK');
+        $query = GeocodeQuery::create('10 Downing St, London, UK')->withLocale('en');
+        $result = $provider->geocodeQuery($query);
         $this->assertWellFormattedResult($result);
 
         // Check Downing Street
@@ -60,7 +60,8 @@ class LiskovSubstitutionPrincipleTest extends \PHPUnit_Framework_TestCase
         /*
          * Find the a good French/Canadian address
          */
-        $result = $geocoder->geocode('367 Rue St-Paul E, Montréal, Québec');
+        $query = GeocodeQuery::create('367 Rue St-Paul E, Montréal, Québec')->withLocale('en');
+        $result = $provider->geocodeQuery($query);
         $this->assertWellFormattedResult($result);
 
         // Check Downing Street
@@ -74,54 +75,53 @@ class LiskovSubstitutionPrincipleTest extends \PHPUnit_Framework_TestCase
          * Test other results are well formatted
          */
         // This will normally generate many results
-        $this->assertWellFormattedResult($geocoder->geocode('Paris'));
+        $query = GeocodeQuery::create('Paris')->withLocale('en');
+        $this->assertWellFormattedResult($provider->geocodeQuery($query));
     }
 
 
     /**
-     * @param Geocoder $geocoder
+     * @param Provider $provider
      * @dataProvider getWorldWideProvider
      */
-    public function testReverseWorldWideProvider(Geocoder $geocoder)
+    public function testReverseWorldWideProvider(Provider $provider)
     {
         // Cheops pyramid
-        $this->assertWellFormattedResult($geocoder->reverse(29.979216, 31.134277));
+        $this->assertWellFormattedResult($provider->reverseQuery(ReverseQuery::fromCoordinates(29.979216, 31.134277)));
 
         // Close to the white house
-        $this->assertWellFormattedResult($geocoder->reverse(38.900206, -77.036991));
-
-
+        $this->assertWellFormattedResult($provider->reverseQuery(ReverseQuery::fromCoordinates(38.900206, -77.036991)));
     }
 
     /**
-     * @param Geocoder $geocoder
+     * @param Provider $provider
      * @dataProvider getWorldWideProvider
      * @expectedException \Geocoder\Exception\ZeroResults
      */
-    public function testNoResult(Geocoder $geocoder)
+    public function testNoResult(Provider $provider)
     {
-        $geocoder->geocode('abcdef, ghijkl, mnopqrs');
+        $provider->geocodeQuery(GeocodeQuery::create('abcdef, ghijkl, mnopqrs'));
     }
 
     /**
-     * @param Geocoder $geocoder
+     * @param Provider $provider
      * @dataProvider getWorldWideProvider
      * @expectedException \Geocoder\Exception\ZeroResults
      */
-    public function testNoResultReverse(Geocoder $geocoder)
+    public function testNoResultReverse(Provider $provider)
     {
         // Out side Hawaii in Pacific ocean
-        $geocoder->reverse(25.388300, 179.861719);
+        $provider->reverseQuery(ReverseQuery::fromCoordinates(25.388300, 179.861719));
     }
 
     /**
-     * @param Geocoder $geocoder
+     * @param Provider $provider
      * @dataProvider getIpAddressProvider
      */
-    public function testIpProvider(Geocoder $geocoder)
+    public function testIpProvider(Provider $provider)
     {
         // Google DNS
-        $this->assertWellFormattedResult($geocoder->geocode('8.8.8.8'));
+        $this->assertWellFormattedResult($provider->geocodeQuery(GeocodeQuery::create('8.8.8.8')));
     }
 
 

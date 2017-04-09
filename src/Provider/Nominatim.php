@@ -66,7 +66,7 @@ final class Nominatim extends AbstractHttpProvider implements LocaleAwareGeocode
         }
 
         $url   = sprintf($this->getGeocodeEndpointUrl(), urlencode($address), $this->getLimit());
-        $content = $this->executeQuery($url);
+        $content = $this->executeQuery($url, $query->getLocale());
 
         if (empty($content)) {
             throw InvalidServerResponse::create($url);
@@ -101,7 +101,7 @@ final class Nominatim extends AbstractHttpProvider implements LocaleAwareGeocode
         $longitude = $coordinates->getLongitude();
         $latitude = $coordinates->getLatitude();
         $url   = sprintf($this->getReverseEndpointUrl(), $latitude, $longitude);
-        $content = $this->executeQuery($url);
+        $content = $this->executeQuery($url, $query->getLocale());
 
         if (empty($content)) {
             throw new ZeroResults(sprintf('Unable to find results for coordinates [ %f, %f ].', $latitude, $longitude));
@@ -171,11 +171,12 @@ final class Nominatim extends AbstractHttpProvider implements LocaleAwareGeocode
 
     /**
      * @param string $query
+     * @param string $locale
      */
-    private function executeQuery($query)
+    private function executeQuery($query, $locale)
     {
-        if (null !== $this->getLocale()) {
-            $query = sprintf('%s&accept-language=%s', $query, $this->getLocale());
+        if (null !== $locale) {
+            $query = sprintf('%s&accept-language=%s', $query, $locale);
         }
 
         $request = $this->getMessageFactory()->createRequest('GET', $query);
