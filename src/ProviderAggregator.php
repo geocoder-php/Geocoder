@@ -51,12 +51,6 @@ class ProviderAggregator implements Geocoder
      */
     public function geocodeQuery(GeocodeQuery $query)
     {
-        $value = trim($query->getText());
-        if (empty($value)) {
-            // let's save a request
-            return new AddressCollection();
-        }
-
         return $this->getProvider()->geocodeQuery($query);
     }
 
@@ -65,14 +59,6 @@ class ProviderAggregator implements Geocoder
      */
     public function reverseQuery(ReverseQuery $query)
     {
-        $coordinates = $query->getCoordinates();
-        $longitude = $coordinates->getLongitude();
-        $latitude = $coordinates->getLatitude();
-        if (empty($latitude) || empty($longitude)) {
-            // let's save a request
-            return new AddressCollection();
-        }
-
         return $this->getProvider()->reverseQuery($query);
     }
 

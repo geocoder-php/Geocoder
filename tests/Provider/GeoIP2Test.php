@@ -46,7 +46,7 @@ class GeoIP2Test extends TestCase
 
     public function testGeocodeWithLocalhostIPv4()
     {
-        $results  = $this->provider->geocode('127.0.0.1');
+        $results  = $this->provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -64,7 +64,7 @@ class GeoIP2Test extends TestCase
      */
     public function testOnlyIpAddressesCouldBeResolved()
     {
-        $this->provider->geocode('Street 123, Somewhere');
+        $this->provider->geocodeQuery(GeocodeQuery::create('Street 123, Somewhere'));
     }
 
     /**

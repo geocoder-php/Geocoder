@@ -18,26 +18,6 @@ class HostIpTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The HostIp provider does not support Street addresses.
      */
-    public function testGeocodeWithNull()
-    {
-        $provider = new HostIp($this->getMockAdapter($this->never()));
-        $provider->geocodeQuery(GeocodeQuery::create(null));
-    }
-
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The HostIp provider does not support Street addresses.
-     */
-    public function testGeocodeWithEmpty()
-    {
-        $provider = new HostIp($this->getMockAdapter($this->never()));
-        $provider->geocodeQuery(GeocodeQuery::create(''));
-    }
-
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The HostIp provider does not support Street addresses.
-     */
     public function testGeocodeWithAddress()
     {
         $provider = new HostIp($this->getMockAdapter($this->never()));

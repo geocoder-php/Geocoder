@@ -129,8 +129,8 @@ class NominatimTest extends TestCase
 
     public function testGeocodeWithRealAddressWithLocale()
     {
-        $provider = Nominatim::withOpenStreetMapServer($this->getAdapter(), 'fr_FR');
-        $results  = $provider->geocodeQuery(GeocodeQuery::create('10 allée Evariste Galois, Clermont ferrand'));
+        $provider = Nominatim::withOpenStreetMapServer($this->getAdapter());
+        $results  = $provider->geocodeQuery(GeocodeQuery::create('10 allée Evariste Galois, Clermont ferrand')->withLocale('fr_FR'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(2, $results);
@@ -218,8 +218,8 @@ class NominatimTest extends TestCase
 
     public function testReverseWithRealCoordinatesWithLocale()
     {
-        $provider = Nominatim::withOpenStreetMapServer($this->getAdapter(), 'de_DE');
-        $results  = $provider->geocodeQuery(GeocodeQuery::create('Kalbacher Hauptstraße, 60437 Frankfurt, Germany'));
+        $provider = Nominatim::withOpenStreetMapServer($this->getAdapter());
+        $results  = $provider->geocodeQuery(GeocodeQuery::create('Kalbacher Hauptstraße, 60437 Frankfurt, Germany')->withLocale('de_DE'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
@@ -368,8 +368,8 @@ class NominatimTest extends TestCase
 
     public function testGeocodeWithRealIPv4WithLocale()
     {
-        $provider = Nominatim::withOpenStreetMapServer($this->getAdapter(), 'da_DK');
-        $results  = $provider->geocodeQuery(GeocodeQuery::create('88.188.221.14'));
+        $provider = Nominatim::withOpenStreetMapServer($this->getAdapter());
+        $results  = $provider->geocodeQuery(GeocodeQuery::create('88.188.221.14')->withLocale('da_DK'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);

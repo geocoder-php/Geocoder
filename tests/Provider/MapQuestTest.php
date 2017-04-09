@@ -43,7 +43,7 @@ class MapQuestTest extends TestCase
         $json = '{"results":[{"locations":[{"street":"","postalCode":"","adminArea5":"","adminArea4":"","adminArea3":"","adminArea1":""}]}]}';
 
         $provider = new MapQuest($this->getMockAdapterReturns($json), 'api_key');
-        $provider->reverseQuery(ReverseQuery::fromCoordinates(123, 456));
+        $provider->reverseQuery(ReverseQuery::fromCoordinates(11, 12));
     }
 
     public function testGeocodeWithRealAddress()

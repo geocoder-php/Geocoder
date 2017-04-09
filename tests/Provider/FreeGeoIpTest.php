@@ -21,17 +21,7 @@ class FreeGeoIpTest extends TestCase
     public function testGeocodeWithNull()
     {
         $provider = new FreeGeoIp($this->getMockAdapter($this->never()));
-        $provider->geocodeQuery(GeocodeQuery::create(null));
-    }
-
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The FreeGeoIp provider does not support street addresses.
-     */
-    public function testGeocodeWithEmpty()
-    {
-        $provider = new FreeGeoIp($this->getMockAdapter($this->never()));
-        $provider->geocodeQuery(GeocodeQuery::create(''));
+        $provider->geocodeQuery(GeocodeQuery::create('xx'));
     }
 
     /**

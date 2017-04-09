@@ -42,25 +42,6 @@ class IpInfoDbTest extends TestCase
         $provider->geocodeQuery(GeocodeQuery::create('foobar'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The IpInfoDb provider does not support street addresses, only IPv4 addresses.
-     */
-    public function testGeocodeWithNull()
-    {
-        $provider = new IpInfoDb($this->getMockAdapter($this->never()), 'api_key');
-        $provider->geocodeQuery(GeocodeQuery::create(null));
-    }
-
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The IpInfoDb provider does not support street addresses, only IPv4 addresses.
-     */
-    public function testGeocodeWithEmpty()
-    {
-        $provider = new IpInfoDb($this->getMockAdapter($this->never()), 'api_key');
-        $provider->geocodeQuery(GeocodeQuery::create(''));
-    }
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation

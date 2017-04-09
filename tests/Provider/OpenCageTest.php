@@ -214,8 +214,8 @@ class OpenCageTest extends TestCase
             $this->markTestSkipped('You need to configure the OPENCAGE_API_KEY value in phpunit.xml');
         }
 
-        $provider = new OpenCage($this->getAdapter($_SERVER['OPENCAGE_API_KEY']), $_SERVER['OPENCAGE_API_KEY'], 'es');
-        $results  = $provider->geocodeQuery(GeocodeQuery::create('London'));
+        $provider = new OpenCage($this->getAdapter($_SERVER['OPENCAGE_API_KEY']), $_SERVER['OPENCAGE_API_KEY']);
+        $results  = $provider->geocodeQuery(GeocodeQuery::create('London')->withLocale('es'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);

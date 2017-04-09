@@ -27,26 +27,6 @@ class GeoIPsTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The GeoIPs provider does not support street addresses, only IPv4 addresses.
      */
-    public function testGeocodeWithNull()
-    {
-        $provider = new GeoIPs($this->getMockAdapter($this->never()), 'api_key');
-        $provider->geocodeQuery(GeocodeQuery::create(null));
-    }
-
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The GeoIPs provider does not support street addresses, only IPv4 addresses.
-     */
-    public function testGeocodeWithEmpty()
-    {
-        $provider = new GeoIPs($this->getMockAdapter($this->never()), 'api_key');
-        $provider->geocodeQuery(GeocodeQuery::create(''));
-    }
-
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The GeoIPs provider does not support street addresses, only IPv4 addresses.
-     */
     public function testGeocodeWithAddress()
     {
         $provider = new GeoIPs($this->getMockAdapter($this->never()), 'api_key');

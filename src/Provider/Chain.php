@@ -40,16 +40,10 @@ final class Chain implements LocaleAwareGeocoder, Provider
      */
     public function geocodeQuery(GeocodeQuery $query)
     {
-        $address = $query->getText();
-        $locale = $query->getLocale();
         $exceptions = [];
         foreach ($this->providers as $provider) {
-            if ($provider instanceof LocaleAwareGeocoder && $locale !== null) {
-                $provider = clone $provider;
-                $provider->setLocale($locale);
-            }
             try {
-                return $provider->geocode($address);
+                return $provider->geocodeQuery($query);
             } catch (InvalidCredentials $e) {
                 throw $e;
             } catch (\Exception $e) {
@@ -57,7 +51,7 @@ final class Chain implements LocaleAwareGeocoder, Provider
             }
         }
 
-        throw new ChainZeroResults(sprintf('No provider could geocode address: "%s".', $address), $exceptions);
+        throw new ChainZeroResults(sprintf('No provider could geocode address: "%s".', $query->getText()), $exceptions);
     }
 
     /**
@@ -65,13 +59,10 @@ final class Chain implements LocaleAwareGeocoder, Provider
      */
     public function reverseQuery(ReverseQuery $query)
     {
-        $coordinates = $query->getCoordinates();
-        $longitude = $coordinates->getLongitude();
-        $latitude = $coordinates->getLatitude();
         $exceptions = [];
         foreach ($this->providers as $provider) {
             try {
-                return $provider->reverse($latitude, $longitude);
+                return $provider->reverseQuery($query);
             } catch (InvalidCredentials $e) {
                 throw $e;
             } catch (\Exception $e) {
@@ -79,6 +70,9 @@ final class Chain implements LocaleAwareGeocoder, Provider
             }
         }
 
+        $coordinates = $query->getCoordinates();
+        $longitude = $coordinates->getLongitude();
+        $latitude = $coordinates->getLatitude();
         throw new ChainZeroResults(sprintf('No provider could reverse coordinates: %f, %f.', $latitude, $longitude), $exceptions);
     }
 

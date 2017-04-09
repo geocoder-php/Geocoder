@@ -31,7 +31,7 @@ class GeonamesTest extends TestCase
     public function testReverseWithNullUsername()
     {
         $provider = new Geonames($this->getMock('Http\Client\HttpClient'), null);
-        $provider->reverseQuery(ReverseQuery::fromCoordinates(1,2));
+        $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
     }
 
     /**
@@ -52,15 +52,6 @@ class GeonamesTest extends TestCase
     {
         $provider = new Geonames($this->getMockAdapter($this->never()), 'username');
         $provider->geocodeQuery(GeocodeQuery::create('::1'));
-    }
-
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
-    public function testGeocodeWithNull()
-    {
-        $provider = new Geonames($this->getMockAdapter(), 'username');
-        $provider->geocodeQuery(GeocodeQuery::create(null));
     }
 
     /**
@@ -188,8 +179,8 @@ JSON;
             $this->markTestSkipped('You need to configure the GEONAMES_USERNAME value in phpunit.xml');
         }
 
-        $provider = new Geonames($this->getAdapter($_SERVER['GEONAMES_USERNAME']), $_SERVER['GEONAMES_USERNAME'], 'it_IT');
-        $results  = $provider->geocodeQuery(GeocodeQuery::create('London'));
+        $provider = new Geonames($this->getAdapter($_SERVER['GEONAMES_USERNAME']), $_SERVER['GEONAMES_USERNAME']);
+        $results  = $provider->geocodeQuery(GeocodeQuery::create('London')->withLocale('it_IT'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
@@ -318,8 +309,8 @@ JSON;
             $this->markTestSkipped('You need to configure the GEONAMES_USERNAME value in phpunit.xml');
         }
 
-        $provider = new Geonames($this->getAdapter($_SERVER['GEONAMES_USERNAME']), $_SERVER['GEONAMES_USERNAME'], 'it_IT');
-        $results  = $provider->reverseQuery(ReverseQuery::fromCoordinates(51.50853, -0.12574));
+        $provider = new Geonames($this->getAdapter($_SERVER['GEONAMES_USERNAME']), $_SERVER['GEONAMES_USERNAME']);
+        $results  = $provider->reverseQuery(ReverseQuery::fromCoordinates(51.50853, -0.12574)->withLocale('it_IT'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);

@@ -32,24 +32,6 @@ class GoogleMapsTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
-    public function testGeocodeWithNull()
-    {
-        $provider = new GoogleMaps($this->getMockAdapter());
-        $provider->geocodeQuery(GeocodeQuery::create(null));
-    }
-
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
-    public function testGeocodeWithEmpty()
-    {
-        $provider = new GoogleMaps($this->getMockAdapter());
-        $provider->geocodeQuery(GeocodeQuery::create(''));
-    }
-
-    /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      */
     public function testGeocodeWithLocalhostIPv4()
@@ -337,7 +319,7 @@ class GoogleMapsTest extends TestCase
      */
     public function testGeocodeWithRealInvalidApiKey()
     {
-        $provider = new GoogleMaps($this->getAdapter(), null, null,  $this->testAPIKey);
+        $provider = new GoogleMaps($this->getAdapter(), null, null, $this->testAPIKey);
 
         $provider->geocodeQuery(GeocodeQuery::create('Columbia University'));
     }

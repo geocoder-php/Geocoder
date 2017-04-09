@@ -40,19 +40,10 @@ class YandexTest extends TestCase
     /**
      * @expectedException \Geocoder\Exception\ZeroResults
      */
-    public function testGeocodeWithNull()
-    {
-        $provider = new Yandex($this->getMockAdapterReturns('{"error":{"status":"400","message":"missing geocode parameter"}}'));
-        $provider->geocodeQuery(GeocodeQuery::create(null));
-    }
-
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
     public function testGeocodeWithEmpty()
     {
         $provider = new Yandex($this->getMockAdapterReturns('{"error":{"status":"400","message":"missing geocode parameter"}}'));
-        $provider->geocodeQuery(GeocodeQuery::create(''));
+        $provider->geocodeQuery(GeocodeQuery::create('xx'));
     }
 
     /**
@@ -119,8 +110,8 @@ class YandexTest extends TestCase
 
     public function testGeocodeWithRealAddressWithUALocale()
     {
-        $provider = new Yandex($this->getAdapter(), 'uk-UA');
-        $results  = $provider->geocodeQuery(GeocodeQuery::create('Copenhagen, Denmark'));
+        $provider = new Yandex($this->getAdapter());
+        $results  = $provider->geocodeQuery(GeocodeQuery::create('Copenhagen, Denmark')->withLocale('uk-UA'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);;
@@ -176,8 +167,8 @@ class YandexTest extends TestCase
 
     public function testGeocodeWithRealAddressWithUSLocale()
     {
-        $provider = new Yandex($this->getAdapter(), 'en-US');
-        $results  = $provider->geocodeQuery(GeocodeQuery::create('1600 Pennsylvania Ave, Washington'));
+        $provider = new Yandex($this->getAdapter());
+        $results  = $provider->geocodeQuery(GeocodeQuery::create('1600 Pennsylvania Ave, Washington')->withLocale('en-US'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
@@ -210,8 +201,8 @@ class YandexTest extends TestCase
 
     public function testGeocodeWithRealAddressWithBYLocale()
     {
-        $provider = new Yandex($this->getAdapter(), 'be-BY');
-        $results  = $provider->geocodeQuery(GeocodeQuery::create('ул.Ленина, 19, Минск 220030, Республика Беларусь'));
+        $provider = new Yandex($this->getAdapter());
+        $results  = $provider->geocodeQuery(GeocodeQuery::create('ул.Ленина, 19, Минск 220030, Республика Беларусь')->withLocale('be-BY'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);

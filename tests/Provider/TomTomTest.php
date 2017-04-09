@@ -28,24 +28,6 @@ class TomTomTest extends TestCase
     /**
      * @expectedException \Geocoder\Exception\ZeroResults
      */
-    public function testGeocodeWithNull()
-    {
-        $provider = new TomTom($this->getMockAdapter(), 'api_key');
-        $provider->geocodeQuery(GeocodeQuery::create(null));
-    }
-
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
-    public function testGeocodeWithEmpty()
-    {
-        $provider = new TomTom($this->getMockAdapter(), 'api_key');
-        $provider->geocodeQuery(GeocodeQuery::create(''));
-    }
-
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
     public function testGeocodeWithAddressContentReturnNull()
     {
         $provider = new TomTom($this->getMockAdapterReturns(null), 'api_key');
@@ -109,8 +91,8 @@ XML;
             $this->markTestSkipped('You need to configure the TOMTOM_MAP_KEY value in phpunit.xml');
         }
 
-        $provider = new TomTom($this->getAdapter($_SERVER['TOMTOM_MAP_KEY']), $_SERVER['TOMTOM_MAP_KEY'], 'fr_FR');
-        $results  = $provider->geocodeQuery(GeocodeQuery::create('Tagensvej 47, 2200 København N'));
+        $provider = new TomTom($this->getAdapter($_SERVER['TOMTOM_MAP_KEY']), $_SERVER['TOMTOM_MAP_KEY']);
+        $results  = $provider->geocodeQuery(GeocodeQuery::create('Tagensvej 47, 2200 København N')->withLocale('fr_FR'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -138,8 +120,8 @@ XML;
             $this->markTestSkipped('You need to configure the TOMTOM_MAP_KEY value in phpunit.xml');
         }
 
-        $provider = new TomTom($this->getAdapter($_SERVER['TOMTOM_MAP_KEY']), $_SERVER['TOMTOM_MAP_KEY'], 'sv-SE');
-        $results  = $provider->geocodeQuery(GeocodeQuery::create('Tagensvej 47, 2200 København N'));
+        $provider = new TomTom($this->getAdapter($_SERVER['TOMTOM_MAP_KEY']), $_SERVER['TOMTOM_MAP_KEY']);
+        $results  = $provider->geocodeQuery(GeocodeQuery::create('Tagensvej 47, 2200 København N')->withLocale('sv-SE'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);

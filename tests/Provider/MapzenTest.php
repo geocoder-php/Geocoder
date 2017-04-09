@@ -2,6 +2,8 @@
 
 namespace Geocoder\Tests\Provider;
 
+use Geocoder\Model\Query\GeocodeQuery;
+use Geocoder\Model\Query\ReverseQuery;
 use Geocoder\Tests\TestCase;
 use Geocoder\Provider\Mapzen;
 

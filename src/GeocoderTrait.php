@@ -30,6 +30,6 @@ trait GeocoderTrait
      */
     public function reverse($latitude, $longitude)
     {
-        return $this->reverseQuery(ReverseQuery::create(new Coordinates($latitude, $longitude)));
+        return $this->reverseQuery(ReverseQuery::fromCoordinates($latitude, $longitude));
     }
 }

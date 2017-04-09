@@ -27,26 +27,6 @@ class MaxMindTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The MaxMind provider does not support street addresses, only IP addresses.
      */
-    public function testGeocodeWithNull()
-    {
-        $provider = new MaxMind($this->getMockAdapter($this->never()), 'api_key');
-        $provider->geocodeQuery(GeocodeQuery::create(null));
-    }
-
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The MaxMind provider does not support street addresses, only IP addresses.
-     */
-    public function testGeocodeWithEmpty()
-    {
-        $provider = new MaxMind($this->getMockAdapter($this->never()), 'api_key');
-        $provider->geocodeQuery(GeocodeQuery::create(''));
-    }
-
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The MaxMind provider does not support street addresses, only IP addresses.
-     */
     public function testGeocodeWithAddress()
     {
         $provider = new MaxMind($this->getMockAdapter($this->never()), 'api_key');
@@ -172,16 +152,16 @@ class MaxMindTest extends TestCase
         $this->assertNull($result->getTimezone());
 
         $provider2 = new MaxMind($this->getMockAdapterReturns('FR,,,,,,,,,'), 'api_key');
-        $result2   = $provider2->geocode('74.200.247.59');
+        $result2   = $provider2->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
         $this->assertEquals('France', $result2->first()->getCountry()->getName());
 
         $provider3 = new MaxMind($this->getMockAdapterReturns('GB,,,,,,,,,'), 'api_key');
-        $result3   = $provider3->geocode('74.200.247.59');
+        $result3   = $provider3->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
         $this->assertEquals('United Kingdom', $result3->first()->getCountry()->getName());
 
         $provider4 = new MaxMind($this->getMockAdapterReturns(
             'US,CA,San Francisco,94110,37.748402,-122.415604,807,415,"Layered Technologies","Automattic"'), 'api_key');
-        $results   = $provider4->geocode('74.200.247.59');
+        $results   = $provider4->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);

@@ -35,24 +35,6 @@ class BingMapsTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
-    public function testGeocodeWithNull()
-    {
-        $provider = new BingMaps($this->getMockAdapter(), 'api_key');
-        $provider->geocodeQuery(GeocodeQuery::create(null));
-    }
-
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
-    public function testGeocodeWithEmpty()
-    {
-        $provider = new BingMaps($this->getMockAdapter(), 'api_key');
-        $provider->geocodeQuery(GeocodeQuery::create(''));
-    }
-
-    /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The BingMaps provider does not support IP addresses, only street addresses.
      */

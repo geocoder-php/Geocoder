@@ -9,13 +9,15 @@ use Geocoder\Model\Address;
 use Geocoder\Model\AddressFactory;
 use Geocoder\Provider\LocaleAwareGeocoder;
 use Geocoder\Provider\Provider;
-use Geocoder\Provider\LocaleTrait;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
 class ProviderAggregatorTest extends TestCase
 {
+    /**
+     * @var TestableGeocoder
+     */
     protected $geocoder;
 
     protected function setUp()
@@ -117,28 +119,6 @@ class ProviderAggregatorTest extends TestCase
         ));
 
         $this->assertSame($provider1, $this->geocoder->getProvider());
-    }
-
-    public function testGeocodeAlwaysReturnsArrayAndDoesNotCallProviderWithEmptyValues()
-    {
-        $this->geocoder->registerProvider(new MockProviderWithRequestCount('test2'));
-
-        $this->assertEmpty($this->geocoder->geocode(''));
-        $this->assertEquals(0, $this->geocoder->getProvider('test2')->geocodeCount);
-
-        $this->assertEmpty($this->geocoder->geocode(null));
-        $this->assertEquals(0, $this->geocoder->getProvider('test2')->geocodeCount);
-    }
-
-    public function testReverseAlwaysReturnsArrayAndDoesNotCallProviderWihEmptyValues()
-    {
-        $this->geocoder->registerProvider(new MockProviderWithRequestCount('test2'));
-
-        $this->assertEmpty($this->geocoder->reverse('', ''));
-        $this->assertEquals(0, $this->geocoder->getProvider('test2')->geocodeCount);
-
-        $this->assertEmpty($this->geocoder->reverse(null, null));
-        $this->assertEquals(0, $this->geocoder->getProvider('test2')->geocodeCount);
     }
 
     public function testDefaultMaxResults()

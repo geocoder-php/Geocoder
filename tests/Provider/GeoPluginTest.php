@@ -19,26 +19,6 @@ class GeoPluginTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The GeoPlugin provider does not support street addresses, only IP addresses.
      */
-    public function testGeocodeWithNull()
-    {
-        $provider = new GeoPlugin($this->getMockAdapter($this->never()));
-        $provider->geocodeQuery(GeocodeQuery::create(null));
-    }
-
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The GeoPlugin provider does not support street addresses, only IP addresses.
-     */
-    public function testGeocodeWithEmpty()
-    {
-        $provider = new GeoPlugin($this->getMockAdapter($this->never()));
-        $provider->geocodeQuery(GeocodeQuery::create(''));
-    }
-
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The GeoPlugin provider does not support street addresses, only IP addresses.
-     */
     public function testGeocodeWithAddress()
     {
         $provider = new GeoPlugin($this->getMockAdapter($this->never()));
