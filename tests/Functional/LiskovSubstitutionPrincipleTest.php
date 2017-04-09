@@ -87,10 +87,10 @@ class LiskovSubstitutionPrincipleTest extends \PHPUnit_Framework_TestCase
     public function testReverseWorldWideProvider(Provider $provider)
     {
         // Cheops pyramid
-        $this->assertWellFormattedResult($provider->reverseQuery(ReverseQuery::fromCoordinates(29.979216, 31.134277)));
+        $this->assertWellFormattedResult($provider->reverseQuery(ReverseQuery::fromCoordinates(29.979216, 31.134277)->withLocale('en')));
 
         // Close to the white house
-        $this->assertWellFormattedResult($provider->reverseQuery(ReverseQuery::fromCoordinates(38.900206, -77.036991)));
+        $this->assertWellFormattedResult($provider->reverseQuery(ReverseQuery::fromCoordinates(38.900206, -77.036991)->withLocale('en')));
     }
 
     /**
@@ -100,7 +100,7 @@ class LiskovSubstitutionPrincipleTest extends \PHPUnit_Framework_TestCase
      */
     public function testNoResult(Provider $provider)
     {
-        $provider->geocodeQuery(GeocodeQuery::create('abcdef, ghijkl, mnopqrs'));
+        $provider->geocodeQuery(GeocodeQuery::create('abcdef, ghijkl, mnopqrs')->withLocale('en'));
     }
 
     /**
@@ -111,7 +111,7 @@ class LiskovSubstitutionPrincipleTest extends \PHPUnit_Framework_TestCase
     public function testNoResultReverse(Provider $provider)
     {
         // Out side Hawaii in Pacific ocean
-        $provider->reverseQuery(ReverseQuery::fromCoordinates(25.388300, 179.861719));
+        $provider->reverseQuery(ReverseQuery::fromCoordinates(25.388300, 179.861719)->withLocale('en'));
     }
 
     /**
@@ -121,7 +121,7 @@ class LiskovSubstitutionPrincipleTest extends \PHPUnit_Framework_TestCase
     public function testIpProvider(Provider $provider)
     {
         // Google DNS
-        $this->assertWellFormattedResult($provider->geocodeQuery(GeocodeQuery::create('8.8.8.8')));
+        $this->assertWellFormattedResult($provider->geocodeQuery(GeocodeQuery::create('8.8.8.8')->withLocale('en')));
     }
 
 
