@@ -300,7 +300,7 @@ class GoogleMapsTest extends TestCase
      * @expectedException \Geocoder\Exception\InvalidCredentials
      * @expectedExceptionMessage API key is invalid https://maps.googleapis.com/maps/api/geocode/json?address=10%20avenue%20Gambetta%2C%20Paris%2C%20France
      */
-    public function testGeocodeWithInavlidApiKey()
+    public function testGeocodeWithInvalidApiKey()
     {
         $provider = new GoogleMaps($this->getMockAdapterReturns('{"error_message":"The provided API key is invalid.", "status":"REQUEST_DENIED"}'));
         $provider->geocode('10 avenue Gambetta, Paris, France');
