@@ -62,7 +62,7 @@ final class Yandex extends AbstractHttpProvider implements LocaleAwareGeocoder, 
 
         $url = sprintf(self::GEOCODE_ENDPOINT_URL, urlencode($address));
 
-        return $this->executeQuery($url, $query->getLocale());
+        return $this->executeQuery($url, $query->getLocale(), $query->getLimit());
     }
 
     /**
@@ -79,7 +79,7 @@ final class Yandex extends AbstractHttpProvider implements LocaleAwareGeocoder, 
             $url = sprintf('%s&kind=%s', $url, $this->toponym);
         }
 
-        return $this->executeQuery($url, $query->getLocale());
+        return $this->executeQuery($url, $query->getLocale(), $query->getLimit());
     }
 
     /**
@@ -93,14 +93,15 @@ final class Yandex extends AbstractHttpProvider implements LocaleAwareGeocoder, 
     /**
      * @param string $query
      * @param string $locale
+     * @param int $limit
      */
-    private function executeQuery($query, $locale)
+    private function executeQuery($query, $locale, $limit)
     {
         if (null !== $locale) {
             $query = sprintf('%s&lang=%s', $query, str_replace('_', '-', $locale));
         }
 
-        $query = sprintf('%s&results=%d', $query, $this->getLimit());
+        $query = sprintf('%s&results=%d', $query, $limit);
 
         $request = $this->getMessageFactory()->createRequest('GET', $query);
         $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();

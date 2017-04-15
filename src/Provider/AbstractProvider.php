@@ -19,38 +19,14 @@ use Geocoder\Model\AddressFactory;
  */
 abstract class AbstractProvider
 {
-
     /**
      * @var AddressFactory
      */
     private $factory;
 
-    /**
-     * @var integer
-     */
-    private $limit = Provider::MAX_RESULTS;
-
     public function __construct()
     {
         $this->factory = new AddressFactory();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function limit($limit)
-    {
-        $this->limit = $limit;
-
-        return $this;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getLimit()
-    {
-        return $this->limit;
     }
 
     /**
@@ -101,10 +77,6 @@ abstract class AbstractProvider
      */
     protected function returnResults(array $data = [])
     {
-        if (0 < $this->getLimit()) {
-            $data = array_slice($data, 0, $this->getLimit());
-        }
-
         return $this->factory->createFromArray($data);
     }
 

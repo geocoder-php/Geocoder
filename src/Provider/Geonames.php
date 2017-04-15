@@ -67,7 +67,7 @@ final class Geonames extends AbstractHttpProvider implements LocaleAwareGeocoder
             throw new UnsupportedOperation('The Geonames provider does not support IP addresses.');
         }
 
-        $url = sprintf(self::GEOCODE_ENDPOINT_URL, urlencode($address), $this->getLimit(), $this->username);
+        $url = sprintf(self::GEOCODE_ENDPOINT_URL, urlencode($address), $query->getLimit(), $this->username);
 
         return $this->executeQuery($url, $query->getLocale());
     }
@@ -84,7 +84,7 @@ final class Geonames extends AbstractHttpProvider implements LocaleAwareGeocoder
             throw new InvalidCredentials('No username provided.');
         }
 
-        $url = sprintf(self::REVERSE_ENDPOINT_URL, $latitude, $longitude, $this->getLimit(), $this->username);
+        $url = sprintf(self::REVERSE_ENDPOINT_URL, $latitude, $longitude, $query->getLimit(), $this->username);
 
         return $this->executeQuery($url, $query->getLocale());
     }

@@ -66,7 +66,7 @@ final class Mapzen extends AbstractHttpProvider implements Provider
             throw new UnsupportedOperation('The Mapzen provider does not support IP addresses, only street addresses.');
         }
 
-        $url = sprintf(self::GEOCODE_ENDPOINT_URL, urlencode($address), $this->apiKey, $this->getLimit());
+        $url = sprintf(self::GEOCODE_ENDPOINT_URL, urlencode($address), $this->apiKey, $query->getLimit());
 
         return $this->executeQuery($url);
     }
@@ -83,7 +83,7 @@ final class Mapzen extends AbstractHttpProvider implements Provider
             throw new InvalidCredentials('No API Key provided.');
         }
 
-        $url = sprintf(self::REVERSE_ENDPOINT_URL, $latitude, $longitude, $this->apiKey, $this->getLimit());
+        $url = sprintf(self::REVERSE_ENDPOINT_URL, $latitude, $longitude, $this->apiKey, $query->getLimit());
 
         return $this->executeQuery($url);
     }

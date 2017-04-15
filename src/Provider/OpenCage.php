@@ -62,7 +62,7 @@ final class OpenCage extends AbstractHttpProvider implements LocaleAwareGeocoder
             throw new UnsupportedOperation('The OpenCage provider does not support IP addresses, only street addresses.');
         }
 
-        $url = sprintf(self::GEOCODE_ENDPOINT_URL, $this->apiKey, urlencode($address), $this->getLimit());
+        $url = sprintf(self::GEOCODE_ENDPOINT_URL, $this->apiKey, urlencode($address), $query->getLimit());
 
         return $this->executeQuery($url, $query->getLocale());
     }

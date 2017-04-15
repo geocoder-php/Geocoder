@@ -15,7 +15,7 @@ use Geocoder\Model\Query\GeocodeQuery;
 use Geocoder\Model\Query\ReverseQuery;
 
 /**
- * Providers MUST always be stateless.
+ * Providers MUST always be stateless and immutable.
  *
  * @author William Durand <william.durand1@gmail.com>
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>

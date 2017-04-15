@@ -86,9 +86,9 @@ final class MapQuest extends AbstractHttpProvider implements Provider
         }
 
         if ($this->licensed) {
-            $url = sprintf(self::LICENSED_GEOCODE_ENDPOINT_URL, urlencode($address), $this->getLimit(), $this->apiKey);
+            $url = sprintf(self::LICENSED_GEOCODE_ENDPOINT_URL, urlencode($address), $query->getLimit(), $this->apiKey);
         } else {
-            $url = sprintf(self::OPEN_GEOCODE_ENDPOINT_URL, urlencode($address), $this->getLimit(), $this->apiKey);
+            $url = sprintf(self::OPEN_GEOCODE_ENDPOINT_URL, urlencode($address), $query->getLimit(), $this->apiKey);
         }
 
         return $this->executeQuery($url);

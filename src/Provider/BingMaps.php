@@ -67,7 +67,7 @@ final class BingMaps extends AbstractHttpProvider implements LocaleAwareGeocoder
             throw new UnsupportedOperation('The BingMaps provider does not support IP addresses, only street addresses.');
         }
 
-        $url = sprintf(self::GEOCODE_ENDPOINT_URL, $this->getLimit(), urlencode($query->getText()), $this->apiKey);
+        $url = sprintf(self::GEOCODE_ENDPOINT_URL, $query->getLimit(), urlencode($query->getText()), $this->apiKey);
 
         return $this->executeQuery($url, $query->getLocale(), $query->getLimit());
     }
