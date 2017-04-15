@@ -18,9 +18,15 @@ use Geocoder\Provider\Provider;
 interface Geocoder extends Provider
 {
     /**
-     * Version
+     * Version of this package.
      */
+    const MAJOR_VERSION = 4;
     const VERSION = '4.0';
+
+    /**
+     * The default result limit. 
+     */
+    const DEFAULT_RESULT_LIMIT = 5;
 
     /**
      * Geocodes a given value.

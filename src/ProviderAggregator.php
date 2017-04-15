@@ -41,7 +41,7 @@ class ProviderAggregator implements Geocoder
     /**
      * @param integer $limit
      */
-    public function __construct($limit = Provider::MAX_RESULTS)
+    public function __construct($limit = Geocoder::DEFAULT_RESULT_LIMIT)
     {
         $this->limit($limit);
     }

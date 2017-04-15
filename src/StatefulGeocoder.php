@@ -37,7 +37,7 @@ class StatefulGeocoder implements Geocoder, LocaleAwareGeocoder
     /**
      * @var int
      */
-    private $limit = Provider::MAX_RESULTS;
+    private $limit;
 
     /**
      * @var Provider
@@ -53,6 +53,7 @@ class StatefulGeocoder implements Geocoder, LocaleAwareGeocoder
     {
         $this->provider = $provider;
         $this->locale = $locale;
+        $this->limit = Geocoder::DEFAULT_RESULT_LIMIT;
     }
 
     /**

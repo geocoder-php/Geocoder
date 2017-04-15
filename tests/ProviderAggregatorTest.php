@@ -2,6 +2,7 @@
 
 namespace Geocoder\Tests;
 
+use Geocoder\Geocoder;
 use Geocoder\Model\Query\GeocodeQuery;
 use Geocoder\Model\Query\ReverseQuery;
 use Geocoder\ProviderAggregator;
@@ -123,7 +124,7 @@ class ProviderAggregatorTest extends TestCase
 
     public function testDefaultMaxResults()
     {
-        $this->assertSame(Provider::MAX_RESULTS, $this->geocoder->getLimit());
+        $this->assertSame(Geocoder::DEFAULT_RESULT_LIMIT, $this->geocoder->getLimit());
     }
 
     private function getAddressMock()

@@ -23,11 +23,6 @@ use Geocoder\Model\Query\ReverseQuery;
 interface Provider
 {
     /**
-     * @var integer
-     */
-    const MAX_RESULTS = 5;
-
-    /**
      * @param GeocodeQuery $query
      *
      * @return AddressCollection

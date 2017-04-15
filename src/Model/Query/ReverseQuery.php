@@ -10,8 +10,8 @@
 
 namespace Geocoder\Model\Query;
 
+use Geocoder\Geocoder;
 use Geocoder\Model\Coordinates;
-use Geocoder\Provider\Provider;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
@@ -45,7 +45,7 @@ final class ReverseQuery
     {
         $this->coordinates = $coordinates;
         $this->data = [];
-        $this->limit = Provider::MAX_RESULTS;
+        $this->limit = Geocoder::DEFAULT_RESULT_LIMIT;
     }
 
     /**

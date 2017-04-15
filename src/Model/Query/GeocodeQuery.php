@@ -11,9 +11,8 @@
 namespace Geocoder\Model\Query;
 
 use Geocoder\Exception\InvalidArgument;
+use Geocoder\Geocoder;
 use Geocoder\Model\Bounds;
-use Geocoder\Model\Coordinates;
-use Geocoder\Provider\Provider;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
@@ -59,7 +58,7 @@ final class GeocodeQuery
 
         $this->text = $text;
         $this->data = [];
-        $this->limit = Provider::MAX_RESULTS;
+        $this->limit = Geocoder::DEFAULT_RESULT_LIMIT;
     }
 
     /**
