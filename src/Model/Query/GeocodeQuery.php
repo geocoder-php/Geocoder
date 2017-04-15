@@ -48,7 +48,8 @@ final class GeocodeQuery
     private $data;
 
     /**
-     * @param Coordinates $coordinates
+     *
+     * @param string $text
      */
     private function __construct($text)
     {
@@ -62,7 +63,7 @@ final class GeocodeQuery
     }
 
     /**
-     * @param $text
+     * @param string $text
      *
      * @return GeocodeQuery
      */

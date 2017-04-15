@@ -57,6 +57,7 @@ final class ReverseQuery
     {
         return new self($coordinates);
     }
+
     /**
      * @param float $latitude
      * @param float $longitude
@@ -71,7 +72,7 @@ final class ReverseQuery
     /**
      * @param int $limit
      *
-     * @return $this
+     * @return ReverseQuery
      */
     public function withLimit($limit)
     {
@@ -98,7 +99,7 @@ final class ReverseQuery
      * @param string $name
      * @param mixed  $value
      *
-     * @return $this
+     * @return ReverseQuery
      */
     public function withData($name, $value)
     {

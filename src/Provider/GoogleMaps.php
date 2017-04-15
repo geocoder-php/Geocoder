@@ -126,7 +126,7 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocod
      *
      * @return GoogleMaps
      */
-    public function setRegion($region)
+    public function withRegion($region)
     {
         $new = clone $this;
         $new->region = $region;

@@ -28,7 +28,7 @@ final class FreeGeoIp extends AbstractHttpProvider implements Provider, IpAddres
      * @var string
      */
     const ENDPOINT_URL = 'https://freegeoip.net/json/%s';
-    
+
     /**
      * {@inheritDoc}
      */

@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * This file is part of the Geocoder package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license    MIT License
+ */
+
 namespace Geocoder;
 
 use Geocoder\Model\AddressCollection;
@@ -110,6 +118,42 @@ class StatefulGeocoder implements Geocoder, LocaleAwareGeocoder
         }
 
         $this->provider->reverseQuery($query);
+    }
+
+    /**
+     * @param string $locale
+     *
+     * @return StatefulGeocoder
+     */
+    public function setLocale($locale)
+    {
+        $this->locale = $locale;
+
+        return $this;
+    }
+
+    /**
+     * @param Bounds $bounds
+     *
+     * @return StatefulGeocoder
+     */
+    public function setBounds($bounds)
+    {
+        $this->bounds = $bounds;
+
+        return $this;
+    }
+
+    /**
+     * @param int $limit
+     *
+     * @return StatefulGeocoder
+     */
+    public function setLimit($limit)
+    {
+        $this->limit = $limit;
+
+        return $this;
     }
 
     /**
