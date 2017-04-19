@@ -33,12 +33,22 @@ final class Geonames extends AbstractHttpProvider implements LocaleAwareProvider
      */
     const REVERSE_ENDPOINT_URL = 'http://api.geonames.org/findNearbyPlaceNameJSON?lat=%F&lng=%F&style=full&maxRows=%d&username=%s';
 
+    /**
+     * @var string
+     */
+    const BASE_ENDPOINT_URL = 'http://api.geonames.org/%s?username=%s';
+
     use LocaleTrait;
 
     /**
      * @var string
      */
     private $username;
+
+    /**
+     * @var integer
+     */
+    private $type;
 
     /**
      * @param HttpClient $client   An HTTP adapter
@@ -94,6 +104,99 @@ final class Geonames extends AbstractHttpProvider implements LocaleAwareProvider
         return 'geonames';
     }
 
+
+    /**
+     *  Obtain all countries of the world from geonames
+     */
+    public function getAllCountries()
+    {
+        $this->type = 3;
+        $query = sprintf(self::BASE_ENDPOINT_URL, 'countryInfoJSON', $this->username);
+        $query = sprintf('%s&maxRows=%d&startRow=%d&style=FULL', $query, 1000, 0);
+
+        return $this->executeQuery($query);
+    }
+
+    /**
+     * Obtain all states of a Country
+     *
+     * @param geonameID  Identifier of a Country in Geonames
+     */
+    public function getAllStatesFor($geonameID)
+    {
+        $this->type = 5;
+        $query = sprintf(self::BASE_ENDPOINT_URL, 'childrenJSON', $this->username);
+        $query = sprintf('%s&maxRows=%d&startRow=%d&geonameId=%d&style=FULL', $query, 1000, 0, $geonameID);
+
+        return $this->executeQuery($query);
+    }
+
+    /**
+     * Obtain all regions by state ID
+     *
+     * @param geonameID  Identifier of a Region of State in Geonames
+     */
+    public function getAllRegionsFor($geonameID)
+    {
+        $this->type = 5;
+        $query = sprintf(self::BASE_ENDPOINT_URL, 'childrenJSON', $this->username);
+        $query = sprintf('%s&maxRows=%d&startRow=%d&geonameId=%d&style=FULL', $query, 1000, 0, $geonameID);
+
+        return $this->executeQuery($query);
+    }
+
+    /**
+     * Obtain all cities with a Region ID
+     *
+     * @param geonameID  Identifier of a Region in Geonames
+     */
+    public function getAllCitiesFor($geonameID)
+    {
+        $this->type = 5;
+        $query = sprintf(self::BASE_ENDPOINT_URL, 'childrenJSON', $this->username);
+        $query = sprintf('%s&maxRows=%d&startRow=%d&geonameId=%d&style=FULL', $query, 1000, 0, $geonameID);
+
+        return $this->executeQuery($query);
+    }
+
+    /**
+     * Obtain the most population cities of a Country
+     *
+     * @param countryCode  It's an identifier on a Country Object in Geonames
+     */
+    public function getAllCitiesByCountryCode($countryCode)
+    {
+        $this->type = 4;
+        $query = sprintf(self::BASE_ENDPOINT_URL, 'searchJSON', $this->username);
+        
+        $completeResultArray = [];
+                
+        $maxRows = 1000;
+        $startRow = 0;
+        $hasNext = 1;
+        
+        while($hasNext != 0)
+        {
+            $customQuery = sprintf('%s&country=%s&maxRows=%d&style=FULL&startRow=%d&cities=cities5000', $query, $countryCode, $maxRows, $startRow);
+
+            
+            $result = $this->executeQuery($customQuery);
+            
+            if (($result != null) && (count($result) > 0))
+            {
+                $completeResultArray = array_merge($completeResultArray, $result);
+
+                $startRow = $startRow + 1000;
+            }
+            else
+            {
+                $hasNext = 0;
+            }
+        }
+
+        return $completeResultArray;
+    }
+
     /**
      * @param string $query
      */
@@ -104,27 +207,38 @@ final class Geonames extends AbstractHttpProvider implements LocaleAwareProvider
             $query = sprintf('%s&lang=%s', $query, substr($this->getLocale(), 0, 2));
         }
 
-        $request = $this->getMessageFactory()->createRequest('GET', $query);
-        $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
+        $content = (string) $this->getAdapter()->get($query)->getBody();
 
         if (empty($content)) {
-            throw InvalidServerResponse::create($query);
+            throw new NoResult(sprintf('Could not execute query "%s".', $query));
         }
 
         if (null === $json = json_decode($content)) {
-            throw InvalidServerResponse::create($query);
+            throw new NoResult(sprintf('Could not execute query "%s".', $query));
         }
 
         if (isset($json->totalResultsCount) && empty($json->totalResultsCount)) {
-            throw ZeroResults::create($query);
+            throw new NoResult(sprintf('No places found for query "%s".', $query));
+        }
+        
+        if (isset($json->status->value)) {
+            return null;
         }
 
         $data = $json->geonames;
-
-        if (empty($data)) {
-            throw ZeroResults::create($query);
+        
+        if ($this->type == 3 || 
+            $this->type == 4 ||
+            $this->type == 5)
+        {
+            return $data;
         }
-
+        else
+        {
+            if (empty($data)) {
+                throw new NoResult(sprintf('Could not execute query "%s".', $query));
+            }
+        
         $results = [];
         foreach ($data as $item) {
             $bounds = null;
@@ -165,5 +279,6 @@ final class Geonames extends AbstractHttpProvider implements LocaleAwareProvider
         }
 
         return $this->returnResults($results);
+        }
     }
 }
