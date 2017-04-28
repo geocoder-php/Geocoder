@@ -8,12 +8,15 @@
  * @license    MIT License
  */
 
-namespace Geocoder\Provider;
+namespace Geocoder\Provider\Chain;
 
 use Geocoder\Exception\ChainZeroResults;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Model\Query\GeocodeQuery;
 use Geocoder\Model\Query\ReverseQuery;
+use Geocoder\Provider\LocaleAwareGeocoder;
+use Geocoder\Provider\Provider;
+
 
 /**
  * @author Markus Bachmann <markus.bachmann@bachi.biz>

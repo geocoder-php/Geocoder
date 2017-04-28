@@ -8,14 +8,14 @@
  * @license    MIT License
  */
 
-namespace Geocoder\Tests\Provider;
+namespace Geocoder\Provider\Chain\Tests;
 
 use Geocoder\Model\Query\GeocodeQuery;
 use Geocoder\Model\Query\ReverseQuery;
 use Geocoder\Provider\Provider;
 use Geocoder\Tests\TestCase;
 use Geocoder\Exception\ChainZeroResults;
-use Geocoder\Provider\Chain;
+use Geocoder\Provider\Chain\Chain;
 
 /**
  * @author Markus Bachmann <markus.bachmann@bachi.biz>
