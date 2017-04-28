@@ -7,3 +7,6 @@ finder:
 
 enabled:
     - short_array_syntax
+
+disabled:
+    - phpdoc_annotation_without_dot # This is still buggy: https://github.com/symfony/symfony/pull/19198

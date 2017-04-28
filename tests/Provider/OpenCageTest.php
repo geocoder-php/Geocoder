@@ -80,7 +80,7 @@ class OpenCageTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\ZeroResults.
+     * @expectedException \Geocoder\Exception\ZeroResults
      */
     public function testReverse()
     {
