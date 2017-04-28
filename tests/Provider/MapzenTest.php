@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file is part of the Geocoder package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license    MIT License
+ */
+
 namespace Geocoder\Tests\Provider;
 
 use Geocoder\Model\Query\GeocodeQuery;
@@ -52,7 +60,7 @@ class MapzenTest extends TestCase
         }
 
         $provider = new Mapzen($this->getAdapter($_SERVER['MAPZEN_API_KEY']), $_SERVER['MAPZEN_API_KEY']);
-        $results  = $provider->geocodeQuery(GeocodeQuery::create('242 Acklam Road, London, United Kingdom'));
+        $results = $provider->geocodeQuery(GeocodeQuery::create('242 Acklam Road, London, United Kingdom'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
@@ -74,7 +82,7 @@ class MapzenTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\ZeroResults
+     * @expectedException \Geocoder\Exception\ZeroResults.
      */
     public function testReverse()
     {
@@ -93,7 +101,7 @@ class MapzenTest extends TestCase
         }
 
         $provider = new Mapzen($this->getAdapter($_SERVER['MAPZEN_API_KEY']), $_SERVER['MAPZEN_API_KEY']);
-        $results  = $provider->reverseQuery(ReverseQuery::fromCoordinates(54.0484068, -2.7990345));
+        $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(54.0484068, -2.7990345));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
@@ -121,7 +129,7 @@ class MapzenTest extends TestCase
         }
 
         $provider = new Mapzen($this->getAdapter($_SERVER['MAPZEN_API_KEY']), $_SERVER['MAPZEN_API_KEY']);
-        $results  = $provider->reverseQuery(ReverseQuery::fromCoordinates(49.1390924, 1.6572462));
+        $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(49.1390924, 1.6572462));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
@@ -139,7 +147,7 @@ class MapzenTest extends TestCase
         }
 
         $provider = new Mapzen($this->getAdapter($_SERVER['MAPZEN_API_KEY']), $_SERVER['MAPZEN_API_KEY']);
-        $results  = $provider->geocodeQuery(GeocodeQuery::create('Hanover'));
+        $results = $provider->geocodeQuery(GeocodeQuery::create('Hanover'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
@@ -171,7 +179,7 @@ class MapzenTest extends TestCase
         $this->assertEquals(39.192889999999998, $result->getCoordinates()->getLatitude(), '', 0.01);
         $this->assertEquals(-76.724140000000006, $result->getCoordinates()->getLongitude(), '', 0.01);
         $this->assertEquals('Hanover', $result->getLocality());
-        $this->assertTrue( $result->getAdminLevels()->has(4));
+        $this->assertTrue($result->getAdminLevels()->has(4));
         $this->assertEquals('Hanover', $result->getAdminLevels()->get(2)->getName());
         $this->assertEquals('United States', $result->getCountry()->getName());
     }
@@ -183,7 +191,7 @@ class MapzenTest extends TestCase
         }
 
         $provider = new Mapzen($this->getAdapter($_SERVER['MAPZEN_API_KEY']), $_SERVER['MAPZEN_API_KEY']);
-        $results  = $provider->geocodeQuery(GeocodeQuery::create('Kalbacher Hauptstraße 10, 60437 Frankfurt, Germany'));
+        $results = $provider->geocodeQuery(GeocodeQuery::create('Kalbacher Hauptstraße 10, 60437 Frankfurt, Germany'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);

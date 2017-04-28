@@ -1,12 +1,19 @@
 <?php
 
+/*
+ * This file is part of the Geocoder package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license    MIT License
+ */
+
 namespace Geocoder\Tests;
 
 use Geocoder\Geocoder;
 use Geocoder\Model\Query\GeocodeQuery;
 use Geocoder\Model\Query\ReverseQuery;
 use Geocoder\ProviderAggregator;
-use Geocoder\Model\Address;
 use Geocoder\Model\AddressFactory;
 use Geocoder\Provider\LocaleAwareGeocoder;
 use Geocoder\Provider\Provider;
@@ -37,7 +44,7 @@ class ProviderAggregatorTest extends TestCase
     public function testRegisterProviders()
     {
         $provider = new MockProvider('test');
-        $this->geocoder->registerProviders(array($provider));
+        $this->geocoder->registerProviders([$provider]);
 
         $this->assertSame($provider, $this->geocoder->getProvider());
     }
@@ -46,7 +53,7 @@ class ProviderAggregatorTest extends TestCase
     {
         $provider1 = new MockProvider('test1');
         $provider2 = new MockProvider('test2');
-        $this->geocoder->registerProviders(array($provider1, $provider2));
+        $this->geocoder->registerProviders([$provider1, $provider2]);
 
         $this->assertSame($provider1, $this->geocoder->getProvider());
 
@@ -89,13 +96,13 @@ class ProviderAggregatorTest extends TestCase
         $provider1 = new MockProvider('test1');
         $provider2 = new MockProvider('test2');
 
-        $this->geocoder->registerProviders(array($provider1, $provider2));
+        $this->geocoder->registerProviders([$provider1, $provider2]);
         $result = $this->geocoder->getProviders();
 
-        $expected = array(
+        $expected = [
             'test1' => $provider1,
-            'test2' => $provider2
-        );
+            'test2' => $provider2,
+        ];
 
         $this->assertSame($expected, $result);
         $this->assertArrayHasKey('test1', $result);
@@ -113,11 +120,11 @@ class ProviderAggregatorTest extends TestCase
 
     public function testGetProviderWithMultipleProvidersReturnsTheFirstOne()
     {
-        $this->geocoder->registerProviders(array(
+        $this->geocoder->registerProviders([
             $provider1 = new MockProvider('test1'),
             $provider2 = new MockProvider('test2'),
             $provider3 = new MockProvider('test3'),
-        ));
+        ]);
 
         $this->assertSame($provider1, $this->geocoder->getProvider());
     }
@@ -144,12 +151,12 @@ class MockProvider implements Provider
 
     public function geocodeQuery(GeocodeQuery $query)
     {
-        return $this->returnResult(array());
+        return $this->returnResult([]);
     }
 
     public function reverseQuery(ReverseQuery $query)
     {
-        return $this->returnResult(array());
+        return $this->returnResult([]);
     }
 
     public function getName()
@@ -166,7 +173,7 @@ class MockProvider implements Provider
         return $this;
     }
 
-    public function returnResult(array $data = array())
+    public function returnResult(array $data = [])
     {
     }
 }
@@ -179,10 +186,10 @@ class MockProviderWithData extends MockProvider
 {
     public function geocode($address)
     {
-        return $this->returnResult(array(
+        return $this->returnResult([
             'latitude' => 123,
-            'longitude' => 456
-        ));
+            'longitude' => 456,
+        ]);
     }
 }
 
@@ -192,7 +199,7 @@ class MockProviderWithRequestCount extends MockProvider
 
     public function geocode($address)
     {
-        $this->geocodeCount++;
+        ++$this->geocodeCount;
 
         return parent::geocode($address);
     }
@@ -204,7 +211,7 @@ class TestableGeocoder extends ProviderAggregator
 
     public function getProvider()
     {
-        $this->countCallGetProvider++;
+        ++$this->countCallGetProvider;
 
         return parent::getProvider();
     }

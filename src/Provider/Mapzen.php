@@ -1,19 +1,19 @@
 <?php
 
-/**
+/*
  * This file is part of the Geocoder package.
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
  * @license    MIT License
  */
+
 namespace Geocoder\Provider;
 
 use Geocoder\Collection;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\QuotaExceeded;
-use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Exception\ZeroResults;
 use Geocoder\Model\Query\GeocodeQuery;
@@ -41,8 +41,8 @@ final class Mapzen extends AbstractHttpProvider implements Provider
     private $apiKey;
 
     /**
-     * @param HttpClient  $client An HTTP adapter.
-     * @param string      $apiKey An API key.
+     * @param HttpClient $client an HTTP adapter
+     * @param string     $apiKey an API key
      */
     public function __construct(HttpClient $client, $apiKey)
     {
@@ -98,6 +98,7 @@ final class Mapzen extends AbstractHttpProvider implements Provider
 
     /**
      * @param $query
+     *
      * @return Collection
      */
     private function executeQuery($query)
@@ -152,7 +153,7 @@ final class Mapzen extends AbstractHttpProvider implements Provider
                 }
             }
 
-            $results[] = array_merge($this->getDefaults(), array(
+            $results[] = array_merge($this->getDefaults(), [
                 'latitude' => $location['geometry']['coordinates'][1],
                 'longitude' => $location['geometry']['coordinates'][0],
                 'bounds' => $bounds ?: [],
@@ -163,8 +164,8 @@ final class Mapzen extends AbstractHttpProvider implements Provider
                 'postalCode' => isset($props['postalcode']) ? $props['postalcode'] : null,
                 'adminLevels' => $adminLevels,
                 'country' => isset($props['country']) ? $props['country'] : null,
-                'countryCode' => isset($props['country_a']) ? strtoupper($props['country_a']) : null
-            ));
+                'countryCode' => isset($props['country_a']) ? strtoupper($props['country_a']) : null,
+            ]);
         }
 
         return $this->returnResults($results);
@@ -177,7 +178,7 @@ final class Mapzen extends AbstractHttpProvider implements Provider
      */
     protected function guessLocality(array $components)
     {
-        $localityKeys = array('city', 'town' , 'village', 'hamlet');
+        $localityKeys = ['city', 'town', 'village', 'hamlet'];
 
         return $this->guessBestComponent($components, $localityKeys);
     }
@@ -189,7 +190,7 @@ final class Mapzen extends AbstractHttpProvider implements Provider
      */
     protected function guessStreetName(array $components)
     {
-        $streetNameKeys = array('road', 'street', 'street_name', 'residential');
+        $streetNameKeys = ['road', 'street', 'street_name', 'residential'];
 
         return $this->guessBestComponent($components, $streetNameKeys);
     }
@@ -201,7 +202,7 @@ final class Mapzen extends AbstractHttpProvider implements Provider
      */
     protected function guessSubLocality(array $components)
     {
-        $subLocalityKeys = array('neighbourhood', 'city_district');
+        $subLocalityKeys = ['neighbourhood', 'city_district'];
 
         return $this->guessBestComponent($components, $subLocalityKeys);
     }

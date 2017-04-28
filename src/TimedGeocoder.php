@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geocoder package.
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -36,12 +36,12 @@ class TimedGeocoder implements Geocoder
 
     public function __construct(Provider $delegate, Stopwatch $stopwatch)
     {
-        $this->delegate  = $delegate;
+        $this->delegate = $delegate;
         $this->stopwatch = $stopwatch;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function geocodeQuery(GeocodeQuery $query)
     {
@@ -61,7 +61,7 @@ class TimedGeocoder implements Geocoder
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function reverseQuery(ReverseQuery $query)
     {

@@ -1,19 +1,19 @@
 <?php
 
-/**
+/*
  * This file is part of the Geocoder package.
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
  * @license    MIT License
  */
+
 namespace Geocoder\Provider;
 
 use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\QuotaExceeded;
-use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Collection;
 use Geocoder\Exception\ZeroResults;
@@ -37,8 +37,8 @@ final class OpenCage extends AbstractHttpProvider implements LocaleAwareGeocoder
     private $apiKey;
 
     /**
-     * @param HttpClient  $client An HTTP adapter.
-     * @param string      $apiKey An API key.
+     * @param HttpClient $client an HTTP adapter
+     * @param string     $apiKey an API key
      */
     public function __construct(HttpClient $client, $apiKey)
     {
@@ -88,6 +88,7 @@ final class OpenCage extends AbstractHttpProvider implements LocaleAwareGeocoder
 
     /**
      * @param $query
+     *
      * @return Collection
      */
     private function executeQuery($query, $locale)
@@ -148,7 +149,7 @@ final class OpenCage extends AbstractHttpProvider implements LocaleAwareGeocoder
                 }
             }
 
-            $results[] = array_merge($this->getDefaults(), array(
+            $results[] = array_merge($this->getDefaults(), [
                 'latitude' => $location['geometry']['lat'],
                 'longitude' => $location['geometry']['lng'],
                 'bounds' => $bounds ?: [],
@@ -156,12 +157,12 @@ final class OpenCage extends AbstractHttpProvider implements LocaleAwareGeocoder
                 'streetName' => $this->guessStreetName($comp),
                 'subLocality' => $this->guessSubLocality($comp),
                 'locality' => $this->guessLocality($comp),
-                'postalCode' => isset($comp['postcode']) ? $comp['postcode']     : null,
+                'postalCode' => isset($comp['postcode']) ? $comp['postcode'] : null,
                 'adminLevels' => $adminLevels,
-                'country' => isset($comp['country']) ? $comp['country']      : null,
+                'country' => isset($comp['country']) ? $comp['country'] : null,
                 'countryCode' => isset($comp['country_code']) ? strtoupper($comp['country_code']) : null,
                 'timezone' => isset($location['annotations']['timezone']['name']) ? $location['annotations']['timezone']['name'] : null,
-            ));
+            ]);
         }
 
         return $this->returnResults($results);
@@ -174,7 +175,7 @@ final class OpenCage extends AbstractHttpProvider implements LocaleAwareGeocoder
      */
     protected function guessLocality(array $components)
     {
-        $localityKeys = array('city', 'town' , 'village', 'hamlet');
+        $localityKeys = ['city', 'town', 'village', 'hamlet'];
 
         return $this->guessBestComponent($components, $localityKeys);
     }
@@ -186,7 +187,7 @@ final class OpenCage extends AbstractHttpProvider implements LocaleAwareGeocoder
      */
     protected function guessStreetName(array $components)
     {
-        $streetNameKeys = array('road', 'street', 'street_name', 'residential');
+        $streetNameKeys = ['road', 'street', 'street_name', 'residential'];
 
         return $this->guessBestComponent($components, $streetNameKeys);
     }
@@ -198,7 +199,7 @@ final class OpenCage extends AbstractHttpProvider implements LocaleAwareGeocoder
      */
     protected function guessSubLocality(array $components)
     {
-        $subLocalityKeys = array('suburb', 'neighbourhood', 'city_district');
+        $subLocalityKeys = ['suburb', 'neighbourhood', 'city_district'];
 
         return $this->guessBestComponent($components, $subLocalityKeys);
     }

@@ -1,9 +1,16 @@
 <?php
 
+/*
+ * This file is part of the Geocoder package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license    MIT License
+ */
+
 namespace Geocoder\Tests\Dumper;
 
 use Geocoder\Dumper\GeoJson;
-use Geocoder\Model\Address;
 use Geocoder\Tests\TestCase;
 
 /**
@@ -21,15 +28,15 @@ class GeoJsonTest extends TestCase
 
     public function testDump()
     {
-        $address  = $this->createAddress([]);
-        $expected = array(
+        $address = $this->createAddress([]);
+        $expected = [
             'type' => 'Feature',
-            'geometry' => array(
+            'geometry' => [
                 'type' => 'Point',
-                'coordinates' => array(0, 0)
-            ),
-            'properties' => null
-        );
+                'coordinates' => [0, 0],
+            ],
+            'properties' => null,
+        ];
 
         $result = $this->dumper->dump($address);
 
@@ -40,18 +47,18 @@ class GeoJsonTest extends TestCase
     public function testDumpWithData()
     {
         $address = $this->createAddress([
-            'latitude'  => 48.8631507,
-            'longitude' => 2.3889114
+            'latitude' => 48.8631507,
+            'longitude' => 2.3889114,
         ]);
 
-        $expected = array(
+        $expected = [
             'type' => 'Feature',
-            'geometry' => array(
+            'geometry' => [
                 'type' => 'Point',
-                'coordinates' => array(2.3889114, 48.8631507)
-            ),
-            'properties' => null
-        );
+                'coordinates' => [2.3889114, 48.8631507],
+            ],
+            'properties' => null,
+        ];
 
         $result = $this->dumper->dump($address);
 
@@ -62,30 +69,30 @@ class GeoJsonTest extends TestCase
     public function testDumpWithBounds()
     {
         $address = $this->createAddress([
-            'latitude'  => 48.8631507,
+            'latitude' => 48.8631507,
             'longitude' => 2.3889114,
             'bounds' => [
                 'south' => 48.8631507,
-                'west'  => 2.3889114,
+                'west' => 2.3889114,
                 'north' => 48.8631507,
-                'east'  => 2.388911
-            ]
+                'east' => 2.388911,
+            ],
         ]);
 
-        $expected = array(
+        $expected = [
             'type' => 'Feature',
-            'geometry' => array(
+            'geometry' => [
                 'type' => 'Point',
-                'coordinates' => array(2.3889114, 48.8631507)
-            ),
+                'coordinates' => [2.3889114, 48.8631507],
+            ],
             'properties' => null,
-            'bounds' => array(
+            'bounds' => [
                 'south' => 48.8631507,
-                'west'  => 2.3889114,
+                'west' => 2.3889114,
                 'north' => 48.8631507,
-                'east'  => 2.388911
-            )
-        );
+                'east' => 2.388911,
+            ],
+        ];
 
         $result = $this->dumper->dump($address);
 
@@ -96,35 +103,35 @@ class GeoJsonTest extends TestCase
     public function testDumpWithProperties()
     {
         $address = $this->createAddress([
-            'latitude'  => 48.8631507,
+            'latitude' => 48.8631507,
             'longitude' => 2.3889114,
             'bounds' => [
                 'south' => 48.8631507,
-                'west'  => 2.3889114,
+                'west' => 2.3889114,
                 'north' => 48.8631507,
-                'east'  => 2.388911
+                'east' => 2.388911,
             ],
-            'locality'  => 'Paris',
-            'country' => 'France'
+            'locality' => 'Paris',
+            'country' => 'France',
         ]);
 
-        $expected = array(
+        $expected = [
             'type' => 'Feature',
-            'geometry' => array(
+            'geometry' => [
                 'type' => 'Point',
-                'coordinates' => array(2.3889114, 48.8631507)
-            ),
-            'properties' => array(
+                'coordinates' => [2.3889114, 48.8631507],
+            ],
+            'properties' => [
                 'locality' => 'Paris',
-                'country' => 'France'
-            ),
-            'bounds' => array(
+                'country' => 'France',
+            ],
+            'bounds' => [
                 'south' => 48.8631507,
-                'west'  => 2.3889114,
+                'west' => 2.3889114,
                 'north' => 48.8631507,
-                'east'  => 2.388911
-            )
-        );
+                'east' => 2.388911,
+            ],
+        ];
 
         $result = $this->dumper->dump($address);
 

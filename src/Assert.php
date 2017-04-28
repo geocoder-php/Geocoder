@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file is part of the Geocoder package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license    MIT License
+ */
+
 namespace Geocoder;
 
 class Assert
@@ -10,7 +18,7 @@ class Assert
      */
     public static function latitude($value, $message = '')
     {
-        if (!is_double($value)) {
+        if (!is_float($value)) {
             throw new \InvalidArgumentException(
                 sprintf($message ?: 'Expected a double. Got: %s', self::typeToString($value))
             );
@@ -29,7 +37,7 @@ class Assert
      */
     public static function longitude($value, $message = '')
     {
-        if (!is_double($value)) {
+        if (!is_float($value)) {
             throw new \InvalidArgumentException(
                 sprintf($message ?: 'Expected a doable. Got: %s', self::typeToString($value))
             );
@@ -46,5 +54,4 @@ class Assert
     {
         return is_object($value) ? get_class($value) : gettype($value);
     }
-
 }

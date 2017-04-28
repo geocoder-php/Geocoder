@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geocoder package.
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -18,37 +18,37 @@ use Geocoder\Assert;
 final class Bounds
 {
     /**
-     * @var double
+     * @var float
      */
     private $south;
 
     /**
-     * @var double
+     * @var float
      */
     private $west;
 
     /**
-     * @var double
+     * @var float
      */
     private $north;
 
     /**
-     * @var double
+     * @var float
      */
     private $east;
 
     /**
-     * @param double $south
-     * @param double $west
-     * @param double $north
-     * @param double $east
+     * @param float $south
+     * @param float $west
+     * @param float $north
+     * @param float $east
      */
     public function __construct($south, $west, $north, $east)
     {
-        $south = (double) $south;
-        $north = (double) $north;
-        $west = (double) $west;
-        $east = (double) $east;
+        $south = (float) $south;
+        $north = (float) $north;
+        $west = (float) $west;
+        $east = (float) $east;
 
         Assert::latitude($south);
         Assert::latitude($north);
@@ -56,15 +56,15 @@ final class Bounds
         Assert::longitude($east);
 
         $this->south = $south;
-        $this->west  = $west;
+        $this->west = $west;
         $this->north = $north;
-        $this->east  = $east;
+        $this->east = $east;
     }
 
     /**
      * Returns the south bound.
      *
-     * @return double
+     * @return float
      */
     public function getSouth()
     {
@@ -74,7 +74,7 @@ final class Bounds
     /**
      * Returns the west bound.
      *
-     * @return double
+     * @return float
      */
     public function getWest()
     {
@@ -84,7 +84,7 @@ final class Bounds
     /**
      * Returns the north bound.
      *
-     * @return double
+     * @return float
      */
     public function getNorth()
     {
@@ -94,7 +94,7 @@ final class Bounds
     /**
      * Returns the east bound.
      *
-     * @return double
+     * @return float
      */
     public function getEast()
     {
@@ -110,9 +110,9 @@ final class Bounds
     {
         return [
             'south' => $this->getSouth(),
-            'west'  => $this->getWest(),
+            'west' => $this->getWest(),
             'north' => $this->getNorth(),
-            'east'  => $this->getEast()
+            'east' => $this->getEast(),
         ];
     }
 }

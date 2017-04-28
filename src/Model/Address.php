@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geocoder package.
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -68,44 +68,43 @@ final class Address implements Location
     private $timezone;
 
     /**
-     *
-     * @param Coordinates|null $coordinates
-     * @param Bounds|null $bounds
-     * @param string|null $streetNumber
-     * @param string|null $streetName
-     * @param string|null $postalCode
-     * @param string|null $locality
-     * @param string|null $subLocality
+     * @param Coordinates|null          $coordinates
+     * @param Bounds|null               $bounds
+     * @param string|null               $streetNumber
+     * @param string|null               $streetName
+     * @param string|null               $postalCode
+     * @param string|null               $locality
+     * @param string|null               $subLocality
      * @param AdminLevelCollection|null $adminLevels
-     * @param Country|null $country
-     * @param string|null $timezone
+     * @param Country|null              $country
+     * @param string|null               $timezone
      */
     public function __construct(
-        Coordinates $coordinates          = null,
-        Bounds $bounds                    = null,
-        $streetNumber                     = null,
-        $streetName                       = null,
-        $postalCode                       = null,
-        $locality                         = null,
-        $subLocality                      = null,
+        Coordinates $coordinates = null,
+        Bounds $bounds = null,
+        $streetNumber = null,
+        $streetName = null,
+        $postalCode = null,
+        $locality = null,
+        $subLocality = null,
         AdminLevelCollection $adminLevels = null,
-        Country $country                  = null,
-        $timezone                         = null
+        Country $country = null,
+        $timezone = null
     ) {
-        $this->coordinates  = $coordinates;
-        $this->bounds       = $bounds;
+        $this->coordinates = $coordinates;
+        $this->bounds = $bounds;
         $this->streetNumber = $streetNumber;
-        $this->streetName   = $streetName;
-        $this->postalCode   = $postalCode;
-        $this->locality     = $locality;
-        $this->subLocality  = $subLocality;
-        $this->adminLevels  = $adminLevels ?: new AdminLevelCollection();
-        $this->country      = $country;
-        $this->timezone     = $timezone;
+        $this->streetName = $streetName;
+        $this->postalCode = $postalCode;
+        $this->locality = $locality;
+        $this->subLocality = $subLocality;
+        $this->adminLevels = $adminLevels ?: new AdminLevelCollection();
+        $this->country = $country;
+        $this->timezone = $timezone;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getCoordinates()
     {
@@ -113,7 +112,7 @@ final class Address implements Location
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getBounds()
     {
@@ -121,7 +120,7 @@ final class Address implements Location
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getStreetNumber()
     {
@@ -129,7 +128,7 @@ final class Address implements Location
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getStreetName()
     {
@@ -137,7 +136,7 @@ final class Address implements Location
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getLocality()
     {
@@ -145,7 +144,7 @@ final class Address implements Location
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getPostalCode()
     {
@@ -153,7 +152,7 @@ final class Address implements Location
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getSubLocality()
     {
@@ -161,7 +160,7 @@ final class Address implements Location
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getAdminLevels()
     {
@@ -169,7 +168,7 @@ final class Address implements Location
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getCountry()
     {
@@ -177,7 +176,7 @@ final class Address implements Location
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getTimezone()
     {
@@ -185,15 +184,15 @@ final class Address implements Location
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function toArray()
     {
         $adminLevels = [];
         foreach ($this->adminLevels as $adminLevel) {
             $adminLevels[$adminLevel->getLevel()] = [
-                'name'  => $adminLevel->getName(),
-                'code'  => $adminLevel->getCode()
+                'name' => $adminLevel->getName(),
+                'code' => $adminLevel->getCode(),
             ];
         }
 
@@ -213,24 +212,24 @@ final class Address implements Location
 
         $noBounds = [
             'south' => null,
-            'west'  => null,
+            'west' => null,
             'north' => null,
-            'east'  => null,
+            'east' => null,
         ];
 
-        return array(
-            'latitude'     => $lat,
-            'longitude'    => $lon,
-            'bounds'       => null !== $this->bounds ? $this->bounds->toArray() : $noBounds,
+        return [
+            'latitude' => $lat,
+            'longitude' => $lon,
+            'bounds' => null !== $this->bounds ? $this->bounds->toArray() : $noBounds,
             'streetNumber' => $this->streetNumber,
-            'streetName'   => $this->streetName,
-            'postalCode'   => $this->postalCode,
-            'locality'     => $this->locality,
-            'subLocality'  => $this->subLocality,
-            'adminLevels'  => $adminLevels,
-            'country'      => $countryName,
-            'countryCode'  => $countryCode,
-            'timezone'     => $this->timezone,
-        );
+            'streetName' => $this->streetName,
+            'postalCode' => $this->postalCode,
+            'locality' => $this->locality,
+            'subLocality' => $this->subLocality,
+            'adminLevels' => $adminLevels,
+            'country' => $countryName,
+            'countryCode' => $countryCode,
+            'timezone' => $this->timezone,
+        ];
     }
 }

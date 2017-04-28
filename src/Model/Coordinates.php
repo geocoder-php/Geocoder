@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geocoder package.
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -18,35 +18,35 @@ use Geocoder\Assert;
 final class Coordinates
 {
     /**
-     * @var double
+     * @var float
      */
     private $latitude;
 
     /**
-     * @var double
+     * @var float
      */
     private $longitude;
 
     /**
-     * @param double $latitude
-     * @param double $longitude
+     * @param float $latitude
+     * @param float $longitude
      */
     public function __construct($latitude, $longitude)
     {
-        $latitude = (double) $latitude;
-        $longitude = (double) $longitude;
+        $latitude = (float) $latitude;
+        $longitude = (float) $longitude;
 
         Assert::latitude($latitude);
         Assert::longitude($longitude);
 
-        $this->latitude  = $latitude;
+        $this->latitude = $latitude;
         $this->longitude = $longitude;
     }
 
     /**
      * Returns the latitude.
      *
-     * @return double
+     * @return float
      */
     public function getLatitude()
     {
@@ -56,7 +56,7 @@ final class Coordinates
     /**
      * Returns the longitude.
      *
-     * @return double
+     * @return float
      */
     public function getLongitude()
     {

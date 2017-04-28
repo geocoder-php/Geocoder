@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file is part of the Geocoder package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license    MIT License
+ */
+
 namespace Geocoder\Tests;
 
 use Http\Client\HttpClient;
@@ -19,14 +27,14 @@ class CachedResponseClient implements HttpClient
 
     public function __construct(HttpClient $delegate, $useCache = false, $apiKey = null, $cacheDir = '.cached_responses')
     {
-        $this->delegate  = $delegate;
+        $this->delegate = $delegate;
         $this->useCache = $useCache;
-        $this->apiKey   = $apiKey;
+        $this->apiKey = $apiKey;
         $this->cacheDir = $cacheDir;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function sendRequest(RequestInterface $request)
     {

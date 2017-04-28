@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geocoder package.
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -15,7 +15,6 @@ use Geocoder\Model\Query\GeocodeQuery;
 use Geocoder\Model\Query\ReverseQuery;
 use GeoIp2\Exception\AddressNotFoundException;
 use Geocoder\Adapter\GeoIP2Adapter;
-use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
 
 /**
@@ -23,7 +22,6 @@ use Geocoder\Exception\UnsupportedOperation;
  */
 final class GeoIP2 extends AbstractProvider implements LocaleAwareGeocoder, IpAddressGeocoder, Provider
 {
-
     /**
      * @var GeoIP2Adapter
      */
@@ -37,7 +35,7 @@ final class GeoIP2 extends AbstractProvider implements LocaleAwareGeocoder, IpAd
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function geocodeQuery(GeocodeQuery $query)
     {
@@ -48,7 +46,7 @@ final class GeoIP2 extends AbstractProvider implements LocaleAwareGeocoder, IpAd
         }
 
         if ('127.0.0.1' === $address) {
-            return $this->returnResults([ $this->getLocalhostDefaults() ]);
+            return $this->returnResults([$this->getLocalhostDefaults()]);
         }
 
         $result = json_decode($this->executeQuery($address));
@@ -66,21 +64,21 @@ final class GeoIP2 extends AbstractProvider implements LocaleAwareGeocoder, IpAd
         }
 
         return $this->returnResults([
-            array_merge($this->getDefaults(), array(
+            array_merge($this->getDefaults(), [
                 'countryCode' => (isset($result->country->iso_code) ? $result->country->iso_code : null),
-                'country'     => (isset($result->country->names->{$locale}) ? $result->country->names->{$locale} : null),
-                'locality'    => (isset($result->city->names->{$locale}) ? $result->city->names->{$locale} : null),
-                'latitude'    => (isset($result->location->latitude) ? $result->location->latitude : null),
-                'longitude'   => (isset($result->location->longitude) ? $result->location->longitude : null),
-                'timezone'    => (isset($result->location->time_zone) ? $result->location->time_zone : null),
-                'postalCode'  => (isset($result->postal->code) ? $result->postal->code : null),
+                'country' => (isset($result->country->names->{$locale}) ? $result->country->names->{$locale} : null),
+                'locality' => (isset($result->city->names->{$locale}) ? $result->city->names->{$locale} : null),
+                'latitude' => (isset($result->location->latitude) ? $result->location->latitude : null),
+                'longitude' => (isset($result->location->longitude) ? $result->location->longitude : null),
+                'timezone' => (isset($result->location->time_zone) ? $result->location->time_zone : null),
+                'postalCode' => (isset($result->postal->code) ? $result->postal->code : null),
                 'adminLevels' => $adminLevels,
-            ))
+            ]),
         ]);
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function reverseQuery(ReverseQuery $query)
     {
@@ -88,7 +86,7 @@ final class GeoIP2 extends AbstractProvider implements LocaleAwareGeocoder, IpAd
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getName()
     {

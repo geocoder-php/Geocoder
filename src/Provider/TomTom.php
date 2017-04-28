@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geocoder package.
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -12,7 +12,6 @@ namespace Geocoder\Provider;
 
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\InvalidServerResponse;
-use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Exception\ZeroResults;
 use Geocoder\Model\Query\GeocodeQuery;
@@ -24,7 +23,6 @@ use Http\Client\HttpClient;
  */
 final class TomTom extends AbstractHttpProvider implements LocaleAwareGeocoder, Provider
 {
-
     /**
      * @var string
      */
@@ -41,8 +39,8 @@ final class TomTom extends AbstractHttpProvider implements LocaleAwareGeocoder, 
     private $apiKey;
 
     /**
-     * @param HttpClient $client An HTTP adapter.
-     * @param string     $apiKey An API key.
+     * @param HttpClient $client an HTTP adapter
+     * @param string     $apiKey an API key
      */
     public function __construct(HttpClient $client, $apiKey)
     {
@@ -52,7 +50,7 @@ final class TomTom extends AbstractHttpProvider implements LocaleAwareGeocoder, 
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function geocodeQuery(GeocodeQuery $query)
     {
@@ -72,7 +70,7 @@ final class TomTom extends AbstractHttpProvider implements LocaleAwareGeocoder, 
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function reverseQuery(ReverseQuery $query)
     {
@@ -89,7 +87,7 @@ final class TomTom extends AbstractHttpProvider implements LocaleAwareGeocoder, 
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -110,7 +108,7 @@ final class TomTom extends AbstractHttpProvider implements LocaleAwareGeocoder, 
         $request = $this->getMessageFactory()->createRequest('GET', $query);
         $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
 
-        if (false !== stripos($content, "Developer Inactive")) {
+        if (false !== stripos($content, 'Developer Inactive')) {
             throw new InvalidCredentials('Map API Key provided is not valid.');
         }
 
@@ -136,9 +134,8 @@ final class TomTom extends AbstractHttpProvider implements LocaleAwareGeocoder, 
 
         $data = isset($xml->geoResult) ? $xml->geoResult : $xml->reverseGeoResult;
 
-
         if (0 === count($data)) {
-            return $this->returnResults([ $this->getResultArray($data) ]);
+            return $this->returnResults([$this->getResultArray($data)]);
         }
 
         $results = [];
@@ -151,14 +148,14 @@ final class TomTom extends AbstractHttpProvider implements LocaleAwareGeocoder, 
 
     private function getResultArray(\SimpleXmlElement $data)
     {
-        return array_merge($this->getDefaults(), array(
-            'latitude'    => isset($data->latitude) ? (double) $data->latitude : null,
-            'longitude'   => isset($data->longitude) ? (double) $data->longitude : null,
-            'streetName'  => isset($data->street) ? (string) $data->street : null,
-            'locality'    => isset($data->city) ? (string) $data->city : null,
+        return array_merge($this->getDefaults(), [
+            'latitude' => isset($data->latitude) ? (float) $data->latitude : null,
+            'longitude' => isset($data->longitude) ? (float) $data->longitude : null,
+            'streetName' => isset($data->street) ? (string) $data->street : null,
+            'locality' => isset($data->city) ? (string) $data->city : null,
             'adminLevels' => isset($data->state) ? [['name' => (string) $data->state, 'level' => 1]] : [],
-            'country'     => isset($data->country) ? (string) $data->country : null,
+            'country' => isset($data->country) ? (string) $data->country : null,
             'countryCode' => isset($data->countryISO3) ? (string) $data->countryISO3 : null,
-        ));
+        ]);
     }
 }

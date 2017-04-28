@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geocoder package.
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -19,7 +19,8 @@ use Geocoder\Collection;
 final class AddressFactory
 {
     /**
-     * @param  array                             $results
+     * @param array $results
+     *
      * @return Collection
      */
     public function createFromArray(array $results)
@@ -34,7 +35,6 @@ final class AddressFactory
                     $this->readStringValue($adminLevel, 'code')
                 );
             }
-
 
             $addresses[] = new Address(
                 $this->createCoordinates(
@@ -65,9 +65,10 @@ final class AddressFactory
     }
 
     /**
-     * @param  array  $data
-     * @param  string $key
-     * @return double
+     * @param array  $data
+     * @param string $key
+     *
+     * @return float
      */
     private function readDoubleValue(array $data, $key)
     {
@@ -75,23 +76,25 @@ final class AddressFactory
     }
 
     /**
-     * @param  array  $data
-     * @param  string $key
+     * @param array  $data
+     * @param string $key
+     *
      * @return string
      */
     private function readStringValue(array $data, $key)
     {
-        return $this->valueOrNull(\igorw\get_in($data, [ $key ]));
+        return $this->valueOrNull(\igorw\get_in($data, [$key]));
     }
 
     /**
-     * @param  array  $data
-     * @param  string $key
+     * @param array  $data
+     * @param string $key
+     *
      * @return array
      */
     private function readArrayValue(array $data, $key)
     {
-        return \igorw\get_in($data, [ $key ]) ?: [];
+        return \igorw\get_in($data, [$key]) ?: [];
     }
 
     /**
@@ -115,8 +118,8 @@ final class AddressFactory
     }
 
     /**
-     * @param double $latitude
-     * @param double $longitude
+     * @param float $latitude
+     * @param float $longitude
      *
      * @return Coordinates|null
      */
@@ -126,14 +129,14 @@ final class AddressFactory
             return null;
         }
 
-        return new Coordinates((double) $latitude, (double) $longitude);
+        return new Coordinates((float) $latitude, (float) $longitude);
     }
 
     /**
-     * @param double $south
-     * @param double $west
-     * @param double $north
-      *
+     * @param float $south
+     * @param float $west
+     * @param float $north
+     *
      * @return Bounds|null
      */
     private function createBounds($south, $west, $north, $east)
@@ -142,6 +145,6 @@ final class AddressFactory
             return null;
         }
 
-        return new Bounds((double) $south, (double) $west, (double) $north, (double) $east);
+        return new Bounds((float) $south, (float) $west, (float) $north, (float) $east);
     }
 }

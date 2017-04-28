@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geocoder package.
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -11,10 +11,8 @@
 namespace Geocoder\Provider;
 
 use Geocoder\Collection;
-use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\InvalidServerResponse;
-use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Exception\ZeroResults;
 use Geocoder\Model\Query\GeocodeQuery;
@@ -52,20 +50,20 @@ final class MaxMind extends AbstractHttpProvider implements Provider, IpAddressG
     private $service = null;
 
     /**
-     * @param HttpClient $client  An HTTP adapter.
-     * @param string     $apiKey  An API key.
-     * @param string     $service The specific Maxmind service to use (optional).
+     * @param HttpClient $client  an HTTP adapter
+     * @param string     $apiKey  an API key
+     * @param string     $service the specific Maxmind service to use (optional)
      */
     public function __construct(HttpClient $client, $apiKey, $service = self::CITY_EXTENDED_SERVICE)
     {
         parent::__construct($client);
 
-        $this->apiKey  = $apiKey;
+        $this->apiKey = $apiKey;
         $this->service = $service;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function geocodeQuery(GeocodeQuery $query)
     {
@@ -78,8 +76,8 @@ final class MaxMind extends AbstractHttpProvider implements Provider, IpAddressG
             throw new UnsupportedOperation('The MaxMind provider does not support street addresses, only IP addresses.');
         }
 
-        if (in_array($address, array('127.0.0.1', '::1'))) {
-            return $this->returnResults([ $this->getLocalhostDefaults() ]);
+        if (in_array($address, ['127.0.0.1', '::1'])) {
+            return $this->returnResults([$this->getLocalhostDefaults()]);
         }
 
         $url = sprintf(self::GEOCODE_ENDPOINT_URL_SSL, $this->service, $this->apiKey, $address);
@@ -88,7 +86,7 @@ final class MaxMind extends AbstractHttpProvider implements Provider, IpAddressG
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function reverseQuery(ReverseQuery $query)
     {
@@ -96,7 +94,7 @@ final class MaxMind extends AbstractHttpProvider implements Provider, IpAddressG
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -112,7 +110,7 @@ final class MaxMind extends AbstractHttpProvider implements Provider, IpAddressG
     {
         $request = $this->getMessageFactory()->createRequest('GET', $query);
         $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
-        $fields  = $this->fieldsForService($this->service);
+        $fields = $this->fieldsForService($this->service);
 
         if (null === $content || '' === $content) {
             throw InvalidServerResponse::create($query);
@@ -120,7 +118,7 @@ final class MaxMind extends AbstractHttpProvider implements Provider, IpAddressG
 
         $data = str_getcsv($content);
 
-        if (in_array(end($data), array('INVALID_LICENSE_KEY', 'LICENSE_REQUIRED'))) {
+        if (in_array(end($data), ['INVALID_LICENSE_KEY', 'LICENSE_REQUIRED'])) {
             throw new InvalidCredentials('API Key provided is not valid.');
         }
 
@@ -144,7 +142,7 @@ final class MaxMind extends AbstractHttpProvider implements Provider, IpAddressG
         $data = $this->replaceAdmins($data);
 
         return $this->returnResults([
-            $this->fixEncoding(array_merge($this->getDefaults(), $data))
+            $this->fixEncoding(array_merge($this->getDefaults(), $data)),
         ]);
     }
 
@@ -174,6 +172,7 @@ final class MaxMind extends AbstractHttpProvider implements Provider, IpAddressG
 
     /**
      * We do not support Country and City services because they do not return much fields.
+     *
      * @see http://dev.maxmind.com/geoip/web-services
      *
      * @param string $service
@@ -184,7 +183,7 @@ final class MaxMind extends AbstractHttpProvider implements Provider, IpAddressG
     {
         switch ($service) {
             case self::CITY_EXTENDED_SERVICE:
-                return array(
+                return [
                     'countryCode',
                     'regionCode',
                     'locality',
@@ -194,10 +193,10 @@ final class MaxMind extends AbstractHttpProvider implements Provider, IpAddressG
                     'metroCode',
                     'areaCode',
                     'isp',
-                    'organization'
-                );
+                    'organization',
+                ];
             case self::OMNI_SERVICE:
-                return array(
+                return [
                     'countryCode',
                     'countryName',
                     'regionCode',
@@ -221,8 +220,8 @@ final class MaxMind extends AbstractHttpProvider implements Provider, IpAddressG
                     'cityConfidence',
                     'regionConfidence',
                     'postalConfidence',
-                    'error'
-                );
+                    'error',
+                ];
             default:
                 throw new UnsupportedOperation(sprintf('Unknown MaxMind service %s', $service));
         }
@@ -233,7 +232,7 @@ final class MaxMind extends AbstractHttpProvider implements Provider, IpAddressG
      */
     private function getCountryNames()
     {
-        return array(
+        return [
             'A1' => 'Anonymous Proxy',
             'A2' => 'Satellite Provider',
             'O1' => 'Other Country',
@@ -487,6 +486,6 @@ final class MaxMind extends AbstractHttpProvider implements Provider, IpAddressG
             'ZA' => 'South Africa',
             'ZM' => 'Zambia',
             'ZW' => 'Zimbabwe',
-        );
+        ];
     }
 }

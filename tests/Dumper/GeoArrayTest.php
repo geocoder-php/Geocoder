@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file is part of the Geocoder package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license    MIT License
+ */
+
 namespace Geocoder\Tests\Dumper;
 
 use Geocoder\Dumper\GeoArray;
@@ -19,14 +27,14 @@ class GeoArrayTest extends TestCase
 
     public function testDump()
     {
-        $address  = $this->createAddress([]);
+        $address = $this->createAddress([]);
         $expected = [
             'type' => 'Feature',
             'geometry' => [
                 'type' => 'Point',
-                'coordinates' => [0, 0]
+                'coordinates' => [0, 0],
             ],
-            'properties' => null
+            'properties' => null,
         ];
 
         $result = $this->dumper->dump($address);
@@ -38,17 +46,17 @@ class GeoArrayTest extends TestCase
     public function testDumpWithData()
     {
         $address = $this->createAddress([
-            'latitude'  => 48.8631507,
-            'longitude' => 2.3889114
+            'latitude' => 48.8631507,
+            'longitude' => 2.3889114,
         ]);
 
         $expected = [
             'type' => 'Feature',
             'geometry' => [
                 'type' => 'Point',
-                'coordinates' => [2.3889114, 48.8631507]
+                'coordinates' => [2.3889114, 48.8631507],
             ],
-            'properties' => null
+            'properties' => null,
         ];
 
         $result = $this->dumper->dump($address);
@@ -60,29 +68,29 @@ class GeoArrayTest extends TestCase
     public function testDumpWithBounds()
     {
         $address = $this->createAddress([
-            'latitude'  => 48.8631507,
+            'latitude' => 48.8631507,
             'longitude' => 2.3889114,
             'bounds' => [
                 'south' => 48.8631507,
-                'west'  => 2.3889114,
+                'west' => 2.3889114,
                 'north' => 48.8631507,
-                'east'  => 2.388911
-            ]
+                'east' => 2.388911,
+            ],
         ]);
 
         $expected = [
             'type' => 'Feature',
             'geometry' => [
                 'type' => 'Point',
-                'coordinates' => [2.3889114, 48.8631507]
+                'coordinates' => [2.3889114, 48.8631507],
             ],
             'properties' => null,
             'bounds' => [
                 'south' => 48.8631507,
-                'west'  => 2.3889114,
+                'west' => 2.3889114,
                 'north' => 48.8631507,
-                'east'  => 2.388911
-            ]
+                'east' => 2.388911,
+            ],
         ];
 
         $result = $this->dumper->dump($address);
@@ -94,34 +102,34 @@ class GeoArrayTest extends TestCase
     public function testDumpWithProperties()
     {
         $address = $this->createAddress([
-            'latitude'  => 48.8631507,
+            'latitude' => 48.8631507,
             'longitude' => 2.3889114,
             'bounds' => [
                 'south' => 48.8631507,
-                'west'  => 2.3889114,
+                'west' => 2.3889114,
                 'north' => 48.8631507,
-                'east'  => 2.388911
+                'east' => 2.388911,
             ],
-            'locality'  => 'Paris',
-            'country' => 'France'
+            'locality' => 'Paris',
+            'country' => 'France',
         ]);
 
         $expected = [
             'type' => 'Feature',
             'geometry' => [
                 'type' => 'Point',
-                'coordinates' => [2.3889114, 48.8631507]
+                'coordinates' => [2.3889114, 48.8631507],
             ],
             'properties' => [
                 'locality' => 'Paris',
-                'country' => 'France'
+                'country' => 'France',
             ],
             'bounds' => [
                 'south' => 48.8631507,
-                'west'  => 2.3889114,
+                'west' => 2.3889114,
                 'north' => 48.8631507,
-                'east'  => 2.388911
-            ]
+                'east' => 2.388911,
+            ],
         ];
 
         $result = $this->dumper->dump($address);

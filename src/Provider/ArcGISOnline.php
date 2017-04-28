@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geocoder package.
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -12,10 +12,8 @@ namespace Geocoder\Provider;
 
 use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\InvalidServerResponse;
-use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Exception\ZeroResults;
-use Geocoder\Model\AddressCollection;
 use Geocoder\Model\Query\GeocodeQuery;
 use Geocoder\Model\Query\ReverseQuery;
 use Http\Client\HttpClient;
@@ -40,7 +38,6 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
      */
     private $sourceCountry;
 
-
     /**
      * @param HttpClient $client        An HTTP adapter
      * @param string     $sourceCountry Country biasing (optional)
@@ -53,7 +50,7 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function geocodeQuery(GeocodeQuery $query)
     {
@@ -68,7 +65,7 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
         }
 
         $url = sprintf(self::ENDPOINT_URL, urlencode($address));
-        $json  = $this->executeQuery($url, $query->getLimit());
+        $json = $this->executeQuery($url, $query->getLimit());
 
         // no result
         if (empty($json->locations)) {
@@ -79,29 +76,29 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
         foreach ($json->locations as $location) {
             $data = $location->feature->attributes;
 
-            $coordinates  = (array) $location->feature->geometry;
-            $streetName   = !empty($data->Match_addr) ? $data->Match_addr : null;
+            $coordinates = (array) $location->feature->geometry;
+            $streetName = !empty($data->Match_addr) ? $data->Match_addr : null;
             $streetNumber = !empty($data->AddNum) ? $data->AddNum : null;
-            $city         = !empty($data->City) ? $data->City : null;
-            $zipcode      = !empty($data->Postal) ? $data->Postal : null;
-            $countryCode  = !empty($data->Country) ? $data->Country : null;
+            $city = !empty($data->City) ? $data->City : null;
+            $zipcode = !empty($data->Postal) ? $data->Postal : null;
+            $countryCode = !empty($data->Country) ? $data->Country : null;
 
             $adminLevels = [];
             foreach (['Region', 'Subregion'] as $i => $property) {
-                if (! empty($data->{$property})) {
+                if (!empty($data->{$property})) {
                     $adminLevels[] = ['name' => $data->{$property}, 'level' => $i + 1];
                 }
             }
 
             $results[] = array_merge($this->getDefaults(), [
-                'latitude'     => $coordinates['y'],
-                'longitude'    => $coordinates['x'],
+                'latitude' => $coordinates['y'],
+                'longitude' => $coordinates['x'],
                 'streetNumber' => $streetNumber,
-                'streetName'   => $streetName,
-                'locality'     => $city,
-                'postalCode'   => $zipcode,
-                'adminLevels'  => $adminLevels,
-                'countryCode'  => $countryCode,
+                'streetName' => $streetName,
+                'locality' => $city,
+                'postalCode' => $zipcode,
+                'adminLevels' => $adminLevels,
+                'countryCode' => $countryCode,
             ]);
         }
 
@@ -109,7 +106,7 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function reverseQuery(ReverseQuery $query)
     {
@@ -118,7 +115,7 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
         $latitude = $coordinates->getLatitude();
 
         $url = sprintf(self::REVERSE_ENDPOINT_URL, $longitude, $latitude);
-        $json  = $this->executeQuery($url, $query->getLimit());
+        $json = $this->executeQuery($url, $query->getLimit());
 
         if (property_exists($json, 'error')) {
             throw ZeroResults::create($url);
@@ -126,29 +123,29 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
 
         $data = $json->address;
 
-        $streetName   = !empty($data->Address) ? $data->Address : null;
-        $city         = !empty($data->City) ? $data->City : null;
-        $zipcode      = !empty($data->Postal) ? $data->Postal : null;
-        $region       = !empty($data->Region) ? $data->Region : null;
-        $county       = !empty($data->Subregion) ? $data->Subregion : null;
-        $countryCode  = !empty($data->CountryCode) ? $data->CountryCode : null;
+        $streetName = !empty($data->Address) ? $data->Address : null;
+        $city = !empty($data->City) ? $data->City : null;
+        $zipcode = !empty($data->Postal) ? $data->Postal : null;
+        $region = !empty($data->Region) ? $data->Region : null;
+        $county = !empty($data->Subregion) ? $data->Subregion : null;
+        $countryCode = !empty($data->CountryCode) ? $data->CountryCode : null;
 
         return $this->returnResults([
             array_merge($this->getDefaults(), [
-                'latitude'    => $latitude,
-                'longitude'   => $longitude,
-                'streetName'  => $streetName,
-                'locality'    => $city,
-                'postalCode'  => $zipcode,
-                'region'      => $region,
+                'latitude' => $latitude,
+                'longitude' => $longitude,
+                'streetName' => $streetName,
+                'locality' => $city,
+                'postalCode' => $zipcode,
+                'region' => $region,
                 'countryCode' => $countryCode,
-                'county'      => $county,
-            ])
+                'county' => $county,
+            ]),
         ]);
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -157,7 +154,7 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
 
     /**
      * @param string $query
-     * @param int $limit
+     * @param int    $limit
      */
     private function buildQuery($query, $limit)
     {
@@ -170,7 +167,7 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
 
     /**
      * @param string $query
-     * @param int $limit
+     * @param int    $limit
      */
     private function executeQuery($query, $limit)
     {

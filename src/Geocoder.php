@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geocoder package.
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -24,7 +24,7 @@ interface Geocoder extends Provider
     const VERSION = '4.0';
 
     /**
-     * The default result limit. 
+     * The default result limit.
      */
     const DEFAULT_RESULT_LIMIT = 5;
 
@@ -34,6 +34,7 @@ interface Geocoder extends Provider
      * @param string $value
      *
      * @return Collection
+     *
      * @throws \Geocoder\Exception\Exception
      */
     public function geocode($value);
@@ -41,10 +42,11 @@ interface Geocoder extends Provider
     /**
      * Reverses geocode given latitude and longitude values.
      *
-     * @param double $latitude
-     * @param double $longitude
+     * @param float $latitude
+     * @param float $longitude
      *
      * @return Collection
+     *
      * @throws \Geocoder\Exception\Exception
      */
     public function reverse($latitude, $longitude);

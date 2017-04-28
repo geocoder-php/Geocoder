@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file is part of the Geocoder package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license    MIT License
+ */
+
 namespace Geocoder\Tests\Dumper;
 
 use Geocoder\Geocoder;
@@ -20,8 +28,8 @@ class GpxTest extends TestCase
 
     public function testDump()
     {
-        $address  = $this->createAddress([]);
-        $expected = sprintf(<<<GPX
+        $address = $this->createAddress([]);
+        $expected = sprintf(<<<'GPX'
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <gpx
 version="1.0"
@@ -35,7 +43,7 @@ version="1.0"
     </wpt>
 </gpx>
 GPX
-        , Geocoder::VERSION, "0", "0");
+        , Geocoder::VERSION, '0', '0');
 
         $result = $this->dumper->dump($address);
 
@@ -46,11 +54,11 @@ GPX
     public function testDumpWithData()
     {
         $address = $this->createAddress([
-            'latitude'  => 48.8631507,
+            'latitude' => 48.8631507,
             'longitude' => 2.3889114,
         ]);
 
-        $expected = sprintf(<<<GPX
+        $expected = sprintf(<<<'GPX'
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <gpx
 version="1.0"
@@ -75,18 +83,18 @@ GPX
     public function testDumpWithBounds()
     {
         $address = $this->createAddress([
-            'latitude'  => 48.8631507,
+            'latitude' => 48.8631507,
             'longitude' => 2.3889114,
             'bounds' => [
                 'south' => 48.8631507,
-                'west'  => 2.3889114,
+                'west' => 2.3889114,
                 'north' => 48.8631507,
-                'east'  => 2.388911
-            ]
+                'east' => 2.388911,
+            ],
         ]);
         $bounds = $address->getBounds()->toArray();
 
-        $expected = sprintf(<<<GPX
+        $expected = sprintf(<<<'GPX'
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <gpx
 version="1.0"
@@ -101,7 +109,7 @@ version="1.0"
     </wpt>
 </gpx>
 GPX
-        , Geocoder::VERSION, $bounds['east'],  "48.863151", $bounds['east'], "48.863151", $bounds['north'], $bounds['west']);
+        , Geocoder::VERSION, $bounds['east'], '48.863151', $bounds['east'], '48.863151', $bounds['north'], $bounds['west']);
 
         $this->assertNotNull($address->getBounds());
 
@@ -113,25 +121,25 @@ GPX
 
     public function testDumpWithName()
     {
-        $bounds = array(
+        $bounds = [
             'south' => 48.8631507,
-            'west'  => 2.3889114,
+            'west' => 2.3889114,
             'north' => 48.8631507,
-            'east'  => 2.388911);
+            'east' => 2.388911, ];
 
         $address = $this->createAddress([
-            'latitude'     => 48.8631507,
-            'longitude'    => 2.3889114,
-            'bounds'       => $bounds,
-            'locality'     => 'Paris',
-            'streetName'   => 'Avenue Gambetta',
+            'latitude' => 48.8631507,
+            'longitude' => 2.3889114,
+            'bounds' => $bounds,
+            'locality' => 'Paris',
+            'streetName' => 'Avenue Gambetta',
             'streetNumber' => '10',
-            'subLocality'  => '20e Arrondissement',
-            'adminLevels'  => [['level' => 1, 'name' => 'Ile-de-France']],
-            'country'      => 'France'
+            'subLocality' => '20e Arrondissement',
+            'adminLevels' => [['level' => 1, 'name' => 'Ile-de-France']],
+            'country' => 'France',
         ]);
 
-        $expected = sprintf(<<<GPX
+        $expected = sprintf(<<<'GPX'
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <gpx
 version="1.0"
@@ -146,7 +154,7 @@ version="1.0"
     </wpt>
 </gpx>
 GPX
-        , Geocoder::VERSION, $bounds['east'],"48.863151", $bounds['east'], "48.863151", $bounds['north'], $bounds['west']);
+        , Geocoder::VERSION, $bounds['east'], '48.863151', $bounds['east'], '48.863151', $bounds['north'], $bounds['west']);
 
         $this->assertNotNull($address->getBounds());
 

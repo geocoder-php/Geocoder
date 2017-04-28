@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file is part of the Geocoder package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license    MIT License
+ */
+
 namespace Geocoder\Tests\Dumper;
 
 use Geocoder\Dumper\Kml;
@@ -20,8 +28,8 @@ class KmlTest extends TestCase
 
     public function testDump()
     {
-        $address  = $this->createEmptyAddress();
-        $expected = <<<KML
+        $address = $this->createEmptyAddress();
+        $expected = <<<'KML'
 <?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2">
     <Document>
@@ -44,12 +52,12 @@ KML;
 
     public function testDumpWithData()
     {
-        $address  = $this->createAddress([
-            'latitude'  => 48.8631507,
+        $address = $this->createAddress([
+            'latitude' => 48.8631507,
             'longitude' => 2.3889114,
-            'locality'      => 'Paris',
+            'locality' => 'Paris',
         ]);
-        $expected = <<<KML
+        $expected = <<<'KML'
 <?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2">
     <Document>

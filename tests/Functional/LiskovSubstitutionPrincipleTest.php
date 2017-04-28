@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file is part of the Geocoder package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license    MIT License
+ */
+
 namespace geocoder\tests\Functional;
 
 use Geocoder\Collection;
@@ -18,7 +26,6 @@ use Geocoder\Provider\GeoIPs;
 use Geocoder\Provider\Geonames;
 use Geocoder\Provider\GeoPlugin;
 use Geocoder\Provider\GoogleMaps;
-use Geocoder\Provider\LocaleAwareGeocoder;
 use Geocoder\Provider\MapQuest;
 use Geocoder\Provider\Mapzen;
 use Geocoder\Provider\Nominatim;
@@ -66,8 +73,8 @@ class LiskovSubstitutionPrincipleTest extends \PHPUnit_Framework_TestCase
 
         // Check Downing Street
         $location = $result->first();
-        $this->assertEquals(45.5094, $location->getCoordinates()->getLatitude(), 'Latitude should be in Québec' ,0.2);
-        $this->assertEquals(-73.5516, $location->getCoordinates()->getLongitude(), 'Longitude should be in Québec' ,0.5);
+        $this->assertEquals(45.5094, $location->getCoordinates()->getLatitude(), 'Latitude should be in Québec', 0.2);
+        $this->assertEquals(-73.5516, $location->getCoordinates()->getLongitude(), 'Longitude should be in Québec', 0.5);
         $this->assertContains('Paul', $location->getStreetName(), 'Street name should contain "Saint Paul"');
         $this->assertContains('367', $location->getStreetNumber(), 'Street number should contain "367"');
 
@@ -78,7 +85,6 @@ class LiskovSubstitutionPrincipleTest extends \PHPUnit_Framework_TestCase
         $query = GeocodeQuery::create('Paris')->withLocale('en');
         $this->assertWellFormattedResult($provider->geocodeQuery($query));
     }
-
 
     /**
      * @param Provider $provider
@@ -124,9 +130,9 @@ class LiskovSubstitutionPrincipleTest extends \PHPUnit_Framework_TestCase
         $this->assertWellFormattedResult($provider->geocodeQuery(GeocodeQuery::create('8.8.8.8')->withLocale('en')));
     }
 
-
     /**
      * The providers that support addresses world wide.
+     *
      * @return array
      */
     public function getWorldWideProvider()
@@ -149,11 +155,11 @@ class LiskovSubstitutionPrincipleTest extends \PHPUnit_Framework_TestCase
 
     /**
      * The providers that support IP addresses.
+     *
      * @return array
      */
     public function getIpAddressProvider()
     {
-
         return [
             [new GeoIPs($this->getAdapter($_SERVER['GEOIPS_API_KEY']), $_SERVER['GEOIPS_API_KEY'])],
             [new GeoPlugin($this->getAdapter())],
@@ -165,7 +171,6 @@ class LiskovSubstitutionPrincipleTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     *
      * @return HttpClient
      */
     protected function getAdapter($apiKey = null)
@@ -182,7 +187,6 @@ class LiskovSubstitutionPrincipleTest extends \PHPUnit_Framework_TestCase
      * a Location with no data may be well formatted.
      *
      * @param $result
-     *
      */
     private function assertWellFormattedResult(Collection $result)
     {
@@ -266,7 +270,7 @@ class LiskovSubstitutionPrincipleTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Assert contains or null
+     * Assert contains or null.
      */
     public static function assertContains(
         $needle,
@@ -289,6 +293,4 @@ class LiskovSubstitutionPrincipleTest extends \PHPUnit_Framework_TestCase
             $checkForNonObjectIdentity
         );
     }
-
-
 }

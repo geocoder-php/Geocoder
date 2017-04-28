@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geocoder package.
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -13,11 +13,9 @@ namespace Geocoder\Provider;
 use Exception;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\InvalidServerResponse;
-use Geocoder\Exception\NoResult;
 use Geocoder\Exception\QuotaExceeded;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Exception\ZeroResults;
-use Geocoder\Model\AddressCollection;
 use Geocoder\Model\Query\GeocodeQuery;
 use Geocoder\Model\Query\Query;
 use Geocoder\Model\Query\ReverseQuery;
@@ -60,14 +58,15 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocod
 
     /**
      * Google Maps for Business
-     * https://developers.google.com/maps/documentation/business/
+     * https://developers.google.com/maps/documentation/business/.
      *
-     * @param HttpClient $client An HTTP adapter
-     * @param string     $clientId Your Client ID
+     * @param HttpClient $client     An HTTP adapter
+     * @param string     $clientId   Your Client ID
      * @param string     $privateKey Your Private Key (optional)
-     * @param string     $locale A locale (optional)
-     * @param string     $region Region biasing (optional)
-     * @param string     $apiKey Google Geocoding API key (optional)
+     * @param string     $locale     A locale (optional)
+     * @param string     $region     Region biasing (optional)
+     * @param string     $apiKey     Google Geocoding API key (optional)
+     *
      * @return GoogleMaps
      */
     public static function business(HttpClient $client, $clientId, $privateKey = null, $locale = null, $region = null, $apiKey = null)
@@ -114,7 +113,7 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocod
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -168,9 +167,10 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocod
     /**
      * @param string $url
      * @param string $locale
-     * @param int $limit
+     * @param int    $limit
      *
      * @return \Geocoder\Collection
+     *
      * @throws Exception
      */
     private function fetchUrl($url, $locale, $limit)
@@ -227,25 +227,25 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocod
 
             // update coordinates
             $coordinates = $result->geometry->location;
-            $resultSet['latitude']  = $coordinates->lat;
+            $resultSet['latitude'] = $coordinates->lat;
             $resultSet['longitude'] = $coordinates->lng;
 
             $resultSet['bounds'] = null;
             if (isset($result->geometry->bounds)) {
-                $resultSet['bounds'] = array(
+                $resultSet['bounds'] = [
                     'south' => $result->geometry->bounds->southwest->lat,
-                    'west'  => $result->geometry->bounds->southwest->lng,
+                    'west' => $result->geometry->bounds->southwest->lng,
                     'north' => $result->geometry->bounds->northeast->lat,
-                    'east'  => $result->geometry->bounds->northeast->lng
-                );
+                    'east' => $result->geometry->bounds->northeast->lng,
+                ];
             } elseif ('ROOFTOP' === $result->geometry->location_type) {
                 // Fake bounds
-                $resultSet['bounds'] = array(
+                $resultSet['bounds'] = [
                     'south' => $coordinates->lat,
-                    'west'  => $coordinates->lng,
+                    'west' => $coordinates->lng,
                     'north' => $coordinates->lat,
-                    'east'  => $coordinates->lng
-                );
+                    'east' => $coordinates->lng,
+                ];
             }
 
             $results[] = array_merge($this->getDefaults(), $resultSet);
@@ -284,10 +284,10 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocod
             case 'administrative_area_level_3':
             case 'administrative_area_level_4':
             case 'administrative_area_level_5':
-                $resultSet['adminLevels'][]= [
+                $resultSet['adminLevels'][] = [
                     'name' => $values->long_name,
                     'code' => $values->short_name,
-                    'level' => intval(substr($type, -1))
+                    'level' => intval(substr($type, -1)),
                 ];
                 break;
 
@@ -313,30 +313,30 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocod
 
         return $resultSet;
     }
-    
+
     /**
      * Sign a URL with a given crypto key
      * Note that this URL must be properly URL-encoded
-     * src: http://gmaps-samples.googlecode.com/svn/trunk/urlsigning/UrlSigner.php-source
+     * src: http://gmaps-samples.googlecode.com/svn/trunk/urlsigning/UrlSigner.php-source.
      *
      * @param string $query Query to be signed
      *
-     * @return string $query Query with signature appended.
+     * @return string $query query with signature appended
      */
     private function signQuery($query)
     {
         $url = parse_url($query);
 
-        $urlPartToSign = $url['path'] . '?' . $url['query'];
+        $urlPartToSign = $url['path'].'?'.$url['query'];
 
         // Decode the private key into its binary format
-        $decodedKey = base64_decode(str_replace(array('-', '_'), array('+', '/'), $this->privateKey));
+        $decodedKey = base64_decode(str_replace(['-', '_'], ['+', '/'], $this->privateKey));
 
         // Create a signature using the private key and the URL-encoded
         // string using HMAC SHA1. This signature will be binary.
         $signature = hash_hmac('sha1', $urlPartToSign, $decodedKey, true);
 
-        $encodedSignature = str_replace(array('+', '/'), array('-', '_'), base64_encode($signature));
+        $encodedSignature = str_replace(['+', '/'], ['-', '_'], base64_encode($signature));
 
         return sprintf('%s&signature=%s', $query, $encodedSignature);
     }

@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file is part of the Geocoder package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license    MIT License
+ */
+
 namespace Geocoder\Tests\Provider;
 
 use Geocoder\Location;
@@ -70,7 +78,7 @@ class BingMapsTest extends TestCase
 JSON;
 
         $provider = new BingMaps($this->getMockAdapterReturns($json), 'api_key', 'fr_FR');
-        $results  = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
+        $results = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(3, $results);
@@ -106,7 +114,7 @@ JSON;
         $this->assertEquals(48.809565092429, $result->getBounds()->getSouth(), '', 0.01);
         $this->assertEquals(2.3172171827738, $result->getBounds()->getWest(), '', 0.01);
         $this->assertEquals(48.817290527571, $result->getBounds()->getNorth(), '', 0.01);
-        $this->assertEquals(2.3328581572262,$result->getBounds()->getEast(), '', 0.01);
+        $this->assertEquals(2.3328581572262, $result->getBounds()->getEast(), '', 0.01);
         $this->assertNull($result->getStreetNumber());
         $this->assertEquals('10 Avenue Léon Gambetta', $result->getStreetName());
         $this->assertEquals(92120, $result->getPostalCode());
@@ -145,7 +153,7 @@ JSON;
 JSON;
 
         $provider = new BingMaps($this->getMockAdapterReturns($json), 'api_key');
-        $results  = $provider->reverseQuery(ReverseQuery::fromCoordinates(48.86321648955345, 2.3887719959020615));
+        $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(48.86321648955345, 2.3887719959020615));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -180,7 +188,7 @@ JSON;
         }
 
         $provider = new BingMaps($this->getAdapter($_SERVER['BINGMAPS_API_KEY']), $_SERVER['BINGMAPS_API_KEY']);
-        $results  = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France')->withLocale('fr-FR'));
+        $results = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France')->withLocale('fr-FR'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -208,7 +216,6 @@ JSON;
         $this->assertNull($result->getAdminLevels()->get(2)->getCode());
         $this->assertNull($result->getAdminLevels()->get(1)->getCode());
         $this->assertNull($result->getTimezone());
-
     }
 
     public function testGeocodeWithRealAddressReturnsMultipleResults()
@@ -218,7 +225,7 @@ JSON;
         }
 
         $provider = new BingMaps($this->getAdapter($_SERVER['BINGMAPS_API_KEY']), $_SERVER['BINGMAPS_API_KEY']);
-        $results  = $provider->geocodeQuery(GeocodeQuery::create('Castelnuovo, Italie')->withLocale('fr-FR'));
+        $results = $provider->geocodeQuery(GeocodeQuery::create('Castelnuovo, Italie')->withLocale('fr-FR'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
@@ -349,7 +356,7 @@ JSON;
         }
 
         $provider = new BingMaps($this->getAdapter($_SERVER['BINGMAPS_API_KEY']), $_SERVER['BINGMAPS_API_KEY']);
-        $results  = $provider->reverseQuery(ReverseQuery::fromCoordinates(48.86321648955345, 2.3887719959020615));
+        $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(48.86321648955345, 2.3887719959020615));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);

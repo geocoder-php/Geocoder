@@ -1,8 +1,18 @@
 <?php
 
+/*
+ * This file is part of the Geocoder package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license    MIT License
+ */
+
 namespace Geocoder\Tests\Provider;
 
-use Geocoder\Location;use Geocoder\Model\Query\GeocodeQuery;use Geocoder\Model\Query\ReverseQuery;
+use Geocoder\Location;
+use Geocoder\Model\Query\GeocodeQuery;
+use Geocoder\Model\Query\ReverseQuery;
 use Geocoder\Provider\Nominatim;
 use Geocoder\Tests\TestCase;
 
@@ -11,7 +21,7 @@ class NominatimTest extends TestCase
     public function testGeocodeWithRealAddress()
     {
         $provider = Nominatim::withOpenStreetMapServer($this->getAdapter());
-        $results  = $provider->geocodeQuery(GeocodeQuery::create('Paris'));
+        $results = $provider->geocodeQuery(GeocodeQuery::create('Paris'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
@@ -130,7 +140,7 @@ class NominatimTest extends TestCase
     public function testGeocodeWithRealAddressWithLocale()
     {
         $provider = Nominatim::withOpenStreetMapServer($this->getAdapter());
-        $results  = $provider->geocodeQuery(GeocodeQuery::create('10 allée Evariste Galois, Clermont ferrand')->withLocale('fr_FR'));
+        $results = $provider->geocodeQuery(GeocodeQuery::create('10 allée Evariste Galois, Clermont ferrand')->withLocale('fr_FR'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(2, $results);
@@ -183,7 +193,7 @@ class NominatimTest extends TestCase
     public function testReverseWithRealCoordinates()
     {
         $provider = Nominatim::withOpenStreetMapServer($this->getAdapter());
-        $results  = $provider->reverseQuery(ReverseQuery::fromCoordinates(60.4539471728726, 22.2567841926781));
+        $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(60.4539471728726, 22.2567841926781));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -202,7 +212,7 @@ class NominatimTest extends TestCase
         $this->assertCount(2, $result->getAdminLevels());
         $this->assertEquals('Varsinais-Suomi', $result->getAdminLevels()->get(2)->getName());
         $this->assertEquals('Etelä-Suomi', $result->getAdminLevels()->get(1)->getName());
-        $this->assertNull( $result->getAdminLevels()->get(1)->getCode());
+        $this->assertNull($result->getAdminLevels()->get(1)->getCode());
         $this->assertEquals('Suomi', $result->getCountry()->getName());
         $this->assertEquals('FI', $result->getCountry()->getCode());
     }
@@ -219,7 +229,7 @@ class NominatimTest extends TestCase
     public function testReverseWithRealCoordinatesWithLocale()
     {
         $provider = Nominatim::withOpenStreetMapServer($this->getAdapter());
-        $results  = $provider->geocodeQuery(GeocodeQuery::create('Kalbacher Hauptstraße, 60437 Frankfurt, Germany')->withLocale('de_DE'));
+        $results = $provider->geocodeQuery(GeocodeQuery::create('Kalbacher Hauptstraße, 60437 Frankfurt, Germany')->withLocale('de_DE'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
@@ -312,7 +322,7 @@ class NominatimTest extends TestCase
     public function testGeocodeWithLocalhostIPv4()
     {
         $provider = Nominatim::withOpenStreetMapServer($this->getMockAdapter($this->never()));
-        $results  = $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
+        $results = $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -338,7 +348,7 @@ class NominatimTest extends TestCase
     public function testGeocodeWithRealIPv4()
     {
         $provider = Nominatim::withOpenStreetMapServer($this->getAdapter());
-        $results  = $provider->geocodeQuery(GeocodeQuery::create('88.188.221.14'));
+        $results = $provider->geocodeQuery(GeocodeQuery::create('88.188.221.14'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
@@ -369,7 +379,7 @@ class NominatimTest extends TestCase
     public function testGeocodeWithRealIPv4WithLocale()
     {
         $provider = Nominatim::withOpenStreetMapServer($this->getAdapter());
-        $results  = $provider->geocodeQuery(GeocodeQuery::create('88.188.221.14')->withLocale('da_DK'));
+        $results = $provider->geocodeQuery(GeocodeQuery::create('88.188.221.14')->withLocale('da_DK'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
@@ -430,7 +440,7 @@ class NominatimTest extends TestCase
      */
     public function testGeocodeWithAddressGetsEmptyXML()
     {
-        $emptyXML = <<<XML
+        $emptyXML = <<<'XML'
 <?xml version="1.0" encoding="utf-8"?><searchresults_empty></searchresults_empty>
 XML;
         $provider = Nominatim::withOpenStreetMapServer($this->getMockAdapterReturns($emptyXML));
@@ -463,7 +473,7 @@ XML;
      */
     public function testReverseWithCoordinatesGetsError()
     {
-        $errorXml = <<<XML
+        $errorXml = <<<'XML'
 <?xml version="1.0" encoding="UTF-8" ?>
 <reversegeocode querystring='format=xml&amp;lat=-80.000000&amp;lon=-170.000000&amp;addressdetails=1'>
     <error>Unable to geocode</error>
@@ -476,7 +486,7 @@ XML;
     public function testGetNodeStreetName()
     {
         $provider = Nominatim::withOpenStreetMapServer($this->getAdapter(), 'fr_FR');
-        $results  = $provider->reverseQuery(ReverseQuery::fromCoordinates(48.86, 2.35));
+        $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(48.86, 2.35));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);

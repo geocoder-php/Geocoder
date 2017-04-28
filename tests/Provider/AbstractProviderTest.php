@@ -1,9 +1,16 @@
 <?php
 
+/*
+ * This file is part of the Geocoder package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license    MIT License
+ */
+
 namespace Geocoder\Tests\Provider;
 
 use Geocoder\Tests\TestCase;
-use Http\Mock\Client;
 use Geocoder\Provider\AbstractProvider;
 
 /**
@@ -15,7 +22,7 @@ class AbstractProviderTest extends TestCase
     {
         $client = $this->prophesize('Http\Client\HttpClient');
         $provider = new MockProvider($client->reveal());
-        $result   = $provider->getLocalhostDefaults();
+        $result = $provider->getLocalhostDefaults();
 
         $this->assertEquals(2, count($result));
         $this->assertEquals('localhost', $result['locality']);

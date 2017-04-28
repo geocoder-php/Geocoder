@@ -1,7 +1,18 @@
 <?php
+
+/*
+ * This file is part of the Geocoder package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license    MIT License
+ */
+
 namespace Geocoder\Tests\Provider;
 
-use Geocoder\Location;use Geocoder\Model\Query\GeocodeQuery;use Geocoder\Model\Query\ReverseQuery;
+use Geocoder\Location;
+use Geocoder\Model\Query\GeocodeQuery;
+use Geocoder\Model\Query\ReverseQuery;
 use Geocoder\Tests\TestCase;
 use Geocoder\Provider\MaxMindBinary;
 
@@ -11,7 +22,7 @@ class MaxMindBinaryTest extends TestCase
 
     public function setUp()
     {
-        $this->binaryFile = __DIR__ . '/fixtures/GeoLiteCity.dat';
+        $this->binaryFile = __DIR__.'/fixtures/GeoLiteCity.dat';
     }
 
     public static function setUpBeforeClass()
@@ -27,10 +38,10 @@ class MaxMindBinaryTest extends TestCase
 
     public static function provideIps()
     {
-        return array(
-            '24.24.24.24' => array('24.24.24.24', 'East Syracuse', 'United States'),
-            '80.24.24.24' => array('80.24.24.24', 'Sabadell', 'Spain'),
-        );
+        return [
+            '24.24.24.24' => ['24.24.24.24', 'East Syracuse', 'United States'],
+            '80.24.24.24' => ['80.24.24.24', 'Sabadell', 'Spain'],
+        ];
     }
 
     /**
@@ -45,7 +56,7 @@ class MaxMindBinaryTest extends TestCase
     public function testLocationResultContainsExpectedFieldsForAnAmericanIp()
     {
         $provider = new MaxMindBinary($this->binaryFile);
-        $results  = $provider->geocodeQuery(GeocodeQuery::create('24.24.24.24'));
+        $results = $provider->geocodeQuery(GeocodeQuery::create('24.24.24.24'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -73,7 +84,7 @@ class MaxMindBinaryTest extends TestCase
     public function testLocationResultContainsExpectedFieldsForASpanishIp()
     {
         $provider = new MaxMindBinary($this->binaryFile);
-        $results  = $provider->geocodeQuery(GeocodeQuery::create('80.24.24.24'));
+        $results = $provider->geocodeQuery(GeocodeQuery::create('80.24.24.24'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -104,7 +115,7 @@ class MaxMindBinaryTest extends TestCase
     public function testFindLocationByIp($ip, $expectedCity, $expectedCountry)
     {
         $provider = new MaxMindBinary($this->binaryFile);
-        $results  = $provider->geocodeQuery(GeocodeQuery::create($ip));
+        $results = $provider->geocodeQuery(GeocodeQuery::create($ip));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -119,7 +130,7 @@ class MaxMindBinaryTest extends TestCase
     public function testShouldReturnResultsAsUtf8Encoded()
     {
         $provider = new MaxMindBinary($this->binaryFile);
-        $results  = $provider->geocodeQuery(GeocodeQuery::create('212.51.181.237'));
+        $results = $provider->geocodeQuery(GeocodeQuery::create('212.51.181.237'));
 
         /** @var Location $result */
         $result = $results->first();

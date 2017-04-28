@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geocoder package.
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -11,7 +11,6 @@
 namespace Geocoder\Provider;
 
 use Geocoder\Exception\ExtensionNotLoaded;
-use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Exception\ZeroResults;
 use Geocoder\Model\Query\GeocodeQuery;
@@ -20,7 +19,7 @@ use Geocoder\Model\Query\ReverseQuery;
 /**
  * @author William Durand <william.durand1@gmail.com>
  *
- * @link http://php.net/manual/ref.geoip.php
+ * @see http://php.net/manual/ref.geoip.php
  */
 final class Geoip extends AbstractProvider implements Provider, IpAddressGeocoder
 {
@@ -34,7 +33,7 @@ final class Geoip extends AbstractProvider implements Provider, IpAddressGeocode
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function geocodeQuery(GeocodeQuery $query)
     {
@@ -50,7 +49,7 @@ final class Geoip extends AbstractProvider implements Provider, IpAddressGeocode
         }
 
         if ('127.0.0.1' === $address) {
-            return $this->returnResults([ $this->getLocalhostDefaults() ]);
+            return $this->returnResults([$this->getLocalhostDefaults()]);
         }
 
         $results = @geoip_record_by_name($address);
@@ -61,7 +60,7 @@ final class Geoip extends AbstractProvider implements Provider, IpAddressGeocode
 
         if (!empty($results['region']) && !empty($results['country_code'])) {
             $timezone = @geoip_time_zone_by_country_and_region($results['country_code'], $results['region']) ?: null;
-            $region   = @geoip_region_name_by_code($results['country_code'], $results['region']) ?: $results['region'];
+            $region = @geoip_region_name_by_code($results['country_code'], $results['region']) ?: $results['region'];
         } else {
             $timezone = null;
             $region = $results['region'];
@@ -69,20 +68,20 @@ final class Geoip extends AbstractProvider implements Provider, IpAddressGeocode
 
         return $this->returnResults([
             $this->fixEncoding(array_merge($this->getDefaults(), [
-                'latitude'    => $results['latitude'],
-                'longitude'   => $results['longitude'],
-                'locality'    => $results['city'],
-                'postalCode'  => $results['postal_code'],
+                'latitude' => $results['latitude'],
+                'longitude' => $results['longitude'],
+                'locality' => $results['city'],
+                'postalCode' => $results['postal_code'],
                 'adminLevels' => $results['region'] ? [['name' => $region, 'code' => $results['region'], 'level' => 1]] : [],
-                'country'     => $results['country_name'],
+                'country' => $results['country_name'],
                 'countryCode' => $results['country_code'],
-                'timezone'    => $timezone,
-            ]))
+                'timezone' => $timezone,
+            ])),
         ]);
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function reverseQuery(ReverseQuery $query)
     {
@@ -90,7 +89,7 @@ final class Geoip extends AbstractProvider implements Provider, IpAddressGeocode
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getName()
     {

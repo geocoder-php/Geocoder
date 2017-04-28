@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geocoder package.
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -37,23 +37,23 @@ abstract class AbstractProvider
     protected function getDefaults()
     {
         return [
-            'latitude'     => null,
-            'longitude'    => null,
-            'bounds'       => [
+            'latitude' => null,
+            'longitude' => null,
+            'bounds' => [
                 'south' => null,
-                'west'  => null,
+                'west' => null,
                 'north' => null,
-                'east'  => null,
+                'east' => null,
             ],
             'streetNumber' => null,
-            'streetName'   => null,
-            'locality'     => null,
-            'postalCode'   => null,
-            'subLocality'  => null,
-            'adminLevels'  => [],
-            'country'      => null,
-            'countryCode'  => null,
-            'timezone'     => null,
+            'streetName' => null,
+            'locality' => null,
+            'postalCode' => null,
+            'subLocality' => null,
+            'adminLevels' => [],
+            'country' => null,
+            'countryCode' => null,
+            'timezone' => null,
         ];
     }
 
@@ -66,12 +66,12 @@ abstract class AbstractProvider
     {
         return [
             'locality' => 'localhost',
-            'country'  => 'localhost',
+            'country' => 'localhost',
         ];
     }
 
     /**
-     * @param array $data An array of data.
+     * @param array $data an array of data
      *
      * @return Collection
      */
@@ -81,10 +81,10 @@ abstract class AbstractProvider
     }
 
     /**
-    * @param array $results
-    *
-    * @return array
-    */
+     * @param array $results
+     *
+     * @return array
+     */
     protected function fixEncoding(array $results)
     {
         return array_map(function ($value) {

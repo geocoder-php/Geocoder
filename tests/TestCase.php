@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file is part of the Geocoder package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license    MIT License
+ */
+
 namespace Geocoder\Tests;
 
 use Geocoder\Model\AddressFactory;
@@ -16,7 +24,8 @@ use Psr\Http\Message\ResponseInterface;
 abstract class TestCase extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @param  null|object          $expects
+     * @param null|object $expects
+     *
      * @return HttpClient
      */
     protected function getMockAdapter($expects = null)
@@ -39,6 +48,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
 
     /**
      * @param $returnValue
+     *
      * @return HttpClient
      */
     protected function getMockAdapterReturns($returnValue)
@@ -51,6 +61,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
 
     /**
      * @param callable $requestCallback
+     *
      * @return HttpClient
      */
     protected function getMockAdapterWithRequestCallback(callable $requestCallback)
@@ -89,7 +100,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     protected function useCache()
     {
@@ -98,7 +109,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
 
     protected function createAddress(array $data)
     {
-        $addresses = (new AddressFactory())->createFromArray([ $data ]);
+        $addresses = (new AddressFactory())->createFromArray([$data]);
 
         return 0 === count($addresses) ? null : $addresses->first();
     }

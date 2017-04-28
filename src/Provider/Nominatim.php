@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geocoder package.
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -11,7 +11,6 @@
 namespace Geocoder\Provider;
 
 use Geocoder\Exception\InvalidServerResponse;
-use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Exception\ZeroResults;
 use Geocoder\Model\Query\GeocodeQuery;
@@ -23,7 +22,6 @@ use Http\Client\HttpClient;
  */
 final class Nominatim extends AbstractHttpProvider implements LocaleAwareGeocoder, Provider
 {
-
     /**
      * @var string
      */
@@ -32,6 +30,7 @@ final class Nominatim extends AbstractHttpProvider implements LocaleAwareGeocode
     /**
      * @param HttpClient  $client
      * @param string|null $locale
+     *
      * @return Nominatim
      */
     public static function withOpenStreetMapServer(HttpClient $client)
@@ -40,7 +39,7 @@ final class Nominatim extends AbstractHttpProvider implements LocaleAwareGeocode
     }
 
     /**
-     * @param HttpClient $client  An HTTP adapter.
+     * @param HttpClient $client  an HTTP adapter
      * @param string     $rootUrl Root URL of the nominatim server
      */
     public function __construct(HttpClient $client, $rootUrl)
@@ -51,21 +50,21 @@ final class Nominatim extends AbstractHttpProvider implements LocaleAwareGeocode
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function geocodeQuery(GeocodeQuery $query)
     {
         $address = $query->getText();
         // This API does not support IPv6
         if (filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
-            throw new UnsupportedOperation('The ' . get_called_class() . ' provider does not support IPv6 addresses.');
+            throw new UnsupportedOperation('The '.get_called_class().' provider does not support IPv6 addresses.');
         }
 
         if ('127.0.0.1' === $address) {
-            return $this->returnResults([ $this->getLocalhostDefaults() ]);
+            return $this->returnResults([$this->getLocalhostDefaults()]);
         }
 
-        $url   = sprintf($this->getGeocodeEndpointUrl(), urlencode($address), $query->getLimit());
+        $url = sprintf($this->getGeocodeEndpointUrl(), urlencode($address), $query->getLimit());
         $content = $this->executeQuery($url, $query->getLocale());
 
         if (empty($content)) {
@@ -93,14 +92,14 @@ final class Nominatim extends AbstractHttpProvider implements LocaleAwareGeocode
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function reverseQuery(ReverseQuery $query)
     {
         $coordinates = $query->getCoordinates();
         $longitude = $coordinates->getLongitude();
         $latitude = $coordinates->getLatitude();
-        $url   = sprintf($this->getReverseEndpointUrl(), $latitude, $longitude);
+        $url = sprintf($this->getReverseEndpointUrl(), $latitude, $longitude);
         $content = $this->executeQuery($url, $query->getLocale());
 
         if (empty($content)) {
@@ -114,10 +113,10 @@ final class Nominatim extends AbstractHttpProvider implements LocaleAwareGeocode
 
         $searchResult = $doc->getElementsByTagName('reversegeocode')->item(0);
         $addressParts = $searchResult->getElementsByTagName('addressparts')->item(0);
-        $result       = $searchResult->getElementsByTagName('result')->item(0);
+        $result = $searchResult->getElementsByTagName('result')->item(0);
 
         return $this->returnResults([
-            array_merge($this->getDefaults(), $this->xmlResultToArray($result, $addressParts))
+            array_merge($this->getDefaults(), $this->xmlResultToArray($result, $addressParts)),
         ]);
     }
 
@@ -137,16 +136,16 @@ final class Nominatim extends AbstractHttpProvider implements LocaleAwareGeocode
         ));
 
         $result = [
-            'latitude'     => $resultNode->getAttribute('lat'),
-            'longitude'    => $resultNode->getAttribute('lon'),
-            'postalCode'   => $postalCode,
-            'adminLevels'  => $adminLevels,
+            'latitude' => $resultNode->getAttribute('lat'),
+            'longitude' => $resultNode->getAttribute('lon'),
+            'postalCode' => $postalCode,
+            'adminLevels' => $adminLevels,
             'streetNumber' => $this->getNodeValue($addressNode->getElementsByTagName('house_number')),
-            'streetName'   => $this->getNodeValue($addressNode->getElementsByTagName('road')) ?: $this->getNodeValue($addressNode->getElementsByTagName('pedestrian')),
-            'locality'     => $this->getNodeValue($addressNode->getElementsByTagName('city')),
-            'subLocality'  => $this->getNodeValue($addressNode->getElementsByTagName('suburb')),
-            'country'      => $this->getNodeValue($addressNode->getElementsByTagName('country')),
-            'countryCode'  => strtoupper($this->getNodeValue($addressNode->getElementsByTagName('country_code'))),
+            'streetName' => $this->getNodeValue($addressNode->getElementsByTagName('road')) ?: $this->getNodeValue($addressNode->getElementsByTagName('pedestrian')),
+            'locality' => $this->getNodeValue($addressNode->getElementsByTagName('city')),
+            'subLocality' => $this->getNodeValue($addressNode->getElementsByTagName('suburb')),
+            'country' => $this->getNodeValue($addressNode->getElementsByTagName('country')),
+            'countryCode' => strtoupper($this->getNodeValue($addressNode->getElementsByTagName('country_code'))),
         ];
 
         $boundsAttr = $resultNode->getAttribute('boundingbox');
@@ -162,7 +161,7 @@ final class Nominatim extends AbstractHttpProvider implements LocaleAwareGeocode
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -186,12 +185,12 @@ final class Nominatim extends AbstractHttpProvider implements LocaleAwareGeocode
 
     private function getGeocodeEndpointUrl()
     {
-        return $this->rootUrl . '/search?q=%s&format=xml&addressdetails=1&limit=%d';
+        return $this->rootUrl.'/search?q=%s&format=xml&addressdetails=1&limit=%d';
     }
 
     private function getReverseEndpointUrl()
     {
-        return $this->rootUrl . '/reverse?format=xml&lat=%F&lon=%F&addressdetails=1&zoom=18';
+        return $this->rootUrl.'/reverse?format=xml&lat=%F&lon=%F&addressdetails=1&zoom=18';
     }
 
     private function getNodeValue(\DOMNodeList $element)

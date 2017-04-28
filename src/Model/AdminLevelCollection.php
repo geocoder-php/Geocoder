@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file is part of the Geocoder package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license    MIT License
+ */
+
 namespace Geocoder\Model;
 
 use Geocoder\Exception\InvalidArgument;
@@ -7,7 +15,7 @@ use Geocoder\Exception\InvalidArgument;
 /**
  * @author Giorgio Premi <giosh94mhz@gmail.com>
  */
-final class AdminLevelCollection implements  \IteratorAggregate, \Countable
+final class AdminLevelCollection implements \IteratorAggregate, \Countable
 {
     const MAX_LEVEL_DEPTH = 5;
 
@@ -17,7 +25,6 @@ final class AdminLevelCollection implements  \IteratorAggregate, \Countable
     private $adminLevels;
 
     /**
-     *
      * @param AdminLevel[] $adminLevels
      */
     public function __construct(array $adminLevels = [])
@@ -30,7 +37,7 @@ final class AdminLevelCollection implements  \IteratorAggregate, \Countable
             $this->checkLevel($level);
 
             if ($this->has($level)) {
-                 throw new InvalidArgument(sprintf("Administrative level %d is defined twice", $level));
+                throw new InvalidArgument(sprintf('Administrative level %d is defined twice', $level));
             }
 
             $this->adminLevels[$level] = $adminLevel;
@@ -40,7 +47,7 @@ final class AdminLevelCollection implements  \IteratorAggregate, \Countable
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getIterator()
     {
@@ -48,7 +55,7 @@ final class AdminLevelCollection implements  \IteratorAggregate, \Countable
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function count()
     {
@@ -85,6 +92,7 @@ final class AdminLevelCollection implements  \IteratorAggregate, \Countable
 
     /**
      * @return AdminLevel
+     *
      * @throws \OutOfBoundsException
      * @throws InvalidArgument
      */
@@ -92,8 +100,8 @@ final class AdminLevelCollection implements  \IteratorAggregate, \Countable
     {
         $this->checkLevel($level);
 
-        if (! isset($this->adminLevels[$level])) {
-            throw new InvalidArgument(sprintf("Administrative level %d is not set for this address", $level));
+        if (!isset($this->adminLevels[$level])) {
+            throw new InvalidArgument(sprintf('Administrative level %d is not set for this address', $level));
         }
 
         return  $this->adminLevels[$level];
@@ -108,14 +116,15 @@ final class AdminLevelCollection implements  \IteratorAggregate, \Countable
     }
 
     /**
-     * @param  integer               $level
+     * @param int $level
+     *
      * @throws \OutOfBoundsException
      */
     private function checkLevel($level)
     {
         if ($level <= 0 || $level > self::MAX_LEVEL_DEPTH) {
             throw new \OutOfBoundsException(sprintf(
-                "Administrative level should be an integer in [1,%d], %d given",
+                'Administrative level should be an integer in [1,%d], %d given',
                 self::MAX_LEVEL_DEPTH,
                 $level
             ));
