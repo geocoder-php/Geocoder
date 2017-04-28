@@ -2,7 +2,7 @@
 
 namespace Geocoder\Tests\Provider;
 
-use Geocoder\Location;
+use Geocoder\Location;use Geocoder\Model\Query\GeocodeQuery;use Geocoder\Model\Query\ReverseQuery;
 use Geocoder\Tests\TestCase;
 use Geocoder\Provider\HostIp;
 
@@ -18,36 +18,16 @@ class HostIpTest extends TestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The HostIp provider does not support Street addresses.
      */
-    public function testGeocodeWithNull()
-    {
-        $provider = new HostIp($this->getMockAdapter($this->never()));
-        $provider->geocode(null);
-    }
-
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The HostIp provider does not support Street addresses.
-     */
-    public function testGeocodeWithEmpty()
-    {
-        $provider = new HostIp($this->getMockAdapter($this->never()));
-        $provider->geocode('');
-    }
-
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The HostIp provider does not support Street addresses.
-     */
     public function testGeocodeWithAddress()
     {
         $provider = new HostIp($this->getMockAdapter($this->never()));
-        $provider->geocode('10 avenue Gambetta, Paris, France');
+        $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
     }
 
     public function testGeocodeWithLocalhostIPv4()
     {
         $provider = new HostIp($this->getMockAdapter($this->never()));
-        $results  = $provider->geocode('127.0.0.1');
+        $results  = $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -72,7 +52,7 @@ class HostIpTest extends TestCase
     public function testGeocodeWithLocalhostIPv6()
     {
         $provider = new HostIp($this->getMockAdapter($this->never()));
-        $provider->geocode('::1');
+        $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
     /**
@@ -81,7 +61,7 @@ class HostIpTest extends TestCase
     public function testGeocodeWithRealIPv4GetsNullContent()
     {
         $provider = new HostIp($this->getMockAdapterReturns(null));
-        $provider->geocode('88.188.221.14');
+        $provider->geocodeQuery(GeocodeQuery::create('88.188.221.14'));
     }
 
     /**
@@ -90,13 +70,13 @@ class HostIpTest extends TestCase
     public function testGeocodeWithRealIPv4GetsEmptyContent()
     {
         $provider = new HostIp($this->getMockAdapterReturns(''));
-        $provider->geocode('88.188.221.14');
+        $provider->geocodeQuery(GeocodeQuery::create('88.188.221.14'));
     }
 
     public function testGeocodeWithRealIPv4()
     {
         $provider = new HostIp($this->getAdapter());
-        $results  = $provider->geocode('88.188.221.14');
+        $results  = $provider->geocodeQuery(GeocodeQuery::create('88.188.221.14'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -120,7 +100,7 @@ class HostIpTest extends TestCase
     public function testGeocodeWithRealIPv6()
     {
         $provider = new HostIp($this->getAdapter());
-        $provider->geocode('::ffff:88.188.221.14');
+        $provider->geocodeQuery(GeocodeQuery::create('::ffff:88.188.221.14'));
     }
 
     /**
@@ -130,13 +110,13 @@ class HostIpTest extends TestCase
     public function testReverse()
     {
         $provider = new HostIp($this->getMockAdapter($this->never()));
-        $provider->reverse(1, 2);
+        $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
     }
 
     public function testGeocodeWithAnotherIp()
     {
         $provider = new HostIp($this->getAdapter());
-        $results  = $provider->geocode('33.33.33.22');
+        $results  = $provider->geocodeQuery(GeocodeQuery::create('33.33.33.22'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);

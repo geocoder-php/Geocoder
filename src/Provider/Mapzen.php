@@ -16,6 +16,8 @@ use Geocoder\Exception\QuotaExceeded;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Exception\ZeroResults;
+use Geocoder\Model\Query\GeocodeQuery;
+use Geocoder\Model\Query\ReverseQuery;
 use Http\Client\HttpClient;
 
 /**
@@ -52,8 +54,9 @@ final class Mapzen extends AbstractHttpProvider implements Provider
     /**
      * {@inheritdoc}
      */
-    public function geocode($address)
+    public function geocodeQuery(GeocodeQuery $query)
     {
+        $address = $query->getText();
         if (null === $this->apiKey) {
             throw new InvalidCredentials('No API Key provided.');
         }
@@ -63,23 +66,26 @@ final class Mapzen extends AbstractHttpProvider implements Provider
             throw new UnsupportedOperation('The Mapzen provider does not support IP addresses, only street addresses.');
         }
 
-        $query = sprintf(self::GEOCODE_ENDPOINT_URL, urlencode($address), $this->apiKey, $this->getLimit());
+        $url = sprintf(self::GEOCODE_ENDPOINT_URL, urlencode($address), $this->apiKey, $query->getLimit());
 
-        return $this->executeQuery($query);
+        return $this->executeQuery($url);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function reverse($latitude, $longitude)
+    public function reverseQuery(ReverseQuery $query)
     {
+        $coordinates = $query->getCoordinates();
+        $longitude = $coordinates->getLongitude();
+        $latitude = $coordinates->getLatitude();
         if (null === $this->apiKey) {
             throw new InvalidCredentials('No API Key provided.');
         }
 
-        $query = sprintf(self::REVERSE_ENDPOINT_URL, $latitude, $longitude, $this->apiKey, $this->getLimit());
+        $url = sprintf(self::REVERSE_ENDPOINT_URL, $latitude, $longitude, $this->apiKey, $query->getLimit());
 
-        return $this->executeQuery($query);
+        return $this->executeQuery($url);
     }
 
     /**

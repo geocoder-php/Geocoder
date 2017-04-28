@@ -15,6 +15,8 @@ use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Exception\ZeroResults;
+use Geocoder\Model\Query\GeocodeQuery;
+use Geocoder\Model\Query\ReverseQuery;
 
 final class MaxMindBinary extends AbstractProvider implements Provider, IpAddressGeocoder
 {
@@ -68,8 +70,9 @@ final class MaxMindBinary extends AbstractProvider implements Provider, IpAddres
     /**
      * {@inheritDoc}
      */
-    public function geocode($address)
+    public function geocodeQuery(GeocodeQuery $query)
     {
+        $address = $query->getText();
         if (false === filter_var($address, FILTER_VALIDATE_IP)) {
             throw new UnsupportedOperation('The MaxMindBinary provider does not support street addresses.');
         }
@@ -110,7 +113,7 @@ final class MaxMindBinary extends AbstractProvider implements Provider, IpAddres
     /**
      * {@inheritDoc}
      */
-    public function reverse($latitude, $longitude)
+    public function reverseQuery(ReverseQuery $query)
     {
         throw new UnsupportedOperation('The MaxMindBinary is not able to do reverse geocoding.');
     }

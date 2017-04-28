@@ -1,0 +1,126 @@
+s:3914:"{
+   "documentation" : "https://geocoder.opencagedata.com/api",
+   "licenses" : [
+      {
+         "name" : "CC-BY-SA",
+         "url" : "http://creativecommons.org/licenses/by-sa/3.0/"
+      },
+      {
+         "name" : "ODbL",
+         "url" : "http://opendatacommons.org/licenses/odbl/summary/"
+      }
+   ],
+   "rate" : {
+      "limit" : 2500,
+      "remaining" : 2496,
+      "reset" : 1491782400
+   },
+   "results" : [
+      {
+         "annotations" : {
+            "DMS" : {
+               "lat" : "38\u00b0 54' 1.81440'' N",
+               "lng" : "77\u00b0 2' 12.83928'' W"
+            },
+            "MGRS" : "18SUJ2336607707",
+            "Maidenhead" : "FM18lv56nc",
+            "Mercator" : {
+               "x" : -8575708.461,
+               "y" : 4680593.136
+            },
+            "OSM" : {
+               "edit_url" : "https://www.openstreetmap.org/edit?way=55326891#map=17/38.90050/-77.03690",
+               "url" : "https://www.openstreetmap.org/?mlat=38.90050&mlon=-77.03690#map=17/38.90050/-77.03690"
+            },
+            "callingcode" : 1,
+            "currency" : {
+               "alternate_symbols" : [
+                  "US$"
+               ],
+               "decimal_mark" : ".",
+               "disambiguate_symbol" : "US$",
+               "html_entity" : "$",
+               "iso_code" : "USD",
+               "iso_numeric" : 840,
+               "name" : "United States Dollar",
+               "smallest_denomination" : 1,
+               "subunit" : "Cent",
+               "subunit_to_unit" : 100,
+               "symbol" : "$",
+               "symbol_first" : 1,
+               "thousands_separator" : ","
+            },
+            "geohash" : "dqcjqcx7y5s0f3uj2swv",
+            "qibla" : 56.56,
+            "sun" : {
+               "rise" : {
+                  "apparent" : 1491734280,
+                  "astronomical" : 1491728700,
+                  "civil" : 1491732660,
+                  "nautical" : 1491730740
+               },
+               "set" : {
+                  "apparent" : 1491781200,
+                  "astronomical" : 1491700380,
+                  "civil" : 1491696420,
+                  "nautical" : 1491698340
+               }
+            },
+            "timezone" : {
+               "name" : "America/New_York",
+               "now_in_dst" : 1,
+               "offset_sec" : -14400,
+               "offset_string" : -400,
+               "short_name" : "EDT"
+            },
+            "what3words" : {
+               "words" : "love.leader.empty"
+            }
+         },
+         "bounds" : {
+            "northeast" : {
+               "lat" : 38.9006934,
+               "lng" : -77.036723
+            },
+            "southwest" : {
+               "lat" : 38.9003173,
+               "lng" : -77.0371737
+            }
+         },
+         "components" : {
+            "_type" : "hotel",
+            "city" : "Washington",
+            "country" : "United States of America",
+            "country_code" : "us",
+            "hotel" : "Hay-Adams Hotel",
+            "house_number" : "800",
+            "neighbourhood" : "Golden Triangle",
+            "postcode" : "20006",
+            "road" : "16th Street Northwest",
+            "state" : "District of Columbia",
+            "suburb" : "Logan Circle"
+         },
+         "confidence" : 9,
+         "formatted" : "Hay-Adams Hotel, 800 16th Street Northwest, Washington, DC 20006, United States of America",
+         "geometry" : {
+            "lat" : 38.900504,
+            "lng" : -77.0368998
+         }
+      }
+   ],
+   "status" : {
+      "code" : 200,
+      "message" : "OK"
+   },
+   "stay_informed" : {
+      "blog" : "http://blog.opencagedata.com",
+      "twitter" : "https://twitter.com/opencagedata"
+   },
+   "thanks" : "For using an OpenCage Data API",
+   "timestamp" : {
+      "created_http" : "Sun, 09 Apr 2017 12:49:15 GMT",
+      "created_unix" : 1491742155
+   },
+   "total_results" : 1
+}
+";

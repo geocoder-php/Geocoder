@@ -15,14 +15,15 @@ use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Exception\ZeroResults;
+use Geocoder\Model\Query\GeocodeQuery;
+use Geocoder\Model\Query\ReverseQuery;
 use Http\Client\HttpClient;
 
 /**
  * @author Antoine Corcy <contact@sbin.dk>
  */
-final class TomTom extends AbstractHttpProvider implements LocaleAwareProvider
+final class TomTom extends AbstractHttpProvider implements LocaleAwareGeocoder, Provider
 {
-    use LocaleTrait;
 
     /**
      * @var string
@@ -42,21 +43,20 @@ final class TomTom extends AbstractHttpProvider implements LocaleAwareProvider
     /**
      * @param HttpClient $client An HTTP adapter.
      * @param string     $apiKey An API key.
-     * @param string     $locale A locale (optional).
      */
-    public function __construct(HttpClient $client, $apiKey, $locale = null)
+    public function __construct(HttpClient $client, $apiKey)
     {
         parent::__construct($client);
 
         $this->apiKey = $apiKey;
-        $this->locale = $locale;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function geocode($address)
+    public function geocodeQuery(GeocodeQuery $query)
     {
+        $address = $query->getText();
         if (null === $this->apiKey) {
             throw new InvalidCredentials('No API Key provided.');
         }
@@ -66,23 +66,26 @@ final class TomTom extends AbstractHttpProvider implements LocaleAwareProvider
             throw new UnsupportedOperation('The TomTom provider does not support IP addresses, only street addresses.');
         }
 
-        $query = sprintf(self::GEOCODE_ENDPOINT_URL, $this->apiKey, rawurlencode($address), $this->getLimit());
+        $url = sprintf(self::GEOCODE_ENDPOINT_URL, $this->apiKey, rawurlencode($address), $query->getLimit());
 
-        return $this->executeQuery($query);
+        return $this->executeQuery($url, $query->getLocale());
     }
 
     /**
      * {@inheritDoc}
      */
-    public function reverse($latitude, $longitude)
+    public function reverseQuery(ReverseQuery $query)
     {
+        $coordinates = $query->getCoordinates();
+        $longitude = $coordinates->getLongitude();
+        $latitude = $coordinates->getLatitude();
         if (null === $this->apiKey) {
             throw new InvalidCredentials('No Map API Key provided.');
         }
 
-        $query = sprintf(self::REVERSE_ENDPOINT_URL, $this->apiKey, $latitude, $longitude);
+        $url = sprintf(self::REVERSE_ENDPOINT_URL, $this->apiKey, $latitude, $longitude);
 
-        return $this->executeQuery($query);
+        return $this->executeQuery($url, $query->getLocale());
     }
 
     /**
@@ -96,12 +99,12 @@ final class TomTom extends AbstractHttpProvider implements LocaleAwareProvider
     /**
      * @param string $query
      */
-    private function executeQuery($query)
+    private function executeQuery($query, $locale)
     {
-        if (null !== $this->getLocale()) {
+        if (null !== $locale) {
             // Supported 2- character values are de, en, es, fr, it, nl, pl, pt, and sv.
             // Equivalent 3-character values are GER, ENG, SPA, FRE, ITA, DUT, POL, POR, and SWE.
-            $query = sprintf('%s&language=%s', $query, substr($this->getLocale(), 0, 2));
+            $query = sprintf('%s&language=%s', $query, substr($locale, 0, 2));
         }
 
         $request = $this->getMessageFactory()->createRequest('GET', $query);

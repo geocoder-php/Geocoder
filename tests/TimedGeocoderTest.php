@@ -2,23 +2,38 @@
 
 namespace Geocoder\Tests;
 
+use Geocoder\Provider\Provider;
 use Geocoder\TimedGeocoder;
 use Symfony\Component\Stopwatch\Stopwatch;
 
 class TimedGeocoderTest extends TestCase
 {
+    /**
+     * @var Stopwatch
+     */
+    private $stopwatch;
+
+    /**
+     * @var Provider
+     */
+    private $delegate;
+
+    /**
+     * @var TimedGeocoder
+     */
+    private $geocoder;
+
     protected function setUp()
     {
         $this->stopwatch = new Stopwatch();
-        $this->delegate = $this->getMock('Geocoder\Geocoder');
+        $this->delegate = $this->getMock(Provider::class);
         $this->geocoder = new TimedGeocoder($this->delegate, $this->stopwatch);
     }
 
     public function testGeocode()
     {
         $this->delegate->expects($this->once())
-             ->method('geocode')
-             ->with($this->equalTo('foo'))
+             ->method('geocodeQuery')
              ->will($this->returnValue([]));
 
         $this->geocoder->geocode('foo');
@@ -29,8 +44,7 @@ class TimedGeocoderTest extends TestCase
     public function testGeocodeThrowsException()
     {
         $this->delegate->expects($this->once())
-             ->method('geocode')
-             ->with($this->equalTo('foo'))
+             ->method('geocodeQuery')
              ->will($this->throwException($exception = new \Exception()));
 
         try {
@@ -46,8 +60,7 @@ class TimedGeocoderTest extends TestCase
     public function testReverse()
     {
         $this->delegate->expects($this->once())
-             ->method('reverse')
-             ->with($this->equalTo(0, 0))
+             ->method('reverseQuery')
              ->will($this->returnValue([]));
 
         $this->geocoder->reverse(0, 0);
@@ -58,8 +71,7 @@ class TimedGeocoderTest extends TestCase
     public function testReverseThrowsException()
     {
         $this->delegate->expects($this->once())
-             ->method('reverse')
-             ->with($this->equalTo(0, 0))
+             ->method('reverseQuery')
              ->will($this->throwException($exception = new \Exception()));
 
         try {

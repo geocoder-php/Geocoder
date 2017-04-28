@@ -12,13 +12,15 @@ namespace Geocoder\Provider;
 
 use Geocoder\Exception\ChainZeroResults;
 use Geocoder\Exception\InvalidCredentials;
+use Geocoder\Model\AddressCollection;
+use Geocoder\Model\Query\GeocodeQuery;
+use Geocoder\Model\Query\ReverseQuery;
 
 /**
  * @author Markus Bachmann <markus.bachmann@bachi.biz>
  */
-final class Chain implements LocaleAwareProvider
+final class Chain implements LocaleAwareGeocoder, Provider
 {
-    use LocaleTrait;
 
     /**
      * @var Provider[]
@@ -36,16 +38,12 @@ final class Chain implements LocaleAwareProvider
     /**
      * {@inheritDoc}
      */
-    public function geocode($address)
+    public function geocodeQuery(GeocodeQuery $query)
     {
         $exceptions = [];
         foreach ($this->providers as $provider) {
-            if ($provider instanceof LocaleAwareProvider && $this->getLocale() !== null) {
-                $provider = clone $provider;
-                $provider->setLocale($this->getLocale());
-            }
             try {
-                return $provider->geocode($address);
+                return $provider->geocodeQuery($query);
             } catch (InvalidCredentials $e) {
                 throw $e;
             } catch (\Exception $e) {
@@ -53,18 +51,18 @@ final class Chain implements LocaleAwareProvider
             }
         }
 
-        throw new ChainZeroResults(sprintf('No provider could geocode address: "%s".', $address), $exceptions);
+        throw new ChainZeroResults(sprintf('No provider could geocode address: "%s".', $query->getText()), $exceptions);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function reverse($latitude, $longitude)
+    public function reverseQuery(ReverseQuery $query)
     {
         $exceptions = [];
         foreach ($this->providers as $provider) {
             try {
-                return $provider->reverse($latitude, $longitude);
+                return $provider->reverseQuery($query);
             } catch (InvalidCredentials $e) {
                 throw $e;
             } catch (\Exception $e) {
@@ -72,6 +70,9 @@ final class Chain implements LocaleAwareProvider
             }
         }
 
+        $coordinates = $query->getCoordinates();
+        $longitude = $coordinates->getLongitude();
+        $latitude = $coordinates->getLatitude();
         throw new ChainZeroResults(sprintf('No provider could reverse coordinates: %f, %f.', $latitude, $longitude), $exceptions);
     }
 

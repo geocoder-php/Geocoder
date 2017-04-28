@@ -2,7 +2,7 @@
 
 namespace Geocoder\Tests\Provider;
 
-use Geocoder\Location;
+use Geocoder\Location;use Geocoder\Model\Query\GeocodeQuery;use Geocoder\Model\Query\ReverseQuery;
 use Geocoder\Tests\TestCase;
 use Geocoder\Provider\TomTom;
 
@@ -22,25 +22,7 @@ class TomTomTest extends TestCase
     public function testGeocodeWithNullApiKey()
     {
         $provider = new TomTom($this->getMockAdapter($this->never()), null);
-        $provider->geocode('foo');
-    }
-
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
-    public function testGeocodeWithNull()
-    {
-        $provider = new TomTom($this->getMockAdapter(), 'api_key');
-        $provider->geocode(null);
-    }
-
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
-    public function testGeocodeWithEmpty()
-    {
-        $provider = new TomTom($this->getMockAdapter(), 'api_key');
-        $provider->geocode('');
+        $provider->geocodeQuery(GeocodeQuery::create('foo'));
     }
 
     /**
@@ -49,7 +31,7 @@ class TomTomTest extends TestCase
     public function testGeocodeWithAddressContentReturnNull()
     {
         $provider = new TomTom($this->getMockAdapterReturns(null), 'api_key');
-        $provider->geocode('Tagensvej 47, 2200 København N');
+        $provider->geocodeQuery(GeocodeQuery::create('Tagensvej 47, 2200 København N'));
     }
 
     /**
@@ -58,7 +40,7 @@ class TomTomTest extends TestCase
     public function testGeocodeWithAddress()
     {
         $provider = new TomTom($this->getMockAdapter(), 'api_key');
-        $provider->geocode('Tagensvej 47, 2200 København N');
+        $provider->geocodeQuery(GeocodeQuery::create('Tagensvej 47, 2200 København N'));
     }
 
     /**
@@ -71,7 +53,7 @@ class TomTomTest extends TestCase
 XML;
 
         $provider = new TomTom($this->getMockAdapterReturns($ZeroResults), 'api_key');
-        $provider->geocode('foo');
+        $provider->geocodeQuery(GeocodeQuery::create('foo'));
     }
 
     public function testGeocodeWithRealAddress()
@@ -81,7 +63,7 @@ XML;
         }
 
         $provider = new TomTom($this->getAdapter($_SERVER['TOMTOM_MAP_KEY']), $_SERVER['TOMTOM_MAP_KEY']);
-        $results  = $provider->geocode('Tagensvej 47, 2200 København N');
+        $results  = $provider->geocodeQuery(GeocodeQuery::create('Tagensvej 47, 2200 København N'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -109,8 +91,8 @@ XML;
             $this->markTestSkipped('You need to configure the TOMTOM_MAP_KEY value in phpunit.xml');
         }
 
-        $provider = new TomTom($this->getAdapter($_SERVER['TOMTOM_MAP_KEY']), $_SERVER['TOMTOM_MAP_KEY'], 'fr_FR');
-        $results  = $provider->geocode('Tagensvej 47, 2200 København N');
+        $provider = new TomTom($this->getAdapter($_SERVER['TOMTOM_MAP_KEY']), $_SERVER['TOMTOM_MAP_KEY']);
+        $results  = $provider->geocodeQuery(GeocodeQuery::create('Tagensvej 47, 2200 København N')->withLocale('fr_FR'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -138,8 +120,8 @@ XML;
             $this->markTestSkipped('You need to configure the TOMTOM_MAP_KEY value in phpunit.xml');
         }
 
-        $provider = new TomTom($this->getAdapter($_SERVER['TOMTOM_MAP_KEY']), $_SERVER['TOMTOM_MAP_KEY'], 'sv-SE');
-        $results  = $provider->geocode('Tagensvej 47, 2200 København N');
+        $provider = new TomTom($this->getAdapter($_SERVER['TOMTOM_MAP_KEY']), $_SERVER['TOMTOM_MAP_KEY']);
+        $results  = $provider->geocodeQuery(GeocodeQuery::create('Tagensvej 47, 2200 København N')->withLocale('sv-SE'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -168,7 +150,7 @@ XML;
         }
 
         $provider = new TomTom($this->getAdapter($_SERVER['TOMTOM_MAP_KEY']), $_SERVER['TOMTOM_MAP_KEY']);
-        $results  = $provider->geocode('Paris');
+        $results  = $provider->geocodeQuery(GeocodeQuery::create('Paris'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
@@ -243,7 +225,7 @@ XML;
     public function testGeocodeWithLocalhostIPv4()
     {
         $provider = new TomTom($this->getMockAdapter($this->never()), 'api_key');
-        $provider->geocode('127.0.0.1');
+        $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
     }
 
     /**
@@ -253,7 +235,7 @@ XML;
     public function testGeocodeWithLocalhostIPv6()
     {
         $provider = new TomTom($this->getMockAdapter($this->never()), 'api_key');
-        $provider->geocode('::1');
+        $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
     /**
@@ -263,7 +245,7 @@ XML;
     public function testGeocodeWithIPv4()
     {
         $provider = new TomTom($this->getAdapter(), 'api_key');
-        $provider->geocode('74.200.247.59');
+        $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
     /**
@@ -273,7 +255,7 @@ XML;
     public function testGeocodeWithIPv6()
     {
         $provider = new TomTom($this->getAdapter(), 'api_key');
-        $provider->geocode('::ffff:74.200.247.59');
+        $provider->geocodeQuery(GeocodeQuery::create('::ffff:74.200.247.59'));
     }
 
     /**
@@ -283,7 +265,7 @@ XML;
     public function testReverseWithoutApiKey()
     {
         $provider = new TomTom($this->getMockAdapter($this->never()), null);
-        $provider->reverse(1, 2);
+        $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
     }
 
     /**
@@ -292,7 +274,7 @@ XML;
     public function testReverse()
     {
         $provider = new TomTom($this->getMockAdapter(), 'api_key');
-        $provider->reverse(1, 2);
+        $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
     }
 
     /**
@@ -301,7 +283,7 @@ XML;
     public function testReverseWithCoordinatesContentReturnNull()
     {
         $provider = new TomTom($this->getMockAdapterReturns(null), 'api_key');
-        $provider->reverse(48.86321648955345, 2.3887719959020615);
+        $provider->reverseQuery(ReverseQuery::fromCoordinates(48.86321648955345, 2.3887719959020615));
     }
 
     /**
@@ -310,7 +292,7 @@ XML;
     public function testReverseWithCoordinatesGetsEmptyContent()
     {
         $provider = new TomTom($this->getMockAdapterReturns(''), 'api_key');
-        $provider->reverse('60.4539471728726', '22.2567841926781');
+        $provider->reverseQuery(ReverseQuery::fromCoordinates('60.4539471728726', '22.2567841926781'));
     }
 
     /**
@@ -323,7 +305,7 @@ XML;
 XML;
 
         $provider = new TomTom($this->getMockAdapterReturns($error400), 'api_key');
-        $provider->reverse(1, 2);
+        $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
     }
 
     /**
@@ -337,7 +319,7 @@ XML;
 XML;
 
         $provider = new TomTom($this->getMockAdapterReturns($error403), 'api_key');
-        $provider->reverse(1, 2);
+        $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
     }
 
     public function testReverseWithRealCoordinates()
@@ -347,7 +329,7 @@ XML;
         }
 
         $provider = new TomTom($this->getAdapter($_SERVER['TOMTOM_MAP_KEY']), $_SERVER['TOMTOM_MAP_KEY']);
-        $results  = $provider->reverse(48.86321648955345, 2.3887719959020615);
+        $results  = $provider->reverseQuery(ReverseQuery::fromCoordinates(48.86321648955345, 2.3887719959020615));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -376,7 +358,7 @@ XML;
         }
 
         $provider = new TomTom($this->getAdapter($_SERVER['TOMTOM_MAP_KEY']),  $_SERVER['TOMTOM_MAP_KEY']);
-        $results  = $provider->reverse(56.5231, 10.0659);
+        $results  = $provider->reverseQuery(ReverseQuery::fromCoordinates(56.5231, 10.0659));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);

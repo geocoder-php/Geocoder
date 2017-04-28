@@ -1,0 +1,34 @@
+s:808:"{
+   "documentation" : "https://geocoder.opencagedata.com/api",
+   "licenses" : [
+      {
+         "name" : "CC-BY-SA",
+         "url" : "http://creativecommons.org/licenses/by-sa/3.0/"
+      },
+      {
+         "name" : "ODbL",
+         "url" : "http://opendatacommons.org/licenses/odbl/summary/"
+      }
+   ],
+   "rate" : {
+      "limit" : 2500,
+      "remaining" : 2494,
+      "reset" : 1491782400
+   },
+   "results" : [],
+   "status" : {
+      "code" : 200,
+      "message" : "OK"
+   },
+   "stay_informed" : {
+      "blog" : "http://blog.opencagedata.com",
+      "twitter" : "https://twitter.com/opencagedata"
+   },
+   "thanks" : "For using an OpenCage Data API",
+   "timestamp" : {
+      "created_http" : "Sun, 09 Apr 2017 12:49:16 GMT",
+      "created_unix" : 1491742156
+   },
+   "total_results" : 0
+}
+";

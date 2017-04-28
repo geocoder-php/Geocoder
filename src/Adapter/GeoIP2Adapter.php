@@ -13,7 +13,6 @@ namespace Geocoder\Adapter;
 use GeoIp2\ProviderInterface;
 use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\UnsupportedOperation;
-use Geocoder\Provider\LocaleTrait;
 
 /**
  * @author Jens Wiese <jens@howtrueisfalse.de>
@@ -25,8 +24,6 @@ class GeoIP2Adapter
      */
     const GEOIP2_MODEL_CITY    = 'city';
     const GEOIP2_MODEL_COUNTRY = 'country';
-
-    use LocaleTrait;
 
     /**
      * @var ProviderInterface

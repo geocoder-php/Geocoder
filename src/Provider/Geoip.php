@@ -14,6 +14,8 @@ use Geocoder\Exception\ExtensionNotLoaded;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Exception\ZeroResults;
+use Geocoder\Model\Query\GeocodeQuery;
+use Geocoder\Model\Query\ReverseQuery;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -34,8 +36,10 @@ final class Geoip extends AbstractProvider implements Provider, IpAddressGeocode
     /**
      * {@inheritDoc}
      */
-    public function geocode($address)
+    public function geocodeQuery(GeocodeQuery $query)
     {
+        $address = $query->getText();
+
         if (!filter_var($address, FILTER_VALIDATE_IP)) {
             throw new UnsupportedOperation('The Geoip provider does not support street addresses, only IPv4 addresses.');
         }
@@ -80,7 +84,7 @@ final class Geoip extends AbstractProvider implements Provider, IpAddressGeocode
     /**
      * {@inheritDoc}
      */
-    public function reverse($latitude, $longitude)
+    public function reverseQuery(ReverseQuery $query)
     {
         throw new UnsupportedOperation('The Geoip provider is not able to do reverse geocoding.');
     }

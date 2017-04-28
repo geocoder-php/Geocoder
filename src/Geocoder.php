@@ -10,15 +10,23 @@
 
 namespace Geocoder;
 
+use Geocoder\Provider\Provider;
+
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-interface Geocoder
+interface Geocoder extends Provider
 {
     /**
-     * Version
+     * Version of this package.
      */
-    const VERSION = '3.3.1-dev';
+    const MAJOR_VERSION = 4;
+    const VERSION = '4.0';
+
+    /**
+     * The default result limit. 
+     */
+    const DEFAULT_RESULT_LIMIT = 5;
 
     /**
      * Geocodes a given value.
@@ -40,22 +48,4 @@ interface Geocoder
      * @throws \Geocoder\Exception\Exception
      */
     public function reverse($latitude, $longitude);
-
-    /**
-     * Returns the maximum number of Address objects that can be
-     * returned by `geocode()` or `reverse()` methods.
-     *
-     * @return integer
-     */
-    public function getLimit();
-
-    /**
-     * Sets the maximum number of `Address` objects that can be
-     * returned by `geocode()` or `reverse()` methods.
-     *
-     * @param integer $limit
-     *
-     * @return Geocoder
-     */
-    public function limit($limit);
 }

@@ -82,22 +82,25 @@ since each HTTP-based provider implements
 
 ```php
 $adapter  = new \Http\Adapter\Guzzle6\Client();
-$geocoder = new \Geocoder\Provider\GoogleMaps($adapter);
+$provider = new \Geocoder\Provider\GoogleMaps($adapter);
+$geocoder = new StatefulGeocoder($provider, 'en');
 
 $geocoder->geocode(...);
 $geocoder->reverse(...);
 ```
 
-The `Geocoder` interface, which all providers implement, exposes two main
-methods:
+The `Provider` interface has three methods:
+
+* `geocodeQuery(GeocodeQuery $query):AddressCollection`
+* `reverseQuery(ReverseQuery $query):AddressCollection`
+* `getName():string`
+
+
+The `Geocoder` interface extends the `Provider` interface and exposes two additional methods. They will
+make migration from 3.x smoother.
 
 * `geocode($streetOrIpAddress)`
 * `reverse($latitude, $longitude)`
-
-It also contains methods to control the number of results:
-
-* `limit($limit)`
-* `getLimit()`
 
 ### Address & AddressCollection
 

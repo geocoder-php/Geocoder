@@ -10,6 +10,9 @@
 
 namespace Geocoder;
 
+use Geocoder\Model\Query\GeocodeQuery;
+use Geocoder\Model\Query\ReverseQuery;
+use Geocoder\Provider\Provider;
 use Symfony\Component\Stopwatch\Stopwatch;
 
 /**
@@ -19,11 +22,19 @@ use Symfony\Component\Stopwatch\Stopwatch;
  */
 class TimedGeocoder implements Geocoder
 {
+    use GeocoderTrait;
+
+    /**
+     * @var Provider
+     */
     private $delegate;
 
+    /**
+     * @var Stopwatch
+     */
     private $stopwatch;
 
-    public function __construct(Geocoder $delegate, Stopwatch $stopwatch)
+    public function __construct(Provider $delegate, Stopwatch $stopwatch)
     {
         $this->delegate  = $delegate;
         $this->stopwatch = $stopwatch;
@@ -32,12 +43,12 @@ class TimedGeocoder implements Geocoder
     /**
      * {@inheritDoc}
      */
-    public function geocode($value)
+    public function geocodeQuery(GeocodeQuery $query)
     {
         $this->stopwatch->start('geocode', 'geocoder');
 
         try {
-            $result = $this->delegate->geocode($value);
+            $result = $this->delegate->geocodeQuery($query);
         } catch (\Exception $e) {
             $this->stopwatch->stop('geocode');
 
@@ -52,12 +63,12 @@ class TimedGeocoder implements Geocoder
     /**
      * {@inheritDoc}
      */
-    public function reverse($latitude, $longitude)
+    public function reverseQuery(ReverseQuery $query)
     {
         $this->stopwatch->start('reverse', 'geocoder');
 
         try {
-            $result = $this->delegate->reverse($latitude, $longitude);
+            $result = $this->delegate->reverseQuery($query);
         } catch (\Exception $e) {
             $this->stopwatch->stop('reverse');
 
@@ -69,24 +80,13 @@ class TimedGeocoder implements Geocoder
         return $result;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getLimit()
-    {
-        return $this->delegate->getLimit();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function limit($limit)
-    {
-        return $this->delegate->limit($limit);
-    }
-
     public function __call($method, $args)
     {
         return call_user_func_array([$this->delegate, $method], $args);
+    }
+
+    public function getName()
+    {
+        return 'TimedGeocoder';
     }
 }

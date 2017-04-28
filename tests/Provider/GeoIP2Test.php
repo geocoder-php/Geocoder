@@ -12,7 +12,7 @@ namespace Geocoder\Tests\Provider;
 
 use Geocoder\Adapter\GeoIP2Adapter;
 use Geocoder\Exception\ZeroResults;
-use Geocoder\Location;
+use Geocoder\Location;use Geocoder\Model\Query\GeocodeQuery;use Geocoder\Model\Query\ReverseQuery;
 use Geocoder\Provider\GeoIP2;
 use Geocoder\Tests\TestCase;
 use GeoIp2\Database\Reader;
@@ -43,12 +43,12 @@ class GeoIP2Test extends TestCase
      */
     public function testQueryingReverseLeadsToException()
     {
-        $this->provider->reverse(50, 9);
+        $this->provider->reverseQuery(ReverseQuery::fromCoordinates(50, 9));
     }
 
     public function testGeocodeWithLocalhostIPv4()
     {
-        $results  = $this->provider->geocode('127.0.0.1');
+        $results  = $this->provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -66,7 +66,7 @@ class GeoIP2Test extends TestCase
      */
     public function testOnlyIpAddressesCouldBeResolved()
     {
-        $this->provider->geocode('Street 123, Somewhere');
+        $this->provider->geocodeQuery(GeocodeQuery::create('Street 123, Somewhere'));
     }
 
     /**
@@ -160,7 +160,7 @@ class GeoIP2Test extends TestCase
         $adapter = $this->getGeoIP2AdapterMock($adapterResponse);
         $provider = new GeoIP2($adapter);
 
-        $results = $provider->geocode($address);
+        $results = $provider->geocodeQuery(GeocodeQuery::create($address));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -206,7 +206,7 @@ class GeoIP2Test extends TestCase
 
         $provider = new GeoIP2($adapter);
 
-        $provider->geocode('74.200.247.59');
+        $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
     public function testGeoIp2Encoding()
@@ -225,7 +225,10 @@ class GeoIP2Test extends TestCase
      */
     public function getGeoIP2AdapterMock($returnValue = '')
     {
-        $mock = $this->getMockBuilder('Geocoder\Adapter\GeoIP2Adapter')->disableOriginalConstructor()->getMock();
+        $mock = $this->getMockBuilder('Geocoder\Adapter\GeoIP2Adapter')
+            ->disableOriginalConstructor()
+            ->setMethods(['getContent'])
+            ->getMock();
 
         if ($returnValue instanceof \Exception) {
             $returnValue = $this->throwException($returnValue);
@@ -233,7 +236,6 @@ class GeoIP2Test extends TestCase
             $returnValue = $this->returnValue($returnValue);
         }
 
-        $mock->expects($this->any())->method('setLocale')->will($this->returnSelf());
         $mock->expects($this->any())->method('getContent')->will($returnValue);
 
         return $mock;

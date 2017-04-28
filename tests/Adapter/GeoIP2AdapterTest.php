@@ -102,16 +102,6 @@ class GeoIP2AdapterTest extends TestCase
         new GeoIP2Adapter($this->getGeoIP2ProviderMock(), 'unsupported_model');
     }
 
-    public function testSettingLocaleIsCorrect()
-    {
-        $this->assertNull($this->adapter->getLocale());
-
-        $expectedLocale = 'it';
-        $this->adapter->setLocale($expectedLocale);
-
-        $this->assertEquals($expectedLocale, $this->adapter->getLocale());
-    }
-
     public function testReaderResponseIsJsonEncoded()
     {
         $cityModel = $this->getGeoIP2ModelMock(GeoIP2Adapter::GEOIP2_MODEL_CITY);

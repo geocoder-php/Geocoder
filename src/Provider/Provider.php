@@ -10,17 +10,31 @@
 
 namespace Geocoder\Provider;
 
-use Geocoder\Geocoder;
+use Geocoder\Model\AddressCollection;
+use Geocoder\Model\Query\GeocodeQuery;
+use Geocoder\Model\Query\ReverseQuery;
 
 /**
+ * Providers MUST always be stateless and immutable.
+ *
  * @author William Durand <william.durand1@gmail.com>
+ * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-interface Provider extends Geocoder
+interface Provider
 {
     /**
-     * @var integer
+     * @param GeocodeQuery $query
+     *
+     * @return AddressCollection
      */
-    const MAX_RESULTS = 5;
+    public function geocodeQuery(GeocodeQuery $query);
+
+    /**
+     * @param ReverseQuery $query
+     *
+     * @return AddressCollection
+     */
+    public function reverseQuery(ReverseQuery $query);
 
     /**
      * Returns the provider's name.

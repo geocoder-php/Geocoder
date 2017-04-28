@@ -3,6 +3,8 @@
 namespace Geocoder\Tests\Provider;
 
 use Geocoder\Location;
+use Geocoder\Model\Query\GeocodeQuery;
+use Geocoder\Model\Query\ReverseQuery;
 use Geocoder\Tests\TestCase;
 use Geocoder\Provider\BingMaps;
 
@@ -20,7 +22,7 @@ class BingMapsTest extends TestCase
     public function testGeocodeWithNullApiKey()
     {
         $provider = new BingMaps($this->getMockAdapter($this->never()), null);
-        $provider->geocode('foo');
+        $provider->geocodeQuery(GeocodeQuery::create('foo'));
     }
 
     /**
@@ -29,25 +31,7 @@ class BingMapsTest extends TestCase
     public function testGeocodeWithInvalidData()
     {
         $provider = new BingMaps($this->getMockAdapter(), 'api_key');
-        $provider->geocode('foobar');
-    }
-
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
-    public function testGeocodeWithNull()
-    {
-        $provider = new BingMaps($this->getMockAdapter(), 'api_key');
-        $provider->geocode(null);
-    }
-
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
-    public function testGeocodeWithEmpty()
-    {
-        $provider = new BingMaps($this->getMockAdapter(), 'api_key');
-        $provider->geocode('');
+        $provider->geocodeQuery(GeocodeQuery::create('foobar'));
     }
 
     /**
@@ -57,7 +41,7 @@ class BingMapsTest extends TestCase
     public function testGeocodeWithLocalhostIPv4()
     {
         $provider = new BingMaps($this->getMockAdapter($this->never()), 'api_key');
-        $provider->geocode('127.0.0.1');
+        $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
     }
 
     /**
@@ -67,7 +51,7 @@ class BingMapsTest extends TestCase
     public function testGeocodeWithLocalhostIPv6()
     {
         $provider = new BingMaps($this->getMockAdapter($this->never()), 'api_key');
-        $provider->geocode('::1');
+        $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
     /**
@@ -76,7 +60,7 @@ class BingMapsTest extends TestCase
     public function testGeocodeWithAddressGetsNullContent()
     {
         $provider = new BingMaps($this->getMockAdapterReturns(null), 'api_key');
-        $provider->geocode('10 avenue Gambetta, Paris, France');
+        $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
     }
 
     public function testGeocodeReturnsMultipleResults()
@@ -86,7 +70,7 @@ class BingMapsTest extends TestCase
 JSON;
 
         $provider = new BingMaps($this->getMockAdapterReturns($json), 'api_key', 'fr_FR');
-        $results  = $provider->geocode('10 avenue Gambetta, Paris, France');
+        $results  = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(3, $results);
@@ -161,7 +145,7 @@ JSON;
 JSON;
 
         $provider = new BingMaps($this->getMockAdapterReturns($json), 'api_key');
-        $results  = $provider->reverse(48.86321648955345, 2.3887719959020615);
+        $results  = $provider->reverseQuery(ReverseQuery::fromCoordinates(48.86321648955345, 2.3887719959020615));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -195,8 +179,8 @@ JSON;
             $this->markTestSkipped('You need to configure the BINGMAPS_API_KEY value in phpunit.xml');
         }
 
-        $provider = new BingMaps($this->getAdapter($_SERVER['BINGMAPS_API_KEY']), $_SERVER['BINGMAPS_API_KEY'], 'fr-FR');
-        $results  = $provider->geocode('10 avenue Gambetta, Paris, France');
+        $provider = new BingMaps($this->getAdapter($_SERVER['BINGMAPS_API_KEY']), $_SERVER['BINGMAPS_API_KEY']);
+        $results  = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France')->withLocale('fr-FR'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -233,8 +217,8 @@ JSON;
             $this->markTestSkipped('You need to configure the BINGMAPS_API_KEY value in phpunit.xml');
         }
 
-        $provider = new BingMaps($this->getAdapter($_SERVER['BINGMAPS_API_KEY']), $_SERVER['BINGMAPS_API_KEY'], 'fr-FR');
-        $results  = $provider->geocode('Castelnuovo, Italie');
+        $provider = new BingMaps($this->getAdapter($_SERVER['BINGMAPS_API_KEY']), $_SERVER['BINGMAPS_API_KEY']);
+        $results  = $provider->geocodeQuery(GeocodeQuery::create('Castelnuovo, Italie')->withLocale('fr-FR'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
@@ -346,7 +330,7 @@ JSON;
     public function testReverse()
     {
         $provider = new BingMaps($this->getMockAdapter(), 'api_key');
-        $provider->reverse(1, 2);
+        $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
     }
 
     /**
@@ -355,7 +339,7 @@ JSON;
     public function testReverseWithCoordinatesContentReturnNull()
     {
         $provider = new BingMaps($this->getMockAdapterReturns(null), 'api_key');
-        $provider->reverse(48.86321648955345, 2.3887719959020615);
+        $provider->reverseQuery(ReverseQuery::fromCoordinates(48.86321648955345, 2.3887719959020615));
     }
 
     public function testReverseWithRealCoordinatesReturnsSingleResult()
@@ -365,7 +349,7 @@ JSON;
         }
 
         $provider = new BingMaps($this->getAdapter($_SERVER['BINGMAPS_API_KEY']), $_SERVER['BINGMAPS_API_KEY']);
-        $results  = $provider->reverse(48.86321648955345, 2.3887719959020615);
+        $results  = $provider->reverseQuery(ReverseQuery::fromCoordinates(48.86321648955345, 2.3887719959020615));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -404,7 +388,7 @@ JSON;
         }
 
         $provider = new BingMaps($this->getAdapter($_SERVER['BINGMAPS_API_KEY']), $_SERVER['BINGMAPS_API_KEY']);
-        $provider->geocode('88.188.221.14');
+        $provider->geocodeQuery(GeocodeQuery::create('88.188.221.14'));
     }
 
     /**
@@ -418,6 +402,6 @@ JSON;
         }
 
         $provider = new BingMaps($this->getAdapter($_SERVER['BINGMAPS_API_KEY']), $_SERVER['BINGMAPS_API_KEY']);
-        $provider->geocode('::ffff:88.188.221.14');
+        $provider->geocodeQuery(GeocodeQuery::create('::ffff:88.188.221.14'));
     }
 }

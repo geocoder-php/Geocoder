@@ -15,6 +15,9 @@ use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Exception\ZeroResults;
+use Geocoder\Model\AddressCollection;
+use Geocoder\Model\Query\GeocodeQuery;
+use Geocoder\Model\Query\ReverseQuery;
 use Http\Client\HttpClient;
 
 /**
@@ -52,8 +55,9 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
     /**
      * {@inheritDoc}
      */
-    public function geocode($address)
+    public function geocodeQuery(GeocodeQuery $query)
     {
+        $address = $query->getText();
         if (filter_var($address, FILTER_VALIDATE_IP)) {
             throw new UnsupportedOperation('The ArcGISOnline provider does not support IP addresses, only street addresses.');
         }
@@ -63,12 +67,12 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
             throw new InvalidArgument('Address cannot be empty.');
         }
 
-        $query = sprintf(self::ENDPOINT_URL, urlencode($address));
-        $json  = $this->executeQuery($query);
+        $url = sprintf(self::ENDPOINT_URL, urlencode($address));
+        $json  = $this->executeQuery($url, $query->getLimit());
 
         // no result
         if (empty($json->locations)) {
-            throw ZeroResults::create($query);
+            throw ZeroResults::create($url);
         }
 
         $results = [];
@@ -107,13 +111,17 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
     /**
      * {@inheritDoc}
      */
-    public function reverse($latitude, $longitude)
+    public function reverseQuery(ReverseQuery $query)
     {
-        $query = sprintf(self::REVERSE_ENDPOINT_URL, $longitude, $latitude);
-        $json  = $this->executeQuery($query);
+        $coordinates = $query->getCoordinates();
+        $longitude = $coordinates->getLongitude();
+        $latitude = $coordinates->getLatitude();
+
+        $url = sprintf(self::REVERSE_ENDPOINT_URL, $longitude, $latitude);
+        $json  = $this->executeQuery($url, $query->getLimit());
 
         if (property_exists($json, 'error')) {
-            throw ZeroResults::create($query);
+            throw ZeroResults::create($url);
         }
 
         $data = $json->address;
@@ -149,22 +157,24 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
 
     /**
      * @param string $query
+     * @param int $limit
      */
-    private function buildQuery($query)
+    private function buildQuery($query, $limit)
     {
         if (null !== $this->sourceCountry) {
             $query = sprintf('%s&sourceCountry=%s', $query, $this->sourceCountry);
         }
 
-        return sprintf('%s&maxLocations=%d&f=%s&outFields=*', $query, $this->getLimit(), 'json');
+        return sprintf('%s&maxLocations=%d&f=%s&outFields=*', $query, $limit, 'json');
     }
 
     /**
      * @param string $query
+     * @param int $limit
      */
-    private function executeQuery($query)
+    private function executeQuery($query, $limit)
     {
-        $query = $this->buildQuery($query);
+        $query = $this->buildQuery($query, $limit);
         $request = $this->getMessageFactory()->createRequest('GET', $query);
         $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
 

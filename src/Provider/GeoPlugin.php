@@ -14,6 +14,8 @@ use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Exception\ZeroResults;
+use Geocoder\Model\Query\GeocodeQuery;
+use Geocoder\Model\Query\ReverseQuery;
 
 /**
  * @author Andrea Cristaudo <andrea.cristaudo@gmail.com>
@@ -28,8 +30,9 @@ final class GeoPlugin extends AbstractHttpProvider implements Provider, IpAddres
     /**
      * {@inheritDoc}
      */
-    public function geocode($address)
+    public function geocodeQuery(GeocodeQuery $query)
     {
+        $address = $query->getText();
         if (!filter_var($address, FILTER_VALIDATE_IP)) {
             throw new UnsupportedOperation('The GeoPlugin provider does not support street addresses, only IP addresses.');
         }
@@ -38,15 +41,15 @@ final class GeoPlugin extends AbstractHttpProvider implements Provider, IpAddres
             return $this->returnResults([ $this->getLocalhostDefaults() ]);
         }
 
-        $query = sprintf(self::GEOCODE_ENDPOINT_URL, $address);
+        $url = sprintf(self::GEOCODE_ENDPOINT_URL, $address);
 
-        return $this->executeQuery($query);
+        return $this->executeQuery($url);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function reverse($latitude, $longitude)
+    public function reverseQuery(ReverseQuery $query)
     {
         throw new UnsupportedOperation('The GeoPlugin provider is not able to do reverse geocoding.');
     }
@@ -60,25 +63,25 @@ final class GeoPlugin extends AbstractHttpProvider implements Provider, IpAddres
     }
 
     /**
-     * @param string $query
+     * @param string $url
      */
-    private function executeQuery($query)
+    private function executeQuery($url)
     {
-        $request = $this->getMessageFactory()->createRequest('GET', $query);
+        $request = $this->getMessageFactory()->createRequest('GET', $url);
         $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
 
         if (empty($content)) {
-            throw InvalidServerResponse::create($query);
+            throw InvalidServerResponse::create($url);
         }
 
         $json = json_decode($content, true);
 
         if (!is_array($json) || !count($json)) {
-            throw InvalidServerResponse::create($query);
+            throw InvalidServerResponse::create($url);
         }
 
         if (!array_key_exists('geoplugin_status', $json) || (200 !== $json['geoplugin_status'] && 206 !== $json['geoplugin_status'])) {
-            throw ZeroResults::create($query);
+            throw ZeroResults::create($url);
         }
 
         $data = array_filter($json);

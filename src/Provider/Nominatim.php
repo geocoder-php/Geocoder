@@ -14,14 +14,15 @@ use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Exception\ZeroResults;
+use Geocoder\Model\Query\GeocodeQuery;
+use Geocoder\Model\Query\ReverseQuery;
 use Http\Client\HttpClient;
 
 /**
  * @author Niklas Närhinen <niklas@narhinen.net>
  */
-final class Nominatim extends AbstractHttpProvider implements LocaleAwareProvider
+final class Nominatim extends AbstractHttpProvider implements LocaleAwareGeocoder, Provider
 {
-    use LocaleTrait;
 
     /**
      * @var string
@@ -33,29 +34,28 @@ final class Nominatim extends AbstractHttpProvider implements LocaleAwareProvide
      * @param string|null $locale
      * @return Nominatim
      */
-    public static function withOpenStreetMapServer(HttpClient $client, $locale = null)
+    public static function withOpenStreetMapServer(HttpClient $client)
     {
-        return new self($client, 'https://nominatim.openstreetmap.org', $locale);
+        return new self($client, 'https://nominatim.openstreetmap.org');
     }
 
     /**
      * @param HttpClient $client  An HTTP adapter.
      * @param string     $rootUrl Root URL of the nominatim server
-     * @param string     $locale  A locale (optional).
      */
-    public function __construct(HttpClient $client, $rootUrl, $locale = null)
+    public function __construct(HttpClient $client, $rootUrl)
     {
         parent::__construct($client);
 
         $this->rootUrl = rtrim($rootUrl, '/');
-        $this->locale  = $locale;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function geocode($address)
+    public function geocodeQuery(GeocodeQuery $query)
     {
+        $address = $query->getText();
         // This API does not support IPv6
         if (filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
             throw new UnsupportedOperation('The ' . get_called_class() . ' provider does not support IPv6 addresses.');
@@ -65,23 +65,23 @@ final class Nominatim extends AbstractHttpProvider implements LocaleAwareProvide
             return $this->returnResults([ $this->getLocalhostDefaults() ]);
         }
 
-        $query   = sprintf($this->getGeocodeEndpointUrl(), urlencode($address), $this->getLimit());
-        $content = $this->executeQuery($query);
+        $url   = sprintf($this->getGeocodeEndpointUrl(), urlencode($address), $query->getLimit());
+        $content = $this->executeQuery($url, $query->getLocale());
 
         if (empty($content)) {
-            throw InvalidServerResponse::create($query);
+            throw InvalidServerResponse::create($url);
         }
 
         $doc = new \DOMDocument();
         if (!@$doc->loadXML($content) || null === $doc->getElementsByTagName('searchresults')->item(0)) {
-            throw InvalidServerResponse::create($query);
+            throw InvalidServerResponse::create($url);
         }
 
         $searchResult = $doc->getElementsByTagName('searchresults')->item(0);
         $places = $searchResult->getElementsByTagName('place');
 
         if (null === $places || 0 === $places->length) {
-            throw ZeroResults::create($query);
+            throw ZeroResults::create($url);
         }
 
         $results = [];
@@ -95,10 +95,13 @@ final class Nominatim extends AbstractHttpProvider implements LocaleAwareProvide
     /**
      * {@inheritDoc}
      */
-    public function reverse($latitude, $longitude)
+    public function reverseQuery(ReverseQuery $query)
     {
-        $query   = sprintf($this->getReverseEndpointUrl(), $latitude, $longitude);
-        $content = $this->executeQuery($query);
+        $coordinates = $query->getCoordinates();
+        $longitude = $coordinates->getLongitude();
+        $latitude = $coordinates->getLatitude();
+        $url   = sprintf($this->getReverseEndpointUrl(), $latitude, $longitude);
+        $content = $this->executeQuery($url, $query->getLocale());
 
         if (empty($content)) {
             throw new ZeroResults(sprintf('Unable to find results for coordinates [ %f, %f ].', $latitude, $longitude));
@@ -168,11 +171,12 @@ final class Nominatim extends AbstractHttpProvider implements LocaleAwareProvide
 
     /**
      * @param string $query
+     * @param string $locale
      */
-    private function executeQuery($query)
+    private function executeQuery($query, $locale)
     {
-        if (null !== $this->getLocale()) {
-            $query = sprintf('%s&accept-language=%s', $query, $this->getLocale());
+        if (null !== $locale) {
+            $query = sprintf('%s&accept-language=%s', $query, $locale);
         }
 
         $request = $this->getMessageFactory()->createRequest('GET', $query);

@@ -2,7 +2,7 @@
 
 namespace Geocoder\Tests\Provider;
 
-use Geocoder\Location;
+use Geocoder\Location;use Geocoder\Model\Query\GeocodeQuery;use Geocoder\Model\Query\ReverseQuery;
 use Geocoder\Tests\TestCase;
 use Geocoder\Provider\GeoIPs;
 
@@ -20,27 +20,7 @@ class GeoIPsTest extends TestCase
     public function testGeocodeWithNullApiKey()
     {
         $provider = new GeoIPs($this->getMockAdapter($this->never()), null);
-        $provider->geocode('foo');
-    }
-
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The GeoIPs provider does not support street addresses, only IPv4 addresses.
-     */
-    public function testGeocodeWithNull()
-    {
-        $provider = new GeoIPs($this->getMockAdapter($this->never()), 'api_key');
-        $provider->geocode(null);
-    }
-
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The GeoIPs provider does not support street addresses, only IPv4 addresses.
-     */
-    public function testGeocodeWithEmpty()
-    {
-        $provider = new GeoIPs($this->getMockAdapter($this->never()), 'api_key');
-        $provider->geocode('');
+        $provider->geocodeQuery(GeocodeQuery::create('foo'));
     }
 
     /**
@@ -50,13 +30,13 @@ class GeoIPsTest extends TestCase
     public function testGeocodeWithAddress()
     {
         $provider = new GeoIPs($this->getMockAdapter($this->never()), 'api_key');
-        $provider->geocode('10 avenue Gambetta, Paris, France');
+        $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
     }
 
     public function testGeocodeWithLocalhostIPv4()
     {
         $provider = new GeoIPs($this->getMockAdapter($this->never()), 'api_key');
-        $results  = $provider->geocode('127.0.0.1');
+        $results  = $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -75,7 +55,7 @@ class GeoIPsTest extends TestCase
     public function testGeocodeWithLocalhostIPv6()
     {
         $provider = new GeoIPs($this->getMockAdapter($this->never()), 'api_key');
-        $provider->geocode('::1');
+        $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
     /**
@@ -84,7 +64,7 @@ class GeoIPsTest extends TestCase
     public function testGeocodeWithRealIPv4GetsNullContent()
     {
         $provider = new GeoIPs($this->getMockAdapterReturns(null), 'api_key');
-        $provider->geocode('74.200.247.59');
+        $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
     /**
@@ -93,7 +73,7 @@ class GeoIPsTest extends TestCase
     public function testGeocodeWithRealIPv4GetsEmptyContent()
     {
         $provider = new GeoIPs($this->getMockAdapterReturns(''), 'api_key');
-        $provider->geocode('74.200.247.59');
+        $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
     public function testGeocodeWithRealIPv4GetsFakeContentFormattedEmpty()
@@ -125,7 +105,7 @@ class GeoIPsTest extends TestCase
         }}';
 
         $provider = new GeoIPs($this->getMockAdapterReturns($json), 'api_key');
-        $results  = $provider->geocode('66.147.244.214');
+        $results  = $provider->geocodeQuery(GeocodeQuery::create('66.147.244.214'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -168,7 +148,7 @@ class GeoIPsTest extends TestCase
         }}';
 
         $provider = new GeoIPs($this->getMockAdapterReturns($json), 'api_key');
-        $results  = $provider->geocode('66.147.244.214');
+        $results  = $provider->geocodeQuery(GeocodeQuery::create('66.147.244.214'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -213,7 +193,7 @@ class GeoIPsTest extends TestCase
             ),
             'api_key'
         );
-        $provider->geocode('74.200.247.59');
+        $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
     /**
@@ -239,7 +219,7 @@ class GeoIPsTest extends TestCase
             ),
             'api_key'
         );
-        $provider->geocode('74.200.247.59');
+        $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
     /**
@@ -265,7 +245,7 @@ class GeoIPsTest extends TestCase
             ),
             'api_key'
         );
-        $provider->geocode('74.200.247.59');
+        $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
     /**
@@ -291,7 +271,7 @@ class GeoIPsTest extends TestCase
             ),
             'api_key'
         );
-        $provider->geocode('74.200.247.59');
+        $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
     /**
@@ -317,7 +297,7 @@ class GeoIPsTest extends TestCase
             ),
             'api_key'
         );
-        $provider->geocode('74.200.247.59');
+        $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
     public function testGeocodeWithRealIPv4()
@@ -327,7 +307,7 @@ class GeoIPsTest extends TestCase
         }
 
         $provider = new GeoIPs($this->getAdapter($_SERVER['GEOIPS_API_KEY']), $_SERVER['GEOIPS_API_KEY']);
-        $results  = $provider->geocode('66.147.244.214');
+        $results  = $provider->geocodeQuery(GeocodeQuery::create('66.147.244.214'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -359,7 +339,7 @@ class GeoIPsTest extends TestCase
         }
 
         $provider = new GeoIPs($this->getAdapter($_SERVER['GEOIPS_API_KEY']), $_SERVER['GEOIPS_API_KEY']);
-        $provider->geocode('255.255.150.96');
+        $provider->geocodeQuery(GeocodeQuery::create('255.255.150.96'));
     }
 
     /**
@@ -369,6 +349,6 @@ class GeoIPsTest extends TestCase
     public function testReverse()
     {
         $provider = new GeoIPs($this->getMockAdapter($this->never()), 'api_key');
-        $provider->reverse(1, 2);
+        $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
     }
 }

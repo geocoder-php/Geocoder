@@ -2,18 +2,23 @@
 
 namespace Geocoder\Tests;
 
+use Geocoder\Geocoder;
+use Geocoder\Model\Query\GeocodeQuery;
+use Geocoder\Model\Query\ReverseQuery;
 use Geocoder\ProviderAggregator;
 use Geocoder\Model\Address;
 use Geocoder\Model\AddressFactory;
-use Geocoder\Provider\LocaleAwareProvider;
+use Geocoder\Provider\LocaleAwareGeocoder;
 use Geocoder\Provider\Provider;
-use Geocoder\Provider\LocaleTrait;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
 class ProviderAggregatorTest extends TestCase
 {
+    /**
+     * @var TestableGeocoder
+     */
     protected $geocoder;
 
     protected function setUp()
@@ -117,31 +122,9 @@ class ProviderAggregatorTest extends TestCase
         $this->assertSame($provider1, $this->geocoder->getProvider());
     }
 
-    public function testGeocodeAlwaysReturnsArrayAndDoesNotCallProviderWithEmptyValues()
-    {
-        $this->geocoder->registerProvider(new MockProviderWithRequestCount('test2'));
-
-        $this->assertEmpty($this->geocoder->geocode(''));
-        $this->assertEquals(0, $this->geocoder->getProvider('test2')->geocodeCount);
-
-        $this->assertEmpty($this->geocoder->geocode(null));
-        $this->assertEquals(0, $this->geocoder->getProvider('test2')->geocodeCount);
-    }
-
-    public function testReverseAlwaysReturnsArrayAndDoesNotCallProviderWihEmptyValues()
-    {
-        $this->geocoder->registerProvider(new MockProviderWithRequestCount('test2'));
-
-        $this->assertEmpty($this->geocoder->reverse('', ''));
-        $this->assertEquals(0, $this->geocoder->getProvider('test2')->geocodeCount);
-
-        $this->assertEmpty($this->geocoder->reverse(null, null));
-        $this->assertEquals(0, $this->geocoder->getProvider('test2')->geocodeCount);
-    }
-
     public function testDefaultMaxResults()
     {
-        $this->assertSame(Provider::MAX_RESULTS, $this->geocoder->getLimit());
+        $this->assertSame(Geocoder::DEFAULT_RESULT_LIMIT, $this->geocoder->getLimit());
     }
 
     private function getAddressMock()
@@ -159,12 +142,12 @@ class MockProvider implements Provider
         $this->name = $name;
     }
 
-    public function geocode($address)
+    public function geocodeQuery(GeocodeQuery $query)
     {
         return $this->returnResult(array());
     }
 
-    public function reverse($latitude, $longitude)
+    public function reverseQuery(ReverseQuery $query)
     {
         return $this->returnResult(array());
     }
@@ -188,9 +171,8 @@ class MockProvider implements Provider
     }
 }
 
-class MockLocaleAwareProvider extends MockProvider implements LocaleAwareProvider
+class MockLocaleAwareProvider extends MockProvider implements LocaleAwareGeocoder
 {
-    use LocaleTrait;
 }
 
 class MockProviderWithData extends MockProvider

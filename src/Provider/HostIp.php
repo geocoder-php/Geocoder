@@ -14,6 +14,8 @@ use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Collection;
 use Geocoder\Exception\ZeroResults;
+use Geocoder\Model\Query\GeocodeQuery;
+use Geocoder\Model\Query\ReverseQuery;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -28,8 +30,9 @@ final class HostIp extends AbstractHttpProvider implements Provider, IpAddressGe
     /**
      * {@inheritDoc}
      */
-    public function geocode($address)
+    public function geocodeQuery(GeocodeQuery $query)
     {
+        $address = $query->getText();
         if (!filter_var($address, FILTER_VALIDATE_IP)) {
             throw new UnsupportedOperation('The HostIp provider does not support Street addresses.');
         }
@@ -43,15 +46,15 @@ final class HostIp extends AbstractHttpProvider implements Provider, IpAddressGe
             return $this->returnResults([ $this->getLocalhostDefaults() ]);
         }
 
-        $query = sprintf(self::ENDPOINT_URL, $address);
+        $url = sprintf(self::ENDPOINT_URL, $address);
 
-        return $this->executeQuery($query);
+        return $this->executeQuery($url);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function reverse($latitude, $longitude)
+    public function reverseQuery(ReverseQuery $query)
     {
         throw new UnsupportedOperation('The HostIp provider is not able to do reverse geocoding.');
     }

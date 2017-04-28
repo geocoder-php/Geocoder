@@ -16,12 +16,14 @@ use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Exception\ZeroResults;
 use Geocoder\Model\AdminLevelCollection;
+use Geocoder\Model\Query\GeocodeQuery;
+use Geocoder\Model\Query\ReverseQuery;
 use Http\Client\HttpClient;
 
 /**
  * @author Giovanni Pirrotta <giovanni.pirrotta@gmail.com>
  */
-final class Geonames extends AbstractHttpProvider implements LocaleAwareProvider
+final class Geonames extends AbstractHttpProvider implements LocaleAwareGeocoder, Provider
 {
     /**
      * @var string
@@ -33,7 +35,6 @@ final class Geonames extends AbstractHttpProvider implements LocaleAwareProvider
      */
     const REVERSE_ENDPOINT_URL = 'http://api.geonames.org/findNearbyPlaceNameJSON?lat=%F&lng=%F&style=full&maxRows=%d&username=%s';
 
-    use LocaleTrait;
 
     /**
      * @var string
@@ -43,21 +44,20 @@ final class Geonames extends AbstractHttpProvider implements LocaleAwareProvider
     /**
      * @param HttpClient $client   An HTTP adapter
      * @param string     $username Username login (Free registration at http://www.geonames.org/login)
-     * @param string     $locale   A locale (optional)
      */
-    public function __construct(HttpClient $client, $username, $locale = null)
+    public function __construct(HttpClient $client, $username)
     {
         parent::__construct($client);
 
         $this->username = $username;
-        $this->locale   = $locale;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function geocode($address)
+    public function geocodeQuery(GeocodeQuery $query)
     {
+        $address = $query->getText();
         if (null === $this->username) {
             throw new InvalidCredentials('No username provided.');
         }
@@ -67,23 +67,26 @@ final class Geonames extends AbstractHttpProvider implements LocaleAwareProvider
             throw new UnsupportedOperation('The Geonames provider does not support IP addresses.');
         }
 
-        $query = sprintf(self::GEOCODE_ENDPOINT_URL, urlencode($address), $this->getLimit(), $this->username);
+        $url = sprintf(self::GEOCODE_ENDPOINT_URL, urlencode($address), $query->getLimit(), $this->username);
 
-        return $this->executeQuery($query);
+        return $this->executeQuery($url, $query->getLocale());
     }
 
     /**
      * {@inheritDoc}
      */
-    public function reverse($latitude, $longitude)
+    public function reverseQuery(ReverseQuery $query)
     {
+        $coordinates = $query->getCoordinates();
+        $longitude = $coordinates->getLongitude();
+        $latitude = $coordinates->getLatitude();
         if (null === $this->username) {
             throw new InvalidCredentials('No username provided.');
         }
 
-        $query = sprintf(self::REVERSE_ENDPOINT_URL, $latitude, $longitude, $this->getLimit(), $this->username);
+        $url = sprintf(self::REVERSE_ENDPOINT_URL, $latitude, $longitude, $query->getLimit(), $this->username);
 
-        return $this->executeQuery($query);
+        return $this->executeQuery($url, $query->getLocale());
     }
 
     /**
@@ -96,12 +99,13 @@ final class Geonames extends AbstractHttpProvider implements LocaleAwareProvider
 
     /**
      * @param string $query
+     * @param string $locale
      */
-    private function executeQuery($query)
+    private function executeQuery($query, $locale)
     {
-        if (null !== $this->getLocale()) {
+        if (null !== $locale) {
             // Locale code transformation: for example from it_IT to it
-            $query = sprintf('%s&lang=%s', $query, substr($this->getLocale(), 0, 2));
+            $query = sprintf('%s&lang=%s', $query, substr($locale, 0, 2));
         }
 
         $request = $this->getMessageFactory()->createRequest('GET', $query);

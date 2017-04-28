@@ -17,19 +17,19 @@ use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Collection;
 use Geocoder\Exception\ZeroResults;
+use Geocoder\Model\Query\GeocodeQuery;
+use Geocoder\Model\Query\ReverseQuery;
 use Http\Client\HttpClient;
 
 /**
  * @author mtm <mtm@opencagedata.com>
  */
-final class OpenCage extends AbstractHttpProvider implements LocaleAwareProvider
+final class OpenCage extends AbstractHttpProvider implements LocaleAwareGeocoder, Provider
 {
     /**
      * @var string
      */
     const GEOCODE_ENDPOINT_URL = 'https://api.opencagedata.com/geocode/v1/json?key=%s&query=%s&limit=%d&pretty=1';
-
-    use LocaleTrait;
 
     /**
      * @var string
@@ -39,22 +39,20 @@ final class OpenCage extends AbstractHttpProvider implements LocaleAwareProvider
     /**
      * @param HttpClient  $client An HTTP adapter.
      * @param string      $apiKey An API key.
-     * @param bool        $useSsl Whether to use an SSL connection (optional).
-     * @param string|null $locale A locale (optional).
      */
-    public function __construct(HttpClient $client, $apiKey, $locale = null)
+    public function __construct(HttpClient $client, $apiKey)
     {
         parent::__construct($client);
 
         $this->apiKey = $apiKey;
-        $this->locale = $locale;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function geocode($address)
+    public function geocodeQuery(GeocodeQuery $query)
     {
+        $address = $query->getText();
         if (null === $this->apiKey) {
             throw new InvalidCredentials('No API Key provided.');
         }
@@ -64,19 +62,20 @@ final class OpenCage extends AbstractHttpProvider implements LocaleAwareProvider
             throw new UnsupportedOperation('The OpenCage provider does not support IP addresses, only street addresses.');
         }
 
-        $query = sprintf(self::GEOCODE_ENDPOINT_URL, $this->apiKey, urlencode($address), $this->getLimit());
+        $url = sprintf(self::GEOCODE_ENDPOINT_URL, $this->apiKey, urlencode($address), $query->getLimit());
 
-        return $this->executeQuery($query);
+        return $this->executeQuery($url, $query->getLocale());
     }
 
     /**
      * {@inheritdoc}
      */
-    public function reverse($latitude, $longitude)
+    public function reverseQuery(ReverseQuery $query)
     {
-        $address = sprintf('%f, %f', $latitude, $longitude);
+        $coordinates = $query->getCoordinates();
+        $address = sprintf('%f, %f', $coordinates->getLatitude(), $coordinates->getLongitude());
 
-        return $this->geocode($address);
+        return $this->geocodeQuery(GeocodeQuery::create($address)->withLocale($query->getLocale()));
     }
 
     /**
@@ -91,10 +90,10 @@ final class OpenCage extends AbstractHttpProvider implements LocaleAwareProvider
      * @param $query
      * @return Collection
      */
-    private function executeQuery($query)
+    private function executeQuery($query, $locale)
     {
-        if (null !== $this->getLocale()) {
-            $query = sprintf('%s&language=%s', $query, $this->getLocale());
+        if (null !== $locale) {
+            $query = sprintf('%s&language=%s', $query, $locale);
         }
 
         $request = $this->getMessageFactory()->createRequest('GET', $query);

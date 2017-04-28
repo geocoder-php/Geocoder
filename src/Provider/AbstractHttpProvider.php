@@ -18,7 +18,7 @@ use Http\Client\HttpClient;
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-class AbstractHttpProvider extends AbstractProvider
+abstract class AbstractHttpProvider extends AbstractProvider
 {
     /**
      * @var HttpClient

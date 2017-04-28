@@ -12,6 +12,9 @@ namespace Geocoder;
 
 use Geocoder\Exception\ProviderNotRegistered;
 use Geocoder\Model\AddressCollection;
+use Geocoder\Model\Coordinates;
+use Geocoder\Model\Query\GeocodeQuery;
+use Geocoder\Model\Query\ReverseQuery;
 use Geocoder\Provider\Provider;
 use Geocoder\Model\Address;
 
@@ -38,7 +41,7 @@ class ProviderAggregator implements Geocoder
     /**
      * @param integer $limit
      */
-    public function __construct($limit = Provider::MAX_RESULTS)
+    public function __construct($limit = Geocoder::DEFAULT_RESULT_LIMIT)
     {
         $this->limit($limit);
     }
@@ -46,18 +49,34 @@ class ProviderAggregator implements Geocoder
     /**
      * {@inheritDoc}
      */
+    public function geocodeQuery(GeocodeQuery $query)
+    {
+        return $this->getProvider()->geocodeQuery($query);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function reverseQuery(ReverseQuery $query)
+    {
+        return $this->getProvider()->reverseQuery($query);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getName()
+    {
+        return 'ProviderAggregator';
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function geocode($value)
     {
-        $value = trim($value);
-
-        if (empty($value)) {
-            // let's save a request
-            return new AddressCollection();
-        }
-
-        return $this->getProvider()
-            ->limit($this->getLimit())
-            ->geocode($value);
+        return $this->geocodeQuery(GeocodeQuery::create($value)
+            ->withLimit($this->limit));
     }
 
     /**
@@ -65,14 +84,8 @@ class ProviderAggregator implements Geocoder
      */
     public function reverse($latitude, $longitude)
     {
-        if (empty($latitude) || empty($longitude)) {
-            // let's save a request
-            return new AddressCollection();
-        }
-
-        return $this->getProvider()
-            ->limit($this->getLimit())
-            ->reverse($latitude, $longitude);
+        return $this->reverseQuery(ReverseQuery::create(new Coordinates($latitude, $longitude))
+            ->withLimit($this->limit));
     }
 
     /**
