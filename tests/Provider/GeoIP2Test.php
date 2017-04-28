@@ -214,7 +214,7 @@ class GeoIP2Test extends TestCase
         $reader = new Reader(__DIR__ . '/fixtures/GeoLite2-City.mmdb');
         $adapter = new GeoIP2Adapter($reader);
         $provider = new GeoIP2($adapter);
-        $locality = $provider->geocode('79.114.34.148')->first()->getLocality();
+        $locality = $provider->geocodeQuery(GeocodeQuery::create('79.114.34.148'))->first()->getLocality();
         $this->assertEquals('Timișoara', $locality);
     }
 
