@@ -214,7 +214,10 @@ class GeoIP2Test extends TestCase
      */
     public function getGeoIP2AdapterMock($returnValue = '')
     {
-        $mock = $this->getMockBuilder('Geocoder\Adapter\GeoIP2Adapter')->disableOriginalConstructor()->getMock();
+        $mock = $this->getMockBuilder('Geocoder\Adapter\GeoIP2Adapter')
+            ->disableOriginalConstructor()
+            ->setMethods(['getContent'])
+            ->getMock();
 
         if ($returnValue instanceof \Exception) {
             $returnValue = $this->throwException($returnValue);
