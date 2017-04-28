@@ -50,6 +50,7 @@ final class AddressFactory
                 $this->readStringValue($result, 'streetNumber'),
                 $this->readStringValue($result, 'streetName'),
                 $this->readStringValue($result, 'postalCode'),
+                $this->readStringValue($result, 'locationType'),
                 $this->readStringValue($result, 'locality'),
                 $this->readStringValue($result, 'subLocality'),
                 new AdminLevelCollection($adminLevels),
