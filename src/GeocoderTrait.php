@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geocoder package.
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -14,7 +14,7 @@ use Geocoder\Model\Query\GeocodeQuery;
 use Geocoder\Model\Query\ReverseQuery;
 
 /**
- * A trait that turns a Provider into a Geocoder
+ * A trait that turns a Provider into a Geocoder.
  *
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
@@ -25,7 +25,7 @@ trait GeocoderTrait
     abstract public function reverseQuery(ReverseQuery $query);
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function geocode($value)
     {
@@ -33,7 +33,7 @@ trait GeocoderTrait
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function reverse($latitude, $longitude)
     {

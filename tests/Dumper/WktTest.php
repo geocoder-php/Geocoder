@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file is part of the Geocoder package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license    MIT License
+ */
+
 namespace Geocoder\Tests\Dumper;
 
 use Geocoder\Dumper\Wkt;
@@ -20,9 +28,9 @@ class WktTest extends TestCase
 
     public function testDump()
     {
-        $address  = $this->createEmptyAddress();
+        $address = $this->createEmptyAddress();
         $expected = sprintf('POINT(%F %F)', 0, 0);
-        $result   = $this->dumper->dump($address);
+        $result = $this->dumper->dump($address);
 
         $this->assertTrue(is_string($result));
         $this->assertEquals($expected, $result);
@@ -30,8 +38,8 @@ class WktTest extends TestCase
 
     public function testDumpWithData()
     {
-        $address  = $this->createAddress([
-            'latitude'  => 48.8631507,
+        $address = $this->createAddress([
+            'latitude' => 48.8631507,
             'longitude' => 2.3889114,
         ]);
         $expected = sprintf('POINT(%F %F)', 2.3889114, 48.8631507);

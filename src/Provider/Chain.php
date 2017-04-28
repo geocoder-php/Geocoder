@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geocoder package.
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -12,7 +12,6 @@ namespace Geocoder\Provider;
 
 use Geocoder\Exception\ChainZeroResults;
 use Geocoder\Exception\InvalidCredentials;
-use Geocoder\Model\AddressCollection;
 use Geocoder\Model\Query\GeocodeQuery;
 use Geocoder\Model\Query\ReverseQuery;
 
@@ -21,7 +20,6 @@ use Geocoder\Model\Query\ReverseQuery;
  */
 final class Chain implements LocaleAwareGeocoder, Provider
 {
-
     /**
      * @var Provider[]
      */
@@ -36,7 +34,7 @@ final class Chain implements LocaleAwareGeocoder, Provider
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function geocodeQuery(GeocodeQuery $query)
     {
@@ -55,7 +53,7 @@ final class Chain implements LocaleAwareGeocoder, Provider
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function reverseQuery(ReverseQuery $query)
     {
@@ -77,7 +75,7 @@ final class Chain implements LocaleAwareGeocoder, Provider
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function limit($limit)
     {
@@ -89,15 +87,15 @@ final class Chain implements LocaleAwareGeocoder, Provider
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getLimit()
     {
-        throw new \LogicException("The `Chain` provider is not able to return the limit value.");
+        throw new \LogicException('The `Chain` provider is not able to return the limit value.');
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getName()
     {

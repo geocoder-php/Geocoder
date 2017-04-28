@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geocoder package.
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -11,7 +11,6 @@
 namespace Geocoder\Provider;
 
 use Geocoder\Exception\InvalidServerResponse;
-use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Exception\ZeroResults;
 use Geocoder\Model\Query\GeocodeQuery;
@@ -28,7 +27,7 @@ final class GeoPlugin extends AbstractHttpProvider implements Provider, IpAddres
     const GEOCODE_ENDPOINT_URL = 'http://www.geoplugin.net/json.gp?ip=%s';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function geocodeQuery(GeocodeQuery $query)
     {
@@ -37,8 +36,8 @@ final class GeoPlugin extends AbstractHttpProvider implements Provider, IpAddres
             throw new UnsupportedOperation('The GeoPlugin provider does not support street addresses, only IP addresses.');
         }
 
-        if (in_array($address, array('127.0.0.1', '::1'))) {
-            return $this->returnResults([ $this->getLocalhostDefaults() ]);
+        if (in_array($address, ['127.0.0.1', '::1'])) {
+            return $this->returnResults([$this->getLocalhostDefaults()]);
         }
 
         $url = sprintf(self::GEOCODE_ENDPOINT_URL, $address);
@@ -47,7 +46,7 @@ final class GeoPlugin extends AbstractHttpProvider implements Provider, IpAddres
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function reverseQuery(ReverseQuery $query)
     {
@@ -55,7 +54,7 @@ final class GeoPlugin extends AbstractHttpProvider implements Provider, IpAddres
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -95,14 +94,14 @@ final class GeoPlugin extends AbstractHttpProvider implements Provider, IpAddres
             $adminLevels[] = ['name' => $region, 'code' => $regionCode, 'level' => 1];
         }
 
-        $results   = [];
+        $results = [];
         $results[] = array_merge($this->getDefaults(), [
-                'locality'    => isset($data['geoplugin_city']) ? $data['geoplugin_city'] : null,
-                'country'     => isset($data['geoplugin_countryName']) ? $data['geoplugin_countryName'] : null,
+                'locality' => isset($data['geoplugin_city']) ? $data['geoplugin_city'] : null,
+                'country' => isset($data['geoplugin_countryName']) ? $data['geoplugin_countryName'] : null,
                 'countryCode' => isset($data['geoplugin_countryCode']) ? $data['geoplugin_countryCode'] : null,
                 'adminLevels' => $adminLevels,
-                'latitude'    => isset($data['geoplugin_latitude']) ? $data['geoplugin_latitude'] : null,
-                'longitude'   => isset($data['geoplugin_longitude']) ? $data['geoplugin_longitude'] : null,
+                'latitude' => isset($data['geoplugin_latitude']) ? $data['geoplugin_latitude'] : null,
+                'longitude' => isset($data['geoplugin_longitude']) ? $data['geoplugin_longitude'] : null,
         ]);
 
         return $this->returnResults($results);

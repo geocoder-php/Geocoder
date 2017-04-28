@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geocoder package.
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -16,14 +16,14 @@ namespace Geocoder\Exception;
 class ChainZeroResults extends ZeroResults
 {
     /**
-     * Exceptions from chained providers
+     * Exceptions from chained providers.
      *
      * @var array
      */
     private $exceptions = [];
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param string $message
      * @param array  $exceptions Array of Exception instances
@@ -36,7 +36,7 @@ class ChainZeroResults extends ZeroResults
     }
 
     /**
-     * Get the exceptions from chained providers
+     * Get the exceptions from chained providers.
      *
      * @return array
      */

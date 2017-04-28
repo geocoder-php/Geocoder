@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geocoder package.
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -12,7 +12,6 @@ namespace Geocoder\Provider;
 
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\InvalidServerResponse;
-use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Exception\ZeroResults;
 use Geocoder\Model\AdminLevelCollection;
@@ -35,7 +34,6 @@ final class Geonames extends AbstractHttpProvider implements LocaleAwareGeocoder
      */
     const REVERSE_ENDPOINT_URL = 'http://api.geonames.org/findNearbyPlaceNameJSON?lat=%F&lng=%F&style=full&maxRows=%d&username=%s';
 
-
     /**
      * @var string
      */
@@ -53,7 +51,7 @@ final class Geonames extends AbstractHttpProvider implements LocaleAwareGeocoder
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function geocodeQuery(GeocodeQuery $query)
     {
@@ -73,7 +71,7 @@ final class Geonames extends AbstractHttpProvider implements LocaleAwareGeocoder
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function reverseQuery(ReverseQuery $query)
     {
@@ -90,7 +88,7 @@ final class Geonames extends AbstractHttpProvider implements LocaleAwareGeocoder
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -134,22 +132,22 @@ final class Geonames extends AbstractHttpProvider implements LocaleAwareGeocoder
             $bounds = null;
 
             if (isset($item->bbox)) {
-                $bounds = array(
+                $bounds = [
                     'south' => $item->bbox->south,
-                    'west'  => $item->bbox->west,
+                    'west' => $item->bbox->west,
                     'north' => $item->bbox->north,
-                    'east'  => $item->bbox->east
-                );
+                    'east' => $item->bbox->east,
+                ];
             }
 
             $adminLevels = [];
 
-            for ($level = 1; $level <= AdminLevelCollection::MAX_LEVEL_DEPTH; ++ $level) {
-                $adminNameProp = 'adminName' . $level;
-                $adminCodeProp = 'adminCode' . $level;
-                if (! empty($item->$adminNameProp) || ! empty($item->$adminCodeProp)) {
+            for ($level = 1; $level <= AdminLevelCollection::MAX_LEVEL_DEPTH; ++$level) {
+                $adminNameProp = 'adminName'.$level;
+                $adminCodeProp = 'adminCode'.$level;
+                if (!empty($item->$adminNameProp) || !empty($item->$adminCodeProp)) {
                     $adminLevels[] = [
-                        'name' => empty($item->$adminNameProp) ? null : $item->$adminNameProp ,
+                        'name' => empty($item->$adminNameProp) ? null : $item->$adminNameProp,
                         'code' => empty($item->$adminCodeProp) ? null : $item->$adminCodeProp,
                         'level' => $level,
                     ];
@@ -157,14 +155,14 @@ final class Geonames extends AbstractHttpProvider implements LocaleAwareGeocoder
             }
 
             $results[] = array_merge($this->getDefaults(), [
-                'latitude'    => isset($item->lat) ? $item->lat : null,
-                'longitude'   => isset($item->lng) ? $item->lng : null,
-                'bounds'      => $bounds,
-                'locality'    => isset($item->name) ? $item->name : null,
+                'latitude' => isset($item->lat) ? $item->lat : null,
+                'longitude' => isset($item->lng) ? $item->lng : null,
+                'bounds' => $bounds,
+                'locality' => isset($item->name) ? $item->name : null,
                 'adminLevels' => $adminLevels,
-                'country'     => isset($item->countryName) ? $item->countryName : null,
+                'country' => isset($item->countryName) ? $item->countryName : null,
                 'countryCode' => isset($item->countryCode) ? $item->countryCode : null,
-                'timezone'    => isset($item->timezone->timeZoneId)  ? $item->timezone->timeZoneId : null,
+                'timezone' => isset($item->timezone->timeZoneId) ? $item->timezone->timeZoneId : null,
             ]);
         }
 

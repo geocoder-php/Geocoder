@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geocoder package.
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -13,7 +13,6 @@ namespace Geocoder\Tests\Adapter;
 use Geocoder\Adapter\GeoIP2Adapter;
 use Geocoder\Tests\TestCase;
 use Geocoder\Exception\RuntimeException;
-use GeoIp2\Database\Reader;
 
 /**
  * @author Jens Wiese <jens@howtrueisfalse.de>
@@ -27,6 +26,7 @@ class GeoIP2AdapterTest extends TestCase
 
     /**
      * {@inheritdoc}
+     *
      * @throws RuntimeException
      */
     public static function setUpBeforeClass()
@@ -69,10 +69,10 @@ class GeoIP2AdapterTest extends TestCase
 
     public static function provideDataForSwitchingRequestMethods()
     {
-        return array(
-            array(GeoIP2Adapter::GEOIP2_MODEL_CITY),
-            array(GeoIP2Adapter::GEOIP2_MODEL_COUNTRY),
-        );
+        return [
+            [GeoIP2Adapter::GEOIP2_MODEL_CITY],
+            [GeoIP2Adapter::GEOIP2_MODEL_COUNTRY],
+        ];
     }
 
     /**
@@ -132,22 +132,23 @@ class GeoIP2AdapterTest extends TestCase
     }
 
     /**
-     * @param  int                                      $geoIP2Model (e.g. GeoIP2Adapter::GEOIP2_MODEL_CITY, ...)
+     * @param int $geoIP2Model (e.g. GeoIP2Adapter::GEOIP2_MODEL_CITY, ...)
+     *
      * @return \PHPUnit_Framework_MockObject_MockObject
      */
     protected function getGeoIP2ModelMock($geoIP2Model)
     {
-        $mockClass = '\\GeoIp2\\Model\\' . ucfirst($geoIP2Model);
+        $mockClass = '\\GeoIp2\\Model\\'.ucfirst($geoIP2Model);
 
         $mock = $this->getMockBuilder($mockClass)->disableOriginalConstructor()->getMock();
         $mock
             ->expects($this->any())
             ->method('jsonSerialize')
             ->will($this->returnValue(
-                array(
-                    'city' => array(
+                [
+                    'city' => [
                         'geoname_id' => 2911298,
-                        'names' => array(
+                        'names' => [
                               'de' => 'Hamburg',
                               'en' => 'Hamburg',
                               'es' => 'Hamburgo',
@@ -156,9 +157,9 @@ class GeoIP2AdapterTest extends TestCase
                               'pt-BR' => 'Hamburgo',
                               'ru' => 'Гамбург',
                               'zh-CN' => '汉堡市',
-                        )
-                    )
-                )
+                        ],
+                    ],
+                ]
             ));
 
         return $mock;

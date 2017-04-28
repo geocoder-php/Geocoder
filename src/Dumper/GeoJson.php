@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geocoder package.
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -18,7 +18,7 @@ use Geocoder\Location;
 class GeoJson implements Dumper
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function dump(Location $location)
     {
@@ -46,8 +46,8 @@ class GeoJson implements Dumper
         $json = [
             'type' => 'Feature',
             'geometry' => [
-                'type'          => 'Point',
-                'coordinates'   => [$lon, $lat],
+                'type' => 'Point',
+                'coordinates' => [$lon, $lat],
             ],
             'properties' => $properties,
         ];

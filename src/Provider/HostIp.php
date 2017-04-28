@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geocoder package.
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -10,7 +10,6 @@
 
 namespace Geocoder\Provider;
 
-use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Collection;
 use Geocoder\Exception\ZeroResults;
@@ -28,7 +27,7 @@ final class HostIp extends AbstractHttpProvider implements Provider, IpAddressGe
     const ENDPOINT_URL = 'http://api.hostip.info/get_json.php?ip=%s&position=true';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function geocodeQuery(GeocodeQuery $query)
     {
@@ -43,7 +42,7 @@ final class HostIp extends AbstractHttpProvider implements Provider, IpAddressGe
         }
 
         if ('127.0.0.1' === $address) {
-            return $this->returnResults([ $this->getLocalhostDefaults() ]);
+            return $this->returnResults([$this->getLocalhostDefaults()]);
         }
 
         $url = sprintf(self::ENDPOINT_URL, $address);
@@ -52,7 +51,7 @@ final class HostIp extends AbstractHttpProvider implements Provider, IpAddressGe
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function reverseQuery(ReverseQuery $query)
     {
@@ -60,7 +59,7 @@ final class HostIp extends AbstractHttpProvider implements Provider, IpAddressGe
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -85,12 +84,12 @@ final class HostIp extends AbstractHttpProvider implements Provider, IpAddressGe
 
         return $this->returnResults([
             array_merge($this->getDefaults(), [
-                'latitude'    => $data['lat'],
-                'longitude'   => $data['lng'],
-                'locality'    => $data['city'],
-                'country'     => $data['country_name'],
+                'latitude' => $data['lat'],
+                'longitude' => $data['lng'],
+                'locality' => $data['city'],
+                'country' => $data['country_name'],
                 'countryCode' => $data['country_code'],
-            ])
+            ]),
         ]);
     }
 }

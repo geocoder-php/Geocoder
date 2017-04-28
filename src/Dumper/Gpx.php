@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geocoder package.
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -25,7 +25,7 @@ class Gpx implements Dumper
      */
     public function dump(Location $location)
     {
-        $gpx = sprintf(<<<GPX
+        $gpx = sprintf(<<<'GPX'
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <gpx
 version="1.0"
@@ -38,7 +38,7 @@ GPX
         , Geocoder::VERSION);
 
         if (null !== $bounds = $location->getBounds()) {
-            $gpx .= sprintf(<<<GPX
+            $gpx .= sprintf(<<<'GPX'
     <bounds minlat="%f" minlon="%f" maxlat="%f" maxlon="%f"/>
 
 GPX
@@ -52,7 +52,7 @@ GPX
             $lon = $coordinates->getLongitude();
         }
 
-        $gpx .= sprintf(<<<GPX
+        $gpx .= sprintf(<<<'GPX'
     <wpt lat="%.7f" lon="%.7f">
         <name><![CDATA[%s]]></name>
         <type><![CDATA[Address]]></type>
@@ -61,7 +61,7 @@ GPX
 GPX
         , $lat, $lon, $this->formatName($location));
 
-        $gpx .= <<<GPX
+        $gpx .= <<<'GPX'
 </gpx>
 GPX;
 
@@ -75,7 +75,7 @@ GPX;
      */
     protected function formatName(Location $address)
     {
-        $name  = [];
+        $name = [];
         $array = $address->toArray();
         $attrs = [
             ['streetNumber'],

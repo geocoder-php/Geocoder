@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file is part of the Geocoder package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license    MIT License
+ */
+
 namespace Geocoder\Model;
 
 use Geocoder\Exception\CollectionIsEmpty;
@@ -22,7 +30,7 @@ final class AddressCollection implements Collection
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getIterator()
     {
@@ -30,7 +38,7 @@ final class AddressCollection implements Collection
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function count()
     {
@@ -67,6 +75,7 @@ final class AddressCollection implements Collection
 
     /**
      * @return Location
+     *
      * @throws \OutOfBoundsException
      */
     public function get($index)

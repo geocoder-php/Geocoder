@@ -1,8 +1,18 @@
 <?php
 
+/*
+ * This file is part of the Geocoder package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license    MIT License
+ */
+
 namespace Geocoder\Tests\Provider;
 
-use Geocoder\Location;use Geocoder\Model\Query\GeocodeQuery;use Geocoder\Model\Query\ReverseQuery;
+use Geocoder\Location;
+use Geocoder\Model\Query\GeocodeQuery;
+use Geocoder\Model\Query\ReverseQuery;
 use Geocoder\Tests\TestCase;
 use Geocoder\Provider\IpInfoDb;
 
@@ -42,7 +52,6 @@ class IpInfoDbTest extends TestCase
         $provider->geocodeQuery(GeocodeQuery::create('foobar'));
     }
 
-
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The IpInfoDb provider does not support street addresses, only IPv4 addresses.
@@ -56,7 +65,7 @@ class IpInfoDbTest extends TestCase
     public function testGeocodeWithLocalhostIPv4()
     {
         $provider = new IpInfoDb($this->getMockAdapter($this->never()), 'api_key');
-        $results  = $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
+        $results = $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -109,7 +118,7 @@ class IpInfoDbTest extends TestCase
         }
 
         $provider = new IpInfoDb($this->getAdapter($_SERVER['IPINFODB_API_KEY']), $_SERVER['IPINFODB_API_KEY']);
-        $results  = $provider->geocodeQuery(GeocodeQuery::create('74.125.45.100'));
+        $results = $provider->geocodeQuery(GeocodeQuery::create('74.125.45.100'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);

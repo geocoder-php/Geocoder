@@ -1,8 +1,18 @@
 <?php
 
+/*
+ * This file is part of the Geocoder package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license    MIT License
+ */
+
 namespace Geocoder\Tests\Provider;
 
-use Geocoder\Location;use Geocoder\Model\Query\GeocodeQuery;use Geocoder\Model\Query\ReverseQuery;
+use Geocoder\Location;
+use Geocoder\Model\Query\GeocodeQuery;
+use Geocoder\Model\Query\ReverseQuery;
 use Geocoder\Tests\TestCase;
 use Geocoder\Provider\Geonames;
 
@@ -59,7 +69,7 @@ class GeonamesTest extends TestCase
      */
     public function testGeocodeWithUnknownCity()
     {
-        $noPlacesFoundResponse = <<<JSON
+        $noPlacesFoundResponse = <<<'JSON'
 {
     "totalResultsCount": 0,
     "geonames": [ ]
@@ -76,7 +86,7 @@ JSON;
         }
 
         $provider = new Geonames($this->getAdapter($_SERVER['GEONAMES_USERNAME']), $_SERVER['GEONAMES_USERNAME']);
-        $results  = $provider->geocodeQuery(GeocodeQuery::create('London'));
+        $results = $provider->geocodeQuery(GeocodeQuery::create('London'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
@@ -180,7 +190,7 @@ JSON;
         }
 
         $provider = new Geonames($this->getAdapter($_SERVER['GEONAMES_USERNAME']), $_SERVER['GEONAMES_USERNAME']);
-        $results  = $provider->geocodeQuery(GeocodeQuery::create('London')->withLocale('it_IT'));
+        $results = $provider->geocodeQuery(GeocodeQuery::create('London')->withLocale('it_IT'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
@@ -284,7 +294,7 @@ JSON;
         }
 
         $provider = new Geonames($this->getAdapter($_SERVER['GEONAMES_USERNAME']), $_SERVER['GEONAMES_USERNAME']);
-        $results  = $provider->reverseQuery(ReverseQuery::fromCoordinates(51.50853, -0.12574));
+        $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(51.50853, -0.12574));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -310,7 +320,7 @@ JSON;
         }
 
         $provider = new Geonames($this->getAdapter($_SERVER['GEONAMES_USERNAME']), $_SERVER['GEONAMES_USERNAME']);
-        $results  = $provider->reverseQuery(ReverseQuery::fromCoordinates(51.50853, -0.12574)->withLocale('it_IT'));
+        $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(51.50853, -0.12574)->withLocale('it_IT'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -334,7 +344,7 @@ JSON;
      */
     public function testReverseWithBadCoordinates()
     {
-        $badCoordinateResponse = <<<JSON
+        $badCoordinateResponse = <<<'JSON'
 {
     "geonames": [ ]
 }

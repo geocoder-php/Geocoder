@@ -1,12 +1,21 @@
 <?php
 
+/*
+ * This file is part of the Geocoder package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license    MIT License
+ */
+
 namespace Geocoder\Tests\Provider;
 
 use Geocoder\Exception\ZeroResults;
-use Geocoder\Location;use Geocoder\Model\Query\GeocodeQuery;use Geocoder\Model\Query\ReverseQuery;
+use Geocoder\Location;
+use Geocoder\Model\Query\GeocodeQuery;
+use Geocoder\Model\Query\ReverseQuery;
 use Geocoder\Tests\TestCase;
 use Geocoder\Provider\GoogleMaps;
-use Http\Client\HttpClient;
 use Psr\Http\Message\RequestInterface;
 
 class GoogleMapsTest extends TestCase
@@ -91,7 +100,7 @@ class GoogleMapsTest extends TestCase
     public function testGeocodeWithRealAddress()
     {
         $provider = new GoogleMaps($this->getAdapter(), 'Île-de-France');
-        $results  = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France')->withLocale('fr-FR'));
+        $results = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France')->withLocale('fr-FR'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -122,7 +131,7 @@ class GoogleMapsTest extends TestCase
     public function testGeocodeWithRealAddressWithSsl()
     {
         $provider = new GoogleMaps($this->getAdapter(), null, null);
-        $results  = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
+        $results = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -154,7 +163,7 @@ class GoogleMapsTest extends TestCase
     public function testGeocodeBoundsWithRealAddressForNonRooftopLocation()
     {
         $provider = new GoogleMaps($this->getAdapter());
-        $results  = $provider->geocodeQuery(GeocodeQuery::create('Paris, France'));
+        $results = $provider->geocodeQuery(GeocodeQuery::create('Paris, France'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -172,7 +181,7 @@ class GoogleMapsTest extends TestCase
     public function testGeocodeWithRealAddressReturnsMultipleResults()
     {
         $provider = new GoogleMaps($this->getAdapter());
-        $results  = $provider->geocodeQuery(GeocodeQuery::create('Paris'));
+        $results = $provider->geocodeQuery(GeocodeQuery::create('Paris'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
 
@@ -220,7 +229,7 @@ class GoogleMapsTest extends TestCase
         $this->assertEquals(38.2097987, $result->getCoordinates()->getLatitude(), '', 0.001);
         $this->assertEquals(-84.2529869, $result->getCoordinates()->getLongitude(), '', 0.001);
         $this->assertEquals('Paris', $result->getLocality());
-        $this->assertEquals('United States',$result->getCountry()->getName());
+        $this->assertEquals('United States', $result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
     }
 
@@ -236,7 +245,7 @@ class GoogleMapsTest extends TestCase
     public function testReverseWithRealCoordinates()
     {
         $provider = new GoogleMaps($this->getAdapter());
-        $results  = $provider->reverseQuery(ReverseQuery::fromCoordinates(48.8631507, 2.388911));
+        $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(48.8631507, 2.388911));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
@@ -267,7 +276,7 @@ class GoogleMapsTest extends TestCase
     public function testGeocodeWithCityDistrict()
     {
         $provider = new GoogleMaps($this->getAdapter());
-        $results  = $provider->geocodeQuery(GeocodeQuery::create('Kalbacher Hauptstraße 10, 60437 Frankfurt, Germany'));
+        $results = $provider->geocodeQuery(GeocodeQuery::create('Kalbacher Hauptstraße 10, 60437 Frankfurt, Germany'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -327,7 +336,7 @@ class GoogleMapsTest extends TestCase
     public function testGeocodePostalTown()
     {
         $provider = new GoogleMaps($this->getAdapter());
-        $results  = $provider->geocodeQuery(GeocodeQuery::create('CF37, United Kingdom'));
+        $results = $provider->geocodeQuery(GeocodeQuery::create('CF37, United Kingdom'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -366,7 +375,7 @@ class GoogleMapsTest extends TestCase
         $provider = GoogleMaps::business(
             $this->getMockAdapterWithRequestCallback(
                 function (RequestInterface $request) use (&$uri) {
-                    $uri = (string)$request->getUri();
+                    $uri = (string) $request->getUri();
                 }
             ),
             'foo',

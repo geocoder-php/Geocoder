@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geocoder package.
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -20,9 +20,9 @@ use Geocoder\Exception\UnsupportedOperation;
 class GeoIP2Adapter
 {
     /**
-     * GeoIP2 models (e.g. city or country)
+     * GeoIP2 models (e.g. city or country).
      */
-    const GEOIP2_MODEL_CITY    = 'city';
+    const GEOIP2_MODEL_CITY = 'city';
     const GEOIP2_MODEL_COUNTRY = 'country';
 
     /**
@@ -55,7 +55,8 @@ class GeoIP2Adapter
     /**
      * Returns the content fetched from a given resource.
      *
-     * @param  string $url (e.g. file://database?127.0.0.1)
+     * @param string $url (e.g. file://database?127.0.0.1)
+     *
      * @return string
      */
     public function getContent($url)
@@ -90,17 +91,18 @@ class GeoIP2Adapter
     }
 
     /**
-     * Returns whether method is supported by GeoIP2
+     * Returns whether method is supported by GeoIP2.
      *
-     * @param  string $method
+     * @param string $method
+     *
      * @return bool
      */
     protected function isSupportedGeoIP2Model($method)
     {
-        $availableMethods = array(
+        $availableMethods = [
             self::GEOIP2_MODEL_CITY,
             self::GEOIP2_MODEL_COUNTRY,
-        );
+        ];
 
         return in_array($method, $availableMethods);
     }

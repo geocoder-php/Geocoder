@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geocoder package.
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -12,7 +12,6 @@ namespace Geocoder\Provider;
 
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\InvalidServerResponse;
-use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Exception\ZeroResults;
 use Geocoder\Model\Query\GeocodeQuery;
@@ -46,7 +45,7 @@ final class MapQuest extends AbstractHttpProvider implements Provider
 
     /**
      * MapQuest offers two geocoding endpoints one commercial (true) and one open (false)
-     * More information: http://developer.mapquest.com/web/tools/getting-started/platform/licensed-vs-open
+     * More information: http://developer.mapquest.com/web/tools/getting-started/platform/licensed-vs-open.
      *
      * @var bool
      */
@@ -58,20 +57,20 @@ final class MapQuest extends AbstractHttpProvider implements Provider
     private $apiKey;
 
     /**
-     * @param HttpClient $client   An HTTP adapter.
-     * @param string     $apiKey   An API key.
-     * @param bool       $licensed True to use MapQuest's licensed endpoints, default is false to use the open endpoints (optional).
+     * @param HttpClient $client   an HTTP adapter
+     * @param string     $apiKey   an API key
+     * @param bool       $licensed true to use MapQuest's licensed endpoints, default is false to use the open endpoints (optional)
      */
     public function __construct(HttpClient $client, $apiKey, $licensed = false)
     {
         parent::__construct($client);
 
-        $this->apiKey   = $apiKey;
+        $this->apiKey = $apiKey;
         $this->licensed = $licensed;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function geocodeQuery(GeocodeQuery $query)
     {
@@ -95,7 +94,7 @@ final class MapQuest extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function reverseQuery(ReverseQuery $query)
     {
@@ -116,7 +115,7 @@ final class MapQuest extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -160,16 +159,16 @@ final class MapQuest extends AbstractHttpProvider implements Provider
                     $admins[] = ['name' => $location['adminArea4'], 'level' => 2];
                 }
 
-                $results[] = array_merge($this->getDefaults(), array(
-                    'latitude'    => $location['latLng']['lat'],
-                    'longitude'   => $location['latLng']['lng'],
-                    'streetName'  => $location['street'] ?: null,
-                    'locality'    => $location['adminArea5'] ?: null,
-                    'postalCode'  => $location['postalCode'] ?: null,
+                $results[] = array_merge($this->getDefaults(), [
+                    'latitude' => $location['latLng']['lat'],
+                    'longitude' => $location['latLng']['lng'],
+                    'streetName' => $location['street'] ?: null,
+                    'locality' => $location['adminArea5'] ?: null,
+                    'postalCode' => $location['postalCode'] ?: null,
                     'adminLevels' => $admins,
-                    'country'     => $location['adminArea1'] ?: null,
+                    'country' => $location['adminArea1'] ?: null,
                     'countryCode' => $location['adminArea1'] ?: null,
-                ));
+                ]);
             }
         }
 

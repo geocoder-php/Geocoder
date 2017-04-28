@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file is part of the Geocoder package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license    MIT License
+ */
+
 namespace Geocoder\Tests\Dumper;
 
 use Geocoder\Dumper\Wkb;
@@ -20,9 +28,9 @@ class WkbTest extends TestCase
 
     public function testDump()
     {
-        $address  = $this->createEmptyAddress();
+        $address = $this->createEmptyAddress();
         $expected = pack('H*', '010100000000000000000000000000000000000000');
-        $result   = $this->dumper->dump($address);
+        $result = $this->dumper->dump($address);
 
         $this->assertTrue(is_string($result));
         $this->assertEquals($expected, $result);
@@ -30,8 +38,8 @@ class WkbTest extends TestCase
 
     public function testDumpWithData()
     {
-        $address  = $this->createAddress([
-            'latitude'  => 48.8631507,
+        $address = $this->createAddress([
+            'latitude' => 48.8631507,
             'longitude' => 2.3889114,
         ]);
         $expected = pack('H*', '0101000000255580947D1C03407F02DEB87B6E4840');

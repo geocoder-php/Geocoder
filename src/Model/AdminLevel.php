@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geocoder package.
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -43,7 +43,7 @@ final class AdminLevel
     }
 
     /**
-     * Returns the administrative level
+     * Returns the administrative level.
      *
      * @return int Level number [1,5]
      */
@@ -53,7 +53,7 @@ final class AdminLevel
     }
 
     /**
-     * Returns the administrative level name
+     * Returns the administrative level name.
      *
      * @return string
      */

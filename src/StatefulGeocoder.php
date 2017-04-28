@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geocoder package.
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -10,7 +10,6 @@
 
 namespace Geocoder;
 
-use Geocoder\Model\AddressCollection;
 use Geocoder\Model\Bounds;
 use Geocoder\Model\Query\GeocodeQuery;
 use Geocoder\Model\Query\ReverseQuery;
@@ -18,8 +17,6 @@ use Geocoder\Provider\LocaleAwareGeocoder;
 use Geocoder\Provider\Provider;
 
 /**
- *
- *
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
 class StatefulGeocoder implements Geocoder, LocaleAwareGeocoder
@@ -45,9 +42,8 @@ class StatefulGeocoder implements Geocoder, LocaleAwareGeocoder
     private $provider;
 
     /**
-     *
      * @param Provider $provider
-     * @param string $locale
+     * @param string   $locale
      */
     public function __construct(Provider $provider, $locale = null)
     {

@@ -1,8 +1,18 @@
 <?php
 
+/*
+ * This file is part of the Geocoder package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license    MIT License
+ */
+
 namespace Geocoder\Tests\Provider;
 
-use Geocoder\Location;use Geocoder\Model\Query\GeocodeQuery;use Geocoder\Model\Query\ReverseQuery;
+use Geocoder\Location;
+use Geocoder\Model\Query\GeocodeQuery;
+use Geocoder\Model\Query\ReverseQuery;
 use Geocoder\Tests\TestCase;
 use Geocoder\Provider\GeoIPs;
 
@@ -36,7 +46,7 @@ class GeoIPsTest extends TestCase
     public function testGeocodeWithLocalhostIPv4()
     {
         $provider = new GeoIPs($this->getMockAdapter($this->never()), 'api_key');
-        $results  = $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
+        $results = $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -105,7 +115,7 @@ class GeoIPsTest extends TestCase
         }}';
 
         $provider = new GeoIPs($this->getMockAdapterReturns($json), 'api_key');
-        $results  = $provider->geocodeQuery(GeocodeQuery::create('66.147.244.214'));
+        $results = $provider->geocodeQuery(GeocodeQuery::create('66.147.244.214'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -148,7 +158,7 @@ class GeoIPsTest extends TestCase
         }}';
 
         $provider = new GeoIPs($this->getMockAdapterReturns($json), 'api_key');
-        $results  = $provider->geocodeQuery(GeocodeQuery::create('66.147.244.214'));
+        $results = $provider->geocodeQuery(GeocodeQuery::create('66.147.244.214'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -164,9 +174,9 @@ class GeoIPsTest extends TestCase
         $this->assertCount(2, $result->getAdminLevels());
         $this->assertEquals('UTAH', $result->getAdminLevels()->get(2)->getName());
         $this->assertEquals('UTAH', $result->getAdminLevels()->get(1)->getName());
-        $this->assertEquals('UT',$result->getAdminLevels()->get(1)->getCode());
+        $this->assertEquals('UT', $result->getAdminLevels()->get(1)->getCode());
         $this->assertEquals('UNITED STATES', $result->getCountry()->getName());
-        $this->assertEquals('US',$result->getCountry()->getCode());
+        $this->assertEquals('US', $result->getCountry()->getCode());
         $this->assertEquals('MST', $result->getTimezone());
     }
 
@@ -307,7 +317,7 @@ class GeoIPsTest extends TestCase
         }
 
         $provider = new GeoIPs($this->getAdapter($_SERVER['GEOIPS_API_KEY']), $_SERVER['GEOIPS_API_KEY']);
-        $results  = $provider->geocodeQuery(GeocodeQuery::create('66.147.244.214'));
+        $results = $provider->geocodeQuery(GeocodeQuery::create('66.147.244.214'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -323,9 +333,9 @@ class GeoIPsTest extends TestCase
         $this->assertCount(2, $result->getAdminLevels());
         $this->assertEquals('UTAH', $result->getAdminLevels()->get(2)->getName());
         $this->assertEquals('UTAH', $result->getAdminLevels()->get(1)->getName());
-        $this->assertEquals('UT',$result->getAdminLevels()->get(1)->getCode());
+        $this->assertEquals('UT', $result->getAdminLevels()->get(1)->getCode());
         $this->assertEquals('UNITED STATES', $result->getCountry()->getName());
-        $this->assertEquals('US',$result->getCountry()->getCode());
+        $this->assertEquals('US', $result->getCountry()->getCode());
         $this->assertEquals('MST', $result->getTimezone());
     }
 

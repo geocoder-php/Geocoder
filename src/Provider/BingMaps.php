@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geocoder package.
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -12,12 +12,9 @@ namespace Geocoder\Provider;
 
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\InvalidServerResponse;
-use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Exception\ZeroResults;
-use Geocoder\Model\AddressCollection;
 use Geocoder\Model\Query\GeocodeQuery;
-use Geocoder\Model\Query\Query;
 use Geocoder\Model\Query\ReverseQuery;
 use Http\Client\HttpClient;
 
@@ -26,7 +23,6 @@ use Http\Client\HttpClient;
  */
 final class BingMaps extends AbstractHttpProvider implements LocaleAwareGeocoder, Provider
 {
-
     /**
      * @var string
      */
@@ -54,7 +50,7 @@ final class BingMaps extends AbstractHttpProvider implements LocaleAwareGeocoder
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function geocodeQuery(GeocodeQuery $query)
     {
@@ -73,7 +69,7 @@ final class BingMaps extends AbstractHttpProvider implements LocaleAwareGeocoder
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function reverseQuery(ReverseQuery $query)
     {
@@ -88,7 +84,7 @@ final class BingMaps extends AbstractHttpProvider implements LocaleAwareGeocoder
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -98,7 +94,7 @@ final class BingMaps extends AbstractHttpProvider implements LocaleAwareGeocoder
     /**
      * @param string $url
      * @param string $locale
-     * @param int $limit
+     * @param int    $limit
      *
      * @return \Geocoder\Collection
      */
@@ -131,18 +127,18 @@ final class BingMaps extends AbstractHttpProvider implements LocaleAwareGeocoder
             if (isset($item->bbox) && is_array($item->bbox) && count($item->bbox) > 0) {
                 $bounds = [
                     'south' => $item->bbox[0],
-                    'west'  => $item->bbox[1],
+                    'west' => $item->bbox[1],
                     'north' => $item->bbox[2],
-                    'east'  => $item->bbox[3]
+                    'east' => $item->bbox[3],
                 ];
             }
 
             $streetNumber = null;
-            $streetName   = property_exists($item->address, 'addressLine') ? (string) $item->address->addressLine : '';
-            $zipcode      = property_exists($item->address, 'postalCode') ? (string) $item->address->postalCode : '';
-            $city         = property_exists($item->address, 'locality') ? (string) $item->address->locality: '';
-            $country      = property_exists($item->address, 'countryRegion') ? (string) $item->address->countryRegion: '';
-            $countryCode  = property_exists($item->address, 'countryRegionIso2') ? (string) $item->address->countryRegionIso2: '';
+            $streetName = property_exists($item->address, 'addressLine') ? (string) $item->address->addressLine : '';
+            $zipcode = property_exists($item->address, 'postalCode') ? (string) $item->address->postalCode : '';
+            $city = property_exists($item->address, 'locality') ? (string) $item->address->locality : '';
+            $country = property_exists($item->address, 'countryRegion') ? (string) $item->address->countryRegion : '';
+            $countryCode = property_exists($item->address, 'countryRegionIso2') ? (string) $item->address->countryRegionIso2 : '';
 
             $adminLevels = [];
 
@@ -153,16 +149,16 @@ final class BingMaps extends AbstractHttpProvider implements LocaleAwareGeocoder
             }
 
             $results[] = array_merge($this->getDefaults(), [
-                'latitude'     => $coordinates[0],
-                'longitude'    => $coordinates[1],
-                'bounds'       => $bounds,
+                'latitude' => $coordinates[0],
+                'longitude' => $coordinates[1],
+                'bounds' => $bounds,
                 'streetNumber' => $streetNumber,
-                'streetName'   => $streetName,
-                'locality'     => empty($city) ? null : $city,
-                'postalCode'   => empty($zipcode) ? null : $zipcode,
-                'adminLevels'  => $adminLevels,
-                'country'      => empty($country) ? null : $country,
-                'countryCode'  => empty($countryCode) ? null : $countryCode,
+                'streetName' => $streetName,
+                'locality' => empty($city) ? null : $city,
+                'postalCode' => empty($zipcode) ? null : $zipcode,
+                'adminLevels' => $adminLevels,
+                'country' => empty($country) ? null : $country,
+                'countryCode' => empty($countryCode) ? null : $countryCode,
             ]);
 
             if (count($results) >= $limit) {

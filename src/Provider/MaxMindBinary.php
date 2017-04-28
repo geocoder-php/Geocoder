@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geocoder package.
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -12,7 +12,6 @@ namespace Geocoder\Provider;
 
 use Geocoder\Exception\FunctionNotFound;
 use Geocoder\Exception\InvalidArgument;
-use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Exception\ZeroResults;
 use Geocoder\Model\Query\GeocodeQuery;
@@ -34,8 +33,8 @@ final class MaxMindBinary extends AbstractProvider implements Provider, IpAddres
      * @param string   $datFile
      * @param int|null $openFlag
      *
-     * @throws FunctionNotFound If maxmind's lib not installed.
-     * @throws InvalidArgument  If dat file is not correct (optional).
+     * @throws FunctionNotFound if maxmind's lib not installed
+     * @throws InvalidArgument  if dat file is not correct (optional)
      */
     public function __construct($datFile, $openFlag = null)
     {
@@ -61,14 +60,14 @@ final class MaxMindBinary extends AbstractProvider implements Provider, IpAddres
             throw new InvalidArgument(sprintf('Given MaxMind dat file "%s" does not readable.', $datFile));
         }
 
-        $this->datFile  = $datFile;
+        $this->datFile = $datFile;
         $this->openFlag = null === $openFlag ? GEOIP_STANDARD : $openFlag;
 
         parent::__construct();
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function geocodeQuery(GeocodeQuery $query)
     {
@@ -82,7 +81,7 @@ final class MaxMindBinary extends AbstractProvider implements Provider, IpAddres
             throw new UnsupportedOperation('The MaxMindBinary provider does not support IPv6 addresses.');
         }
 
-        $geoIp       = geoip_open($this->datFile, $this->openFlag);
+        $geoIp = geoip_open($this->datFile, $this->openFlag);
         $geoIpRecord = GeoIP_record_by_addr($geoIp, $address);
 
         geoip_close($geoIp);
@@ -100,18 +99,18 @@ final class MaxMindBinary extends AbstractProvider implements Provider, IpAddres
         return $this->returnResults([
             $this->fixEncoding(array_merge($this->getDefaults(), [
                 'countryCode' => $geoIpRecord->country_code,
-                'country'     => $geoIpRecord->country_name,
+                'country' => $geoIpRecord->country_name,
                 'adminLevels' => $adminLevels,
-                'locality'    => $geoIpRecord->city,
-                'latitude'    => $geoIpRecord->latitude,
-                'longitude'   => $geoIpRecord->longitude,
-                'postalCode'  => $geoIpRecord->postal_code,
-            ]))
+                'locality' => $geoIpRecord->city,
+                'latitude' => $geoIpRecord->latitude,
+                'longitude' => $geoIpRecord->longitude,
+                'postalCode' => $geoIpRecord->postal_code,
+            ])),
         ]);
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function reverseQuery(ReverseQuery $query)
     {
@@ -119,7 +118,7 @@ final class MaxMindBinary extends AbstractProvider implements Provider, IpAddres
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getName()
     {

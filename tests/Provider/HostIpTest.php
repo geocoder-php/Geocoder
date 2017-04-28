@@ -1,8 +1,18 @@
 <?php
 
+/*
+ * This file is part of the Geocoder package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license    MIT License
+ */
+
 namespace Geocoder\Tests\Provider;
 
-use Geocoder\Location;use Geocoder\Model\Query\GeocodeQuery;use Geocoder\Model\Query\ReverseQuery;
+use Geocoder\Location;
+use Geocoder\Model\Query\GeocodeQuery;
+use Geocoder\Model\Query\ReverseQuery;
 use Geocoder\Tests\TestCase;
 use Geocoder\Provider\HostIp;
 
@@ -27,7 +37,7 @@ class HostIpTest extends TestCase
     public function testGeocodeWithLocalhostIPv4()
     {
         $provider = new HostIp($this->getMockAdapter($this->never()));
-        $results  = $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
+        $results = $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -76,7 +86,7 @@ class HostIpTest extends TestCase
     public function testGeocodeWithRealIPv4()
     {
         $provider = new HostIp($this->getAdapter());
-        $results  = $provider->geocodeQuery(GeocodeQuery::create('88.188.221.14'));
+        $results = $provider->geocodeQuery(GeocodeQuery::create('88.188.221.14'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -116,7 +126,7 @@ class HostIpTest extends TestCase
     public function testGeocodeWithAnotherIp()
     {
         $provider = new HostIp($this->getAdapter());
-        $results  = $provider->geocodeQuery(GeocodeQuery::create('33.33.33.22'));
+        $results = $provider->geocodeQuery(GeocodeQuery::create('33.33.33.22'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -125,6 +135,5 @@ class HostIpTest extends TestCase
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertNull($result->getCoordinates());
-
     }
 }

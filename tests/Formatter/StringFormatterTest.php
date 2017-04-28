@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file is part of the Geocoder package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license    MIT License
+ */
+
 namespace Geocoder\Tests\Formatter;
 
 use Geocoder\Formatter\StringFormatter;
@@ -23,7 +31,7 @@ class StringFormatterTest extends TestCase
     public function testFormat($data, $format, $expected)
     {
         $address = $this->createAddress($data);
-        $result  = $this->formatter->format($address, $format);
+        $result = $this->formatter->format($address, $format);
 
         $this->assertTrue(is_string($result));
         $this->assertEquals($expected, $result);
@@ -31,97 +39,97 @@ class StringFormatterTest extends TestCase
 
     public static function dataProviderForTestFormat()
     {
-        return array(
-            array(
-                array('streetNumber' => 10),
+        return [
+            [
+                ['streetNumber' => 10],
                 '%n',
-                '10'
-            ),
-            array(
-                array('streetName' => 'Via San Marco'),
+                '10',
+            ],
+            [
+                ['streetName' => 'Via San Marco'],
                 '%S',
-                'Via San Marco'
-            ),
-            array(
-                array('locality' => 'Zuerich'),
+                'Via San Marco',
+            ],
+            [
+                ['locality' => 'Zuerich'],
                 '%L',
-                'Zuerich'
-            ),
-            array(
-                array('postalCode' => '8001'),
+                'Zuerich',
+            ],
+            [
+                ['postalCode' => '8001'],
                 '%z',
-                '8001'
-            ),
-            array(
-                array('adminLevels' => [['name' => 'Collin County', 'level' => 2]]),
+                '8001',
+            ],
+            [
+                ['adminLevels' => [['name' => 'Collin County', 'level' => 2]]],
                 '%A2',
-                'Collin County'
-            ),
-            array(
-                array('adminLevels' => [['code' => 'FC', 'level' => 2]]),
+                'Collin County',
+            ],
+            [
+                ['adminLevels' => [['code' => 'FC', 'level' => 2]]],
                 '%a2',
-                'FC'
-            ),
-            array(
-                array('adminLevels' => [['name' => 'Auvergne', 'level' => 1]]),
+                'FC',
+            ],
+            [
+                ['adminLevels' => [['name' => 'Auvergne', 'level' => 1]]],
                 '%A1',
-                'Auvergne'
-            ),
-            array(
-                array('adminLevels' => [['code' => 'CA', 'level' => 1]]),
+                'Auvergne',
+            ],
+            [
+                ['adminLevels' => [['code' => 'CA', 'level' => 1]]],
                 '%a1',
-                'CA'
-            ),
-            array(
-                array('country' => 'France'),
+                'CA',
+            ],
+            [
+                ['country' => 'France'],
                 '%C',
-                'France'
-            ),
-            array(
-                array('countryCode' => 'fr'),
+                'France',
+            ],
+            [
+                ['countryCode' => 'fr'],
                 '%c',
-                'FR'
-            ),
-            array(
-                array('timezone' => 'Europe/Paris'),
+                'FR',
+            ],
+            [
+                ['timezone' => 'Europe/Paris'],
                 '%T',
-                'Europe/Paris'
-            ),
-            array(
-                array('subLocality' => 'District'),
+                'Europe/Paris',
+            ],
+            [
+                ['subLocality' => 'District'],
                 '%D',
-                'District'
-            ),
-            array(
-                array(
+                'District',
+            ],
+            [
+                [
                     'streetNumber' => 120,
-                    'streetName'   => 'Badenerstrasse',
-                    'postalCode'   => 8001,
-                    'locality'     => 'Zuerich',
-                ),
+                    'streetName' => 'Badenerstrasse',
+                    'postalCode' => 8001,
+                    'locality' => 'Zuerich',
+                ],
                 '%S %n, %z %L',
-                'Badenerstrasse 120, 8001 Zuerich'
-            ),
-            array(
-                array(
+                'Badenerstrasse 120, 8001 Zuerich',
+            ],
+            [
+                [
                     'streetNumber' => 120,
-                    'streetName'   => 'Badenerstrasse',
-                    'postalCode'   => 8001,
-                    'locality'     => 'Zuerich',
-                ),
+                    'streetName' => 'Badenerstrasse',
+                    'postalCode' => 8001,
+                    'locality' => 'Zuerich',
+                ],
                 '<p>%S %n, %z <a href="#%L">%L</a></p>',
-                '<p>Badenerstrasse 120, 8001 <a href="#Zuerich">Zuerich</a></p>'
-            ),
-            array(
-                array(
+                '<p>Badenerstrasse 120, 8001 <a href="#Zuerich">Zuerich</a></p>',
+            ],
+            [
+                [
                     'streetNumber' => 120,
-                    'streetName'   => 'Badenerstrasse',
-                    'postalCode'   => 8001,
-                    'locality'     => 'Zuerich',
-                ),
+                    'streetName' => 'Badenerstrasse',
+                    'postalCode' => 8001,
+                    'locality' => 'Zuerich',
+                ],
                 '<p>%S %n, %z <a href="#%L">%L</a></p><p>%A2</p>',
-                '<p>Badenerstrasse 120, 8001 <a href="#Zuerich">Zuerich</a></p><p></p>'
-            ),
-        );
+                '<p>Badenerstrasse 120, 8001 <a href="#Zuerich">Zuerich</a></p><p></p>',
+            ],
+        ];
     }
 }

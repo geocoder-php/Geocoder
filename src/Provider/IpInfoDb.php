@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geocoder package.
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -13,7 +13,6 @@ namespace Geocoder\Provider;
 use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\InvalidServerResponse;
-use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Collection;
 use Geocoder\Exception\ZeroResults;
@@ -47,8 +46,8 @@ final class IpInfoDb extends AbstractHttpProvider implements Provider, IpAddress
     private $endpointUrl;
 
     /**
-     * @param HttpClient $client    An HTTP adapter.
-     * @param string     $apiKey    An API key.
+     * @param HttpClient $client    an HTTP adapter
+     * @param string     $apiKey    an API key
      * @param string     $precision The endpoint precision. Either "city" or "country" (faster)
      *
      * @throws \Geocoder\Exception\InvalidArgument
@@ -76,7 +75,7 @@ final class IpInfoDb extends AbstractHttpProvider implements Provider, IpAddress
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function geocodeQuery(GeocodeQuery $query)
     {
@@ -87,7 +86,6 @@ final class IpInfoDb extends AbstractHttpProvider implements Provider, IpAddress
 
         if (!filter_var($address, FILTER_VALIDATE_IP)) {
             throw new UnsupportedOperation('The IpInfoDb provider does not support street addresses, only IPv4 addresses.');
-
         }
 
         // This API does not support IPv6
@@ -96,7 +94,7 @@ final class IpInfoDb extends AbstractHttpProvider implements Provider, IpAddress
         }
 
         if ('127.0.0.1' === $address) {
-            return $this->returnResults([ $this->getLocalhostDefaults() ]);
+            return $this->returnResults([$this->getLocalhostDefaults()]);
         }
 
         $url = sprintf($this->endpointUrl, $this->apiKey, $address);
@@ -105,7 +103,7 @@ final class IpInfoDb extends AbstractHttpProvider implements Provider, IpAddress
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function reverseQuery(ReverseQuery $query)
     {
@@ -113,7 +111,7 @@ final class IpInfoDb extends AbstractHttpProvider implements Provider, IpAddress
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -142,20 +140,20 @@ final class IpInfoDb extends AbstractHttpProvider implements Provider, IpAddress
 
         $timezone = null;
         if (isset($data['timeZone'])) {
-            $timezone = timezone_name_from_abbr("", (int) substr($data['timeZone'], 0, strpos($data['timeZone'], ':')) * 3600, 0);
+            $timezone = timezone_name_from_abbr('', (int) substr($data['timeZone'], 0, strpos($data['timeZone'], ':')) * 3600, 0);
         }
 
         return $this->returnResults([
-            array_merge($this->getDefaults(), array(
-                'latitude'    => isset($data['latitude']) ? $data['latitude'] : null,
-                'longitude'   => isset($data['longitude']) ? $data['longitude'] : null,
-                'locality'    => isset($data['cityName']) ? $data['cityName'] : null,
-                'postalCode'  => isset($data['zipCode']) ? $data['zipCode'] : null,
+            array_merge($this->getDefaults(), [
+                'latitude' => isset($data['latitude']) ? $data['latitude'] : null,
+                'longitude' => isset($data['longitude']) ? $data['longitude'] : null,
+                'locality' => isset($data['cityName']) ? $data['cityName'] : null,
+                'postalCode' => isset($data['zipCode']) ? $data['zipCode'] : null,
                 'adminLevels' => isset($data['regionName']) ? [['name' => $data['regionName'], 'level' => 1]] : [],
-                'country'     => isset($data['countryName']) ? $data['countryName'] : null,
+                'country' => isset($data['countryName']) ? $data['countryName'] : null,
                 'countryCode' => isset($data['countryName']) ? $data['countryCode'] : null,
-                'timezone'    => $timezone,
-            ))
+                'timezone' => $timezone,
+            ]),
         ]);
     }
 }

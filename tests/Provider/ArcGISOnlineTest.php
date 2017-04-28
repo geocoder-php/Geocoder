@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file is part of the Geocoder package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license    MIT License
+ */
+
 namespace Geocoder\Tests\Provider;
 
 use Geocoder\Location;
@@ -66,7 +74,7 @@ class ArcGISOnlineTest extends TestCase
     public function testGeocodeWithRealAddress()
     {
         $provider = new ArcGISOnline($this->getAdapter());
-        $results  = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
+        $results = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
@@ -96,7 +104,7 @@ class ArcGISOnlineTest extends TestCase
     public function testGeocodeWithRealAddressAndHttps()
     {
         $provider = new ArcGISOnline($this->getAdapter(), null, true);
-        $results  = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
+        $results = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
@@ -151,11 +159,10 @@ class ArcGISOnlineTest extends TestCase
         $provider->reverseQuery(ReverseQuery::fromCoordinates(48.863279997000461, 2.3890199980004354));
     }
 
-
     public function testReverseWithRealCoordinatesWithHttps()
     {
         $provider = new ArcGISOnline($this->getAdapter(), null);
-        $results  = $provider->reverseQuery(ReverseQuery::fromCoordinates(48.863279997000461, 2.3890199980004354));
+        $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(48.863279997000461, 2.3890199980004354));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -181,7 +188,7 @@ class ArcGISOnlineTest extends TestCase
     public function testGeocodeWithCity()
     {
         $provider = new ArcGISOnline($this->getAdapter());
-        $results  = $provider->geocodeQuery(GeocodeQuery::create('Hannover'));
+        $results = $provider->geocodeQuery(GeocodeQuery::create('Hannover'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);

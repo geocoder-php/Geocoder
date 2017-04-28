@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geocoder package.
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -12,7 +12,9 @@ namespace Geocoder\Tests\Provider;
 
 use Geocoder\Adapter\GeoIP2Adapter;
 use Geocoder\Exception\ZeroResults;
-use Geocoder\Location;use Geocoder\Model\Query\GeocodeQuery;use Geocoder\Model\Query\ReverseQuery;
+use Geocoder\Location;
+use Geocoder\Model\Query\GeocodeQuery;
+use Geocoder\Model\Query\ReverseQuery;
 use Geocoder\Provider\GeoIP2;
 use Geocoder\Tests\TestCase;
 use GeoIp2\Database\Reader;
@@ -48,7 +50,7 @@ class GeoIP2Test extends TestCase
 
     public function testGeocodeWithLocalhostIPv4()
     {
-        $results  = $this->provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
+        $results = $this->provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -70,17 +72,17 @@ class GeoIP2Test extends TestCase
     }
 
     /**
-     * Provides data for geocode test
+     * Provides data for geocode test.
      *
      * @return array
      */
     public static function provideDataForRetrievingGeodata()
     {
-        $testdata = array(
-            'Response with data' => array(
+        $testdata = [
+            'Response with data' => [
                 '74.200.247.59',
                 '{"city":{"geoname_id":2911298,"names":{"de":"Hamburg","en":"Hamburg","es":"Hamburgo","fr":"Hambourg","ja":"\u30cf\u30f3\u30d6\u30eb\u30af","pt-BR":"Hamburgo","ru":"\u0413\u0430\u043c\u0431\u0443\u0440\u0433","zh-CN":"\u6c49\u5821\u5e02"}},"continent":{"code":"EU","geoname_id":6255148,"names":{"de":"Europa","en":"Europe","es":"Europa","fr":"Europe","ja":"\u30e8\u30fc\u30ed\u30c3\u30d1","pt-BR":"Europa","ru":"\u0415\u0432\u0440\u043e\u043f\u0430","zh-CN":"\u6b27\u6d32"}},"country":{"geoname_id":2921044,"iso_code":"DE","names":{"de":"Deutschland","en":"Germany","es":"Alemania","fr":"Allemagne","ja":"\u30c9\u30a4\u30c4\u9023\u90a6\u5171\u548c\u56fd","pt-BR":"Alemanha","ru":"\u0413\u0435\u0440\u043c\u0430\u043d\u0438\u044f","zh-CN":"\u5fb7\u56fd"}},"location":{"latitude":53.55,"longitude":10,"time_zone":"Europe\/Berlin"},"registered_country":{"geoname_id":2921044,"iso_code":"DE","names":{"de":"Deutschland","en":"Germany","es":"Alemania","fr":"Allemagne","ja":"\u30c9\u30a4\u30c4\u9023\u90a6\u5171\u548c\u56fd","pt-BR":"Alemanha","ru":"\u0413\u0435\u0440\u043c\u0430\u043d\u0438\u044f","zh-CN":"\u5fb7\u56fd"}},"subdivisions":[{"geoname_id":2911297,"iso_code":"HH","names":{"de":"Hamburg","en":"Hamburg","es":"Hamburgo","fr":"Hambourg"}}],"traits":{"ip_address":"74.200.247.59"},"postal":{"code":"EC4N"}}',
-                array(
+                [
                     'latitude' => 53.55,
                     'longitude' => 10,
                     'boundsDefined' => null,
@@ -96,12 +98,12 @@ class GeoIP2Test extends TestCase
                     'country' => 'Germany',
                     'countryCode' => 'DE',
                     'timezone' => 'Europe/Berlin',
-                )
-            ),
-            'Response with all possible data' => array(
+                ],
+            ],
+            'Response with all possible data' => [
                 '93.36.20.217',
                 '{"country": {"iso_code": "IT","names": {"pt-BR": "Itália","es": "Italia","ru": "Италия","en": "Italy","zh-CN": "意大利","fr": "Italie","de": "Italien","ja": "イタリア共和国"},"geoname_id": 3175395},"location": {"longitude": 9.2667,"latitude": 45.5833,"time_zone": "Europe/Rome"},"subdivisions": [{"iso_code": "25","names": {"en": "Lombardy","fr": "Lombardie","de": "Lombardei","es": "Lombardía"},"geoname_id": 3174618},{"iso_code": "MB","names": {"en": "Monza Brianza"},"geoname_id": 6955700}],"postal": {"code": "20900"},"city": {"names": {"pt-BR": "Monza","es": "Monza","ru": "Монца","en": "Monza","zh-CN": "蒙扎","fr": "Monza","de": "Monza","ja": "モンツァ"},"geoname_id": 3172629},"continent": {"names": {"pt-BR": "Europa","es": "Europa","ru": "Европа","en": "Europe","zh-CN": "欧洲","fr": "Europe","de": "Europa","ja": "ヨーロッパ"},"geoname_id": 6255148,"code": "EU"},"registered_country": {"iso_code": "IT","names": {"pt-BR": "Itália","es": "Italia","ru": "Италия","en": "Italy","zh-CN": "意大利","fr": "Italie","de": "Italien","ja": "イタリア共和国"},"geoname_id": 3175395},"traits": {"domain": "fastwebnet.it","autonomous_system_number": 12874,"ip_address": "93.36.20.217","organization": "Fastweb","isp": "Fastweb","autonomous_system_organization": "Fastweb SpA"},"represented_country": {"names": {}}}',
-                array(
+                [
                     'latitude' => 45.5833,
                     'longitude' => 9.2667,
                     'boundsDefined' => null,
@@ -123,12 +125,12 @@ class GeoIP2Test extends TestCase
                     'country' => 'Italy',
                     'countryCode' => 'IT',
                     'timezone' => 'Europe/Rome',
-                )
-            ),
-            'Response with all data null' => array(
+                ],
+            ],
+            'Response with all data null' => [
                 '74.200.247.59',
                 '{}',
-                array(
+                [
                     'latitude' => null,
                     'longitude' => null,
                     'boundsDefined' => null,
@@ -141,9 +143,9 @@ class GeoIP2Test extends TestCase
                     'country' => null,
                     'countryCode' => null,
                     'timezone' => null,
-                )
-            )
-        );
+                ],
+            ],
+        ];
 
         return $testdata;
     }
@@ -211,7 +213,7 @@ class GeoIP2Test extends TestCase
 
     public function testGeoIp2Encoding()
     {
-        $reader = new Reader(__DIR__ . '/fixtures/GeoLite2-City.mmdb');
+        $reader = new Reader(__DIR__.'/fixtures/GeoLite2-City.mmdb');
         $adapter = new GeoIP2Adapter($reader);
         $provider = new GeoIP2($adapter);
         $locality = $provider->geocodeQuery(GeocodeQuery::create('79.114.34.148'))->first()->getLocality();

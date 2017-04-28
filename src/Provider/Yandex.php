@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geocoder package.
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -10,8 +10,6 @@
 
 namespace Geocoder\Provider;
 
-use Geocoder\Exception\InvalidServerResponse;
-use Geocoder\Exception\NoResult;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Exception\ZeroResults;
 use Geocoder\Model\Query\GeocodeQuery;
@@ -39,8 +37,8 @@ final class Yandex extends AbstractHttpProvider implements LocaleAwareGeocoder, 
     private $toponym;
 
     /**
-     * @param HttpClient $client  An HTTP adapter.
-     * @param string     $toponym Toponym biasing only for reverse geocoding (optional).
+     * @param HttpClient $client  an HTTP adapter
+     * @param string     $toponym toponym biasing only for reverse geocoding (optional)
      */
     public function __construct(HttpClient $client, $toponym = null)
     {
@@ -50,7 +48,7 @@ final class Yandex extends AbstractHttpProvider implements LocaleAwareGeocoder, 
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function geocodeQuery(GeocodeQuery $query)
     {
@@ -66,7 +64,7 @@ final class Yandex extends AbstractHttpProvider implements LocaleAwareGeocoder, 
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function reverseQuery(ReverseQuery $query)
     {
@@ -83,7 +81,7 @@ final class Yandex extends AbstractHttpProvider implements LocaleAwareGeocoder, 
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -93,7 +91,7 @@ final class Yandex extends AbstractHttpProvider implements LocaleAwareGeocoder, 
     /**
      * @param string $query
      * @param string $locale
-     * @param int $limit
+     * @param int    $limit
      */
     private function executeQuery($query, $locale, $limit)
     {
@@ -105,10 +103,10 @@ final class Yandex extends AbstractHttpProvider implements LocaleAwareGeocoder, 
 
         $request = $this->getMessageFactory()->createRequest('GET', $query);
         $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
-        $json    = (array) json_decode($content, true);
+        $json = (array) json_decode($content, true);
 
         if (empty($json) || isset($json['error']) ||
-            (isset($json['response']) &&  '0' === $json['response']['GeoObjectCollection']['metaDataProperty']['GeocoderResponseMetaData']['found'])
+            (isset($json['response']) && '0' === $json['response']['GeoObjectCollection']['metaDataProperty']['GeocoderResponseMetaData']['found'])
         ) {
             throw ZeroResults::create($query);
         }
@@ -118,7 +116,7 @@ final class Yandex extends AbstractHttpProvider implements LocaleAwareGeocoder, 
         $results = [];
         foreach ($data as $item) {
             $bounds = null;
-            $details = array('pos' => ' ');
+            $details = ['pos' => ' '];
 
             array_walk_recursive(
                 $item['GeoObject'],
@@ -126,19 +124,21 @@ final class Yandex extends AbstractHttpProvider implements LocaleAwareGeocoder, 
                 /**
                  * @param string $value
                  */
-                function ($value, $key) use (&$details) {$details[$key] = $value;}
+                function ($value, $key) use (&$details) {
+                    $details[$key] = $value;
+                }
             );
 
-            if (! empty($details['lowerCorner'])) {
+            if (!empty($details['lowerCorner'])) {
                 $coordinates = explode(' ', $details['lowerCorner']);
                 $bounds['south'] = (float) $coordinates[1];
-                $bounds['west']  = (float) $coordinates[0];
+                $bounds['west'] = (float) $coordinates[0];
             }
 
-            if (! empty($details['upperCorner'])) {
+            if (!empty($details['upperCorner'])) {
                 $coordinates = explode(' ', $details['upperCorner']);
                 $bounds['north'] = (float) $coordinates[1];
-                $bounds['east']  = (float) $coordinates[0];
+                $bounds['east'] = (float) $coordinates[0];
             }
 
             $coordinates = explode(' ', $details['pos']);
@@ -150,18 +150,18 @@ final class Yandex extends AbstractHttpProvider implements LocaleAwareGeocoder, 
                 }
             }
 
-            $results[] = array_merge($this->getDefaults(), array(
-                'latitude'     => (float) $coordinates[1],
-                'longitude'    => (float) $coordinates[0],
-                'bounds'       => $bounds,
+            $results[] = array_merge($this->getDefaults(), [
+                'latitude' => (float) $coordinates[1],
+                'longitude' => (float) $coordinates[0],
+                'bounds' => $bounds,
                 'streetNumber' => isset($details['PremiseNumber']) ? $details['PremiseNumber'] : null,
-                'streetName'   => isset($details['ThoroughfareName']) ? $details['ThoroughfareName'] : null,
-                'subLocality'  => isset($details['DependentLocalityName']) ? $details['DependentLocalityName'] : null,
-                'locality'     => isset($details['LocalityName']) ? $details['LocalityName'] : null,
-                'adminLevels'  => $adminLevels,
-                'country'      => isset($details['CountryName']) ? $details['CountryName'] : null,
-                'countryCode'  => isset($details['CountryNameCode']) ? $details['CountryNameCode'] : null,
-            ));
+                'streetName' => isset($details['ThoroughfareName']) ? $details['ThoroughfareName'] : null,
+                'subLocality' => isset($details['DependentLocalityName']) ? $details['DependentLocalityName'] : null,
+                'locality' => isset($details['LocalityName']) ? $details['LocalityName'] : null,
+                'adminLevels' => $adminLevels,
+                'country' => isset($details['CountryName']) ? $details['CountryName'] : null,
+                'countryCode' => isset($details['CountryNameCode']) ? $details['CountryNameCode'] : null,
+            ]);
         }
 
         return $this->returnResults($results);

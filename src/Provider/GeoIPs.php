@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geocoder package.
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -13,7 +13,6 @@ namespace Geocoder\Provider;
 use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\InvalidServerResponse;
-use Geocoder\Exception\NoResult;
 use Geocoder\Exception\QuotaExceeded;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Exception\ZeroResults;
@@ -25,28 +24,28 @@ use Http\Client\HttpClient;
  * @author Andrea Cristaudo <andrea.cristaudo@gmail.com>
  * @author Arthur Bodera <abodera@thinkscape.pro>
  *
- * @link http://www.geoips.com/en/developer/api-guide
+ * @see http://www.geoips.com/en/developer/api-guide
  */
 final class GeoIPs extends AbstractHttpProvider implements Provider, IpAddressGeocoder
 {
     /**
      * @var string
      */
-    const GEOCODE_ENDPOINT_URL  = 'https://api.geoips.com/ip/%s/key/%s/output/json/timezone/true/';
+    const GEOCODE_ENDPOINT_URL = 'https://api.geoips.com/ip/%s/key/%s/output/json/timezone/true/';
 
-    const CODE_SUCCESS          = '200_1'; // The following results has been returned.
+    const CODE_SUCCESS = '200_1'; // The following results has been returned.
 
-    const CODE_NOT_FOUND        = '200_2'; // No result set has been returned.
+    const CODE_NOT_FOUND = '200_2'; // No result set has been returned.
 
-    const CODE_BAD_KEY          = '400_1'; // Error in the URI - The API call should include a API key parameter.
+    const CODE_BAD_KEY = '400_1'; // Error in the URI - The API call should include a API key parameter.
 
-    const CODE_BAD_IP           = '400_2'; // Error in the URI - The API call should include a valid IP address.
+    const CODE_BAD_IP = '400_2'; // Error in the URI - The API call should include a valid IP address.
 
-    const CODE_NOT_AUTHORIZED   = '403_1'; // The API key associated with your request was not recognized.
+    const CODE_NOT_AUTHORIZED = '403_1'; // The API key associated with your request was not recognized.
 
     const CODE_ACCOUNT_INACTIVE = '403_2'; // The API key has not been approved or has been disabled.
 
-    const CODE_LIMIT_EXCEEDED   = '403_3'; // The service you have requested is over capacity.
+    const CODE_LIMIT_EXCEEDED = '403_3'; // The service you have requested is over capacity.
 
     /**
      * @var string
@@ -65,7 +64,7 @@ final class GeoIPs extends AbstractHttpProvider implements Provider, IpAddressGe
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function geocodeQuery(GeocodeQuery $query)
     {
@@ -83,7 +82,7 @@ final class GeoIPs extends AbstractHttpProvider implements Provider, IpAddressGe
         }
 
         if ('127.0.0.1' === $address) {
-            return $this->returnResults([ $this->getLocalhostDefaults() ]);
+            return $this->returnResults([$this->getLocalhostDefaults()]);
         }
 
         $query = sprintf(self::GEOCODE_ENDPOINT_URL, $address, $this->apiKey);
@@ -92,7 +91,7 @@ final class GeoIPs extends AbstractHttpProvider implements Provider, IpAddressGe
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function reverseQuery(ReverseQuery $query)
     {
@@ -100,7 +99,7 @@ final class GeoIPs extends AbstractHttpProvider implements Provider, IpAddressGe
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -137,9 +136,9 @@ final class GeoIPs extends AbstractHttpProvider implements Provider, IpAddressGe
                     throw new ZeroResults(sprintf(
                         'GeoIPs error %s%s%s%s - query: %s',
                         $json['error']['code'],
-                        isset($json['error']['status']) ? ', ' . $json['error']['status'] : '',
-                        isset($json['error']['message']) ? ', ' . $json['error']['message'] : '',
-                        isset($json['error']['notes']) ? ', ' . $json['error']['notes'] : '',
+                        isset($json['error']['status']) ? ', '.$json['error']['status'] : '',
+                        isset($json['error']['message']) ? ', '.$json['error']['message'] : '',
+                        isset($json['error']['notes']) ? ', '.$json['error']['notes'] : '',
                         $query
                     ));
             }
@@ -153,7 +152,7 @@ final class GeoIPs extends AbstractHttpProvider implements Provider, IpAddressGe
 
         // Check response code
         switch ($response['code']) {
-            case static::CODE_SUCCESS;
+            case static::CODE_SUCCESS:
                 // everything is ok
                 break;
             case static::CODE_NOT_FOUND:
@@ -181,27 +180,27 @@ final class GeoIPs extends AbstractHttpProvider implements Provider, IpAddressGe
             $adminLevels[] = [
                 'name' => $location['region_name'],
                 'code' => $location['region_code'],
-                'level' => 1
+                'level' => 1,
             ];
         }
 
         if (null !== $location['county_name']) {
             $adminLevels[] = [
                 'name' => $location['county_name'],
-                'level' => 2
+                'level' => 2,
             ];
         }
 
-        $results   = [];
-        $results[] = array_merge($this->getDefaults(), array(
-            'country'     => $location['country_name'],
+        $results = [];
+        $results[] = array_merge($this->getDefaults(), [
+            'country' => $location['country_name'],
             'countryCode' => $location['country_code'],
             'adminLevels' => $adminLevels,
-            'locality'    => $location['city_name'],
-            'latitude'    => $location['latitude'],
-            'longitude'   => $location['longitude'],
-            'timezone'    => $location['timezone'],
-        ));
+            'locality' => $location['city_name'],
+            'latitude' => $location['latitude'],
+            'longitude' => $location['longitude'],
+            'timezone' => $location['timezone'],
+        ]);
 
         return $this->returnResults($results);
     }
