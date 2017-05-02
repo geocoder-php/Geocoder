@@ -83,7 +83,7 @@ since each HTTP-based provider implements
 ```php
 $adapter  = new \Http\Adapter\Guzzle6\Client();
 $provider = new \Geocoder\Provider\GoogleMaps($adapter);
-$geocoder = new StatefulGeocoder($provider, 'en');
+$geocoder = new \Geocoder\StatefulGeocoder($provider, 'en');
 
 $geocoder->geocode(...);
 $geocoder->reverse(...);
