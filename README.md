@@ -83,7 +83,7 @@ since each HTTP-based provider implements
 ```php
 $adapter  = new \Http\Adapter\Guzzle6\Client();
 $provider = new \Geocoder\Provider\GoogleMaps($adapter);
-$geocoder = new StatefulGeocoder($provider, 'en');
+$geocoder = new \Geocoder\StatefulGeocoder($provider, 'en');
 
 $geocoder->geocode(...);
 $geocoder->reverse(...);
@@ -228,10 +228,10 @@ Standard](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-7-ht
 which defines how HTTP message should be implemented. You can use any library to send HTTP messages
 that implements [php-http/client-implementation](https://packagist.org/providers/php-http/client-implementation).
 
-To use Guzzle 6 you should run the follwing command:
+To use Guzzle 6 you should run the following command:
 
 ```
-$ composer require php-http/guzzle6-adapter
+$ composer require php-http/guzzle6-adapter php-http/message
 ```
 
 ### Providers
