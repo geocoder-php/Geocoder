@@ -6,8 +6,8 @@ First of all, **thank you** for contributing, **you are awesome**!
 Here are a few rules to follow in order to ease code reviews, and discussions before
 maintainers accept and merge your work.
 
-You MUST follow the [PSR-1](http://www.php-fig.org/psr/1/) and
-[PSR-2](http://www.php-fig.org/psr/2/). If you don't know about any of them, you
+You MUST follow the [PSR-1](http://www.php-fig.org/psr/psr-1/) and
+[PSR-2](http://www.php-fig.org/psr/psr-2/). If you don't know about any of them, you
 should really read the recommendations. Can't wait? Use the [PHP-CS-Fixer
 tool](http://cs.sensiolabs.org/).
 
