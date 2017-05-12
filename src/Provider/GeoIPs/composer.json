@@ -1,7 +1,7 @@
 {
-    "name": "geocoder-php/chain-provider",
+    "name": "geocoder-php/geoips-provider",
     "type": "library",
-    "description": "Geocoder chain adapter",
+    "description": "Geocoder GeoIPs adapter",
     "keywords": [],
     "homepage": "http://geocoder-php.org/Geocoder/",
     "license": "MIT",
@@ -22,7 +22,7 @@
         "symfony/phpunit-bridge": "^3.2"
     },
     "autoload": {
-        "psr-4": { "Geocoder\\Provider\\Chain\\": "" },
+        "psr-4": { "Geocoder\\Provider\\GeoIPs\\": "" },
         "exclude-from-classmap": [
             "/Tests/"
         ]
