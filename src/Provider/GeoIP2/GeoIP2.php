@@ -18,7 +18,6 @@ use Geocoder\Provider\IpAddressGeocoder;
 use Geocoder\Provider\LocaleAwareGeocoder;
 use Geocoder\Provider\Provider;
 use GeoIp2\Exception\AddressNotFoundException;
-use Geocoder\Adapter\GeoIP2Adapter;
 use Geocoder\Exception\UnsupportedOperation;
 
 /**

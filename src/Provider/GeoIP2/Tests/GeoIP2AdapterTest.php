@@ -8,11 +8,11 @@
  * @license    MIT License
  */
 
-namespace Geocoder\Tests\Adapter;
+namespace Geocoder\Provider\GeoIP2\Tests;
 
-use Geocoder\Adapter\GeoIP2Adapter;
+use Geocoder\Adapter\GeoIP2\GeoIP2Adapter;
 use Geocoder\Tests\TestCase;
-use Geocoder\Exception\RuntimeException;
+use \RuntimeException;
 
 /**
  * @author Jens Wiese <jens@howtrueisfalse.de>
@@ -20,7 +20,7 @@ use Geocoder\Exception\RuntimeException;
 class GeoIP2AdapterTest extends TestCase
 {
     /**
-     * @var GeoIP2DatabaseAdapter
+     * @var GeoIP2Adapter
      */
     protected $adapter;
 

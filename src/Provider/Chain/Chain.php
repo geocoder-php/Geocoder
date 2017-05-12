@@ -17,7 +17,6 @@ use Geocoder\Model\Query\ReverseQuery;
 use Geocoder\Provider\LocaleAwareGeocoder;
 use Geocoder\Provider\Provider;
 
-
 /**
  * @author Markus Bachmann <markus.bachmann@bachi.biz>
  */
