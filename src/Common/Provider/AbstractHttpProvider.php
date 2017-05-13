@@ -35,8 +35,6 @@ abstract class AbstractHttpProvider extends AbstractProvider
      */
     public function __construct(HttpClient $client, MessageFactory $factory = null)
     {
-        parent::__construct();
-
         $this->client = $client;
         $this->messageFactory = $factory;
     }
