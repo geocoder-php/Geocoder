@@ -17,7 +17,6 @@ use Geocoder\Exception\QuotaExceeded;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Exception\ZeroResults;
 use Geocoder\Model\Query\GeocodeQuery;
-use Geocoder\Model\Query\Query;
 use Geocoder\Model\Query\ReverseQuery;
 use Geocoder\Provider\AbstractHttpProvider;
 use Geocoder\Provider\LocaleAwareGeocoder;
@@ -66,15 +65,14 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocod
      * @param HttpClient $client     An HTTP adapter
      * @param string     $clientId   Your Client ID
      * @param string     $privateKey Your Private Key (optional)
-     * @param string     $locale     A locale (optional)
      * @param string     $region     Region biasing (optional)
      * @param string     $apiKey     Google Geocoding API key (optional)
      *
      * @return GoogleMaps
      */
-    public static function business(HttpClient $client, $clientId, $privateKey = null, $locale = null, $region = null, $apiKey = null)
+    public static function business(HttpClient $client, $clientId, $privateKey = null, $region = null, $apiKey = null)
     {
-        $provider = new self($client, $locale, $region, $apiKey);
+        $provider = new self($client, $region, $apiKey);
         $provider->clientId = $clientId;
         $provider->privateKey = $privateKey;
 
