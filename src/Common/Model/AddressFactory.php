@@ -11,57 +11,66 @@
 namespace Geocoder\Model;
 
 use Geocoder\Collection;
+use Geocoder\Location;
 
 /**
  * @author Markus Bachmann <markus.bachmann@bachi.biz>
  * @author William Durand <william.durand1@gmail.com>
+ * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
 final class AddressFactory
 {
     /**
-     * @param array $results
+     * @param array $data
+     * @param string $class
      *
-     * @return Collection
+     * @return Location
      */
-    public function createFromArray(array $results)
-    {
-        $addresses = [];
-        foreach ($results as $result) {
-            $adminLevels = [];
-            foreach ($this->readArrayValue($result, 'adminLevels') as $adminLevel) {
-                $adminLevels[] = new AdminLevel(
-                    intval($this->readStringValue($adminLevel, 'level')),
-                    $this->readStringValue($adminLevel, 'name'),
-                    $this->readStringValue($adminLevel, 'code')
-                );
-            }
-
-            $addresses[] = new Address(
-                $this->createCoordinates(
-                    $this->readDoubleValue($result, 'latitude'),
-                    $this->readDoubleValue($result, 'longitude')
-                ),
-                $this->createBounds(
-                    $this->readDoubleValue($result, 'bounds.south'),
-                    $this->readDoubleValue($result, 'bounds.west'),
-                    $this->readDoubleValue($result, 'bounds.north'),
-                    $this->readDoubleValue($result, 'bounds.east')
-                ),
-                $this->readStringValue($result, 'streetNumber'),
-                $this->readStringValue($result, 'streetName'),
-                $this->readStringValue($result, 'postalCode'),
-                $this->readStringValue($result, 'locality'),
-                $this->readStringValue($result, 'subLocality'),
-                new AdminLevelCollection($adminLevels),
-                new Country(
-                    $this->readStringValue($result, 'country'),
-                    $this->upperize(\igorw\get_in($result, ['countryCode']))
-                ),
-                \igorw\get_in($result, ['timezone'])
+    public static function createLocation(array $data, $class = Address::class) {
+        $adminLevels = [];
+        foreach (self::readArrayValue($data, 'adminLevels') as $adminLevel) {
+            $adminLevels[] = new AdminLevel(
+                intval(self::readStringValue($adminLevel, 'level')),
+                self::readStringValue($adminLevel, 'name'),
+                self::readStringValue($adminLevel, 'code')
             );
         }
 
-        return new AddressCollection($addresses);
+        $address = new $class(
+            self::createCoordinates(
+                self::readDoubleValue($data, 'latitude'),
+                self::readDoubleValue($data, 'longitude')
+            ),
+            self::createBounds(
+                self::readDoubleValue($data, 'bounds.south'),
+                self::readDoubleValue($data, 'bounds.west'),
+                self::readDoubleValue($data, 'bounds.north'),
+                self::readDoubleValue($data, 'bounds.east')
+            ),
+            self::readStringValue($data, 'streetNumber'),
+            self::readStringValue($data, 'streetName'),
+            self::readStringValue($data, 'postalCode'),
+            self::readStringValue($data, 'locality'),
+            self::readStringValue($data, 'subLocality'),
+            new AdminLevelCollection($adminLevels),
+            new Country(
+                self::readStringValue($data, 'country'),
+                self::upperize(\igorw\get_in($data, ['countryCode']))
+            ),
+            \igorw\get_in($data, ['timezone'])
+        );
+
+        return $address;
+    }
+
+    /**
+     * @param Location[] $locations
+     *
+     * @return AddressCollection
+     */
+    public static function createCollection(array $locations)
+    {
+        return new AddressCollection($locations);
     }
 
     /**
@@ -70,7 +79,7 @@ final class AddressFactory
      *
      * @return float
      */
-    private function readDoubleValue(array $data, $key)
+    private static function readDoubleValue(array $data, $key)
     {
         return \igorw\get_in($data, explode('.', $key));
     }
@@ -81,9 +90,9 @@ final class AddressFactory
      *
      * @return string
      */
-    private function readStringValue(array $data, $key)
+    private static function readStringValue(array $data, $key)
     {
-        return $this->valueOrNull(\igorw\get_in($data, [$key]));
+        return self::valueOrNull(\igorw\get_in($data, [$key]));
     }
 
     /**
@@ -92,7 +101,7 @@ final class AddressFactory
      *
      * @return array
      */
-    private function readArrayValue(array $data, $key)
+    private static function readArrayValue(array $data, $key)
     {
         return \igorw\get_in($data, [$key]) ?: [];
     }
@@ -100,7 +109,7 @@ final class AddressFactory
     /**
      * @return string|null
      */
-    private function valueOrNull($str)
+    private static function valueOrNull($str)
     {
         return empty($str) ? null : $str;
     }
@@ -108,9 +117,9 @@ final class AddressFactory
     /**
      * @return string|null
      */
-    private function upperize($str)
+    private static function upperize($str)
     {
-        if (null !== $str = $this->valueOrNull($str)) {
+        if (null !== $str = self::valueOrNull($str)) {
             return extension_loaded('mbstring') ? mb_strtoupper($str, 'UTF-8') : strtoupper($str);
         }
 
@@ -123,7 +132,7 @@ final class AddressFactory
      *
      * @return Coordinates|null
      */
-    private function createCoordinates($latitude, $longitude)
+    private static function createCoordinates($latitude, $longitude)
     {
         if (null === $latitude || null === $longitude) {
             return null;
@@ -139,7 +148,7 @@ final class AddressFactory
      *
      * @return Bounds|null
      */
-    private function createBounds($south, $west, $north, $east)
+    private static function createBounds($south, $west, $north, $east)
     {
         if (null === $south || null === $west || null === $north || null === $east) {
             return null;

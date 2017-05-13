@@ -16,9 +16,11 @@ use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\QuotaExceeded;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Exception\ZeroResults;
-use Geocoder\Query\GeocodeQuery;
-use Geocoder\Query\ReverseQuery;
+use Geocoder\Model\AddressFactory;
+use Geocoder\GeocodeQuery;
+use Geocoder\ReverseQuery;
 use Geocoder\Provider\AbstractHttpProvider;
+use Geocoder\Provider\GoogleMaps\Model\GoogleAddress;
 use Geocoder\Provider\LocaleAwareGeocoder;
 use Geocoder\Provider\Provider;
 use Http\Client\HttpClient;
@@ -249,14 +251,19 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocod
                 ];
             }
 
-            $results[] = array_merge($this->getDefaults(), $resultSet);
+            /** @var GoogleAddress $address */
+            $address = AddressFactory::createLocation($resultSet, GoogleAddress::class);
+            if (isset($resultSet['locationType'])) {
+                $address->setLocationType($resultSet['locationType']);
+            }
+            $results[] = $address;
 
             if (count($results) >= $limit) {
                 break;
             }
         }
 
-        return $this->returnResults($results);
+        return AddressFactory::createCollection($results);
     }
 
     /**

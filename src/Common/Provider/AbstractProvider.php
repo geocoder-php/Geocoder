@@ -74,10 +74,16 @@ abstract class AbstractProvider
      * @param array $data an array of data
      *
      * @return Collection
+     * @deprecated
      */
     protected function returnResults(array $data = [])
     {
-        return $this->factory->createFromArray($data);
+        $addresses = [];
+        foreach ($data as $result) {
+            $addresses[] = AddressFactory::createLocation($result);
+        }
+
+        return AddressFactory::createCollection($addresses);
     }
 
     /**
