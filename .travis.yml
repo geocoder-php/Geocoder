@@ -1,33 +1,81 @@
+language: php
 sudo: false
 
 addons:
   apt:
     packages:
+      - parallel
       - libgeoip-dev
-
-language: php
 
 env:
     global:
-        - deps=""
-
-php:
-    - 5.5
-    - 5.6
-    - 7.0
-    - 7.1
-    - hhvm
+        - MIN_PHP=5.5.9
 
 matrix:
     fast_finish: true
     include:
         - php: 5.5
           env: deps="low"
+        - php: 5.5
+        - php: 5.6
+        - php: 7.0
+        - php: 7.1
+        - php: hhvm
 
-before_script:
+before_install:
     - if [ "$TRAVIS_PHP_VERSION" != "hhvm" && "$TRAVIS_PHP_VERSION" != "7.0" ]; then pecl install geoip; fi
-    - if [ "$deps" = "low" ]; then composer update --prefer-dist --prefer-lowest; fi
-    - if [ "$deps" = "" ]; then composer install --prefer-dist --no-interaction; fi
     - if [ "$TRAVIS_PHP_VERSION" == "7.0" ]; then composer require "geoip/geoip"; fi
+    - |
+      # tfold is a helper to create folded reports
+      tfold () {
+          title=$1
+          fold=$(echo $title | sed -r 's/[^-_A-Za-z\d]+/./g')
+          shift
+          echo -e "travis_fold:start:$fold\\n\\e[1;34m$title\\e[0m"
+          bash -xc "$*" 2>&1 &&
+              echo -e "\\e[32mOK\\e[0m $title\\n\\ntravis_fold:end:$fold" ||
+              ( echo -e "\\e[41mKO\\e[0m $title\\n" && exit 1 )
+      }
+      export -f tfold
 
-script: ./vendor/bin/phpunit --coverage-text
+      # Matrix lines for intermediate PHP versions are skipped for pull requests
+      if [[ ! $deps && ! $PHP = ${MIN_PHP%.*} && ! $PHP = hhvm* && $TRAVIS_PULL_REQUEST != false ]]; then
+          deps=skip
+          skip=1
+      else
+          COMPONENTS=$(find src -mindepth 3 -type f -name phpunit.xml.dist -printf '%h\n')
+      fi
+
+    # php.ini configuration
+    if [[ $PHP = hhvm* ]]; then
+        INI=/etc/hhvm/php.ini
+    else
+        INI=~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
+        phpenv config-rm xdebug.ini || echo "xdebug not available"
+    fi
+    echo memory_limit = -1 >> $INI
+
+install:
+  - |
+    run_tests () {
+        set -e
+        if [[ $skip ]]; then
+            echo -e "\\n\\e[1;34mIntermediate PHP version $PHP is skipped for pull requests.\\e[0m"
+        elif [[ $deps = high ]]; then
+            echo "$COMPONENTS" | parallel --gnu -j10% "tfold {} 'cd {} && $COMPOSER_UP && $PHPUNIT_X$LEGACY'"
+        elif [[ $deps = low ]]; then
+            echo "$COMPONENTS" | parallel --gnu -j10% "tfold {} 'cd {} && $COMPOSER_UP --prefer-lowest --prefer-stable && $PHPUNIT_X'" &&
+            # Test the PhpUnit bridge on PHP 5.5, using the original phpunit script
+            tfold src/Symfony/Bridge/PhpUnit \
+            "cd src/Symfony/Bridge/PhpUnit && wget https://phar.phpunit.de/phpunit-4.8.phar && phpenv global 5.3 && composer update --no-progress --ansi && php phpunit-4.8.phar"
+        elif [[ $PHP = hhvm* ]]; then
+            $PHPUNIT --exclude-group benchmark,intl-data
+        else
+            echo "$COMPONENTS" | parallel --gnu "tfold {} $PHPUNIT_X {}"
+            tfold tty-group $PHPUNIT --group tty
+        fi
+    }
+
+script:
+    - (run_tests)
+
