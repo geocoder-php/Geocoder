@@ -12,7 +12,7 @@ namespace Geocoder\Provider\GeoIP2\Tests;
 
 use Geocoder\Provider\GeoIP2\GeoIP2Adapter;
 use Geocoder\Tests\TestCase;
-use \RuntimeException;
+use RuntimeException;
 
 /**
  * @author Jens Wiese <jens@howtrueisfalse.de>
