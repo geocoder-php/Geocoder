@@ -10,7 +10,6 @@
 
 namespace Geocoder\Model;
 
-use Geocoder\Collection;
 use Geocoder\Location;
 
 /**
@@ -18,7 +17,7 @@ use Geocoder\Location;
  * @author William Durand <william.durand1@gmail.com>
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-final class AddressFactory
+final class LocationFactory
 {
     /**
      * @param array $data
@@ -26,7 +25,12 @@ final class AddressFactory
      *
      * @return Location
      */
-    public static function createLocation(array $data, $class = Address::class) {
+    public static function createLocation(array $data, $class = Address::class)
+    {
+        if (!is_a($class, Location::class, true)) {
+            throw new \LogicException('Second parameter to LocationFactory::build must be a class name implementing Geocoder\Location');
+        }
+
         $adminLevels = [];
         foreach (self::readArrayValue($data, 'adminLevels') as $adminLevel) {
             $adminLevels[] = new AdminLevel(
@@ -61,16 +65,6 @@ final class AddressFactory
         );
 
         return $address;
-    }
-
-    /**
-     * @param Location[] $locations
-     *
-     * @return AddressCollection
-     */
-    public static function createCollection(array $locations)
-    {
-        return new AddressCollection($locations);
     }
 
     /**

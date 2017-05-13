@@ -12,7 +12,8 @@ namespace Geocoder\Provider;
 
 use Geocoder\Geocoder;
 use Geocoder\Collection;
-use Geocoder\Model\AddressFactory;
+use Geocoder\Model\AddressCollection;
+use Geocoder\Model\LocationFactory;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -20,19 +21,10 @@ use Geocoder\Model\AddressFactory;
 abstract class AbstractProvider
 {
     /**
-     * @var AddressFactory
-     */
-    private $factory;
-
-    public function __construct()
-    {
-        $this->factory = new AddressFactory();
-    }
-
-    /**
      * Returns the default results.
      *
      * @return array
+     * @deprecated Use LocationBuilder
      */
     protected function getDefaults()
     {
@@ -74,16 +66,16 @@ abstract class AbstractProvider
      * @param array $data an array of data
      *
      * @return Collection
-     * @deprecated
+     * @deprecated Use the AddressBuilder
      */
     protected function returnResults(array $data = [])
     {
         $addresses = [];
         foreach ($data as $result) {
-            $addresses[] = AddressFactory::createLocation($result);
+            $addresses[] = LocationFactory::createLocation($result);
         }
 
-        return AddressFactory::createCollection($addresses);
+        return new AddressCollection($addresses);
     }
 
     /**

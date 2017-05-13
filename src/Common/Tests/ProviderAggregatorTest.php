@@ -14,7 +14,7 @@ use Geocoder\Geocoder;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\ProviderAggregator;
-use Geocoder\Model\AddressFactory;
+use Geocoder\Model\LocationFactory;
 use Geocoder\Provider\LocaleAwareGeocoder;
 use Geocoder\Provider\Provider;
 
@@ -136,7 +136,7 @@ class ProviderAggregatorTest extends TestCase
 
     private function getAddressMock()
     {
-        return (new AddressFactory())->createFromArray([]);
+        return (new LocationFactory())->createFromArray([]);
     }
 }
 

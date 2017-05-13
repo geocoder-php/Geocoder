@@ -16,7 +16,8 @@ use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\QuotaExceeded;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Exception\ZeroResults;
-use Geocoder\Model\AddressFactory;
+use Geocoder\Model\AddressCollection;
+use Geocoder\Model\LocationBuilder;
 use Geocoder\GeocodeQuery;
 use Geocoder\ReverseQuery;
 use Geocoder\Provider\AbstractHttpProvider;
@@ -219,42 +220,40 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocod
 
         $results = [];
         foreach ($json->results as $result) {
-            $resultSet = $this->getDefaults();
+            $builder = new LocationBuilder();
 
             // update address components
             foreach ($result->address_components as $component) {
                 foreach ($component->types as $type) {
-                    $this->updateAddressComponent($resultSet, $type, $component);
+                    $this->updateAddressComponent($builder, $type, $component);
                 }
             }
 
             // update coordinates
             $coordinates = $result->geometry->location;
-            $resultSet['latitude'] = $coordinates->lat;
-            $resultSet['longitude'] = $coordinates->lng;
+            $builder->setCoordinates($coordinates->lat,  $coordinates->lng);
 
-            $resultSet['bounds'] = null;
             if (isset($result->geometry->bounds)) {
-                $resultSet['bounds'] = [
-                    'south' => $result->geometry->bounds->southwest->lat,
-                    'west' => $result->geometry->bounds->southwest->lng,
-                    'north' => $result->geometry->bounds->northeast->lat,
-                    'east' => $result->geometry->bounds->northeast->lng,
-                ];
+                $builder->setBounds(
+                    $result->geometry->bounds->southwest->lat,
+                    $result->geometry->bounds->southwest->lng,
+                    $result->geometry->bounds->northeast->lat,
+                    $result->geometry->bounds->northeast->lng
+                );
             } elseif ('ROOFTOP' === $result->geometry->location_type) {
                 // Fake bounds
-                $resultSet['bounds'] = [
-                    'south' => $coordinates->lat,
-                    'west' => $coordinates->lng,
-                    'north' => $coordinates->lat,
-                    'east' => $coordinates->lng,
-                ];
+                $builder->setBounds(
+                    $coordinates->lat,
+                    $coordinates->lng,
+                    $coordinates->lat,
+                    $coordinates->lng
+                );
             }
 
             /** @var GoogleAddress $address */
-            $address = AddressFactory::createLocation($resultSet, GoogleAddress::class);
-            if (isset($resultSet['locationType'])) {
-                $address->setLocationType($resultSet['locationType']);
+            $address = $builder->build(GoogleAddress::class);
+            if (isset($result->geometry->location_type)){
+                $address->setLocationType($result->geometry->location_type);
             }
             $results[] = $address;
 
@@ -263,28 +262,26 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocod
             }
         }
 
-        return AddressFactory::createCollection($results);
+        return new AddressCollection($results);
     }
 
     /**
      * Update current resultSet with given key/value.
      *
-     * @param array  $resultSet resultSet to update
+     * @param LocationBuilder $builder
      * @param string $type      Component type
      * @param object $values    The component values
-     *
-     * @return array
      */
-    private function updateAddressComponent(&$resultSet, $type, $values)
+    private function updateAddressComponent(LocationBuilder $builder, $type, $values)
     {
         switch ($type) {
             case 'postal_code':
-                $resultSet['postalCode'] = $values->long_name;
+                $builder->setPostalCode($values->long_name);
                 break;
 
             case 'locality':
             case 'postal_town':
-                $resultSet['locality'] = $values->long_name;
+                $builder->setLocality($values->long_name);
                 break;
 
             case 'administrative_area_level_1':
@@ -292,34 +289,28 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocod
             case 'administrative_area_level_3':
             case 'administrative_area_level_4':
             case 'administrative_area_level_5':
-                $resultSet['adminLevels'][] = [
-                    'name' => $values->long_name,
-                    'code' => $values->short_name,
-                    'level' => intval(substr($type, -1)),
-                ];
+                $builder->addAdminLevel(intval(substr($type, -1)), $values->long_name, $values->short_name);
                 break;
 
             case 'country':
-                $resultSet['country'] = $values->long_name;
-                $resultSet['countryCode'] = $values->short_name;
+                $builder->setCountry($values->long_name);
+                $builder->setCountryCode($values->short_name);
                 break;
 
             case 'street_number':
-                $resultSet['streetNumber'] = $values->long_name;
+                $builder->setStreetNumber($values->long_name);
                 break;
 
             case 'route':
-                $resultSet['streetName'] = $values->long_name;
+                $builder->setStreetName($values->long_name);
                 break;
 
             case 'sublocality':
-                $resultSet['subLocality'] = $values->long_name;
+                $builder->setSubLocality($values->long_name);
                 break;
 
             default:
         }
-
-        return $resultSet;
     }
 
     /**
