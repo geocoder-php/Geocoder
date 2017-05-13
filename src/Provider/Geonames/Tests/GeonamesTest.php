@@ -30,7 +30,7 @@ class GeonamesTest extends TestCase
      */
     public function testGeocodeWithNullUsername()
     {
-        $provider = new Geonames($this->getMock('Http\Client\HttpClient'), null);
+        $provider = new Geonames($this->getMockBuilder('Http\Client\HttpClient')->getMock(), null);
         $provider->geocodeQuery(GeocodeQuery::create('foo'));
     }
 
@@ -40,7 +40,7 @@ class GeonamesTest extends TestCase
      */
     public function testReverseWithNullUsername()
     {
-        $provider = new Geonames($this->getMock('Http\Client\HttpClient'), null);
+        $provider = new Geonames($this->getMockBuilder('Http\Client\HttpClient')->getMock(), null);
         $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
     }
 

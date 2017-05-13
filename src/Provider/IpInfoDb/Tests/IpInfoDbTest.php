@@ -38,7 +38,7 @@ class IpInfoDbTest extends TestCase
      */
     public function testGetDataWithNullApiKey()
     {
-        $provider = new IpInfoDb($this->getMock('Http\Client\HttpClient'), null);
+        $provider = new IpInfoDb($this->getMockBuilder('Http\Client\HttpClient')->getMock(), null);
         $provider->geocodeQuery(GeocodeQuery::create('foo'));
     }
 
@@ -185,7 +185,7 @@ class IpInfoDbTest extends TestCase
      */
     public function testReverse()
     {
-        $provider = new IpInfoDb($this->getMock('Http\Client\HttpClient'), 'api_key');
+        $provider = new IpInfoDb($this->getMockBuilder('Http\Client\HttpClient')->getMock(), 'api_key');
         $provider->reverseQuery(ReverseQuery::fromCoordinates(null, null));
     }
 }

@@ -24,7 +24,7 @@ class ChainTest extends TestCase
 {
     public function testAdd()
     {
-        $mock = $this->getMock('Geocoder\Provider\Provider');
+        $mock = $this->getMockBuilder('Geocoder\Provider\Provider')->getMock();
         $chain = new Chain();
 
         $chain->add($mock);
@@ -38,14 +38,14 @@ class ChainTest extends TestCase
 
     public function testReverse()
     {
-        $mockOne = $this->getMock(Provider::class);
+        $mockOne = $this->getMockBuilder(Provider::class)->getMock();
         $mockOne->expects($this->once())
             ->method('reverseQuery')
             ->will($this->returnCallback(function () {
                 throw new \Exception();
             }));
 
-        $mockTwo = $this->getMock('Geocoder\\Provider\\Provider');
+        $mockTwo = $this->getMockBuilder('Geocoder\\Provider\\Provider')->getMock();
         $mockTwo->expects($this->once())
             ->method('reverseQuery')
             ->will($this->returnValue(['foo' => 'bar']));
@@ -57,7 +57,7 @@ class ChainTest extends TestCase
 
     public function testReverseThrowsChainZeroResults()
     {
-        $mockOne = $this->getMock('Geocoder\\Provider\\Provider');
+        $mockOne = $this->getMockBuilder('Geocoder\\Provider\\Provider')->getMock();
         $mockOne->expects($this->exactly(2))
             ->method('reverseQuery')
             ->will($this->returnCallback(function () {
@@ -76,14 +76,14 @@ class ChainTest extends TestCase
     public function testGeocode()
     {
         $query = GeocodeQuery::create('Paris');
-        $mockOne = $this->getMock('Geocoder\\Provider\\Provider');
+        $mockOne = $this->getMockBuilder('Geocoder\\Provider\\Provider')->getMock();
         $mockOne->expects($this->once())
             ->method('geocodeQuery')
             ->will($this->returnCallback(function () {
                 throw new \Exception();
             }));
 
-        $mockTwo = $this->getMock('Geocoder\\Provider\\Provider');
+        $mockTwo = $this->getMockBuilder('Geocoder\\Provider\\Provider')->getMock();
         $mockTwo->expects($this->once())
             ->method('geocodeQuery')
             ->with($query)
@@ -96,7 +96,7 @@ class ChainTest extends TestCase
 
     public function testGeocodeThrowsChainZeroResults()
     {
-        $mockOne = $this->getMock('Geocoder\\Provider\\Provider');
+        $mockOne = $this->getMockBuilder('Geocoder\\Provider\\Provider')->getMock();
         $mockOne->expects($this->exactly(2))
             ->method('geocodeQuery')
             ->will($this->returnCallback(function () {
