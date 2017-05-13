@@ -10,6 +10,7 @@
 
 namespace Geocoder\Provider\TomTom\Tests;
 
+use Geocoder\Collection;
 use Geocoder\Location;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
@@ -35,27 +36,24 @@ class TomTomTest extends TestCase
         $provider->geocodeQuery(GeocodeQuery::create('foo'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
     public function testGeocodeWithAddressContentReturnNull()
     {
         $provider = new TomTom($this->getMockAdapterReturns(null), 'api_key');
-        $provider->geocodeQuery(GeocodeQuery::create('Tagensvej 47, 2200 København N'));
+        $result = $provider->geocodeQuery(GeocodeQuery::create('Tagensvej 47, 2200 København N'));
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
     public function testGeocodeWithAddress()
     {
         $provider = new TomTom($this->getMockAdapter(), 'api_key');
-        $provider->geocodeQuery(GeocodeQuery::create('Tagensvej 47, 2200 København N'));
+        $result = $provider->geocodeQuery(GeocodeQuery::create('Tagensvej 47, 2200 København N'));
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
     public function testGeocodeZeroResults()
     {
         $ZeroResults = <<<'XML'
@@ -63,7 +61,10 @@ class TomTomTest extends TestCase
 XML;
 
         $provider = new TomTom($this->getMockAdapterReturns($ZeroResults), 'api_key');
-        $provider->geocodeQuery(GeocodeQuery::create('foo'));
+        $result = $provider->geocodeQuery(GeocodeQuery::create('foo'));
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
     public function testGeocodeWithRealAddress()
@@ -278,36 +279,33 @@ XML;
         $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
     public function testReverse()
     {
         $provider = new TomTom($this->getMockAdapter(), 'api_key');
-        $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
+        $result = $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
     public function testReverseWithCoordinatesContentReturnNull()
     {
         $provider = new TomTom($this->getMockAdapterReturns(null), 'api_key');
-        $provider->reverseQuery(ReverseQuery::fromCoordinates(48.86321648955345, 2.3887719959020615));
+        $result = $provider->reverseQuery(ReverseQuery::fromCoordinates(48.86321648955345, 2.3887719959020615));
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
     public function testReverseWithCoordinatesGetsEmptyContent()
     {
         $provider = new TomTom($this->getMockAdapterReturns(''), 'api_key');
-        $provider->reverseQuery(ReverseQuery::fromCoordinates('60.4539471728726', '22.2567841926781'));
+        $result = $provider->reverseQuery(ReverseQuery::fromCoordinates('60.4539471728726', '22.2567841926781'));
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
     public function testReverseError400()
     {
         $error400 = <<<'XML'
@@ -315,7 +313,10 @@ XML;
 XML;
 
         $provider = new TomTom($this->getMockAdapterReturns($error400), 'api_key');
-        $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
+        $result = $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
     /**

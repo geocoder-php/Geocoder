@@ -10,6 +10,7 @@
 
 namespace Geocoder\Provider\ArcGISOnlineTest\Tests;
 
+use Geocoder\Collection;
 use Geocoder\Location;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
@@ -24,13 +25,13 @@ class ArcGISOnlineTest extends TestCase
         $this->assertEquals('arcgis_online', $provider->getName());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
     public function testGeocodeWithInvalidData()
     {
         $provider = new ArcGISOnline($this->getMockAdapter());
-        $provider->geocodeQuery(GeocodeQuery::create('loremipsum'));
+        $result = $provider->geocodeQuery(GeocodeQuery::create('loremipsum'));
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
     /**
@@ -62,13 +63,13 @@ class ArcGISOnlineTest extends TestCase
         $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
     public function testGeocodeWithAddressGetsNullContent()
     {
         $provider = new ArcGISOnline($this->getMockAdapterReturns(null));
-        $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
+        $result = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
     public function testGeocodeWithRealAddress()
@@ -132,31 +133,31 @@ class ArcGISOnlineTest extends TestCase
         $this->assertNull($result->getTimezone());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
     public function testGeocodeWithInvalidAddressWithHttpsForSourceCountry()
     {
         $provider = new ArcGISOnline($this->getAdapter(), 'Denmark', true);
-        $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
+        $result = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
     public function testReverseWithInvalid()
     {
         $provider = new ArcGISOnline($this->getMockAdapter());
-        $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
+        $result = $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
     public function testReverseWithCoordinatesContentReturnNull()
     {
         $provider = new ArcGISOnline($this->getMockAdapterReturns(null));
-        $provider->reverseQuery(ReverseQuery::fromCoordinates(48.863279997000461, 2.3890199980004354));
+        $result = $provider->reverseQuery(ReverseQuery::fromCoordinates(48.863279997000461, 2.3890199980004354));
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
     public function testReverseWithRealCoordinatesWithHttps()

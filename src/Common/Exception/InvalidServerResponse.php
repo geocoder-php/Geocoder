@@ -15,7 +15,7 @@ namespace Geocoder\Exception;
  *
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-class InvalidServerResponse extends ZeroResults implements Exception
+class InvalidServerResponse extends \RuntimeException implements Exception
 {
     public static function create($query)
     {

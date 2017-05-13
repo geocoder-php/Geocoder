@@ -10,6 +10,7 @@
 
 namespace Geocoder\Provider\FreeGeoIp\Tests;
 
+use Geocoder\Collection;
 use Geocoder\Location;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
@@ -74,22 +75,22 @@ class FreeGeoIpTest extends TestCase
         $this->assertEquals('localhost', $result->getCountry()->getName());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
     public function testGeocodeWithRealIPv4GetsNullContent()
     {
         $provider = new FreeGeoIp($this->getMockAdapterReturns(null));
-        $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
+        $result = $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
     public function testGeocodeWithRealIPv4GetsEmptyContent()
     {
         $provider = new FreeGeoIp($this->getMockAdapterReturns(''));
-        $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
+        $result = $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
     public function testGeocodeWithRealIPv4()
@@ -134,13 +135,13 @@ class FreeGeoIpTest extends TestCase
         $this->assertEquals('US', $result->getCountry()->getCode());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
     public function testGeocodeWithRealIPv6GetsNullContent()
     {
         $provider = new FreeGeoIp($this->getMockAdapterReturns(null));
-        $provider->geocodeQuery(GeocodeQuery::create('::ffff:74.200.247.59'));
+        $result = $provider->geocodeQuery(GeocodeQuery::create('::ffff:74.200.247.59'));
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
     public function testGeocodeWithUSIPv4()

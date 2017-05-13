@@ -10,6 +10,7 @@
 
 namespace Geocoder\Provider\BingMaps\Tests;
 
+use Geocoder\Collection;
 use Geocoder\Location;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
@@ -33,13 +34,13 @@ class BingMapsTest extends TestCase
         $provider->geocodeQuery(GeocodeQuery::create('foo'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
     public function testGeocodeWithInvalidData()
     {
         $provider = new BingMaps($this->getMockAdapter(), 'api_key');
-        $provider->geocodeQuery(GeocodeQuery::create('foobar'));
+        $result = $provider->geocodeQuery(GeocodeQuery::create('foobar'));
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
     /**
@@ -62,9 +63,6 @@ class BingMapsTest extends TestCase
         $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
     public function testGeocodeWithAddressGetsNullContent()
     {
         $provider = new BingMaps($this->getMockAdapterReturns(null), 'api_key');
@@ -331,22 +329,22 @@ JSON;
         $this->assertEquals('IT', $result->getCountry()->getCode());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
     public function testReverse()
     {
         $provider = new BingMaps($this->getMockAdapter(), 'api_key');
-        $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
+        $result = $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
     public function testReverseWithCoordinatesContentReturnNull()
     {
         $provider = new BingMaps($this->getMockAdapterReturns(null), 'api_key');
-        $provider->reverseQuery(ReverseQuery::fromCoordinates(48.86321648955345, 2.3887719959020615));
+        $result = $provider->reverseQuery(ReverseQuery::fromCoordinates(48.86321648955345, 2.3887719959020615));
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
     public function testReverseWithRealCoordinatesReturnsSingleResult()

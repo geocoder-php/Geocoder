@@ -14,6 +14,7 @@ use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Exception\ZeroResults;
+use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\AbstractHttpProvider;
@@ -124,7 +125,7 @@ final class TomTom extends AbstractHttpProvider implements LocaleAwareGeocoder, 
         $attributes = $xml->attributes();
 
         if (isset($attributes['count']) && 0 === (int) $attributes['count']) {
-            throw ZeroResults::create($query);
+            return new AddressCollection([]);
         }
 
         if (isset($attributes['errorCode'])) {
@@ -132,7 +133,7 @@ final class TomTom extends AbstractHttpProvider implements LocaleAwareGeocoder, 
                 throw new InvalidCredentials('Map API Key provided is not valid.');
             }
 
-            throw ZeroResults::create($query);
+            return new AddressCollection([]);
         }
 
         $data = isset($xml->geoResult) ? $xml->geoResult : $xml->reverseGeoResult;

@@ -10,6 +10,7 @@
 
 namespace Geocoder\Provider\MapQuest\Tests;
 
+use Geocoder\Collection;
 use Geocoder\Location;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
@@ -27,33 +28,33 @@ class MapQuestTest extends TestCase
         $this->assertEquals('map_quest', $provider->getName());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
     public function testGeocode()
     {
         $provider = new MapQuest($this->getMockAdapterReturns('{}'), 'api_key');
-        $provider->geocodeQuery(GeocodeQuery::create('foobar'));
+        $result = $provider->geocodeQuery(GeocodeQuery::create('foobar'));
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
     public function testGeocodeWithAddressGetsNullContent()
     {
         $provider = new MapQuest($this->getMockAdapterReturns(null), 'api_key');
-        $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
+        $result = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
     public function testGetNotRelevantData()
     {
         $json = '{"results":[{"locations":[{"street":"","postalCode":"","adminArea5":"","adminArea4":"","adminArea3":"","adminArea1":""}]}]}';
 
         $provider = new MapQuest($this->getMockAdapterReturns($json), 'api_key');
-        $provider->reverseQuery(ReverseQuery::fromCoordinates(11, 12));
+        $result = $provider->reverseQuery(ReverseQuery::fromCoordinates(11, 12));
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
     public function testGeocodeWithRealAddress()
@@ -88,9 +89,6 @@ class MapQuestTest extends TestCase
         $this->assertNull($result->getTimezone());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
     public function testReverse()
     {
         if (!isset($_SERVER['MAPQUEST_API_KEY'])) {
@@ -98,7 +96,10 @@ class MapQuestTest extends TestCase
         }
 
         $provider = new MapQuest($this->getMockAdapter(), $_SERVER['MAPQUEST_API_KEY']);
-        $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
+        $result = $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
     public function testReverseWithRealCoordinates()

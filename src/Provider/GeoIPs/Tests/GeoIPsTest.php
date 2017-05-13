@@ -10,6 +10,7 @@
 
 namespace Geocoder\Provider\GeoIPs\Tests;
 
+use Geocoder\Collection;
 use Geocoder\Location;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
@@ -68,22 +69,23 @@ class GeoIPsTest extends TestCase
         $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
     public function testGeocodeWithRealIPv4GetsNullContent()
     {
         $provider = new GeoIPs($this->getMockAdapterReturns(null), 'api_key');
-        $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
+        $result = $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
+
     public function testGeocodeWithRealIPv4GetsEmptyContent()
     {
         $provider = new GeoIPs($this->getMockAdapterReturns(''), 'api_key');
-        $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
+        $result = $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
     public function testGeocodeWithRealIPv4GetsFakeContentFormattedEmpty()
@@ -339,9 +341,6 @@ class GeoIPsTest extends TestCase
         $this->assertEquals('MST', $result->getTimezone());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
     public function testGeocodeWithRealIPv4ZeroResultss()
     {
         if (!isset($_SERVER['GEOIPS_API_KEY'])) {
@@ -349,7 +348,10 @@ class GeoIPsTest extends TestCase
         }
 
         $provider = new GeoIPs($this->getAdapter($_SERVER['GEOIPS_API_KEY']), $_SERVER['GEOIPS_API_KEY']);
-        $provider->geocodeQuery(GeocodeQuery::create('255.255.150.96'));
+        $result = $provider->geocodeQuery(GeocodeQuery::create('255.255.150.96'));
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
     /**

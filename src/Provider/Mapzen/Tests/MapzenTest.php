@@ -10,6 +10,7 @@
 
 namespace Geocoder\Provider\Mapzen\Tests;
 
+use Geocoder\Collection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Tests\TestCase;
@@ -26,31 +27,31 @@ class MapzenTest extends TestCase
         $this->assertEquals('mapzen', $provider->getName());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
     public function testGeocode()
     {
         $provider = new Mapzen($this->getMockAdapterReturns('{}'), 'api_key');
-        $provider->geocodeQuery(GeocodeQuery::create('foobar'));
+        $result = $provider->geocodeQuery(GeocodeQuery::create('foobar'));
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
     public function testSslSchema()
     {
         $provider = new Mapzen($this->getMockAdapterReturns('{}'), 'api_key', true);
-        $provider->geocodeQuery(GeocodeQuery::create('foobar'));
+        $result = $provider->geocodeQuery(GeocodeQuery::create('foobar'));
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
     public function testGeocodeWithAddressGetsNullContent()
     {
         $provider = new Mapzen($this->getMockAdapterReturns(null), 'api_key');
-        $provider->geocodeQuery(GeocodeQuery::create('242 Acklam Road, London, United Kingdom'));
+        $result = $provider->geocodeQuery(GeocodeQuery::create('242 Acklam Road, London, United Kingdom'));
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
     public function testGeocodeWithRealAddress()
@@ -81,9 +82,6 @@ class MapzenTest extends TestCase
         $this->assertEquals('GBR', $result->getCountry()->getCode());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
     public function testReverse()
     {
         if (!isset($_SERVER['MAPZEN_API_KEY'])) {
@@ -91,7 +89,10 @@ class MapzenTest extends TestCase
         }
 
         $provider = new Mapzen($this->getMockAdapter(), $_SERVER['MAPZEN_API_KEY']);
-        $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
+        $result = $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
     public function testReverseWithRealCoordinates()

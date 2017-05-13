@@ -10,6 +10,7 @@
 
 namespace Geocoder\Provider\MaxMind\Tests;
 
+use Geocoder\Collection;
 use Geocoder\Location;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
@@ -93,22 +94,22 @@ class MaxMindTest extends TestCase
         $provider->geocodeQuery(GeocodeQuery::create('::ffff:74.200.247.59'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
     public function testGeocodeWithRealIPv4GetsNullContent()
     {
         $provider = new MaxMind($this->getMockAdapterReturns(null), 'api_key');
-        $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
+        $result = $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
     public function testGeocodeWithRealIPv4GetsEmptyContent()
     {
         $provider = new MaxMind($this->getMockAdapterReturns(''), 'api_key');
-        $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
+        $result = $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
     public function testGeocodeWithRealIPv4GetsFakeContentFormattedEmpty()
@@ -246,25 +247,23 @@ class MaxMindTest extends TestCase
         $provider->geocodeQuery(GeocodeQuery::create('::ffff:74.200.247.59'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     * @expectedExceptionMessage Could not retrieve information for the supplied IP address.
-     */
     public function testGeocodeWithRealIPv4GetsFakeContentWithIpNotFound()
     {
         $provider = new MaxMind($this->getMockAdapterReturns(',,,,,,,,,,IP_NOT_FOUND'), 'api_key');
-        $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
+        $result = $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     * @expectedExceptionMessage Could not retrieve information for the supplied IP address.
-     */
     public function testGeocodeOmniServiceWithRealIPv6GetsFakeContentWithIpNotFound()
     {
         $provider = new MaxMind($this->getMockAdapterReturns(',,,,,,,,,,,,,,,,,,,,,,,IP_NOT_FOUND'),
             'api_key', MaxMind::OMNI_SERVICE);
-        $provider->geocodeQuery(GeocodeQuery::create('::fff:74.200.247.59'));
+        $result = $provider->geocodeQuery(GeocodeQuery::create('::fff:74.200.247.59'));
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
     /**

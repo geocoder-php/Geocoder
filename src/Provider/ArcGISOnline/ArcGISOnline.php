@@ -14,6 +14,7 @@ use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Exception\ZeroResults;
+use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\AbstractHttpProvider;
@@ -71,7 +72,7 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
 
         // no result
         if (empty($json->locations)) {
-            throw ZeroResults::create($url);
+            return new AddressCollection([]);
         }
 
         $results = [];
@@ -120,7 +121,7 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
         $json = $this->executeQuery($url, $query->getLimit());
 
         if (property_exists($json, 'error')) {
-            throw ZeroResults::create($url);
+            return new AddressCollection([]);
         }
 
         $data = $json->address;

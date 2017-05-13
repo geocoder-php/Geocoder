@@ -15,6 +15,7 @@ use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Exception\ZeroResults;
+use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\AbstractHttpProvider;
@@ -126,7 +127,7 @@ final class MaxMind extends AbstractHttpProvider implements Provider, IpAddressG
         }
 
         if ('IP_NOT_FOUND' === end($data)) {
-            throw new ZeroResults('Could not retrieve information for the supplied IP address.');
+            return new AddressCollection([]);
         }
 
         if (count($fields) !== count($data)) {

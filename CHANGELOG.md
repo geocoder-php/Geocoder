@@ -20,6 +20,7 @@ CHANGELOG
 * Removed: `Address::getLongitude` in favor for `Address::getCoordinates()->getLongitude()`.
 * Removed: `Address::getLatitude` in favor for `Address::getCoordinates()->getLatitude()`.
 * Removed: `Bounds::isDefined` as it is always defined. 
+* Removed: `ZeroResults` exception was removed. 
 
 ### 3.3.0 (2015-12-06)
 

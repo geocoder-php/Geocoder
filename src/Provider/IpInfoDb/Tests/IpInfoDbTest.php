@@ -10,6 +10,7 @@
 
 namespace Geocoder\Provider\IpInfoDb\Tests;
 
+use Geocoder\Collection;
 use Geocoder\Location;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
@@ -93,22 +94,22 @@ class IpInfoDbTest extends TestCase
         $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
     public function testGeocodeWithRealIPv4GetsNullContent()
     {
         $provider = new IpInfoDb($this->getMockAdapterReturns(null), 'api_key');
-        $provider->geocodeQuery(GeocodeQuery::create('74.125.45.100'));
+        $result = $provider->geocodeQuery(GeocodeQuery::create('74.125.45.100'));
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
     public function testGeocodeWithRealIPv4GetsEmptyContent()
     {
         $provider = new IpInfoDb($this->getMockAdapterReturns(''), 'api_key');
-        $provider->geocodeQuery(GeocodeQuery::create('74.125.45.100'));
+        $result = $provider->geocodeQuery(GeocodeQuery::create('74.125.45.100'));
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
     public function testGeocodeWithRealIPv4()

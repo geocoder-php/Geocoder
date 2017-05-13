@@ -88,7 +88,7 @@ final class MaxMindBinary extends AbstractProvider implements Provider, IpAddres
         geoip_close($geoIp);
 
         if (false === $geoIpRecord instanceof \GeoIpRecord) {
-            throw new ZeroResults(sprintf('No results found for IP address %s', $address));
+            return new AddressCollection([]);
         }
 
         $adminLevels = [];

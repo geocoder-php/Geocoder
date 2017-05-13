@@ -10,6 +10,7 @@
 
 namespace Geocoder\Provider\GeoPlugin\Tests;
 
+use Geocoder\Collection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Tests\TestCase;
@@ -59,22 +60,22 @@ class GeoPluginTest extends TestCase
         $this->assertEquals('localhost', $result->getCountry()->getName());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
     public function testGeocodeWithRealIPv4GetsNullContent()
     {
         $provider = new GeoPlugin($this->getMockAdapterReturns(null));
-        $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
+        $result = $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
     public function testGeocodeWithRealIPv4GetsEmptyContent()
     {
         $provider = new GeoPlugin($this->getMockAdapterReturns(''));
-        $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
+        $result = $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
     public function testGeocodeWithRealIPv4()
