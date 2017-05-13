@@ -11,6 +11,8 @@
 namespace Geocoder\Exception;
 
 /**
+ * Thrown when the Provider API declines the request because of wrong credentials.
+ *
  * @author Markus Bachmann <markus.bachmann@bachi.biz>
  */
 class InvalidCredentials extends \RuntimeException implements Exception

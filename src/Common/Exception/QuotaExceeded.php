@@ -11,6 +11,8 @@
 namespace Geocoder\Exception;
 
 /**
+ * Thrown when you no longer may access the API because your quota has exceeded.
+ *
  * @author Max V. Kovrigovich <mvk@tut.by>
  */
 class QuotaExceeded extends \RuntimeException implements Exception

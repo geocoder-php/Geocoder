@@ -21,7 +21,7 @@ class FunctionNotFound extends \RuntimeException implements Exception
      */
     public function __construct($functionName, $description = null)
     {
-        parent::__construct(sprintf('The function "%s" cannot be found.%s',
+        parent::__construct(sprintf('The function "%s" cannot be found. %s',
             $functionName,
             null !== $description ? sprintf(' %s', $description) : ''
         ));

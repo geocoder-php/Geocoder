@@ -46,12 +46,12 @@ class AddressCollection implements Collection
     }
 
     /**
-     * @return Location
+     * @return Location|null
      */
     public function first()
     {
         if (empty($this->addresses)) {
-            throw new CollectionIsEmpty('The Collection instance is empty.');
+            return null;
         }
 
         return reset($this->addresses);
