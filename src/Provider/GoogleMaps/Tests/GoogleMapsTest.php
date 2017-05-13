@@ -12,7 +12,6 @@ namespace Geocoder\Provider\GoogleMaps\Tests;
 
 use Geocoder\Collection;
 use Geocoder\Exception\InvalidServerResponse;
-use Geocoder\Exception\ZeroResults;
 use Geocoder\Location;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
@@ -364,7 +363,8 @@ class GoogleMapsTest extends TestCase
 
         try {
             $provider->geocodeQuery(GeocodeQuery::create('blah'));
-        } catch (InvalidServerResponse $e) {}
+        } catch (InvalidServerResponse $e) {
+        }
         $this->assertEquals('https://maps.googleapis.com/maps/api/geocode/json?address=blah&client=foo', $uri);
     }
 
@@ -384,7 +384,8 @@ class GoogleMapsTest extends TestCase
 
         try {
             $provider->geocodeQuery(GeocodeQuery::create('blah'));
-        } catch (InvalidServerResponse $e) {}
+        } catch (InvalidServerResponse $e) {
+        }
         $this->assertEquals(
             'https://maps.googleapis.com/maps/api/geocode/json?address=blah&client=foo&signature=9G2weMhhd4E2ciR681gp9YabvUg=',
             $uri

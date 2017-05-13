@@ -10,7 +10,6 @@
 
 namespace Geocoder\Provider\IpInfoDb\Tests;
 
-use Geocoder\Collection;
 use Geocoder\Location;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;

@@ -10,7 +10,6 @@
 
 namespace Geocoder\Provider\GeoPlugin\Tests;
 
-use Geocoder\Collection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Tests\TestCase;

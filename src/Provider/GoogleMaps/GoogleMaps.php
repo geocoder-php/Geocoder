@@ -15,7 +15,6 @@ use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\QuotaExceeded;
 use Geocoder\Exception\UnsupportedOperation;
-use Geocoder\Exception\ZeroResults;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Model\LocationBuilder;
 use Geocoder\Query\GeocodeQuery;

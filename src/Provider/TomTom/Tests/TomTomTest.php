@@ -11,7 +11,6 @@
 namespace Geocoder\Provider\TomTom\Tests;
 
 use Geocoder\Collection;
-use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Location;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;

@@ -14,7 +14,6 @@ use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\Provider;
 use Geocoder\Tests\TestCase;
-use Geocoder\Exception\ChainZeroResults;
 use Geocoder\Provider\Chain\Chain;
 
 /**

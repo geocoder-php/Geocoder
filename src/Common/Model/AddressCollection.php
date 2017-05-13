@@ -10,7 +10,6 @@
 
 namespace Geocoder\Model;
 
-use Geocoder\Exception\CollectionIsEmpty;
 use Geocoder\Collection;
 use Geocoder\Location;
 

@@ -11,7 +11,6 @@
 namespace Geocoder\Provider\Yandex;
 
 use Geocoder\Exception\UnsupportedOperation;
-use Geocoder\Exception\ZeroResults;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;

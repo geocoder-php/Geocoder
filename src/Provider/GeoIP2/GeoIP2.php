@@ -10,7 +10,6 @@
 
 namespace Geocoder\Provider\GeoIP2;
 
-use Geocoder\Exception\ZeroResults;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
