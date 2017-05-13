@@ -10,7 +10,7 @@
 
 namespace Geocoder\Provider\GeoIP2\Tests;
 
-use Geocoder\Adapter\GeoIP2\GeoIP2Adapter;
+use Geocoder\Provider\GeoIP2\GeoIP2Adapter;
 use Geocoder\Tests\TestCase;
 use \RuntimeException;
 

@@ -337,7 +337,7 @@ class NominatimTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The Geocoder\Provider\Nominatim provider does not support IPv6 addresses.
+     * @expectedExceptionMessage The Nominatim provider does not support IPv6 addresses.
      */
     public function testGeocodeWithLocalhostIPv6()
     {
@@ -409,7 +409,7 @@ class NominatimTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The Geocoder\Provider\Nominatim provider does not support IPv6 addresses.
+     * @expectedExceptionMessage The Nominatim provider does not support IPv6 addresses.
      */
     public function testGeocodeWithRealIPv6()
     {

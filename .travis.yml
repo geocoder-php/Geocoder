@@ -2,10 +2,9 @@ language: php
 sudo: false
 
 addons:
-  apt:
-    packages:
-      - parallel
-      - libgeoip-dev
+    apt_packages:
+        - parallel
+        - libgeoip-dev
 
 env:
     global:
@@ -26,6 +25,14 @@ before_install:
     - if [ "$TRAVIS_PHP_VERSION" != "hhvm" && "$TRAVIS_PHP_VERSION" != "7.0" ]; then pecl install geoip; fi
     - if [ "$TRAVIS_PHP_VERSION" == "7.0" ]; then composer require "geoip/geoip"; fi
     - |
+      # General configuration
+      stty cols 120
+      PHP=$TRAVIS_PHP_VERSION
+      [ -d ~/.composer ] || mkdir ~/.composer
+      export PHPUNIT=$(readlink -f ./phpunit)
+      export PHPUNIT_X="$PHPUNIT --exclude-group benchmark"
+      export COMPOSER_UP='composer update --no-progress --no-suggest --ansi'
+
       # tfold is a helper to create folded reports
       tfold () {
           title=$1
@@ -43,19 +50,20 @@ before_install:
           deps=skip
           skip=1
       else
-          COMPONENTS=$(find src -mindepth 3 -type f -name phpunit.xml.dist -printf '%h\n')
+          COMPONENTS=$(find src -mindepth 2 -type f -name phpunit.xml.dist -printf '%h\n')
       fi
 
-    # php.ini configuration
-    if [[ $PHP = hhvm* ]]; then
-        INI=/etc/hhvm/php.ini
-    else
-        INI=~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
-        phpenv config-rm xdebug.ini || echo "xdebug not available"
-    fi
-    echo memory_limit = -1 >> $INI
+      # php.ini configuration
+      if [[ $PHP = hhvm* ]]; then
+          INI=/etc/hhvm/php.ini
+      else
+          INI=~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
+          phpenv config-rm xdebug.ini || echo "xdebug not available"
+      fi
+      echo memory_limit = -1 >> $INI
 
 install:
+  - if [[ ! $skip ]]; then $COMPOSER_UP; fi
   - |
     run_tests () {
         set -e

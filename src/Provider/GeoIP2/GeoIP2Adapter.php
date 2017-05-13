@@ -8,7 +8,7 @@
  * @license    MIT License
  */
 
-namespace Geocoder\Adapter\GeoIP2;
+namespace Geocoder\Provider\GeoIP2;
 
 use GeoIp2\ProviderInterface;
 use Geocoder\Exception\InvalidArgument;

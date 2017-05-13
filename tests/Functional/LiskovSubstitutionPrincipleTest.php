@@ -11,7 +11,6 @@
 namespace geocoder\tests\Functional;
 
 use Geocoder\Collection;
-use Geocoder\Geocoder;
 use Geocoder\Location;
 use Geocoder\Model\AdminLevelCollection;
 use Geocoder\Model\Bounds;
@@ -19,23 +18,17 @@ use Geocoder\Model\Coordinates;
 use Geocoder\Model\Country;
 use Geocoder\Model\Query\GeocodeQuery;
 use Geocoder\Model\Query\ReverseQuery;
-use Geocoder\Provider\ArcGISOnline;
-use Geocoder\Provider\BingMaps;
-use Geocoder\Provider\FreeGeoIp;
-use Geocoder\Provider\GeoIPs;
-use Geocoder\Provider\Geonames;
-use Geocoder\Provider\GeoPlugin;
-use Geocoder\Provider\GoogleMaps;
-use Geocoder\Provider\MapQuest;
-use Geocoder\Provider\Mapzen;
-use Geocoder\Provider\Nominatim;
-use Geocoder\Provider\OpenCage;
+use Geocoder\Provider\BingMaps\BingMaps;
+use Geocoder\Provider\FreeGeoIp\FreeGeoIp;
+use Geocoder\Provider\GeoIPs\GeoIPs;
+use Geocoder\Provider\GeoPlugin\GeoPlugin;
+use Geocoder\Provider\GoogleMaps\GoogleMaps;
+use Geocoder\Provider\Nominatim\Nominatim;
+use Geocoder\Provider\OpenCage\OpenCage;
 use Geocoder\Provider\Provider;
-use Geocoder\Provider\TomTom;
-use Geocoder\Provider\Yandex;
 use Geocoder\Tests\CachedResponseClient;
 use Http\Client\HttpClient;
-use Http\Adapter\Guzzle6\Client as GuzzleClient;
+use Http\Client\Curl\Client as HttplugClient;
 
 /**
  * Test all adapters and make sure they provide the similar result.
@@ -176,7 +169,7 @@ class LiskovSubstitutionPrincipleTest extends \PHPUnit_Framework_TestCase
     protected function getAdapter($apiKey = null)
     {
         return new CachedResponseClient(
-            new GuzzleClient(),
+            new HttplugClient(),
             isset($_SERVER['USE_CACHED_RESPONSES']) && true === $_SERVER['USE_CACHED_RESPONSES'],
             $apiKey
         );

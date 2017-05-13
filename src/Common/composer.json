@@ -24,8 +24,9 @@
         "phpunit/phpunit": "^4.8",
         "symfony/stopwatch": "~2.5",
         "php-http/message": "^1.0",
-        "php-http/guzzle6-adapter": "^1.0",
-        "php-http/mock-client": "^0.3.0"
+        "php-http/curl-client": "^1.7",
+        "php-http/mock-client": "^0.3.0",
+        "guzzlehttp/psr7": "^1.4"
     },
     "suggest": {
         "symfony/stopwatch": "If you want to use the TimedGeocoder"

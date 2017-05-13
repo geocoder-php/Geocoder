@@ -60,7 +60,7 @@ final class Nominatim extends AbstractHttpProvider implements LocaleAwareGeocode
         $address = $query->getText();
         // This API does not support IPv6
         if (filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
-            throw new UnsupportedOperation('The '.get_called_class().' provider does not support IPv6 addresses.');
+            throw new UnsupportedOperation('The Nominatim provider does not support IPv6 addresses.');
         }
 
         if ('127.0.0.1' === $address) {

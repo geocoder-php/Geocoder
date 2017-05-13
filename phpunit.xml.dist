@@ -30,14 +30,28 @@
         <!-- <server name="MAXMIND_API_KEY" value="YOUR_API_KEY" /> -->
         <!-- <server name="IPINFODB_API_KEY" value="YOUR_API_KEY" /> -->
     </php>
+
     <testsuites>
         <testsuite name="Geocoder Test Suite">
             <directory>./tests/</directory>
+            <directory>./src/Common/Tests/</directory>
+            <directory>./src/Provider/*/Tests/</directory>
         </testsuite>
     </testsuites>
+
     <filter>
         <whitelist>
             <directory>./src/</directory>
+            <exclude>
+                <directory>./src/Common/Tests</directory>
+                <directory>./src/Provider/*/Tests</directory>
+                <directory>./src/Common/vendor</directory>
+                <directory>./src/Provider/*/vendor</directory>
+            </exclude>
         </whitelist>
     </filter>
+
+    <listeners>
+        <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
+    </listeners>
 </phpunit>
