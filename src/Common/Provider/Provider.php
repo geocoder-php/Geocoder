@@ -11,8 +11,8 @@
 namespace Geocoder\Provider;
 
 use Geocoder\Model\AddressCollection;
-use Geocoder\Model\Query\GeocodeQuery;
-use Geocoder\Model\Query\ReverseQuery;
+use Geocoder\Query\GeocodeQuery;
+use Geocoder\Query\ReverseQuery;
 
 /**
  * Providers MUST always be stateless and immutable.

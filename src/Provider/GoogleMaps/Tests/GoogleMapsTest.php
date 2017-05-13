@@ -12,8 +12,8 @@ namespace Geocoder\Provider\GoogleMaps\Tests;
 
 use Geocoder\Exception\ZeroResults;
 use Geocoder\Location;
-use Geocoder\Model\Query\GeocodeQuery;
-use Geocoder\Model\Query\ReverseQuery;
+use Geocoder\Query\GeocodeQuery;
+use Geocoder\Query\ReverseQuery;
 use Geocoder\Tests\TestCase;
 use Geocoder\Provider\GoogleMaps\GoogleMaps;
 use Psr\Http\Message\RequestInterface;

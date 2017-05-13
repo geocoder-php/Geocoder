@@ -10,8 +10,8 @@
 
 namespace Geocoder\Provider\Chain\Tests;
 
-use Geocoder\Model\Query\GeocodeQuery;
-use Geocoder\Model\Query\ReverseQuery;
+use Geocoder\Query\GeocodeQuery;
+use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\Provider;
 use Geocoder\Tests\TestCase;
 use Geocoder\Exception\ChainZeroResults;

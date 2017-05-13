@@ -10,8 +10,8 @@
 
 namespace Geocoder\Provider\GeoPlugin\Tests;
 
-use Geocoder\Model\Query\GeocodeQuery;
-use Geocoder\Model\Query\ReverseQuery;
+use Geocoder\Query\GeocodeQuery;
+use Geocoder\Query\ReverseQuery;
 use Geocoder\Tests\TestCase;
 use Geocoder\Provider\GeoPlugin\GeoPlugin;
 

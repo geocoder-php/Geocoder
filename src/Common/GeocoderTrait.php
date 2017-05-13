@@ -10,8 +10,8 @@
 
 namespace Geocoder;
 
-use Geocoder\Model\Query\GeocodeQuery;
-use Geocoder\Model\Query\ReverseQuery;
+use Geocoder\Query\GeocodeQuery;
+use Geocoder\Query\ReverseQuery;
 
 /**
  * A trait that turns a Provider into a Geocoder.

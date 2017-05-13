@@ -12,8 +12,8 @@ namespace Geocoder\Provider\GeoIP2\Tests;
 
 use Geocoder\Exception\ZeroResults;
 use Geocoder\Location;
-use Geocoder\Model\Query\GeocodeQuery;
-use Geocoder\Model\Query\ReverseQuery;
+use Geocoder\Query\GeocodeQuery;
+use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\GeoIP2\GeoIP2;
 use Geocoder\Provider\GeoIP2\GeoIP2Adapter;
 use Geocoder\Tests\TestCase;
