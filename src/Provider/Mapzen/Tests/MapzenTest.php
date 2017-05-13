@@ -45,13 +45,13 @@ class MapzenTest extends TestCase
         $this->assertEquals(0, $result->count());
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
+     */
     public function testGeocodeWithAddressGetsNullContent()
     {
         $provider = new Mapzen($this->getMockAdapterReturns(null), 'api_key');
-        $result = $provider->geocodeQuery(GeocodeQuery::create('242 Acklam Road, London, United Kingdom'));
-
-        $this->assertInstanceOf(Collection::class, $result);
-        $this->assertEquals(0, $result->count());
+        $provider->geocodeQuery(GeocodeQuery::create('242 Acklam Road, London, United Kingdom'));
     }
 
     public function testGeocodeWithRealAddress()
@@ -82,6 +82,9 @@ class MapzenTest extends TestCase
         $this->assertEquals('GBR', $result->getCountry()->getCode());
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
+     */
     public function testReverse()
     {
         if (!isset($_SERVER['MAPZEN_API_KEY'])) {
@@ -89,10 +92,7 @@ class MapzenTest extends TestCase
         }
 
         $provider = new Mapzen($this->getMockAdapter(), $_SERVER['MAPZEN_API_KEY']);
-        $result = $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
-
-        $this->assertInstanceOf(Collection::class, $result);
-        $this->assertEquals(0, $result->count());
+        $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
     }
 
     public function testReverseWithRealCoordinates()

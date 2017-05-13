@@ -94,22 +94,22 @@ class MaxMindTest extends TestCase
         $provider->geocodeQuery(GeocodeQuery::create('::ffff:74.200.247.59'));
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
+     */
     public function testGeocodeWithRealIPv4GetsNullContent()
     {
         $provider = new MaxMind($this->getMockAdapterReturns(null), 'api_key');
-        $result = $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
-
-        $this->assertInstanceOf(Collection::class, $result);
-        $this->assertEquals(0, $result->count());
+        $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
+     */
     public function testGeocodeWithRealIPv4GetsEmptyContent()
     {
         $provider = new MaxMind($this->getMockAdapterReturns(''), 'api_key');
         $result = $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
-
-        $this->assertInstanceOf(Collection::class, $result);
-        $this->assertEquals(0, $result->count());
     }
 
     public function testGeocodeWithRealIPv4GetsFakeContentFormattedEmpty()

@@ -69,23 +69,22 @@ class GeoIPsTest extends TestCase
         $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
+     */
     public function testGeocodeWithRealIPv4GetsNullContent()
     {
         $provider = new GeoIPs($this->getMockAdapterReturns(null), 'api_key');
-        $result = $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
-
-        $this->assertInstanceOf(Collection::class, $result);
-        $this->assertEquals(0, $result->count());
+        $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
-
+    /**
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
+     */
     public function testGeocodeWithRealIPv4GetsEmptyContent()
     {
         $provider = new GeoIPs($this->getMockAdapterReturns(''), 'api_key');
-        $result = $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
-
-        $this->assertInstanceOf(Collection::class, $result);
-        $this->assertEquals(0, $result->count());
+        $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
     public function testGeocodeWithRealIPv4GetsFakeContentFormattedEmpty()
@@ -341,7 +340,7 @@ class GeoIPsTest extends TestCase
         $this->assertEquals('MST', $result->getTimezone());
     }
 
-    public function testGeocodeWithRealIPv4ZeroResultss()
+    public function testGeocodeWithRealIPv4ZeroResults()
     {
         if (!isset($_SERVER['GEOIPS_API_KEY'])) {
             $this->markTestSkipped('You need to configure the GEOIPS_API_KEY value in phpunit.xml');

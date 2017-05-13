@@ -10,6 +10,7 @@
 
 namespace Geocoder\Provider\GeoIP2\Tests;
 
+use Geocoder\Collection;
 use Geocoder\Exception\ZeroResults;
 use Geocoder\Location;
 use Geocoder\Model\AddressCollection;
@@ -200,13 +201,12 @@ class GeoIP2Test extends TestCase
 
     public function testRetrievingGeodataNotExistingLocation()
     {
-        $adapterReturn = new AddressCollection([]);
-        $adapter = $this->getGeoIP2AdapterMock($adapterReturn);
-
+        $adapter = $this->getGeoIP2AdapterMock('');
         $provider = new GeoIP2($adapter);
 
         $result = $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
-        $this->assertEquals($adapterReturn, $result);
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
     public function testGeoIp2Encoding()

@@ -25,13 +25,13 @@ class ArcGISOnlineTest extends TestCase
         $this->assertEquals('arcgis_online', $provider->getName());
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
+     */
     public function testGeocodeWithInvalidData()
     {
         $provider = new ArcGISOnline($this->getMockAdapter());
-        $result = $provider->geocodeQuery(GeocodeQuery::create('loremipsum'));
-
-        $this->assertInstanceOf(Collection::class, $result);
-        $this->assertEquals(0, $result->count());
+        $provider->geocodeQuery(GeocodeQuery::create('loremipsum'));
     }
 
     /**
@@ -63,13 +63,13 @@ class ArcGISOnlineTest extends TestCase
         $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
+     */
     public function testGeocodeWithAddressGetsNullContent()
     {
         $provider = new ArcGISOnline($this->getMockAdapterReturns(null));
-        $result = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
-
-        $this->assertInstanceOf(Collection::class, $result);
-        $this->assertEquals(0, $result->count());
+        $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
     }
 
     public function testGeocodeWithRealAddress()
@@ -142,22 +142,22 @@ class ArcGISOnlineTest extends TestCase
         $this->assertEquals(0, $result->count());
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
+     */
     public function testReverseWithInvalid()
     {
         $provider = new ArcGISOnline($this->getMockAdapter());
-        $result = $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
-
-        $this->assertInstanceOf(Collection::class, $result);
-        $this->assertEquals(0, $result->count());
+        $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
+     */
     public function testReverseWithCoordinatesContentReturnNull()
     {
         $provider = new ArcGISOnline($this->getMockAdapterReturns(null));
-        $result = $provider->reverseQuery(ReverseQuery::fromCoordinates(48.863279997000461, 2.3890199980004354));
-
-        $this->assertInstanceOf(Collection::class, $result);
-        $this->assertEquals(0, $result->count());
+        $provider->reverseQuery(ReverseQuery::fromCoordinates(48.863279997000461, 2.3890199980004354));
     }
 
     public function testReverseWithRealCoordinatesWithHttps()

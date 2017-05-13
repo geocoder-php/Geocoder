@@ -52,8 +52,12 @@ final class GeoIP2 extends AbstractProvider implements LocaleAwareGeocoder, IpAd
         }
 
         $result = json_decode($this->executeQuery($address));
-        $adminLevels = [];
 
+        if (null === $result) {
+            return new AddressCollection([]);
+        }
+
+        $adminLevels = [];
         if (isset($result->subdivisions) && is_array($result->subdivisions)) {
             foreach ($result->subdivisions as $i => $subdivision) {
                 $name = (isset($subdivision->names->{$locale}) ? $subdivision->names->{$locale} : null);

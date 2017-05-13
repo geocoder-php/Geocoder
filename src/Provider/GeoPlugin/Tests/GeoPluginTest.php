@@ -60,22 +60,22 @@ class GeoPluginTest extends TestCase
         $this->assertEquals('localhost', $result->getCountry()->getName());
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
+     */
     public function testGeocodeWithRealIPv4GetsNullContent()
     {
         $provider = new GeoPlugin($this->getMockAdapterReturns(null));
-        $result = $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
-
-        $this->assertInstanceOf(Collection::class, $result);
-        $this->assertEquals(0, $result->count());
+        $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
+     */
     public function testGeocodeWithRealIPv4GetsEmptyContent()
     {
         $provider = new GeoPlugin($this->getMockAdapterReturns(''));
-        $result = $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
-
-        $this->assertInstanceOf(Collection::class, $result);
-        $this->assertEquals(0, $result->count());
+        $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
     public function testGeocodeWithRealIPv4()

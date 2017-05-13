@@ -94,22 +94,22 @@ class IpInfoDbTest extends TestCase
         $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
+     */
     public function testGeocodeWithRealIPv4GetsNullContent()
     {
         $provider = new IpInfoDb($this->getMockAdapterReturns(null), 'api_key');
-        $result = $provider->geocodeQuery(GeocodeQuery::create('74.125.45.100'));
-
-        $this->assertInstanceOf(Collection::class, $result);
-        $this->assertEquals(0, $result->count());
+        $provider->geocodeQuery(GeocodeQuery::create('74.125.45.100'));
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
+     */
     public function testGeocodeWithRealIPv4GetsEmptyContent()
     {
         $provider = new IpInfoDb($this->getMockAdapterReturns(''), 'api_key');
-        $result = $provider->geocodeQuery(GeocodeQuery::create('74.125.45.100'));
-
-        $this->assertInstanceOf(Collection::class, $result);
-        $this->assertEquals(0, $result->count());
+        $provider->geocodeQuery(GeocodeQuery::create('74.125.45.100'));
     }
 
     public function testGeocodeWithRealIPv4()

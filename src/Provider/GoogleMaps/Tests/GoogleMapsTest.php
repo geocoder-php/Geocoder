@@ -11,6 +11,7 @@
 namespace Geocoder\Provider\GoogleMaps\Tests;
 
 use Geocoder\Collection;
+use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\ZeroResults;
 use Geocoder\Location;
 use Geocoder\Query\GeocodeQuery;
@@ -32,13 +33,13 @@ class GoogleMapsTest extends TestCase
         $this->assertEquals('google_maps', $provider->getName());
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
+     */
     public function testGeocode()
     {
         $provider = new GoogleMaps($this->getMockAdapter());
         $result = $provider->geocodeQuery(GeocodeQuery::create('foobar'));
-
-        $this->assertInstanceOf(Collection::class, $result);
-        $this->assertEquals(0, $result->count());
     }
 
     /**
@@ -70,13 +71,13 @@ class GoogleMapsTest extends TestCase
         $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
+     */
     public function testGeocodeWithAddressGetsNullContent()
     {
         $provider = new GoogleMaps($this->getMockAdapterReturns(null));
-        $result = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
-
-        $this->assertInstanceOf(Collection::class, $result);
-        $this->assertEquals(0, $result->count());
+        $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
     }
 
     public function testGeocodeWithAddressGetsEmptyContent()
@@ -234,13 +235,13 @@ class GoogleMapsTest extends TestCase
         $this->assertEquals('US', $result->getCountry()->getCode());
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
+     */
     public function testReverse()
     {
         $provider = new GoogleMaps($this->getMockAdapter());
-        $result = $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
-
-        $this->assertInstanceOf(Collection::class, $result);
-        $this->assertEquals(0, $result->count());
+        $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
     }
 
     public function testReverseWithRealCoordinates()
@@ -265,13 +266,13 @@ class GoogleMapsTest extends TestCase
         $this->assertEquals('FR', $result->getCountry()->getCode());
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
+     */
     public function testReverseWithCoordinatesGetsNullContent()
     {
         $provider = new GoogleMaps($this->getMockAdapterReturns(null));
-        $result = $provider->reverseQuery(ReverseQuery::fromCoordinates(48.8631507, 2.388911));
-
-        $this->assertInstanceOf(Collection::class, $result);
-        $this->assertEquals(0, $result->count());
+        $provider->reverseQuery(ReverseQuery::fromCoordinates(48.8631507, 2.388911));
     }
 
     public function testGeocodeWithCityDistrict()
@@ -361,7 +362,9 @@ class GoogleMapsTest extends TestCase
             'foo'
         );
 
-        $provider->geocodeQuery(GeocodeQuery::create('blah'));
+        try {
+            $provider->geocodeQuery(GeocodeQuery::create('blah'));
+        } catch (InvalidServerResponse $e) {}
         $this->assertEquals('https://maps.googleapis.com/maps/api/geocode/json?address=blah&client=foo', $uri);
     }
 
@@ -379,7 +382,9 @@ class GoogleMapsTest extends TestCase
             'bogus'
         );
 
-        $provider->geocodeQuery(GeocodeQuery::create('blah'));
+        try {
+            $provider->geocodeQuery(GeocodeQuery::create('blah'));
+        } catch (InvalidServerResponse $e) {}
         $this->assertEquals(
             'https://maps.googleapis.com/maps/api/geocode/json?address=blah&client=foo&signature=9G2weMhhd4E2ciR681gp9YabvUg=',
             $uri

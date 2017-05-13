@@ -37,13 +37,13 @@ class MapQuestTest extends TestCase
         $this->assertEquals(0, $result->count());
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
+     */
     public function testGeocodeWithAddressGetsNullContent()
     {
         $provider = new MapQuest($this->getMockAdapterReturns(null), 'api_key');
-        $result = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
-
-        $this->assertInstanceOf(Collection::class, $result);
-        $this->assertEquals(0, $result->count());
+        $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
     }
 
     public function testGetNotRelevantData()
@@ -89,6 +89,9 @@ class MapQuestTest extends TestCase
         $this->assertNull($result->getTimezone());
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
+     */
     public function testReverse()
     {
         if (!isset($_SERVER['MAPQUEST_API_KEY'])) {
@@ -96,10 +99,7 @@ class MapQuestTest extends TestCase
         }
 
         $provider = new MapQuest($this->getMockAdapter(), $_SERVER['MAPQUEST_API_KEY']);
-        $result = $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
-
-        $this->assertInstanceOf(Collection::class, $result);
-        $this->assertEquals(0, $result->count());
+        $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
     }
 
     public function testReverseWithRealCoordinates()

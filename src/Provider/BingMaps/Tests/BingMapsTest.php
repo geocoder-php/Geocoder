@@ -34,13 +34,13 @@ class BingMapsTest extends TestCase
         $provider->geocodeQuery(GeocodeQuery::create('foo'));
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
+     */
     public function testGeocodeWithInvalidData()
     {
         $provider = new BingMaps($this->getMockAdapter(), 'api_key');
-        $result = $provider->geocodeQuery(GeocodeQuery::create('foobar'));
-
-        $this->assertInstanceOf(Collection::class, $result);
-        $this->assertEquals(0, $result->count());
+        $provider->geocodeQuery(GeocodeQuery::create('foobar'));
     }
 
     /**
@@ -63,6 +63,9 @@ class BingMapsTest extends TestCase
         $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
+     */
     public function testGeocodeWithAddressGetsNullContent()
     {
         $provider = new BingMaps($this->getMockAdapterReturns(null), 'api_key');
@@ -329,22 +332,22 @@ JSON;
         $this->assertEquals('IT', $result->getCountry()->getCode());
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
+     */
     public function testReverse()
     {
         $provider = new BingMaps($this->getMockAdapter(), 'api_key');
-        $result = $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
-
-        $this->assertInstanceOf(Collection::class, $result);
-        $this->assertEquals(0, $result->count());
+        $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
+     */
     public function testReverseWithCoordinatesContentReturnNull()
     {
         $provider = new BingMaps($this->getMockAdapterReturns(null), 'api_key');
-        $result = $provider->reverseQuery(ReverseQuery::fromCoordinates(48.86321648955345, 2.3887719959020615));
-
-        $this->assertInstanceOf(Collection::class, $result);
-        $this->assertEquals(0, $result->count());
+        $provider->reverseQuery(ReverseQuery::fromCoordinates(48.86321648955345, 2.3887719959020615));
     }
 
     public function testReverseWithRealCoordinatesReturnsSingleResult()
