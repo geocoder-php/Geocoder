@@ -24,6 +24,7 @@ abstract class AbstractProvider
      * Returns the default results.
      *
      * @return array
+     *
      * @deprecated Use LocationBuilder
      */
     protected function getDefaults()
@@ -66,6 +67,7 @@ abstract class AbstractProvider
      * @param array $data an array of data
      *
      * @return Collection
+     *
      * @deprecated Use the AddressBuilder
      */
     protected function returnResults(array $data = [])

@@ -1,11 +1,19 @@
 <?php
 
+/*
+ * This file is part of the Geocoder package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license    MIT License
+ */
+
 namespace Geocoder\Model;
 
 use Geocoder\Location;
 
 /**
- * A class that builds an Address or a subclass of an address
+ * A class that builds an Address or a subclass of a Location.
  *
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
@@ -128,13 +136,14 @@ final class LocationBuilder
     }
 
     /**
-     * @param int $level
+     * @param int    $level
      * @param string $name
      * @param string $code
      *
      * @return LocationBuilder
      */
-    public function addAdminLevel($level, $name, $code) {
+    public function addAdminLevel($level, $name, $code)
+    {
         $this->adminLevels[] = new AdminLevel($level, $name, $code);
 
         return $this;

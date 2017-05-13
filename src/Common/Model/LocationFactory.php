@@ -13,14 +13,18 @@ namespace Geocoder\Model;
 use Geocoder\Location;
 
 /**
+ * Create an Address or any other subclass of a Location from an array.
+ *
  * @author Markus Bachmann <markus.bachmann@bachi.biz>
  * @author William Durand <william.durand1@gmail.com>
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
+ *
+ * @deprecated Use LocationBuilder
  */
 final class LocationFactory
 {
     /**
-     * @param array $data
+     * @param array  $data
      * @param string $class
      *
      * @return Location

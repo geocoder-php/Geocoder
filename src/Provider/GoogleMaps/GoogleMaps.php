@@ -231,7 +231,7 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocod
 
             // update coordinates
             $coordinates = $result->geometry->location;
-            $builder->setCoordinates($coordinates->lat,  $coordinates->lng);
+            $builder->setCoordinates($coordinates->lat, $coordinates->lng);
 
             if (isset($result->geometry->bounds)) {
                 $builder->setBounds(
@@ -252,7 +252,7 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocod
 
             /** @var GoogleAddress $address */
             $address = $builder->build(GoogleAddress::class);
-            if (isset($result->geometry->location_type)){
+            if (isset($result->geometry->location_type)) {
                 $address->setLocationType($result->geometry->location_type);
             }
             $results[] = $address;
@@ -269,8 +269,8 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocod
      * Update current resultSet with given key/value.
      *
      * @param LocationBuilder $builder
-     * @param string $type      Component type
-     * @param object $values    The component values
+     * @param string          $type    Component type
+     * @param object          $values  The component values
      */
     private function updateAddressComponent(LocationBuilder $builder, $type, $values)
     {

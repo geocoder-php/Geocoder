@@ -65,6 +65,5 @@ class LocationFactoryTest extends TestCase
     {
         $address = LocationFactory::createLocation([]);
         $this->assertInstanceOf(Location::class, $address);
-
     }
 }
