@@ -179,8 +179,7 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocod
     private function fetchUrl($url, $locale, $limit)
     {
         $url = $this->buildQuery($url, $locale);
-        $request = $this->getMessageFactory()->createRequest('GET', $url);
-        $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
+        $content = $this->getUrlContents($url);
 
         // Throw exception if invalid clientID and/or privateKey used with GoogleMapsBusinessProvider
         if (strpos($content, "Provided 'signature' is not valid for the provided client ID") !== false) {
