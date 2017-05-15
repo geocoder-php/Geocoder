@@ -19,7 +19,7 @@ class InvalidServerResponse extends \RuntimeException implements Exception
 {
     /**
      * @param string $query
-     * @param int $code
+     * @param int    $code
      *
      * @return InvalidServerResponse
      */
