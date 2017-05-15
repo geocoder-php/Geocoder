@@ -186,10 +186,6 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocod
             throw new InvalidCredentials(sprintf('Invalid client ID / API Key %s', $url));
         }
 
-        if (empty($content)) {
-            throw InvalidServerResponse::create($url);
-        }
-
         $json = json_decode($content);
 
         // API error
