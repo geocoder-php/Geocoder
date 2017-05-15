@@ -1,7 +1,12 @@
-s:2135:"{
+s:2162:"{
    "results" : [
       {
          "address_components" : [
+            {
+               "long_name" : "10 Downing Street",
+               "short_name" : "10 Downing Street",
+               "types" : [ "establishment", "point_of_interest" ]
+            },
             {
                "long_name" : "10",
                "short_name" : "10",
@@ -11,11 +16,6 @@ s:2135:"{
                "long_name" : "Downing Street",
                "short_name" : "Downing St",
                "types" : [ "route" ]
-            },
-            {
-               "long_name" : "Westminster",
-               "short_name" : "Westminster",
-               "types" : [ "neighborhood", "political" ]
             },
             {
                "long_name" : "London",
@@ -43,7 +43,7 @@ s:2135:"{
                "types" : [ "postal_code" ]
             }
          ],
-         "formatted_address" : "10 Downing St, Westminster, London SW1A 2AA, UK",
+         "formatted_address" : "10 Downing Street, 10 Downing St, London SW1A 2AA, UK",
          "geometry" : {
             "location" : {
                "lat" : 51.5033635,

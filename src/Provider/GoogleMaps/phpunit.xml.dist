@@ -7,7 +7,7 @@
          bootstrap="vendor/autoload.php"
 >
     <php>
-        <ini name="error_reporting" value="-1" />
+        <server name="GOOGLE_GEOCODING_KEY" value="YOUR_GEOCODING_KEY" />
     </php>
 
     <testsuites>
