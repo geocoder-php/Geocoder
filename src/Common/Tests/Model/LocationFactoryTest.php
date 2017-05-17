@@ -10,6 +10,7 @@
 
 namespace Geocoder\Tests\Model;
 
+use Geocoder\Exception\CollectionIsEmpty;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Model\LocationFactory;
 use Geocoder\Location;
@@ -61,6 +62,9 @@ class LocationFactoryTest extends TestCase
         $this->assertEquals('1st ave 1A', $address->getStreetName());
     }
 
+    /**
+     * @expectedException CollectionIsEmpty
+     */
     public function testCreateFromEmptyArray()
     {
         $address = LocationFactory::createLocation([]);
