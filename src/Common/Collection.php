@@ -10,6 +10,8 @@
 
 namespace Geocoder;
 
+use Geocoder\Exception\CollectionIsEmpty;
+
 /**
  * This is the interface that is always return from a Geocoder.
  *
@@ -20,8 +22,15 @@ interface Collection extends \IteratorAggregate, \Countable
 {
     /**
      * @return Location
+     *
+     * @throws CollectionIsEmpty
      */
     public function first();
+
+    /**
+     * @return bool
+     */
+    public function isEmpty();
 
     /**
      * @return Location[]
