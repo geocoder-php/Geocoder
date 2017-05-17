@@ -10,7 +10,6 @@
 
 namespace Geocoder\Tests\Model;
 
-use Geocoder\Exception\CollectionIsEmpty;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Model\LocationFactory;
 use Geocoder\Location;
@@ -63,7 +62,7 @@ class LocationFactoryTest extends TestCase
     }
 
     /**
-     * @expectedException CollectionIsEmpty
+     * @expectedException \Geocoder\Exception\CollectionIsEmpty
      */
     public function testCreateFromEmptyArray()
     {
