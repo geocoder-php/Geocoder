@@ -10,6 +10,7 @@ CHANGELOG
 * Added: Interface for `Geocoder\Model\AddressCollection` called `Geocoder\Collection`. Public APIs are updated to type hint for `Geocoder\GeocoderResult`.
 * Added: Interface for `Geocoder\Model\Address` called `Geocoder\Location`. Public APIs are updated to type hint for `Geocoder\Location`.
 * Added: GeoArray dumper
+* Added: `Collection::isEmpty`
 * Changed: `Location::getCoordinates` will return null or a `Coordinates` object with coordinates data. It will never return `Coordinates` without data. 
 * Changed: `Location::getBounds` will return null or a `Bounds` object with coordinates data. It will never return `Bounds` without data. 
 * Changed: Support for unsecure transfer protocol was removed. The providers only support HTTPS.
@@ -20,7 +21,7 @@ CHANGELOG
 * Removed: `Address::getLongitude` in favor for `Address::getCoordinates()->getLongitude()`.
 * Removed: `Address::getLatitude` in favor for `Address::getCoordinates()->getLatitude()`.
 * Removed: `Bounds::isDefined` as it is always defined. 
-* Removed: The following exception was removed: `ZeroResults`, `ChainZeroResults`, `CollectionIsEmpty`, `HttpError`, `UnexpectedValue` 
+* Removed: The following exception was removed: `ZeroResults`, `ChainZeroResults`, `HttpError`, `UnexpectedValue` 
 
 ### 3.3.0 (2015-12-06)
 
