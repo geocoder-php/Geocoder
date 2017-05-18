@@ -33,7 +33,7 @@ interface Geocoder extends Provider
      *
      * @param string $value
      *
-     * @return Collection
+     * @return \Geocoder\Model\Query\GeocodeQuery
      *
      * @throws \Geocoder\Exception\Exception
      */
@@ -45,7 +45,7 @@ interface Geocoder extends Provider
      * @param float $latitude
      * @param float $longitude
      *
-     * @return Collection
+     * @return \Geocoder\Model\Query\ReverseQuery
      *
      * @throws \Geocoder\Exception\Exception
      */
