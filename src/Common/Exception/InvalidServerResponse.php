@@ -23,7 +23,7 @@ class InvalidServerResponse extends \RuntimeException implements Exception
      *
      * @return InvalidServerResponse
      */
-    public static function create($query, $code)
+    public static function create($query, $code = 0)
     {
         return new self(sprintf('The geocoder server returned an invalid response (%d) for query "%s". We could not parse it.', $code, $query));
     }
