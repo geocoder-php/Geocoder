@@ -48,13 +48,7 @@ before_install:
       }
       export -f tfold
 
-      # Matrix lines for intermediate PHP versions are skipped for pull requests
-      if [[ ! $deps && ! $PHP = ${MIN_PHP%.*} && ! $PHP = hhvm* && $TRAVIS_PULL_REQUEST != false ]]; then
-          deps=skip
-          skip=1
-      else
-          COMPONENTS=$(find src -mindepth 2 -type f -name phpunit.xml.dist -printf '%h\n')
-      fi
+      COMPONENTS=$(find src -mindepth 2 -type f -name phpunit.xml.dist -printf '%h\n')
 
       # php.ini configuration
       if [[ $PHP = hhvm* ]]; then
