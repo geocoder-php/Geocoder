@@ -47,23 +47,23 @@ class AddressTest extends \PHPUnit_Framework_TestCase
     public function testToArray()
     {
         $data = [
-            'latitude'  => 48.8631507,
+            'latitude' => 48.8631507,
             'longitude' => 2.3889114,
-            'bounds'    => [
+            'bounds' => [
                 'south' => 48.8631507,
-                'west'  => 2.3889114,
+                'west' => 2.3889114,
                 'north' => 48.8631507,
-                'east'  => 2.388911,
+                'east' => 2.388911,
             ],
             'streetNumber' => '10',
-            'streetName'   => 'Avenue Gambetta',
-            'postalCode'   => '75020',
-            'locality'     => 'Paris',
-            'subLocality'  => '20e Arrondissement',
-            'adminLevels'  => [1 => ['name' => 'Ile-de-France', 'code' => 'Ile-de-France', 'level' => 1]],
-            'country'      => 'France',
-            'countryCode'  => 'FR',
-            'timezone'     => null,
+            'streetName' => 'Avenue Gambetta',
+            'postalCode' => '75020',
+            'locality' => 'Paris',
+            'subLocality' => '20e Arrondissement',
+            'adminLevels' => [1 => ['name' => 'Ile-de-France', 'code' => 'Ile-de-France', 'level' => 1]],
+            'country' => 'France',
+            'countryCode' => 'FR',
+            'timezone' => null,
         ];
 
         $address = LocationFactory::createLocation($data);
