@@ -11,7 +11,11 @@
 namespace Geocoder\Tests\Model;
 
 use Geocoder\Model\Address;
+use Geocoder\Model\LocationFactory;
 
+/**
+ * @author Antoine Lemaire <lemaireantoine@hotmail.com>
+ */
 class AddressTest extends \PHPUnit_Framework_TestCase
 {
     public function testDumpEmptyAddress()
@@ -38,5 +42,32 @@ class AddressTest extends \PHPUnit_Framework_TestCase
 
         $address = new Address();
         $this->assertEquals($address->toArray(), $expected);
+    }
+
+    public function testToArray()
+    {
+        $data = [
+            'latitude' => 48.8631507,
+            'longitude' => 2.3889114,
+            'bounds' => [
+                'south' => 48.8631507,
+                'west' => 2.3889114,
+                'north' => 48.8631507,
+                'east' => 2.388911,
+            ],
+            'streetNumber' => '10',
+            'streetName' => 'Avenue Gambetta',
+            'postalCode' => '75020',
+            'locality' => 'Paris',
+            'subLocality' => '20e Arrondissement',
+            'adminLevels' => [1 => ['name' => 'Ile-de-France', 'code' => 'Ile-de-France', 'level' => 1]],
+            'country' => 'France',
+            'countryCode' => 'FR',
+            'timezone' => null,
+        ];
+
+        $address = LocationFactory::createLocation($data);
+
+        $this->assertSame($data, $address->toArray());
     }
 }
