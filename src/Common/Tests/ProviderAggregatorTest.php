@@ -11,8 +11,8 @@
 namespace Geocoder\Tests;
 
 use Geocoder\Geocoder;
-use Geocoder\Model\Query\GeocodeQuery;
-use Geocoder\Model\Query\ReverseQuery;
+use Geocoder\Query\GeocodeQuery;
+use Geocoder\Query\ReverseQuery;
 use Geocoder\ProviderAggregator;
 use Geocoder\Model\AddressFactory;
 use Geocoder\Provider\LocaleAwareGeocoder;

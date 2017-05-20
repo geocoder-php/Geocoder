@@ -8,7 +8,7 @@
  * @license    MIT License
  */
 
-namespace Geocoder\Model\Query;
+namespace Geocoder\Query;
 
 use Geocoder\Geocoder;
 use Geocoder\Model\Coordinates;

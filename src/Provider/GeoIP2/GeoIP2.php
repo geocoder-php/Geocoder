@@ -11,8 +11,8 @@
 namespace Geocoder\Provider\GeoIP2;
 
 use Geocoder\Exception\ZeroResults;
-use Geocoder\Model\Query\GeocodeQuery;
-use Geocoder\Model\Query\ReverseQuery;
+use Geocoder\Query\GeocodeQuery;
+use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\AbstractProvider;
 use Geocoder\Provider\IpAddressGeocoder;
 use Geocoder\Provider\LocaleAwareGeocoder;

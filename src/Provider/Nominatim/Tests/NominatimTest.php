@@ -11,8 +11,8 @@
 namespace Geocoder\Provider\Nominatim\Tests;
 
 use Geocoder\Location;
-use Geocoder\Model\Query\GeocodeQuery;
-use Geocoder\Model\Query\ReverseQuery;
+use Geocoder\Query\GeocodeQuery;
+use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\Nominatim\Nominatim;
 use Geocoder\Tests\TestCase;
 

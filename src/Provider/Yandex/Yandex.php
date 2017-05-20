@@ -12,8 +12,8 @@ namespace Geocoder\Provider\Yandex;
 
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Exception\ZeroResults;
-use Geocoder\Model\Query\GeocodeQuery;
-use Geocoder\Model\Query\ReverseQuery;
+use Geocoder\Query\GeocodeQuery;
+use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\AbstractHttpProvider;
 use Geocoder\Provider\LocaleAwareGeocoder;
 use Geocoder\Provider\Provider;

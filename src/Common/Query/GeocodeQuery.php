@@ -8,7 +8,7 @@
  * @license    MIT License
  */
 
-namespace Geocoder\Model\Query;
+namespace Geocoder\Query;
 
 use Geocoder\Exception\InvalidArgument;
 use Geocoder\Geocoder;
