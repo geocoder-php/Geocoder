@@ -8,6 +8,7 @@
 >
     <php>
         <server name="GOOGLE_GEOCODING_KEY" value="YOUR_GEOCODING_KEY" />
+        <server name="USE_CACHED_RESPONSES" value="true" />
     </php>
 
     <testsuites>

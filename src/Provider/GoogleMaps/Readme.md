@@ -16,5 +16,5 @@ composer require geocoder-php/google-maps-provider
 
 ### Contribute
 
-Contributions are very welcome! Send a pull request to the [main repository](https://github.com/php-cache/cache) or 
-report any issues you find on the [issue tracker](http://issues.php-cache.com).
+Contributions are very welcome! Send a pull request to the [main repository](https://github.com/geocoder-php/Geocoder) or 
+report any issues you find on the [issue tracker](https://github.com/geocoder-php/Geocoder/issues).

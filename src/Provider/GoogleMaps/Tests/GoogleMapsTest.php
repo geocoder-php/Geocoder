@@ -10,54 +10,34 @@
 
 namespace Geocoder\Provider\GoogleMaps\Tests;
 
-use Geocoder\Collection;
 use Geocoder\Exception\InvalidServerResponse;
-use Geocoder\IntegrationTest\CachedResponseClient;
+use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Location;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Tests\TestCase;
 use Geocoder\Provider\GoogleMaps\GoogleMaps;
-use Http\Client\HttpClient;
 use Psr\Http\Message\RequestInterface;
-use Http\Client\Curl\Client as HttplugClient;
 
-class GoogleMapsTest extends TestCase
+class GoogleMapsTest extends BaseTestCase
 {
     /**
      * @var string
      */
     private $testAPIKey = 'fake_key';
 
-    /**
-     * @return HttpClient
-     */
-    protected function getAdapter($apiKey = null)
+    protected function getCacheDir()
     {
-        if ($this->useCache()) {
-            return new CachedResponseClient(
-                new HttplugClient(),
-                __DIR__.'/.cached_responses',
-                $apiKey
-            );
-        } else {
-            return new HttplugClient();
+        if (isset($_SERVER['USE_CACHED_RESPONSES']) && true === $_SERVER['USE_CACHED_RESPONSES']) {
+            return __DIR__.'/.cached_responses';
         }
+
+        return null;
     }
 
     public function testGetName()
     {
-        $provider = new GoogleMaps($this->getMockAdapter($this->never()));
+        $provider = new GoogleMaps($this->getMockedHttpClient());
         $this->assertEquals('google_maps', $provider->getName());
-    }
-
-    /**
-     * @expectedException \Geocoder\Exception\InvalidServerResponse
-     */
-    public function testGeocode()
-    {
-        $provider = new GoogleMaps($this->getMockAdapter());
-        $result = $provider->geocodeQuery(GeocodeQuery::create('foobar'));
     }
 
     /**
@@ -65,7 +45,7 @@ class GoogleMapsTest extends TestCase
      */
     public function testGeocodeWithLocalhostIPv4()
     {
-        $provider = new GoogleMaps($this->getMockAdapter($this->never()));
+        $provider = new GoogleMaps($this->getMockedHttpClient());
         $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
     }
 
@@ -75,7 +55,7 @@ class GoogleMapsTest extends TestCase
      */
     public function testGeocodeWithLocalhostIPv6()
     {
-        $provider = new GoogleMaps($this->getMockAdapter($this->never()));
+        $provider = new GoogleMaps($this->getMockedHttpClient());
         $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
@@ -85,26 +65,8 @@ class GoogleMapsTest extends TestCase
      */
     public function testGeocodeWithRealIp()
     {
-        $provider = new GoogleMaps($this->getAdapter());
+        $provider = new GoogleMaps($this->getHttpClient());
         $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
-    }
-
-    /**
-     * @expectedException \Geocoder\Exception\InvalidServerResponse
-     */
-    public function testGeocodeWithAddressGetsNullContent()
-    {
-        $provider = new GoogleMaps($this->getMockAdapterReturns(null));
-        $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
-    }
-
-    public function testGeocodeWithAddressGetsEmptyContent()
-    {
-        $provider = new GoogleMaps($this->getMockAdapterReturns('{"status":"OK"}'));
-        $result = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
-
-        $this->assertInstanceOf(Collection::class, $result);
-        $this->assertEquals(0, $result->count());
     }
 
     /**
@@ -113,13 +75,13 @@ class GoogleMapsTest extends TestCase
      */
     public function testGeocodeWithQuotaExceeded()
     {
-        $provider = new GoogleMaps($this->getMockAdapterReturns('{"status":"OVER_QUERY_LIMIT"}'));
+        $provider = new GoogleMaps($this->getMockedHttpClient('{"status":"OVER_QUERY_LIMIT"}'));
         $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
     }
 
     public function testGeocodeWithRealAddress()
     {
-        $provider = new GoogleMaps($this->getAdapter(), 'Île-de-France');
+        $provider = new GoogleMaps($this->getHttpClient(), 'Île-de-France');
         $results = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France')->withLocale('fr-FR'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -150,7 +112,7 @@ class GoogleMapsTest extends TestCase
 
     public function testGeocodeWithRealAddressWithSsl()
     {
-        $provider = new GoogleMaps($this->getAdapter(), null, null);
+        $provider = new GoogleMaps($this->getHttpClient(), null, null);
         $results = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -182,7 +144,7 @@ class GoogleMapsTest extends TestCase
 
     public function testGeocodeBoundsWithRealAddressForNonRooftopLocation()
     {
-        $provider = new GoogleMaps($this->getAdapter());
+        $provider = new GoogleMaps($this->getHttpClient());
         $results = $provider->geocodeQuery(GeocodeQuery::create('Paris, France'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -200,7 +162,7 @@ class GoogleMapsTest extends TestCase
 
     public function testGeocodeWithRealAddressReturnsMultipleResults()
     {
-        $provider = new GoogleMaps($this->getAdapter());
+        $provider = new GoogleMaps($this->getHttpClient());
         $results = $provider->geocodeQuery(GeocodeQuery::create('Paris'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -258,13 +220,13 @@ class GoogleMapsTest extends TestCase
      */
     public function testReverse()
     {
-        $provider = new GoogleMaps($this->getMockAdapter());
+        $provider = new GoogleMaps($this->getMockedHttpClient());
         $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
     }
 
     public function testReverseWithRealCoordinates()
     {
-        $provider = new GoogleMaps($this->getAdapter());
+        $provider = new GoogleMaps($this->getHttpClient());
         $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(48.8631507, 2.388911));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -284,18 +246,9 @@ class GoogleMapsTest extends TestCase
         $this->assertEquals('FR', $result->getCountry()->getCode());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\InvalidServerResponse
-     */
-    public function testReverseWithCoordinatesGetsNullContent()
-    {
-        $provider = new GoogleMaps($this->getMockAdapterReturns(null));
-        $provider->reverseQuery(ReverseQuery::fromCoordinates(48.8631507, 2.388911));
-    }
-
     public function testGeocodeWithCityDistrict()
     {
-        $provider = new GoogleMaps($this->getAdapter());
+        $provider = new GoogleMaps($this->getHttpClient());
         $results = $provider->geocodeQuery(GeocodeQuery::create('Kalbacher Hauptstraße 10, 60437 Frankfurt, Germany'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -313,7 +266,7 @@ class GoogleMapsTest extends TestCase
      */
     public function testGeocodeWithInavlidApiKey()
     {
-        $provider = new GoogleMaps($this->getMockAdapterReturns('{"error_message":"The provided API key is invalid.", "status":"REQUEST_DENIED"}'));
+        $provider = new GoogleMaps($this->getMockedHttpClient('{"error_message":"The provided API key is invalid.", "status":"REQUEST_DENIED"}'));
         $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
     }
 
@@ -323,7 +276,7 @@ class GoogleMapsTest extends TestCase
             $this->markTestSkipped('You need to configure the GOOGLE_GEOCODING_KEY value in phpunit.xml');
         }
 
-        $provider = new GoogleMaps($this->getAdapter($_SERVER['GOOGLE_GEOCODING_KEY']), null, $_SERVER['GOOGLE_GEOCODING_KEY']);
+        $provider = new GoogleMaps($this->getHttpClient($_SERVER['GOOGLE_GEOCODING_KEY']), null, $_SERVER['GOOGLE_GEOCODING_KEY']);
 
         $results = $provider->geocodeQuery(GeocodeQuery::create('Columbia University'));
 
@@ -348,14 +301,14 @@ class GoogleMapsTest extends TestCase
      */
     public function testGeocodeWithRealInvalidApiKey()
     {
-        $provider = new GoogleMaps($this->getAdapter(), null, $this->testAPIKey);
+        $provider = new GoogleMaps($this->getHttpClient(), null, $this->testAPIKey);
 
         $provider->geocodeQuery(GeocodeQuery::create('Columbia University'));
     }
 
     public function testGeocodePostalTown()
     {
-        $provider = new GoogleMaps($this->getAdapter());
+        $provider = new GoogleMaps($this->getHttpClient());
         $results = $provider->geocodeQuery(GeocodeQuery::create('CF37, United Kingdom'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -372,7 +325,7 @@ class GoogleMapsTest extends TestCase
         $uri = '';
 
         $provider = GoogleMaps::business(
-            $this->getMockAdapterWithRequestCallback(
+            $this->getMockedHttpClientCallback(
                 function (RequestInterface $request) use (&$uri) {
                     $uri = $request->getUri();
                 }
@@ -392,7 +345,7 @@ class GoogleMapsTest extends TestCase
         $uri = '';
 
         $provider = GoogleMaps::business(
-            $this->getMockAdapterWithRequestCallback(
+            $this->getMockedHttpClientCallback(
                 function (RequestInterface $request) use (&$uri) {
                     $uri = (string) $request->getUri();
                 }
@@ -417,7 +370,7 @@ class GoogleMapsTest extends TestCase
      */
     public function testGeocodeWithInvalidClientIdAndKey()
     {
-        $provider = GoogleMaps::business($this->getAdapter(), 'foo', 'bogus');
+        $provider = GoogleMaps::business($this->getHttpClient(), 'foo', 'bogus');
         $provider->geocodeQuery(GeocodeQuery::create('Columbia University'));
     }
 
@@ -427,7 +380,7 @@ class GoogleMapsTest extends TestCase
      */
     public function testGeocodeWithInvalidClientIdAndKeyNoSsl()
     {
-        $provider = GoogleMaps::business($this->getAdapter(), 'foo', 'bogus');
+        $provider = GoogleMaps::business($this->getHttpClient(), 'foo', 'bogus');
         $provider->geocodeQuery(GeocodeQuery::create('Columbia University'));
     }
 }
