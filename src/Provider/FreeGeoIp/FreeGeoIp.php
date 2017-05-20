@@ -10,7 +10,6 @@
 
 namespace Geocoder\Provider\FreeGeoIp;
 
-use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Collection;
 use Geocoder\Model\AddressCollection;

@@ -12,7 +12,6 @@ namespace Geocoder\Provider\OpenCage;
 
 use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\InvalidCredentials;
-use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\QuotaExceeded;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Collection;

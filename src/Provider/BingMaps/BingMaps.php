@@ -11,7 +11,6 @@
 namespace Geocoder\Provider\BingMaps;
 
 use Geocoder\Exception\InvalidCredentials;
-use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
