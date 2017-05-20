@@ -103,6 +103,9 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocod
         }
 
         $url = sprintf(self::GEOCODE_ENDPOINT_URL_SSL, rawurlencode($query->getText()));
+        if (null !== $bounds = $query->getBounds()) {
+            $url .= sprintf('&bounds=%s,%s|%s,%s', $bounds->getSouth(), $bounds->getWest(), $bounds->getNorth(), $bounds->getEast());
+        }
 
         return $this->fetchUrl($url, $query->getLocale(), $query->getLimit());
     }
