@@ -23,6 +23,13 @@ class YandexAddress extends Address
     private $precision;
 
     /**
+     * The name of this location.
+     *
+     * @var string|null
+     */
+    private $name;
+
+    /**
      * @return null|string
      */
     public function getPrecision()
@@ -38,6 +45,26 @@ class YandexAddress extends Address
     public function setPrecision($precision)
     {
         $this->precision = $precision;
+
+        return $this;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param null|string $name
+     *
+     * @return YandexAddress
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
 
         return $this;
     }
