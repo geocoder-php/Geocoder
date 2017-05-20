@@ -7,13 +7,25 @@
 
 ### Note
 
-Since version 4.0 of `willdurand/geocoder` this repository will only contain classes and interfaces shared between multiple
-providers. 
-
 * This repository is **READ ONLY**
 * Post issues and PRs at the main repository: https://github.com/geocoder-php/Geocoder
 
+### History
+
+Just some months before the release of 4.0 of `willdurand/geocoder` we changed the repository to https://github.com/geocoder-php/php-common
+from https://github.com/geocoder-php/Geocoder. The new repository will only contain classes and interfaces shared between 
+multiple providers. The original repository is still used for issues and pull requests. 
+
+The new repository architecture allows us to use a [git subtree split](www.subtreesplit.com) from geocoder-php/Geocoder
+to geocoder-php/php-common and to each provider. 
+
+Version before 4.0 `willdurand/geocoder` will still work as usual, but with the new repository. 
+
+
 ### Install
+
+In 99% of the cases you do **not** want to install this package directly. You are more likely to install one provider. 
+Have a look at [the documentation](https://github.com/geocoder-php/Geocoder) to see the different providers. 
 
 ```bash
 composer require willdurand/geocoder

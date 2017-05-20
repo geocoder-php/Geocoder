@@ -54,6 +54,8 @@ abstract class AbstractProvider
      * Returns the results for the 'localhost' special case.
      *
      * @return array
+     *
+     * @deprecated
      */
     protected function getLocalhostDefaults()
     {

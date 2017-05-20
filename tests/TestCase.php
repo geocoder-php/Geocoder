@@ -20,6 +20,8 @@ use Psr\Http\Message\ResponseInterface;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
+ *
+ * @deprecated Use geocoder-php/provider-integration-tests instead
  */
 abstract class TestCase extends \PHPUnit_Framework_TestCase
 {

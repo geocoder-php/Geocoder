@@ -11,13 +11,16 @@
 namespace Geocoder\Tests\Dumper;
 
 use Geocoder\Dumper\GeoArray;
-use Geocoder\Tests\TestCase;
+use Geocoder\Model\LocationFactory;
 
 /**
  * @author Tomas Norkūnas <norkunas.tom@gmail.com>
  */
-class GeoArrayTest extends TestCase
+class GeoArrayTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var GeoArray
+     */
     private $dumper;
 
     protected function setUp()
@@ -27,7 +30,7 @@ class GeoArrayTest extends TestCase
 
     public function testDump()
     {
-        $address = $this->createAddress([]);
+        $address = LocationFactory::createLocation([]);
         $expected = [
             'type' => 'Feature',
             'geometry' => [
@@ -45,7 +48,7 @@ class GeoArrayTest extends TestCase
 
     public function testDumpWithData()
     {
-        $address = $this->createAddress([
+        $address = LocationFactory::createLocation([
             'latitude' => 48.8631507,
             'longitude' => 2.3889114,
         ]);
@@ -67,7 +70,7 @@ class GeoArrayTest extends TestCase
 
     public function testDumpWithBounds()
     {
-        $address = $this->createAddress([
+        $address = LocationFactory::createLocation([
             'latitude' => 48.8631507,
             'longitude' => 2.3889114,
             'bounds' => [
@@ -101,7 +104,7 @@ class GeoArrayTest extends TestCase
 
     public function testDumpWithProperties()
     {
-        $address = $this->createAddress([
+        $address = LocationFactory::createLocation([
             'latitude' => 48.8631507,
             'longitude' => 2.3889114,
             'bounds' => [

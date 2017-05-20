@@ -14,7 +14,7 @@ use Geocoder\Provider\Provider;
 use Geocoder\TimedGeocoder;
 use Symfony\Component\Stopwatch\Stopwatch;
 
-class TimedGeocoderTest extends TestCase
+class TimedGeocoderTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var Stopwatch

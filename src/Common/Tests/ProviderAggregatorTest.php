@@ -14,14 +14,13 @@ use Geocoder\Geocoder;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\ProviderAggregator;
-use Geocoder\Model\LocationFactory;
 use Geocoder\Provider\LocaleAwareGeocoder;
 use Geocoder\Provider\Provider;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-class ProviderAggregatorTest extends TestCase
+class ProviderAggregatorTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var TestableGeocoder
@@ -132,11 +131,6 @@ class ProviderAggregatorTest extends TestCase
     public function testDefaultMaxResults()
     {
         $this->assertSame(Geocoder::DEFAULT_RESULT_LIMIT, $this->geocoder->getLimit());
-    }
-
-    private function getAddressMock()
-    {
-        return (new LocationFactory())->createFromArray([]);
     }
 }
 

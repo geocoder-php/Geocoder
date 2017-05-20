@@ -11,14 +11,17 @@
 namespace Geocoder\Tests\Dumper;
 
 use Geocoder\Dumper\GeoJson;
-use Geocoder\Tests\TestCase;
+use Geocoder\Model\LocationFactory;
 
 /**
  * @author Jan Sorgalla <jsorgalla@googlemail.com>
  * @author William Durand <william.durand1@gmail.com>
  */
-class GeoJsonTest extends TestCase
+class GeoJsonTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var GeoJson
+     */
     private $dumper;
 
     public function setUp()
@@ -28,7 +31,7 @@ class GeoJsonTest extends TestCase
 
     public function testDump()
     {
-        $address = $this->createAddress([]);
+        $address = LocationFactory::createLocation([]);
         $expected = [
             'type' => 'Feature',
             'geometry' => [
@@ -46,7 +49,7 @@ class GeoJsonTest extends TestCase
 
     public function testDumpWithData()
     {
-        $address = $this->createAddress([
+        $address = LocationFactory::createLocation([
             'latitude' => 48.8631507,
             'longitude' => 2.3889114,
         ]);
@@ -68,7 +71,7 @@ class GeoJsonTest extends TestCase
 
     public function testDumpWithBounds()
     {
-        $address = $this->createAddress([
+        $address = LocationFactory::createLocation([
             'latitude' => 48.8631507,
             'longitude' => 2.3889114,
             'bounds' => [
@@ -102,7 +105,7 @@ class GeoJsonTest extends TestCase
 
     public function testDumpWithProperties()
     {
-        $address = $this->createAddress([
+        $address = LocationFactory::createLocation([
             'latitude' => 48.8631507,
             'longitude' => 2.3889114,
             'bounds' => [
