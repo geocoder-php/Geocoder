@@ -15,7 +15,7 @@ use Geocoder\Location;
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-final class Address implements Location
+class Address implements Location
 {
     /**
      * @var Coordinates|null

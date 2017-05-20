@@ -32,8 +32,6 @@ final class GeoIP2 extends AbstractProvider implements LocaleAwareGeocoder, IpAd
 
     public function __construct(GeoIP2Adapter $adapter)
     {
-        parent::__construct();
-
         $this->adapter = $adapter;
     }
 

@@ -10,7 +10,8 @@
 
 namespace Geocoder\Tests\Model;
 
-use Geocoder\Model\AddressFactory;
+use Geocoder\Model\AddressCollection;
+use Geocoder\Model\LocationFactory;
 use Geocoder\Location;
 use Geocoder\Tests\TestCase;
 
@@ -18,22 +19,14 @@ use Geocoder\Tests\TestCase;
  * @author Antoine Corcy <contact@sbin.dk>
  * @author William Durand <william.durand1@gmail.com>
  */
-class AddressFactoryTest extends TestCase
+class LocationFactoryTest extends TestCase
 {
-    /** @var AddressFactory */
-    private $factory;
-
-    public function setUp()
-    {
-        $this->factory = new AddressFactory();
-    }
-
     public function testCreateFromArray()
     {
-        $addresses = $this->factory->createFromArray([
-            ['streetNumber' => 1],
-            ['streetNumber' => 2, 'adminLevels' => [['name' => 'admin 1', 'level' => 1]]],
-            ['streetNumber' => 3, 'adminLevels' => [['name' => 'admin 2', 'level' => 2], ['name' => 'admin 1', 'level' => 1]]],
+        $addresses = new AddressCollection([
+            LocationFactory::createLocation(['streetNumber' => 1]),
+            LocationFactory::createLocation(['streetNumber' => 2, 'adminLevels' => [['name' => 'admin 1', 'level' => 1]]]),
+            LocationFactory::createLocation(['streetNumber' => 3, 'adminLevels' => [['name' => 'admin 2', 'level' => 2], ['name' => 'admin 1', 'level' => 1]]]),
         ]);
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $addresses);
@@ -63,23 +56,14 @@ class AddressFactoryTest extends TestCase
         }
         // MB_TITLE_CASE Will turn this into 1St so let's test to ensure we are correcting that
         // We do not want to "correct" 5C, however, as it is part of the original string
-        $addresses = $this->factory->createFromArray([
-            ['streetName' => '1st ave 1A'],
-        ]);
+        $address = LocationFactory::createLocation(['streetName' => '1st ave 1A']);
 
-        $this->assertEquals('1st ave 1A', $addresses->first()->getStreetName());
+        $this->assertEquals('1st ave 1A', $address->getStreetName());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\CollectionIsEmpty
-     */
     public function testCreateFromEmptyArray()
     {
-        $addresses = $this->factory->createFromArray([]);
-
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $addresses);
-        $this->assertCount(0, $addresses);
-
-        $addresses->first(); // expecting exception here
+        $address = LocationFactory::createLocation([]);
+        $this->assertInstanceOf(Location::class, $address);
     }
 }

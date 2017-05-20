@@ -10,7 +10,7 @@
 
 namespace Geocoder\Tests;
 
-use Geocoder\Model\AddressFactory;
+use Geocoder\Model\LocationFactory;
 use GuzzleHttp\Psr7\Response;
 use Http\Client\HttpClient;
 use Http\Mock\Client as MockClient;
@@ -109,9 +109,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
 
     protected function createAddress(array $data)
     {
-        $addresses = (new AddressFactory())->createFromArray([$data]);
-
-        return 0 === count($addresses) ? null : $addresses->first();
+        return LocationFactory::createLocation($data);
     }
 
     protected function createEmptyAddress()
