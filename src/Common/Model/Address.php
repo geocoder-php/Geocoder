@@ -193,6 +193,7 @@ class Address implements Location
             $adminLevels[$adminLevel->getLevel()] = [
                 'name' => $adminLevel->getName(),
                 'code' => $adminLevel->getCode(),
+                'level' => $adminLevel->getLevel(),
             ];
         }
 
