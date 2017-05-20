@@ -13,7 +13,6 @@ namespace Geocoder\Tests\Model;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Model\LocationFactory;
 use Geocoder\Location;
-use Geocoder\Tests\TestCase;
 
 /**
  * @author Antoine Corcy <contact@sbin.dk>

@@ -13,7 +13,6 @@ namespace Geocoder\Tests\Dumper;
 use Geocoder\Geocoder;
 use Geocoder\Dumper\Gpx;
 use Geocoder\Model\LocationFactory;
-use Geocoder\Tests\TestCase;
 
 /**
  * @author William Durand <william.durand1@gmail.com>

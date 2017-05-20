@@ -14,7 +14,6 @@ use Geocoder\Geocoder;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\ProviderAggregator;
-use Geocoder\Model\LocationFactory;
 use Geocoder\Provider\LocaleAwareGeocoder;
 use Geocoder\Provider\Provider;
 

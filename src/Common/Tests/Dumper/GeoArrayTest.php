@@ -12,7 +12,6 @@ namespace Geocoder\Tests\Dumper;
 
 use Geocoder\Dumper\GeoArray;
 use Geocoder\Model\LocationFactory;
-use Geocoder\Tests\TestCase;
 
 /**
  * @author Tomas Norkūnas <norkunas.tom@gmail.com>
@@ -31,7 +30,7 @@ class GeoArrayTest extends \PHPUnit_Framework_TestCase
 
     public function testDump()
     {
-        $address =  LocationFactory::createLocation([]);
+        $address = LocationFactory::createLocation([]);
         $expected = [
             'type' => 'Feature',
             'geometry' => [

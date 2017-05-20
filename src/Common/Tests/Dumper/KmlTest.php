@@ -12,7 +12,6 @@ namespace Geocoder\Tests\Dumper;
 
 use Geocoder\Dumper\Kml;
 use Geocoder\Model\LocationFactory;
-use Geocoder\Tests\TestCase;
 
 /**
  * @author Jan Sorgalla <jsorgalla@googlemail.com>
