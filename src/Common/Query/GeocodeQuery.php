@@ -156,11 +156,24 @@ final class GeocodeQuery
     }
 
     /**
-     * Return arbitrary data for this query.
+     * @param string $name
+     * @param null   $default
      *
+     * @return mixed
+     */
+    public function getData($name, $default = null)
+    {
+        if (!array_key_exists($name, $this->data)) {
+            return $default;
+        }
+
+        return $this->data[$name];
+    }
+
+    /**
      * @return array
      */
-    public function getData()
+    public function getAllData()
     {
         return $this->data;
     }
