@@ -12,7 +12,7 @@ namespace Geocoder\Provider\Nominatim;
 
 use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\UnsupportedOperation;
-use Geocoder\Exception\ZeroResults;
+use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\AbstractHttpProvider;
@@ -83,7 +83,7 @@ final class Nominatim extends AbstractHttpProvider implements LocaleAwareGeocode
         $places = $searchResult->getElementsByTagName('place');
 
         if (null === $places || 0 === $places->length) {
-            throw ZeroResults::create($url);
+            return new AddressCollection([]);
         }
 
         $results = [];
@@ -106,12 +106,12 @@ final class Nominatim extends AbstractHttpProvider implements LocaleAwareGeocode
         $content = $this->executeQuery($url, $query->getLocale());
 
         if (empty($content)) {
-            throw new ZeroResults(sprintf('Unable to find results for coordinates [ %f, %f ].', $latitude, $longitude));
+            return new AddressCollection([]);
         }
 
         $doc = new \DOMDocument();
         if (!@$doc->loadXML($content) || $doc->getElementsByTagName('error')->length > 0) {
-            throw new ZeroResults(sprintf('Unable to find results for coordinates [ %f, %f ].', $latitude, $longitude));
+            return new AddressCollection([]);
         }
 
         $searchResult = $doc->getElementsByTagName('reversegeocode')->item(0);

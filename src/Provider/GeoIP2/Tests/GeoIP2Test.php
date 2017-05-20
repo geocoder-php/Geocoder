@@ -10,7 +10,7 @@
 
 namespace Geocoder\Provider\GeoIP2\Tests;
 
-use Geocoder\Exception\ZeroResults;
+use Geocoder\Collection;
 use Geocoder\Location;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
@@ -197,18 +197,14 @@ class GeoIP2Test extends TestCase
         }
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     * @expectedExceptionMessage No results found for IP address 74.200.247.59
-     */
     public function testRetrievingGeodataNotExistingLocation()
     {
-        $adapterReturn = new ZeroResults('No results found for IP address 74.200.247.59');
-        $adapter = $this->getGeoIP2AdapterMock($adapterReturn);
-
+        $adapter = $this->getGeoIP2AdapterMock('');
         $provider = new GeoIP2($adapter);
 
-        $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
+        $result = $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
     public function testGeoIp2Encoding()

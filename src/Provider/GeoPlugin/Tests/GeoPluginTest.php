@@ -60,7 +60,7 @@ class GeoPluginTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\ZeroResults
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
      */
     public function testGeocodeWithRealIPv4GetsNullContent()
     {
@@ -69,7 +69,7 @@ class GeoPluginTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\ZeroResults
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
      */
     public function testGeocodeWithRealIPv4GetsEmptyContent()
     {

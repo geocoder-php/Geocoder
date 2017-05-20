@@ -12,7 +12,7 @@ namespace Geocoder\Provider\GeoPlugin;
 
 use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\UnsupportedOperation;
-use Geocoder\Exception\ZeroResults;
+use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\AbstractHttpProvider;
@@ -83,7 +83,7 @@ final class GeoPlugin extends AbstractHttpProvider implements Provider, IpAddres
         }
 
         if (!array_key_exists('geoplugin_status', $json) || (200 !== $json['geoplugin_status'] && 206 !== $json['geoplugin_status'])) {
-            throw ZeroResults::create($url);
+            return new AddressCollection([]);
         }
 
         $data = array_filter($json);

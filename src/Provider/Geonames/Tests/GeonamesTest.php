@@ -10,6 +10,7 @@
 
 namespace Geocoder\Provider\Geonames\Tests;
 
+use Geocoder\Collection;
 use Geocoder\Location;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
@@ -64,9 +65,6 @@ class GeonamesTest extends TestCase
         $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
     public function testGeocodeWithUnknownCity()
     {
         $noPlacesFoundResponse = <<<'JSON'
@@ -76,7 +74,10 @@ class GeonamesTest extends TestCase
 }
 JSON;
         $provider = new Geonames($this->getMockAdapterReturns($noPlacesFoundResponse), 'username');
-        $provider->geocodeQuery(GeocodeQuery::create('BlaBlaBla'));
+        $result = $provider->geocodeQuery(GeocodeQuery::create('BlaBlaBla'));
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
     public function testGeocodeWithRealPlace()
@@ -339,9 +340,6 @@ JSON;
         $this->assertEquals('Europe/London', $result->getTimezone());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
     public function testReverseWithBadCoordinates()
     {
         $badCoordinateResponse = <<<'JSON'
@@ -350,6 +348,9 @@ JSON;
 }
 JSON;
         $provider = new Geonames($this->getMockAdapterReturns($badCoordinateResponse), 'username');
-        $provider->reverseQuery(ReverseQuery::fromCoordinates(-80.000000, -170.000000));
+        $result = $provider->reverseQuery(ReverseQuery::fromCoordinates(-80.000000, -170.000000));
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 }

@@ -13,7 +13,7 @@ namespace Geocoder\Provider\Geonames;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\UnsupportedOperation;
-use Geocoder\Exception\ZeroResults;
+use Geocoder\Model\AddressCollection;
 use Geocoder\Model\AdminLevelCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
@@ -121,13 +121,13 @@ final class Geonames extends AbstractHttpProvider implements LocaleAwareGeocoder
         }
 
         if (isset($json->totalResultsCount) && empty($json->totalResultsCount)) {
-            throw ZeroResults::create($query);
+            return new AddressCollection([]);
         }
 
         $data = $json->geonames;
 
         if (empty($data)) {
-            throw ZeroResults::create($query);
+            return new AddressCollection([]);
         }
 
         $results = [];

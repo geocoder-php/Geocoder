@@ -11,7 +11,7 @@
 namespace Geocoder\Provider\Yandex;
 
 use Geocoder\Exception\UnsupportedOperation;
-use Geocoder\Exception\ZeroResults;
+use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\AbstractHttpProvider;
@@ -111,7 +111,7 @@ final class Yandex extends AbstractHttpProvider implements LocaleAwareGeocoder, 
         if (empty($json) || isset($json['error']) ||
             (isset($json['response']) && '0' === $json['response']['GeoObjectCollection']['metaDataProperty']['GeocoderResponseMetaData']['found'])
         ) {
-            throw ZeroResults::create($query);
+            return new AddressCollection([]);
         }
 
         $data = $json['response']['GeoObjectCollection']['featureMember'];

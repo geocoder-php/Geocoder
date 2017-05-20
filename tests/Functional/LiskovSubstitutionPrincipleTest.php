@@ -95,22 +95,26 @@ class LiskovSubstitutionPrincipleTest extends \PHPUnit_Framework_TestCase
     /**
      * @param Provider $provider
      * @dataProvider getWorldWideProvider
-     * @expectedException \Geocoder\Exception\ZeroResults
      */
     public function testNoResult(Provider $provider)
     {
-        $provider->geocodeQuery(GeocodeQuery::create('abcdef, ghijkl, mnopqrs')->withLocale('en'));
+        $result = $provider->geocodeQuery(GeocodeQuery::create('abcdef, ghijkl, mnopqrs')->withLocale('en'));
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
     /**
      * @param Provider $provider
      * @dataProvider getWorldWideProvider
-     * @expectedException \Geocoder\Exception\ZeroResults
      */
     public function testNoResultReverse(Provider $provider)
     {
         // Out side Hawaii in Pacific ocean
-        $provider->reverseQuery(ReverseQuery::fromCoordinates(25.388300, 179.861719)->withLocale('en'));
+        $result = $provider->reverseQuery(ReverseQuery::fromCoordinates(25.388300, 179.861719)->withLocale('en'));
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
     /**

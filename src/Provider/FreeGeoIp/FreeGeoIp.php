@@ -13,7 +13,7 @@ namespace Geocoder\Provider\FreeGeoIp;
 use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Collection;
-use Geocoder\Exception\ZeroResults;
+use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\AbstractHttpProvider;
@@ -82,7 +82,7 @@ final class FreeGeoIp extends AbstractHttpProvider implements Provider, IpAddres
         $data = (array) json_decode($content);
 
         if (empty($data)) {
-            throw ZeroResults::create($query);
+            return new AddressCollection([]);
         }
 
         $adminLevels = [];

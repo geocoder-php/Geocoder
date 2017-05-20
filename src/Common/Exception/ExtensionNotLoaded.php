@@ -11,6 +11,8 @@
 namespace Geocoder\Exception;
 
 /**
+ * When a required PHP extension is missing.
+ *
  * @author Antoine Corcy <contact@sbin.dk>
  */
 class ExtensionNotLoaded extends \RuntimeException implements Exception

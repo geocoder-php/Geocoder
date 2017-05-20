@@ -15,7 +15,7 @@ use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\QuotaExceeded;
 use Geocoder\Exception\UnsupportedOperation;
-use Geocoder\Exception\ZeroResults;
+use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\AbstractHttpProvider;
@@ -125,13 +125,13 @@ final class Mapzen extends AbstractHttpProvider implements Provider
         }
 
         if (!isset($json['type']) || $json['type'] !== 'FeatureCollection' || !isset($json['features']) || count($json['features']) === 0) {
-            throw ZeroResults::create($query);
+            return new AddressCollection([]);
         }
 
         $locations = $json['features'];
 
         if (empty($locations)) {
-            throw ZeroResults::create($query);
+            return new AddressCollection([]);
         }
 
         $results = [];

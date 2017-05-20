@@ -13,7 +13,7 @@ namespace Geocoder\Provider\BingMaps;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\UnsupportedOperation;
-use Geocoder\Exception\ZeroResults;
+use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\AbstractHttpProvider;
@@ -117,7 +117,7 @@ final class BingMaps extends AbstractHttpProvider implements LocaleAwareGeocoder
         $json = json_decode($content);
 
         if (!isset($json->resourceSets[0]) || !isset($json->resourceSets[0]->resources)) {
-            throw ZeroResults::create($url);
+            return new AddressCollection([]);
         }
 
         $data = (array) $json->resourceSets[0]->resources;
@@ -170,7 +170,7 @@ final class BingMaps extends AbstractHttpProvider implements LocaleAwareGeocoder
         }
 
         if (empty($results)) {
-            throw ZeroResults::create($url);
+            return new AddressCollection([]);
         }
 
         return $this->returnResults($results);

@@ -10,6 +10,7 @@
 
 namespace Geocoder\Provider\Mapzen\Tests;
 
+use Geocoder\Collection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Tests\TestCase;
@@ -26,26 +27,26 @@ class MapzenTest extends TestCase
         $this->assertEquals('mapzen', $provider->getName());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
     public function testGeocode()
     {
         $provider = new Mapzen($this->getMockAdapterReturns('{}'), 'api_key');
-        $provider->geocodeQuery(GeocodeQuery::create('foobar'));
+        $result = $provider->geocodeQuery(GeocodeQuery::create('foobar'));
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
     public function testSslSchema()
     {
         $provider = new Mapzen($this->getMockAdapterReturns('{}'), 'api_key', true);
-        $provider->geocodeQuery(GeocodeQuery::create('foobar'));
+        $result = $provider->geocodeQuery(GeocodeQuery::create('foobar'));
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
     /**
-     * @expectedException \Geocoder\Exception\ZeroResults
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
      */
     public function testGeocodeWithAddressGetsNullContent()
     {
@@ -82,7 +83,7 @@ class MapzenTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\ZeroResults
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
      */
     public function testReverse()
     {

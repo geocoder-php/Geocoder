@@ -13,7 +13,7 @@ namespace Geocoder\Provider\MapQuest;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\UnsupportedOperation;
-use Geocoder\Exception\ZeroResults;
+use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\AbstractHttpProvider;
@@ -139,13 +139,13 @@ final class MapQuest extends AbstractHttpProvider implements Provider
         $json = json_decode($content, true);
 
         if (!isset($json['results']) || empty($json['results'])) {
-            throw ZeroResults::create($query);
+            return new AddressCollection([]);
         }
 
         $locations = $json['results'][0]['locations'];
 
         if (empty($locations)) {
-            throw ZeroResults::create($query);
+            return new AddressCollection([]);
         }
 
         $results = [];
@@ -175,7 +175,7 @@ final class MapQuest extends AbstractHttpProvider implements Provider
         }
 
         if (empty($results)) {
-            throw ZeroResults::create($query);
+            return new AddressCollection([]);
         }
 
         return $this->returnResults($results);

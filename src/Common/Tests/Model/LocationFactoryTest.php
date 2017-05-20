@@ -63,7 +63,7 @@ class LocationFactoryTest extends TestCase
 
     public function testCreateFromEmptyArray()
     {
-        $address = LocationFactory::createLocation([]);
-        $this->assertInstanceOf(Location::class, $address);
+        $location = LocationFactory::createLocation([]);
+        $this->assertInstanceOf(Location::class, $location);
     }
 }

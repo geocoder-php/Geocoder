@@ -94,7 +94,7 @@ class IpInfoDbTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\ZeroResults
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
      */
     public function testGeocodeWithRealIPv4GetsNullContent()
     {
@@ -103,7 +103,7 @@ class IpInfoDbTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\ZeroResults
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
      */
     public function testGeocodeWithRealIPv4GetsEmptyContent()
     {

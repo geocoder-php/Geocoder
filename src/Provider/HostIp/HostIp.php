@@ -12,7 +12,7 @@ namespace Geocoder\Provider\HostIp;
 
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Collection;
-use Geocoder\Exception\ZeroResults;
+use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\AbstractHttpProvider;
@@ -82,7 +82,7 @@ final class HostIp extends AbstractHttpProvider implements Provider, IpAddressGe
         $data = json_decode($content, true);
 
         if (!$data) {
-            throw ZeroResults::create($query);
+            return new AddressCollection([]);
         }
 
         return $this->returnResults([

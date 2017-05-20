@@ -10,6 +10,7 @@
 
 namespace Geocoder\Provider\TomTom\Tests;
 
+use Geocoder\Collection;
 use Geocoder\Location;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
@@ -36,7 +37,7 @@ class TomTomTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\ZeroResults
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
      */
     public function testGeocodeWithAddressContentReturnNull()
     {
@@ -45,7 +46,7 @@ class TomTomTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\ZeroResults
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
      */
     public function testGeocodeWithAddress()
     {
@@ -53,9 +54,6 @@ class TomTomTest extends TestCase
         $provider->geocodeQuery(GeocodeQuery::create('Tagensvej 47, 2200 København N'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
     public function testGeocodeZeroResults()
     {
         $ZeroResults = <<<'XML'
@@ -63,7 +61,10 @@ class TomTomTest extends TestCase
 XML;
 
         $provider = new TomTom($this->getMockAdapterReturns($ZeroResults), 'api_key');
-        $provider->geocodeQuery(GeocodeQuery::create('foo'));
+        $result = $provider->geocodeQuery(GeocodeQuery::create('foo'));
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
     public function testGeocodeWithRealAddress()
@@ -279,7 +280,7 @@ XML;
     }
 
     /**
-     * @expectedException \Geocoder\Exception\ZeroResults
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
      */
     public function testReverse()
     {
@@ -288,7 +289,7 @@ XML;
     }
 
     /**
-     * @expectedException \Geocoder\Exception\ZeroResults
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
      */
     public function testReverseWithCoordinatesContentReturnNull()
     {
@@ -297,7 +298,7 @@ XML;
     }
 
     /**
-     * @expectedException \Geocoder\Exception\ZeroResults
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
      */
     public function testReverseWithCoordinatesGetsEmptyContent()
     {
@@ -305,9 +306,6 @@ XML;
         $provider->reverseQuery(ReverseQuery::fromCoordinates('60.4539471728726', '22.2567841926781'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
     public function testReverseError400()
     {
         $error400 = <<<'XML'
@@ -315,7 +313,10 @@ XML;
 XML;
 
         $provider = new TomTom($this->getMockAdapterReturns($error400), 'api_key');
-        $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
+        $result = $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
     /**

@@ -75,7 +75,7 @@ class FreeGeoIpTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\ZeroResults
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
      */
     public function testGeocodeWithRealIPv4GetsNullContent()
     {
@@ -84,7 +84,7 @@ class FreeGeoIpTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\ZeroResults
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
      */
     public function testGeocodeWithRealIPv4GetsEmptyContent()
     {
@@ -135,7 +135,7 @@ class FreeGeoIpTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\ZeroResults
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
      */
     public function testGeocodeWithRealIPv6GetsNullContent()
     {

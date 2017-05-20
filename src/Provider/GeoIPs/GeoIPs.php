@@ -15,7 +15,7 @@ use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\QuotaExceeded;
 use Geocoder\Exception\UnsupportedOperation;
-use Geocoder\Exception\ZeroResults;
+use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\AbstractHttpProvider;
@@ -136,7 +136,7 @@ final class GeoIPs extends AbstractHttpProvider implements Provider, IpAddressGe
                 case static::CODE_LIMIT_EXCEEDED:
                     throw new QuotaExceeded('The service you have requested is over capacity.');
                 default:
-                    throw new ZeroResults(sprintf(
+                    throw new InvalidServerResponse(sprintf(
                         'GeoIPs error %s%s%s%s - query: %s',
                         $json['error']['code'],
                         isset($json['error']['status']) ? ', '.$json['error']['status'] : '',
@@ -159,7 +159,7 @@ final class GeoIPs extends AbstractHttpProvider implements Provider, IpAddressGe
                 // everything is ok
                 break;
             case static::CODE_NOT_FOUND:
-                throw ZeroResults::create($query);
+                return new AddressCollection([]);
             default:
                 throw new InvalidServerResponse(sprintf(
                     'The GeoIPs API returned unknown result code "%s" for query: "%s".',
@@ -170,7 +170,7 @@ final class GeoIPs extends AbstractHttpProvider implements Provider, IpAddressGe
 
         // Make sure that we do have proper result array
         if (empty($response['location']) || !is_array($response['location'])) {
-            throw ZeroResults::create($query);
+            return new AddressCollection([]);
         }
 
         $location = array_map(function ($value) {

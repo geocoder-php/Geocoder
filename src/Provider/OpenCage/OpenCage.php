@@ -16,7 +16,7 @@ use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\QuotaExceeded;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Collection;
-use Geocoder\Exception\ZeroResults;
+use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\AbstractHttpProvider;
@@ -122,13 +122,13 @@ final class OpenCage extends AbstractHttpProvider implements LocaleAwareGeocoder
         }
 
         if (!isset($json['total_results']) || $json['total_results'] == 0) {
-            throw ZeroResults::create($query);
+            return new AddressCollection([]);
         }
 
         $locations = $json['results'];
 
         if (empty($locations)) {
-            throw ZeroResults::create($query);
+            return new AddressCollection([]);
         }
 
         $results = [];

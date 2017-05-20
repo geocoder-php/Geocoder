@@ -34,7 +34,7 @@ class BingMapsTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\ZeroResults
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
      */
     public function testGeocodeWithInvalidData()
     {
@@ -63,7 +63,7 @@ class BingMapsTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\ZeroResults
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
      */
     public function testGeocodeWithAddressGetsNullContent()
     {
@@ -332,7 +332,7 @@ JSON;
     }
 
     /**
-     * @expectedException \Geocoder\Exception\ZeroResults
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
      */
     public function testReverse()
     {
@@ -341,7 +341,7 @@ JSON;
     }
 
     /**
-     * @expectedException \Geocoder\Exception\ZeroResults
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
      */
     public function testReverseWithCoordinatesContentReturnNull()
     {

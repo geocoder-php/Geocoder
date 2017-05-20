@@ -13,7 +13,7 @@ namespace Geocoder\Provider\MaxMindBinary;
 use Geocoder\Exception\FunctionNotFound;
 use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\UnsupportedOperation;
-use Geocoder\Exception\ZeroResults;
+use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\AbstractProvider;
@@ -88,7 +88,7 @@ final class MaxMindBinary extends AbstractProvider implements Provider, IpAddres
         geoip_close($geoIp);
 
         if (false === $geoIpRecord instanceof \GeoIpRecord) {
-            throw new ZeroResults(sprintf('No results found for IP address %s', $address));
+            return new AddressCollection([]);
         }
 
         $adminLevels = [];

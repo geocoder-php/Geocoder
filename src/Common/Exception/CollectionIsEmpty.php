@@ -10,6 +10,11 @@
 
 namespace Geocoder\Exception;
 
-class CollectionIsEmpty extends \RuntimeException implements Exception
+/**
+ * When you are trying to access an element on en empty collection.
+ *
+ * @author Tobias Nyholm <tobias.nyholm@gmail.com>
+ */
+class CollectionIsEmpty extends \LogicException implements Exception
 {
 }

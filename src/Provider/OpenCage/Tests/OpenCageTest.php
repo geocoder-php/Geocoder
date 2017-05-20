@@ -10,6 +10,7 @@
 
 namespace Geocoder\Provider\OpenCage\Tests;
 
+use Geocoder\Collection;
 use Geocoder\Location;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
@@ -27,17 +28,17 @@ class OpenCageTest extends TestCase
         $this->assertEquals('opencage', $provider->getName());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
     public function testSslSchema()
     {
         $provider = new OpenCage($this->getMockAdapterReturns('{}'), 'api_key');
-        $provider->geocodeQuery(GeocodeQuery::create('foobar'));
+        $result = $provider->geocodeQuery(GeocodeQuery::create('foobar'));
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
     /**
-     * @expectedException \Geocoder\Exception\ZeroResults
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
      */
     public function testGeocodeWithAddressGetsNullContent()
     {
@@ -80,7 +81,7 @@ class OpenCageTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\ZeroResults
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
      */
     public function testReverse()
     {

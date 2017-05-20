@@ -15,7 +15,6 @@ use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\QuotaExceeded;
 use Geocoder\Exception\UnsupportedOperation;
-use Geocoder\Exception\ZeroResults;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Model\LocationBuilder;
 use Geocoder\Query\GeocodeQuery;
@@ -215,7 +214,7 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocod
 
         // no result
         if (!isset($json->results) || !count($json->results) || 'OK' !== $json->status) {
-            throw ZeroResults::create($url);
+            return new AddressCollection([]);
         }
 
         $results = [];

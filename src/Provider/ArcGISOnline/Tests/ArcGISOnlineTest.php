@@ -10,6 +10,7 @@
 
 namespace Geocoder\Provider\ArcGISOnlineTest\Tests;
 
+use Geocoder\Collection;
 use Geocoder\Location;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
@@ -25,7 +26,7 @@ class ArcGISOnlineTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\ZeroResults
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
      */
     public function testGeocodeWithInvalidData()
     {
@@ -63,7 +64,7 @@ class ArcGISOnlineTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\ZeroResults
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
      */
     public function testGeocodeWithAddressGetsNullContent()
     {
@@ -132,17 +133,17 @@ class ArcGISOnlineTest extends TestCase
         $this->assertNull($result->getTimezone());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
     public function testGeocodeWithInvalidAddressWithHttpsForSourceCountry()
     {
         $provider = new ArcGISOnline($this->getAdapter(), 'Denmark', true);
-        $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
+        $result = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
     /**
-     * @expectedException \Geocoder\Exception\ZeroResults
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
      */
     public function testReverseWithInvalid()
     {
@@ -151,7 +152,7 @@ class ArcGISOnlineTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\ZeroResults
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
      */
     public function testReverseWithCoordinatesContentReturnNull()
     {

@@ -10,6 +10,7 @@
 
 namespace Geocoder\Provider\Nominatim\Tests;
 
+use Geocoder\Collection;
 use Geocoder\Location;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
@@ -217,13 +218,13 @@ class NominatimTest extends TestCase
         $this->assertEquals('FI', $result->getCountry()->getCode());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
     public function testGeocodeWithUnknownCity()
     {
         $provider = Nominatim::withOpenStreetMapServer($this->getAdapter());
-        $provider->geocodeQuery(GeocodeQuery::create('Hammm'));
+        $result = $provider->geocodeQuery(GeocodeQuery::create('Hammm'));
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
     public function testReverseWithRealCoordinatesWithLocale()
@@ -418,7 +419,7 @@ class NominatimTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\ZeroResults
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
      */
     public function testGeocodeWithAddressGetsNullContent()
     {
@@ -427,7 +428,7 @@ class NominatimTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\ZeroResults
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
      */
     public function testGeocodeWithAddressGetsEmptyContent()
     {
@@ -436,7 +437,7 @@ class NominatimTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\ZeroResults
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
      */
     public function testGeocodeWithAddressGetsEmptyXML()
     {
@@ -447,30 +448,24 @@ XML;
         $provider->geocodeQuery(GeocodeQuery::create('Läntinen Pitkäkatu 35, Turku'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     * @expectedExceptionMessage Unable to find results for coordinates [ 60.453947, 22.256784 ].
-     */
     public function testReverseWithCoordinatesGetsNullContent()
     {
         $provider = Nominatim::withOpenStreetMapServer($this->getMockAdapterReturns(null));
-        $provider->reverseQuery(ReverseQuery::fromCoordinates(60.4539471728726, 22.2567841926781));
+        $result = $provider->reverseQuery(ReverseQuery::fromCoordinates(60.4539471728726, 22.2567841926781));
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     * @expectedExceptionMessage Unable to find results for coordinates [ 60.453947, 22.256784 ].
-     */
     public function testReverseWithCoordinatesGetsEmptyContent()
     {
         $provider = Nominatim::withOpenStreetMapServer($this->getMockAdapterReturns('<error></error>'));
-        $provider->reverseQuery(ReverseQuery::fromCoordinates(60.4539471728726, 22.2567841926781));
+        $result = $provider->reverseQuery(ReverseQuery::fromCoordinates(60.4539471728726, 22.2567841926781));
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     * @expectedExceptionMessage Unable to find results for coordinates [ -80.000000, -170.000000 ].
-     */
     public function testReverseWithCoordinatesGetsError()
     {
         $errorXml = <<<'XML'
@@ -480,12 +475,15 @@ XML;
 </reversegeocode>
 XML;
         $provider = Nominatim::withOpenStreetMapServer($this->getMockAdapterReturns($errorXml));
-        $provider->reverseQuery(ReverseQuery::fromCoordinates(-80.000000, -170.000000));
+        $result = $provider->reverseQuery(ReverseQuery::fromCoordinates(-80.000000, -170.000000));
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
     public function testGetNodeStreetName()
     {
-        $provider = Nominatim::withOpenStreetMapServer($this->getAdapter(), 'fr_FR');
+        $provider = Nominatim::withOpenStreetMapServer($this->getAdapter());
         $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(48.86, 2.35));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);

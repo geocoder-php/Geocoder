@@ -10,6 +10,7 @@
 
 namespace Geocoder\Provider\MaxMindBinary\Tests;
 
+use Geocoder\Collection;
 use Geocoder\Location;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
@@ -145,15 +146,13 @@ class MaxMindBinaryTest extends TestCase
         $this->assertEquals('maxmind_binary', $provider->getName());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     * @expectedExceptionMessage No results found for IP address 127.0.0.1
-     */
     public function testThrowIfIpAddressCouldNotBeLocated()
     {
         $provider = new MaxMindBinary($this->binaryFile);
+        $result = $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
 
-        $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
     /**

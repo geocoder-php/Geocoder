@@ -10,7 +10,8 @@
 
 namespace Geocoder\Provider\GoogleMaps\Tests;
 
-use Geocoder\Exception\ZeroResults;
+use Geocoder\Collection;
+use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Location;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
@@ -32,12 +33,12 @@ class GoogleMapsTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\ZeroResults
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
      */
     public function testGeocode()
     {
         $provider = new GoogleMaps($this->getMockAdapter());
-        $provider->geocodeQuery(GeocodeQuery::create('foobar'));
+        $result = $provider->geocodeQuery(GeocodeQuery::create('foobar'));
     }
 
     /**
@@ -70,7 +71,7 @@ class GoogleMapsTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\ZeroResults
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
      */
     public function testGeocodeWithAddressGetsNullContent()
     {
@@ -78,13 +79,13 @@ class GoogleMapsTest extends TestCase
         $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ZeroResults
-     */
     public function testGeocodeWithAddressGetsEmptyContent()
     {
         $provider = new GoogleMaps($this->getMockAdapterReturns('{"status":"OK"}'));
-        $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
+        $result = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertEquals(0, $result->count());
     }
 
     /**
@@ -234,7 +235,7 @@ class GoogleMapsTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\ZeroResults
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
      */
     public function testReverse()
     {
@@ -265,7 +266,7 @@ class GoogleMapsTest extends TestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\ZeroResults
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
      */
     public function testReverseWithCoordinatesGetsNullContent()
     {
@@ -362,9 +363,8 @@ class GoogleMapsTest extends TestCase
 
         try {
             $provider->geocodeQuery(GeocodeQuery::create('blah'));
-        } catch (ZeroResults $e) {
+        } catch (InvalidServerResponse $e) {
         }
-
         $this->assertEquals('https://maps.googleapis.com/maps/api/geocode/json?address=blah&client=foo', $uri);
     }
 
@@ -384,9 +384,8 @@ class GoogleMapsTest extends TestCase
 
         try {
             $provider->geocodeQuery(GeocodeQuery::create('blah'));
-        } catch (ZeroResults $e) {
+        } catch (InvalidServerResponse $e) {
         }
-
         $this->assertEquals(
             'https://maps.googleapis.com/maps/api/geocode/json?address=blah&client=foo&signature=9G2weMhhd4E2ciR681gp9YabvUg=',
             $uri

@@ -10,8 +10,8 @@
 
 namespace Geocoder\Model;
 
-use Geocoder\Exception\CollectionIsEmpty;
 use Geocoder\Collection;
+use Geocoder\Exception\CollectionIsEmpty;
 use Geocoder\Location;
 
 class AddressCollection implements Collection
@@ -19,14 +19,14 @@ class AddressCollection implements Collection
     /**
      * @var Location[]
      */
-    private $addresses;
+    private $locations;
 
     /**
-     * @param Location[] $addresses
+     * @param Location[] $locations
      */
-    public function __construct(array $addresses = [])
+    public function __construct(array $locations = [])
     {
-        $this->addresses = array_values($addresses);
+        $this->locations = array_values($locations);
     }
 
     /**
@@ -42,19 +42,27 @@ class AddressCollection implements Collection
      */
     public function count()
     {
-        return count($this->addresses);
+        return count($this->locations);
     }
 
     /**
-     * @return Location
+     * {@inheritdoc}
      */
     public function first()
     {
-        if (empty($this->addresses)) {
-            throw new CollectionIsEmpty('The Collection instance is empty.');
+        if (empty($this->locations)) {
+            throw new CollectionIsEmpty();
         }
 
-        return reset($this->addresses);
+        return reset($this->locations);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isEmpty()
+    {
+        return empty($this->locations);
     }
 
     /**
@@ -62,7 +70,7 @@ class AddressCollection implements Collection
      */
     public function slice($offset, $length = null)
     {
-        return array_slice($this->addresses, $offset, $length);
+        return array_slice($this->locations, $offset, $length);
     }
 
     /**
@@ -70,28 +78,26 @@ class AddressCollection implements Collection
      */
     public function has($index)
     {
-        return isset($this->addresses[$index]);
+        return isset($this->locations[$index]);
     }
 
     /**
-     * @return Location
-     *
-     * @throws \OutOfBoundsException
+     * {@inheritdoc}
      */
     public function get($index)
     {
-        if (!isset($this->addresses[$index])) {
+        if (!isset($this->locations[$index])) {
             throw new \OutOfBoundsException(sprintf('The index "%s" does not exist in this collection.', $index));
         }
 
-        return $this->addresses[$index];
+        return $this->locations[$index];
     }
 
     /**
-     * @return Location[]
+     * {@inheritdoc}
      */
     public function all()
     {
-        return $this->addresses;
+        return $this->locations;
     }
 }

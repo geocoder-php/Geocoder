@@ -11,6 +11,9 @@
 namespace Geocoder\Exception;
 
 /**
+ * Thrown when you are trying to use a Provider for something it does not support. Example if you trying to reverse
+ * geocode an IP address.
+ *
  * @author William Durand <william.durand1@gmail.com>
  */
 class UnsupportedOperation extends InvalidArgument implements Exception

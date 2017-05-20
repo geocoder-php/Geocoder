@@ -15,7 +15,7 @@ use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Collection;
-use Geocoder\Exception\ZeroResults;
+use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\AbstractHttpProvider;
@@ -138,7 +138,7 @@ final class IpInfoDb extends AbstractHttpProvider implements Provider, IpAddress
         $data = (array) json_decode($content);
 
         if (empty($data) || 'OK' !== $data['statusCode']) {
-            throw ZeroResults::create($query);
+            return new AddressCollection([]);
         }
 
         $timezone = null;
