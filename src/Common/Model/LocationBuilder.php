@@ -13,7 +13,7 @@ namespace Geocoder\Model;
 use Geocoder\Location;
 
 /**
- * A class that builds an Address or a subclass of a Location.
+ * A class that builds a Location or any of its subclasses.
  *
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
