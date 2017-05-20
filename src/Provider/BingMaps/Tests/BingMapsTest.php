@@ -70,6 +70,7 @@ class BingMapsTest extends BaseTestCase
         $provider = new BingMaps($this->getMockedHttpClient(), 'api_key');
         $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
+
     public function testGeocodeReturnsMultipleResults()
     {
         $json = <<<JSON
@@ -329,6 +330,7 @@ JSON;
         $this->assertEquals('Italie', $result->getCountry()->getName());
         $this->assertEquals('IT', $result->getCountry()->getCode());
     }
+
     public function testReverseWithRealCoordinatesReturnsSingleResult()
     {
         if (!isset($_SERVER['BINGMAPS_API_KEY'])) {
