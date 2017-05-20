@@ -86,7 +86,7 @@ class ArcGISOnlineTest extends TestCase
         $this->assertEquals(48.863279997000461, $result->getCoordinates()->getLatitude(), '', 0.0001);
         $this->assertEquals(2.3890199980004354, $result->getCoordinates()->getLongitude(), '', 0.0001);
         $this->assertEquals(10, $result->getStreetNumber());
-        $this->assertEquals('10 Avenue Gambetta, 75020, 20e Arrondissement, Paris, Île-de-France', $result->getStreetName());
+        $this->assertEquals('10 Avenue Gambetta', $result->getStreetName());
         $this->assertEquals(75020, $result->getPostalCode());
         $this->assertEquals('Paris', $result->getLocality());
         $this->assertCount(2, $result->getAdminLevels());
@@ -116,7 +116,7 @@ class ArcGISOnlineTest extends TestCase
         $this->assertEquals(48.863279997000461, $result->getCoordinates()->getLatitude(), '', 0.0001);
         $this->assertEquals(2.3890199980004354, $result->getCoordinates()->getLongitude(), '', 0.0001);
         $this->assertEquals(10, $result->getStreetNumber());
-        $this->assertEquals('10 Avenue Gambetta, 75020, 20e Arrondissement, Paris, Île-de-France', $result->getStreetName());
+        $this->assertEquals('10 Avenue Gambetta', $result->getStreetName());
         $this->assertEquals(75020, $result->getPostalCode());
         $this->assertEquals('Paris', $result->getLocality());
         $this->assertCount(2, $result->getAdminLevels());
@@ -200,7 +200,7 @@ class ArcGISOnlineTest extends TestCase
         $this->assertEquals(52.370518568000477, $result->getCoordinates()->getLatitude(), '', 0.0001);
         $this->assertEquals(9.7332166860004463, $result->getCoordinates()->getLongitude(), '', 0.0001);
         $this->assertNull($result->getStreetNumber());
-        $this->assertEquals('Hannover, Niedersachsen, Deutschland', $result->getStreetName());
+        $this->assertNull($result->getStreetName());
         $this->assertNull($result->getPostalCode());
         $this->assertNull($result->getLocality());
         $this->assertCount(1, $result->getAdminLevels());
@@ -217,7 +217,7 @@ class ArcGISOnlineTest extends TestCase
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(47.111386795000499, $result->getCoordinates()->getLatitude(), '', 0.0001);
         $this->assertEquals(-101.4265391569997, $result->getCoordinates()->getLongitude(), '', 0.0001);
-        $this->assertEquals('Hannover, North Dakota, United States', $result->getStreetName());
+        $this->assertNull($result->getStreetName());
         $this->assertNull($result->getLocality());
         $this->assertCount(2, $result->getAdminLevels());
         $this->assertEquals('North Dakota', $result->getAdminLevels()->get(1)->getName());
@@ -228,7 +228,7 @@ class ArcGISOnlineTest extends TestCase
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(39.391768472000479, $result->getCoordinates()->getLatitude(), '', 0.0001);
         $this->assertEquals(-77.440257128999633, $result->getCoordinates()->getLongitude(), '', 0.0001);
-        $this->assertEquals('Hannover, Maryland, United States', $result->getStreetName());
+        $this->assertNull($result->getStreetName());
         $this->assertNull($result->getLocality());
         $this->assertCount(2, $result->getAdminLevels());
         $this->assertEquals('Maryland', $result->getAdminLevels()->get(1)->getName());
@@ -239,7 +239,7 @@ class ArcGISOnlineTest extends TestCase
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(53.174198173, $result->getCoordinates()->getLatitude(), '', 0.0001);
         $this->assertEquals(8.5069383810005, $result->getCoordinates()->getLongitude(), '', 0.0001);
-        $this->assertEquals('Hannöver, Niedersachsen, Deutschland', $result->getStreetName());
+        $this->assertNull($result->getStreetName());
         $this->assertNull($result->getLocality());
         $this->assertCount(1, $result->getAdminLevels());
         $this->assertEquals('Niedersachsen', $result->getAdminLevels()->get(1)->getName());
@@ -250,7 +250,7 @@ class ArcGISOnlineTest extends TestCase
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(-26.281805980999593, $result->getCoordinates()->getLatitude(), '', 0.0001);
         $this->assertEquals(-48.849389793999649, $result->getCoordinates()->getLongitude(), '', 0.0001);
-        $this->assertEquals('Hannover', $result->getStreetName());
+        $this->assertEquals('Rua Doutor João Colin', $result->getStreetName());
         $this->assertCount(2, $result->getAdminLevels());
         $this->assertEquals('Sul', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('BRA', $result->getCountry()->getCode());
