@@ -135,7 +135,7 @@ final class ReverseQuery
 
     /**
      * @param string $name
-     * @param null $default
+     * @param null   $default
      *
      * @return mixed
      */
