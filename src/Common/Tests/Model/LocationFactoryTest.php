@@ -61,12 +61,9 @@ class LocationFactoryTest extends TestCase
         $this->assertEquals('1st ave 1A', $address->getStreetName());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\CollectionIsEmpty
-     */
     public function testCreateFromEmptyArray()
     {
-        $address = LocationFactory::createLocation([]);
-        $this->assertInstanceOf(Location::class, $address);
+        $location = LocationFactory::createLocation([]);
+        $this->assertInstanceOf(Location::class, $location);
     }
 }
