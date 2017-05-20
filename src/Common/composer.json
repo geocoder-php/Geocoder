@@ -32,9 +32,10 @@
         "symfony/stopwatch": "If you want to use the TimedGeocoder"
     },
     "autoload": {
-        "psr-4": {
-            "Geocoder\\": ""
-        }
+        "psr-4": { "Geocoder\\": "" },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
     },
     "scripts": {
         "test": "vendor/bin/phpunit"

@@ -11,14 +11,18 @@
 namespace Geocoder\Tests\Dumper;
 
 use Geocoder\Dumper\Wkt;
+use Geocoder\Model\LocationFactory;
 use Geocoder\Tests\TestCase;
 
 /**
  * @author Jan Sorgalla <jsorgalla@googlemail.com>
  * @author William Durand <william.durand1@gmail.com>
  */
-class WktTest extends TestCase
+class WktTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var Wkt
+     */
     private $dumper;
 
     public function setUp()
@@ -28,7 +32,7 @@ class WktTest extends TestCase
 
     public function testDump()
     {
-        $address = $this->createEmptyAddress();
+        $address = LocationFactory::createLocation([]);
         $expected = sprintf('POINT(%F %F)', 0, 0);
         $result = $this->dumper->dump($address);
 
@@ -38,7 +42,7 @@ class WktTest extends TestCase
 
     public function testDumpWithData()
     {
-        $address = $this->createAddress([
+        $address = LocationFactory::createLocation([
             'latitude' => 48.8631507,
             'longitude' => 2.3889114,
         ]);

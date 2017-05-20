@@ -19,7 +19,7 @@ use Geocoder\Tests\TestCase;
  * @author Antoine Corcy <contact@sbin.dk>
  * @author William Durand <william.durand1@gmail.com>
  */
-class LocationFactoryTest extends TestCase
+class LocationFactoryTest extends \PHPUnit_Framework_TestCase
 {
     public function testCreateFromArray()
     {

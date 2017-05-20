@@ -21,7 +21,7 @@ use Geocoder\Provider\Provider;
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-class ProviderAggregatorTest extends TestCase
+class ProviderAggregatorTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var TestableGeocoder
@@ -132,11 +132,6 @@ class ProviderAggregatorTest extends TestCase
     public function testDefaultMaxResults()
     {
         $this->assertSame(Geocoder::DEFAULT_RESULT_LIMIT, $this->geocoder->getLimit());
-    }
-
-    private function getAddressMock()
-    {
-        return (new LocationFactory())->createFromArray([]);
     }
 }
 

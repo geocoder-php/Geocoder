@@ -11,13 +11,17 @@
 namespace Geocoder\Tests\Formatter;
 
 use Geocoder\Formatter\StringFormatter;
+use Geocoder\Model\LocationFactory;
 use Geocoder\Tests\TestCase;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-class StringFormatterTest extends TestCase
+class StringFormatterTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var StringFormatter
+     */
     private $formatter;
 
     public function setUp()
@@ -30,14 +34,14 @@ class StringFormatterTest extends TestCase
      */
     public function testFormat($data, $format, $expected)
     {
-        $address = $this->createAddress($data);
+        $address = LocationFactory::createLocation($data);
         $result = $this->formatter->format($address, $format);
 
         $this->assertTrue(is_string($result));
         $this->assertEquals($expected, $result);
     }
 
-    public static function dataProviderForTestFormat()
+    public function dataProviderForTestFormat()
     {
         return [
             [

@@ -11,14 +11,18 @@
 namespace Geocoder\Tests\Dumper;
 
 use Geocoder\Dumper\Kml;
+use Geocoder\Model\LocationFactory;
 use Geocoder\Tests\TestCase;
 
 /**
  * @author Jan Sorgalla <jsorgalla@googlemail.com>
  * @author William Durand <william.durand1@gmail.com>
  */
-class KmlTest extends TestCase
+class KmlTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var Kml
+     */
     private $dumper;
 
     public function setUp()
@@ -28,7 +32,7 @@ class KmlTest extends TestCase
 
     public function testDump()
     {
-        $address = $this->createEmptyAddress();
+        $address = LocationFactory::createLocation([]);
         $expected = <<<'KML'
 <?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2">
@@ -52,7 +56,7 @@ KML;
 
     public function testDumpWithData()
     {
-        $address = $this->createAddress([
+        $address = LocationFactory::createLocation([
             'latitude' => 48.8631507,
             'longitude' => 2.3889114,
             'locality' => 'Paris',
