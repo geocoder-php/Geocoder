@@ -27,8 +27,8 @@ class GoogleMapsTest extends BaseTestCase
 
     protected function getCacheDir()
     {
-        if (isset($_SERVER['RESPONSE_CACHE']) && false !== $_SERVER['RESPONSE_CACHE']) {
-            return $_SERVER['RESPONSE_CACHE'];
+        if (isset($_SERVER['USE_CACHED_RESPONSES']) && true === $_SERVER['USE_CACHED_RESPONSES']) {
+            return __DIR__.'/.cached_responses';
         }
 
         return null;
