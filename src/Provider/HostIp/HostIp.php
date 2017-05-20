@@ -70,15 +70,13 @@ final class HostIp extends AbstractHttpProvider implements Provider, IpAddressGe
     }
 
     /**
-     * @param string $query
+     * @param string $url
      *
      * @return Collection
      */
-    private function executeQuery($query)
+    private function executeQuery($url)
     {
-        $request = $this->getMessageFactory()->createRequest('GET', $query);
-        $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
-
+        $content = $this->getUrlContents($url);
         $data = json_decode($content, true);
 
         if (!$data) {

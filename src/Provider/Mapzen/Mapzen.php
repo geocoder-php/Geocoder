@@ -99,19 +99,13 @@ final class Mapzen extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * @param $query
+     * @param $url
      *
      * @return Collection
      */
-    private function executeQuery($query)
+    private function executeQuery($url)
     {
-        $request = $this->getMessageFactory()->createRequest('GET', $query);
-        $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
-
-        if (empty($content)) {
-            throw InvalidServerResponse::create($query);
-        }
-
+        $content = $this->getUrlContents($url);
         $json = json_decode($content, true);
 
         // See https://mapzen.com/documentation/search/api-keys-rate-limits/

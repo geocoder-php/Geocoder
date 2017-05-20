@@ -92,21 +92,19 @@ final class Yandex extends AbstractHttpProvider implements LocaleAwareGeocoder, 
     }
 
     /**
-     * @param string $query
+     * @param string $url
      * @param string $locale
      * @param int    $limit
      */
-    private function executeQuery($query, $locale, $limit)
+    private function executeQuery($url, $locale, $limit)
     {
         if (null !== $locale) {
-            $query = sprintf('%s&lang=%s', $query, str_replace('_', '-', $locale));
+            $url = sprintf('%s&lang=%s', $url, str_replace('_', '-', $locale));
         }
 
-        $query = sprintf('%s&results=%d', $query, $limit);
-
-        $request = $this->getMessageFactory()->createRequest('GET', $query);
-        $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
-        $json = (array) json_decode($content, true);
+        $url = sprintf('%s&results=%d', $url, $limit);
+        $content = $this->getUrlContents($url);
+        $json = json_decode($content, true);
 
         if (empty($json) || isset($json['error']) ||
             (isset($json['response']) && '0' === $json['response']['GeoObjectCollection']['metaDataProperty']['GeocoderResponseMetaData']['found'])

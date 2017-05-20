@@ -110,17 +110,11 @@ final class GeoIPs extends AbstractHttpProvider implements Provider, IpAddressGe
     }
 
     /**
-     * @param string $query
+     * @param string $url
      */
-    private function executeQuery($query)
+    private function executeQuery($url)
     {
-        $request = $this->getMessageFactory()->createRequest('GET', $query);
-        $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
-
-        if (empty($content)) {
-            throw InvalidServerResponse::create($query);
-        }
-
+        $content = $this->getUrlContents($url);
         $json = json_decode($content, true);
 
         if (isset($json['error'])) {
@@ -142,13 +136,13 @@ final class GeoIPs extends AbstractHttpProvider implements Provider, IpAddressGe
                         isset($json['error']['status']) ? ', '.$json['error']['status'] : '',
                         isset($json['error']['message']) ? ', '.$json['error']['message'] : '',
                         isset($json['error']['notes']) ? ', '.$json['error']['notes'] : '',
-                        $query
+                        $url
                     ));
             }
         }
 
         if (!is_array($json) || empty($json) || empty($json['response']) || empty($json['response']['code'])) {
-            throw InvalidServerResponse::create($query);
+            throw InvalidServerResponse::create($url);
         }
 
         $response = $json['response'];
@@ -164,7 +158,7 @@ final class GeoIPs extends AbstractHttpProvider implements Provider, IpAddressGe
                 throw new InvalidServerResponse(sprintf(
                     'The GeoIPs API returned unknown result code "%s" for query: "%s".',
                     $response['code'],
-                    $query
+                    $url
                 ));
         }
 

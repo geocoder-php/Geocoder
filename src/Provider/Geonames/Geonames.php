@@ -99,25 +99,19 @@ final class Geonames extends AbstractHttpProvider implements LocaleAwareGeocoder
     }
 
     /**
-     * @param string $query
+     * @param string $url
      * @param string $locale
      */
-    private function executeQuery($query, $locale)
+    private function executeQuery($url, $locale)
     {
         if (null !== $locale) {
             // Locale code transformation: for example from it_IT to it
-            $query = sprintf('%s&lang=%s', $query, substr($locale, 0, 2));
+            $url = sprintf('%s&lang=%s', $url, substr($locale, 0, 2));
         }
 
-        $request = $this->getMessageFactory()->createRequest('GET', $query);
-        $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
-
-        if (empty($content)) {
-            throw InvalidServerResponse::create($query);
-        }
-
+        $content = $this->getUrlContents($url);
         if (null === $json = json_decode($content)) {
-            throw InvalidServerResponse::create($query);
+            throw InvalidServerResponse::create($url);
         }
 
         if (isset($json->totalResultsCount) && empty($json->totalResultsCount)) {

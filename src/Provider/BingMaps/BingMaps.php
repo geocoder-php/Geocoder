@@ -107,13 +107,7 @@ final class BingMaps extends AbstractHttpProvider implements LocaleAwareGeocoder
             $url = sprintf('%s&culture=%s', $url, str_replace('_', '-', $locale));
         }
 
-        $request = $this->getMessageFactory()->createRequest('GET', $url);
-        $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
-
-        if (empty($content)) {
-            throw InvalidServerResponse::create($url);
-        }
-
+        $content = $this->getUrlContents($url);
         $json = json_decode($content);
 
         if (!isset($json->resourceSets[0]) || !isset($json->resourceSets[0]->resources)) {

@@ -105,20 +105,14 @@ final class MaxMind extends AbstractHttpProvider implements Provider, IpAddressG
     }
 
     /**
-     * @param string $query
+     * @param string $url
      *
      * @return Collection
      */
-    private function executeQuery($query)
+    private function executeQuery($url)
     {
-        $request = $this->getMessageFactory()->createRequest('GET', $query);
-        $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
         $fields = $this->fieldsForService($this->service);
-
-        if (null === $content || '' === $content) {
-            throw InvalidServerResponse::create($query);
-        }
-
+        $content = $this->getUrlContents($url);
         $data = str_getcsv($content);
 
         if (in_array(end($data), ['INVALID_LICENSE_KEY', 'LICENSE_REQUIRED'])) {
@@ -130,7 +124,7 @@ final class MaxMind extends AbstractHttpProvider implements Provider, IpAddressG
         }
 
         if (count($fields) !== count($data)) {
-            throw InvalidServerResponse::create($query);
+            throw InvalidServerResponse::create($url);
         }
 
         $data = array_combine($fields, $data);

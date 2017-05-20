@@ -448,24 +448,6 @@ XML;
         $provider->geocodeQuery(GeocodeQuery::create('Läntinen Pitkäkatu 35, Turku'));
     }
 
-    public function testReverseWithCoordinatesGetsNullContent()
-    {
-        $provider = Nominatim::withOpenStreetMapServer($this->getMockAdapterReturns(null));
-        $result = $provider->reverseQuery(ReverseQuery::fromCoordinates(60.4539471728726, 22.2567841926781));
-
-        $this->assertInstanceOf(Collection::class, $result);
-        $this->assertEquals(0, $result->count());
-    }
-
-    public function testReverseWithCoordinatesGetsEmptyContent()
-    {
-        $provider = Nominatim::withOpenStreetMapServer($this->getMockAdapterReturns('<error></error>'));
-        $result = $provider->reverseQuery(ReverseQuery::fromCoordinates(60.4539471728726, 22.2567841926781));
-
-        $this->assertInstanceOf(Collection::class, $result);
-        $this->assertEquals(0, $result->count());
-    }
-
     public function testReverseWithCoordinatesGetsError()
     {
         $errorXml = <<<'XML'

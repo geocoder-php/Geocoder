@@ -80,7 +80,7 @@ class MaxMindTest extends TestCase
      */
     public function testGeocodeWithRealIPv4AndNotSupportedService()
     {
-        $provider = new MaxMind($this->getMockAdapter(), 'api_key', 'foo');
+        $provider = new MaxMind($this->getMockAdapter($this->any()), 'api_key', 'foo');
         $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
@@ -90,7 +90,7 @@ class MaxMindTest extends TestCase
      */
     public function testGeocodeWithRealIPv6AndNotSupportedService()
     {
-        $provider = new MaxMind($this->getMockAdapter(), 'api_key', 12345);
+        $provider = new MaxMind($this->getMockAdapter($this->any()), 'api_key', 12345);
         $provider->geocodeQuery(GeocodeQuery::create('::ffff:74.200.247.59'));
     }
 

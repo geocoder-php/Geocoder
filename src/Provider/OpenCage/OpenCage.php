@@ -90,23 +90,17 @@ final class OpenCage extends AbstractHttpProvider implements LocaleAwareGeocoder
     }
 
     /**
-     * @param $query
+     * @param $url
      *
      * @return Collection
      */
-    private function executeQuery($query, $locale)
+    private function executeQuery($url, $locale)
     {
         if (null !== $locale) {
-            $query = sprintf('%s&language=%s', $query, $locale);
+            $url = sprintf('%s&language=%s', $url, $locale);
         }
 
-        $request = $this->getMessageFactory()->createRequest('GET', $query);
-        $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
-
-        if (empty($content)) {
-            throw InvalidServerResponse::create($query);
-        }
-
+        $content = $this->getUrlContents($url);
         $json = json_decode($content, true);
 
         // https://geocoder.opencagedata.com/api#codes

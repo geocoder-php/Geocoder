@@ -168,24 +168,18 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * @param string $query
+     * @param string $url
      * @param int    $limit
      */
-    private function executeQuery($query, $limit)
+    private function executeQuery($url, $limit)
     {
-        $query = $this->buildQuery($query, $limit);
-        $request = $this->getMessageFactory()->createRequest('GET', $query);
-        $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
-
-        if (empty($content)) {
-            throw InvalidServerResponse::create($query);
-        }
-
+        $url = $this->buildQuery($url, $limit);
+        $content = $this->getUrlContents($url);
         $json = json_decode($content);
 
         // API error
         if (!isset($json)) {
-            throw InvalidServerResponse::create($query);
+            throw InvalidServerResponse::create($url);
         }
 
         return $json;
