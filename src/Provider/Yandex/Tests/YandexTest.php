@@ -452,6 +452,5 @@ class YandexTest extends TestCase
 
         $first = $results->first();
         $this->assertEquals('метро Озерки', $first->getName());
-
     }
 }
