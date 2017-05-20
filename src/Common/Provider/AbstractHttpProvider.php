@@ -10,6 +10,9 @@
 
 namespace Geocoder\Provider;
 
+use Geocoder\Exception\InvalidCredentials;
+use Geocoder\Exception\InvalidServerResponse;
+use Geocoder\Exception\QuotaExceeded;
 use Http\Message\MessageFactory;
 use Http\Discovery\MessageFactoryDiscovery;
 use Http\Client\HttpClient;
@@ -37,6 +40,35 @@ abstract class AbstractHttpProvider extends AbstractProvider
     {
         $this->client = $client;
         $this->messageFactory = $factory;
+    }
+
+    /**
+     * Get URL and retrun contents.
+     *
+     * @param string $url
+     *
+     * @return string
+     */
+    protected function getUrlContents($url)
+    {
+        $request = $this->getMessageFactory()->createRequest('GET', $url);
+        $response = $this->getHttpClient()->sendRequest($request);
+
+        $statusCode = $response->getStatusCode();
+        if (401 === $statusCode) {
+            throw new InvalidCredentials();
+        } elseif (429 === $statusCode) {
+            throw new QuotaExceeded();
+        } elseif ($statusCode >= 300) {
+            throw InvalidServerResponse::create($url, $statusCode);
+        }
+
+        $body = (string) $response->getBody();
+        if (empty($body)) {
+            throw InvalidServerResponse::emptyResponse($url);
+        }
+
+        return $body;
     }
 
     /**

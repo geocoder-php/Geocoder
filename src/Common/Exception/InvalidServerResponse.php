@@ -17,8 +17,24 @@ namespace Geocoder\Exception;
  */
 class InvalidServerResponse extends \RuntimeException implements Exception
 {
-    public static function create($query)
+    /**
+     * @param string $query
+     * @param int    $code
+     *
+     * @return InvalidServerResponse
+     */
+    public static function create($query, $code = 0)
     {
-        return new self(sprintf('The geocoder server returned an invalid response for query "%s". We could not parse it.', $query));
+        return new self(sprintf('The geocoder server returned an invalid response (%d) for query "%s". We could not parse it.', $code, $query));
+    }
+
+    /**
+     * @param string $query
+     *
+     * @return InvalidServerResponse
+     */
+    public static function emptyResponse($query)
+    {
+        return new self(sprintf('The geocoder server returned an empty response for query "%s".', $query));
     }
 }
