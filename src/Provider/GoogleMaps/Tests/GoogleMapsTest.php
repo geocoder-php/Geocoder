@@ -12,12 +12,15 @@ namespace Geocoder\Provider\GoogleMaps\Tests;
 
 use Geocoder\Collection;
 use Geocoder\Exception\InvalidServerResponse;
+use Geocoder\IntegrationTest\CachedResponseClient;
 use Geocoder\Location;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Tests\TestCase;
 use Geocoder\Provider\GoogleMaps\GoogleMaps;
+use Http\Client\HttpClient;
 use Psr\Http\Message\RequestInterface;
+use Http\Client\Curl\Client as HttplugClient;
 
 class GoogleMapsTest extends TestCase
 {
@@ -25,6 +28,22 @@ class GoogleMapsTest extends TestCase
      * @var string
      */
     private $testAPIKey = 'fake_key';
+
+    /**
+     * @return HttpClient
+     */
+    protected function getAdapter($apiKey = null)
+    {
+        if ($this->useCache()) {
+            return new CachedResponseClient(
+                new HttplugClient(),
+                __DIR__.'/.cached_responses',
+                $apiKey
+            );
+        } else {
+            return new HttplugClient();
+        }
+    }
 
     public function testGetName()
     {

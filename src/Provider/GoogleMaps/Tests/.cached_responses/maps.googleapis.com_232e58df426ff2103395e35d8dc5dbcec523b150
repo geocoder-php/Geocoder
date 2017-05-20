@@ -1,4 +1,4 @@
-s:17280:"{
+s:17274:"{
    "results" : [
       {
          "address_components" : [
@@ -488,8 +488,8 @@ s:17280:"{
                }
             },
             "location" : {
-               "lat" : 38.855601,
-               "lng" : -77.35429479999999
+               "lat" : 39.1289725,
+               "lng" : -77.3783789
             },
             "location_type" : "APPROXIMATE",
             "viewport" : {

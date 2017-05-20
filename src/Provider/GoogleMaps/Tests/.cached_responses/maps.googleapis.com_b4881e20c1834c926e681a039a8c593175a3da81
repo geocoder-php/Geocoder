@@ -1,10 +1,10 @@
-s:17280:"{
+s:15348:"{
    "results" : [
       {
          "address_components" : [
             {
-               "long_name" : "1608",
-               "short_name" : "1608",
+               "long_name" : "1611",
+               "short_name" : "1611",
                "types" : [ "street_number" ]
             },
             {
@@ -38,35 +38,25 @@ s:17280:"{
                "types" : [ "postal_code" ]
             }
          ],
-         "formatted_address" : "1608 H St NW, Washington, DC 20006, USA",
+         "formatted_address" : "1611 H St NW, Washington, DC 20006, USA",
          "geometry" : {
-            "bounds" : {
-               "northeast" : {
-                  "lat" : 38.9002132,
-                  "lng" : -77.03668429999999
-               },
-               "southwest" : {
-                  "lat" : 38.9002132,
-                  "lng" : -77.0379497
-               }
-            },
             "location" : {
-               "lat" : 38.9001986,
-               "lng" : -77.036991
+               "lat" : 38.9003985,
+               "lng" : -77.03691619999999
             },
-            "location_type" : "RANGE_INTERPOLATED",
+            "location_type" : "ROOFTOP",
             "viewport" : {
                "northeast" : {
-                  "lat" : 38.90156218029149,
-                  "lng" : -77.03596801970849
+                  "lat" : 38.9017474802915,
+                  "lng" : -77.03556721970848
                },
                "southwest" : {
-                  "lat" : 38.8988642197085,
-                  "lng" : -77.0386659802915
+                  "lat" : 38.89904951970851,
+                  "lng" : -77.0382651802915
                }
             }
          },
-         "place_id" : "EicxNjA4IEggU3QgTlcsIFdhc2hpbmd0b24sIERDIDIwMDA2LCBVU0E",
+         "place_id" : "ChIJ9zgEPby3t4kRj7FMWkj9cTY",
          "types" : [ "street_address" ]
       },
       {
@@ -74,12 +64,7 @@ s:17280:"{
             {
                "long_name" : "H St NW @ Jackson Pl NW",
                "short_name" : "H St NW @ Jackson Pl NW",
-               "types" : [
-                  "bus_station",
-                  "establishment",
-                  "point_of_interest",
-                  "transit_station"
-               ]
+               "types" : [ "establishment", "point_of_interest" ]
             },
             {
                "long_name" : "Northwest Washington",
@@ -369,12 +354,7 @@ s:17280:"{
             {
                "long_name" : "District of Columbia",
                "short_name" : "DC",
-               "types" : [
-                  "administrative_area_level_1",
-                  "establishment",
-                  "point_of_interest",
-                  "political"
-               ]
+               "types" : [ "administrative_area_level_1", "political" ]
             },
             {
                "long_name" : "United States",
@@ -460,50 +440,6 @@ s:17280:"{
             }
          },
          "place_id" : "ChIJy25QE7lFtokRgaAnbc9iMr8",
-         "types" : [ "political" ]
-      },
-      {
-         "address_components" : [
-            {
-               "long_name" : "Washinton Metropolitan Area",
-               "short_name" : "Washinton Metropolitan Area",
-               "types" : [ "political" ]
-            },
-            {
-               "long_name" : "United States",
-               "short_name" : "US",
-               "types" : [ "country", "political" ]
-            }
-         ],
-         "formatted_address" : "Washinton Metropolitan Area, USA",
-         "geometry" : {
-            "bounds" : {
-               "northeast" : {
-                  "lat" : 39.720045,
-                  "lng" : -76.32190779999999
-               },
-               "southwest" : {
-                  "lat" : 37.991157,
-                  "lng" : -78.3866819
-               }
-            },
-            "location" : {
-               "lat" : 38.855601,
-               "lng" : -77.35429479999999
-            },
-            "location_type" : "APPROXIMATE",
-            "viewport" : {
-               "northeast" : {
-                  "lat" : 39.720045,
-                  "lng" : -76.32190779999999
-               },
-               "southwest" : {
-                  "lat" : 37.991157,
-                  "lng" : -78.3866819
-               }
-            }
-         },
-         "place_id" : "ChIJgUbYn4i3t4kRBwT_p0uw078",
          "types" : [ "political" ]
       },
       {

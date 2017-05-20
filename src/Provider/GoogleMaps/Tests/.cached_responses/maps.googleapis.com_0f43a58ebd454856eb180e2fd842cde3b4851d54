@@ -1,4 +1,4 @@
-s:9717:"{
+s:9699:"{
    "results" : [
       {
          "address_components" : [
@@ -64,7 +64,7 @@ s:9717:"{
             {
                "long_name" : "The Great Pyramid at Giza",
                "short_name" : "The Great Pyramid at Giza",
-               "types" : [ "establishment", "point_of_interest", "premise" ]
+               "types" : [ "establishment", "point_of_interest" ]
             },
             {
                "long_name" : "Al Haram",
@@ -248,7 +248,7 @@ s:9717:"{
             "location_type" : "APPROXIMATE",
             "viewport" : {
                "northeast" : {
-                  "lat" : 30.34039869999999,
+                  "lat" : 30.3397743,
                   "lng" : 31.9402533
                },
                "southwest" : {

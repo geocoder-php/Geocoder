@@ -1,4 +1,4 @@
-s:2191:"{
+s:2187:"{
    "results" : [
       {
          "address_components" : [
@@ -9,7 +9,7 @@ s:2191:"{
             },
             {
                "long_name" : "Rue Saint Paul Est",
-               "short_name" : "Rue Saint Paul Est",
+               "short_name" : "Rue Saint Paul E",
                "types" : [ "route" ]
             },
             {
@@ -43,7 +43,7 @@ s:2191:"{
                "types" : [ "postal_code" ]
             }
          ],
-         "formatted_address" : "367 Rue Saint Paul Est, Montréal, QC H2Y 1H3, Canada",
+         "formatted_address" : "367 Rue Saint Paul E, Montréal, QC H2Y 1H3, Canada",
          "geometry" : {
             "location" : {
                "lat" : 45.5094724,
