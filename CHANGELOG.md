@@ -15,6 +15,7 @@ CHANGELOG
 * Changed: `Location::getBounds` will return null or a `Bounds` object with coordinates data. It will never return `Bounds` without data. 
 * Changed: Support for unsecure transfer protocol was removed. The providers only support HTTPS.
 * Changed: Using PSR-4 instead of PSR-0 for autoloading.  
+* Fixed: ArcGISOnline's street address should not contain city and country. 
 * Removed: `AdminLevel::toString` in favor for `AdminLevel::__toString`.
 * Removed: `Country::toString` in favor for `Country::__toString`.
 * Removed: `Address::getCountryCode` in favor for `Address::getCountry()->getCode()`.

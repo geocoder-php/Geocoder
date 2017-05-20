@@ -79,7 +79,7 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
             $data = $location->feature->attributes;
 
             $coordinates = (array) $location->feature->geometry;
-            $streetName = !empty($data->Match_addr) ? $data->Match_addr : null;
+            $streetName = !empty($data->StAddr) ? $data->StAddr : null;
             $streetNumber = !empty($data->AddNum) ? $data->AddNum : null;
             $city = !empty($data->City) ? $data->City : null;
             $zipcode = !empty($data->Postal) ? $data->Postal : null;
