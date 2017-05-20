@@ -6,6 +6,11 @@ addons:
         - parallel
         - libgeoip-dev
 
+branches:
+    except:
+        - /^analysis-.*$/
+        - /^patch-.*$/
+
 env:
     global:
         - MIN_PHP=5.5.9
