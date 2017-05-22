@@ -184,6 +184,102 @@ class Address implements Location
     }
 
     /**
+     * Create an Address with an array. Useful for testing.
+     *
+     * @param array $data
+     *
+     * @return static
+     */
+    public static function createFromArray(array $data)
+    {
+        $defaults = [
+            'latitude' => null,
+            'longitude' => null,
+            'bounds' => [
+                'south' => null,
+                'west' => null,
+                'north' => null,
+                'east' => null,
+            ],
+            'streetNumber' => null,
+            'streetName' => null,
+            'locality' => null,
+            'postalCode' => null,
+            'subLocality' => null,
+            'adminLevels' => [],
+            'country' => null,
+            'countryCode' => null,
+            'timezone' => null,
+        ];
+
+        $data = array_merge($defaults, $data);
+
+        $adminLevels = [];
+        foreach ($data['adminLevels'] as $adminLevel) {
+            $adminLevels[] = new AdminLevel(
+                isset($adminLevel['level']) ? $adminLevel : null,
+                isset($adminLevel['name']) ? $adminLevel : null,
+                isset($adminLevel['code']) ? $adminLevel : null
+            );
+        }
+
+        return new static(
+            self::createCoordinates(
+                $data['latitude'],
+                $data['longitude']
+            ),
+            self::createBounds(
+                $data['bounds']['south'],
+                $data['bounds']['west'],
+                $data['bounds']['north'],
+                $data['bounds']['east']
+            ),
+            $data['streetNumber'],
+            $data['streetName'],
+            $data['postalCode'],
+            $data['locality'],
+            $data['subLocality'],
+            new AdminLevelCollection($adminLevels),
+            new Country(
+                $data['country'],
+                $data['countryCode']
+            ),
+            $data['timezone']
+        );
+    }
+
+    /**
+     * @param float $latitude
+     * @param float $longitude
+     *
+     * @return Coordinates|null
+     */
+    private static function createCoordinates($latitude, $longitude)
+    {
+        if (null === $latitude || null === $longitude) {
+            return null;
+        }
+
+        return new Coordinates((float) $latitude, (float) $longitude);
+    }
+
+    /**
+     * @param float $south
+     * @param float $west
+     * @param float $north
+     *
+     * @return Bounds|null
+     */
+    private static function createBounds($south, $west, $north, $east)
+    {
+        if (null === $south || null === $west || null === $north || null === $east) {
+            return null;
+        }
+
+        return new Bounds((float) $south, (float) $west, (float) $north, (float) $east);
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function toArray()
