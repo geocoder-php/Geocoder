@@ -131,6 +131,10 @@ final class BingMaps extends AbstractHttpProvider implements LocaleAwareGeocoder
 
             $streetNumber = null;
             $streetName = property_exists($item->address, 'addressLine') ? (string) $item->address->addressLine : '';
+            if (empty($streetName)) {
+                $streetName = property_exists($item->address, 'formattedAddress') ? (string) $item->address->formattedAddress : '';
+                $streetName = substr($streetName, 0, strpos($streetName, ','));
+            }
             $zipcode = property_exists($item->address, 'postalCode') ? (string) $item->address->postalCode : '';
             $city = property_exists($item->address, 'locality') ? (string) $item->address->locality : '';
             $country = property_exists($item->address, 'countryRegion') ? (string) $item->address->countryRegion : '';
