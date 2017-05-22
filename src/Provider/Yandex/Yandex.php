@@ -12,6 +12,8 @@ namespace Geocoder\Provider\Yandex;
 
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Model\AddressCollection;
+use Geocoder\Model\LocationBuilder;
+use Geocoder\Provider\Yandex\Model\YandexAddress;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\AbstractHttpProvider;
@@ -114,10 +116,11 @@ final class Yandex extends AbstractHttpProvider implements LocaleAwareGeocoder, 
 
         $data = $json['response']['GeoObjectCollection']['featureMember'];
 
-        $results = [];
+        $locations = [];
         foreach ($data as $item) {
+            $builder = new LocationBuilder();
             $bounds = null;
-            $details = ['pos' => ' '];
+            $flatArray = ['pos' => ' '];
 
             array_walk_recursive(
                 $item['GeoObject'],
@@ -125,46 +128,45 @@ final class Yandex extends AbstractHttpProvider implements LocaleAwareGeocoder, 
                 /**
                  * @param string $value
                  */
-                function ($value, $key) use (&$details) {
-                    $details[$key] = $value;
+                function ($value, $key) use (&$flatArray) {
+                    $flatArray[$key] = $value;
                 }
             );
 
-            if (!empty($details['lowerCorner'])) {
-                $coordinates = explode(' ', $details['lowerCorner']);
-                $bounds['south'] = (float) $coordinates[1];
-                $bounds['west'] = (float) $coordinates[0];
+            if (!empty($flatArray['lowerCorner']) && !empty($flatArray['upperCorner'])) {
+                $lowerCorner = explode(' ', $flatArray['lowerCorner']);
+                $upperCorner = explode(' ', $flatArray['upperCorner']);
+                $builder->setBounds(
+                    (float) $lowerCorner[1],
+                    (float) $lowerCorner[0],
+                    (float) $upperCorner[1],
+                    (float) $upperCorner[0]
+                );
             }
 
-            if (!empty($details['upperCorner'])) {
-                $coordinates = explode(' ', $details['upperCorner']);
-                $bounds['north'] = (float) $coordinates[1];
-                $bounds['east'] = (float) $coordinates[0];
-            }
+            $coordinates = explode(' ', $flatArray['pos']);
+            $builder->setCoordinates((float) $coordinates[1], (float) $coordinates[0]);
 
-            $coordinates = explode(' ', $details['pos']);
-
-            $adminLevels = [];
-            foreach (['AdministrativeAreaName', 'SubAdministrativeAreaName'] as $i => $detail) {
-                if (isset($details[$detail])) {
-                    $adminLevels[] = ['name' => $details[$detail], 'level' => $i + 1];
+            foreach (['AdministrativeAreaName', 'SubAdministrativeAreaName'] as $i => $name) {
+                if (isset($flatArray[$name])) {
+                    $builder->addAdminLevel($i + 1, $flatArray[$name], null);
                 }
             }
 
-            $results[] = array_merge($this->getDefaults(), [
-                'latitude' => (float) $coordinates[1],
-                'longitude' => (float) $coordinates[0],
-                'bounds' => $bounds,
-                'streetNumber' => isset($details['PremiseNumber']) ? $details['PremiseNumber'] : null,
-                'streetName' => isset($details['ThoroughfareName']) ? $details['ThoroughfareName'] : null,
-                'subLocality' => isset($details['DependentLocalityName']) ? $details['DependentLocalityName'] : null,
-                'locality' => isset($details['LocalityName']) ? $details['LocalityName'] : null,
-                'adminLevels' => $adminLevels,
-                'country' => isset($details['CountryName']) ? $details['CountryName'] : null,
-                'countryCode' => isset($details['CountryNameCode']) ? $details['CountryNameCode'] : null,
-            ]);
+            $builder->setStreetNumber(isset($flatArray['PremiseNumber']) ? $flatArray['PremiseNumber'] : null);
+            $builder->setStreetName(isset($flatArray['ThoroughfareName']) ? $flatArray['ThoroughfareName'] : null);
+            $builder->setSubLocality(isset($flatArray['DependentLocalityName']) ? $flatArray['DependentLocalityName'] : null);
+            $builder->setLocality(isset($flatArray['LocalityName']) ? $flatArray['LocalityName'] : null);
+            $builder->setCountry(isset($flatArray['CountryName']) ? $flatArray['CountryName'] : null);
+            $builder->setCountryCode(isset($flatArray['CountryNameCode']) ? $flatArray['CountryNameCode'] : null);
+
+            /** @var YandexAddress $location */
+            $location = $builder->build(YandexAddress::class);
+            $location->setPrecision(isset($flatArray['precision']) ? $flatArray['precision'] : null);
+            $location->setName(isset($flatArray['name']) ? $flatArray['name'] : null);
+            $locations[] = $location;
         }
 
-        return $this->returnResults($results);
+        return new AddressCollection($locations);
     }
 }

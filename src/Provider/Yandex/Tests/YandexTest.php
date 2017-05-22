@@ -399,4 +399,13 @@ class YandexTest extends TestCase
         $this->assertNull($result->getAdminLevels()->get(1)->getCode());
         $this->assertNull($result->getTimezone());
     }
+
+    public function testReverseMetroStationToGetName()
+    {
+        $provider = new Yandex($this->getAdapter(), 'metro');
+        $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(60.036843, 30.324285));
+
+        $first = $results->first();
+        $this->assertEquals('метро Озерки', $first->getName());
+    }
 }
