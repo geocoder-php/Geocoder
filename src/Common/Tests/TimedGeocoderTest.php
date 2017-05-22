@@ -12,9 +12,10 @@ namespace Geocoder\Tests;
 
 use Geocoder\Provider\Provider;
 use Geocoder\TimedGeocoder;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Stopwatch\Stopwatch;
 
-class TimedGeocoderTest extends \PHPUnit_Framework_TestCase
+class TimedGeocoderTest extends TestCase
 {
     /**
      * @var Stopwatch

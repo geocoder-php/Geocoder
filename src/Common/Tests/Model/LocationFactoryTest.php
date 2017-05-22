@@ -13,12 +13,13 @@ namespace Geocoder\Tests\Model;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Model\LocationFactory;
 use Geocoder\Location;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author Antoine Corcy <contact@sbin.dk>
  * @author William Durand <william.durand1@gmail.com>
  */
-class LocationFactoryTest extends \PHPUnit_Framework_TestCase
+class LocationFactoryTest extends TestCase
 {
     public function testCreateFromArray()
     {

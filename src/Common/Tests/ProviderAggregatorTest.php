@@ -16,11 +16,12 @@ use Geocoder\Query\ReverseQuery;
 use Geocoder\ProviderAggregator;
 use Geocoder\Provider\LocaleAwareGeocoder;
 use Geocoder\Provider\Provider;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-class ProviderAggregatorTest extends \PHPUnit_Framework_TestCase
+class ProviderAggregatorTest extends TestCase
 {
     /**
      * @var TestableGeocoder

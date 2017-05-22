@@ -12,11 +12,12 @@ namespace Geocoder\Tests\Dumper;
 
 use Geocoder\Dumper\GeoArray;
 use Geocoder\Model\LocationFactory;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author Tomas Norkūnas <norkunas.tom@gmail.com>
  */
-class GeoArrayTest extends \PHPUnit_Framework_TestCase
+class GeoArrayTest extends TestCase
 {
     /**
      * @var GeoArray

@@ -12,11 +12,12 @@ namespace Geocoder\Tests\Formatter;
 
 use Geocoder\Formatter\StringFormatter;
 use Geocoder\Model\LocationFactory;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-class StringFormatterTest extends \PHPUnit_Framework_TestCase
+class StringFormatterTest extends TestCase
 {
     /**
      * @var StringFormatter

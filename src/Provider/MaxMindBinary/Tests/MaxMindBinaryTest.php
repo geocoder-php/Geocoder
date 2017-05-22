@@ -29,11 +29,11 @@ class MaxMindBinaryTest extends TestCase
     public static function setUpBeforeClass()
     {
         if (false == function_exists('geoip_open')) {
-            throw new \PHPUnit_Framework_SkippedTestError('The maxmind\'s official lib required to run these tests.');
+            self::markTestSkipped('The maxmind\'s official lib required to run these tests.');
         }
 
         if (false == function_exists('GeoIP_record_by_addr')) {
-            throw new \PHPUnit_Framework_SkippedTestError('The maxmind\'s official lib required to run these tests.');
+            self::markTestSkipped('The maxmind\'s official lib required to run these tests.');
         }
     }
 
