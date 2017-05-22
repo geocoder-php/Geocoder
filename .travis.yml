@@ -25,11 +25,9 @@ matrix:
           env: deps="low"
         - php: 7.0
         - php: 7.1
-        - php: hhvm
 
 before_install:
-    - if [ "$TRAVIS_PHP_VERSION" != "hhvm" && "$TRAVIS_PHP_VERSION" != "7.0" ]; then pecl install geoip; fi
-    - if [ "$TRAVIS_PHP_VERSION" == "7.0" ]; then composer require "geoip/geoip"; fi
+    - composer require "geoip/geoip" --no-update
     - |
       # General configuration
       stty cols 120
@@ -54,12 +52,8 @@ before_install:
       COMPONENTS=$(find src -mindepth 2 -type f -name phpunit.xml.dist -printf '%h\n')
 
       # php.ini configuration
-      if [[ $PHP = hhvm* ]]; then
-          INI=/etc/hhvm/php.ini
-      else
-          INI=~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
-          phpenv config-rm xdebug.ini || echo "xdebug not available"
-      fi
+      INI=~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
+      phpenv config-rm xdebug.ini || echo "xdebug not available"
       echo memory_limit = -1 >> $INI
 
 install:
@@ -76,8 +70,6 @@ install:
             # Test the PhpUnit bridge on PHP 5.5, using the original phpunit script
             tfold src/Symfony/Bridge/PhpUnit \
             "cd src/Symfony/Bridge/PhpUnit && wget https://phar.phpunit.de/phpunit-4.8.phar && phpenv global 5.3 && composer update --no-progress --ansi && php phpunit-4.8.phar"
-        elif [[ $PHP = hhvm* ]]; then
-            $PHPUNIT --exclude-group benchmark,intl-data
         else
             echo "$COMPONENTS" | parallel --gnu "tfold {} $PHPUNIT_X {}"
             tfold tty-group $PHPUNIT --group tty
