@@ -27,7 +27,7 @@ final class GeocodeQuery
     private $text;
 
     /**
-     * @var Bounds
+     * @var Bounds|null
      */
     private $bounds;
 
@@ -132,7 +132,7 @@ final class GeocodeQuery
     }
 
     /**
-     * @return Bounds
+     * @return Bounds|null
      */
     public function getBounds()
     {
