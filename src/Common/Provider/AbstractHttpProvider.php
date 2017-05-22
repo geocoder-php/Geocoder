@@ -43,11 +43,13 @@ abstract class AbstractHttpProvider extends AbstractProvider
     }
 
     /**
-     * Get URL and retrun contents.
+     * Get URL and return contents. If content is empty, an exception will be thrown.
      *
      * @param string $url
      *
      * @return string
+     *
+     * @throws InvalidServerResponse
      */
     protected function getUrlContents($url)
     {

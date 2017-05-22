@@ -11,7 +11,6 @@
 namespace Geocoder\Provider\MapQuest;
 
 use Geocoder\Exception\InvalidCredentials;
-use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
@@ -125,17 +124,11 @@ final class MapQuest extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * @param string $query
+     * @param string $url
      */
-    private function executeQuery($query)
+    private function executeQuery($url)
     {
-        $request = $this->getMessageFactory()->createRequest('GET', $query);
-        $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
-
-        if (empty($content)) {
-            throw InvalidServerResponse::create($query);
-        }
-
+        $content = $this->getUrlContents($url);
         $json = json_decode($content, true);
 
         if (!isset($json['results']) || empty($json['results'])) {

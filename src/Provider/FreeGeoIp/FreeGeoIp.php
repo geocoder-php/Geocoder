@@ -10,7 +10,6 @@
 
 namespace Geocoder\Provider\FreeGeoIp;
 
-use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Collection;
 use Geocoder\Model\AddressCollection;
@@ -66,20 +65,14 @@ final class FreeGeoIp extends AbstractHttpProvider implements Provider, IpAddres
     }
 
     /**
-     * @param string $query
+     * @param string $url
      *
      * @return Collection
      */
-    private function executeQuery($query)
+    private function executeQuery($url)
     {
-        $request = $this->getMessageFactory()->createRequest('GET', $query);
-        $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
-
-        if (empty($content)) {
-            throw InvalidServerResponse::create($query);
-        }
-
-        $data = (array) json_decode($content);
+        $content = $this->getUrlContents($url);
+        $data = json_decode($content, true);
 
         if (empty($data)) {
             return new AddressCollection([]);

@@ -10,7 +10,6 @@
 
 namespace Geocoder\Provider\HostIp\Tests;
 
-use Geocoder\Collection;
 use Geocoder\Location;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
@@ -64,24 +63,6 @@ class HostIpTest extends TestCase
     {
         $provider = new HostIp($this->getMockAdapter($this->never()));
         $provider->geocodeQuery(GeocodeQuery::create('::1'));
-    }
-
-    public function testGeocodeWithRealIPv4GetsNullContent()
-    {
-        $provider = new HostIp($this->getMockAdapterReturns(null));
-        $result = $provider->geocodeQuery(GeocodeQuery::create('88.188.221.14'));
-
-        $this->assertInstanceOf(Collection::class, $result);
-        $this->assertEquals(0, $result->count());
-    }
-
-    public function testGeocodeWithRealIPv4GetsEmptyContent()
-    {
-        $provider = new HostIp($this->getMockAdapterReturns(''));
-        $result = $provider->geocodeQuery(GeocodeQuery::create('88.188.221.14'));
-
-        $this->assertInstanceOf(Collection::class, $result);
-        $this->assertEquals(0, $result->count());
     }
 
     public function testGeocodeWithRealIPv4()

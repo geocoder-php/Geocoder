@@ -57,24 +57,6 @@ class YandexTest extends TestCase
         $this->assertEquals(0, $result->count());
     }
 
-    public function testGeocodeWithInvalidData()
-    {
-        $provider = new Yandex($this->getMockAdapter());
-        $result = $provider->geocodeQuery(GeocodeQuery::create('foobar'));
-
-        $this->assertInstanceOf(Collection::class, $result);
-        $this->assertEquals(0, $result->count());
-    }
-
-    public function testGeocodeWithAddressGetsNullContent()
-    {
-        $provider = new Yandex($this->getMockAdapterReturns(null));
-        $result = $provider->geocodeQuery(GeocodeQuery::create('Kabasakal Caddesi, Istanbul, Turkey'));
-
-        $this->assertInstanceOf(Collection::class, $result);
-        $this->assertEquals(0, $result->count());
-    }
-
     public function testGeocodeWithFakeAddress()
     {
         $provider = new Yandex($this->getAdapter());
@@ -240,33 +222,6 @@ class YandexTest extends TestCase
         $this->assertNull($result->getPostalCode());
         $this->assertNull($result->getSubLocality());
         $this->assertNull($result->getTimezone());
-    }
-
-    public function testReverse()
-    {
-        $provider = new Yandex($this->getMockAdapter());
-        $result = $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
-
-        $this->assertInstanceOf(Collection::class, $result);
-        $this->assertEquals(0, $result->count());
-    }
-
-    public function testReverseWithInvalidData()
-    {
-        $provider = new Yandex($this->getMockAdapter());
-        $result = $provider->reverseQuery(ReverseQuery::fromCoordinates('foo', 'bar'));
-
-        $this->assertInstanceOf(Collection::class, $result);
-        $this->assertEquals(0, $result->count());
-    }
-
-    public function testReverseWithAddressGetsNullContent()
-    {
-        $provider = new Yandex($this->getMockAdapterReturns(null));
-        $result = $provider->reverseQuery(ReverseQuery::fromCoordinates(48.863216489553, 2.388771995902061));
-
-        $this->assertInstanceOf(Collection::class, $result);
-        $this->assertEquals(0, $result->count());
     }
 
     public function testReverseWithRealCoordinates()

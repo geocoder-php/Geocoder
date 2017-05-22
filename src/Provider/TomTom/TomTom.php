@@ -98,19 +98,17 @@ final class TomTom extends AbstractHttpProvider implements LocaleAwareGeocoder, 
     }
 
     /**
-     * @param string $query
+     * @param string $url
      */
-    private function executeQuery($query, $locale)
+    private function executeQuery($url, $locale)
     {
         if (null !== $locale) {
             // Supported 2- character values are de, en, es, fr, it, nl, pl, pt, and sv.
             // Equivalent 3-character values are GER, ENG, SPA, FRE, ITA, DUT, POL, POR, and SWE.
-            $query = sprintf('%s&language=%s', $query, substr($locale, 0, 2));
+            $url = sprintf('%s&language=%s', $url, substr($locale, 0, 2));
         }
 
-        $request = $this->getMessageFactory()->createRequest('GET', $query);
-        $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
-
+        $content = $this->getUrlContents($url);
         if (false !== stripos($content, 'Developer Inactive')) {
             throw new InvalidCredentials('Map API Key provided is not valid.');
         }
@@ -118,7 +116,7 @@ final class TomTom extends AbstractHttpProvider implements LocaleAwareGeocoder, 
         try {
             $xml = new \SimpleXmlElement($content);
         } catch (\Exception $e) {
-            throw InvalidServerResponse::create($query);
+            throw InvalidServerResponse::create($url);
         }
 
         $attributes = $xml->attributes();

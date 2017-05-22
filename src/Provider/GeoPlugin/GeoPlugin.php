@@ -69,13 +69,7 @@ final class GeoPlugin extends AbstractHttpProvider implements Provider, IpAddres
      */
     private function executeQuery($url)
     {
-        $request = $this->getMessageFactory()->createRequest('GET', $url);
-        $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
-
-        if (empty($content)) {
-            throw InvalidServerResponse::create($url);
-        }
-
+        $content = $this->getUrlContents($url);
         $json = json_decode($content, true);
 
         if (!is_array($json) || !count($json)) {

@@ -12,7 +12,6 @@ namespace Geocoder\Provider\IpInfoDb;
 
 use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\InvalidCredentials;
-use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Collection;
 use Geocoder\Model\AddressCollection;
@@ -122,20 +121,14 @@ final class IpInfoDb extends AbstractHttpProvider implements Provider, IpAddress
     }
 
     /**
-     * @param string $query
+     * @param string $url
      *
      * @return Collection
      */
-    private function executeQuery($query)
+    private function executeQuery($url)
     {
-        $request = $this->getMessageFactory()->createRequest('GET', $query);
-        $content = (string) $this->getHttpClient()->sendRequest($request)->getBody();
-
-        if (empty($content)) {
-            throw InvalidServerResponse::create($query);
-        }
-
-        $data = (array) json_decode($content);
+        $content = $this->getUrlContents($url);
+        $data = json_decode($content, true);
 
         if (empty($data) || 'OK' !== $data['statusCode']) {
             return new AddressCollection([]);
