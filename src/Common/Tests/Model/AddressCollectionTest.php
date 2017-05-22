@@ -11,11 +11,12 @@
 namespace Geocoder\Tests\Model;
 
 use Geocoder\Model\AddressCollection;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-class AddressCollectionTest extends \PHPUnit_Framework_TestCase
+class AddressCollectionTest extends TestCase
 {
     /**
      * @expectedException \Geocoder\Exception\CollectionIsEmpty

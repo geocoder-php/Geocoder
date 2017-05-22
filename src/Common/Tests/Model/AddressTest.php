@@ -12,11 +12,12 @@ namespace Geocoder\Tests\Model;
 
 use Geocoder\Model\Address;
 use Geocoder\Model\LocationFactory;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author Antoine Lemaire <lemaireantoine@hotmail.com>
  */
-class AddressTest extends \PHPUnit_Framework_TestCase
+class AddressTest extends TestCase
 {
     public function testDumpEmptyAddress()
     {

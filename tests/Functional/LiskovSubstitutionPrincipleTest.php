@@ -29,14 +29,24 @@ use Geocoder\Provider\Provider;
 use Geocoder\Tests\CachedResponseClient;
 use Http\Client\HttpClient;
 use Http\Client\Curl\Client as HttplugClient;
+use Http\Discovery\ClassDiscovery;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Test all adapters and make sure they provide the similar result.
  *
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-class LiskovSubstitutionPrincipleTest extends \PHPUnit_Framework_TestCase
+class LiskovSubstitutionPrincipleTest extends TestCase
 {
+    public function __construct($name = null, array $data = [], $dataName = '')
+    {
+        ClassDiscovery::prependStrategy('\Nyholm\Psr7\Httplug\DiscoveryStrategy');
+
+        parent::__construct($name, $data, $dataName);
+    }
+
+
     /**
      * @param Provider $provider
      * @dataProvider getWorldWideProvider

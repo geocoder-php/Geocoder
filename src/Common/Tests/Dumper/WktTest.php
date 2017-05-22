@@ -12,12 +12,13 @@ namespace Geocoder\Tests\Dumper;
 
 use Geocoder\Dumper\Wkt;
 use Geocoder\Model\LocationFactory;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author Jan Sorgalla <jsorgalla@googlemail.com>
  * @author William Durand <william.durand1@gmail.com>
  */
-class WktTest extends \PHPUnit_Framework_TestCase
+class WktTest extends TestCase
 {
     /**
      * @var Wkt

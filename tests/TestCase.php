@@ -11,10 +11,11 @@
 namespace Geocoder\Tests;
 
 use Geocoder\Model\LocationFactory;
-use GuzzleHttp\Psr7\Response;
 use Http\Client\HttpClient;
+use Http\Discovery\ClassDiscovery;
 use Http\Mock\Client as MockClient;
 use Http\Client\Curl\Client as HttplugClient;
+use Nyholm\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -23,8 +24,14 @@ use Psr\Http\Message\ResponseInterface;
  *
  * @deprecated Use geocoder-php/provider-integration-tests instead
  */
-abstract class TestCase extends \PHPUnit_Framework_TestCase
+abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
+    public static function setUpBeforeClass()
+    {
+        parent::setUpBeforeClass();
+        ClassDiscovery::prependStrategy('\Nyholm\Psr7\Httplug\DiscoveryStrategy');
+    }
+
     /**
      * @param null|object $expects
      *

@@ -13,11 +13,12 @@ namespace Geocoder\Tests\Dumper;
 use Geocoder\Geocoder;
 use Geocoder\Dumper\Gpx;
 use Geocoder\Model\LocationFactory;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-class GpxTest extends \PHPUnit_Framework_TestCase
+class GpxTest extends TestCase
 {
     /**
      * @var Gpx
