@@ -46,7 +46,6 @@ class LiskovSubstitutionPrincipleTest extends TestCase
         parent::__construct($name, $data, $dataName);
     }
 
-
     /**
      * @param Provider $provider
      * @dataProvider getWorldWideProvider
