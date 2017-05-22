@@ -19,6 +19,10 @@ use Http\Client\HttpClient;
  */
 class IntegrationTest extends ProviderIntegrationTest
 {
+    protected $skippedTests = [
+        'testGeocodeQuery' => 'Bing classifies this as Landmarks. They do not have addresses. ',
+    ];
+
     protected function createProvider(HttpClient $httpClient)
     {
         return new BingMaps($httpClient, $this->getApiKey());
