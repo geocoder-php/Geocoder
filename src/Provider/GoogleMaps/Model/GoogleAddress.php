@@ -12,7 +12,10 @@ namespace Geocoder\Provider\GoogleMaps\Model;
 
 use Geocoder\Model\Address;
 
-class GoogleAddress extends Address
+/**
+ * @author Tobias Nyholm <tobias.nyholm@gmail.com>
+ */
+final class GoogleAddress extends Address
 {
     /**
      * @var string|null

@@ -15,7 +15,7 @@ use Geocoder\Model\Address;
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-class YandexAddress extends Address
+final class YandexAddress extends Address
 {
     /**
      * @var string|null
