@@ -82,14 +82,14 @@ class Address implements Location
     public function __construct(
         Coordinates $coordinates = null,
         Bounds $bounds = null,
-        $streetNumber = null,
-        $streetName = null,
-        $postalCode = null,
-        $locality = null,
-        $subLocality = null,
+        string $streetNumber = null,
+        string $streetName = null,
+        string $postalCode = null,
+        string $locality = null,
+        string $subLocality = null,
         AdminLevelCollection $adminLevels = null,
         Country $country = null,
-        $timezone = null
+        string $timezone = null
     ) {
         $this->coordinates = $coordinates;
         $this->bounds = $bounds;
@@ -162,7 +162,7 @@ class Address implements Location
     /**
      * {@inheritdoc}
      */
-    public function getAdminLevels()
+    public function getAdminLevels(): AdminLevelCollection
     {
         return $this->adminLevels;
     }
@@ -282,7 +282,7 @@ class Address implements Location
     /**
      * {@inheritdoc}
      */
-    public function toArray()
+    public function toArray(): array
     {
         $adminLevels = [];
         foreach ($this->adminLevels as $adminLevel) {

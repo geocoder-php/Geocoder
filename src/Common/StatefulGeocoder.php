@@ -55,7 +55,7 @@ class StatefulGeocoder implements Geocoder, LocaleAwareGeocoder
     /**
      * {@inheritdoc}
      */
-    public function geocode($value)
+    public function geocode($value): Collection
     {
         $query = GeocodeQuery::create($value)
             ->withLimit($this->limit);
@@ -74,7 +74,7 @@ class StatefulGeocoder implements Geocoder, LocaleAwareGeocoder
     /**
      * {@inheritdoc}
      */
-    public function reverse($latitude, $longitude)
+    public function reverse($latitude, $longitude): Collection
     {
         $query = ReverseQuery::fromCoordinates($latitude, $longitude)
             ->withLimit($this->limit);

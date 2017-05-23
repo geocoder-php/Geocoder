@@ -80,7 +80,7 @@ interface Location
      *
      * @return AdminLevelCollection
      */
-    public function getAdminLevels();
+    public function getAdminLevels(): AdminLevelCollection;
 
     /**
      * Returns the country value object.
@@ -103,5 +103,5 @@ interface Location
      *
      * @return array
      */
-    public function toArray();
+    public function toArray(): array;
 }
