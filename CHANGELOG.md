@@ -3,6 +3,7 @@ CHANGELOG
 
 ### 4.0.0 (2016-xx-xx)
 
+* Dropped support for PHP < 7
 * Introduced `GeocodeQuery` and `ReverseQuery`. 
 * `Provider` and `Geocoder` interfaces has been updated to use query objects
 * All providers are stateless and immutable. 
