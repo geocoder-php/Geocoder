@@ -10,17 +10,26 @@
 
 namespace Geocoder\Provider\BingMaps\Tests;
 
+use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Location;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Tests\TestCase;
 use Geocoder\Provider\BingMaps\BingMaps;
 
-class BingMapsTest extends TestCase
+class BingMapsTest extends BaseTestCase
 {
+    protected function getCacheDir()
+    {
+        if (isset($_SERVER['USE_CACHED_RESPONSES']) && true === $_SERVER['USE_CACHED_RESPONSES']) {
+            return __DIR__.'/.cached_responses';
+        }
+
+        return null;
+    }
+
     public function testGetName()
     {
-        $provider = new BingMaps($this->getMockAdapter($this->never()), 'api_key');
+        $provider = new BingMaps($this->getMockedHttpClient(), 'api_key');
         $this->assertEquals('bing_maps', $provider->getName());
     }
 
@@ -29,7 +38,7 @@ class BingMapsTest extends TestCase
      */
     public function testGeocodeWithNullApiKey()
     {
-        $provider = new BingMaps($this->getMockAdapter($this->never()), null);
+        $provider = new BingMaps($this->getMockedHttpClient(), null);
         $provider->geocodeQuery(GeocodeQuery::create('foo'));
     }
 
@@ -38,7 +47,7 @@ class BingMapsTest extends TestCase
      */
     public function testGeocodeWithInvalidData()
     {
-        $provider = new BingMaps($this->getMockAdapter(), 'api_key');
+        $provider = new BingMaps($this->getMockedHttpClient(), 'api_key');
         $provider->geocodeQuery(GeocodeQuery::create('foobar'));
     }
 
@@ -48,7 +57,7 @@ class BingMapsTest extends TestCase
      */
     public function testGeocodeWithLocalhostIPv4()
     {
-        $provider = new BingMaps($this->getMockAdapter($this->never()), 'api_key');
+        $provider = new BingMaps($this->getMockedHttpClient(), 'api_key');
         $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
     }
 
@@ -58,17 +67,8 @@ class BingMapsTest extends TestCase
      */
     public function testGeocodeWithLocalhostIPv6()
     {
-        $provider = new BingMaps($this->getMockAdapter($this->never()), 'api_key');
+        $provider = new BingMaps($this->getMockedHttpClient(), 'api_key');
         $provider->geocodeQuery(GeocodeQuery::create('::1'));
-    }
-
-    /**
-     * @expectedException \Geocoder\Exception\InvalidServerResponse
-     */
-    public function testGeocodeWithAddressGetsNullContent()
-    {
-        $provider = new BingMaps($this->getMockAdapterReturns(null), 'api_key');
-        $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
     }
 
     public function testGeocodeReturnsMultipleResults()
@@ -77,7 +77,7 @@ class BingMapsTest extends TestCase
 {"authenticationResultCode":"ValidCredentials","brandLogoUri":"https:\/\/dev.virtualearth.net\/Branding\/logo_powered_by.png","copyright":"Copyright © 2013 Microsoft and its suppliers. All rights reserved. This API cannot be accessed and the content and any results may not be used, reproduced or transmitted in any manner without express written permission from Microsoft Corporation.","resourceSets":[{"estimatedTotal":3,"resources":[{"__type":"Location:https:\/\/schemas.microsoft.com\/search\/local\/ws\/rest\/v1","bbox":[48.859354042429317,2.3809438666389395,48.86707947757067,2.3966003933610596],"name":"10 Avenue Gambetta, 75020 Paris","point":{"type":"Point","coordinates":[48.863216759999993,2.3887721299999995]},"address":{"addressLine":"10 Avenue Gambetta","adminDistrict":"IdF","adminDistrict2":"Paris","countryRegion":"France","countryRegionIso2":"FR","formattedAddress":"10 Avenue Gambetta, 75020 Paris","locality":"Paris","postalCode":"75020"},"confidence":"Medium","entityType":"Address","geocodePoints":[{"type":"Point","coordinates":[48.863216759999993,2.3887721299999995],"calculationMethod":"Interpolation","usageTypes":["Display","Route"]}],"matchCodes":["Ambiguous","Good"]},{"__type":"Location:https:\/\/schemas.microsoft.com\/search\/local\/ws\/rest\/v1","bbox":[48.809565092429317,2.3172171827738461,48.81729052757067,2.3328581572261538],"name":"10 Avenue Léon Gambetta, 92120 Montrouge","point":{"type":"Point","coordinates":[48.813427809999993,2.32503767]},"address":{"addressLine":"10 Avenue Léon Gambetta","adminDistrict":"IdF","adminDistrict2":"Hauts-de-Seine","countryRegion":"France","countryRegionIso2":"FR","formattedAddress":"10 Avenue Léon Gambetta, 92120 Montrouge","locality":"Montrouge","postalCode":"92120"},"confidence":"Medium","entityType":"Address","geocodePoints":[{"type":"Point","coordinates":[48.813427809999993,2.32503767],"calculationMethod":"Interpolation","usageTypes":["Display","Route"]}],"matchCodes":["Ambiguous","Good"]},{"__type":"Location:https:\/\/schemas.microsoft.com\/search\/local\/ws\/rest\/v1","bbox":[48.806278752429328,2.4278605052896745,48.814004187570681,2.4435004547103261],"name":"10 Avenue Gambetta, 94700 Maisons-Alfort","point":{"type":"Point","coordinates":[48.810141470000005,2.4356804800000003]},"address":{"addressLine":"10 Avenue Gambetta","adminDistrict":"IdF","adminDistrict2":"Val-De-Marne","countryRegion":"France","countryRegionIso2":"FR","formattedAddress":"10 Avenue Gambetta, 94700 Maisons-Alfort","locality":"Maisons-Alfort","postalCode":"94700"},"confidence":"Medium","entityType":"Address","geocodePoints":[{"type":"Point","coordinates":[48.810141470000005,2.4356804800000003],"calculationMethod":"Interpolation","usageTypes":["Display","Route"]}],"matchCodes":["Ambiguous","Good"]}]}],"statusCode":200,"statusDescription":"OK","traceId":"fd9b0b8fe1a34ad384923b5d0937bfb2|AMSM001404|02.00.139.700|AMSMSNVM002409, AMSMSNVM001862, AMSMSNVM001322, AMSMSNVM000044"}
 JSON;
 
-        $provider = new BingMaps($this->getMockAdapterReturns($json), 'api_key', 'fr_FR');
+        $provider = new BingMaps($this->getMockedHttpClient($json), 'api_key', 'fr_FR');
         $results = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -152,7 +152,7 @@ JSON;
 {"authenticationResultCode":"ValidCredentials","brandLogoUri":"https:\/\/dev.virtualearth.net\/Branding\/logo_powered_by.png","copyright":"Copyright © 2013 Microsoft and its suppliers. All rights reserved. This API cannot be accessed and the content and any results may not be used, reproduced or transmitted in any manner without express written permission from Microsoft Corporation.","resourceSets":[{"estimatedTotal":1,"resources":[{"__type":"Location:https:\/\/schemas.microsoft.com\/search\/local\/ws\/rest\/v1","bbox":[48.859353771982775,2.3809437325832983,48.867079207124128,2.3966002592208246],"name":"10 Avenue Gambetta, 75020 20e Arrondissement","point":{"type":"Point","coordinates":[48.863216489553452,2.3887719959020615]},"address":{"addressLine":"10 Avenue Gambetta","adminDistrict":"IdF","adminDistrict2":"Paris","countryRegion":"France","countryRegionIso2":"FR","formattedAddress":"10 Avenue Gambetta, 75020 20e Arrondissement","locality":"20e Arrondissement","postalCode":"75020"},"confidence":"Medium","entityType":"Address","geocodePoints":[{"type":"Point","coordinates":[48.863216489553452,2.3887719959020615],"calculationMethod":"Interpolation","usageTypes":["Display","Route"]}],"matchCodes":["Good"]}]}],"statusCode":200,"statusDescription":"OK","traceId":"0691dabd257043b381b678fbfaf799dd|AMSM001401|02.00.139.700|AMSMSNVM001951, AMSMSNVM002152"}
 JSON;
 
-        $provider = new BingMaps($this->getMockAdapterReturns($json), 'api_key');
+        $provider = new BingMaps($this->getMockedHttpClient($json), 'api_key');
         $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(48.86321648955345, 2.3887719959020615));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -187,7 +187,7 @@ JSON;
             $this->markTestSkipped('You need to configure the BINGMAPS_API_KEY value in phpunit.xml');
         }
 
-        $provider = new BingMaps($this->getAdapter($_SERVER['BINGMAPS_API_KEY']), $_SERVER['BINGMAPS_API_KEY']);
+        $provider = new BingMaps($this->getHttpClient($_SERVER['BINGMAPS_API_KEY']), $_SERVER['BINGMAPS_API_KEY']);
         $results = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France')->withLocale('fr-FR'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -224,7 +224,7 @@ JSON;
             $this->markTestSkipped('You need to configure the BINGMAPS_API_KEY value in phpunit.xml');
         }
 
-        $provider = new BingMaps($this->getAdapter($_SERVER['BINGMAPS_API_KEY']), $_SERVER['BINGMAPS_API_KEY']);
+        $provider = new BingMaps($this->getHttpClient($_SERVER['BINGMAPS_API_KEY']), $_SERVER['BINGMAPS_API_KEY']);
         $results = $provider->geocodeQuery(GeocodeQuery::create('Castelnuovo, Italie')->withLocale('fr-FR'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -331,31 +331,13 @@ JSON;
         $this->assertEquals('IT', $result->getCountry()->getCode());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\InvalidServerResponse
-     */
-    public function testReverse()
-    {
-        $provider = new BingMaps($this->getMockAdapter(), 'api_key');
-        $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
-    }
-
-    /**
-     * @expectedException \Geocoder\Exception\InvalidServerResponse
-     */
-    public function testReverseWithCoordinatesContentReturnNull()
-    {
-        $provider = new BingMaps($this->getMockAdapterReturns(null), 'api_key');
-        $provider->reverseQuery(ReverseQuery::fromCoordinates(48.86321648955345, 2.3887719959020615));
-    }
-
     public function testReverseWithRealCoordinatesReturnsSingleResult()
     {
         if (!isset($_SERVER['BINGMAPS_API_KEY'])) {
             $this->markTestSkipped('You need to configure the BINGMAPS_API_KEY value in phpunit.xml');
         }
 
-        $provider = new BingMaps($this->getAdapter($_SERVER['BINGMAPS_API_KEY']), $_SERVER['BINGMAPS_API_KEY']);
+        $provider = new BingMaps($this->getHttpClient($_SERVER['BINGMAPS_API_KEY']), $_SERVER['BINGMAPS_API_KEY']);
         $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(48.86321648955345, 2.3887719959020615));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -377,7 +359,7 @@ JSON;
         $this->assertEquals('Paris', $result->getLocality());
         $this->assertCount(2, $result->getAdminLevels());
         $this->assertEquals('Paris', $result->getAdminLevels()->get(2)->getName());
-        $this->assertEquals('IdF', $result->getAdminLevels()->get(1)->getName());
+        $this->assertEquals('Ile-de-France', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('France', $result->getCountry()->getName());
         $this->assertEquals('FR', $result->getCountry()->getCode());
 
@@ -394,7 +376,7 @@ JSON;
             $this->markTestSkipped('You need to configure the BINGMAPS_API_KEY value in phpunit.xml');
         }
 
-        $provider = new BingMaps($this->getAdapter($_SERVER['BINGMAPS_API_KEY']), $_SERVER['BINGMAPS_API_KEY']);
+        $provider = new BingMaps($this->getHttpClient($_SERVER['BINGMAPS_API_KEY']), $_SERVER['BINGMAPS_API_KEY']);
         $provider->geocodeQuery(GeocodeQuery::create('88.188.221.14'));
     }
 
@@ -408,7 +390,7 @@ JSON;
             $this->markTestSkipped('You need to configure the BINGMAPS_API_KEY value in phpunit.xml');
         }
 
-        $provider = new BingMaps($this->getAdapter($_SERVER['BINGMAPS_API_KEY']), $_SERVER['BINGMAPS_API_KEY']);
+        $provider = new BingMaps($this->getHttpClient($_SERVER['BINGMAPS_API_KEY']), $_SERVER['BINGMAPS_API_KEY']);
         $provider->geocodeQuery(GeocodeQuery::create('::ffff:88.188.221.14'));
     }
 }
