@@ -34,11 +34,12 @@ final class GoogleAddress extends Address
      *
      * @return GoogleAddress
      */
-    public function setLocationType($locationType)
+    public function withLocationType($locationType)
     {
-        $this->locationType = $locationType;
+        $new = clone $this;
+        $new->locationType = $locationType;
 
-        return $this;
+        return $new;
     }
 
     /**
@@ -62,10 +63,11 @@ final class GoogleAddress extends Address
      *
      * @return GoogleAddress
      */
-    public function setResultType(array $resultType)
+    public function withResultType(array $resultType)
     {
-        $this->resultType = $resultType;
+        $new = clone $this;
+        $new->resultType = $resultType;
 
-        return $this;
+        return $new;
     }
 }

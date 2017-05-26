@@ -44,11 +44,12 @@ final class YandexAddress extends Address
      *
      * @return YandexAddress
      */
-    public function setPrecision($precision)
+    public function withPrecision($precision)
     {
-        $this->precision = $precision;
+        $new = clone $this;
+        $new->precision = $precision;
 
-        return $this;
+        return $new;
     }
 
     /**
@@ -64,10 +65,11 @@ final class YandexAddress extends Address
      *
      * @return YandexAddress
      */
-    public function setName($name)
+    public function withName($name)
     {
-        $this->name = $name;
+        $new = clone $this;
+        $new->name = $name;
 
-        return $this;
+        return $new;
     }
 }
