@@ -66,7 +66,7 @@ final class Bounds
      *
      * @return float
      */
-    public function getSouth()
+    public function getSouth(): float
     {
         return $this->south;
     }
@@ -76,7 +76,7 @@ final class Bounds
      *
      * @return float
      */
-    public function getWest()
+    public function getWest(): float
     {
         return $this->west;
     }
@@ -86,7 +86,7 @@ final class Bounds
      *
      * @return float
      */
-    public function getNorth()
+    public function getNorth(): float
     {
         return $this->north;
     }
@@ -96,7 +96,7 @@ final class Bounds
      *
      * @return float
      */
-    public function getEast()
+    public function getEast(): float
     {
         return $this->east;
     }
@@ -106,7 +106,7 @@ final class Bounds
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'south' => $this->getSouth(),

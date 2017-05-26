@@ -48,7 +48,7 @@ class AddressCollection implements Collection
     /**
      * {@inheritdoc}
      */
-    public function first()
+    public function first(): Location
     {
         if (empty($this->locations)) {
             throw new CollectionIsEmpty();
@@ -60,7 +60,7 @@ class AddressCollection implements Collection
     /**
      * {@inheritdoc}
      */
-    public function isEmpty()
+    public function isEmpty(): bool
     {
         return empty($this->locations);
     }
@@ -76,7 +76,7 @@ class AddressCollection implements Collection
     /**
      * @return bool
      */
-    public function has($index)
+    public function has($index): bool
     {
         return isset($this->locations[$index]);
     }
@@ -84,7 +84,7 @@ class AddressCollection implements Collection
     /**
      * {@inheritdoc}
      */
-    public function get($index)
+    public function get($index): Location
     {
         if (!isset($this->locations[$index])) {
             throw new \OutOfBoundsException(sprintf('The index "%s" does not exist in this collection.', $index));

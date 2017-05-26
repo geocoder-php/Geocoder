@@ -25,12 +25,12 @@ interface Collection extends \IteratorAggregate, \Countable
      *
      * @throws CollectionIsEmpty
      */
-    public function first();
+    public function first(): Location;
 
     /**
      * @return bool
      */
-    public function isEmpty();
+    public function isEmpty(): bool;
 
     /**
      * @return Location[]
@@ -40,14 +40,14 @@ interface Collection extends \IteratorAggregate, \Countable
     /**
      * @return bool
      */
-    public function has($index);
+    public function has($index): bool;
 
     /**
      * @return Location
      *
      * @throws \OutOfBoundsException
      */
-    public function get($index);
+    public function get($index): Location;
 
     /**
      * @return Location[]

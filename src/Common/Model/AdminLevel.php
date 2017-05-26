@@ -26,14 +26,14 @@ final class AdminLevel
     private $name;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $code;
 
     /**
-     * @param int    $level
-     * @param string $name
-     * @param string $code
+     * @param int         $level
+     * @param string      $name
+     * @param string|null $code
      */
     public function __construct($level, $name, $code)
     {

@@ -10,6 +10,7 @@
 
 namespace Geocoder\Tests;
 
+use Geocoder\Model\AddressCollection;
 use Geocoder\Provider\Provider;
 use Geocoder\TimedGeocoder;
 use PHPUnit\Framework\TestCase;
@@ -43,7 +44,7 @@ class TimedGeocoderTest extends TestCase
     {
         $this->delegate->expects($this->once())
              ->method('geocodeQuery')
-             ->will($this->returnValue([]));
+             ->will($this->returnValue(new AddressCollection([])));
 
         $this->geocoder->geocode('foo');
 
@@ -70,7 +71,7 @@ class TimedGeocoderTest extends TestCase
     {
         $this->delegate->expects($this->once())
              ->method('reverseQuery')
-             ->will($this->returnValue([]));
+             ->will($this->returnValue(new AddressCollection([])));
 
         $this->geocoder->reverse(0, 0);
 

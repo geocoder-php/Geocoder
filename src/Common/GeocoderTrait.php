@@ -27,7 +27,7 @@ trait GeocoderTrait
     /**
      * {@inheritdoc}
      */
-    public function geocode($value)
+    public function geocode($value): Collection
     {
         return $this->geocodeQuery(GeocodeQuery::create($value));
     }
@@ -35,7 +35,7 @@ trait GeocoderTrait
     /**
      * {@inheritdoc}
      */
-    public function reverse($latitude, $longitude)
+    public function reverse($latitude, $longitude): Collection
     {
         return $this->reverseQuery(ReverseQuery::fromCoordinates($latitude, $longitude));
     }

@@ -85,7 +85,7 @@ final class AdminLevelCollection implements \IteratorAggregate, \Countable
     /**
      * @return bool
      */
-    public function has($level)
+    public function has($level): bool
     {
         return isset($this->adminLevels[$level]);
     }
@@ -96,7 +96,7 @@ final class AdminLevelCollection implements \IteratorAggregate, \Countable
      * @throws \OutOfBoundsException
      * @throws InvalidArgument
      */
-    public function get($level)
+    public function get($level): AdminLevel
     {
         $this->checkLevel($level);
 
