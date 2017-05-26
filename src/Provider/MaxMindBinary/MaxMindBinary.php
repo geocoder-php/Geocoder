@@ -99,8 +99,7 @@ final class MaxMindBinary extends AbstractProvider implements Provider, IpAddres
             $adminLevels[] = ['name' => $geoIpRecord->region, 'level' => 1];
         }
 
-        return $this->returnResults([
-            $this->fixEncoding(array_merge($this->getDefaults(), [
+        return $this->returnResults([array_merge($this->getDefaults(), [
                 'countryCode' => $geoIpRecord->country_code,
                 'country' => $geoIpRecord->country_name,
                 'adminLevels' => $adminLevels,
@@ -108,7 +107,7 @@ final class MaxMindBinary extends AbstractProvider implements Provider, IpAddres
                 'latitude' => $geoIpRecord->latitude,
                 'longitude' => $geoIpRecord->longitude,
                 'postalCode' => $geoIpRecord->postal_code,
-            ])),
+            ]),
         ]);
     }
 

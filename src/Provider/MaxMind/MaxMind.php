@@ -140,9 +140,7 @@ final class MaxMind extends AbstractHttpProvider implements Provider, IpAddressG
 
         $data = $this->replaceAdmins($data);
 
-        return $this->returnResults([
-            $this->fixEncoding(array_merge($this->getDefaults(), $data)),
-        ]);
+        return $this->returnResults([array_merge($this->getDefaults(), $data)]);
     }
 
     private function countryCodeToCountryName($code)
