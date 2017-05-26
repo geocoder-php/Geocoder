@@ -131,7 +131,7 @@ final class MaxMind extends AbstractHttpProvider implements Provider, IpAddressG
 
         $data = array_combine($fields, $data);
         $data = array_map(function ($value) {
-            return '' === $value ? null : $value;
+            return '' === $value ? null : is_string($value) ? utf8_encode($value) : $value;
         }, $data);
 
         if (empty($data['country']) && !empty($data['countryCode'])) {
