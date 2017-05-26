@@ -13,7 +13,6 @@ declare(strict_types=1);
 namespace Geocoder\Provider\FreeGeoIp;
 
 use Geocoder\Exception\UnsupportedOperation;
-use Geocoder\Collection;
 use Geocoder\Model\Address;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Model\LocationBuilder;

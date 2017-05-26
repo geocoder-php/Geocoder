@@ -16,9 +16,7 @@ use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Location;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Tests\TestCase;
 use Geocoder\Provider\FreeGeoIp\FreeGeoIp;
-use Nyholm\Psr7\Response;
 
 class FreeGeoIpTest extends BaseTestCase
 {
