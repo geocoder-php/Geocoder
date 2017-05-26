@@ -14,7 +14,6 @@ namespace Geocoder\Provider\ArcGISOnlineTest\Tests;
 
 use Geocoder\IntegrationTest\ProviderIntegrationTest;
 use Geocoder\Provider\ArcGISOnline\ArcGISOnline;
-use Geocoder\Provider\BingMaps\BingMaps;
 use Http\Client\HttpClient;
 
 /**

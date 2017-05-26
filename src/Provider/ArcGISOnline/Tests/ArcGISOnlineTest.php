@@ -17,7 +17,6 @@ use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Location;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Tests\TestCase;
 use Geocoder\Provider\ArcGISOnline\ArcGISOnline;
 
 class ArcGISOnlineTest extends BaseTestCase
@@ -26,7 +25,6 @@ class ArcGISOnlineTest extends BaseTestCase
     {
         return __DIR__.'/.cached_responses';
     }
-
 
     public function testGetName()
     {
