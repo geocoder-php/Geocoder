@@ -211,6 +211,7 @@ class Address implements Location
     public static function createFromArray(array $data)
     {
         $defaults = [
+            'providedBy' => 'n/a',
             'latitude' => null,
             'longitude' => null,
             'bounds' => [
@@ -242,6 +243,8 @@ class Address implements Location
         }
 
         return new static(
+            $data['providedBy'],
+            new AdminLevelCollection($adminLevels),
             self::createCoordinates(
                 $data['latitude'],
                 $data['longitude']
@@ -257,7 +260,6 @@ class Address implements Location
             $data['postalCode'],
             $data['locality'],
             $data['subLocality'],
-            new AdminLevelCollection($adminLevels),
             new Country(
                 $data['country'],
                 $data['countryCode']
