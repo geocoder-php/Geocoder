@@ -20,6 +20,11 @@ class GoogleAddress extends Address
     private $locationType;
 
     /**
+     * @var array
+     */
+    private $resultType = [];
+
+    /**
      * @param null|string $locationType
      *
      * @return GoogleAddress
@@ -37,5 +42,25 @@ class GoogleAddress extends Address
     public function getLocationType()
     {
         return $this->locationType;
+    }
+
+    /**
+     * @return array
+     */
+    public function getResultType()
+    {
+        return $this->resultType;
+    }
+
+    /**
+     * @param array $resultType
+     *
+     * @return GoogleAddress
+     */
+    public function setResultType(array $resultType)
+    {
+        $this->resultType = $resultType;
+
+        return $this;
     }
 }
