@@ -87,7 +87,7 @@ class TimedGeocoder implements Geocoder
         return call_user_func_array([$this->delegate, $method], $args);
     }
 
-    public function getName()
+    public function getName(): string
     {
         return 'TimedGeocoder';
     }

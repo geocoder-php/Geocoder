@@ -81,7 +81,7 @@ final class IpInfoDb extends AbstractHttpProvider implements Provider, IpAddress
     /**
      * {@inheritdoc}
      */
-    public function geocodeQuery(GeocodeQuery $query)
+    public function geocodeQuery(GeocodeQuery $query): Collection
     {
         $address = $query->getText();
         if (null === $this->apiKey) {
@@ -109,7 +109,7 @@ final class IpInfoDb extends AbstractHttpProvider implements Provider, IpAddress
     /**
      * {@inheritdoc}
      */
-    public function reverseQuery(ReverseQuery $query)
+    public function reverseQuery(ReverseQuery $query): Collection
     {
         throw new UnsupportedOperation('The IpInfoDb provider is not able to do reverse geocoding.');
     }
@@ -117,7 +117,7 @@ final class IpInfoDb extends AbstractHttpProvider implements Provider, IpAddress
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return 'ip_info_db';
     }

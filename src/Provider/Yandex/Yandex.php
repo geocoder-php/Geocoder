@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Geocoder\Provider\Yandex;
 
+use Geocoder\Collection;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Model\LocationBuilder;
@@ -57,7 +58,7 @@ final class Yandex extends AbstractHttpProvider implements LocaleAwareGeocoder, 
     /**
      * {@inheritdoc}
      */
-    public function geocodeQuery(GeocodeQuery $query)
+    public function geocodeQuery(GeocodeQuery $query): Collection
     {
         $address = $query->getText();
         // This API doesn't handle IPs
@@ -73,7 +74,7 @@ final class Yandex extends AbstractHttpProvider implements LocaleAwareGeocoder, 
     /**
      * {@inheritdoc}
      */
-    public function reverseQuery(ReverseQuery $query)
+    public function reverseQuery(ReverseQuery $query): Collection
     {
         $coordinates = $query->getCoordinates();
         $longitude = $coordinates->getLongitude();
@@ -90,7 +91,7 @@ final class Yandex extends AbstractHttpProvider implements LocaleAwareGeocoder, 
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return 'yandex';
     }

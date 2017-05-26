@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Geocoder\Provider\ArcGISOnline;
 
+use Geocoder\Collection;
 use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\UnsupportedOperation;
@@ -56,7 +57,7 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
     /**
      * {@inheritdoc}
      */
-    public function geocodeQuery(GeocodeQuery $query)
+    public function geocodeQuery(GeocodeQuery $query): Collection
     {
         $address = $query->getText();
         if (filter_var($address, FILTER_VALIDATE_IP)) {
@@ -112,7 +113,7 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
     /**
      * {@inheritdoc}
      */
-    public function reverseQuery(ReverseQuery $query)
+    public function reverseQuery(ReverseQuery $query): Collection
     {
         $coordinates = $query->getCoordinates();
         $longitude = $coordinates->getLongitude();
@@ -151,7 +152,7 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return 'arcgis_online';
     }

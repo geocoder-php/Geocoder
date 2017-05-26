@@ -54,7 +54,7 @@ final class YandexAddress extends Address
     /**
      * @return null|string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }

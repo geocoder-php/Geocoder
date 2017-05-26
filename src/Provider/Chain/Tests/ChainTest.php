@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Geocoder\Provider\Chain\Tests;
 
+use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\Provider;
@@ -47,13 +48,14 @@ class ChainTest extends TestCase
             }));
 
         $mockTwo = $this->getMockBuilder('Geocoder\\Provider\\Provider')->getMock();
+        $result = new AddressCollection(['foo' => 'bar']);
         $mockTwo->expects($this->once())
             ->method('reverseQuery')
-            ->will($this->returnValue(['foo' => 'bar']));
+            ->will($this->returnValue($result));
 
         $chain = new Chain([$mockOne, $mockTwo]);
 
-        $this->assertEquals(['foo' => 'bar'], $chain->reverseQuery(ReverseQuery::fromCoordinates(11, 22)));
+        $this->assertEquals($result, $chain->reverseQuery(ReverseQuery::fromCoordinates(11, 22)));
     }
 
     public function testGeocode()
@@ -67,13 +69,14 @@ class ChainTest extends TestCase
             }));
 
         $mockTwo = $this->getMockBuilder('Geocoder\\Provider\\Provider')->getMock();
+        $result = new AddressCollection(['foo' => 'bar']);
         $mockTwo->expects($this->once())
             ->method('geocodeQuery')
             ->with($query)
-            ->will($this->returnValue(['foo' => 'bar']));
+            ->will($this->returnValue($result));
 
         $chain = new Chain([$mockOne, $mockTwo]);
 
-        $this->assertEquals(['foo' => 'bar'], $chain->geocodeQuery($query));
+        $this->assertEquals($result, $chain->geocodeQuery($query));
     }
 }

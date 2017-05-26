@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Geocoder\Provider\GeoIP2;
 
+use Geocoder\Collection;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
@@ -40,7 +41,7 @@ final class GeoIP2 extends AbstractProvider implements LocaleAwareGeocoder, IpAd
     /**
      * {@inheritdoc}
      */
-    public function geocodeQuery(GeocodeQuery $query)
+    public function geocodeQuery(GeocodeQuery $query): Collection
     {
         $address = $query->getText();
         $locale = $query->getLocale() ?: 'en'; // Default to English
@@ -87,7 +88,7 @@ final class GeoIP2 extends AbstractProvider implements LocaleAwareGeocoder, IpAd
     /**
      * {@inheritdoc}
      */
-    public function reverseQuery(ReverseQuery $query)
+    public function reverseQuery(ReverseQuery $query): Collection
     {
         throw new UnsupportedOperation('The GeoIP2 provider is not able to do reverse geocoding.');
     }
@@ -95,7 +96,7 @@ final class GeoIP2 extends AbstractProvider implements LocaleAwareGeocoder, IpAd
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return 'geoip2';
     }

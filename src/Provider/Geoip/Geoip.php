@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Geocoder\Provider\Geoip;
 
+use Geocoder\Collection;
 use Geocoder\Exception\ExtensionNotLoaded;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Model\AddressCollection;
@@ -38,7 +39,7 @@ final class Geoip extends AbstractProvider implements Provider, IpAddressGeocode
     /**
      * {@inheritdoc}
      */
-    public function geocodeQuery(GeocodeQuery $query)
+    public function geocodeQuery(GeocodeQuery $query): Collection
     {
         $address = $query->getText();
 
@@ -86,7 +87,7 @@ final class Geoip extends AbstractProvider implements Provider, IpAddressGeocode
     /**
      * {@inheritdoc}
      */
-    public function reverseQuery(ReverseQuery $query)
+    public function reverseQuery(ReverseQuery $query): Collection
     {
         throw new UnsupportedOperation('The Geoip provider is not able to do reverse geocoding.');
     }
@@ -94,7 +95,7 @@ final class Geoip extends AbstractProvider implements Provider, IpAddressGeocode
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return 'geoip';
     }

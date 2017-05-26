@@ -13,7 +13,6 @@ declare(strict_types=1);
 namespace Geocoder\Provider;
 
 use Geocoder\Collection;
-use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 
@@ -29,6 +28,7 @@ interface Provider
      * @param GeocodeQuery $query
      *
      * @return Collection
+     *
      * @throws \Geocoder\Exception\Exception
      */
     public function geocodeQuery(GeocodeQuery $query): Collection;
@@ -37,6 +37,7 @@ interface Provider
      * @param ReverseQuery $query
      *
      * @return Collection
+     *
      * @throws \Geocoder\Exception\Exception
      */
     public function reverseQuery(ReverseQuery $query): Collection;

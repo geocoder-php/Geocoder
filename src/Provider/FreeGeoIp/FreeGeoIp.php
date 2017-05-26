@@ -34,7 +34,7 @@ final class FreeGeoIp extends AbstractHttpProvider implements Provider, IpAddres
     /**
      * {@inheritdoc}
      */
-    public function geocodeQuery(GeocodeQuery $query)
+    public function geocodeQuery(GeocodeQuery $query): Collection
     {
         $address = $query->getText();
         if (!filter_var($address, FILTER_VALIDATE_IP)) {
@@ -53,7 +53,7 @@ final class FreeGeoIp extends AbstractHttpProvider implements Provider, IpAddres
     /**
      * {@inheritdoc}
      */
-    public function reverseQuery(ReverseQuery $query)
+    public function reverseQuery(ReverseQuery $query): Collection
     {
         throw new UnsupportedOperation('The FreeGeoIp provider is not able to do reverse geocoding.');
     }
@@ -61,7 +61,7 @@ final class FreeGeoIp extends AbstractHttpProvider implements Provider, IpAddres
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return 'free_geo_ip';
     }

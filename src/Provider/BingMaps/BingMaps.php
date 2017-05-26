@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Geocoder\Provider\BingMaps;
 
+use Geocoder\Collection;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Model\AddressCollection;
@@ -56,7 +57,7 @@ final class BingMaps extends AbstractHttpProvider implements LocaleAwareGeocoder
     /**
      * {@inheritdoc}
      */
-    public function geocodeQuery(GeocodeQuery $query)
+    public function geocodeQuery(GeocodeQuery $query): Collection
     {
         if (null === $this->apiKey) {
             throw new InvalidCredentials('No API key provided.');
@@ -75,7 +76,7 @@ final class BingMaps extends AbstractHttpProvider implements LocaleAwareGeocoder
     /**
      * {@inheritdoc}
      */
-    public function reverseQuery(ReverseQuery $query)
+    public function reverseQuery(ReverseQuery $query): Collection
     {
         if (null === $this->apiKey) {
             throw new InvalidCredentials('No API key provided.');
@@ -90,7 +91,7 @@ final class BingMaps extends AbstractHttpProvider implements LocaleAwareGeocoder
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return 'bing_maps';
     }

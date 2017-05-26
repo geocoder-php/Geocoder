@@ -57,7 +57,7 @@ final class Mapzen extends AbstractHttpProvider implements Provider
     /**
      * {@inheritdoc}
      */
-    public function geocodeQuery(GeocodeQuery $query)
+    public function geocodeQuery(GeocodeQuery $query): Collection
     {
         $address = $query->getText();
         if (null === $this->apiKey) {
@@ -77,7 +77,7 @@ final class Mapzen extends AbstractHttpProvider implements Provider
     /**
      * {@inheritdoc}
      */
-    public function reverseQuery(ReverseQuery $query)
+    public function reverseQuery(ReverseQuery $query): Collection
     {
         $coordinates = $query->getCoordinates();
         $longitude = $coordinates->getLongitude();
@@ -94,7 +94,7 @@ final class Mapzen extends AbstractHttpProvider implements Provider
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return 'mapzen';
     }

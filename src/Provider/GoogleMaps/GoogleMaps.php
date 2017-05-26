@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Geocoder\Provider\GoogleMaps;
 
 use Exception;
+use Geocoder\Collection;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\QuotaExceeded;
@@ -96,7 +97,7 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocod
         $this->apiKey = $apiKey;
     }
 
-    public function geocodeQuery(GeocodeQuery $query)
+    public function geocodeQuery(GeocodeQuery $query): Collection
     {
         // Google API returns invalid data if IP address given
         // This API doesn't handle IPs
@@ -112,7 +113,7 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocod
         return $this->fetchUrl($url, $query->getLocale(), $query->getLimit());
     }
 
-    public function reverseQuery(ReverseQuery $query)
+    public function reverseQuery(ReverseQuery $query): Collection
     {
         $coordinate = $query->getCoordinates();
         $url = sprintf(self::REVERSE_ENDPOINT_URL_SSL, $coordinate->getLatitude(), $coordinate->getLongitude());
@@ -131,7 +132,7 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocod
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return 'google_maps';
     }

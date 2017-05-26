@@ -49,7 +49,7 @@ class ProviderAggregator implements Geocoder
     /**
      * {@inheritdoc}
      */
-    public function geocodeQuery(GeocodeQuery $query)
+    public function geocodeQuery(GeocodeQuery $query): Collection
     {
         return $this->getProvider()->geocodeQuery($query);
     }
@@ -57,7 +57,7 @@ class ProviderAggregator implements Geocoder
     /**
      * {@inheritdoc}
      */
-    public function reverseQuery(ReverseQuery $query)
+    public function reverseQuery(ReverseQuery $query): Collection
     {
         return $this->getProvider()->reverseQuery($query);
     }
@@ -65,7 +65,7 @@ class ProviderAggregator implements Geocoder
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return 'ProviderAggregator';
     }

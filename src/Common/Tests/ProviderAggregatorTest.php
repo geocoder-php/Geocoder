@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Geocoder\Tests;
 
+use Geocoder\Collection;
 use Geocoder\Geocoder;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
@@ -146,17 +147,17 @@ class MockProvider implements Provider
         $this->name = $name;
     }
 
-    public function geocodeQuery(GeocodeQuery $query)
+    public function geocodeQuery(GeocodeQuery $query): Collection
     {
         return $this->returnResult([]);
     }
 
-    public function reverseQuery(ReverseQuery $query)
+    public function reverseQuery(ReverseQuery $query): Collection
     {
         return $this->returnResult([]);
     }
 
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
