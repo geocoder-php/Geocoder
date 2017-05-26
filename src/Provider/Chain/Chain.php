@@ -81,7 +81,7 @@ final class Chain implements LocaleAwareGeocoder, Provider, LoggerAwareInterface
                 $coordinates = $query->getCoordinates();
                 $this->log(
                     'alert',
-                    sprintf('Provider "%s" could reverse coordinates: %f, %f.', $provider->getName(), $coordinates->getLatitude(),  $coordinates->getLongitude()),
+                    sprintf('Provider "%s" could reverse coordinates: %f, %f.', $provider->getName(), $coordinates->getLatitude(), $coordinates->getLongitude()),
                     ['exception' => $e]
                 );
             }
