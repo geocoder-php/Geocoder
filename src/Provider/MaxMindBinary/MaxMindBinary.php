@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Geocoder\Provider\MaxMindBinary;
 
+use Geocoder\Collection;
 use Geocoder\Exception\FunctionNotFound;
 use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\UnsupportedOperation;
