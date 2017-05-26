@@ -26,9 +26,9 @@ class LocationFactoryTest extends TestCase
     public function testCreateFromArray()
     {
         $addresses = new AddressCollection([
-            LocationFactory::createLocation(['streetNumber' => 1]),
-            LocationFactory::createLocation(['streetNumber' => 2, 'adminLevels' => [['name' => 'admin 1', 'level' => 1]]]),
-            LocationFactory::createLocation(['streetNumber' => 3, 'adminLevels' => [['name' => 'admin 2', 'level' => 2], ['name' => 'admin 1', 'level' => 1]]]),
+            LocationFactory::createLocation(['streetNumber' => '1']),
+            LocationFactory::createLocation(['streetNumber' => '2', 'adminLevels' => [['name' => 'admin 1', 'level' => 1]]]),
+            LocationFactory::createLocation(['streetNumber' => '3', 'adminLevels' => [['name' => 'admin 2', 'level' => 2], ['name' => 'admin 1', 'level' => 1]]]),
         ]);
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $addresses);

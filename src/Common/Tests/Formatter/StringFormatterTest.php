@@ -47,7 +47,7 @@ class StringFormatterTest extends TestCase
     {
         return [
             [
-                ['streetNumber' => 10],
+                ['streetNumber' => '10'],
                 '%n',
                 '10',
             ],
@@ -108,9 +108,9 @@ class StringFormatterTest extends TestCase
             ],
             [
                 [
-                    'streetNumber' => 120,
+                    'streetNumber' => '120',
                     'streetName' => 'Badenerstrasse',
-                    'postalCode' => 8001,
+                    'postalCode' => '8001',
                     'locality' => 'Zuerich',
                 ],
                 '%S %n, %z %L',
@@ -118,9 +118,9 @@ class StringFormatterTest extends TestCase
             ],
             [
                 [
-                    'streetNumber' => 120,
+                    'streetNumber' => '120',
                     'streetName' => 'Badenerstrasse',
-                    'postalCode' => 8001,
+                    'postalCode' => '8001',
                     'locality' => 'Zuerich',
                 ],
                 '<p>%S %n, %z <a href="#%L">%L</a></p>',
@@ -128,9 +128,9 @@ class StringFormatterTest extends TestCase
             ],
             [
                 [
-                    'streetNumber' => 120,
+                    'streetNumber' => '120',
                     'streetName' => 'Badenerstrasse',
-                    'postalCode' => 8001,
+                    'postalCode' => '8001',
                     'locality' => 'Zuerich',
                 ],
                 '<p>%S %n, %z <a href="#%L">%L</a></p><p>%A2</p>',
