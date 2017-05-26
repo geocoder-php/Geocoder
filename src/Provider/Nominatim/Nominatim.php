@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Geocoder package.
  * For the full copyright and license information, please view the LICENSE
@@ -126,9 +128,10 @@ final class Nominatim extends AbstractHttpProvider implements LocaleAwareGeocode
         }
 
         // get the first postal-code when there are many
-        $postalCode = current(explode(';',
-            $this->getNodeValue($addressNode->getElementsByTagName('postcode'))
-        ));
+        $postalCode = $this->getNodeValue($addressNode->getElementsByTagName('postcode'));
+        if (!empty($postalCode)) {
+            $postalCode = current(explode(';', $postalCode));
+        }
 
         $result = [
             'latitude' => $resultNode->getAttribute('lat'),

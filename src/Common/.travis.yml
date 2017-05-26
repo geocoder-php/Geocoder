@@ -3,7 +3,6 @@ sudo: false
 
 php: 7.0
 
-
 install:
   - composer update --prefer-stable --prefer-dist
 
