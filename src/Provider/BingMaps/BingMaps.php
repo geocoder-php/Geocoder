@@ -128,11 +128,11 @@ final class BingMaps extends AbstractHttpProvider implements LocaleAwareGeocoder
                 $builder->setBounds($item->bbox[0], $item->bbox[1], $item->bbox[2], $item->bbox[3]);
             }
 
-            $builder->setStreetName(property_exists($item->address, 'addressLine') ? (string) $item->address->addressLine : null);
-            $builder->setPostalCode(property_exists($item->address, 'postalCode') ? (string) $item->address->postalCode : null);
-            $builder->setLocality(property_exists($item->address, 'locality') ? (string) $item->address->locality : null);
-            $builder->setCountry(property_exists($item->address, 'countryRegion') ? (string) $item->address->countryRegion : null);
-            $builder->setCountryCode(property_exists($item->address, 'countryRegionIso2') ? (string) $item->address->countryRegionIso2 : null);
+            $builder->setStreetName($item->address->addressLine ?? null);
+            $builder->setPostalCode($item->address->postalCode ?? null);
+            $builder->setLocality($item->address->locality ?? null);
+            $builder->setCountry($item->address->countryRegion ?? null);
+            $builder->setCountryCode($item->address->countryRegionIso2 ?? null);
 
             foreach (['adminDistrict', 'adminDistrict2'] as $i => $property) {
                 if (property_exists($item->address, $property)) {
