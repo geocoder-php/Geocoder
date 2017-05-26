@@ -70,10 +70,6 @@ final class Nominatim extends AbstractHttpProvider implements LocaleAwareGeocode
         $url = sprintf($this->getGeocodeEndpointUrl(), urlencode($address), $query->getLimit());
         $content = $this->executeQuery($url, $query->getLocale());
 
-        if (empty($content)) {
-            throw InvalidServerResponse::create($url);
-        }
-
         $doc = new \DOMDocument();
         if (!@$doc->loadXML($content) || null === $doc->getElementsByTagName('searchresults')->item(0)) {
             throw InvalidServerResponse::create($url);
@@ -102,12 +98,8 @@ final class Nominatim extends AbstractHttpProvider implements LocaleAwareGeocode
         $coordinates = $query->getCoordinates();
         $longitude = $coordinates->getLongitude();
         $latitude = $coordinates->getLatitude();
-        $url = sprintf($this->getReverseEndpointUrl(), $latitude, $longitude);
+        $url = sprintf($this->getReverseEndpointUrl(), $latitude, $longitude, $query->getData('zoom', 18));
         $content = $this->executeQuery($url, $query->getLocale());
-
-        if (empty($content)) {
-            return new AddressCollection([]);
-        }
 
         $doc = new \DOMDocument();
         if (!@$doc->loadXML($content) || $doc->getElementsByTagName('error')->length > 0) {
@@ -191,7 +183,7 @@ final class Nominatim extends AbstractHttpProvider implements LocaleAwareGeocode
 
     private function getReverseEndpointUrl()
     {
-        return $this->rootUrl.'/reverse?format=xml&lat=%F&lon=%F&addressdetails=1&zoom=18';
+        return $this->rootUrl.'/reverse?format=xml&lat=%F&lon=%F&addressdetails=1&zoom=%d';
     }
 
     private function getNodeValue(\DOMNodeList $element)
