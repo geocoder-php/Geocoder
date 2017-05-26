@@ -271,8 +271,8 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocod
      * Update current resultSet with given key/value.
      *
      * @param AddressBuilder $builder
-     * @param string          $type    Component type
-     * @param object          $values  The component values
+     * @param string         $type    Component type
+     * @param object         $values  The component values
      */
     private function updateAddressComponent(AddressBuilder $builder, $type, $values)
     {

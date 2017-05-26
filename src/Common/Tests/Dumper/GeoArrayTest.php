@@ -41,7 +41,7 @@ class GeoArrayTest extends TestCase
                 'coordinates' => [0, 0],
             ],
             'properties' => [
-                'providedBy' => 'n/a'
+                'providedBy' => 'n/a',
             ],
         ];
 
@@ -65,7 +65,7 @@ class GeoArrayTest extends TestCase
                 'coordinates' => [2.3889114, 48.8631507],
             ],
             'properties' => [
-                'providedBy' => 'n/a'
+                'providedBy' => 'n/a',
             ],
         ];
 
@@ -95,7 +95,7 @@ class GeoArrayTest extends TestCase
                 'coordinates' => [2.3889114, 48.8631507],
             ],
             'properties' => [
-                'providedBy' => 'n/a'
+                'providedBy' => 'n/a',
             ],
             'bounds' => [
                 'south' => 48.8631507,
@@ -135,7 +135,7 @@ class GeoArrayTest extends TestCase
             'properties' => [
                 'locality' => 'Paris',
                 'country' => 'France',
-                'providedBy' => 'n/a'
+                'providedBy' => 'n/a',
             ],
             'bounds' => [
                 'south' => 48.8631507,

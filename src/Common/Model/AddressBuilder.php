@@ -82,7 +82,6 @@ final class AddressBuilder
     private $timezone;
 
     /**
-     *
      * @param string $providedBy
      */
     public function __construct(string $providedBy)
