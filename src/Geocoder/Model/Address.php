@@ -56,6 +56,11 @@ final class Address
     private $adminLevels;
 
     /**
+     * @var AdminLevelCollection
+     */
+    private $subLocalityLevels;
+
+    /**
      * @var Country
      */
     private $country;
@@ -66,34 +71,43 @@ final class Address
     private $timezone;
 
     /**
-     * @param string $streetNumber
-     * @param string $streetName
-     * @param string $postalCode
-     * @param string $locality
-     * @param string $subLocality
+     * @param \Geocoder\Model\Coordinates                $coordinates
+     * @param \Geocoder\Model\Bounds                     $bounds
+     * @param string                                     $streetNumber
+     * @param string                                     $streetName
+     * @param string                                     $postalCode
+     * @param string                                     $locality
+     * @param string                                     $subLocality
+     * @param \Geocoder\Model\AdminLevelCollection       $adminLevels
+     * @param \Geocoder\Model\SubLocalityLevelCollection $subLocalityLevels
+     * @param \Geocoder\Model\Country                    $country
+     * @param null                                       $timezone
      */
     public function __construct(
-        Coordinates $coordinates          = null,
-        Bounds $bounds                    = null,
-        $streetNumber                     = null,
-        $streetName                       = null,
-        $postalCode                       = null,
-        $locality                         = null,
-        $subLocality                      = null,
+        Coordinates $coordinates = null,
+        Bounds $bounds = null,
+        $streetNumber = null,
+        $streetName = null,
+        $postalCode = null,
+        $locality = null,
+        $subLocality = null,
         AdminLevelCollection $adminLevels = null,
-        Country $country                  = null,
-        $timezone                         = null
-    ) {
-        $this->coordinates  = $coordinates;
-        $this->bounds       = $bounds;
+        SubLocalityLevelCollection $subLocalityLevels = null,
+        Country $country = null,
+        $timezone = null
+    )
+    {
+        $this->coordinates = $coordinates;
+        $this->bounds = $bounds;
         $this->streetNumber = $streetNumber;
-        $this->streetName   = $streetName;
-        $this->postalCode   = $postalCode;
-        $this->locality     = $locality;
-        $this->subLocality  = $subLocality;
-        $this->adminLevels  = $adminLevels ?: new AdminLevelCollection();
-        $this->country      = $country;
-        $this->timezone     = $timezone;
+        $this->streetName = $streetName;
+        $this->postalCode = $postalCode;
+        $this->locality = $locality;
+        $this->subLocality = $subLocality;
+        $this->adminLevels = $adminLevels ?: new AdminLevelCollection();
+        $this->subLocalityLevels = $subLocalityLevels ?: new SubLocalityLevelCollection();
+        $this->country = $country;
+        $this->timezone = $timezone;
     }
 
     /**
@@ -104,34 +118,6 @@ final class Address
     public function getCoordinates()
     {
         return $this->coordinates;
-    }
-
-    /**
-     * Returns the latitude value.
-     *
-     * @return double
-     */
-    public function getLatitude()
-    {
-        if (null === $this->coordinates) {
-            return null;
-        }
-
-        return $this->coordinates->getLatitude();
-    }
-
-    /**
-     * Returns the longitude value.
-     *
-     * @return double
-     */
-    public function getLongitude()
-    {
-        if (null === $this->coordinates) {
-            return null;
-        }
-
-        return $this->coordinates->getLongitude();
     }
 
     /**
@@ -206,6 +192,16 @@ final class Address
     }
 
     /**
+     * Returns the sublocality levels.
+     *
+     * @return SubLocalityLevelCollection
+     */
+    public function getSubLocalityLevels()
+    {
+        return $this->subLocalityLevels;
+    }
+
+    /**
      * Returns the country value.
      *
      * @return Country
@@ -245,24 +241,61 @@ final class Address
         $adminLevels = [];
         foreach ($this->adminLevels as $adminLevel) {
             $adminLevels[$adminLevel->getLevel()] = [
-                'name'  => $adminLevel->getName(),
-                'code'  => $adminLevel->getCode()
+                'name' => $adminLevel->getName(),
+                'code' => $adminLevel->getCode()
             ];
         }
 
-        return array(
-            'latitude'     => $this->getLatitude(),
-            'longitude'    => $this->getLongitude(),
-            'bounds'       => $this->bounds->toArray(),
-            'streetNumber' => $this->streetNumber,
-            'streetName'   => $this->streetName,
-            'postalCode'   => $this->postalCode,
-            'locality'     => $this->locality,
-            'subLocality'  => $this->subLocality,
-            'adminLevels'  => $adminLevels,
-            'country'      => $this->country->getName(),
-            'countryCode'  => $this->country->getCode(),
-            'timezone'     => $this->timezone,
-        );
+        $subLocalityLevels = [];
+        foreach ($this->subLocalityLevels as $sublocalityLevel) {
+            $subLocalityLevels[$sublocalityLevel->getLevel()] = [
+                'name' => $sublocalityLevel->getName(),
+                'code' => $sublocalityLevel->getCode()
+            ];
+        }
+
+        return [
+            'latitude'          => $this->getLatitude(),
+            'longitude'         => $this->getLongitude(),
+            'bounds'            => $this->bounds->toArray(),
+            'streetNumber'      => $this->streetNumber,
+            'streetName'        => $this->streetName,
+            'postalCode'        => $this->postalCode,
+            'locality'          => $this->locality,
+            'subLocality'       => $this->subLocality,
+            'adminLevels'       => $adminLevels,
+            'subLocalityLevels' => $subLocalityLevels,
+            'country'           => $this->country->getName(),
+            'countryCode'       => $this->country->getCode(),
+            'timezone'          => $this->timezone,
+        ];
+    }
+
+    /**
+     * Returns the latitude value.
+     *
+     * @return double
+     */
+    public function getLatitude()
+    {
+        if (null === $this->coordinates) {
+            return null;
+        }
+
+        return $this->coordinates->getLatitude();
+    }
+
+    /**
+     * Returns the longitude value.
+     *
+     * @return double
+     */
+    public function getLongitude()
+    {
+        if (null === $this->coordinates) {
+            return null;
+        }
+
+        return $this->coordinates->getLongitude();
     }
 }
