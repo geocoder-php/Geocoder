@@ -266,7 +266,7 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocod
                 $address->setResultType($result->types);
             }
             if (isset($result->formatted_address)) {
-                $address->setFormattedAddress($result->formatted_address);
+                $address = $address->withFormattedAddress($result->formatted_address);
             }
             $results[] = $address;
 

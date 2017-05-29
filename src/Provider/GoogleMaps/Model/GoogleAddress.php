@@ -85,10 +85,11 @@ final class GoogleAddress extends Address
     /**
      * @param null|string $formattedAddress
      */
-    public function setFormattedAddress($formattedAddress)
+    public function withFormattedAddress($formattedAddress)
     {
-        $this->formattedAddress = $formattedAddress;
+        $new = clone $this;
+        $new->formattedAddress = $formattedAddress;
 
-        return $this;
+        return $new;
     }
 }
