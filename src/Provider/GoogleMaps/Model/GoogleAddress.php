@@ -30,6 +30,11 @@ final class GoogleAddress extends Address
     private $resultType = [];
 
     /**
+     * @var string|null
+     */
+    private $formattedAddress;
+
+    /**
      * @param null|string $locationType
      *
      * @return GoogleAddress
@@ -67,5 +72,24 @@ final class GoogleAddress extends Address
         $this->resultType = $resultType;
 
         return $this;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getFormattedAddress()
+    {
+        return $this->formattedAddress;
+    }
+
+    /**
+     * @param null|string $formattedAddress
+     */
+    public function withFormattedAddress($formattedAddress)
+    {
+        $new = clone $this;
+        $new->formattedAddress = $formattedAddress;
+
+        return $new;
     }
 }
