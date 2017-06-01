@@ -13,36 +13,23 @@ declare(strict_types=1);
 namespace Geocoder\Provider\ArcGISOnlineTest\Tests;
 
 use Geocoder\Collection;
+use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Location;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Tests\TestCase;
 use Geocoder\Provider\ArcGISOnline\ArcGISOnline;
 
-class ArcGISOnlineTest extends TestCase
+class ArcGISOnlineTest extends BaseTestCase
 {
+    protected function getCacheDir()
+    {
+        return __DIR__.'/.cached_responses';
+    }
+
     public function testGetName()
     {
-        $provider = new ArcGISOnline($this->getMockAdapter($this->never()));
+        $provider = new ArcGISOnline($this->getMockedHttpClient());
         $this->assertEquals('arcgis_online', $provider->getName());
-    }
-
-    /**
-     * @expectedException \Geocoder\Exception\InvalidServerResponse
-     */
-    public function testGeocodeWithInvalidData()
-    {
-        $provider = new ArcGISOnline($this->getMockAdapter());
-        $provider->geocodeQuery(GeocodeQuery::create('loremipsum'));
-    }
-
-    /**
-     * @expectedException \Geocoder\Exception\InvalidArgument
-     */
-    public function testGeocodeWithEmpty()
-    {
-        $provider = new ArcGISOnline($this->getMockAdapter($this->never()));
-        $provider->geocodeQuery(GeocodeQuery::create(''));
     }
 
     /**
@@ -51,7 +38,7 @@ class ArcGISOnlineTest extends TestCase
      */
     public function testGeocodeWithLocalhostIPv4()
     {
-        $provider = new ArcGISOnline($this->getMockAdapter($this->never()));
+        $provider = new ArcGISOnline($this->getMockedHttpClient());
         $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
     }
 
@@ -61,22 +48,13 @@ class ArcGISOnlineTest extends TestCase
      */
     public function testGeocodeWithLocalhostIPv6()
     {
-        $provider = new ArcGISOnline($this->getMockAdapter($this->never()));
+        $provider = new ArcGISOnline($this->getMockedHttpClient());
         $provider->geocodeQuery(GeocodeQuery::create('::1'));
-    }
-
-    /**
-     * @expectedException \Geocoder\Exception\InvalidServerResponse
-     */
-    public function testGeocodeWithAddressGetsNullContent()
-    {
-        $provider = new ArcGISOnline($this->getMockAdapterReturns(null));
-        $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
     }
 
     public function testGeocodeWithRealAddress()
     {
-        $provider = new ArcGISOnline($this->getAdapter());
+        $provider = new ArcGISOnline($this->getHttpClient());
         $results = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -104,67 +82,18 @@ class ArcGISOnlineTest extends TestCase
         $this->assertNull($result->getTimezone());
     }
 
-    public function testGeocodeWithRealAddressAndHttps()
+    public function testGeocodeWithInvalidAddressWithSourceCountry()
     {
-        $provider = new ArcGISOnline($this->getAdapter(), null, true);
-        $results = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
-
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
-        $this->assertCount(5, $results);
-
-        /** @var \Geocoder\Model\Address $result */
-        $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(48.863279997000461, $result->getCoordinates()->getLatitude(), '', 0.0001);
-        $this->assertEquals(2.3890199980004354, $result->getCoordinates()->getLongitude(), '', 0.0001);
-        $this->assertEquals(10, $result->getStreetNumber());
-        $this->assertEquals('10 Avenue Gambetta', $result->getStreetName());
-        $this->assertEquals(75020, $result->getPostalCode());
-        $this->assertEquals('Paris', $result->getLocality());
-        $this->assertCount(2, $result->getAdminLevels());
-        $this->assertEquals('Paris', $result->getAdminLevels()->get(2)->getName());
-        $this->assertEquals('Île-de-France', $result->getAdminLevels()->get(1)->getName());
-        $this->assertEquals('FRA', $result->getCountry()->getCode());
-        $this->assertEquals(10, $result->getStreetNumber());
-
-        $this->assertNull($result->getBounds());
-        $this->assertNull($result->getSubLocality());
-        $this->assertNull($result->getAdminLevels()->get(2)->getCode());
-        $this->assertNull($result->getAdminLevels()->get(1)->getCode());
-        $this->assertNull($result->getCountry()->getName());
-        $this->assertNull($result->getTimezone());
-    }
-
-    public function testGeocodeWithInvalidAddressWithHttpsForSourceCountry()
-    {
-        $provider = new ArcGISOnline($this->getAdapter(), 'Denmark', true);
+        $provider = new ArcGISOnline($this->getHttpClient(), 'Denmark', true);
         $result = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
 
         $this->assertInstanceOf(Collection::class, $result);
         $this->assertEquals(0, $result->count());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\InvalidServerResponse
-     */
-    public function testReverseWithInvalid()
+    public function testReverseWithRealCoordinates()
     {
-        $provider = new ArcGISOnline($this->getMockAdapter());
-        $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
-    }
-
-    /**
-     * @expectedException \Geocoder\Exception\InvalidServerResponse
-     */
-    public function testReverseWithCoordinatesContentReturnNull()
-    {
-        $provider = new ArcGISOnline($this->getMockAdapterReturns(null));
-        $provider->reverseQuery(ReverseQuery::fromCoordinates(48.863279997000461, 2.3890199980004354));
-    }
-
-    public function testReverseWithRealCoordinatesWithHttps()
-    {
-        $provider = new ArcGISOnline($this->getAdapter(), null);
+        $provider = new ArcGISOnline($this->getHttpClient(), null);
         $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(48.863279997000461, 2.3890199980004354));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -190,7 +119,7 @@ class ArcGISOnlineTest extends TestCase
 
     public function testGeocodeWithCity()
     {
-        $provider = new ArcGISOnline($this->getAdapter());
+        $provider = new ArcGISOnline($this->getHttpClient());
         $results = $provider->geocodeQuery(GeocodeQuery::create('Hannover'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -264,7 +193,7 @@ class ArcGISOnlineTest extends TestCase
      */
     public function testGeocodeWithRealIPv4()
     {
-        $provider = new ArcGISOnline($this->getMockAdapter($this->never()));
+        $provider = new ArcGISOnline($this->getHttpClient());
         $provider->geocodeQuery(GeocodeQuery::create('88.188.221.14'));
     }
 
@@ -274,7 +203,7 @@ class ArcGISOnlineTest extends TestCase
      */
     public function testGeocodeWithRealIPv6()
     {
-        $provider = new ArcGISOnline($this->getMockAdapter($this->never()));
+        $provider = new ArcGISOnline($this->getHttpClient());
         $provider->geocodeQuery(GeocodeQuery::create('::ffff:88.188.221.14'));
     }
 }
