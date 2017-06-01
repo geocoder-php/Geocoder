@@ -165,8 +165,8 @@ final class Yandex extends AbstractHttpProvider implements LocaleAwareGeocoder, 
 
             /** @var YandexAddress $location */
             $location = $builder->build(YandexAddress::class);
-            $location->setPrecision(isset($flatArray['precision']) ? $flatArray['precision'] : null);
-            $location->setName(isset($flatArray['name']) ? $flatArray['name'] : null);
+            $location = $location->withPrecision(isset($flatArray['precision']) ? $flatArray['precision'] : null);
+            $location = $location->withName(isset($flatArray['name']) ? $flatArray['name'] : null);
             $locations[] = $location;
         }
 
