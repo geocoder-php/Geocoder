@@ -15,6 +15,7 @@ namespace Geocoder\Provider\FreeGeoIp;
 use Geocoder\Collection;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Model\Address;
+use Geocoder\Model\AddressBuilder;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Model\LocationBuilder;
 use Geocoder\Query\GeocodeQuery;
@@ -52,7 +53,7 @@ final class FreeGeoIp extends AbstractHttpProvider implements Provider, IpAddres
 
         $content = $this->getUrlContents(sprintf(self::ENDPOINT_URL, $address));
         $data = json_decode($content, true);
-        $builder = new LocationBuilder();
+        $builder = new AddressBuilder($this->getName());
 
         if (!empty($data['region_name']) || !empty($data['region_code'])) {
             $builder->addAdminLevel(1, $data['region_name'] ?? null, $data['region_code'] ?? null);
