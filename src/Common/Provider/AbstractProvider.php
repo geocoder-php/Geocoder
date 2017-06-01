@@ -83,16 +83,4 @@ abstract class AbstractProvider
 
         return new AddressCollection($addresses);
     }
-
-    /**
-     * @param array $results
-     *
-     * @return array
-     */
-    protected function fixEncoding(array $results)
-    {
-        return array_map(function ($value) {
-            return is_string($value) ? utf8_encode($value) : $value;
-        }, $results);
-    }
 }
