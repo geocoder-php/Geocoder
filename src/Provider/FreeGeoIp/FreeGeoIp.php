@@ -13,8 +13,9 @@ declare(strict_types=1);
 namespace Geocoder\Provider\FreeGeoIp;
 
 use Geocoder\Exception\UnsupportedOperation;
-use Geocoder\Collection;
+use Geocoder\Model\Address;
 use Geocoder\Model\AddressCollection;
+use Geocoder\Model\LocationBuilder;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\AbstractHttpProvider;
@@ -42,12 +43,28 @@ final class FreeGeoIp extends AbstractHttpProvider implements Provider, IpAddres
         }
 
         if (in_array($address, ['127.0.0.1', '::1'])) {
-            return $this->returnResults([$this->getLocalhostDefaults()]);
+            return new AddressCollection([Address::createFromArray([
+                'locality' => 'localhost',
+                'country' => 'localhost',
+            ])]);
         }
 
-        $query = sprintf(self::ENDPOINT_URL, $address);
+        $content = $this->getUrlContents(sprintf(self::ENDPOINT_URL, $address));
+        $data = json_decode($content, true);
+        $builder = new LocationBuilder();
 
-        return $this->executeQuery($query);
+        if (!empty($data['region_name']) || !empty($data['region_code'])) {
+            $builder->addAdminLevel(1, $data['region_name'] ?? null, $data['region_code'] ?? null);
+        }
+
+        $builder->setCoordinates($data['latitude'] ?? null, $data['longitude'] ?? null);
+        $builder->setLocality($data['city'] ?? null);
+        $builder->setPostalCode($data['zip_code'] ?? null);
+        $builder->setCountry($data['country_name'] ?? null);
+        $builder->setCountryCode($data['country_code'] ?? null);
+        $builder->setTimezone($data['time_zone'] ?? null);
+
+        return new AddressCollection([$builder->build()]);
     }
 
     /**
@@ -64,43 +81,5 @@ final class FreeGeoIp extends AbstractHttpProvider implements Provider, IpAddres
     public function getName(): string
     {
         return 'free_geo_ip';
-    }
-
-    /**
-     * @param string $url
-     *
-     * @return Collection
-     */
-    private function executeQuery($url)
-    {
-        $content = $this->getUrlContents($url);
-        $data = json_decode($content, true);
-
-        if (empty($data)) {
-            return new AddressCollection([]);
-        }
-
-        $adminLevels = [];
-
-        if (!empty($data['region_name']) || !empty($data['region_code'])) {
-            $adminLevels[] = [
-                'name' => isset($data['region_name']) ? $data['region_name'] : null,
-                'code' => isset($data['region_code']) ? $data['region_code'] : null,
-                'level' => 1,
-            ];
-        }
-
-        return $this->returnResults([
-            array_merge($this->getDefaults(), [
-                'latitude' => isset($data['latitude']) ? $data['latitude'] : null,
-                'longitude' => isset($data['longitude']) ? $data['longitude'] : null,
-                'locality' => isset($data['city']) ? $data['city'] : null,
-                'postalCode' => isset($data['zip_code']) ? $data['zip_code'] : null,
-                'adminLevels' => $adminLevels,
-                'country' => isset($data['country_name']) ? $data['country_name'] : null,
-                'countryCode' => isset($data['country_code']) ? $data['country_code'] : null,
-                'timezone' => isset($data['time_zone']) ? $data['time_zone'] : null,
-            ]),
-        ]);
     }
 }
