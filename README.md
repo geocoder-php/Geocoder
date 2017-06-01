@@ -1,13 +1,12 @@
 Geocoder
 ========
 
-[![Build
-Status](https://travis-ci.org/geocoder-php/Geocoder.svg?branch=master)](http://travis-ci.org/geocoder-php/Geocoder)
-[![Total
-Downloads](https://poser.pugx.org/willdurand/Geocoder/downloads.png)](https://packagist.org/packages/willdurand/Geocoder)
-[![Latest Stable
-Version](https://poser.pugx.org/willdurand/Geocoder/v/stable.png)](https://packagist.org/packages/willdurand/Geocoder)
-![PHP7 ready](https://img.shields.io/badge/PHP7-ready-green.svg)
+[![Build Status](https://travis-ci.org/geocoder-php/Geocoder.svg?branch=master)](http://travis-ci.org/geocoder-php/Geocoder)
+[![Latest Stable Version](https://poser.pugx.org/willdurand/Geocoder/v/stable.png)](https://packagist.org/packages/willdurand/Geocoder)
+[![Total Downloads](https://poser.pugx.org/willdurand/Geocoder/downloads.png)](https://packagist.org/packages/willdurand/Geocoder)
+[![Monthly Downloads](https://poser.pugx.org/willdurand/Geocoder/d/monthly.png)](https://packagist.org/packages/willdurand/Geocoder)
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
+
 
 > **Important:** You are browsing the documentation of Geocoder **4.x** (not
 > released yet).
@@ -24,48 +23,60 @@ Version](https://poser.pugx.org/willdurand/Geocoder/v/stable.png)](https://packa
 providing a powerful abstraction layer for geocoding manipulations.
 
 * [Installation](#installation)
+* [Cookbook](#cookbook)
 * [Usage](#usage)
-  - [Address & AddressCollection](#address--addresscollection)
+* [Special Geocoders and Providers](#special-geocoders-and-providers) 
+  - [The Chain Provider](#the-chain-provider)
   - [The ProviderAggregator](#the-provideraggregator)
   - [TimedGeocoder](#timedgeocoder)
-  - [HTTP Adapters](#http-adapters)
-  - [Providers](#providers)
-    - [Address-based Providers](#address-based-providers)
-      - [ArcGISOnline](#arcgisonline)
-      - [GeoIP2](#geoip2)
-      - [GoogleMaps](#googlemaps)
-      - [GoogleMapsBusiness](#googlemapsbusiness)
-      - [Mapzen](#mapzen)
-      - [MaxMindBinary](#maxmindbinary)
-      - [Nominatim](#nominatim)
-      - [TomTom](#tomtom)
-      - [Yandex](#yandex)
-    - [IP-based Providers](#ip-based-providers)
-    - [Locale Aware Providers](#locale-aware-providers)
-    - [The Chain Provider](#the-chain-provider)
-  - [Dumpers](#dumpers)
-    - [GPS eXchange Format (GPX)](#gps-exchange-format-gpx)
-    - [GeoJSON](#geojson)
-    - [GeoArray](#geoarray)
-    - [Keyhole Markup Language (KML)](#keyhole-markup-language-kml)
-    - [Well-Known Binary (WKB)](#well-known-binary-wkb)
-    - [Well-Known Text (WKT)](#well-known-text-wkt)
-  - [Formatters](#formatters)
-* [Extending Things](#extending-things)
+* [Providers](#providers)
+  - [Address-based Providers](#address-based-providers)
+  - [IP-based Providers](#ip-based-providers)
+  - [Locale Aware Providers](#locale-aware-providers)
+* [Dumpers](#dumpers)
+* [Formatters](#formatters)
 * [Versioning](#versioning)
-* [Cookbook](#cookbook)
 
 
 Installation
 ------------
 
-The recommended way to install Geocoder is through
-[Composer](http://getcomposer.org):
+To install a Geocoder there are two things you need to know: 
+
+1) What Geocoder provider you want to use
+2) What HTTP client/adapter you want to use. 
+
+### Geocoder providers
+
+Since 4.0 we do not include providers by default. You need to select a *geocoder provider*. You will see a list of 
+providers [at Packagist](https://packagist.org/providers/geocoder-php/provider-implementation)
+
+### HTTP Clients
+
+In order to talk to geocoding APIs, you need HTTP adapters. While it was part of
+the library in Geocoder before, Geocoder 4.x and upper now relies on HTTPlug
+which defines how HTTP message should be sent and received. You can use any library to send HTTP messages
+that implements [php-http/client-implementation](https://packagist.org/providers/php-http/client-implementation).
+
+Here is a list of all officially supported clients and adapters by HTTPlug: http://docs.php-http.org/en/latest/clients.html
+
+Read more about HTTPlug in [their docs](http://docs.php-http.org/en/latest/httplug/users.html).
+
+### Summery (Just give me the command)
+
+To install Google Maps geocoder with Guzzle 6 you may run the following command: 
 
 ```
-$ composer require willdurand/geocoder
+$ composer require geocoder-php/google-maps-provider php-http/guzzle6-adapter php-http/message
 ```
 
+Cookbook
+--------
+
+We have a small cookbook where you can find examples on common use cases:
+
+* [Caching responses](/docs/cookbook/cache.md)
+* [Configuring the HTTP client](/docs/cookbook/http-client.md)
 
 Usage
 -----
@@ -85,8 +96,8 @@ $adapter  = new \Http\Adapter\Guzzle6\Client();
 $provider = new \Geocoder\Provider\GoogleMaps($adapter);
 $geocoder = new \Geocoder\StatefulGeocoder($provider, 'en');
 
-$geocoder->geocode(...);
-$geocoder->reverse(...);
+$geocoder->geocodeQuery(GeocodeQuery::create(...));
+$geocoder->reverseQuery(ReverseQuery::fromCoordinates(...));
 ```
 
 The `Provider` interface has three methods:
@@ -102,10 +113,10 @@ make migration from 3.x smoother.
 * `geocode($streetOrIpAddress)`
 * `reverse($latitude, $longitude)`
 
-### Address & AddressCollection
+### Location & Collection
 
-Both `geocode()` and `reverse()` methods return a collection of `Address`
-objects (`AddressCollection`), each providing the following API:
+Both `geocodeQuery()` and `reverseQuery()` methods return a collection of `Location`
+objects (`Collection`), each providing the following API:
 
 * `getCoordinates()` will return a `Coordinates` object (with `latitude` and
   `longitude` properties);
@@ -134,6 +145,37 @@ The `AddressCollection` exposes the following methods:
 * `get($index)` fetches an `Address` using its `$index`;
 * `all()` returns all `Address` objects;
 * `getIterator()` (this class implements `IteratorAggregate`).
+
+Special Geocoders and Providers
+-------------------------------
+
+### The Chain Provider
+
+The `Chain` provider is a special provider that takes a list of providers and
+iterates over this list to get information. Note that it **stops** its iteration
+when a provider returns a result. The result is returned by `GoogleMaps` because
+`FreeGeoIp` and `HostIp` cannot geocode street addresses. `BingMaps` is ignored.
+
+``` php
+$geocoder = new \Geocoder\ProviderAggregator();
+$adapter  = new \Http\Adapter\Guzzle6\Client();
+
+$chain = new \Geocoder\Provider\Chain([
+    new \Geocoder\Provider\FreeGeoIp($adapter),
+    new \Geocoder\Provider\HostIp($adapter),
+    new \Geocoder\Provider\GoogleMaps($adapter, 'France'),
+    new \Geocoder\Provider\BingMaps($adapter, '<API_KEY>'),
+    // ...
+]);
+
+$geocoder->registerProvider($chain);
+
+$geocode = $geocoder->geocode('10 rue Gambetta, Paris, France');
+var_export($geocode);
+
+```
+
+Everything is ok, enjoy!
 
 ### The ProviderAggregator
 
@@ -219,22 +261,8 @@ We use the [symfony/stopwatch](http://symfony.com/doc/current/components/stopwat
 component under the hood. Which means, if you use the Symfony framework the
 geocoder calls will appear in your timeline section in the Web Profiler.
 
-### HTTP Adapters
-
-In order to talk to geocoding APIs, you need HTTP adapters. While it was part of
-the library in Geocoder 1.x and 2.x, Geocoder 3.x and upper now relies on the
-[PSR-7
-Standard](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-7-http-message.md)
-which defines how HTTP message should be implemented. You can use any library to send HTTP messages
-that implements [php-http/client-implementation](https://packagist.org/providers/php-http/client-implementation).
-
-To use Guzzle 6 you should run the following command:
-
-```
-$ composer require php-http/guzzle6-adapter php-http/message
-```
-
-### Providers
+Providers
+---------
 
 Providers perform the geocoding black magic for you (talking to the APIs,
 fetching results, dealing with errors, etc.) and are highly configurable.
@@ -367,40 +395,10 @@ $geocoder->setLocale('xyz');
 $locale = $geocoder->getLocale();
 ```
 
-#### The Chain Provider
+Dumpers
+-------
 
-The `Chain` provider is a special provider that takes a list of providers and
-iterates over this list to get information. Note that it **stops** its iteration
-when a provider returns a result. The result is returned by `GoogleMaps` because
-`FreeGeoIp` and `HostIp` cannot geocode street addresses. `BingMaps` is ignored.
-
-``` php
-$geocoder = new \Geocoder\ProviderAggregator();
-$adapter  = new \Http\Adapter\Guzzle6\Client();
-
-$chain = new \Geocoder\Provider\Chain([
-    new \Geocoder\Provider\FreeGeoIp($adapter),
-    new \Geocoder\Provider\HostIp($adapter),
-    new \Geocoder\Provider\GoogleMaps($adapter, 'fr_FR', 'France', true),
-    new \Geocoder\Provider\BingMaps($adapter, '<API_KEY>'),
-    // ...
-]);
-
-$geocoder->registerProvider($chain);
-
-try {
-    $geocode = $geocoder->geocode('10 rue Gambetta, Paris, France');
-    var_export($geocode);
-} catch (Exception $e) {
-    echo $e->getMessage();
-}
-```
-
-Everything is ok, enjoy!
-
-### Dumpers
-
-**Geocoder** provides dumpers that aim to transform an `Address` object in
+**Geocoder** provides dumpers that aim to transform a `Location` object in
 standard formats.
 
 #### GPS eXchange Format (GPX)
@@ -465,7 +463,8 @@ Well-known text (WKT) is a text markup language for representing vector geometry
 objects on a map, spatial reference systems of spatial objects and
 transformations between spatial reference systems.
 
-### Formatters
+Formatters
+----------
 
 A common use case is to print geocoded data. Thanks to the `StringFormatter`
 class, it's simple to format an `Address` object as a string:
@@ -486,33 +485,15 @@ $formatter->format($address, '<p>%S %n, %z %L</p>');
 Here is the mapping:
 
 * Street Number: `%n`
-
 * Street Name: `%S`
-
 * City: `%L`
-
 * City District: `%D`
-
 * Zipcode: `%z`
-
 * Admin Level Name: `%A1`, `%A2`, `%A3`, `%A4`, `%A5`
-
 * Admin Level Code: `%a1`, `%a2`, `%a3`, `%a4`, `%a5`
-
 * Country: `%C`
-
 * Country Code: `%c`
-
 * Timezone: `%T`
-
-
-Extending Things
-----------------
-
-You can write your own `provider` by implementing the `Provider` interface.
-
-You can provide your own `dumper` by implementing the `Dumper` interface.
-
 
 Versioning
 ----------
@@ -539,15 +520,6 @@ Major version `2` will reach **end of life on December 2015**.
 ### Stable Version
 
 Version `3.x` is the current major stable version of Geocoder.
-
-Cookbook
---------
-
-We have a small cookbook where you can find examples on common use cases:
-
-* [Caching responses](/docs/cookbook/cache.md)
-* [Configuring the HTTP client](/docs/cookbook/http-client.md)
-
 
 Contributing
 ------------
