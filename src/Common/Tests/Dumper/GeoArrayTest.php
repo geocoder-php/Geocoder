@@ -40,7 +40,9 @@ class GeoArrayTest extends TestCase
                 'type' => 'Point',
                 'coordinates' => [0, 0],
             ],
-            'properties' => null,
+            'properties' => [
+                'providedBy' => 'n/a',
+            ],
         ];
 
         $result = $this->dumper->dump($address);
@@ -62,7 +64,9 @@ class GeoArrayTest extends TestCase
                 'type' => 'Point',
                 'coordinates' => [2.3889114, 48.8631507],
             ],
-            'properties' => null,
+            'properties' => [
+                'providedBy' => 'n/a',
+            ],
         ];
 
         $result = $this->dumper->dump($address);
@@ -90,7 +94,9 @@ class GeoArrayTest extends TestCase
                 'type' => 'Point',
                 'coordinates' => [2.3889114, 48.8631507],
             ],
-            'properties' => null,
+            'properties' => [
+                'providedBy' => 'n/a',
+            ],
             'bounds' => [
                 'south' => 48.8631507,
                 'west' => 2.3889114,
@@ -129,6 +135,7 @@ class GeoArrayTest extends TestCase
             'properties' => [
                 'locality' => 'Paris',
                 'country' => 'France',
+                'providedBy' => 'n/a',
             ],
             'bounds' => [
                 'south' => 48.8631507,

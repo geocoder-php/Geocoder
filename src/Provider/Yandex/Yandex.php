@@ -15,7 +15,7 @@ namespace Geocoder\Provider\Yandex;
 use Geocoder\Collection;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Model\AddressCollection;
-use Geocoder\Model\LocationBuilder;
+use Geocoder\Model\AddressBuilder;
 use Geocoder\Provider\Yandex\Model\YandexAddress;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
@@ -121,7 +121,7 @@ final class Yandex extends AbstractHttpProvider implements LocaleAwareGeocoder, 
 
         $locations = [];
         foreach ($data as $item) {
-            $builder = new LocationBuilder();
+            $builder = new AddressBuilder($this->getName());
             $bounds = null;
             $flatArray = ['pos' => ' '];
 

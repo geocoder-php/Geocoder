@@ -106,4 +106,11 @@ interface Location
      * @return array
      */
     public function toArray(): array;
+
+    /**
+     * The name of the provider that created this Location.
+     *
+     * @return string
+     */
+    public function getProvidedBy(): string;
 }

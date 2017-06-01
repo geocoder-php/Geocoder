@@ -19,7 +19,7 @@ use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\QuotaExceeded;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Model\AddressCollection;
-use Geocoder\Model\LocationBuilder;
+use Geocoder\Model\AddressBuilder;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\AbstractHttpProvider;
@@ -216,7 +216,7 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocod
 
         $results = [];
         foreach ($json->results as $result) {
-            $builder = new LocationBuilder();
+            $builder = new AddressBuilder($this->getName());
 
             // update address components
             foreach ($result->address_components as $component) {
@@ -270,11 +270,11 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocod
     /**
      * Update current resultSet with given key/value.
      *
-     * @param LocationBuilder $builder
-     * @param string          $type    Component type
-     * @param object          $values  The component values
+     * @param AddressBuilder $builder
+     * @param string         $type    Component type
+     * @param object         $values  The component values
      */
-    private function updateAddressComponent(LocationBuilder $builder, $type, $values)
+    private function updateAddressComponent(AddressBuilder $builder, $type, $values)
     {
         switch ($type) {
             case 'postal_code':

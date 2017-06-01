@@ -19,8 +19,13 @@ use Geocoder\Location;
  *
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-final class LocationBuilder
+final class AddressBuilder
 {
+    /**
+     * @var string
+     */
+    private $providedBy;
+
     /**
      * @var Coordinates|null
      */
@@ -77,17 +82,27 @@ final class LocationBuilder
     private $timezone;
 
     /**
+     * @param string $providedBy
+     */
+    public function __construct(string $providedBy)
+    {
+        $this->providedBy = $providedBy;
+    }
+
+    /**
      * @param string $class
      *
-     * @return Location
+     * @return Address
      */
     public function build($class = Address::class)
     {
-        if (!is_a($class, Location::class, true)) {
-            throw new \LogicException('First parameter to LocationBuilder::build must be a class name implementing Geocoder\Location');
+        if (!is_a($class, Address::class, true)) {
+            throw new \LogicException('First parameter to LocationBuilder::build must be a class name extending Geocoder\Model\Address');
         }
 
         return new $class(
+            $this->providedBy,
+            new AdminLevelCollection($this->adminLevels),
             $this->coordinates,
             $this->bounds,
             $this->streetNumber,
@@ -95,7 +110,6 @@ final class LocationBuilder
             $this->postalCode,
             $this->locality,
             $this->subLocality,
-            new AdminLevelCollection($this->adminLevels),
             new Country($this->country, $this->countryCode),
             $this->timezone
         );
@@ -107,7 +121,7 @@ final class LocationBuilder
      * @param float $north
      * @param float $east
      *
-     * @return LocationBuilder
+     * @return AddressBuilder
      */
     public function setBounds($south, $west, $north, $east)
     {
@@ -124,7 +138,7 @@ final class LocationBuilder
      * @param float $latitude
      * @param float $longitude
      *
-     * @return LocationBuilder
+     * @return AddressBuilder
      */
     public function setCoordinates($latitude, $longitude)
     {
@@ -142,7 +156,7 @@ final class LocationBuilder
      * @param string $name
      * @param string $code
      *
-     * @return LocationBuilder
+     * @return AddressBuilder
      */
     public function addAdminLevel($level, $name, $code)
     {
@@ -154,7 +168,7 @@ final class LocationBuilder
     /**
      * @param null|string $streetNumber
      *
-     * @return LocationBuilder
+     * @return AddressBuilder
      */
     public function setStreetNumber($streetNumber)
     {
@@ -166,7 +180,7 @@ final class LocationBuilder
     /**
      * @param null|string $streetName
      *
-     * @return LocationBuilder
+     * @return AddressBuilder
      */
     public function setStreetName($streetName)
     {
@@ -178,7 +192,7 @@ final class LocationBuilder
     /**
      * @param null|string $locality
      *
-     * @return LocationBuilder
+     * @return AddressBuilder
      */
     public function setLocality($locality)
     {
@@ -190,7 +204,7 @@ final class LocationBuilder
     /**
      * @param null|string $postalCode
      *
-     * @return LocationBuilder
+     * @return AddressBuilder
      */
     public function setPostalCode($postalCode)
     {
@@ -202,7 +216,7 @@ final class LocationBuilder
     /**
      * @param null|string $subLocality
      *
-     * @return LocationBuilder
+     * @return AddressBuilder
      */
     public function setSubLocality($subLocality)
     {
@@ -214,7 +228,7 @@ final class LocationBuilder
     /**
      * @param array $adminLevels
      *
-     * @return LocationBuilder
+     * @return AddressBuilder
      */
     public function setAdminLevels($adminLevels)
     {
@@ -226,7 +240,7 @@ final class LocationBuilder
     /**
      * @param null|string $country
      *
-     * @return LocationBuilder
+     * @return AddressBuilder
      */
     public function setCountry($country)
     {
@@ -238,7 +252,7 @@ final class LocationBuilder
     /**
      * @param null|string $countryCode
      *
-     * @return LocationBuilder
+     * @return AddressBuilder
      */
     public function setCountryCode($countryCode)
     {
@@ -250,7 +264,7 @@ final class LocationBuilder
     /**
      * @param null|string $timezone
      *
-     * @return LocationBuilder
+     * @return AddressBuilder
      */
     public function setTimezone($timezone)
     {

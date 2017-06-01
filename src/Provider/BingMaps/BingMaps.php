@@ -15,8 +15,8 @@ namespace Geocoder\Provider\BingMaps;
 use Geocoder\Collection;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Model\AddressBuilder;
 use Geocoder\Model\AddressCollection;
-use Geocoder\Model\LocationBuilder;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\AbstractHttpProvider;
@@ -121,7 +121,7 @@ final class BingMaps extends AbstractHttpProvider implements LocaleAwareGeocoder
 
         $results = [];
         foreach ($data as $item) {
-            $builder = new LocationBuilder();
+            $builder = new AddressBuilder($this->getName());
             $coordinates = (array) $item->geocodePoints[0]->coordinates;
             $builder->setCoordinates($coordinates[0], $coordinates[1]);
 

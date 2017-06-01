@@ -70,18 +70,26 @@ class Address implements Location
     private $timezone;
 
     /**
-     * @param Coordinates|null          $coordinates
-     * @param Bounds|null               $bounds
-     * @param string|null               $streetNumber
-     * @param string|null               $streetName
-     * @param string|null               $postalCode
-     * @param string|null               $locality
-     * @param string|null               $subLocality
-     * @param AdminLevelCollection|null $adminLevels
-     * @param Country|null              $country
-     * @param string|null               $timezone
+     * @var string
+     */
+    private $providedBy;
+
+    /**
+     * @param string               $providedBy
+     * @param AdminLevelCollection $adminLevels
+     * @param Coordinates|null     $coordinates
+     * @param Bounds|null          $bounds
+     * @param string|null          $streetNumber
+     * @param string|null          $streetName
+     * @param string|null          $postalCode
+     * @param string|null          $locality
+     * @param string|null          $subLocality
+     * @param Country|null         $country
+     * @param string|null          $timezone
      */
     public function __construct(
+        string $providedBy,
+        AdminLevelCollection $adminLevels,
         Coordinates $coordinates = null,
         Bounds $bounds = null,
         string $streetNumber = null,
@@ -89,10 +97,11 @@ class Address implements Location
         string $postalCode = null,
         string $locality = null,
         string $subLocality = null,
-        AdminLevelCollection $adminLevels = null,
         Country $country = null,
         string $timezone = null
     ) {
+        $this->providedBy = $providedBy;
+        $this->adminLevels = $adminLevels;
         $this->coordinates = $coordinates;
         $this->bounds = $bounds;
         $this->streetNumber = $streetNumber;
@@ -100,9 +109,16 @@ class Address implements Location
         $this->postalCode = $postalCode;
         $this->locality = $locality;
         $this->subLocality = $subLocality;
-        $this->adminLevels = $adminLevels ?: new AdminLevelCollection();
         $this->country = $country;
         $this->timezone = $timezone;
+    }
+
+    /**
+     * @return string
+     */
+    public function getProvidedBy(): string
+    {
+        return $this->providedBy;
     }
 
     /**
@@ -195,6 +211,7 @@ class Address implements Location
     public static function createFromArray(array $data)
     {
         $defaults = [
+            'providedBy' => 'n/a',
             'latitude' => null,
             'longitude' => null,
             'bounds' => [
@@ -226,6 +243,8 @@ class Address implements Location
         }
 
         return new static(
+            $data['providedBy'],
+            new AdminLevelCollection($adminLevels),
             self::createCoordinates(
                 $data['latitude'],
                 $data['longitude']
@@ -241,7 +260,6 @@ class Address implements Location
             $data['postalCode'],
             $data['locality'],
             $data['subLocality'],
-            new AdminLevelCollection($adminLevels),
             new Country(
                 $data['country'],
                 $data['countryCode']
@@ -317,6 +335,7 @@ class Address implements Location
         ];
 
         return [
+            'providedBy' => $this->providedBy,
             'latitude' => $lat,
             'longitude' => $lon,
             'bounds' => null !== $this->bounds ? $this->bounds->toArray() : $noBounds,

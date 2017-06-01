@@ -47,6 +47,8 @@ final class LocationFactory
         }
 
         $address = new $class(
+            'n/a',
+            new AdminLevelCollection($adminLevels),
             self::createCoordinates(
                 self::readDoubleValue($data, 'latitude'),
                 self::readDoubleValue($data, 'longitude')
@@ -62,7 +64,6 @@ final class LocationFactory
             self::readStringValue($data, 'postalCode'),
             self::readStringValue($data, 'locality'),
             self::readStringValue($data, 'subLocality'),
-            new AdminLevelCollection($adminLevels),
             new Country(
                 self::readStringValue($data, 'country'),
                 self::upperize(\igorw\get_in($data, ['countryCode']))

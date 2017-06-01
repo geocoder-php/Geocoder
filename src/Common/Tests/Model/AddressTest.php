@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Geocoder\Tests\Model;
 
 use Geocoder\Model\Address;
+use Geocoder\Model\AdminLevelCollection;
 use Geocoder\Model\LocationFactory;
 use PHPUnit\Framework\TestCase;
 
@@ -24,6 +25,7 @@ class AddressTest extends TestCase
     public function testDumpEmptyAddress()
     {
         $expected = [
+            'providedBy' => 'n/a',
             'latitude' => null,
             'longitude' => null,
             'bounds' => [
@@ -43,13 +45,14 @@ class AddressTest extends TestCase
             'timezone' => null,
         ];
 
-        $address = new Address();
+        $address = new Address('n/a', new AdminLevelCollection());
         $this->assertEquals($address->toArray(), $expected);
     }
 
     public function testToArray()
     {
         $data = [
+            'providedBy' => 'n/a',
             'latitude' => 48.8631507,
             'longitude' => 2.3889114,
             'bounds' => [
