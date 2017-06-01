@@ -15,6 +15,7 @@ namespace Geocoder\Provider\BingMaps;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Model\AddressCollection;
+use Geocoder\Model\LocationBuilder;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\AbstractHttpProvider;
@@ -119,55 +120,33 @@ final class BingMaps extends AbstractHttpProvider implements LocaleAwareGeocoder
 
         $results = [];
         foreach ($data as $item) {
+            $builder = new LocationBuilder();
             $coordinates = (array) $item->geocodePoints[0]->coordinates;
+            $builder->setCoordinates($coordinates[0], $coordinates[1]);
 
-            $bounds = null;
             if (isset($item->bbox) && is_array($item->bbox) && count($item->bbox) > 0) {
-                $bounds = [
-                    'south' => $item->bbox[0],
-                    'west' => $item->bbox[1],
-                    'north' => $item->bbox[2],
-                    'east' => $item->bbox[3],
-                ];
+                $builder->setBounds($item->bbox[0], $item->bbox[1], $item->bbox[2], $item->bbox[3]);
             }
 
-            $streetNumber = null;
-            $streetName = property_exists($item->address, 'addressLine') ? (string) $item->address->addressLine : '';
-            $zipcode = property_exists($item->address, 'postalCode') ? (string) $item->address->postalCode : '';
-            $city = property_exists($item->address, 'locality') ? (string) $item->address->locality : '';
-            $country = property_exists($item->address, 'countryRegion') ? (string) $item->address->countryRegion : '';
-            $countryCode = property_exists($item->address, 'countryRegionIso2') ? (string) $item->address->countryRegionIso2 : '';
-
-            $adminLevels = [];
+            $builder->setStreetName($item->address->addressLine ?? null);
+            $builder->setPostalCode($item->address->postalCode ?? null);
+            $builder->setLocality($item->address->locality ?? null);
+            $builder->setCountry($item->address->countryRegion ?? null);
+            $builder->setCountryCode($item->address->countryRegionIso2 ?? null);
 
             foreach (['adminDistrict', 'adminDistrict2'] as $i => $property) {
                 if (property_exists($item->address, $property)) {
-                    $adminLevels[] = ['name' => $item->address->{$property}, 'level' => $i + 1];
+                    $builder->addAdminLevel($i + 1, $item->address->{$property}, null);
                 }
             }
 
-            $results[] = array_merge($this->getDefaults(), [
-                'latitude' => $coordinates[0],
-                'longitude' => $coordinates[1],
-                'bounds' => $bounds,
-                'streetNumber' => $streetNumber,
-                'streetName' => $streetName,
-                'locality' => empty($city) ? null : $city,
-                'postalCode' => empty($zipcode) ? null : $zipcode,
-                'adminLevels' => $adminLevels,
-                'country' => empty($country) ? null : $country,
-                'countryCode' => empty($countryCode) ? null : $countryCode,
-            ]);
+            $results[] = $builder->build();
 
             if (count($results) >= $limit) {
                 break;
             }
         }
 
-        if (empty($results)) {
-            return new AddressCollection([]);
-        }
-
-        return $this->returnResults($results);
+        return new AddressCollection($results);
     }
 }
