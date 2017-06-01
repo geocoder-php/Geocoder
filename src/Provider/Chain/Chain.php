@@ -13,18 +13,21 @@ declare(strict_types=1);
 namespace Geocoder\Provider\Chain;
 
 use Geocoder\Collection;
-use Geocoder\Exception\ChainZeroResults;
-use Geocoder\Exception\InvalidCredentials;
+use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\LocaleAwareGeocoder;
 use Geocoder\Provider\Provider;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
 
 /**
  * @author Markus Bachmann <markus.bachmann@bachi.biz>
  */
-final class Chain implements LocaleAwareGeocoder, Provider
+final class Chain implements LocaleAwareGeocoder, Provider, LoggerAwareInterface
 {
+    use LoggerAwareTrait;
+
     /**
      * @var Provider[]
      */
@@ -43,18 +46,23 @@ final class Chain implements LocaleAwareGeocoder, Provider
      */
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
-        $exceptions = [];
         foreach ($this->providers as $provider) {
             try {
-                return $provider->geocodeQuery($query);
-            } catch (InvalidCredentials $e) {
-                throw $e;
+                $result = $provider->geocodeQuery($query);
+
+                if (!$result->isEmpty()) {
+                    return $result;
+                }
             } catch (\Exception $e) {
-                $exceptions[] = $e;
+                $this->log(
+                    'alert',
+                    sprintf('Provider "%s" could geocode address: "%s".', $provider->getName(), $query->getText()),
+                    ['exception' => $e]
+                );
             }
         }
 
-        throw new ChainZeroResults(sprintf('No provider could geocode address: "%s".', $query->getText()), $exceptions);
+        return new AddressCollection();
     }
 
     /**
@@ -62,41 +70,24 @@ final class Chain implements LocaleAwareGeocoder, Provider
      */
     public function reverseQuery(ReverseQuery $query): Collection
     {
-        $exceptions = [];
         foreach ($this->providers as $provider) {
             try {
-                return $provider->reverseQuery($query);
-            } catch (InvalidCredentials $e) {
-                throw $e;
+                $result = $provider->reverseQuery($query);
+
+                if (!$result->isEmpty()) {
+                    return $result;
+                }
             } catch (\Exception $e) {
-                $exceptions[] = $e;
+                $coordinates = $query->getCoordinates();
+                $this->log(
+                    'alert',
+                    sprintf('Provider "%s" could reverse coordinates: %f, %f.', $provider->getName(), $coordinates->getLatitude(), $coordinates->getLongitude()),
+                    ['exception' => $e]
+                );
             }
         }
 
-        $coordinates = $query->getCoordinates();
-        $longitude = $coordinates->getLongitude();
-        $latitude = $coordinates->getLatitude();
-        throw new ChainZeroResults(sprintf('No provider could reverse coordinates: %f, %f.', $latitude, $longitude), $exceptions);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function limit($limit)
-    {
-        foreach ($this->providers as $provider) {
-            $provider->limit($limit);
-        }
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getLimit()
-    {
-        throw new \LogicException('The `Chain` provider is not able to return the limit value.');
+        return new AddressCollection();
     }
 
     /**
@@ -119,5 +110,17 @@ final class Chain implements LocaleAwareGeocoder, Provider
         $this->providers[] = $provider;
 
         return $this;
+    }
+
+    /**
+     * @param $level
+     * @param $message
+     * @param array $context
+     */
+    private function log($level, $message, array $context = [])
+    {
+        if ($this->logger) {
+            $this->logger->log($level, $message, $context);
+        }
     }
 }
