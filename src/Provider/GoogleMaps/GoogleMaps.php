@@ -110,7 +110,7 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocod
             $url .= sprintf('&bounds=%s,%s|%s,%s', $bounds->getSouth(), $bounds->getWest(), $bounds->getNorth(), $bounds->getEast());
         }
 
-        return $this->fetchUrl($url, $query->getLocale(), $query->getLimit());
+        return $this->fetchUrl($url, $query->getLocale(), $query->getLimit(), $query->getData('region', $this->region));
     }
 
     public function reverseQuery(ReverseQuery $query): Collection
@@ -126,7 +126,7 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocod
             $url .= '&result_type='.urlencode($resultType);
         }
 
-        return $this->fetchUrl($url, $query->getLocale(), $query->getLimit());
+        return $this->fetchUrl($url, $query->getLocale(), $query->getLimit(), $query->getData('region', $this->region));
     }
 
     /**
@@ -138,32 +138,19 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocod
     }
 
     /**
-     * @param $region
-     *
-     * @return GoogleMaps
-     */
-    public function withRegion($region)
-    {
-        $new = clone $this;
-        $new->region = $region;
-
-        return $new;
-    }
-
-    /**
      * @param string $url
      * @param string $locale
      *
      * @return string query with extra params
      */
-    private function buildQuery($url, $locale)
+    private function buildQuery($url, $locale, $region)
     {
         if (null !== $locale) {
             $url = sprintf('%s&language=%s', $url, $locale);
         }
 
-        if (null !== $this->region) {
-            $url = sprintf('%s&region=%s', $url, $this->region);
+        if (null !== $region) {
+            $url = sprintf('%s&region=%s', $url, $region);
         }
 
         if (null !== $this->apiKey) {
@@ -185,14 +172,15 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocod
      * @param string $url
      * @param string $locale
      * @param int    $limit
+     * @param string $region
      *
      * @return \Geocoder\Collection
      *
      * @throws Exception
      */
-    private function fetchUrl($url, $locale, $limit)
+    private function fetchUrl($url, $locale, $limit, $region)
     {
-        $url = $this->buildQuery($url, $locale);
+        $url = $this->buildQuery($url, $locale, $region);
         $content = $this->getUrlContents($url);
 
         // Throw exception if invalid clientID and/or privateKey used with GoogleMapsBusinessProvider
