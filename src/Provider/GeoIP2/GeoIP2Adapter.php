@@ -87,7 +87,7 @@ class GeoIP2Adapter
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'maxmind_geoip2';
     }

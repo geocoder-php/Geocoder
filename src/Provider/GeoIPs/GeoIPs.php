@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Geocoder\Provider\GeoIPs;
 
+use Geocoder\Collection;
 use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\InvalidServerResponse;
@@ -71,7 +72,7 @@ final class GeoIPs extends AbstractHttpProvider implements Provider, IpAddressGe
     /**
      * {@inheritdoc}
      */
-    public function geocodeQuery(GeocodeQuery $query)
+    public function geocodeQuery(GeocodeQuery $query): Collection
     {
         $address = $query->getText();
         if (null === $this->apiKey) {
@@ -98,7 +99,7 @@ final class GeoIPs extends AbstractHttpProvider implements Provider, IpAddressGe
     /**
      * {@inheritdoc}
      */
-    public function reverseQuery(ReverseQuery $query)
+    public function reverseQuery(ReverseQuery $query): Collection
     {
         throw new UnsupportedOperation('The GeoIPs provider is not able to do reverse geocoding.');
     }
@@ -106,7 +107,7 @@ final class GeoIPs extends AbstractHttpProvider implements Provider, IpAddressGe
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return 'geo_ips';
     }

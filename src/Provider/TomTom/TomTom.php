@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Geocoder\Provider\TomTom;
 
+use Geocoder\Collection;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\UnsupportedOperation;
@@ -57,7 +58,7 @@ final class TomTom extends AbstractHttpProvider implements LocaleAwareGeocoder, 
     /**
      * {@inheritdoc}
      */
-    public function geocodeQuery(GeocodeQuery $query)
+    public function geocodeQuery(GeocodeQuery $query): Collection
     {
         $address = $query->getText();
         if (null === $this->apiKey) {
@@ -77,7 +78,7 @@ final class TomTom extends AbstractHttpProvider implements LocaleAwareGeocoder, 
     /**
      * {@inheritdoc}
      */
-    public function reverseQuery(ReverseQuery $query)
+    public function reverseQuery(ReverseQuery $query): Collection
     {
         $coordinates = $query->getCoordinates();
         $longitude = $coordinates->getLongitude();
@@ -94,7 +95,7 @@ final class TomTom extends AbstractHttpProvider implements LocaleAwareGeocoder, 
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return 'tomtom';
     }

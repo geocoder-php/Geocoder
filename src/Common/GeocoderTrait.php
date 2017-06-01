@@ -22,9 +22,9 @@ use Geocoder\Query\ReverseQuery;
  */
 trait GeocoderTrait
 {
-    abstract public function geocodeQuery(GeocodeQuery $query);
+    abstract public function geocodeQuery(GeocodeQuery $query): Collection;
 
-    abstract public function reverseQuery(ReverseQuery $query);
+    abstract public function reverseQuery(ReverseQuery $query): Collection;
 
     /**
      * {@inheritdoc}

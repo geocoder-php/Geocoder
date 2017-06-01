@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Geocoder\Provider\Nominatim;
 
+use Geocoder\Collection;
 use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Model\AddressCollection;
@@ -57,7 +58,7 @@ final class Nominatim extends AbstractHttpProvider implements LocaleAwareGeocode
     /**
      * {@inheritdoc}
      */
-    public function geocodeQuery(GeocodeQuery $query)
+    public function geocodeQuery(GeocodeQuery $query): Collection
     {
         $address = $query->getText();
         // This API does not support IPv6
@@ -95,7 +96,7 @@ final class Nominatim extends AbstractHttpProvider implements LocaleAwareGeocode
     /**
      * {@inheritdoc}
      */
-    public function reverseQuery(ReverseQuery $query)
+    public function reverseQuery(ReverseQuery $query): Collection
     {
         $coordinates = $query->getCoordinates();
         $longitude = $coordinates->getLongitude();
@@ -161,7 +162,7 @@ final class Nominatim extends AbstractHttpProvider implements LocaleAwareGeocode
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return 'nominatim';
     }

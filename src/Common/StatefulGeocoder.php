@@ -91,7 +91,7 @@ class StatefulGeocoder implements Geocoder, LocaleAwareGeocoder
     /**
      * {@inheritdoc}
      */
-    public function geocodeQuery(GeocodeQuery $query)
+    public function geocodeQuery(GeocodeQuery $query): Collection
     {
         $data = $query->getLocale();
         if (empty($data)) {
@@ -109,7 +109,7 @@ class StatefulGeocoder implements Geocoder, LocaleAwareGeocoder
     /**
      * {@inheritdoc}
      */
-    public function reverseQuery(ReverseQuery $query)
+    public function reverseQuery(ReverseQuery $query): Collection
     {
         $data = $query->getLocale();
         if (empty($data)) {
@@ -158,7 +158,7 @@ class StatefulGeocoder implements Geocoder, LocaleAwareGeocoder
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return 'stateful_geocoder';
     }

@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Geocoder\Provider\Chain;
 
+use Geocoder\Collection;
 use Geocoder\Exception\ChainZeroResults;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Query\GeocodeQuery;
@@ -40,7 +41,7 @@ final class Chain implements LocaleAwareGeocoder, Provider
     /**
      * {@inheritdoc}
      */
-    public function geocodeQuery(GeocodeQuery $query)
+    public function geocodeQuery(GeocodeQuery $query): Collection
     {
         $exceptions = [];
         foreach ($this->providers as $provider) {
@@ -59,7 +60,7 @@ final class Chain implements LocaleAwareGeocoder, Provider
     /**
      * {@inheritdoc}
      */
-    public function reverseQuery(ReverseQuery $query)
+    public function reverseQuery(ReverseQuery $query): Collection
     {
         $exceptions = [];
         foreach ($this->providers as $provider) {
@@ -101,7 +102,7 @@ final class Chain implements LocaleAwareGeocoder, Provider
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return 'chain';
     }

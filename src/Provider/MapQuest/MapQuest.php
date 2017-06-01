@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Geocoder\Provider\MapQuest;
 
+use Geocoder\Collection;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Model\AddressCollection;
@@ -75,7 +76,7 @@ final class MapQuest extends AbstractHttpProvider implements Provider
     /**
      * {@inheritdoc}
      */
-    public function geocodeQuery(GeocodeQuery $query)
+    public function geocodeQuery(GeocodeQuery $query): Collection
     {
         $address = $query->getText();
         if (null === $this->apiKey) {
@@ -99,7 +100,7 @@ final class MapQuest extends AbstractHttpProvider implements Provider
     /**
      * {@inheritdoc}
      */
-    public function reverseQuery(ReverseQuery $query)
+    public function reverseQuery(ReverseQuery $query): Collection
     {
         $coordinates = $query->getCoordinates();
         $longitude = $coordinates->getLongitude();
@@ -120,7 +121,7 @@ final class MapQuest extends AbstractHttpProvider implements Provider
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return 'map_quest';
     }

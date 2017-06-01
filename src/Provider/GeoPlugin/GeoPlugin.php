@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Geocoder\Provider\GeoPlugin;
 
+use Geocoder\Collection;
 use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Model\AddressCollection;
@@ -34,7 +35,7 @@ final class GeoPlugin extends AbstractHttpProvider implements Provider, IpAddres
     /**
      * {@inheritdoc}
      */
-    public function geocodeQuery(GeocodeQuery $query)
+    public function geocodeQuery(GeocodeQuery $query): Collection
     {
         $address = $query->getText();
         if (!filter_var($address, FILTER_VALIDATE_IP)) {
@@ -53,7 +54,7 @@ final class GeoPlugin extends AbstractHttpProvider implements Provider, IpAddres
     /**
      * {@inheritdoc}
      */
-    public function reverseQuery(ReverseQuery $query)
+    public function reverseQuery(ReverseQuery $query): Collection
     {
         throw new UnsupportedOperation('The GeoPlugin provider is not able to do reverse geocoding.');
     }
@@ -61,7 +62,7 @@ final class GeoPlugin extends AbstractHttpProvider implements Provider, IpAddres
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return 'geo_plugin';
     }

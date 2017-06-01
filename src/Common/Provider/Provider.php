@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Geocoder\Provider;
 
-use Geocoder\Model\AddressCollection;
+use Geocoder\Collection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 
@@ -27,21 +27,25 @@ interface Provider
     /**
      * @param GeocodeQuery $query
      *
-     * @return AddressCollection
+     * @return Collection
+     *
+     * @throws \Geocoder\Exception\Exception
      */
-    public function geocodeQuery(GeocodeQuery $query);
+    public function geocodeQuery(GeocodeQuery $query): Collection;
 
     /**
      * @param ReverseQuery $query
      *
-     * @return AddressCollection
+     * @return Collection
+     *
+     * @throws \Geocoder\Exception\Exception
      */
-    public function reverseQuery(ReverseQuery $query);
+    public function reverseQuery(ReverseQuery $query): Collection;
 
     /**
      * Returns the provider's name.
      *
      * @return string
      */
-    public function getName();
+    public function getName(): string;
 }

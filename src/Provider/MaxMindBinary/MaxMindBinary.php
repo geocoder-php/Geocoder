@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Geocoder\Provider\MaxMindBinary;
 
+use Geocoder\Collection;
 use Geocoder\Exception\FunctionNotFound;
 use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\UnsupportedOperation;
@@ -72,7 +73,7 @@ final class MaxMindBinary extends AbstractProvider implements Provider, IpAddres
     /**
      * {@inheritdoc}
      */
-    public function geocodeQuery(GeocodeQuery $query)
+    public function geocodeQuery(GeocodeQuery $query): Collection
     {
         $address = $query->getText();
         if (false === filter_var($address, FILTER_VALIDATE_IP)) {
@@ -115,7 +116,7 @@ final class MaxMindBinary extends AbstractProvider implements Provider, IpAddres
     /**
      * {@inheritdoc}
      */
-    public function reverseQuery(ReverseQuery $query)
+    public function reverseQuery(ReverseQuery $query): Collection
     {
         throw new UnsupportedOperation('The MaxMindBinary is not able to do reverse geocoding.');
     }
@@ -123,7 +124,7 @@ final class MaxMindBinary extends AbstractProvider implements Provider, IpAddres
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return 'maxmind_binary';
     }
