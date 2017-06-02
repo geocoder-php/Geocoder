@@ -100,22 +100,22 @@ final class GoogleAddress extends Address
         return $new;
     }
 
-	/**
-	 * @return null|string
-	 */
-	public function getSubpremise()
-	{
-		return $this->subpremise;
-	}
+    /**
+     * @return null|string
+     */
+    public function getSubpremise()
+    {
+        return $this->subpremise;
+    }
 
-	/**
-	 * @param null|string $subpremise
-	 */
-	public function withSubpremise($subpremise)
-	{
-		$new = clone $this;
-		$new->subpremise = $subpremise;
+    /**
+     * @param null|string $subpremise
+     */
+    public function withSubpremise($subpremise)
+    {
+        $new = clone $this;
+        $new->subpremise = $subpremise;
 
-		return $new;
-	}
+        return $new;
+    }
 }
