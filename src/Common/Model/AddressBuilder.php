@@ -304,6 +304,4 @@ final class AddressBuilder
     {
         return property_exists($this, $name);
     }
-
-
 }
