@@ -19,7 +19,7 @@ multiple providers. The original repository is still used for issues and pull re
 The new repository architecture allows us to use a [git subtree split](www.subtreesplit.com) from geocoder-php/Geocoder
 to geocoder-php/php-common and to each provider. 
 
-Version before 4.0 `willdurand/geocoder` will still work as usual, but with the new repository. 
+Versions before 4.0 `willdurand/geocoder` will still work as usual, but with the new repository. 
 
 
 ### Install
