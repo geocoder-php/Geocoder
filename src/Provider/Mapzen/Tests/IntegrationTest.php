@@ -11,7 +11,6 @@
 namespace Geocoder\Provider\Mapzen\Tests;
 
 use Geocoder\IntegrationTest\ProviderIntegrationTest;
-use Geocoder\Provider\BingMaps\BingMaps;
 use Geocoder\Provider\Mapzen\Mapzen;
 use Http\Client\HttpClient;
 
