@@ -17,7 +17,6 @@ use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Location;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Tests\TestCase;
 use Geocoder\Provider\GeoIPs\GeoIPs;
 
 class GeoIPsTest extends BaseTestCase
@@ -32,7 +31,6 @@ class GeoIPsTest extends BaseTestCase
     {
         return __DIR__.'/.cached_responses';
     }
-
 
     /**
      * @expectedException \RuntimeException
