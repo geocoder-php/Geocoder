@@ -315,7 +315,7 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocod
                 break;
 
             case 'subpremise':
-                $builder->setValue('subpremise',$values->long_name);
+                $builder->setValue('subpremise', $values->long_name);
                 break;
 
             default:

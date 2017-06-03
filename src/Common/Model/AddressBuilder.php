@@ -276,18 +276,19 @@ final class AddressBuilder
     /**
      * @param $name
      * @param $value
+	 *
      * @return $this
      */
     public function setValue($name, $value)
     {
         $this->$name = $value;
+
         return $this;
     }
 
     /**
      * @param $name
      * @param null $default
-     * @return null
      */
     public function getValue($name, $default = null)
     {
@@ -296,6 +297,7 @@ final class AddressBuilder
 
     /**
      * @param $name
+	 *
      * @return bool
      */
     public function hasValue($name)
