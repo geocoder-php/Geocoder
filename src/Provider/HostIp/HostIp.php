@@ -14,6 +14,7 @@ namespace Geocoder\Provider\HostIp;
 
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Collection;
+use Geocoder\Model\Address;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
@@ -85,8 +86,7 @@ final class HostIp extends AbstractHttpProvider implements Provider, IpAddressGe
             return new AddressCollection([]);
         }
 
-        return $this->returnResults([
-            array_merge($this->getDefaults(), [
+        return new AddressCollection([Address::createFromArray([
                 'latitude' => $data['lat'],
                 'longitude' => $data['lng'],
                 'locality' => $data['city'],
