@@ -24,7 +24,7 @@ class GeoIPsTest extends BaseTestCase
 {
     public function testGetName()
     {
-        $provider = new GeoIPs($this->getMockAdapter($this->never()), 'api_key');
+        $provider = new GeoIPs($this->getMockedHttpClient(), 'api_key');
         $this->assertEquals('geo_ips', $provider->getName());
     }
 
@@ -39,7 +39,7 @@ class GeoIPsTest extends BaseTestCase
      */
     public function testGeocodeWithNullApiKey()
     {
-        $provider = new GeoIPs($this->getMockAdapter($this->never()), null);
+        $provider = new GeoIPs($this->getMockedHttpClient(), null);
         $provider->geocodeQuery(GeocodeQuery::create('foo'));
     }
 
@@ -49,13 +49,13 @@ class GeoIPsTest extends BaseTestCase
      */
     public function testGeocodeWithAddress()
     {
-        $provider = new GeoIPs($this->getMockAdapter($this->never()), 'api_key');
+        $provider = new GeoIPs($this->getMockedHttpClient(), 'api_key');
         $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
     }
 
     public function testGeocodeWithLocalhostIPv4()
     {
-        $provider = new GeoIPs($this->getMockAdapter($this->never()), 'api_key');
+        $provider = new GeoIPs($this->getMockedHttpClient(), 'api_key');
         $results = $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -74,7 +74,7 @@ class GeoIPsTest extends BaseTestCase
      */
     public function testGeocodeWithLocalhostIPv6()
     {
-        $provider = new GeoIPs($this->getMockAdapter($this->never()), 'api_key');
+        $provider = new GeoIPs($this->getMockedHttpClient(), 'api_key');
         $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
@@ -83,7 +83,7 @@ class GeoIPsTest extends BaseTestCase
      */
     public function testGeocodeWithRealIPv4GetsNullContent()
     {
-        $provider = new GeoIPs($this->getMockAdapterReturns(null), 'api_key');
+        $provider = new GeoIPs($this->getMockedHttpClient(null), 'api_key');
         $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
@@ -92,7 +92,7 @@ class GeoIPsTest extends BaseTestCase
      */
     public function testGeocodeWithRealIPv4GetsEmptyContent()
     {
-        $provider = new GeoIPs($this->getMockAdapterReturns(''), 'api_key');
+        $provider = new GeoIPs($this->getMockedHttpClient(''), 'api_key');
         $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
@@ -124,7 +124,7 @@ class GeoIPsTest extends BaseTestCase
             }
         }}';
 
-        $provider = new GeoIPs($this->getMockAdapterReturns($json), 'api_key');
+        $provider = new GeoIPs($this->getMockedHttpClient($json), 'api_key');
         $results = $provider->geocodeQuery(GeocodeQuery::create('66.147.244.214'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -167,7 +167,7 @@ class GeoIPsTest extends BaseTestCase
             }
         }}';
 
-        $provider = new GeoIPs($this->getMockAdapterReturns($json), 'api_key');
+        $provider = new GeoIPs($this->getMockedHttpClient($json), 'api_key');
         $results = $provider->geocodeQuery(GeocodeQuery::create('66.147.244.214'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -197,7 +197,7 @@ class GeoIPsTest extends BaseTestCase
     public function testGeocodeWithRealIPv4AndInvalidApiKeyGetsFakeContent()
     {
         $provider = new GeoIPs(
-            $this->getMockAdapterReturns(
+            $this->getMockedHttpClient(
                 '{
                     "error": {
                         "status": "Forbidden",
@@ -223,7 +223,7 @@ class GeoIPsTest extends BaseTestCase
     public function testGeocodeWithRealIPv4AndInvalidApiKeyGetsFakeContent2()
     {
         $provider = new GeoIPs(
-            $this->getMockAdapterReturns(
+            $this->getMockedHttpClient(
                 '{
                     "error": {
                         "status": "Forbidden",
@@ -249,7 +249,7 @@ class GeoIPsTest extends BaseTestCase
     public function testGeocodeWithRealIPv4AndQuotaExceeded()
     {
         $provider = new GeoIPs(
-            $this->getMockAdapterReturns(
+            $this->getMockedHttpClient(
                 '{
                     "error": {
                         "status": "Forbidden",
@@ -275,7 +275,7 @@ class GeoIPsTest extends BaseTestCase
     public function testGeocodeGetsFakeContentWithIpNotFound()
     {
         $provider = new GeoIPs(
-            $this->getMockAdapterReturns(
+            $this->getMockedHttpClient(
                 '{
                     "error": {
                         "status": "Bad Request",
@@ -301,7 +301,7 @@ class GeoIPsTest extends BaseTestCase
     public function testGeocodeGetsFakeContentWithKeyNotFound()
     {
         $provider = new GeoIPs(
-            $this->getMockAdapterReturns(
+            $this->getMockedHttpClient(
                 '{
                     "error": {
                         "status": "Bad Request",
@@ -326,7 +326,7 @@ class GeoIPsTest extends BaseTestCase
             $this->markTestSkipped('You need to configure the GEOIPS_API_KEY value in phpunit.xml');
         }
 
-        $provider = new GeoIPs($this->getAdapter($_SERVER['GEOIPS_API_KEY']), $_SERVER['GEOIPS_API_KEY']);
+        $provider = new GeoIPs($this->getHttpClient($_SERVER['GEOIPS_API_KEY']), $_SERVER['GEOIPS_API_KEY']);
         $results = $provider->geocodeQuery(GeocodeQuery::create('66.147.244.214'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -355,7 +355,7 @@ class GeoIPsTest extends BaseTestCase
             $this->markTestSkipped('You need to configure the GEOIPS_API_KEY value in phpunit.xml');
         }
 
-        $provider = new GeoIPs($this->getAdapter($_SERVER['GEOIPS_API_KEY']), $_SERVER['GEOIPS_API_KEY']);
+        $provider = new GeoIPs($this->getHttpClient($_SERVER['GEOIPS_API_KEY']), $_SERVER['GEOIPS_API_KEY']);
         $result = $provider->geocodeQuery(GeocodeQuery::create('255.255.150.96'));
 
         $this->assertInstanceOf(Collection::class, $result);
@@ -368,7 +368,7 @@ class GeoIPsTest extends BaseTestCase
      */
     public function testReverse()
     {
-        $provider = new GeoIPs($this->getMockAdapter($this->never()), 'api_key');
+        $provider = new GeoIPs($this->getMockedHttpClient(), 'api_key');
         $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
     }
 }
