@@ -1,8 +1,8 @@
 # Bing Maps Geocoder provider
-[![Build Status](https://travis-ci.org/geocoder-php/bing-maps-provider.svg?branch=master)](http://travis-ci.org/geocoder-php/bing-maps-provider)
-[![Latest Stable Version](https://poser.pugx.org/geocoder-php/bing-maps-provider/v/stable)](https://packagist.org/packages/geocoder-php/bing-maps-provider)
-[![Total Downloads](https://poser.pugx.org/geocoder-php/bing-maps-provider/downloads)](https://packagist.org/packages/geocoder-php/bing-maps-provider)
-[![Monthly Downloads](https://poser.pugx.org/geocoder-php/bing-maps-provider/d/monthly.png)](https://packagist.org/packages/geocoder-php/bing-maps-provider)
+[![Build Status](https://travis-ci.org/geocoder-php/geoip-provider.svg?branch=master)](http://travis-ci.org/geocoder-php/geoip-provider)
+[![Latest Stable Version](https://poser.pugx.org/geocoder-php/geoip-provider/v/stable)](https://packagist.org/packages/geocoder-php/geoip-provider)
+[![Total Downloads](https://poser.pugx.org/geocoder-php/geoip-provider/downloads)](https://packagist.org/packages/geocoder-php/geoip-provider)
+[![Monthly Downloads](https://poser.pugx.org/geocoder-php/geoip-provider/d/monthly.png)](https://packagist.org/packages/geocoder-php/geoip-provider)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 
 This is the Bing Maps provider from the PHP Geocoder. This is a **READ ONLY** repository. See the
@@ -11,7 +11,7 @@ This is the Bing Maps provider from the PHP Geocoder. This is a **READ ONLY** re
 ### Install
 
 ```bash
-composer require geocoder-php/bing-maps-provider
+composer require geocoder-php/geoip-provider
 ```
 
 ### Contribute

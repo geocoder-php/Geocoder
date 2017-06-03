@@ -83,7 +83,7 @@ final class Geoip extends AbstractProvider implements Provider, IpAddressGeocode
                 'country' => $results['country_name'],
                 'countryCode' => $results['country_code'],
                 'timezone' => $timezone,
-            ])
+            ]),
         ]);
     }
 

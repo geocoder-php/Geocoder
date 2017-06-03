@@ -11,7 +11,6 @@
 namespace Geocoder\Provider\Geoip\Tests;
 
 use Geocoder\IntegrationTest\ProviderIntegrationTest;
-use Geocoder\Provider\BingMaps\BingMaps;
 use Geocoder\Provider\Geoip\Geoip;
 use Http\Client\HttpClient;
 

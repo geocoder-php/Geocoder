@@ -31,7 +31,6 @@ class GeoipTest extends BaseTestCase
         $this->assertEquals('geoip', $provider->getName());
     }
 
-
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The Geoip provider does not support street addresses, only IPv4 addresses.
