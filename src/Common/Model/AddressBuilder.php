@@ -276,7 +276,7 @@ final class AddressBuilder
     /**
      * @param $name
      * @param $value
-	 *
+     *
      * @return $this
      */
     public function setValue($name, $value)
@@ -297,7 +297,7 @@ final class AddressBuilder
 
     /**
      * @param $name
-	 *
+     *
      * @return bool
      */
     public function hasValue($name)

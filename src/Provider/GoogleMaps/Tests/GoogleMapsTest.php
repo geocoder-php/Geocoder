@@ -398,7 +398,5 @@ class GoogleMapsTest extends BaseTestCase
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals('61', $result->getSubpremise());
-
     }
-
 }
