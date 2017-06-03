@@ -257,8 +257,8 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocod
             if (isset($result->formatted_address)) {
                 $address = $address->withFormattedAddress($result->formatted_address);
             }
-            if (property_exists($builder, 'subpremise')) {
-                $address = $address->withSubpremise($builder->subpremise);
+            if ($builder->hasValue('subpremise')) {
+                $address = $address->withSubpremise($builder->getValue('subpremise'));
             }
             $results[] = $address;
 
@@ -315,7 +315,7 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocod
                 break;
 
             case 'subpremise':
-                $builder->subpremise = $values->long_name;
+                $builder->setValue('subpremise',$values->long_name);
                 break;
 
             default:

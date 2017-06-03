@@ -37,7 +37,7 @@ final class GoogleAddress extends Address
     /**
      * @var string|null
      */
-    private $subpremise;
+    public $subpremise;
 
     /**
      * @param null|string $locationType
