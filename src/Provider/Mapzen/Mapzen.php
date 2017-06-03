@@ -16,6 +16,7 @@ use Geocoder\Collection;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\QuotaExceeded;
 use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Model\Address;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
@@ -150,7 +151,7 @@ final class Mapzen extends AbstractHttpProvider implements Provider
                 }
             }
 
-            $results[] = array_merge($this->getDefaults(), [
+            $results[] = Address::createFromArray([
                 'latitude' => $location['geometry']['coordinates'][1],
                 'longitude' => $location['geometry']['coordinates'][0],
                 'bounds' => $bounds ?: [],
@@ -165,7 +166,7 @@ final class Mapzen extends AbstractHttpProvider implements Provider
             ]);
         }
 
-        return $this->returnResults($results);
+        return new AddressCollection($results);
     }
 
     /**
