@@ -36,6 +36,13 @@ class IntegrationTest extends ProviderIntegrationTest
         'testInvalidCredentialsResponseReverse' => 'The provider does not support street addresses.',
     ];
 
+    protected function setUp()
+    {
+        if (!function_exists('geoip_record_by_name')) {
+            $this->markTestSkipped('You have to install GeoIP.');
+        }
+    }
+
     protected function createProvider(HttpClient $httpClient)
     {
         return new Geoip();

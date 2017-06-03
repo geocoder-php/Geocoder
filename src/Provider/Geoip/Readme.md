@@ -5,7 +5,7 @@
 [![Monthly Downloads](https://poser.pugx.org/geocoder-php/geoip-provider/d/monthly.png)](https://packagist.org/packages/geocoder-php/geoip-provider)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 
-This is the Bing Maps provider from the PHP Geocoder. This is a **READ ONLY** repository. See the
+This is the Geoip provider from the PHP Geocoder. This is a **READ ONLY** repository. See the
 [main repo](https://github.com/geocoder-php/Geocoder) for information and documentation. 
 
 ### Install

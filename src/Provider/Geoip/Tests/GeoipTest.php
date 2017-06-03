@@ -20,6 +20,13 @@ use Geocoder\Provider\Geoip\Geoip;
 
 class GeoipTest extends BaseTestCase
 {
+    protected function setUp()
+    {
+        if (!function_exists('geoip_record_by_name')) {
+            $this->markTestSkipped('You have to install GeoIP.');
+        }
+    }
+
     protected function getCacheDir()
     {
         return __DIR__.'/.cached_responses';
