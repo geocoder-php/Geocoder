@@ -13,17 +13,23 @@ declare(strict_types=1);
 namespace Geocoder\Provider\Geonames\Tests;
 
 use Geocoder\Collection;
+use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Location;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Tests\TestCase;
 use Geocoder\Provider\Geonames\Geonames;
 
-class GeonamesTest extends TestCase
+class GeonamesTest extends BaseTestCase
 {
+    protected function getCacheDir()
+    {
+        return __DIR__.'/.cached_responses';
+    }
+
     public function testGetName()
     {
-        $provider = new Geonames($this->getMockAdapter($this->never()), 'username');
+        $provider = new Geonames($this->getMockedHttpClient(), 'username');
         $this->assertEquals('geonames', $provider->getName());
     }
 
@@ -33,7 +39,7 @@ class GeonamesTest extends TestCase
      */
     public function testGeocodeWithNullUsername()
     {
-        $provider = new Geonames($this->getMockBuilder('Http\Client\HttpClient')->getMock(), null);
+        $provider = new Geonames($this->getMockedHttpClient(), null);
         $provider->geocodeQuery(GeocodeQuery::create('foo'));
     }
 
@@ -43,7 +49,7 @@ class GeonamesTest extends TestCase
      */
     public function testReverseWithNullUsername()
     {
-        $provider = new Geonames($this->getMockBuilder('Http\Client\HttpClient')->getMock(), null);
+        $provider = new Geonames($this->getMockedHttpClient(), null);
         $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
     }
 
@@ -53,7 +59,7 @@ class GeonamesTest extends TestCase
      */
     public function testGeocodeWithLocalhostIPv4()
     {
-        $provider = new Geonames($this->getMockAdapter($this->never()), 'username');
+        $provider = new Geonames($this->getMockedHttpClient(), 'username');
         $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
     }
 
@@ -63,7 +69,7 @@ class GeonamesTest extends TestCase
      */
     public function testGeocodeWithLocalhostIPv6()
     {
-        $provider = new Geonames($this->getMockAdapter($this->never()), 'username');
+        $provider = new Geonames($this->getMockedHttpClient(), 'username');
         $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
@@ -75,7 +81,7 @@ class GeonamesTest extends TestCase
     "geonames": [ ]
 }
 JSON;
-        $provider = new Geonames($this->getMockAdapterReturns($noPlacesFoundResponse), 'username');
+        $provider = new Geonames($this->getMockedHttpClient($noPlacesFoundResponse), 'username');
         $result = $provider->geocodeQuery(GeocodeQuery::create('BlaBlaBla'));
 
         $this->assertInstanceOf(Collection::class, $result);
@@ -88,7 +94,7 @@ JSON;
             $this->markTestSkipped('You need to configure the GEONAMES_USERNAME value in phpunit.xml');
         }
 
-        $provider = new Geonames($this->getAdapter($_SERVER['GEONAMES_USERNAME']), $_SERVER['GEONAMES_USERNAME']);
+        $provider = new Geonames($this->getHttpClient($_SERVER['GEONAMES_USERNAME']), $_SERVER['GEONAMES_USERNAME']);
         $results = $provider->geocodeQuery(GeocodeQuery::create('London'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -192,7 +198,7 @@ JSON;
             $this->markTestSkipped('You need to configure the GEONAMES_USERNAME value in phpunit.xml');
         }
 
-        $provider = new Geonames($this->getAdapter($_SERVER['GEONAMES_USERNAME']), $_SERVER['GEONAMES_USERNAME']);
+        $provider = new Geonames($this->getHttpClient($_SERVER['GEONAMES_USERNAME']), $_SERVER['GEONAMES_USERNAME']);
         $results = $provider->geocodeQuery(GeocodeQuery::create('London')->withLocale('it_IT'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -296,7 +302,7 @@ JSON;
             $this->markTestSkipped('You need to configure the GEONAMES_USERNAME value in phpunit.xml');
         }
 
-        $provider = new Geonames($this->getAdapter($_SERVER['GEONAMES_USERNAME']), $_SERVER['GEONAMES_USERNAME']);
+        $provider = new Geonames($this->getHttpClient($_SERVER['GEONAMES_USERNAME']), $_SERVER['GEONAMES_USERNAME']);
         $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(51.50853, -0.12574));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -322,7 +328,7 @@ JSON;
             $this->markTestSkipped('You need to configure the GEONAMES_USERNAME value in phpunit.xml');
         }
 
-        $provider = new Geonames($this->getAdapter($_SERVER['GEONAMES_USERNAME']), $_SERVER['GEONAMES_USERNAME']);
+        $provider = new Geonames($this->getHttpClient($_SERVER['GEONAMES_USERNAME']), $_SERVER['GEONAMES_USERNAME']);
         $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(51.50853, -0.12574)->withLocale('it_IT'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -349,7 +355,7 @@ JSON;
     "geonames": [ ]
 }
 JSON;
-        $provider = new Geonames($this->getMockAdapterReturns($badCoordinateResponse), 'username');
+        $provider = new Geonames($this->getMockedHttpClient($badCoordinateResponse), 'username');
         $result = $provider->reverseQuery(ReverseQuery::fromCoordinates(-80.000000, -170.000000));
 
         $this->assertInstanceOf(Collection::class, $result);
