@@ -81,7 +81,7 @@ final class GeoIP2 extends AbstractProvider implements LocaleAwareGeocoder, IpAd
                 'timezone' => (isset($result->location->time_zone) ? $result->location->time_zone : null),
                 'postalCode' => (isset($result->postal->code) ? $result->postal->code : null),
                 'adminLevels' => $adminLevels,
-            ])
+            ]),
         ]);
     }
 

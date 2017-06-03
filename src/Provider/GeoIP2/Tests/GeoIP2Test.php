@@ -41,7 +41,6 @@ class GeoIP2Test extends BaseTestCase
         return __DIR__.'/.cached_responses';
     }
 
-
     public function testGetName()
     {
         $this->assertEquals('geoip2', $this->provider->getName());
