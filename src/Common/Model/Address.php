@@ -236,9 +236,9 @@ class Address implements Location
         $adminLevels = [];
         foreach ($data['adminLevels'] as $adminLevel) {
             $adminLevels[] = new AdminLevel(
-                isset($adminLevel['level']) ? $adminLevel : null,
-                isset($adminLevel['name']) ? $adminLevel : null,
-                isset($adminLevel['code']) ? $adminLevel : null
+                $adminLevel['level'] ?? null,
+                $adminLevel['name'] ?? null,
+                $adminLevel['code'] ?? null
             );
         }
 
