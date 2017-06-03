@@ -13,19 +13,26 @@ declare(strict_types=1);
 namespace Geocoder\Provider\GeoIPs\Tests;
 
 use Geocoder\Collection;
+use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Location;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Tests\TestCase;
 use Geocoder\Provider\GeoIPs\GeoIPs;
 
-class GeoIPsTest extends TestCase
+class GeoIPsTest extends BaseTestCase
 {
     public function testGetName()
     {
         $provider = new GeoIPs($this->getMockAdapter($this->never()), 'api_key');
         $this->assertEquals('geo_ips', $provider->getName());
     }
+
+    protected function getCacheDir()
+    {
+        return __DIR__.'/.cached_responses';
+    }
+
 
     /**
      * @expectedException \RuntimeException
