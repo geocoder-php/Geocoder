@@ -18,7 +18,6 @@ use Geocoder\Location;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\Nominatim\Nominatim;
-use Geocoder\Tests\TestCase;
 
 class NominatimTest extends BaseTestCase
 {

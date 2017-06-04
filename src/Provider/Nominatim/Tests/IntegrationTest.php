@@ -11,7 +11,6 @@
 namespace Geocoder\Provider\Nominatim\Tests;
 
 use Geocoder\IntegrationTest\ProviderIntegrationTest;
-use Geocoder\Provider\BingMaps\BingMaps;
 use Geocoder\Provider\Nominatim\Nominatim;
 use Http\Client\HttpClient;
 

@@ -149,7 +149,6 @@ final class Nominatim extends AbstractHttpProvider implements LocaleAwareGeocode
         $builder->setCountryCode(strtoupper($this->getNodeValue($addressNode->getElementsByTagName('country_code'))));
         $builder->setCoordinates($resultNode->getAttribute('lat'), $resultNode->getAttribute('lon'));
 
-
         $boundsAttr = $resultNode->getAttribute('boundingbox');
         if ($boundsAttr) {
             $bounds = [];
