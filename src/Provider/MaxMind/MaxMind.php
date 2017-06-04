@@ -86,7 +86,8 @@ final class MaxMind extends AbstractHttpProvider implements Provider, IpAddressG
             return new AddressCollection([Address::createFromArray([
                 'locality' => 'localhost',
                 'country' => 'localhost',
-            ])]);        }
+            ])]);
+        }
 
         $url = sprintf(self::GEOCODE_ENDPOINT_URL_SSL, $this->service, $this->apiKey, $address);
 
