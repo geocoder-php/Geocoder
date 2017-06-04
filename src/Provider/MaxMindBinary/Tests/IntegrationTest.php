@@ -11,7 +11,6 @@
 namespace Geocoder\Provider\MaxMindBinary\Tests;
 
 use Geocoder\IntegrationTest\ProviderIntegrationTest;
-use Geocoder\Provider\BingMaps\BingMaps;
 use Geocoder\Provider\MaxMindBinary\MaxMindBinary;
 use Http\Client\HttpClient;
 
@@ -21,7 +20,6 @@ use Http\Client\HttpClient;
 class IntegrationTest extends ProviderIntegrationTest
 {
     protected $skippedTests = [
-
     ];
 
     protected function createProvider(HttpClient $httpClient)

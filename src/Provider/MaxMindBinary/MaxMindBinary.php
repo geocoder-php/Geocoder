@@ -101,7 +101,7 @@ final class MaxMindBinary extends AbstractProvider implements Provider, IpAddres
             $adminLevels[] = ['name' => $geoIpRecord->region, 'level' => 1];
         }
 
-        return New AddressCollection([Address::createFromArray([
+        return new AddressCollection([Address::createFromArray([
                 'countryCode' => $geoIpRecord->country_code,
                 'country' => utf8_encode($geoIpRecord->country_name),
                 'adminLevels' => $adminLevels,
