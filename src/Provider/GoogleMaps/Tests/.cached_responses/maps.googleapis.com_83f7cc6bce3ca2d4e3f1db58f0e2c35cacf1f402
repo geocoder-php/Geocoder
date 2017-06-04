@@ -1,0 +1,71 @@
+s:2170:"{
+   "results" : [
+      {
+         "address_components" : [
+            {
+               "long_name" : "61",
+               "short_name" : "61",
+               "types" : [ "subpremise" ]
+            },
+            {
+               "long_name" : "2123",
+               "short_name" : "2123",
+               "types" : [ "street_number" ]
+            },
+            {
+               "long_name" : "West Mineral Avenue",
+               "short_name" : "W Mineral Ave",
+               "types" : [ "route" ]
+            },
+            {
+               "long_name" : "Littleton",
+               "short_name" : "Littleton",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "Arapahoe County",
+               "short_name" : "Arapahoe County",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "Colorado",
+               "short_name" : "CO",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "United States",
+               "short_name" : "US",
+               "types" : [ "country", "political" ]
+            },
+            {
+               "long_name" : "80120",
+               "short_name" : "80120",
+               "types" : [ "postal_code" ]
+            }
+         ],
+         "formatted_address" : "2123 W Mineral Ave #61, Littleton, CO 80120, USA",
+         "geometry" : {
+            "location" : {
+               "lat" : 39.574515,
+               "lng" : -105.0131111
+            },
+            "location_type" : "ROOFTOP",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 39.57586398029149,
+                  "lng" : -105.0117621197085
+               },
+               "southwest" : {
+                  "lat" : 39.57316601970849,
+                  "lng" : -105.0144600802915
+               }
+            }
+         },
+         "partial_match" : true,
+         "place_id" : "EjAyMTIzIFcgTWluZXJhbCBBdmUgIzYxLCBMaXR0bGV0b24sIENPIDgwMTIwLCBVU0E",
+         "types" : [ "subpremise" ]
+      }
+   ],
+   "status" : "OK"
+}
+";

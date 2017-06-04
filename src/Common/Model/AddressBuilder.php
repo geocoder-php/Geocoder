@@ -272,4 +272,36 @@ final class AddressBuilder
 
         return $this;
     }
+
+    /**
+     * @param $name
+     * @param $value
+     *
+     * @return $this
+     */
+    public function setValue($name, $value)
+    {
+        $this->$name = $value;
+
+        return $this;
+    }
+
+    /**
+     * @param $name
+     * @param null $default
+     */
+    public function getValue($name, $default = null)
+    {
+        return $this->$name ?? $default;
+    }
+
+    /**
+     * @param $name
+     *
+     * @return bool
+     */
+    public function hasValue($name)
+    {
+        return property_exists($this, $name);
+    }
 }

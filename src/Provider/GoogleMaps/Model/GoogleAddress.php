@@ -35,6 +35,11 @@ final class GoogleAddress extends Address
     private $formattedAddress;
 
     /**
+     * @var string|null
+     */
+    private $subpremise;
+
+    /**
      * @param null|string $locationType
      *
      * @return GoogleAddress
@@ -91,6 +96,25 @@ final class GoogleAddress extends Address
     {
         $new = clone $this;
         $new->formattedAddress = $formattedAddress;
+
+        return $new;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getSubpremise()
+    {
+        return $this->subpremise;
+    }
+
+    /**
+     * @param null|string $subpremise
+     */
+    public function withSubpremise($subpremise)
+    {
+        $new = clone $this;
+        $new->subpremise = $subpremise;
 
         return $new;
     }

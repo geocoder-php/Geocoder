@@ -385,4 +385,18 @@ class GoogleMapsTest extends BaseTestCase
         $provider = GoogleMaps::business($this->getHttpClient(), 'foo', 'bogus');
         $provider->geocodeQuery(GeocodeQuery::create('Columbia University'));
     }
+
+    public function testGeocodeWithSupremise()
+    {
+        $provider = new GoogleMaps($this->getHttpClient());
+        $results = $provider->geocodeQuery(GeocodeQuery::create('2123 W Mineral Ave Apt 61,Littleton,CO8 0120'));
+
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertCount(1, $results);
+
+        /** @var Location $result */
+        $result = $results->first();
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals('61', $result->getSubpremise());
+    }
 }
