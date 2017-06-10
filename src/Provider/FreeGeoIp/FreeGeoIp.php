@@ -114,7 +114,7 @@ final class FreeGeoIp extends AbstractHttpProvider implements Provider
     /**
      * @return string|null
      */
-    public function getLocale(): ?string
+    public function getLocale()
     {
         return $this->locale;
     }
