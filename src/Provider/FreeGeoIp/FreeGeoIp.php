@@ -21,6 +21,7 @@ use Geocoder\Query\ReverseQuery;
 use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Provider\Provider;
 use Http\Client\HttpClient;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -31,6 +32,11 @@ final class FreeGeoIp extends AbstractHttpProvider implements Provider
      * @var string
      */
     private $baseUrl;
+
+    /**
+     * @var string|null
+     */
+    private $locale;
 
     /**
      * @param HttpClient $client
@@ -55,6 +61,10 @@ final class FreeGeoIp extends AbstractHttpProvider implements Provider
 
         if (in_array($address, ['127.0.0.1', '::1'])) {
             return new AddressCollection([$this->getLocationForLocalhost()]);
+        }
+
+        if ($locale = $query->getLocale()) {
+            $this->setLocale($locale);
         }
 
         $content = $this->getUrlContents(sprintf($this->baseUrl, $address));
@@ -91,5 +101,36 @@ final class FreeGeoIp extends AbstractHttpProvider implements Provider
     public function getName(): string
     {
         return 'free_geo_ip';
+    }
+
+    /**
+     * @param string $locale
+     */
+    public function setLocale(string $locale)
+    {
+        $this->locale = $locale;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getLocale(): ?string
+    {
+        return $this->locale;
+    }
+
+    /**
+     * {@inheritdoc}
+     * @throws \InvalidArgumentException
+     */
+    protected function getRequest(string $url): RequestInterface
+    {
+        $request = parent::getRequest($url);
+
+        if ($this->locale !== null) {
+            $request = $request->withHeader('Accept-Language', $this->locale);
+        }
+
+        return $request;
     }
 }

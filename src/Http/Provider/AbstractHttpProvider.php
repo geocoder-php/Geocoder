@@ -19,6 +19,7 @@ use Geocoder\Provider\AbstractProvider;
 use Http\Message\MessageFactory;
 use Http\Discovery\MessageFactoryDiscovery;
 use Http\Client\HttpClient;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -57,7 +58,7 @@ abstract class AbstractHttpProvider extends AbstractProvider
      */
     protected function getUrlContents(string $url): string
     {
-        $request = $this->getMessageFactory()->createRequest('GET', $url);
+        $request = $this->getRequest($url);
         $response = $this->getHttpClient()->sendRequest($request);
 
         $statusCode = $response->getStatusCode();
@@ -93,5 +94,14 @@ abstract class AbstractHttpProvider extends AbstractProvider
     protected function getMessageFactory(): MessageFactory
     {
         return $this->messageFactory;
+    }
+
+    /**
+     * @param string $url
+     * @return RequestInterface
+     */
+    protected function getRequest(string $url): RequestInterface
+    {
+        return $this->getMessageFactory()->createRequest('GET', $url);
     }
 }
