@@ -121,6 +121,7 @@ final class FreeGeoIp extends AbstractHttpProvider implements Provider
 
     /**
      * {@inheritdoc}
+     *
      * @throws \InvalidArgumentException
      */
     protected function getRequest(string $url): RequestInterface

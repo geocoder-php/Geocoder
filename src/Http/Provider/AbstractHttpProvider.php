@@ -98,6 +98,7 @@ abstract class AbstractHttpProvider extends AbstractProvider
 
     /**
      * @param string $url
+     *
      * @return RequestInterface
      */
     protected function getRequest(string $url): RequestInterface
