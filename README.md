@@ -385,6 +385,10 @@ MaxMind Binary file | `maxmind_binary` | yes | no | no | needs locally installed
 Extra](https://github.com/geocoder-php/geocoder-extra) library contains even
 more official providers!
 
+##### FreeGeoIp
+
+The default language-locale is `en`, you can choose between `de`, `es`, `fr`, `ru`, `ja`.
+
 #### Locale Aware Providers
 
 Providers that are _locale aware_ expose the following methods:
