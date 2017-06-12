@@ -36,13 +36,11 @@ abstract class AbstractHttpProvider extends AbstractProvider
     private $messageFactory;
 
     /**
-     * @param HttpClient          $client
-     * @param MessageFactory|null $factory
+     * @param HttpClient $client
      */
-    public function __construct(HttpClient $client, MessageFactory $factory = null)
+    public function __construct(HttpClient $client)
     {
         $this->client = $client;
-        $this->messageFactory = $factory;
     }
 
     /**
@@ -54,7 +52,7 @@ abstract class AbstractHttpProvider extends AbstractProvider
      *
      * @throws InvalidServerResponse
      */
-    protected function getUrlContents(string $url): string
+    protected function getUrlContents($url)
     {
         $request = $this->getRequest($url);
         $response = $this->getHttpClient()->sendRequest($request);
