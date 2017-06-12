@@ -43,6 +43,7 @@ final class FreeGeoIp extends AbstractHttpProvider implements Provider, IpAddres
 
     /**
      * {@inheritdoc}
+     *
      * @param string|null $locale
      */
     public function __construct(HttpClient $client, $locale = null)
@@ -51,7 +52,6 @@ final class FreeGeoIp extends AbstractHttpProvider implements Provider, IpAddres
 
         $this->locale = $locale;
     }
-
 
     /**
      * {@inheritdoc}
@@ -107,7 +107,6 @@ final class FreeGeoIp extends AbstractHttpProvider implements Provider, IpAddres
     {
         return 'free_geo_ip';
     }
-
 
     /**
      * @return string|null
