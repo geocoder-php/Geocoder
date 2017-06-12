@@ -22,6 +22,7 @@ use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Provider\Provider;
 use Http\Client\HttpClient;
 use Psr\Http\Message\RequestInterface;
+use Http\Client\HttpClient;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -51,6 +52,18 @@ final class FreeGeoIp extends AbstractHttpProvider implements Provider
 
     /**
      * {@inheritdoc}
+     * @param string|null $locale
+     */
+    public function __construct(HttpClient $client, $locale = null)
+    {
+        parent::__construct($client);
+
+        $this->locale = $locale;
+    }
+
+
+    /**
+     * {@inheritdoc}
      */
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
@@ -64,7 +77,7 @@ final class FreeGeoIp extends AbstractHttpProvider implements Provider
         }
 
         if ($locale = $query->getLocale()) {
-            $this->setLocale($locale);
+            $this->locale = $locale;
         }
 
         $content = $this->getUrlContents(sprintf($this->baseUrl, $address));
@@ -103,13 +116,6 @@ final class FreeGeoIp extends AbstractHttpProvider implements Provider
         return 'free_geo_ip';
     }
 
-    /**
-     * @param string $locale
-     */
-    public function setLocale(string $locale)
-    {
-        $this->locale = $locale;
-    }
 
     /**
      * @return string|null

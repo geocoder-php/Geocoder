@@ -174,8 +174,8 @@ class FreeGeoIpTest extends BaseTestCase
 
     public function testGeocodeWithFrLocale()
     {
-        $provider = new FreeGeoIp($this->getHttpClient());
-        $results = $provider->geocodeQuery(GeocodeQuery::create('81.27.51.252')->withLocale('fr'));
+        $provider = new FreeGeoIp($this->getHttpClient(), 'fr');
+        $results = $provider->geocodeQuery(GeocodeQuery::create('81.27.51.252'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -186,7 +186,7 @@ class FreeGeoIpTest extends BaseTestCase
 
     public function testGeocodeWithIncorrectLocale()
     {
-        $provider = new FreeGeoIp($this->getHttpClient());
+        $provider = new FreeGeoIp($this->getHttpClient(), 'ru');
         $results = $provider->geocodeQuery(GeocodeQuery::create('81.27.51.251')->withLocale('wrong_locale'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
