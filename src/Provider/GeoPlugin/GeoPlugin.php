@@ -96,7 +96,7 @@ final class GeoPlugin extends AbstractHttpProvider implements Provider, IpAddres
         }
 
         $results = [];
-        $results[] = array_merge($this->getDefaults(), [
+        $results[] = Address::createFromArray([
                 'locality' => isset($data['geoplugin_city']) ? $data['geoplugin_city'] : null,
                 'country' => isset($data['geoplugin_countryName']) ? $data['geoplugin_countryName'] : null,
                 'countryCode' => isset($data['geoplugin_countryCode']) ? $data['geoplugin_countryCode'] : null,

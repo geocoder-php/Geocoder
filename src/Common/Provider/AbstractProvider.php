@@ -24,36 +24,6 @@ use Geocoder\Model\AddressCollection;
 abstract class AbstractProvider
 {
     /**
-     * Returns the default results.
-     *
-     * @return array
-     *
-     * @deprecated Use LocationBuilder
-     */
-    protected function getDefaults()
-    {
-        return [
-            'latitude' => null,
-            'longitude' => null,
-            'bounds' => [
-                'south' => null,
-                'west' => null,
-                'north' => null,
-                'east' => null,
-            ],
-            'streetNumber' => null,
-            'streetName' => null,
-            'locality' => null,
-            'postalCode' => null,
-            'subLocality' => null,
-            'adminLevels' => [],
-            'country' => null,
-            'countryCode' => null,
-            'timezone' => null,
-        ];
-    }
-
-    /**
      * Returns the results for the 'localhost' special case.
      *
      * @return Location

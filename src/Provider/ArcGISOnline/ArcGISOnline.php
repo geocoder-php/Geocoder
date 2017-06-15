@@ -16,6 +16,7 @@ use Geocoder\Collection;
 use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Model\Address;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
@@ -95,7 +96,7 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
                 }
             }
 
-            $results[] = array_merge($this->getDefaults(), [
+            $results[] = Address::createFromArray([
                 'latitude' => $coordinates['y'],
                 'longitude' => $coordinates['x'],
                 'streetNumber' => $streetNumber,
@@ -136,7 +137,7 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
         $countryCode = !empty($data->CountryCode) ? $data->CountryCode : null;
 
         return new AddressCollection([
-            array_merge($this->getDefaults(), [
+            Address::createFromArray([
                 'latitude' => $latitude,
                 'longitude' => $longitude,
                 'streetName' => $streetName,
