@@ -13,19 +13,24 @@ declare(strict_types=1);
 namespace Geocoder\Provider\MaxMindBinary\Tests;
 
 use Geocoder\Collection;
+use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Location;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Tests\TestCase;
 use Geocoder\Provider\MaxMindBinary\MaxMindBinary;
 
-class MaxMindBinaryTest extends TestCase
+class MaxMindBinaryTest extends BaseTestCase
 {
     private $binaryFile;
 
     public function setUp()
     {
         $this->binaryFile = __DIR__.'/fixtures/GeoLiteCity.dat';
+    }
+
+    protected function getCacheDir()
+    {
+        return __DIR__.'/.cached_responses';
     }
 
     public static function setUpBeforeClass()
