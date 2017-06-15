@@ -22,6 +22,9 @@ class IntegrationTest extends ProviderIntegrationTest
 {
     protected $skippedTests = [];
 
+    protected $testIpv4 = false;
+    protected $testIpv6 = false;
+
     protected function createProvider(HttpClient $httpClient)
     {
         return new TomTom($httpClient, $this->getApiKey());
