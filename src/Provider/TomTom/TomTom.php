@@ -16,6 +16,7 @@ use Geocoder\Collection;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Location;
 use Geocoder\Model\Address;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
@@ -33,12 +34,12 @@ final class TomTom extends AbstractHttpProvider implements LocaleAwareGeocoder, 
     /**
      * @var string
      */
-    const GEOCODE_ENDPOINT_URL = 'https://api.tomtom.com/lbs/services/geocode/4/geocode?key=%s&query=%s&maxResults=%d';
+    const GEOCODE_ENDPOINT_URL = 'https://api.tomtom.com/search/2/geocode/%s.json?key=%s&limit=%d';
 
     /**
      * @var string
      */
-    const REVERSE_ENDPOINT_URL = 'https://api.tomtom.com/lbs/services/reverseGeocode/3/xml?key=%s&point=%F,%F';
+    const REVERSE_ENDPOINT_URL = 'https://api.tomtom.com/search/2/reverseGeocode/%F,%F.json?key=%s';
 
     /**
      * @var string
@@ -71,9 +72,37 @@ final class TomTom extends AbstractHttpProvider implements LocaleAwareGeocoder, 
             throw new UnsupportedOperation('The TomTom provider does not support IP addresses, only street addresses.');
         }
 
-        $url = sprintf(self::GEOCODE_ENDPOINT_URL, $this->apiKey, rawurlencode($address), $query->getLimit());
+        $url = sprintf(self::GEOCODE_ENDPOINT_URL, rawurlencode($address), $this->apiKey, $query->getLimit());
 
-        return $this->executeQuery($url, $query->getLocale());
+        if (null !== $query->getLocale()) {
+            $url = sprintf('%s&language=%s', $url, $query->getLocale());
+        }
+
+        $content = $this->getUrlContents($url);
+        if (false !== stripos($content, 'Developer Inactive')) {
+            throw new InvalidCredentials('Map API Key provided is not valid.');
+        }
+
+        $json = json_decode($content, true);
+        $results = $json['results'];
+
+        if (empty($results)) {
+            return new AddressCollection([]);
+        }
+
+        $locations = [];
+        foreach ($results as $item) {
+            $locations[] = Address::createFromArray([
+                'latitude' => $item['position']['lat'] ?? null,
+                'longitude' => $item['position']['lon'] ?? null,
+                'streetName' => $item['address']['streetName'] ?? null,
+                'streetNumber' => $item['address']['streetNumber'] ?? null,
+                'country' => $item['address']['country'] ?? null,
+                'countryCode' => $item['address']['countryCode'] ?? null,
+            ]);
+        }
+
+        return new AddressCollection($locations);
     }
 
     /**
@@ -88,9 +117,34 @@ final class TomTom extends AbstractHttpProvider implements LocaleAwareGeocoder, 
             throw new InvalidCredentials('No Map API Key provided.');
         }
 
-        $url = sprintf(self::REVERSE_ENDPOINT_URL, $this->apiKey, $latitude, $longitude);
+        $url = sprintf(self::REVERSE_ENDPOINT_URL, $latitude, $longitude, $this->apiKey);
 
-        return $this->executeQuery($url, $query->getLocale());
+        $content = $this->getUrlContents($url);
+        if (false !== stripos($content, 'Developer Inactive')) {
+            throw new InvalidCredentials('Map API Key provided is not valid.');
+        }
+
+        $json = json_decode($content, true);
+        $results = $json['addresses'];
+
+        if (empty($results)) {
+            return new AddressCollection([]);
+        }
+
+        $locations = [];
+        foreach ($results as $item) {
+            list($lat, $lon) = explode(',', $item['position']);
+            $locations[] = Address::createFromArray([
+                'latitude' => $lat,
+                'longitude' => $lon,
+                'streetName' => $item['address']['streetName'] ?? null,
+                'streetNumber' => $item['address']['streetNumber'] ?? null,
+                'country' => $item['address']['country'] ?? null,
+                'countryCode' => $item['address']['countryCode'] ?? null,
+            ]);
+        }
+
+        return new AddressCollection($locations);
     }
 
     /**
@@ -99,68 +153,5 @@ final class TomTom extends AbstractHttpProvider implements LocaleAwareGeocoder, 
     public function getName(): string
     {
         return 'tomtom';
-    }
-
-    /**
-     * @param string $url
-     */
-    private function executeQuery($url, $locale)
-    {
-        if (null !== $locale) {
-            // Supported 2- character values are de, en, es, fr, it, nl, pl, pt, and sv.
-            // Equivalent 3-character values are GER, ENG, SPA, FRE, ITA, DUT, POL, POR, and SWE.
-            $url = sprintf('%s&language=%s', $url, substr($locale, 0, 2));
-        }
-
-        $content = $this->getUrlContents($url);
-        if (false !== stripos($content, 'Developer Inactive')) {
-            throw new InvalidCredentials('Map API Key provided is not valid.');
-        }
-
-        try {
-            $xml = new \SimpleXmlElement($content);
-        } catch (\Exception $e) {
-            throw InvalidServerResponse::create($url);
-        }
-
-        $attributes = $xml->attributes();
-
-        if (isset($attributes['count']) && 0 === (int) $attributes['count']) {
-            return new AddressCollection([]);
-        }
-
-        if (isset($attributes['errorCode'])) {
-            if ('403' === (string) $attributes['errorCode']) {
-                throw new InvalidCredentials('Map API Key provided is not valid.');
-            }
-
-            return new AddressCollection([]);
-        }
-
-        $data = isset($xml->geoResult) ? $xml->geoResult : $xml->reverseGeoResult;
-
-        if (0 === count($data)) {
-            return $this->returnResults([$this->getResultArray($data)]);
-        }
-
-        $results = [];
-        foreach ($data as $item) {
-            $results[] = $this->getResultArray($item);
-        }
-
-        return new AddressCollection($results);
-    }
-
-    private function getResultArray(\SimpleXmlElement $data)
-    {
-        return Address::createFromArray([
-            'latitude' => isset($data->latitude) ? (float) $data->latitude : null,
-            'longitude' => isset($data->longitude) ? (float) $data->longitude : null,
-            'streetName' => isset($data->street) ? (string) $data->street : null,
-            'locality' => isset($data->city) ? (string) $data->city : null,
-            'adminLevels' => isset($data->state) ? [['name' => (string) $data->state, 'level' => 1]] : [],
-            'country' => isset($data->country) ? (string) $data->country : null,
-            'countryCode' => isset($data->countryISO3) ? (string) $data->countryISO3 : null,
-        ]);
     }
 }

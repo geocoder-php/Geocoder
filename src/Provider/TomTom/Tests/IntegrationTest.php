@@ -20,7 +20,9 @@ use Http\Client\HttpClient;
  */
 class IntegrationTest extends ProviderIntegrationTest
 {
-    protected $skippedTests = [];
+    protected $skippedTests = [
+        'testReverseQueryWithNoResults' => 'Null island exists. ',
+    ];
 
     protected $testIpv4 = false;
     protected $testIpv6 = false;
