@@ -19,22 +19,10 @@ use Http\Client\HttpClient;
  */
 class IntegrationTest extends ProviderIntegrationTest
 {
-    protected $skippedTests = [
-        'testGeocodeQuery' => 'No street addresses supported',
-        'testGeocodeQueryWithNoResults' => 'No street addresses supported',
-        'testReverseQuery' => 'No reverse supported',
-        'testEmptyReverseQuery' => 'No reverse supported',
-        'testServer500Error' => 'The provider does not support street addresses.',
-        'testServer500ErrorReverse' => 'The provider does not support street addresses.',
-        'testServer400Error' => 'The provider does not support street addresses.',
-        'testServer400ErrorReverse' => 'The provider does not support street addresses.',
-        'testServerEmptyResponse' => 'The provider does not support street addresses.',
-        'testServerEmptyResponseReverse' => 'The provider does not support street addresses.',
-        'testQuotaExceededResponse' => 'The provider does not support street addresses.',
-        'testQuotaExceededResponseReverse' => 'The provider does not support street addresses.',
-        'testInvalidCredentialsResponse' => 'The provider does not support street addresses.',
-        'testInvalidCredentialsResponseReverse' => 'The provider does not support street addresses.',
-    ];
+    protected $testAddress = false;
+    protected $testReverse = false;
+    protected $testIpv6 = false;
+    protected $testHttpProvider = false;
 
     protected function setUp()
     {
