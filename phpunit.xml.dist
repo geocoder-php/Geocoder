@@ -35,6 +35,8 @@
             <directory>./tests/</directory>
             <directory>./src/Common/Tests/</directory>
             <directory>./src/Provider/*/Tests/</directory>
+            <exclude>./src/Provider/MaxMind/Tests/IntegrationTest.php</exclude>
+            <exclude>./src/Provider/MaxMind/Tests/MaxMindTest.php</exclude>
         </testsuite>
     </testsuites>
 
