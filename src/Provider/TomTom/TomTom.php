@@ -16,6 +16,7 @@ use Geocoder\Collection;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Model\Address;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
@@ -147,12 +148,12 @@ final class TomTom extends AbstractHttpProvider implements LocaleAwareGeocoder, 
             $results[] = $this->getResultArray($item);
         }
 
-        return $this->returnResults($results);
+        return new AddressCollection($results);
     }
 
     private function getResultArray(\SimpleXmlElement $data)
     {
-        return array_merge($this->getDefaults(), [
+        return Address::createFromArray([
             'latitude' => isset($data->latitude) ? (float) $data->latitude : null,
             'longitude' => isset($data->longitude) ? (float) $data->longitude : null,
             'streetName' => isset($data->street) ? (string) $data->street : null,

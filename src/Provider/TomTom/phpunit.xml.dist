@@ -7,7 +7,8 @@
          bootstrap="vendor/autoload.php"
 >
     <php>
-        <ini name="error_reporting" value="-1" />
+        <server name="TOMTOM_MAP_KEY" value="YOUR_MAP_KEY" />
+        <server name="USE_CACHED_RESPONSES" value="true" />
     </php>
 
     <testsuites>
