@@ -1,0 +1,13 @@
+s:284:"{
+	"statusCode" : "OK",
+	"statusMessage" : "",
+	"ipAddress" : "83.227.123.8",
+	"countryCode" : "SE",
+	"countryName" : "Sweden",
+	"regionName" : "Vasterbottens lan",
+	"cityName" : "Umea",
+	"zipCode" : "90850",
+	"latitude" : "63.8284",
+	"longitude" : "20.2597",
+	"timeZone" : "+02:00"
+}";

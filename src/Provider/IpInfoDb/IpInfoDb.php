@@ -16,6 +16,7 @@ use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Collection;
+use Geocoder\Model\Address;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
@@ -98,7 +99,10 @@ final class IpInfoDb extends AbstractHttpProvider implements Provider, IpAddress
         }
 
         if ('127.0.0.1' === $address) {
-            return $this->returnResults([$this->getLocalhostDefaults()]);
+            return new AddressCollection([Address::createFromArray([
+                'locality' => 'localhost',
+                'country' => 'localhost',
+            ])]);
         }
 
         $url = sprintf($this->endpointUrl, $this->apiKey, $address);
@@ -141,15 +145,14 @@ final class IpInfoDb extends AbstractHttpProvider implements Provider, IpAddress
             $timezone = timezone_name_from_abbr('', (int) substr($data['timeZone'], 0, strpos($data['timeZone'], ':')) * 3600, 0);
         }
 
-        return $this->returnResults([
-            array_merge($this->getDefaults(), [
-                'latitude' => isset($data['latitude']) ? $data['latitude'] : null,
-                'longitude' => isset($data['longitude']) ? $data['longitude'] : null,
-                'locality' => isset($data['cityName']) ? $data['cityName'] : null,
-                'postalCode' => isset($data['zipCode']) ? $data['zipCode'] : null,
+        return new AddressCollection([Address::createFromArray([
+                'latitude' => $data['latitude'] ?? null,
+                'longitude' => $data['longitude'] ?? null,
+                'locality' => $data['cityName'] ?? null,
+                'postalCode' => $data['zipCode'] ?? null,
                 'adminLevels' => isset($data['regionName']) ? [['name' => $data['regionName'], 'level' => 1]] : [],
-                'country' => isset($data['countryName']) ? $data['countryName'] : null,
-                'countryCode' => isset($data['countryName']) ? $data['countryCode'] : null,
+                'country' => $data['countryName'] ?? null,
+                'countryCode' => $data['countryName'] ?? null,
                 'timezone' => $timezone,
             ]),
         ]);
