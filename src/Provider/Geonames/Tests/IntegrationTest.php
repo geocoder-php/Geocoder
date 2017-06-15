@@ -23,6 +23,9 @@ class IntegrationTest extends ProviderIntegrationTest
         'testGeocodeQuery' => 'This address is not found..',
     ];
 
+    protected $testIpv4 = false;
+    protected $testIpv6 = false;
+
     protected function createProvider(HttpClient $httpClient)
     {
         return new Geonames($httpClient, $this->getApiKey());
