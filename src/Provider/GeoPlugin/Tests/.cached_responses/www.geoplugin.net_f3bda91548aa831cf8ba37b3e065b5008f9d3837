@@ -1,0 +1,20 @@
+s:729:"{
+  "geoplugin_request":"83.227.123.8",
+  "geoplugin_status":206,
+  "geoplugin_credit":"Some of the returned data includes GeoLite data created by MaxMind, available from <a href='http:\/\/www.maxmind.com'>http:\/\/www.maxmind.com<\/a>.",
+  "geoplugin_city":"",
+  "geoplugin_region":"",
+  "geoplugin_areaCode":"0",
+  "geoplugin_dmaCode":"0",
+  "geoplugin_countryCode":"SE",
+  "geoplugin_countryName":"Sweden",
+  "geoplugin_continentCode":"EU",
+  "geoplugin_latitude":"59.3247",
+  "geoplugin_longitude":"18.056",
+  "geoplugin_regionCode":"",
+  "geoplugin_regionName":"",
+  "geoplugin_currencyCode":"SEK",
+  "geoplugin_currencySymbol":"&#107;&#114;",
+  "geoplugin_currencySymbol_UTF8":"kr",
+  "geoplugin_currencyConverter":8.9853
+}";
