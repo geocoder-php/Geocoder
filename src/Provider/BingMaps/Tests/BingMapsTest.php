@@ -256,7 +256,7 @@ JSON;
         $this->assertEquals(48.867079207124, $result->getBounds()->getNorth(), '', 0.0001);
         $this->assertEquals(2.3966002592208, $result->getBounds()->getEast(), '', 0.0001);
         $this->assertNull($result->getStreetNumber());
-        $this->assertEquals('1 Avenue Gambetta', $result->getStreetName());
+        $this->assertEquals('3 Avenue Gambetta', $result->getStreetName());
         $this->assertEquals(75020, $result->getPostalCode());
         $this->assertEquals('Paris', $result->getLocality());
         $this->assertCount(2, $result->getAdminLevels());
