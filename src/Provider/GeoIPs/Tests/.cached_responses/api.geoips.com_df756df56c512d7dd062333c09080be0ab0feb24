@@ -1,0 +1,29 @@
+s:573:"{
+"response": {
+"status": "Propper Request",
+"message": "Success",
+"notes": "The following results has been returned",
+"code": "200_1",
+"location": {
+"ip": "83.227.123.8",
+"owner": "B2 CUSTOMERS IN DSL10.UME1",
+"continent_name": "EUROPE",
+"continent_code": "EU",
+"country_name": "SWEDEN",
+"country_code": "SE",
+"region_name": "",
+"region_code": "",
+"county_name": "",
+"city_name": "STOCKHOLM",
+"latitude": "59.33",
+"longitude": "18.05",
+"timezone": "GMT+1"
+},
+"unit_test": {
+"api_calls": "100",
+"current_calls": "0",
+"elapsed_time": "0.0193",
+"memory_usage": "0.66MB"
+}
+}
+}";
