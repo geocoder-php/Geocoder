@@ -14,6 +14,7 @@ namespace Geocoder\Provider;
 
 use Geocoder\Geocoder;
 use Geocoder\Collection;
+use Geocoder\Location;
 use Geocoder\Model\Address;
 use Geocoder\Model\AddressCollection;
 
@@ -55,15 +56,13 @@ abstract class AbstractProvider
     /**
      * Returns the results for the 'localhost' special case.
      *
-     * @return array
-     *
-     * @deprecated
+     * @return Location
      */
-    protected function getLocalhostDefaults()
+    protected function getLocationForLocalhost()
     {
-        return [
+        return Address::createFromArray([
             'locality' => 'localhost',
             'country' => 'localhost',
-        ];
+        ]);
     }
 }

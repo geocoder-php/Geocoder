@@ -44,10 +44,7 @@ final class GeoPlugin extends AbstractHttpProvider implements Provider, IpAddres
         }
 
         if (in_array($address, ['127.0.0.1', '::1'])) {
-            return new AddressCollection([Address::createFromArray([
-                'locality' => 'localhost',
-                'country' => 'localhost',
-            ])]);
+            return new AddressCollection([$this->getLocationForLocalhost()]);
         }
 
         $url = sprintf(self::GEOCODE_ENDPOINT_URL, $address);
