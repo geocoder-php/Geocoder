@@ -7,7 +7,8 @@
          bootstrap="vendor/autoload.php"
 >
     <php>
-        <ini name="error_reporting" value="-1" />
+        <server name="USE_CACHED_RESPONSES" value="true" />
+        <server name="GEOIPS_API_KEY" value="YOUR_API_KEY" />
     </php>
 
     <testsuites>
