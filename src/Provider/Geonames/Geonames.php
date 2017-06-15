@@ -16,6 +16,7 @@ use Geocoder\Collection;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Model\Address;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Model\AdminLevelCollection;
 use Geocoder\Query\GeocodeQuery;
@@ -154,7 +155,7 @@ final class Geonames extends AbstractHttpProvider implements LocaleAwareGeocoder
                 }
             }
 
-            $results[] = array_merge($this->getDefaults(), [
+            $results[] = Address::createFromArray([
                 'latitude' => isset($item->lat) ? $item->lat : null,
                 'longitude' => isset($item->lng) ? $item->lng : null,
                 'bounds' => $bounds,
@@ -166,6 +167,6 @@ final class Geonames extends AbstractHttpProvider implements LocaleAwareGeocoder
             ]);
         }
 
-        return $this->returnResults($results);
+        return new AddressCollection($results);
     }
 }
