@@ -13,46 +13,42 @@ declare(strict_types=1);
 namespace Geocoder\Provider\MapQuest\Tests;
 
 use Geocoder\Collection;
+use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Location;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Tests\TestCase;
 use Geocoder\Provider\MapQuest\MapQuest;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-class MapQuestTest extends TestCase
+class MapQuestTest extends BaseTestCase
 {
+    protected function getCacheDir()
+    {
+        return __DIR__.'/.cached_responses';
+    }
+
     public function testGetName()
     {
-        $provider = new MapQuest($this->getMockAdapter($this->never()), 'api_key');
+        $provider = new MapQuest($this->getMockedHttpClient(), 'api_key');
         $this->assertEquals('map_quest', $provider->getName());
     }
 
     public function testGeocode()
     {
-        $provider = new MapQuest($this->getMockAdapterReturns('{}'), 'api_key');
+        $provider = new MapQuest($this->getMockedHttpClient('{}'), 'api_key');
         $result = $provider->geocodeQuery(GeocodeQuery::create('foobar'));
 
         $this->assertInstanceOf(Collection::class, $result);
         $this->assertEquals(0, $result->count());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\InvalidServerResponse
-     */
-    public function testGeocodeWithAddressGetsNullContent()
-    {
-        $provider = new MapQuest($this->getMockAdapterReturns(null), 'api_key');
-        $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
-    }
-
     public function testGetNotRelevantData()
     {
         $json = '{"results":[{"locations":[{"street":"","postalCode":"","adminArea5":"","adminArea4":"","adminArea3":"","adminArea1":""}]}]}';
 
-        $provider = new MapQuest($this->getMockAdapterReturns($json), 'api_key');
+        $provider = new MapQuest($this->getMockedHttpClient($json), 'api_key');
         $result = $provider->reverseQuery(ReverseQuery::fromCoordinates(11, 12));
 
         $this->assertInstanceOf(Collection::class, $result);
@@ -65,7 +61,7 @@ class MapQuestTest extends TestCase
             $this->markTestSkipped('You need to configure the MAPQUEST_API_KEY value in phpunit.xml');
         }
 
-        $provider = new MapQuest($this->getAdapter($_SERVER['MAPQUEST_API_KEY']), $_SERVER['MAPQUEST_API_KEY']);
+        $provider = new MapQuest($this->getHttpClient($_SERVER['MAPQUEST_API_KEY']), $_SERVER['MAPQUEST_API_KEY']);
         $results = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -91,26 +87,13 @@ class MapQuestTest extends TestCase
         $this->assertNull($result->getTimezone());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\InvalidServerResponse
-     */
-    public function testReverse()
-    {
-        if (!isset($_SERVER['MAPQUEST_API_KEY'])) {
-            $this->markTestSkipped('You need to configure the MAPQUEST_API_KEY value in phpunit.xml');
-        }
-
-        $provider = new MapQuest($this->getMockAdapter(), $_SERVER['MAPQUEST_API_KEY']);
-        $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
-    }
-
     public function testReverseWithRealCoordinates()
     {
         if (!isset($_SERVER['MAPQUEST_API_KEY'])) {
             $this->markTestSkipped('You need to configure the MAPQUEST_API_KEY value in phpunit.xml');
         }
 
-        $provider = new MapQuest($this->getAdapter($_SERVER['MAPQUEST_API_KEY']), $_SERVER['MAPQUEST_API_KEY']);
+        $provider = new MapQuest($this->getHttpClient($_SERVER['MAPQUEST_API_KEY']), $_SERVER['MAPQUEST_API_KEY']);
         $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(54.0484068, -2.7990345));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -141,7 +124,7 @@ class MapQuestTest extends TestCase
             $this->markTestSkipped('You need to configure the MAPQUEST_API_KEY value in phpunit.xml');
         }
 
-        $provider = new MapQuest($this->getAdapter($_SERVER['MAPQUEST_API_KEY']), $_SERVER['MAPQUEST_API_KEY']);
+        $provider = new MapQuest($this->getHttpClient($_SERVER['MAPQUEST_API_KEY']), $_SERVER['MAPQUEST_API_KEY']);
         $results = $provider->geocodeQuery(GeocodeQuery::create('Hanover'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -202,7 +185,7 @@ class MapQuestTest extends TestCase
             $this->markTestSkipped('You need to configure the MAPQUEST_API_KEY value in phpunit.xml');
         }
 
-        $provider = new MapQuest($this->getAdapter($_SERVER['MAPQUEST_API_KEY']), $_SERVER['MAPQUEST_API_KEY']);
+        $provider = new MapQuest($this->getHttpClient($_SERVER['MAPQUEST_API_KEY']), $_SERVER['MAPQUEST_API_KEY']);
         $results = $provider->geocodeQuery(GeocodeQuery::create('Kalbacher Hauptstraße 10, 60437 Frankfurt, Germany'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -233,7 +216,7 @@ class MapQuestTest extends TestCase
      */
     public function testGeocodeWithLocalhostIPv4()
     {
-        $provider = new MapQuest($this->getMockAdapter($this->never()), 'api_key');
+        $provider = new MapQuest($this->getMockedHttpClient(), 'api_key');
         $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
     }
 
@@ -243,7 +226,7 @@ class MapQuestTest extends TestCase
      */
     public function testGeocodeWithLocalhostIPv6()
     {
-        $provider = new MapQuest($this->getMockAdapter($this->never()), 'api_key');
+        $provider = new MapQuest($this->getMockedHttpClient(), 'api_key');
         $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
@@ -253,7 +236,7 @@ class MapQuestTest extends TestCase
      */
     public function testGeocodeWithRealIPv4()
     {
-        $provider = new MapQuest($this->getAdapter(), 'api_key');
+        $provider = new MapQuest($this->getMockedHttpClient(), 'api_key');
         $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
@@ -263,7 +246,7 @@ class MapQuestTest extends TestCase
      */
     public function testGeocodeWithRealIPv6()
     {
-        $provider = new MapQuest($this->getAdapter(), 'api_key');
+        $provider = new MapQuest($this->getMockedHttpClient(), 'api_key');
         $provider->geocodeQuery(GeocodeQuery::create('::ffff:74.200.247.59'));
     }
 }
