@@ -17,7 +17,6 @@ use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Location;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Tests\TestCase;
 use Geocoder\Provider\TomTom\TomTom;
 
 class TomTomTest extends BaseTestCase
@@ -42,23 +41,10 @@ class TomTomTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('Tagensvej 47, 2200 København N'));
     }
 
-    public function testGeocodeZeroResults()
-    {
-        $ZeroResults = <<<'XML'
-<geoResponse duration="" debugInformation="" count="0" svnRevision="" version="" consolidatedMaps=""/>
-XML;
-
-        $provider = new TomTom($this->getMockedHttpClient($ZeroResults), 'api_key');
-        $result = $provider->geocodeQuery(GeocodeQuery::create('foo'));
-
-        $this->assertInstanceOf(Collection::class, $result);
-        $this->assertEquals(0, $result->count());
-    }
-
     public function testGeocodeWithRealAddress()
     {
         $provider = new TomTom($this->getHttpClient($_SERVER['TOMTOM_MAP_KEY']), $_SERVER['TOMTOM_MAP_KEY']);
-        $results = $provider->geocodeQuery(GeocodeQuery::create('Tagensvej 47, 2200 København N'));
+        $results = $provider->geocodeQuery(GeocodeQuery::create('Tagensvej 47, 2200 København N')->withLocale('en-GB'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -66,24 +52,23 @@ XML;
         /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(55.704389, $result->getCoordinates()->getLatitude(), '', 0.0001);
-        $this->assertEquals(12.546129, $result->getCoordinates()->getLongitude(), '', 0.0001);
+        $this->assertEquals(55.70, $result->getCoordinates()->getLatitude(), '', 0.001);
+        $this->assertEquals(12.5529, $result->getCoordinates()->getLongitude(), '', 0.001);
         $this->assertNull($result->getBounds());
-        $this->assertNull($result->getStreetNumber());
+        $this->assertEquals(47, $result->getStreetNumber());
         $this->assertEquals('Tagensvej', $result->getStreetName());
-        $this->assertNull($result->getPostalCode());
+        $this->assertEquals(2200, $result->getPostalCode());
         $this->assertEquals('Copenhagen', $result->getLocality());
-        $this->assertNull($result->getSubLocality());
         $this->assertCount(0, $result->getAdminLevels());
         $this->assertEquals('Denmark', $result->getCountry()->getName());
-        $this->assertEquals('DNK', $result->getCountry()->getCode());
+        $this->assertEquals('DK', $result->getCountry()->getCode());
         $this->assertNull($result->getTimezone());
     }
 
     public function testGeocodeWithRealAddressWithFrenchLocale()
     {
         $provider = new TomTom($this->getHttpClient($_SERVER['TOMTOM_MAP_KEY']), $_SERVER['TOMTOM_MAP_KEY']);
-        $results = $provider->geocodeQuery(GeocodeQuery::create('Tagensvej 47, 2200 København N')->withLocale('fr_FR'));
+        $results = $provider->geocodeQuery(GeocodeQuery::create('Tagensvej 47, 2200 København N')->withLocale('fr-FR'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -91,114 +76,6 @@ XML;
         /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(55.704389, $result->getCoordinates()->getLatitude(), '', 0.0001);
-        $this->assertEquals(12.546129, $result->getCoordinates()->getLongitude(), '', 0.0001);
-        $this->assertNull($result->getBounds());
-        $this->assertNull($result->getStreetNumber());
-        $this->assertEquals('Tagensvej', $result->getStreetName());
-        $this->assertNull($result->getPostalCode());
-        $this->assertEquals('Copenhague', $result->getLocality());
-        $this->assertNull($result->getSubLocality());
-        $this->assertCount(0, $result->getAdminLevels());
-        $this->assertEquals('Danemark', $result->getCountry()->getName());
-        $this->assertEquals('DNK', $result->getCountry()->getCode());
-        $this->assertNull($result->getTimezone());
-    }
-
-    public function testGeocodeWithRealAddressWithSwedishLocale()
-    {
-        $provider = new TomTom($this->getHttpClient($_SERVER['TOMTOM_MAP_KEY']), $_SERVER['TOMTOM_MAP_KEY']);
-        $results = $provider->geocodeQuery(GeocodeQuery::create('Tagensvej 47, 2200 København N')->withLocale('sv-SE'));
-
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
-        $this->assertCount(1, $results);
-
-        /** @var Location $result */
-        $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(55.704389, $result->getCoordinates()->getLatitude(), '', 0.0001);
-        $this->assertEquals(12.546129, $result->getCoordinates()->getLongitude(), '', 0.0001);
-        $this->assertNull($result->getBounds());
-        $this->assertNull($result->getStreetNumber());
-        $this->assertEquals('Tagensvej', $result->getStreetName());
-        $this->assertNull($result->getPostalCode());
-        $this->assertEquals('Köpenhamn', $result->getLocality());
-        $this->assertNull($result->getSubLocality());
-        $this->assertCount(0, $result->getAdminLevels());
-        $this->assertEquals('Danmark', $result->getCountry()->getName());
-        $this->assertEquals('DNK', $result->getCountry()->getCode());
-        $this->assertNull($result->getTimezone());
-    }
-
-    public function testGeocodeWithRealAddressReturnsMultipleResults()
-    {
-        $provider = new TomTom($this->getHttpClient($_SERVER['TOMTOM_MAP_KEY']), $_SERVER['TOMTOM_MAP_KEY']);
-        $results = $provider->geocodeQuery(GeocodeQuery::create('Paris'));
-
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
-        $this->assertCount(5, $results);
-
-        /** @var Location $result */
-        $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(48.856898, $result->getCoordinates()->getLatitude(), '', 0.0001);
-        $this->assertEquals(2.350844, $result->getCoordinates()->getLongitude(), '', 0.0001);
-        $this->assertNull($result->getBounds());
-        $this->assertNull($result->getStreetNumber());
-        $this->assertNull($result->getStreetName());
-        $this->assertNull($result->getPostalCode());
-        $this->assertEquals('Paris', $result->getLocality());
-        $this->assertNull($result->getSubLocality());
-        $this->assertCount(1, $result->getAdminLevels());
-        $this->assertEquals('Ile-de-France', $result->getAdminLevels()->get(1)->getName());
-        $this->assertNull($result->getAdminLevels()->get(1)->getCode());
-        $this->assertEquals('France', $result->getCountry()->getName());
-        $this->assertEquals('FRA', $result->getCountry()->getCode());
-        $this->assertNull($result->getTimezone());
-
-        /** @var Location $result */
-        $result = $results->get(1);
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(33.661426, $result->getCoordinates()->getLatitude(), '', 0.0001);
-        $this->assertEquals(-95.556321, $result->getCoordinates()->getLongitude(), '', 0.0001);
-        $this->assertEquals('Paris', $result->getLocality());
-        $this->assertCount(1, $result->getAdminLevels());
-        $this->assertEquals('Texas', $result->getAdminLevels()->get(1)->getName());
-        $this->assertEquals('United States', $result->getCountry()->getName());
-        $this->assertEquals('USA', $result->getCountry()->getCode());
-
-        /** @var Location $result */
-        $result = $results->get(2);
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(36.302754, $result->getCoordinates()->getLatitude(), '', 0.0001);
-        $this->assertEquals(-88.326359, $result->getCoordinates()->getLongitude(), '', 0.0001);
-        $this->assertEquals('Paris', $result->getLocality());
-        $this->assertCount(1, $result->getAdminLevels());
-        $this->assertEquals('Tennessee', $result->getAdminLevels()->get(1)->getName());
-        $this->assertEquals('United States', $result->getCountry()->getName());
-        $this->assertEquals('USA', $result->getCountry()->getCode());
-
-        /** @var Location $result */
-        $result = $results->get(3);
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(-19.039448, $result->getCoordinates()->getLatitude(), '', 0.0001);
-        $this->assertEquals(29.560445, $result->getCoordinates()->getLongitude(), '', 0.0001);
-        $this->assertEquals('Paris', $result->getLocality());
-        $this->assertCount(1, $result->getAdminLevels());
-        $this->assertEquals('Midlands', $result->getAdminLevels()->get(1)->getName());
-        $this->assertEquals('Zimbabwe', $result->getCountry()->getName());
-        $this->assertEquals('ZWE', $result->getCountry()->getCode());
-
-        /** @var Location $result */
-        $result = $results->get(4);
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(35.292105, $result->getCoordinates()->getLatitude(), '', 0.0001);
-        $this->assertEquals(-93.729922, $result->getCoordinates()->getLongitude(), '', 0.0001);
-        $this->assertEquals('Paris', $result->getLocality());
-        $this->assertCount(1, $result->getAdminLevels());
-        $this->assertEquals('Arkansas', $result->getAdminLevels()->get(1)->getName());
-        $this->assertEquals('United States', $result->getCountry()->getName());
-        $this->assertEquals('USA', $result->getCountry()->getCode());
     }
 
     /**
@@ -273,20 +150,6 @@ XML;
         $this->assertEquals(0, $result->count());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\InvalidCredentials
-     * @expectedExceptionMessage Map API Key provided is not valid.
-     */
-    public function testReverseError403()
-    {
-        $error403 = <<<'XML'
-<errorResponse version="" description="" errorCode="403"/>
-XML;
-
-        $provider = new TomTom($this->getMockedHttpClient($error403), 'api_key');
-        $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
-    }
-
     public function testReverseWithRealCoordinates()
     {
         if (!isset($_SERVER['TOMTOM_MAP_KEY'])) {
@@ -305,14 +168,13 @@ XML;
         $this->assertEquals(48.86323, $result->getCoordinates()->getLatitude(), '', 0.001);
         $this->assertEquals(2.38877, $result->getCoordinates()->getLongitude(), '', 0.001);
         $this->assertNull($result->getBounds());
-        $this->assertNull($result->getStreetNumber());
         $this->assertEquals('Avenue Gambetta', $result->getStreetName());
         $this->assertNull($result->getPostalCode());
-        $this->assertEquals('20e Arrondissement Paris', $result->getLocality());
-        $this->assertNull($result->getSubLocality());
+        $this->assertEquals('Paris', $result->getLocality());
+        $this->assertEquals('20e Arrondissement Paris', $result->getSubLocality());
         $this->assertCount(0, $result->getAdminLevels());
         $this->assertEquals('France', $result->getCountry()->getName());
-        $this->assertEquals('FRA', $result->getCountry()->getCode());
+        $this->assertEquals('FR', $result->getCountry()->getCode());
         $this->assertNull($result->getTimezone());
     }
 
@@ -334,14 +196,14 @@ XML;
         $this->assertEquals(56.52435, $result->getCoordinates()->getLatitude(), '', 0.001);
         $this->assertEquals(10.06744, $result->getCoordinates()->getLongitude(), '', 0.001);
         $this->assertNull($result->getBounds());
-        $this->assertNull($result->getStreetNumber());
+        $this->assertEquals(16, $result->getStreetNumber());
         $this->assertEquals('Stabelsvej', $result->getStreetName());
         $this->assertNull($result->getPostalCode());
         $this->assertEquals('Spentrup', $result->getLocality());
-        $this->assertNull($result->getSubLocality());
+        $this->assertEquals('Spentrup', $result->getSubLocality());
         $this->assertCount(0, $result->getAdminLevels());
         $this->assertEquals('Denmark', $result->getCountry()->getName());
-        $this->assertEquals('DNK', $result->getCountry()->getCode());
+        $this->assertEquals('DK', $result->getCountry()->getCode());
         $this->assertNull($result->getTimezone());
     }
 }

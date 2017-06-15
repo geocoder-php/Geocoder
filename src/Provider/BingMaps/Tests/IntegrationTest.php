@@ -23,6 +23,9 @@ class IntegrationTest extends ProviderIntegrationTest
         'testGeocodeQuery' => 'Bing classifies this as Landmarks. They do not have addresses. ',
     ];
 
+    protected $testIpv4 = false;
+    protected $testIpv6 = false;
+
     protected function createProvider(HttpClient $httpClient)
     {
         return new BingMaps($httpClient, $this->getApiKey());

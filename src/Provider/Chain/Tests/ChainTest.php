@@ -16,8 +16,8 @@ use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\Provider;
-use Geocoder\Tests\TestCase;
 use Geocoder\Provider\Chain\Chain;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author Markus Bachmann <markus.bachmann@bachi.biz>

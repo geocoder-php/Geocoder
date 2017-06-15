@@ -58,12 +58,14 @@ final class FreeGeoIp extends AbstractHttpProvider implements Provider, IpAddres
             $builder->addAdminLevel(1, $data['region_name'] ?? null, $data['region_code'] ?? null);
         }
 
-        $builder->setCoordinates($data['latitude'] ?? null, $data['longitude'] ?? null);
-        $builder->setLocality($data['city'] ?? null);
-        $builder->setPostalCode($data['zip_code'] ?? null);
-        $builder->setCountry($data['country_name'] ?? null);
-        $builder->setCountryCode($data['country_code'] ?? null);
-        $builder->setTimezone($data['time_zone'] ?? null);
+        if ($data['latitude'] !== 0 || $data['longitude'] !== 0) {
+            $builder->setCoordinates($data['latitude'] ?? null, $data['longitude'] ?? null);
+        }
+        $builder->setLocality(empty($data['city']) ? null : $data['city']);
+        $builder->setPostalCode(empty($data['zip_code']) ? null : $data['zip_code']);
+        $builder->setCountry(empty($data['country_name']) ? null : $data['country_name']);
+        $builder->setCountryCode(empty($data['country_code']) ? null : $data['country_code']);
+        $builder->setTimezone(empty($data['time_zone']) ? null : $data['time_zone']);
 
         return new AddressCollection([$builder->build()]);
     }
