@@ -11,7 +11,6 @@
 namespace Geocoder\Provider\OpenCage\Tests;
 
 use Geocoder\IntegrationTest\ProviderIntegrationTest;
-use Geocoder\Provider\BingMaps\BingMaps;
 use Geocoder\Provider\OpenCage\OpenCage;
 use Http\Client\HttpClient;
 

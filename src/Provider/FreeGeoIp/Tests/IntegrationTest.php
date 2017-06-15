@@ -19,22 +19,8 @@ use Http\Client\HttpClient;
  */
 class IntegrationTest extends ProviderIntegrationTest
 {
-    protected $skippedTests = [
-        'testGeocodeQuery' => 'The FreeGeoIp provider does not support street addresses.',
-        'testGeocodeQueryWithNoResults' => 'The FreeGeoIp provider does not support street addresses.',
-        'testReverseQuery' => 'The FreeGeoIp provider does not support street addresses.',
-        'testEmptyReverseQuery' => 'The FreeGeoIp provider does not support street addresses.',
-        'testServer500Error' => 'The FreeGeoIp provider does not support street addresses.',
-        'testServer500ErrorReverse' => 'The FreeGeoIp provider does not support street addresses.',
-        'testServer400Error' => 'The FreeGeoIp provider does not support street addresses.',
-        'testServer400ErrorReverse' => 'The FreeGeoIp provider does not support street addresses.',
-        'testServerEmptyResponse' => 'The FreeGeoIp provider does not support street addresses.',
-        'testServerEmptyResponseReverse' => 'The FreeGeoIp provider does not support street addresses.',
-        'testQuotaExceededResponse' => 'The FreeGeoIp provider does not support street addresses.',
-        'testQuotaExceededResponseReverse' => 'The FreeGeoIp provider does not support street addresses.',
-        'testInvalidCredentialsResponse' => 'The FreeGeoIp provider does not support street addresses.',
-        'testInvalidCredentialsResponseReverse' => 'The FreeGeoIp provider does not support street addresses.',
-    ];
+    protected $testAddress = false;
+    protected $testReverse = false;
 
     protected function createProvider(HttpClient $httpClient)
     {

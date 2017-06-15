@@ -11,7 +11,6 @@
 namespace Geocoder\Provider\TomTom\Tests;
 
 use Geocoder\IntegrationTest\ProviderIntegrationTest;
-use Geocoder\Provider\BingMaps\BingMaps;
 use Geocoder\Provider\TomTom\TomTom;
 use Http\Client\HttpClient;
 
@@ -20,7 +19,9 @@ use Http\Client\HttpClient;
  */
 class IntegrationTest extends ProviderIntegrationTest
 {
-    protected $skippedTests = [];
+    protected $skippedTests = [
+        'testReverseQueryWithNoResults' => 'Null island exists. ',
+    ];
 
     protected $testIpv4 = false;
     protected $testIpv6 = false;
