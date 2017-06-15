@@ -15,6 +15,7 @@ namespace Geocoder\Provider\GeoPlugin;
 use Geocoder\Collection;
 use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Model\Address;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
@@ -43,7 +44,10 @@ final class GeoPlugin extends AbstractHttpProvider implements Provider, IpAddres
         }
 
         if (in_array($address, ['127.0.0.1', '::1'])) {
-            return $this->returnResults([$this->getLocalhostDefaults()]);
+            return new AddressCollection([Address::createFromArray([
+                'locality' => 'localhost',
+                'country' => 'localhost',
+            ])]);
         }
 
         $url = sprintf(self::GEOCODE_ENDPOINT_URL, $address);

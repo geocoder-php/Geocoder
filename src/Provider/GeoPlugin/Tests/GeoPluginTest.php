@@ -12,16 +12,21 @@ declare(strict_types=1);
 
 namespace Geocoder\Provider\GeoPlugin\Tests;
 
+use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Tests\TestCase;
 use Geocoder\Provider\GeoPlugin\GeoPlugin;
 
-class GeoPluginTest extends TestCase
+class GeoPluginTest extends BaseTestCase
 {
+    protected function getCacheDir()
+    {
+        return __DIR__.'/.cached_responses';
+    }
+
     public function testgetName()
     {
-        $provider = new GeoPlugin($this->getMockAdapter($this->never()));
+        $provider = new GeoPlugin($this->getMockedHttpClient());
         $this->assertEquals('geo_plugin', $provider->getName());
     }
 
@@ -31,13 +36,13 @@ class GeoPluginTest extends TestCase
      */
     public function testGeocodeWithAddress()
     {
-        $provider = new GeoPlugin($this->getMockAdapter($this->never()));
+        $provider = new GeoPlugin($this->getMockedHttpClient());
         $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
     }
 
     public function testGeocodeWithLocalhostIPv4()
     {
-        $provider = new GeoPlugin($this->getMockAdapter($this->never()));
+        $provider = new GeoPlugin($this->getMockedHttpClient());
         $results = $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -50,7 +55,7 @@ class GeoPluginTest extends TestCase
 
     public function testGeocodeWithLocalhostIPv6()
     {
-        $provider = new GeoPlugin($this->getMockAdapter($this->never()));
+        $provider = new GeoPlugin($this->getMockedHttpClient());
         $results = $provider->geocodeQuery(GeocodeQuery::create('::1'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -61,27 +66,9 @@ class GeoPluginTest extends TestCase
         $this->assertEquals('localhost', $result->getCountry()->getName());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\InvalidServerResponse
-     */
-    public function testGeocodeWithRealIPv4GetsNullContent()
-    {
-        $provider = new GeoPlugin($this->getMockAdapterReturns(null));
-        $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
-    }
-
-    /**
-     * @expectedException \Geocoder\Exception\InvalidServerResponse
-     */
-    public function testGeocodeWithRealIPv4GetsEmptyContent()
-    {
-        $provider = new GeoPlugin($this->getMockAdapterReturns(''));
-        $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
-    }
-
     public function testGeocodeWithRealIPv4()
     {
-        $provider = new GeoPlugin($this->getAdapter());
+        $provider = new GeoPlugin($this->getHttpClient());
         $results = $provider->geocodeQuery(GeocodeQuery::create('66.147.244.214'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -105,7 +92,7 @@ class GeoPluginTest extends TestCase
      */
     public function testReverse()
     {
-        $provider = new GeoPlugin($this->getMockAdapter($this->never()));
+        $provider = new GeoPlugin($this->getMockedHttpClient());
         $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
     }
 }
