@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Geocoder\Provider\GeoIP2;
 
 use Geocoder\Collection;
+use Geocoder\Model\Address;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
@@ -71,8 +72,7 @@ final class GeoIP2 extends AbstractProvider implements LocaleAwareGeocoder, IpAd
             }
         }
 
-        return $this->returnResults([
-            array_merge($this->getDefaults(), [
+        return new AddressCollection([Address::createFromArray([
                 'countryCode' => (isset($result->country->iso_code) ? $result->country->iso_code : null),
                 'country' => (isset($result->country->names->{$locale}) ? $result->country->names->{$locale} : null),
                 'locality' => (isset($result->city->names->{$locale}) ? $result->city->names->{$locale} : null),
