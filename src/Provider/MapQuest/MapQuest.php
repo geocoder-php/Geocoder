@@ -174,6 +174,6 @@ final class MapQuest extends AbstractHttpProvider implements Provider
             return new AddressCollection([]);
         }
 
-        return $this->returnResults($results);
+        return new AddressCollection($results);
     }
 }

@@ -66,21 +66,4 @@ abstract class AbstractProvider
             'country' => 'localhost',
         ];
     }
-
-    /**
-     * @param array $data an array of data
-     *
-     * @return Collection
-     *
-     * @deprecated Use the AddressBuilder
-     */
-    protected function returnResults(array $data = [])
-    {
-        $addresses = [];
-        foreach ($data as $result) {
-            $addresses[] = Address::createFromArray($result);
-        }
-
-        return new AddressCollection($addresses);
-    }
 }

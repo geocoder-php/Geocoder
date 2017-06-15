@@ -108,6 +108,6 @@ final class GeoPlugin extends AbstractHttpProvider implements Provider, IpAddres
                 'longitude' => isset($data['geoplugin_longitude']) ? $data['geoplugin_longitude'] : null,
         ]);
 
-        return $this->returnResults($results);
+        return new AddressCollection($results);
     }
 }

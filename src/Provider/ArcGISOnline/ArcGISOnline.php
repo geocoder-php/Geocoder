@@ -107,7 +107,7 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
             ]);
         }
 
-        return $this->returnResults($results);
+        return new AddressCollection($results);
     }
 
     /**
@@ -135,7 +135,7 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
         $county = !empty($data->Subregion) ? $data->Subregion : null;
         $countryCode = !empty($data->CountryCode) ? $data->CountryCode : null;
 
-        return $this->returnResults([
+        return new AddressCollection([
             array_merge($this->getDefaults(), [
                 'latitude' => $latitude,
                 'longitude' => $longitude,
