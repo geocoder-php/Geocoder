@@ -11,7 +11,6 @@
 namespace Geocoder\Provider\TomTom\Tests;
 
 use Geocoder\IntegrationTest\ProviderIntegrationTest;
-use Geocoder\Provider\BingMaps\BingMaps;
 use Geocoder\Provider\TomTom\TomTom;
 use Http\Client\HttpClient;
 
