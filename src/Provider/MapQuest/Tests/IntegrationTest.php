@@ -8,7 +8,7 @@
  * @license    MIT License
  */
 
-namespace Geocoder\Provider\BingMaps\Tests;
+namespace Geocoder\Provider\MapQuest\Tests;
 
 use Geocoder\IntegrationTest\ProviderIntegrationTest;
 use Geocoder\Provider\MapQuest\MapQuest;
@@ -19,8 +19,8 @@ use Http\Client\HttpClient;
  */
 class IntegrationTest extends ProviderIntegrationTest
 {
-    protected $skippedTests = [
-    ];
+    protected $testIpv4 = false;
+    protected $testIpv6 = false;
 
     protected function createProvider(HttpClient $httpClient)
     {
