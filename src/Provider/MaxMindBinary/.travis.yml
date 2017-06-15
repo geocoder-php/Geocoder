@@ -1,0 +1,16 @@
+language: php
+sudo: false
+
+php: 7.0
+
+addons:
+    apt_packages:
+        - libgeoip-dev
+        - php-geoip
+
+install:
+  - composer update --prefer-stable --prefer-dist
+
+script:
+    - ./vendor/bin/phpunit
+

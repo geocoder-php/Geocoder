@@ -16,6 +16,7 @@ use Geocoder\Collection;
 use Geocoder\Exception\FunctionNotFound;
 use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Model\Address;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
@@ -100,7 +101,7 @@ final class MaxMindBinary extends AbstractProvider implements Provider, IpAddres
             $adminLevels[] = ['name' => $geoIpRecord->region, 'level' => 1];
         }
 
-        return $this->returnResults([array_merge($this->getDefaults(), [
+        return new AddressCollection([Address::createFromArray([
                 'countryCode' => $geoIpRecord->country_code,
                 'country' => utf8_encode($geoIpRecord->country_name),
                 'adminLevels' => $adminLevels,
