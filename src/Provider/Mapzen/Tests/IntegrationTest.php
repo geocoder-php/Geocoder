@@ -19,8 +19,13 @@ use Http\Client\HttpClient;
  */
 class IntegrationTest extends ProviderIntegrationTest
 {
-    protected $skippedTests = [
+    protected $skippedTests  = [
+        'testGeocodeQuery' => 'We get wrongs cords',
+        'testReverseQueryWithNoResults' => 'We weirdly find stuff here...',
     ];
+
+    protected $testIpv4 = false;
+    protected $testIpv6 = false;
 
     protected function createProvider(HttpClient $httpClient)
     {

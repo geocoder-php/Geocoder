@@ -32,12 +32,12 @@ final class Mapzen extends AbstractHttpProvider implements Provider
     /**
      * @var string
      */
-    const GEOCODE_ENDPOINT_URL = 'https://search.mapzen.com/v1/search?text=%s&key=%s&size=%d';
+    const GEOCODE_ENDPOINT_URL = 'https://search.mapzen.com/v1/search?text=%s&api_key=%s&size=%d';
 
     /**
      * @var string
      */
-    const REVERSE_ENDPOINT_URL = 'https://search.mapzen.com/v1/reverse?point.lat=%f&point.lon=%f&key=%s&size=%d';
+    const REVERSE_ENDPOINT_URL = 'https://search.mapzen.com/v1/reverse?point.lat=%f&point.lon=%f&api_key=%s&size=%d';
 
     /**
      * @var string
@@ -132,7 +132,12 @@ final class Mapzen extends AbstractHttpProvider implements Provider
 
         $results = [];
         foreach ($locations as $location) {
-            $bounds = [];
+            $bounds = [
+                'south' => null,
+                'west' => null,
+                'north' => null,
+                'east' => null,
+            ];
             if (isset($location['bbox'])) {
                 $bounds = [
                     'south' => $location['bbox'][3],
@@ -154,7 +159,7 @@ final class Mapzen extends AbstractHttpProvider implements Provider
             $results[] = Address::createFromArray([
                 'latitude' => $location['geometry']['coordinates'][1],
                 'longitude' => $location['geometry']['coordinates'][0],
-                'bounds' => $bounds ?: [],
+                'bounds' => $bounds,
                 'streetNumber' => isset($props['housenumber']) ? $props['housenumber'] : null,
                 'streetName' => isset($props['street']) ? $props['street'] : null,
                 'subLocality' => isset($props['neighbourhood']) ? $props['neighbourhood'] : null,

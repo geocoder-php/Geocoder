@@ -62,16 +62,14 @@ class MapzenTest extends BaseTestCase
         $results = $provider->geocodeQuery(GeocodeQuery::create('242 Acklam Road, London, United Kingdom'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
-        $this->assertCount(5, $results);
+        $this->assertCount(1, $results);
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(51.521124, $result->getCoordinates()->getLatitude(), '', 0.01);
         $this->assertEquals(-0.20360200000000001, $result->getCoordinates()->getLongitude(), '', 0.01);
-        $this->assertEquals(240, $result->getStreetNumber());
         $this->assertEquals('Acklam Road', $result->getStreetName());
-        $this->assertEquals('W10 5QT', $result->getPostalCode());
         $this->assertEquals('London', $result->getLocality());
         $this->assertCount(4, $result->getAdminLevels());
         $this->assertEquals('London', $result->getAdminLevels()->get(2)->getName());
@@ -99,7 +97,7 @@ class MapzenTest extends BaseTestCase
         $this->assertEquals(-2.7989549999999999, $result->getCoordinates()->getLongitude(), '', 0.001);
         $this->assertNull($result->getStreetNumber());
         $this->assertEquals('Gage Street', $result->getStreetName());
-        $this->assertNull($result->getPostalCode());
+        $this->assertEquals('LA1 1UH', $result->getPostalCode());
         $this->assertEquals('Lancaster', $result->getLocality());
         $this->assertCount(4, $result->getAdminLevels());
         $this->assertEquals('Lancashire', $result->getAdminLevels()->get(1)->getName());
@@ -180,7 +178,7 @@ class MapzenTest extends BaseTestCase
         $results = $provider->geocodeQuery(GeocodeQuery::create('Kalbacher Hauptstraße 10, 60437 Frankfurt, Germany'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
-        $this->assertCount(5, $results);
+        $this->assertCount(2, $results);
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results->first();
