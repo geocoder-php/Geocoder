@@ -100,6 +100,11 @@ final class AddressBuilder
             throw new \LogicException('First parameter to LocationBuilder::build must be a class name extending Geocoder\Model\Address');
         }
 
+        $country = null;
+        if (!empty($this->country) || !empty($this->country)) {
+            $country = new Country($this->country, $this->countryCode);
+        }
+
         return new $class(
             $this->providedBy,
             new AdminLevelCollection($this->adminLevels),
@@ -110,7 +115,7 @@ final class AddressBuilder
             $this->postalCode,
             $this->locality,
             $this->subLocality,
-            new Country($this->country, $this->countryCode),
+            $country,
             $this->timezone
         );
     }
