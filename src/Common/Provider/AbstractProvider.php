@@ -13,10 +13,8 @@ declare(strict_types=1);
 namespace Geocoder\Provider;
 
 use Geocoder\Geocoder;
-use Geocoder\Collection;
 use Geocoder\Location;
 use Geocoder\Model\Address;
-use Geocoder\Model\AddressCollection;
 
 /**
  * @author William Durand <william.durand1@gmail.com>

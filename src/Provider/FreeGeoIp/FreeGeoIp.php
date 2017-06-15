@@ -14,7 +14,6 @@ namespace Geocoder\Provider\FreeGeoIp;
 
 use Geocoder\Collection;
 use Geocoder\Exception\UnsupportedOperation;
-use Geocoder\Model\Address;
 use Geocoder\Model\AddressBuilder;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
