@@ -12,47 +12,30 @@ declare(strict_types=1);
 
 namespace Geocoder\Provider\Geoip\Tests;
 
+use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Location;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Tests\TestCase;
 use Geocoder\Provider\Geoip\Geoip;
 
-class GeoipTest extends TestCase
+class GeoipTest extends BaseTestCase
 {
     protected function setUp()
     {
-        parent::setUp();
-
         if (!function_exists('geoip_record_by_name')) {
             $this->markTestSkipped('You have to install GeoIP.');
         }
+    }
+
+    protected function getCacheDir()
+    {
+        return __DIR__.'/.cached_responses';
     }
 
     public function testGetName()
     {
         $provider = new Geoip();
         $this->assertEquals('geoip', $provider->getName());
-    }
-
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The Geoip provider does not support street addresses, only IPv4 addresses.
-     */
-    public function testGeocodeWithNull()
-    {
-        $provider = new Geoip();
-        $provider->geocodeQuery(GeocodeQuery::create(null));
-    }
-
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The Geoip provider does not support street addresses, only IPv4 addresses.
-     */
-    public function testGeocodeWithEmpty()
-    {
-        $provider = new Geoip();
-        $provider->geocodeQuery(GeocodeQuery::create(''));
     }
 
     /**
