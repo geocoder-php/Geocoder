@@ -15,6 +15,8 @@ namespace Geocoder\Provider\Nominatim;
 use Geocoder\Collection;
 use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Location;
+use Geocoder\Model\AddressBuilder;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
@@ -87,10 +89,10 @@ final class Nominatim extends AbstractHttpProvider implements LocaleAwareGeocode
 
         $results = [];
         foreach ($places as $place) {
-            $results[] = array_merge($this->getDefaults(), $this->xmlResultToArray($place, $place));
+            $results[] = $this->xmlResultToArray($place, $place);
         }
 
-        return $this->returnResults($results);
+        return new AddressCollection($results);
     }
 
     /**
@@ -113,18 +115,23 @@ final class Nominatim extends AbstractHttpProvider implements LocaleAwareGeocode
         $addressParts = $searchResult->getElementsByTagName('addressparts')->item(0);
         $result = $searchResult->getElementsByTagName('result')->item(0);
 
-        return $this->returnResults([
-            array_merge($this->getDefaults(), $this->xmlResultToArray($result, $addressParts)),
-        ]);
+        return new AddressCollection([$this->xmlResultToArray($result, $addressParts)]);
     }
 
+    /**
+     * @param \DOMElement $resultNode
+     * @param \DOMElement $addressNode
+     *
+     * @return Location
+     */
     private function xmlResultToArray(\DOMElement $resultNode, \DOMElement $addressNode)
     {
+        $builder = new AddressBuilder($this->getName());
         $adminLevels = [];
 
         foreach (['state', 'county'] as $i => $tagName) {
             if (null !== ($adminLevel = $this->getNodeValue($addressNode->getElementsByTagName($tagName)))) {
-                $adminLevels[] = ['name' => $adminLevel, 'level' => $i + 1];
+                $builder->addAdminLevel($i + 1, $adminLevel, '');
             }
         }
 
@@ -133,30 +140,23 @@ final class Nominatim extends AbstractHttpProvider implements LocaleAwareGeocode
         if (!empty($postalCode)) {
             $postalCode = current(explode(';', $postalCode));
         }
-
-        $result = [
-            'latitude' => $resultNode->getAttribute('lat'),
-            'longitude' => $resultNode->getAttribute('lon'),
-            'postalCode' => $postalCode,
-            'adminLevels' => $adminLevels,
-            'streetNumber' => $this->getNodeValue($addressNode->getElementsByTagName('house_number')),
-            'streetName' => $this->getNodeValue($addressNode->getElementsByTagName('road')) ?: $this->getNodeValue($addressNode->getElementsByTagName('pedestrian')),
-            'locality' => $this->getNodeValue($addressNode->getElementsByTagName('city')),
-            'subLocality' => $this->getNodeValue($addressNode->getElementsByTagName('suburb')),
-            'country' => $this->getNodeValue($addressNode->getElementsByTagName('country')),
-            'countryCode' => strtoupper($this->getNodeValue($addressNode->getElementsByTagName('country_code'))),
-        ];
+        $builder->setPostalCode($postalCode);
+        $builder->setStreetName($this->getNodeValue($addressNode->getElementsByTagName('road')) ?: $this->getNodeValue($addressNode->getElementsByTagName('pedestrian')));
+        $builder->setStreetNumber($this->getNodeValue($addressNode->getElementsByTagName('house_number')));
+        $builder->setLocality($this->getNodeValue($addressNode->getElementsByTagName('city')));
+        $builder->setSubLocality($this->getNodeValue($addressNode->getElementsByTagName('suburb')));
+        $builder->setCountry($this->getNodeValue($addressNode->getElementsByTagName('country')));
+        $builder->setCountryCode(strtoupper($this->getNodeValue($addressNode->getElementsByTagName('country_code'))));
+        $builder->setCoordinates($resultNode->getAttribute('lat'), $resultNode->getAttribute('lon'));
 
         $boundsAttr = $resultNode->getAttribute('boundingbox');
         if ($boundsAttr) {
             $bounds = [];
-
             list($bounds['south'], $bounds['north'], $bounds['west'], $bounds['east']) = explode(',', $boundsAttr);
-
-            $result['bounds'] = $bounds;
+            $builder->setBounds($bounds['south'], $bounds['north'], $bounds['west'], $bounds['east']);
         }
 
-        return $result;
+        return $builder->build();
     }
 
     /**
