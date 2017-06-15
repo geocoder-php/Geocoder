@@ -21,7 +21,13 @@ use Http\Client\HttpClient;
 class IntegrationTest extends ProviderIntegrationTest
 {
     protected $skippedTests = [
+        'testGeocodeQuery' => 'Wrong cords',
     ];
+
+    protected $testAddress = true;
+    protected $testReverse = true;
+    protected $testIpv4 = false;
+    protected $testIpv6 = false;
 
     protected function createProvider(HttpClient $httpClient)
     {
