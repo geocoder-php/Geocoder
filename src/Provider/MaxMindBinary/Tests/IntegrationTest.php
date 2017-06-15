@@ -22,6 +22,12 @@ class IntegrationTest extends ProviderIntegrationTest
     protected $skippedTests = [
     ];
 
+    protected $testAddress = true;
+    protected $testReverse = true;
+    protected $testIpv4 = true;
+    protected $testIpv6 = true;
+    protected $testHttpProvider = false;
+
     protected function createProvider(HttpClient $httpClient)
     {
         return new MaxMindBinary(__DIR__.'/fixtures/GeoLiteCity.dat');
