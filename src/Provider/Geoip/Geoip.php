@@ -15,6 +15,7 @@ namespace Geocoder\Provider\Geoip;
 use Geocoder\Collection;
 use Geocoder\Exception\ExtensionNotLoaded;
 use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Model\Address;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
@@ -53,7 +54,10 @@ final class Geoip extends AbstractProvider implements Provider, IpAddressGeocode
         }
 
         if ('127.0.0.1' === $address) {
-            return $this->returnResults([$this->getLocalhostDefaults()]);
+            return new AddressCollection([Address::createFromArray([
+                'locality' => 'localhost',
+                'country' => 'localhost',
+            ])]);
         }
 
         $results = @geoip_record_by_name($address);
@@ -70,7 +74,7 @@ final class Geoip extends AbstractProvider implements Provider, IpAddressGeocode
             $region = $results['region'];
         }
 
-        return $this->returnResults([array_merge($this->getDefaults(), [
+        return new AddressCollection([Address::createFromArray([
                 'latitude' => $results['latitude'],
                 'longitude' => $results['longitude'],
                 'locality' => $results['city'],
