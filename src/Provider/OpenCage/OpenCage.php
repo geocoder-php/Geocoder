@@ -17,6 +17,7 @@ use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\QuotaExceeded;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Collection;
+use Geocoder\Model\Address;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
@@ -128,7 +129,12 @@ final class OpenCage extends AbstractHttpProvider implements LocaleAwareGeocoder
 
         $results = [];
         foreach ($locations as $location) {
-            $bounds = [];
+            $bounds = [
+                'south' => null,
+                'west' => null,
+                'north' => null,
+                'east' => null,
+            ];
             if (isset($location['bounds'])) {
                 $bounds = [
                     'south' => $location['bounds']['southwest']['lat'],
@@ -147,7 +153,7 @@ final class OpenCage extends AbstractHttpProvider implements LocaleAwareGeocoder
                 }
             }
 
-            $results[] = array_merge($this->getDefaults(), [
+            $results[] = Address::createFromArray([
                 'latitude' => $location['geometry']['lat'],
                 'longitude' => $location['geometry']['lng'],
                 'bounds' => $bounds ?: [],
@@ -163,7 +169,7 @@ final class OpenCage extends AbstractHttpProvider implements LocaleAwareGeocoder
             ]);
         }
 
-        return $this->returnResults($results);
+        return new AddressCollection($results);
     }
 
     /**

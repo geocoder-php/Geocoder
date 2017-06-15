@@ -7,7 +7,8 @@
          bootstrap="vendor/autoload.php"
 >
     <php>
-        <ini name="error_reporting" value="-1" />
+        <server name="OPENCAGE_API_KEY" value="YOUR_GEOCODING_KEY" />
+        <server name="USE_CACHED_RESPONSES" value="true" />
     </php>
 
     <testsuites>

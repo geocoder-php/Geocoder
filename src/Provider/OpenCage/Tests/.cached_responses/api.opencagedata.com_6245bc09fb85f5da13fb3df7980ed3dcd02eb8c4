@@ -12,8 +12,8 @@ s:808:"{
    ],
    "rate" : {
       "limit" : 2500,
-      "remaining" : 2495,
-      "reset" : 1491782400
+      "remaining" : 2487,
+      "reset" : 1497484800
    },
    "results" : [],
    "status" : {
@@ -26,8 +26,8 @@ s:808:"{
    },
    "thanks" : "For using an OpenCage Data API",
    "timestamp" : {
-      "created_http" : "Sun, 09 Apr 2017 12:49:15 GMT",
-      "created_unix" : 1491742155
+      "created_http" : "Thu, 15 Jun 2017 21:04:47 GMT",
+      "created_unix" : 1497560687
    },
    "total_results" : 0
 }
