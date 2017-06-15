@@ -1,0 +1,20 @@
+s:733:"{
+  "geoplugin_request":"2001:0db8:0000:0042:0000:8a2e:0370:7334",
+  "geoplugin_status":404,
+  "geoplugin_credit":"Some of the returned data includes GeoLite data created by MaxMind, available from <a href='http:\/\/www.maxmind.com'>http:\/\/www.maxmind.com<\/a>.",
+  "geoplugin_city":null,
+  "geoplugin_region":null,
+  "geoplugin_areaCode":null,
+  "geoplugin_dmaCode":null,
+  "geoplugin_countryCode":null,
+  "geoplugin_countryName":null,
+  "geoplugin_continentCode":null,
+  "geoplugin_latitude":null,
+  "geoplugin_longitude":null,
+  "geoplugin_regionCode":null,
+  "geoplugin_regionName":"",
+  "geoplugin_currencyCode":null,
+  "geoplugin_currencySymbol":null,
+  "geoplugin_currencySymbol_UTF8":"",
+  "geoplugin_currencyConverter":0
+}";

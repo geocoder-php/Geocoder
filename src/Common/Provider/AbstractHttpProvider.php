@@ -59,7 +59,7 @@ abstract class AbstractHttpProvider extends AbstractProvider
         $response = $this->getHttpClient()->sendRequest($request);
 
         $statusCode = $response->getStatusCode();
-        if (401 === $statusCode) {
+        if (401 === $statusCode || 403 === $statusCode) {
             throw new InvalidCredentials();
         } elseif (429 === $statusCode) {
             throw new QuotaExceeded();

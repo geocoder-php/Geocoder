@@ -82,19 +82,20 @@ final class TomTom extends AbstractHttpProvider implements LocaleAwareGeocoder, 
         }
 
         $json = json_decode($content, true);
-        $results = $json['results'];
-
-        if (empty($results)) {
+        if (!isset($json['results']) || empty($json['results'])) {
             return new AddressCollection([]);
         }
 
         $locations = [];
-        foreach ($results as $item) {
+        foreach ($json['results'] as $item) {
             $locations[] = Address::createFromArray([
                 'latitude' => $item['position']['lat'] ?? null,
                 'longitude' => $item['position']['lon'] ?? null,
                 'streetName' => $item['address']['streetName'] ?? null,
                 'streetNumber' => $item['address']['streetNumber'] ?? null,
+                'locality' => $item['address']['municipality'] ?? null,
+                'subLocality' => $item['address']['municipalitySubdivision'] ?? null,
+                'postalCode' => $item['address']['postalCode'] ?? null,
                 'country' => $item['address']['country'] ?? null,
                 'countryCode' => $item['address']['countryCode'] ?? null,
             ]);
@@ -137,6 +138,8 @@ final class TomTom extends AbstractHttpProvider implements LocaleAwareGeocoder, 
                 'longitude' => $lon,
                 'streetName' => $item['address']['streetName'] ?? null,
                 'streetNumber' => $item['address']['streetNumber'] ?? null,
+                'locality' => $item['address']['municipality'] ?? null,
+                'subLocality' => $item['address']['municipalitySubdivision'] ?? null,
                 'country' => $item['address']['country'] ?? null,
                 'countryCode' => $item['address']['countryCode'] ?? null,
             ]);
