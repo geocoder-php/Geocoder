@@ -12,17 +12,22 @@ declare(strict_types=1);
 
 namespace Geocoder\Provider\HostIp\Tests;
 
+use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Location;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Tests\TestCase;
 use Geocoder\Provider\HostIp\HostIp;
 
-class HostIpTest extends TestCase
+class HostIpTest extends BaseTestCase
 {
+    protected function getCacheDir()
+    {
+        return __DIR__.'/.cached_responses';
+    }
+
     public function testGetName()
     {
-        $provider = new HostIp($this->getMockAdapter($this->never()));
+        $provider = new HostIp($this->getMockedHttpClient());
         $this->assertEquals('host_ip', $provider->getName());
     }
 
@@ -32,13 +37,13 @@ class HostIpTest extends TestCase
      */
     public function testGeocodeWithAddress()
     {
-        $provider = new HostIp($this->getMockAdapter($this->never()));
+        $provider = new HostIp($this->getMockedHttpClient());
         $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
     }
 
     public function testGeocodeWithLocalhostIPv4()
     {
-        $provider = new HostIp($this->getMockAdapter($this->never()));
+        $provider = new HostIp($this->getMockedHttpClient());
         $results = $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -63,13 +68,13 @@ class HostIpTest extends TestCase
      */
     public function testGeocodeWithLocalhostIPv6()
     {
-        $provider = new HostIp($this->getMockAdapter($this->never()));
+        $provider = new HostIp($this->getMockedHttpClient());
         $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
     public function testGeocodeWithRealIPv4()
     {
-        $provider = new HostIp($this->getAdapter());
+        $provider = new HostIp($this->getHttpClient());
         $results = $provider->geocodeQuery(GeocodeQuery::create('88.188.221.14'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -93,7 +98,7 @@ class HostIpTest extends TestCase
      */
     public function testGeocodeWithRealIPv6()
     {
-        $provider = new HostIp($this->getAdapter());
+        $provider = new HostIp($this->getHttpClient());
         $provider->geocodeQuery(GeocodeQuery::create('::ffff:88.188.221.14'));
     }
 
@@ -103,13 +108,13 @@ class HostIpTest extends TestCase
      */
     public function testReverse()
     {
-        $provider = new HostIp($this->getMockAdapter($this->never()));
+        $provider = new HostIp($this->getMockedHttpClient());
         $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
     }
 
     public function testGeocodeWithAnotherIp()
     {
-        $provider = new HostIp($this->getAdapter());
+        $provider = new HostIp($this->getHttpClient());
         $results = $provider->geocodeQuery(GeocodeQuery::create('33.33.33.22'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
