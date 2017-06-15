@@ -19,8 +19,8 @@ use Http\Client\HttpClient;
  */
 class IntegrationTest extends ProviderIntegrationTest
 {
-    protected $skippedTests = [
-    ];
+    protected $testAddress = false;
+    protected $testReverse = false;
 
     protected function createProvider(HttpClient $httpClient)
     {
