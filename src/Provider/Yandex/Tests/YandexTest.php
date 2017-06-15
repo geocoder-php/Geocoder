@@ -13,7 +13,9 @@ declare(strict_types=1);
 namespace Geocoder\Provider\Yandex\Tests;
 
 use Geocoder\Collection;
+use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Location;
+use Geocoder\Provider\Yandex\Model\YandexAddress;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Tests\TestCase;
@@ -22,11 +24,16 @@ use Geocoder\Provider\Yandex\Yandex;
 /**
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class YandexTest extends TestCase
+class YandexTest extends BaseTestCase
 {
+    protected function getCacheDir()
+    {
+        return __DIR__.'/.cached_responses';
+    }
+
     public function testGetName()
     {
-        $provider = new Yandex($this->getMockAdapter($this->never()));
+        $provider = new Yandex($this->getMockedHttpClient());
         $this->assertEquals('yandex', $provider->getName());
     }
 
@@ -36,7 +43,7 @@ class YandexTest extends TestCase
      */
     public function testGeocodeWithLocalhostIPv4()
     {
-        $provider = new Yandex($this->getMockAdapter($this->never()));
+        $provider = new Yandex($this->getMockedHttpClient());
         $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
     }
 
@@ -46,13 +53,13 @@ class YandexTest extends TestCase
      */
     public function testGeocodeWithLocalhostIPv6()
     {
-        $provider = new Yandex($this->getMockAdapter($this->never()));
+        $provider = new Yandex($this->getMockedHttpClient());
         $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
     public function testGeocodeWithEmpty()
     {
-        $provider = new Yandex($this->getMockAdapterReturns('{"error":{"status":"400","message":"missing geocode parameter"}}'));
+        $provider = new Yandex($this->getMockedHttpClient('{"error":{"status":"400","message":"missing geocode parameter"}}'));
         $result = $provider->geocodeQuery(GeocodeQuery::create('xx'));
 
         $this->assertInstanceOf(Collection::class, $result);
@@ -61,7 +68,7 @@ class YandexTest extends TestCase
 
     public function testGeocodeWithFakeAddress()
     {
-        $provider = new Yandex($this->getAdapter());
+        $provider = new Yandex($this->getHttpClient());
         $result = $provider->geocodeQuery(GeocodeQuery::create('foobar'));
 
         $this->assertInstanceOf(Collection::class, $result);
@@ -70,7 +77,7 @@ class YandexTest extends TestCase
 
     public function testGeocodeWithRealAddress()
     {
-        $provider = new Yandex($this->getAdapter());
+        $provider = new Yandex($this->getHttpClient());
         $results = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -105,7 +112,7 @@ class YandexTest extends TestCase
 
     public function testGeocodeWithRealAddressWithUALocale()
     {
-        $provider = new Yandex($this->getAdapter());
+        $provider = new Yandex($this->getHttpClient());
         $results = $provider->geocodeQuery(GeocodeQuery::create('Copenhagen, Denmark')->withLocale('uk-UA'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -162,7 +169,7 @@ class YandexTest extends TestCase
 
     public function testGeocodeWithRealAddressWithUSLocale()
     {
-        $provider = new Yandex($this->getAdapter());
+        $provider = new Yandex($this->getHttpClient());
         $results = $provider->geocodeQuery(GeocodeQuery::create('1600 Pennsylvania Ave, Washington')->withLocale('en-US'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -196,7 +203,7 @@ class YandexTest extends TestCase
 
     public function testGeocodeWithRealAddressWithBYLocale()
     {
-        $provider = new Yandex($this->getAdapter());
+        $provider = new Yandex($this->getHttpClient());
         $results = $provider->geocodeQuery(GeocodeQuery::create('ул.Ленина, 19, Минск 220030, Республика Беларусь')->withLocale('be-BY'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -228,7 +235,7 @@ class YandexTest extends TestCase
 
     public function testReverseWithRealCoordinates()
     {
-        $provider = new Yandex($this->getAdapter());
+        $provider = new Yandex($this->getHttpClient());
         $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(48.863216489553, 2.388771995902061));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -275,7 +282,7 @@ class YandexTest extends TestCase
 
     public function testReverseWithRealCoordinatesWithUSLocaleAndStreeToponym()
     {
-        $provider = new Yandex($this->getAdapter(), 'street');
+        $provider = new Yandex($this->getHttpClient(), 'street');
         $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(48.863216489553, 2.388771995902061)->withLocale('en-US'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -334,7 +341,7 @@ class YandexTest extends TestCase
 
     public function testReverseWithRealCoordinatesWithUALocaleAndHouseToponym()
     {
-        $provider = new Yandex($this->getAdapter(), 'house');
+        $provider = new Yandex($this->getHttpClient(), 'house');
         $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(60.4539471768582, 22.2567842183875)->withLocale('uk-UA'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -369,7 +376,7 @@ class YandexTest extends TestCase
 
     public function testReverseWithRealCoordinatesWithTRLocaleAndLocalityToponym()
     {
-        $provider = new Yandex($this->getAdapter(), 'locality');
+        $provider = new Yandex($this->getHttpClient(), 'locality');
         $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(40.900640, 29.198184)->withLocale('tr-TR'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -404,9 +411,10 @@ class YandexTest extends TestCase
 
     public function testReverseMetroStationToGetName()
     {
-        $provider = new Yandex($this->getAdapter(), 'metro');
+        $provider = new Yandex($this->getHttpClient(), 'metro');
         $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(60.036843, 30.324285));
 
+        /** @var YandexAddress $first */
         $first = $results->first();
         $this->assertEquals('метро Озерки', $first->getName());
     }
