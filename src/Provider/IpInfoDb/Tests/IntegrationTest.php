@@ -11,7 +11,7 @@
 namespace Geocoder\Provider\IpInfoDb\Tests;
 
 use Geocoder\IntegrationTest\ProviderIntegrationTest;
-use Geocoder\Provider\HostIp\HostIp;
+use Geocoder\Provider\IpInfoDb\IpInfoDb;
 use Http\Client\HttpClient;
 
 /**
@@ -19,26 +19,15 @@ use Http\Client\HttpClient;
  */
 class IntegrationTest extends ProviderIntegrationTest
 {
-    protected $skippedTests = [
-        'testReverseQuery' => 'No support for reverse.',
-        'testEmptyReverseQuery' => 'No support for reverse.',
-        'testGeocodeQuery' => 'No support for addresses.',
-        'testGeocodeQueryWithNoResults' => 'No support for addresses.',
-        'testServer500Error' => 'The FreeGeoIp provider does not support street addresses.',
-        'testServer500ErrorReverse' => 'The FreeGeoIp provider does not support street addresses.',
-        'testServer400Error' => 'The FreeGeoIp provider does not support street addresses.',
-        'testServer400ErrorReverse' => 'The FreeGeoIp provider does not support street addresses.',
-        'testServerEmptyResponse' => 'The FreeGeoIp provider does not support street addresses.',
-        'testServerEmptyResponseReverse' => 'The FreeGeoIp provider does not support street addresses.',
-        'testQuotaExceededResponse' => 'The FreeGeoIp provider does not support street addresses.',
-        'testQuotaExceededResponseReverse' => 'The FreeGeoIp provider does not support street addresses.',
-        'testInvalidCredentialsResponse' => 'The FreeGeoIp provider does not support street addresses.',
-        'testInvalidCredentialsResponseReverse' => 'The FreeGeoIp provider does not support street addresses.',
-    ];
+
+    protected $testAddress = false;
+    protected $testReverse = false;
+    protected $testIpv6 = false;
+
 
     protected function createProvider(HttpClient $httpClient)
     {
-        return new HostIp($httpClient);
+        return new IpInfoDb($httpClient);
     }
 
     protected function getCacheDir()
