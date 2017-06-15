@@ -14,7 +14,7 @@ namespace Geocoder\Tests\Dumper;
 
 use Geocoder\Geocoder;
 use Geocoder\Dumper\Gpx;
-use Geocoder\Model\LocationFactory;
+use Geocoder\Model\Address;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -34,7 +34,7 @@ class GpxTest extends TestCase
 
     public function testDump()
     {
-        $address = LocationFactory::createLocation([]);
+        $address = Address::createFromArray([]);
         $expected = sprintf(<<<'GPX'
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <gpx
@@ -59,7 +59,7 @@ GPX
 
     public function testDumpWithData()
     {
-        $address = LocationFactory::createLocation([
+        $address = Address::createFromArray([
             'latitude' => 48.8631507,
             'longitude' => 2.3889114,
         ]);
@@ -88,7 +88,7 @@ GPX
 
     public function testDumpWithBounds()
     {
-        $address = LocationFactory::createLocation([
+        $address = Address::createFromArray([
             'latitude' => 48.8631507,
             'longitude' => 2.3889114,
             'bounds' => [
@@ -133,7 +133,7 @@ GPX
             'north' => 48.8631507,
             'east' => 2.388911, ];
 
-        $address = LocationFactory::createLocation([
+        $address = Address::createFromArray([
             'latitude' => 48.8631507,
             'longitude' => 2.3889114,
             'bounds' => $bounds,

@@ -14,8 +14,8 @@ namespace Geocoder\Provider;
 
 use Geocoder\Geocoder;
 use Geocoder\Collection;
+use Geocoder\Model\Address;
 use Geocoder\Model\AddressCollection;
-use Geocoder\Model\LocationFactory;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -78,7 +78,7 @@ abstract class AbstractProvider
     {
         $addresses = [];
         foreach ($data as $result) {
-            $addresses[] = LocationFactory::createLocation($result);
+            $addresses[] = Address::createFromArray($result);
         }
 
         return new AddressCollection($addresses);

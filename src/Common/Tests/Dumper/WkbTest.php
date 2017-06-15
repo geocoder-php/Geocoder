@@ -13,7 +13,7 @@ declare(strict_types=1);
 namespace Geocoder\Tests\Dumper;
 
 use Geocoder\Dumper\Wkb;
-use Geocoder\Model\LocationFactory;
+use Geocoder\Model\Address;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -34,7 +34,7 @@ class WkbTest extends TestCase
 
     public function testDump()
     {
-        $address = LocationFactory::createLocation([]);
+        $address = Address::createFromArray([]);
         $expected = pack('H*', '010100000000000000000000000000000000000000');
         $result = $this->dumper->dump($address);
 
@@ -44,7 +44,7 @@ class WkbTest extends TestCase
 
     public function testDumpWithData()
     {
-        $address = LocationFactory::createLocation([
+        $address = Address::createFromArray([
             'latitude' => 48.8631507,
             'longitude' => 2.3889114,
         ]);

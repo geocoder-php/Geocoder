@@ -13,7 +13,7 @@ declare(strict_types=1);
 namespace Geocoder\Tests\Formatter;
 
 use Geocoder\Formatter\StringFormatter;
-use Geocoder\Model\LocationFactory;
+use Geocoder\Model\Address;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -36,7 +36,7 @@ class StringFormatterTest extends TestCase
      */
     public function testFormat($data, $format, $expected)
     {
-        $address = LocationFactory::createLocation($data);
+        $address = Address::createFromArray($data);
         $result = $this->formatter->format($address, $format);
 
         $this->assertTrue(is_string($result));
