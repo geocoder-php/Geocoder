@@ -13,18 +13,18 @@ declare(strict_types=1);
 namespace Geocoder\Provider\GeoIP2\Tests;
 
 use Geocoder\Collection;
+use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Location;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\GeoIP2\GeoIP2;
 use Geocoder\Provider\GeoIP2\GeoIP2Adapter;
-use Geocoder\Tests\TestCase;
 use GeoIp2\Database\Reader;
 
 /**
  * @author Jens Wiese <jens@howtrueisfalse.de>
  */
-class GeoIP2Test extends TestCase
+class GeoIP2Test extends BaseTestCase
 {
     /**
      * @var GeoIP2
@@ -34,6 +34,11 @@ class GeoIP2Test extends TestCase
     public function setUp()
     {
         $this->provider = new GeoIP2($this->getGeoIP2AdapterMock());
+    }
+
+    protected function getCacheDir()
+    {
+        return __DIR__.'/.cached_responses';
     }
 
     public function testGetName()
