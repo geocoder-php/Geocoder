@@ -16,6 +16,7 @@ use Geocoder\Collection;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Model\Address;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
@@ -82,7 +83,10 @@ final class MaxMind extends AbstractHttpProvider implements Provider, IpAddressG
         }
 
         if (in_array($address, ['127.0.0.1', '::1'])) {
-            return $this->returnResults([$this->getLocalhostDefaults()]);
+            return new AddressCollection([Address::createFromArray([
+                'locality' => 'localhost',
+                'country' => 'localhost',
+            ])]);
         }
 
         $url = sprintf(self::GEOCODE_ENDPOINT_URL_SSL, $this->service, $this->apiKey, $address);
@@ -140,7 +144,7 @@ final class MaxMind extends AbstractHttpProvider implements Provider, IpAddressG
 
         $data = $this->replaceAdmins($data);
 
-        return $this->returnResults([array_merge($this->getDefaults(), $data)]);
+        return new AddressCollection([Address::createFromArray($data)]);
     }
 
     private function countryCodeToCountryName($code)
