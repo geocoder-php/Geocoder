@@ -26,8 +26,8 @@
         <server name="GOOGLE_GEOCODING_KEY" value="YOUR_GEOCODING_KEY" />
         <server name="OPENCAGE_API_KEY" value="YOUR_GEOCODING_KEY" />
         <server name="MAPZEN_API_KEY" value="YOUR_MAPZEN_API_KEY" />
-        <server name="MAXMIND_API_KEY" value="YOUR_API_KEY" />
         <server name="IPINFODB_API_KEY" value="YOUR_API_KEY" />
+        <!--<server name="MAXMIND_API_KEY" value="YOUR_API_KEY" />-->
     </php>
 
     <testsuites>
@@ -35,8 +35,6 @@
             <directory>./tests/</directory>
             <directory>./src/Common/Tests/</directory>
             <directory>./src/Provider/*/Tests/</directory>
-            <exclude>./src/Provider/MaxMind/Tests/IntegrationTest.php</exclude>
-            <exclude>./src/Provider/MaxMind/Tests/MaxMindTest.php</exclude>
         </testsuite>
     </testsuites>
 

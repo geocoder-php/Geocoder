@@ -34,6 +34,9 @@ class IntegrationTest extends ProviderIntegrationTest
 
     protected function getApiKey()
     {
+        if (!isset($_SERVER['MAXMIND_API_KEY'])) {
+            $this->markTestSkipped('No MaxMind API key');
+        }
         return $_SERVER['MAXMIND_API_KEY'];
     }
 }
