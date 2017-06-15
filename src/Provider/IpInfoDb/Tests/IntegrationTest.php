@@ -19,15 +19,13 @@ use Http\Client\HttpClient;
  */
 class IntegrationTest extends ProviderIntegrationTest
 {
-
     protected $testAddress = false;
     protected $testReverse = false;
     protected $testIpv6 = false;
 
-
     protected function createProvider(HttpClient $httpClient)
     {
-        return new IpInfoDb($httpClient);
+        return new IpInfoDb($httpClient, $this->getApiKey());
     }
 
     protected function getCacheDir()
@@ -37,6 +35,6 @@ class IntegrationTest extends ProviderIntegrationTest
 
     protected function getApiKey()
     {
-        return null;
+        return $_SERVER['IPINFODB_API_KEY'];
     }
 }

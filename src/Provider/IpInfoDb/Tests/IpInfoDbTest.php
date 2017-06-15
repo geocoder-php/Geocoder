@@ -133,15 +133,15 @@ class IpInfoDbTest extends BaseTestCase
         /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(37.406, $result->getCoordinates()->getLatitude(), '', 0.001);
-        $this->assertEquals(-122.079, $result->getCoordinates()->getLongitude(), '', 0.001);
-        $this->assertEquals(94043, $result->getPostalCode());
-        $this->assertEquals('Mountain View', $result->getLocality());
+        $this->assertEquals(36.154, $result->getCoordinates()->getLatitude(), '', 0.001);
+        $this->assertEquals(-95.9928, $result->getCoordinates()->getLongitude(), '', 0.001);
+        $this->assertEquals(74101, $result->getPostalCode());
+        $this->assertEquals('Tulsa', $result->getLocality());
         $this->assertCount(1, $result->getAdminLevels());
-        $this->assertEquals('California', $result->getAdminLevels()->get(1)->getName());
+        $this->assertEquals('Oklahoma', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('United States', $result->getCountry()->getName());
-        $this->assertEquals('US', $result->getCountry()->getCode());
-        $this->assertEquals('America/Los_Angeles', $result->getTimezone());
+        $this->assertEquals('United States', $result->getCountry()->getCode());
+        $this->assertEquals('America/New_York', $result->getTimezone());
     }
 
     /**
@@ -182,7 +182,7 @@ class IpInfoDbTest extends BaseTestCase
         $this->assertNull($result->getLocality());
         $this->assertEmpty($result->getAdminLevels());
         $this->assertEquals('United States', $result->getCountry()->getName());
-        $this->assertEquals('US', $result->getCountry()->getCode());
+        $this->assertEquals('United States', $result->getCountry()->getCode());
         $this->assertNull($result->getTimezone());
     }
 
