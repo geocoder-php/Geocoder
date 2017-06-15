@@ -129,7 +129,12 @@ final class OpenCage extends AbstractHttpProvider implements LocaleAwareGeocoder
 
         $results = [];
         foreach ($locations as $location) {
-            $bounds = [];
+            $bounds = [
+                'south' => null,
+                'west' => null,
+                'north' => null,
+                'east' => null,
+            ];
             if (isset($location['bounds'])) {
                 $bounds = [
                     'south' => $location['bounds']['southwest']['lat'],
