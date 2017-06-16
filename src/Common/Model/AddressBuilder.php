@@ -86,7 +86,7 @@ final class AddressBuilder
      *
      * @var array
      */
-    private $data;
+    private $data = [];
 
     /**
      * @param string $providedBy
