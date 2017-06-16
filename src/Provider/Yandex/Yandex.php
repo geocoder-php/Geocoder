@@ -81,8 +81,8 @@ final class Yandex extends AbstractHttpProvider implements LocaleAwareGeocoder, 
         $latitude = $coordinates->getLatitude();
         $url = sprintf(self::REVERSE_ENDPOINT_URL, $longitude, $latitude);
 
-        if (null !== $this->toponym) {
-            $url = sprintf('%s&kind=%s', $url, $this->toponym);
+        if (null !== $toponym = $query->getData('toponym', $this->toponym)) {
+            $url = sprintf('%s&kind=%s', $url, $toponym);
         }
 
         return $this->executeQuery($url, $query->getLocale(), $query->getLimit());
