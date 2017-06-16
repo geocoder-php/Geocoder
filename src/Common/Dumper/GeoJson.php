@@ -22,7 +22,7 @@ class GeoJson implements Dumper
     /**
      * {@inheritdoc}
      */
-    public function dump(Location $location)
+    public function dump(Location $location): string
     {
         $properties = array_filter($location->toArray(), function ($value) {
             return !empty($value);

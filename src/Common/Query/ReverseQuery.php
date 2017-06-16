@@ -26,19 +26,19 @@ final class ReverseQuery
     private $coordinates;
 
     /**
-     * @var int
-     */
-    private $limit;
-
-    /**
-     * @var string
+     * @var string|null
      */
     private $locale;
 
     /**
+     * @var int
+     */
+    private $limit = Geocoder::DEFAULT_RESULT_LIMIT;
+
+    /**
      * @var array
      */
-    private $data;
+    private $data = [];
 
     /**
      * @param Coordinates $coordinates
@@ -46,8 +46,6 @@ final class ReverseQuery
     private function __construct(Coordinates $coordinates)
     {
         $this->coordinates = $coordinates;
-        $this->data = [];
-        $this->limit = Geocoder::DEFAULT_RESULT_LIMIT;
     }
 
     /**
@@ -66,7 +64,7 @@ final class ReverseQuery
      *
      * @return ReverseQuery
      */
-    public static function fromCoordinates($latitude, $longitude)
+    public static function fromCoordinates($latitude, $longitude): ReverseQuery
     {
         return new self(new Coordinates($latitude, $longitude));
     }
@@ -76,7 +74,7 @@ final class ReverseQuery
      *
      * @return ReverseQuery
      */
-    public function withLimit($limit)
+    public function withLimit(int $limit): ReverseQuery
     {
         $new = clone $this;
         $new->limit = $limit;
@@ -89,7 +87,7 @@ final class ReverseQuery
      *
      * @return ReverseQuery
      */
-    public function withLocale($locale)
+    public function withLocale(string $locale): ReverseQuery
     {
         $new = clone $this;
         $new->locale = $locale;
@@ -103,7 +101,7 @@ final class ReverseQuery
      *
      * @return ReverseQuery
      */
-    public function withData($name, $value)
+    public function withData(string $name, $value): ReverseQuery
     {
         $new = clone $this;
         $new->data[$name] = $value;
@@ -114,7 +112,7 @@ final class ReverseQuery
     /**
      * @return Coordinates
      */
-    public function getCoordinates()
+    public function getCoordinates(): Coordinates
     {
         return $this->coordinates;
     }
@@ -122,7 +120,7 @@ final class ReverseQuery
     /**
      * @return int
      */
-    public function getLimit()
+    public function getLimit(): int
     {
         return $this->limit;
     }
@@ -136,12 +134,12 @@ final class ReverseQuery
     }
 
     /**
-     * @param string $name
-     * @param null   $default
+     * @param string     $name
+     * @param mixed|null $default
      *
      * @return mixed
      */
-    public function getData($name, $default = null)
+    public function getData(string $name, $default = null)
     {
         if (!array_key_exists($name, $this->data)) {
             return $default;
@@ -153,7 +151,7 @@ final class ReverseQuery
     /**
      * @return array
      */
-    public function getAllData()
+    public function getAllData(): array
     {
         return $this->data;
     }

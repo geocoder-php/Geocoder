@@ -21,7 +21,7 @@ class ProviderNotRegistered extends \RuntimeException implements Exception
      * @param string $providerName
      * @param array  $registeredProviders
      */
-    public function __construct($providerName, array $registeredProviders = [])
+    public function __construct(string $providerName, array $registeredProviders = [])
     {
         parent::__construct(sprintf(
             'Provider "%s" is not registered, so you cannot use it. Did you forget to register it or made a typo?%s',

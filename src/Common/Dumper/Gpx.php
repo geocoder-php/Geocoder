@@ -25,7 +25,7 @@ class Gpx implements Dumper
      *
      * @return string
      */
-    public function dump(Location $location)
+    public function dump(Location $location): string
     {
         $gpx = sprintf(<<<'GPX'
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
@@ -75,7 +75,7 @@ GPX;
      *
      * @return string
      */
-    protected function formatName(Location $address)
+    protected function formatName(Location $address): string
     {
         $name = [];
         $array = $address->toArray();

@@ -25,7 +25,7 @@ interface Dumper
      *
      * @param Location $location
      *
-     * @return string
+     * @return mixed
      */
     public function dump(Location $location);
 }

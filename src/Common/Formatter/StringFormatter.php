@@ -48,7 +48,7 @@ class StringFormatter
      *
      * @return string
      */
-    public function format(Location $location, $format)
+    public function format(Location $location, string $format): string
     {
         if (null !== $code = $location->getCountry()->getCode()) {
             $code = strtoupper($code);

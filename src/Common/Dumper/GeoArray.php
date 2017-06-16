@@ -22,7 +22,7 @@ class GeoArray implements Dumper
     /**
      * {@inheritdoc}
      */
-    public function dump(Location $location)
+    public function dump(Location $location): array
     {
         $properties = array_filter($location->toArray(), function ($value) {
             return !empty($value);
