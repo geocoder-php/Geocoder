@@ -136,7 +136,7 @@ class StatefulGeocoder implements Geocoder, LocaleAwareGeocoder
      *
      * @return StatefulGeocoder
      */
-    public function setBounds(Bounds $bounds) :StatefulGeocoder
+    public function setBounds(Bounds $bounds): StatefulGeocoder
     {
         $this->bounds = $bounds;
 
