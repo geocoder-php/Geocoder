@@ -313,7 +313,7 @@ class GoogleMapsTest extends BaseTestCase
     public function testGeocodeBoundsWithRealAddressWithViewportOnly()
     {
         $provider = new GoogleMaps($this->getHttpClient());
-        $results  = $provider->geocodeQuery(GeocodeQuery::create('Sibbe, Netherlands'));
+        $results = $provider->geocodeQuery(GeocodeQuery::create('Sibbe, Netherlands'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
