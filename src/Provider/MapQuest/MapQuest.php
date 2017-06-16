@@ -15,11 +15,11 @@ namespace Geocoder\Provider\MapQuest;
 use Geocoder\Collection;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Model\Address;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Provider\AbstractHttpProvider;
 use Geocoder\Provider\Provider;
 use Http\Client\HttpClient;
 

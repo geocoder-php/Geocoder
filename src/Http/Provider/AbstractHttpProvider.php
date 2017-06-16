@@ -10,11 +10,12 @@ declare(strict_types=1);
  * @license    MIT License
  */
 
-namespace Geocoder\Provider;
+namespace Geocoder\Http\Provider;
 
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\QuotaExceeded;
+use Geocoder\Provider\AbstractProvider;
 use Http\Message\MessageFactory;
 use Http\Discovery\MessageFactoryDiscovery;
 use Http\Client\HttpClient;
