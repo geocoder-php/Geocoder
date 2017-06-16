@@ -14,7 +14,6 @@ namespace Geocoder\Tests\Model;
 
 use Geocoder\Model\Address;
 use Geocoder\Model\AdminLevelCollection;
-use Geocoder\Model\LocationFactory;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -72,7 +71,7 @@ class AddressTest extends TestCase
             'timezone' => null,
         ];
 
-        $address = LocationFactory::createLocation($data);
+        $address = Address::createFromArray($data);
 
         $this->assertSame($data, $address->toArray());
     }

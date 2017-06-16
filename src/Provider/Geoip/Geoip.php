@@ -54,10 +54,7 @@ final class Geoip extends AbstractProvider implements Provider, IpAddressGeocode
         }
 
         if ('127.0.0.1' === $address) {
-            return new AddressCollection([Address::createFromArray([
-                'locality' => 'localhost',
-                'country' => 'localhost',
-            ])]);
+            return new AddressCollection([$this->getLocationForLocalhost()]);
         }
 
         $results = @geoip_record_by_name($address);

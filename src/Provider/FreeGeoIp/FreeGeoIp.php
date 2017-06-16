@@ -14,7 +14,6 @@ namespace Geocoder\Provider\FreeGeoIp;
 
 use Geocoder\Collection;
 use Geocoder\Exception\UnsupportedOperation;
-use Geocoder\Model\Address;
 use Geocoder\Model\AddressBuilder;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
@@ -44,10 +43,7 @@ final class FreeGeoIp extends AbstractHttpProvider implements Provider, IpAddres
         }
 
         if (in_array($address, ['127.0.0.1', '::1'])) {
-            return new AddressCollection([Address::createFromArray([
-                'locality' => 'localhost',
-                'country' => 'localhost',
-            ])]);
+            return new AddressCollection([$this->getLocationForLocalhost()]);
         }
 
         $content = $this->getUrlContents(sprintf(self::ENDPOINT_URL, $address));

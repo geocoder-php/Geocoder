@@ -69,7 +69,7 @@ final class Nominatim extends AbstractHttpProvider implements LocaleAwareGeocode
         }
 
         if ('127.0.0.1' === $address) {
-            return $this->returnResults([$this->getLocalhostDefaults()]);
+            return new AddressCollection([$this->getLocationForLocalhost()]);
         }
 
         $url = sprintf($this->getGeocodeEndpointUrl(), urlencode($address), $query->getLimit());
