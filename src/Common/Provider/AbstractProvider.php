@@ -13,9 +13,8 @@ declare(strict_types=1);
 namespace Geocoder\Provider;
 
 use Geocoder\Geocoder;
-use Geocoder\Collection;
-use Geocoder\Model\AddressCollection;
-use Geocoder\Model\LocationFactory;
+use Geocoder\Location;
+use Geocoder\Model\Address;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -23,64 +22,15 @@ use Geocoder\Model\LocationFactory;
 abstract class AbstractProvider
 {
     /**
-     * Returns the default results.
-     *
-     * @return array
-     *
-     * @deprecated Use LocationBuilder
-     */
-    protected function getDefaults()
-    {
-        return [
-            'latitude' => null,
-            'longitude' => null,
-            'bounds' => [
-                'south' => null,
-                'west' => null,
-                'north' => null,
-                'east' => null,
-            ],
-            'streetNumber' => null,
-            'streetName' => null,
-            'locality' => null,
-            'postalCode' => null,
-            'subLocality' => null,
-            'adminLevels' => [],
-            'country' => null,
-            'countryCode' => null,
-            'timezone' => null,
-        ];
-    }
-
-    /**
      * Returns the results for the 'localhost' special case.
      *
-     * @return array
-     *
-     * @deprecated
+     * @return Location
      */
-    protected function getLocalhostDefaults()
+    protected function getLocationForLocalhost()
     {
-        return [
+        return Address::createFromArray([
             'locality' => 'localhost',
             'country' => 'localhost',
-        ];
-    }
-
-    /**
-     * @param array $data an array of data
-     *
-     * @return Collection
-     *
-     * @deprecated Use the AddressBuilder
-     */
-    protected function returnResults(array $data = [])
-    {
-        $addresses = [];
-        foreach ($data as $result) {
-            $addresses[] = LocationFactory::createLocation($result);
-        }
-
-        return new AddressCollection($addresses);
+        ]);
     }
 }

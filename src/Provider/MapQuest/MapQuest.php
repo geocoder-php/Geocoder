@@ -15,6 +15,7 @@ namespace Geocoder\Provider\MapQuest;
 use Geocoder\Collection;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Model\Address;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
@@ -157,7 +158,7 @@ final class MapQuest extends AbstractHttpProvider implements Provider
                     $admins[] = ['name' => $location['adminArea4'], 'level' => 2];
                 }
 
-                $results[] = array_merge($this->getDefaults(), [
+                $results[] = Address::createFromArray([
                     'latitude' => $location['latLng']['lat'],
                     'longitude' => $location['latLng']['lng'],
                     'streetName' => $location['street'] ?: null,
@@ -174,6 +175,6 @@ final class MapQuest extends AbstractHttpProvider implements Provider
             return new AddressCollection([]);
         }
 
-        return $this->returnResults($results);
+        return new AddressCollection($results);
     }
 }

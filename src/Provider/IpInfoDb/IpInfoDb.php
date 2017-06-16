@@ -99,10 +99,7 @@ final class IpInfoDb extends AbstractHttpProvider implements Provider, IpAddress
         }
 
         if ('127.0.0.1' === $address) {
-            return new AddressCollection([Address::createFromArray([
-                'locality' => 'localhost',
-                'country' => 'localhost',
-            ])]);
+            return new AddressCollection([$this->getLocationForLocalhost()]);
         }
 
         $url = sprintf($this->endpointUrl, $this->apiKey, $address);

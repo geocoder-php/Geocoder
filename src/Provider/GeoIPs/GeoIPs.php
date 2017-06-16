@@ -89,10 +89,7 @@ final class GeoIPs extends AbstractHttpProvider implements Provider, IpAddressGe
         }
 
         if ('127.0.0.1' === $address) {
-            return new AddressCollection([Address::createFromArray([
-                'locality' => 'localhost',
-                'country' => 'localhost',
-            ])]);
+            return new AddressCollection([$this->getLocationForLocalhost()]);
         }
 
         $query = sprintf(self::GEOCODE_ENDPOINT_URL, $address, $this->apiKey);

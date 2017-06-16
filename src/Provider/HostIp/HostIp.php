@@ -48,7 +48,7 @@ final class HostIp extends AbstractHttpProvider implements Provider, IpAddressGe
         }
 
         if ('127.0.0.1' === $address) {
-            return $this->returnResults([$this->getLocalhostDefaults()]);
+            return new AddressCollection([$this->getLocationForLocalhost()]);
         }
 
         $url = sprintf(self::ENDPOINT_URL, $address);

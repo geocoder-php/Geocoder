@@ -51,7 +51,7 @@ final class GeoIP2 extends AbstractProvider implements LocaleAwareGeocoder, IpAd
         }
 
         if ('127.0.0.1' === $address) {
-            return $this->returnResults([$this->getLocalhostDefaults()]);
+            return new AddressCollection([$this->getLocationForLocalhost()]);
         }
 
         $result = json_decode($this->executeQuery($address));

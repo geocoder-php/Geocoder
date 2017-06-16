@@ -22,6 +22,7 @@ use Psr\Http\Message\RequestInterface;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
+ * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
 abstract class AbstractHttpProvider extends AbstractProvider
 {
