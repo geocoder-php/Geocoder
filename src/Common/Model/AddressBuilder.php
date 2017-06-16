@@ -305,7 +305,7 @@ final class AddressBuilder
     public function getValue(string $name, $default = null)
     {
         if ($this->hasValue($name)) {
-            $this->data[$name];
+            return $this->data[$name];
         }
 
         return $default;
