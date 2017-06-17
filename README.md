@@ -105,13 +105,11 @@ make migration from 3.x smoother.
 Providers
 ---------
 
-Providers perform the geocoding black magic for you (talking to the APIs,
-fetching results, dealing with errors, etc.) and are highly configurable.
-
-#### Address-based Providers
+Providers perform the geocoding black magic for you (talking to the APIs, fetching results, dealing with errors, etc.) 
+and are highly configurable.
 
 
-Provider       | Package | Features | Website
+Provider       | Package | Features | Stats
 :------------- |:------- |:-------- |:-------
 [ArcGIS Online](https://github.com/geocoder-php/arcgis-online-provider) | `geocoder-php/arcgis-online-provider` | address, reverse <br> [Website](https://developers.arcgis.com/en/features/geocoding/) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/arcgis-online-provider/v/stable)](https://packagist.org/packages/geocoder-php/arcgis-online-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/arcgis-online-provider/downloads)](https://packagist.org/packages/geocoder-php/arcgis-online-provider)
 [Bing Maps](https://github.com/geocoder-php/bing-maps-provider) | `geocoder-php/bing-maps-provider` | address, reverse <br> [Website](http://msdn.microsoft.com/en-us/library/ff701713.aspx) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/bing-maps-provider/v/stable)](https://packagist.org/packages/geocoder-php/bing-maps-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/bing-maps-provider/downloads)](https://packagist.org/packages/geocoder-php/bing-maps-provider)
@@ -197,7 +195,7 @@ $geocoder
 The `ProviderAggregator`'s API is fluent, meaning you can write:
 
 ``` php
-$addresses = $geocoder
+$locations = $geocoder
     ->registerProvider(new \My\Provider\Custom($adapter))
     ->using('custom')
     ->limit(10)
@@ -219,11 +217,12 @@ easily figure out how many time/memory was spent for each geocoder/reverse call.
 
 ```php
 // configure you geocoder object
+$geocoder = // ...
 
 $stopwatch = new \Symfony\Component\Stopwatch\Stopwatch();
-$geocoder = new \Geocoder\TimedGeocoder($geocoder, $stopwatch);
+$timedGeocoder = new \Geocoder\TimedGeocoder($geocoder, $stopwatch);
 
-$geocoder->geocode('Paris, France');
+$timedGeocoder->geocodeQuery(GeocodeQuery::create('Paris, France'));
 
 // Now you can debug your application
 ```
@@ -242,13 +241,13 @@ standard formats.
 
 The **GPS eXchange** format is designed to share geolocated data like point of
 interests, tracks, ways, but also coordinates. **Geocoder** provides a dumper to
-convert an `Address` object in an GPX compliant format.
+convert a `Location` object in an GPX compliant format.
 
-Assuming we got a `$address` object as seen previously:
+Assuming we got a `$location` object as seen previously:
 
 ``` php
 $dumper = new \Geocoder\Dumper\Gpx();
-$strGpx = $dumper->dump($address);
+$strGpx = $dumper->dump($location);
 
 echo $strGpx;
 ```
@@ -302,16 +301,16 @@ Formatters
 ----------
 
 A common use case is to print geocoded data. Thanks to the `StringFormatter`
-class, it's simple to format an `Address` object as a string:
+class, it's simple to format a `Location` object as a string:
 
 ``` php
-// $address is an instance of Address
+// $location is an instance of Location
 $formatter = new \Geocoder\Formatter\StringFormatter();
 
-$formatter->format($address, '%S %n, %z %L');
+$formatter->format($location, '%S %n, %z %L');
 // 'Badenerstrasse 120, 8001 Zuerich'
 
-$formatter->format($address, '<p>%S %n, %z %L</p>');
+$formatter->format($location, '<p>%S %n, %z %L</p>');
 // '<p>Badenerstrasse 120, 8001 Zuerich</p>'
 ```
 
