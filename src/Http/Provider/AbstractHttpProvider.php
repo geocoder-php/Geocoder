@@ -10,15 +10,15 @@ declare(strict_types=1);
  * @license    MIT License
  */
 
-namespace Geocoder\Provider;
+namespace Geocoder\Http\Provider;
 
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\QuotaExceeded;
-use Http\Client\HttpClient;
-use Http\Discovery\MessageFactoryDiscovery;
+use Geocoder\Provider\AbstractProvider;
 use Http\Message\MessageFactory;
-use Psr\Http\Message\RequestInterface;
+use Http\Discovery\MessageFactoryDiscovery;
+use Http\Client\HttpClient;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -57,7 +57,7 @@ abstract class AbstractHttpProvider extends AbstractProvider
      */
     protected function getUrlContents($url): string
     {
-        $request = $this->getRequest($url);
+        $request = $this->getMessageFactory()->createRequest('GET', $url);
         $response = $this->getHttpClient()->sendRequest($request);
 
         $statusCode = $response->getStatusCode();
@@ -113,15 +113,5 @@ abstract class AbstractHttpProvider extends AbstractProvider
     public function setMessageFactory(MessageFactory $messageFactory)
     {
         $this->messageFactory = $messageFactory;
-    }
-
-    /**
-     * @param string $url
-     *
-     * @return RequestInterface
-     */
-    protected function getRequest(string $url): RequestInterface
-    {
-        return $this->getMessageFactory()->createRequest('GET', $url);
     }
 }
