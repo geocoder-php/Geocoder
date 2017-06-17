@@ -67,7 +67,7 @@ class ProviderAggregator implements Geocoder
      */
     public function getName(): string
     {
-        return 'ProviderAggregator';
+        return 'provider_aggregator';
     }
 
     /**
