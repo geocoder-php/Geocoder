@@ -73,7 +73,7 @@ class ProviderAggregator implements Geocoder
     /**
      * {@inheritdoc}
      */
-    public function geocode($value): Collection
+    public function geocode(string $value): Collection
     {
         return $this->geocodeQuery(GeocodeQuery::create($value)
             ->withLimit($this->limit));
@@ -146,7 +146,7 @@ class ProviderAggregator implements Geocoder
     public function using($name)
     {
         if (!isset($this->providers[$name])) {
-            throw new ProviderNotRegistered($name);
+            throw new ProviderNotRegistered($name ?? '');
         }
 
         $this->provider = $this->providers[$name];

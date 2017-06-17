@@ -54,7 +54,7 @@ abstract class AbstractHttpProvider extends AbstractProvider
      *
      * @throws InvalidServerResponse
      */
-    protected function getUrlContents($url)
+    protected function getUrlContents($url): string
     {
         $request = $this->getMessageFactory()->createRequest('GET', $url);
         $response = $this->getHttpClient()->sendRequest($request);
@@ -81,7 +81,7 @@ abstract class AbstractHttpProvider extends AbstractProvider
      *
      * @return HttpClient
      */
-    protected function getHttpClient()
+    protected function getHttpClient(): HttpClient
     {
         return $this->client;
     }
@@ -89,7 +89,7 @@ abstract class AbstractHttpProvider extends AbstractProvider
     /**
      * @return MessageFactory
      */
-    protected function getMessageFactory()
+    protected function getMessageFactory(): MessageFactory
     {
         if ($this->messageFactory === null) {
             $this->messageFactory = MessageFactoryDiscovery::find();
@@ -100,25 +100,17 @@ abstract class AbstractHttpProvider extends AbstractProvider
 
     /**
      * @param HttpClient $client
-     *
-     * @return AbstractHttpProvider
      */
     public function setClient(HttpClient $client)
     {
         $this->client = $client;
-
-        return $this;
     }
 
     /**
      * @param MessageFactory $messageFactory
-     *
-     * @return AbstractHttpProvider
      */
     public function setMessageFactory(MessageFactory $messageFactory)
     {
         $this->messageFactory = $messageFactory;
-
-        return $this;
     }
 }

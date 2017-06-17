@@ -29,7 +29,7 @@ trait GeocoderTrait
     /**
      * {@inheritdoc}
      */
-    public function geocode($value): Collection
+    public function geocode(string $value): Collection
     {
         return $this->geocodeQuery(GeocodeQuery::create($value));
     }

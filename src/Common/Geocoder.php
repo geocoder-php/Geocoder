@@ -39,7 +39,7 @@ interface Geocoder extends Provider
      *
      * @throws \Geocoder\Exception\Exception
      */
-    public function geocode($value): Collection;
+    public function geocode(string $value): Collection;
 
     /**
      * Reverses geocode given latitude and longitude values.

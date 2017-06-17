@@ -22,7 +22,7 @@ class Kml extends Gpx implements Dumper
     /**
      * {@inheritdoc}
      */
-    public function dump(Location $location)
+    public function dump(Location $location): string
     {
         $name = $this->formatName($location);
         $kml = <<<'KML'

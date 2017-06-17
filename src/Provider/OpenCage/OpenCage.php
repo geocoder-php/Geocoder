@@ -80,7 +80,12 @@ final class OpenCage extends AbstractHttpProvider implements LocaleAwareGeocoder
         $coordinates = $query->getCoordinates();
         $address = sprintf('%f, %f', $coordinates->getLatitude(), $coordinates->getLongitude());
 
-        return $this->geocodeQuery(GeocodeQuery::create($address)->withLocale($query->getLocale()));
+        $geocodeQuery = GeocodeQuery::create($address);
+        if (null !== $locale = $query->getLocale()) {
+            $geocodeQuery = $geocodeQuery->withLocale($query->getLocale());
+        }
+
+        return $this->geocodeQuery($geocodeQuery);
     }
 
     /**
