@@ -4,7 +4,6 @@ sudo: false
 addons:
     apt_packages:
         - parallel
-        - libgeoip-dev
 
 branches:
     except:
@@ -26,7 +25,6 @@ matrix:
         - php: 7.1
 
 before_install:
-    - pecl install geoip-1.1.1
     - |
       # General configuration
       stty cols 120
@@ -35,6 +33,9 @@ before_install:
       export PHPUNIT=$(readlink -f ./phpunit)
       export PHPUNIT_X="$PHPUNIT --exclude-group benchmark"
       export COMPOSER_UP='composer update --no-progress --no-suggest --ansi'
+
+      # If "geoip-1.1.1" exits in a provider's .travis.yml, then install the dependency.
+      export GEOIP_EXT = 'grep -Fq "geoip-1.1.1" .travis.yml && pecl install geoip-1.1.1'
 
       # tfold is a helper to create folded reports
       tfold () {
@@ -63,9 +64,9 @@ install:
         if [[ $skip ]]; then
             echo -e "\\n\\e[1;34mIntermediate PHP version $PHP is skipped for pull requests.\\e[0m"
         elif [[ $deps = high ]]; then
-            echo "$COMPONENTS" | parallel --gnu -j10% "tfold {} 'cd {} && $COMPOSER_UP && $PHPUNIT_X$LEGACY'"
+            echo "$COMPONENTS" | parallel --gnu -j10% "tfold {} 'cd {} && $GEOIP_EXT && $COMPOSER_UP && $PHPUNIT_X$LEGACY'"
         elif [[ $deps = low ]]; then
-            echo "$COMPONENTS" | parallel --gnu -j10% "tfold {} 'cd {} && $COMPOSER_UP --prefer-lowest --prefer-stable && $PHPUNIT_X'" &&
+            echo "$COMPONENTS" | parallel --gnu -j10% "tfold {} 'cd {} && $GEOIP_EXT && $COMPOSER_UP --prefer-lowest --prefer-stable && $PHPUNIT_X'" &&
             # Test the PhpUnit bridge on PHP 5.5, using the original phpunit script
             tfold src/Symfony/Bridge/PhpUnit \
             "cd src/Symfony/Bridge/PhpUnit && wget https://phar.phpunit.de/phpunit-4.8.phar && phpenv global 5.3 && composer update --no-progress --ansi && php phpunit-4.8.phar"
