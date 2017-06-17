@@ -3,6 +3,7 @@
 [![Latest Stable Version](https://poser.pugx.org/geocoder-php/geoip-provider/v/stable)](https://packagist.org/packages/geocoder-php/geoip-provider)
 [![Total Downloads](https://poser.pugx.org/geocoder-php/geoip-provider/downloads)](https://packagist.org/packages/geocoder-php/geoip-provider)
 [![Monthly Downloads](https://poser.pugx.org/geocoder-php/geoip-provider/d/monthly.png)](https://packagist.org/packages/geocoder-php/geoip-provider)
+[![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/geocoder-php/geoip-provider.svg?style=flat-square)](https://scrutinizer-ci.com/g/geocoder-php/geoip-provider)
 [![Quality Score](https://img.shields.io/scrutinizer/g/geocoder-php/geoip-provider.svg?style=flat-square)](https://scrutinizer-ci.com/g/geocoder-php/geoip-provider)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 
