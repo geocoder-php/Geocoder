@@ -51,6 +51,16 @@ class Assert
             );
         }
     }
+    /**
+     * @param mixed  $value
+     * @param string $message
+     */
+    public static function notNull($value, $message = '')
+    {
+        if (null === $value) {
+            throw new \InvalidArgumentException(sprintf($message ?: 'Value cannot be null'));
+        }
+    }
 
     private static function typeToString($value)
     {

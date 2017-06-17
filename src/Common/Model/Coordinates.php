@@ -35,6 +35,9 @@ final class Coordinates
      */
     public function __construct($latitude, $longitude)
     {
+        Assert::notNull($latitude);
+        Assert::notNull($longitude);
+
         $latitude = (float) $latitude;
         $longitude = (float) $longitude;
 
