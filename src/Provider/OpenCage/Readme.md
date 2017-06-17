@@ -3,6 +3,7 @@
 [![Latest Stable Version](https://poser.pugx.org/geocoder-php/open-cage-provider/v/stable)](https://packagist.org/packages/geocoder-php/open-cage-provider)
 [![Total Downloads](https://poser.pugx.org/geocoder-php/open-cage-provider/downloads)](https://packagist.org/packages/geocoder-php/open-cage-provider)
 [![Monthly Downloads](https://poser.pugx.org/geocoder-php/open-cage-provider/d/monthly.png)](https://packagist.org/packages/geocoder-php/open-cage-provider)
+[![Quality Score](https://img.shields.io/scrutinizer/g/geocoder-php/open-cage-provider.svg?style=flat-square)](https://scrutinizer-ci.com/g/geocoder-php/open-cage-provider)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 
 This is the OpenCage provider from the PHP Geocoder. This is a **READ ONLY** repository. See the

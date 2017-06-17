@@ -12,5 +12,8 @@ install:
   - composer update --prefer-stable --prefer-dist
 
 script:
-    - composer test
+    - composer test-ci
+
+after_success:
+    - wget https://scrutinizer-ci.com/ocular.phar; php ocular.phar code-coverage:upload --format=php-clover
 

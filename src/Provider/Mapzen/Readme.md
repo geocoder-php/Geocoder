@@ -3,6 +3,7 @@
 [![Latest Stable Version](https://poser.pugx.org/geocoder-php/mapzen-provider/v/stable)](https://packagist.org/packages/geocoder-php/mapzen-provider)
 [![Total Downloads](https://poser.pugx.org/geocoder-php/mapzen-provider/downloads)](https://packagist.org/packages/geocoder-php/mapzen-provider)
 [![Monthly Downloads](https://poser.pugx.org/geocoder-php/mapzen-provider/d/monthly.png)](https://packagist.org/packages/geocoder-php/mapzen-provider)
+[![Quality Score](https://img.shields.io/scrutinizer/g/geocoder-php/mapzen-provider.svg?style=flat-square)](https://scrutinizer-ci.com/g/geocoder-php/mapzen-provider)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 
 This is the Mapzen provider from the PHP Geocoder. This is a **READ ONLY** repository. See the

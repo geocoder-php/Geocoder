@@ -4,6 +4,7 @@
 [![Latest Stable Version](https://poser.pugx.org/geocoder-php/common-http/v/stable)](https://packagist.org/packages/geocoder-php/common-http)
 [![Total Downloads](https://poser.pugx.org/geocoder-php/common-http/downloads)](https://packagist.org/packages/geocoder-php/common-http)
 [![Monthly Downloads](https://poser.pugx.org/geocoder-php/common-http/d/monthly.png)](https://packagist.org/packages/geocoder-php/common-http)
+[![Quality Score](https://img.shields.io/scrutinizer/g/geocoder-php/php-common-http.svg?style=flat-square)](https://scrutinizer-ci.com/g/geocoder-php/php-common-http)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 
 This package has dependency on HTTP related libraries. Such as the great [HTTPlug](http://httplug.io/) and [PSR7](http://www.php-fig.org/psr/psr-7/).
