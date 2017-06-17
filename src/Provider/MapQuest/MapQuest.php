@@ -66,12 +66,15 @@ final class MapQuest extends AbstractHttpProvider implements Provider
      * @param string     $apiKey   an API key
      * @param bool       $licensed true to use MapQuest's licensed endpoints, default is false to use the open endpoints (optional)
      */
-    public function __construct(HttpClient $client, $apiKey, $licensed = false)
+    public function __construct(HttpClient $client, string $apiKey, bool $licensed = false)
     {
-        parent::__construct($client);
+        if (empty($apiKey)) {
+            throw new InvalidCredentials('No API key provided.');
+        }
 
         $this->apiKey = $apiKey;
         $this->licensed = $licensed;
+        parent::__construct($client);
     }
 
     /**
@@ -80,9 +83,6 @@ final class MapQuest extends AbstractHttpProvider implements Provider
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
         $address = $query->getText();
-        if (null === $this->apiKey) {
-            throw new InvalidCredentials('No API Key provided.');
-        }
 
         // This API doesn't handle IPs
         if (filter_var($address, FILTER_VALIDATE_IP)) {
@@ -106,9 +106,6 @@ final class MapQuest extends AbstractHttpProvider implements Provider
         $coordinates = $query->getCoordinates();
         $longitude = $coordinates->getLongitude();
         $latitude = $coordinates->getLatitude();
-        if (null === $this->apiKey) {
-            throw new InvalidCredentials('No API Key provided.');
-        }
 
         if ($this->licensed) {
             $url = sprintf(self::LICENSED_REVERSE_ENDPOINT_URL, $this->apiKey, $latitude, $longitude);
@@ -129,8 +126,10 @@ final class MapQuest extends AbstractHttpProvider implements Provider
 
     /**
      * @param string $url
+     *
+     * @return AddressCollection
      */
-    private function executeQuery($url)
+    private function executeQuery(string $url): AddressCollection
     {
         $content = $this->getUrlContents($url);
         $json = json_decode($content, true);

@@ -120,12 +120,11 @@ class TomTomTest extends BaseTestCase
 
     /**
      * @expectedException \Geocoder\Exception\InvalidCredentials
-     * @expectedExceptionMessage No Map API Key provided
+     * @expectedExceptionMessage No API key provided
      */
-    public function testReverseWithoutApiKey()
+    public function testWithoutApiKey()
     {
-        $provider = new TomTom($this->getMockedHttpClient(), null);
-        $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
+        $provider = new TomTom($this->getMockedHttpClient(), '');
     }
 
     /**

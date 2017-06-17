@@ -44,12 +44,12 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocod
     const REVERSE_ENDPOINT_URL_SSL = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=%F,%F';
 
     /**
-     * @var string
+     * @var string|null
      */
     private $region;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $apiKey;
 
@@ -59,7 +59,7 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocod
     private $clientId;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $privateKey;
 
@@ -75,7 +75,7 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocod
      *
      * @return GoogleMaps
      */
-    public static function business(HttpClient $client, $clientId, $privateKey = null, $region = null, $apiKey = null)
+    public static function business(HttpClient $client, string  $clientId, string $privateKey = null, string $region = null, string $apiKey = null)
     {
         $provider = new self($client, $region, $apiKey);
         $provider->clientId = $clientId;
@@ -89,7 +89,7 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocod
      * @param string     $region Region biasing (optional)
      * @param string     $apiKey Google Geocoding API key (optional)
      */
-    public function __construct(HttpClient $client, $region = null, $apiKey = null)
+    public function __construct(HttpClient $client, string $region = null, string $apiKey = null)
     {
         parent::__construct($client);
 
@@ -143,7 +143,7 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocod
      *
      * @return string query with extra params
      */
-    private function buildQuery($url, $locale, $region)
+    private function buildQuery(string $url, string $locale = null, string $region = null)
     {
         if (null !== $locale) {
             $url = sprintf('%s&language=%s', $url, $locale);
@@ -174,11 +174,12 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocod
      * @param int    $limit
      * @param string $region
      *
-     * @return \Geocoder\Collection
+     * @return AddressCollection
      *
-     * @throws Exception
+     * @throws InvalidServerResponse
+     * @throws InvalidCredentials
      */
-    private function fetchUrl($url, $locale, $limit, $region)
+    private function fetchUrl(string $url, string $locale = null, int $limit, string $region = null): AddressCollection
     {
         $url = $this->buildQuery($url, $locale, $region);
         $content = $this->getUrlContents($url);
@@ -284,7 +285,7 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocod
      * @param string         $type    Component type
      * @param object         $values  The component values
      */
-    private function updateAddressComponent(AddressBuilder $builder, $type, $values)
+    private function updateAddressComponent(AddressBuilder $builder, string $type, $values)
     {
         switch ($type) {
             case 'postal_code':
@@ -338,7 +339,7 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocod
      *
      * @return string $query query with signature appended
      */
-    private function signQuery($query)
+    private function signQuery(string $query): string
     {
         $url = parse_url($query);
 

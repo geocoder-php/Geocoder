@@ -48,7 +48,7 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
      * @param HttpClient $client        An HTTP adapter
      * @param string     $sourceCountry Country biasing (optional)
      */
-    public function __construct(HttpClient $client, $sourceCountry = null)
+    public function __construct(HttpClient $client, string $sourceCountry = null)
     {
         parent::__construct($client);
 
@@ -161,8 +161,10 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
     /**
      * @param string $query
      * @param int    $limit
+     *
+     * @return string
      */
-    private function buildQuery($query, $limit)
+    private function buildQuery(string $query, int $limit): string
     {
         if (null !== $this->sourceCountry) {
             $query = sprintf('%s&sourceCountry=%s', $query, $this->sourceCountry);
@@ -174,8 +176,10 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
     /**
      * @param string $url
      * @param int    $limit
+     *
+     * @return \stdClass
      */
-    private function executeQuery($url, $limit)
+    private function executeQuery(string $url, int $limit): \stdClass
     {
         $url = $this->buildQuery($url, $limit);
         $content = $this->getUrlContents($url);

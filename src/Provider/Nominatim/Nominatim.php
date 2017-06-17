@@ -124,7 +124,7 @@ final class Nominatim extends AbstractHttpProvider implements LocaleAwareGeocode
      *
      * @return Location
      */
-    private function xmlResultToArray(\DOMElement $resultNode, \DOMElement $addressNode)
+    private function xmlResultToArray(\DOMElement $resultNode, \DOMElement $addressNode): Location
     {
         $builder = new AddressBuilder($this->getName());
         $adminLevels = [];
@@ -168,10 +168,12 @@ final class Nominatim extends AbstractHttpProvider implements LocaleAwareGeocode
     }
 
     /**
-     * @param string $url
-     * @param string $locale
+     * @param string      $url
+     * @param string|null $locale
+     *
+     * @return string
      */
-    private function executeQuery($url, $locale)
+    private function executeQuery(string $url, string $locale = null): string
     {
         if (null !== $locale) {
             $url = sprintf('%s&accept-language=%s', $url, $locale);
@@ -180,12 +182,12 @@ final class Nominatim extends AbstractHttpProvider implements LocaleAwareGeocode
         return $this->getUrlContents($url);
     }
 
-    private function getGeocodeEndpointUrl()
+    private function getGeocodeEndpointUrl(): string
     {
         return $this->rootUrl.'/search?q=%s&format=xml&addressdetails=1&limit=%d';
     }
 
-    private function getReverseEndpointUrl()
+    private function getReverseEndpointUrl(): string
     {
         return $this->rootUrl.'/reverse?format=xml&lat=%F&lon=%F&addressdetails=1&zoom=%d';
     }

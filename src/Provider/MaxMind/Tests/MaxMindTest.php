@@ -33,15 +33,6 @@ class MaxMindTest extends BaseTestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\InvalidCredentials
-     */
-    public function testGeocodeWithNullApiKey()
-    {
-        $provider = new MaxMind($this->getMockedHttpClient(), null);
-        $provider->geocodeQuery(GeocodeQuery::create('foo'));
-    }
-
-    /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The MaxMind provider does not support street addresses, only IP addresses.
      */
@@ -97,7 +88,7 @@ class MaxMindTest extends BaseTestCase
      */
     public function testGeocodeWithRealIPv6AndNotSupportedService()
     {
-        $provider = new MaxMind($this->getMockedHttpClient(), 'api_key', 12345);
+        $provider = new MaxMind($this->getMockedHttpClient(), 'api_key', '12345');
         $provider->geocodeQuery(GeocodeQuery::create('::ffff:74.200.247.59'));
     }
 
