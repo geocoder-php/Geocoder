@@ -15,6 +15,14 @@ This is the Yandex provider from the PHP Geocoder. This is a **READ ONLY** repos
 composer require geocoder-php/yandex-provider
 ```
 
+### Note
+
+The default language-locale is `ru-RU`, you can choose between `uk-UA`, `be-BY`,
+`en-US`, `en-BR` and `tr-TR`. 
+
+It's possible to precise the toponym to get more accurate result for reverse geocoding:
+`house`, `street`, `metro`, `district` and `locality`.
+
 ### Contribute
 
 Contributions are very welcome! Send a pull request to the [main repository](https://github.com/geocoder-php/Geocoder) or 

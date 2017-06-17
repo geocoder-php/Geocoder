@@ -124,7 +124,7 @@ class StatefulGeocoder implements Geocoder, LocaleAwareGeocoder
      *
      * @return StatefulGeocoder
      */
-    public function setLocale(string $locale): StatefulGeocoder
+    public function setLocale(string $locale): self
     {
         $this->locale = $locale;
 
@@ -136,7 +136,7 @@ class StatefulGeocoder implements Geocoder, LocaleAwareGeocoder
      *
      * @return StatefulGeocoder
      */
-    public function setBounds(Bounds $bounds): StatefulGeocoder
+    public function setBounds(Bounds $bounds): self
     {
         $this->bounds = $bounds;
 
@@ -148,7 +148,7 @@ class StatefulGeocoder implements Geocoder, LocaleAwareGeocoder
      *
      * @return StatefulGeocoder
      */
-    public function setLimit(int $limit): StatefulGeocoder
+    public function setLimit(int $limit): self
     {
         $this->limit = $limit;
 

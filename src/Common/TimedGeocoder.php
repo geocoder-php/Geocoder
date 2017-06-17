@@ -89,6 +89,6 @@ class TimedGeocoder implements Geocoder
 
     public function getName(): string
     {
-        return 'TimedGeocoder';
+        return 'timed_geocoder';
     }
 }
