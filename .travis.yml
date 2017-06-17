@@ -4,6 +4,7 @@ sudo: false
 addons:
     apt_packages:
         - parallel
+        - libgeoip-dev
 
 branches:
     except:
