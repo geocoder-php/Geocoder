@@ -97,6 +97,7 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
             }
 
             $results[] = Address::createFromArray([
+                'providedBy' => $this->getName(),
                 'latitude' => $coordinates['y'],
                 'longitude' => $coordinates['x'],
                 'streetNumber' => $streetNumber,
@@ -138,6 +139,7 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
 
         return new AddressCollection([
             Address::createFromArray([
+                'providedBy' => $this->getName(),
                 'latitude' => $latitude,
                 'longitude' => $longitude,
                 'streetName' => $streetName,

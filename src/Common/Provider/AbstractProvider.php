@@ -19,7 +19,7 @@ use Geocoder\Model\Address;
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-abstract class AbstractProvider
+abstract class AbstractProvider implements Provider
 {
     /**
      * Returns the results for the 'localhost' special case.
@@ -29,6 +29,7 @@ abstract class AbstractProvider
     protected function getLocationForLocalhost(): Location
     {
         return Address::createFromArray([
+            'providedBy' => $this->getName(),
             'locality' => 'localhost',
             'country' => 'localhost',
         ]);

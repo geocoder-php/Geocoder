@@ -194,6 +194,7 @@ final class GeoIPs extends AbstractHttpProvider implements Provider, IpAddressGe
         }
 
         $results = Address::createFromArray([
+            'providedBy' => $this->getName(),
             'country' => $location['country_name'],
             'countryCode' => $location['country_code'],
             'adminLevels' => $adminLevels,

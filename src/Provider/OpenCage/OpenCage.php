@@ -162,6 +162,7 @@ final class OpenCage extends AbstractHttpProvider implements LocaleAwareGeocoder
             }
 
             $results[] = Address::createFromArray([
+                'providedBy' => $this->getName(),
                 'latitude' => $location['geometry']['lat'],
                 'longitude' => $location['geometry']['lng'],
                 'bounds' => $bounds ?: [],

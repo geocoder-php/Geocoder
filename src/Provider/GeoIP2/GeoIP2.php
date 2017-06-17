@@ -72,7 +72,9 @@ final class GeoIP2 extends AbstractProvider implements LocaleAwareGeocoder, IpAd
             }
         }
 
-        return new AddressCollection([Address::createFromArray([
+        return new AddressCollection([
+            Address::createFromArray([
+                'providedBy' => $this->getName(),
                 'countryCode' => (isset($result->country->iso_code) ? $result->country->iso_code : null),
                 'country' => (isset($result->country->names->{$locale}) ? $result->country->names->{$locale} : null),
                 'locality' => (isset($result->city->names->{$locale}) ? $result->city->names->{$locale} : null),
