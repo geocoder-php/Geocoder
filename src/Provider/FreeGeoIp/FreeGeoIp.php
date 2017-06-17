@@ -35,7 +35,7 @@ final class FreeGeoIp extends AbstractHttpProvider implements Provider, IpAddres
 
     /**
      * @param HttpClient $client
-     * @param string $baseUrl
+     * @param string     $baseUrl
      */
     public function __construct(HttpClient $client, string $baseUrl = 'https://freegeoip.net/json/%s')
     {
