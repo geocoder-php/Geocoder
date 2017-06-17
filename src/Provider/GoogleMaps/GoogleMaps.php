@@ -236,6 +236,13 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocod
                     $result->geometry->bounds->northeast->lat,
                     $result->geometry->bounds->northeast->lng
                 );
+            } elseif (isset($result->geometry->viewport)) {
+                $builder->setBounds(
+                    $result->geometry->viewport->southwest->lat,
+                    $result->geometry->viewport->southwest->lng,
+                    $result->geometry->viewport->northeast->lat,
+                    $result->geometry->viewport->northeast->lng
+                );
             } elseif ('ROOFTOP' === $result->geometry->location_type) {
                 // Fake bounds
                 $builder->setBounds(
