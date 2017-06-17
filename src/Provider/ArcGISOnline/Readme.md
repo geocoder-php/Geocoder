@@ -4,6 +4,7 @@
 [![Latest Stable Version](https://poser.pugx.org/geocoder-php/arcgis-online-provider/v/stable)](https://packagist.org/packages/geocoder-php/arcgis-online-provider)
 [![Total Downloads](https://poser.pugx.org/geocoder-php/arcgis-online-provider/downloads)](https://packagist.org/packages/geocoder-php/arcgis-online-provider)
 [![Monthly Downloads](https://poser.pugx.org/geocoder-php/arcgis-online-provider/d/monthly.png)](https://packagist.org/packages/geocoder-php/arcgis-online-provider)
+[![Quality Score](https://img.shields.io/scrutinizer/g/geocoder-php/arcgis-online-provider.svg?style=flat-square)](https://scrutinizer-ci.com/g/geocoder-php/arcgis-online-provider)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 
 This is the ArcGIS provider from the PHP Geocoder. This is a **READ ONLY** repository. See the
