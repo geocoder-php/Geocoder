@@ -26,7 +26,7 @@ abstract class AbstractProvider
      *
      * @return Location
      */
-    protected function getLocationForLocalhost()
+    protected function getLocationForLocalhost(): Location
     {
         return Address::createFromArray([
             'locality' => 'localhost',

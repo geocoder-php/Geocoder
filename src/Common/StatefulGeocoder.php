@@ -57,7 +57,7 @@ class StatefulGeocoder implements Geocoder, LocaleAwareGeocoder
     /**
      * {@inheritdoc}
      */
-    public function geocode($value): Collection
+    public function geocode(string $value): Collection
     {
         $query = GeocodeQuery::create($value)
             ->withLimit($this->limit);
@@ -93,13 +93,13 @@ class StatefulGeocoder implements Geocoder, LocaleAwareGeocoder
      */
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
-        $data = $query->getLocale();
-        if (empty($data)) {
+        $locale = $query->getLocale();
+        if (empty($locale) && null !== $this->locale) {
             $query = $query->withLocale($this->locale);
         }
 
-        $data = $query->getBounds();
-        if (empty($data)) {
+        $bounds = $query->getBounds();
+        if (empty($bounds) && null !== $this->bounds) {
             $query = $query->withBounds($this->bounds);
         }
 
@@ -111,8 +111,8 @@ class StatefulGeocoder implements Geocoder, LocaleAwareGeocoder
      */
     public function reverseQuery(ReverseQuery $query): Collection
     {
-        $data = $query->getLocale();
-        if (empty($data)) {
+        $locale = $query->getLocale();
+        if (empty($locale) && null !== $this->locale) {
             $query->withLocale($this->locale);
         }
 
@@ -124,7 +124,7 @@ class StatefulGeocoder implements Geocoder, LocaleAwareGeocoder
      *
      * @return StatefulGeocoder
      */
-    public function setLocale($locale)
+    public function setLocale(string $locale): StatefulGeocoder
     {
         $this->locale = $locale;
 
@@ -136,7 +136,7 @@ class StatefulGeocoder implements Geocoder, LocaleAwareGeocoder
      *
      * @return StatefulGeocoder
      */
-    public function setBounds($bounds)
+    public function setBounds(Bounds $bounds): StatefulGeocoder
     {
         $this->bounds = $bounds;
 
@@ -148,7 +148,7 @@ class StatefulGeocoder implements Geocoder, LocaleAwareGeocoder
      *
      * @return StatefulGeocoder
      */
-    public function setLimit($limit)
+    public function setLimit(int $limit): StatefulGeocoder
     {
         $this->limit = $limit;
 

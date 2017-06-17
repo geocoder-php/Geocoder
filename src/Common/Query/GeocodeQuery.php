@@ -34,32 +34,30 @@ final class GeocodeQuery
     private $bounds;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $locale;
 
     /**
      * @var int
      */
-    private $limit;
+    private $limit = Geocoder::DEFAULT_RESULT_LIMIT;
 
     /**
      * @var array
      */
-    private $data;
+    private $data = [];
 
     /**
      * @param string $text
      */
-    private function __construct($text)
+    private function __construct(string $text)
     {
         if (empty($text)) {
             throw new InvalidArgument('Geocode query cannot be empty');
         }
 
         $this->text = $text;
-        $this->data = [];
-        $this->limit = Geocoder::DEFAULT_RESULT_LIMIT;
     }
 
     /**
@@ -67,7 +65,7 @@ final class GeocodeQuery
      *
      * @return GeocodeQuery
      */
-    public static function create($text)
+    public static function create(string $text): GeocodeQuery
     {
         return new self($text);
     }
@@ -77,7 +75,7 @@ final class GeocodeQuery
      *
      * @return GeocodeQuery
      */
-    public function withBounds(Bounds $bounds)
+    public function withBounds(Bounds $bounds): GeocodeQuery
     {
         $new = clone $this;
         $new->bounds = $bounds;
@@ -90,7 +88,7 @@ final class GeocodeQuery
      *
      * @return GeocodeQuery
      */
-    public function withLocale($locale)
+    public function withLocale(string $locale): GeocodeQuery
     {
         $new = clone $this;
         $new->locale = $locale;
@@ -103,7 +101,7 @@ final class GeocodeQuery
      *
      * @return GeocodeQuery
      */
-    public function withLimit($limit)
+    public function withLimit(int $limit): GeocodeQuery
     {
         $new = clone $this;
         $new->limit = $limit;
@@ -117,7 +115,7 @@ final class GeocodeQuery
      *
      * @return GeocodeQuery
      */
-    public function withData($name, $value)
+    public function withData(string $name, $value): GeocodeQuery
     {
         $new = clone $this;
         $new->data[$name] = $value;
@@ -128,7 +126,7 @@ final class GeocodeQuery
     /**
      * @return string
      */
-    public function getText()
+    public function getText(): string
     {
         return $this->text;
     }
@@ -142,7 +140,7 @@ final class GeocodeQuery
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getLocale()
     {
@@ -152,18 +150,18 @@ final class GeocodeQuery
     /**
      * @return int
      */
-    public function getLimit()
+    public function getLimit(): int
     {
         return $this->limit;
     }
 
     /**
-     * @param string $name
-     * @param null   $default
+     * @param string     $name
+     * @param mixed|null $default
      *
      * @return mixed
      */
-    public function getData($name, $default = null)
+    public function getData(string $name, $default = null)
     {
         if (!array_key_exists($name, $this->data)) {
             return $default;
@@ -175,7 +173,7 @@ final class GeocodeQuery
     /**
      * @return array
      */
-    public function getAllData()
+    public function getAllData(): array
     {
         return $this->data;
     }
