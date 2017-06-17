@@ -13,7 +13,6 @@
     ],
     "require": {
         "php": "^7.0",
-        "ext-geoip": "*",
         "willdurand/geocoder": "^4.0",
         "igorw/get-in": "^1.0"
     },
