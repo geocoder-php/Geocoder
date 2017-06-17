@@ -103,7 +103,7 @@ class StatefulGeocoder implements Geocoder, LocaleAwareGeocoder
             $query = $query->withBounds($this->bounds);
         }
 
-        $this->provider->geocodeQuery($query);
+        return $this->provider->geocodeQuery($query);
     }
 
     /**
@@ -116,7 +116,7 @@ class StatefulGeocoder implements Geocoder, LocaleAwareGeocoder
             $query->withLocale($this->locale);
         }
 
-        $this->provider->reverseQuery($query);
+        return $this->provider->reverseQuery($query);
     }
 
     /**

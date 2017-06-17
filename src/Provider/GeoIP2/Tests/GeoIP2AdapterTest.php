@@ -14,11 +14,12 @@ namespace Geocoder\Provider\GeoIP2\Tests;
 
 use Geocoder\Provider\GeoIP2\GeoIP2Adapter;
 use RuntimeException;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author Jens Wiese <jens@howtrueisfalse.de>
  */
-class GeoIP2AdapterTest extends \PHPUnit\Framework\TestCase
+class GeoIP2AdapterTest extends TestCase
 {
     /**
      * @var GeoIP2Adapter

@@ -26,7 +26,7 @@ class TimedGeocoderTest extends TestCase
     private $stopwatch;
 
     /**
-     * @var Provider
+     * @var Provider|\PHPUnit_Framework_MockObject_MockObject
      */
     private $delegate;
 
