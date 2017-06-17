@@ -11,6 +11,7 @@
 namespace Geocoder\Http\Provider\Tests;
 
 use Geocoder\Http\Provider\AbstractHttpProvider;
+use Http\Client\HttpClient;
 use Http\Mock\Client;
 use PHPUnit\Framework\TestCase;
 
@@ -26,7 +27,7 @@ class AbstractHttpProviderTest extends TestCase
 
 class DummyProvider extends AbstractHttpProvider
 {
-    public function getHttpClient()
+    public function getHttpClient(): HttpClient
     {
         return parent::getHttpClient();
     }
