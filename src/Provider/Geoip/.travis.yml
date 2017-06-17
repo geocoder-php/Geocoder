@@ -6,9 +6,9 @@ php: 7.0
 addons:
     apt_packages:
         - libgeoip-dev
-        - php-geoip
 
 install:
+  - pecl install geoip-1.1.1
   - composer update --prefer-stable --prefer-dist
 
 script:

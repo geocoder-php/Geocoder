@@ -23,10 +23,13 @@ matrix:
     include:
         - php: 7.0
           env: deps="low"
+        - php: 7.1
+          env: deps="high"
         - php: 7.0
         - php: 7.1
 
 before_install:
+    - pecl install geoip-1.1.1
     - composer require "geoip/geoip" --no-update
     - |
       # General configuration
