@@ -12,5 +12,5 @@ install:
   - composer update --prefer-stable --prefer-dist
 
 script:
-    - ./vendor/bin/phpunit
+    - composer test
 
