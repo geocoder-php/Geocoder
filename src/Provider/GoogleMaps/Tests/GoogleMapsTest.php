@@ -95,46 +95,14 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertEquals(48.8630462, $result->getCoordinates()->getLatitude(), '', 0.001);
         $this->assertEquals(2.3882487, $result->getCoordinates()->getLongitude(), '', 0.001);
         $this->assertNotNull($result->getBounds());
-        $this->assertEquals(48.8630462, $result->getBounds()->getSouth(), '', 0.001);
+        $this->assertEquals(48.8617, $result->getBounds()->getSouth(), '', 0.001);
         $this->assertEquals(2.3882487, $result->getBounds()->getWest(), '', 0.001);
-        $this->assertEquals(48.8630462, $result->getBounds()->getNorth(), '', 0.001);
-        $this->assertEquals(2.3882487, $result->getBounds()->getEast(), '', 0.001);
+        $this->assertEquals(48.8644, $result->getBounds()->getNorth(), '', 0.001);
+        $this->assertEquals(2.3901, $result->getBounds()->getEast(), '', 0.001);
         $this->assertEquals(10, $result->getStreetNumber());
         $this->assertEquals('Avenue Gambetta', $result->getStreetName());
         $this->assertEquals(75020, $result->getPostalCode());
         $this->assertEquals('Paris', $result->getLocality());
-        $this->assertEquals('Paris', $result->getAdminLevels()->get(2)->getName());
-        $this->assertEquals('Île-de-France', $result->getAdminLevels()->get(1)->getName());
-        $this->assertEquals('France', $result->getCountry()->getName());
-        $this->assertEquals('FR', $result->getCountry()->getCode());
-
-        // not provided
-        $this->assertNull($result->getTimezone());
-    }
-
-    public function testGeocodeWithRealAddressWithSsl()
-    {
-        $provider = new GoogleMaps($this->getHttpClient(), null, null);
-        $results = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
-
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
-        $this->assertCount(1, $results);
-
-        /** @var Location $result */
-        $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(48.8630462, $result->getCoordinates()->getLatitude(), '', 0.001);
-        $this->assertEquals(2.3882487, $result->getCoordinates()->getLongitude(), '', 0.001);
-        $this->assertNotNull($result->getBounds());
-        $this->assertEquals(48.8630462, $result->getBounds()->getSouth(), '', 0.001);
-        $this->assertEquals(2.3882487, $result->getBounds()->getWest(), '', 0.001);
-        $this->assertEquals(48.8630462, $result->getBounds()->getNorth(), '', 0.001);
-        $this->assertEquals(2.3882487, $result->getBounds()->getEast(), '', 0.001);
-        $this->assertEquals(10, $result->getStreetNumber());
-        $this->assertEquals('Avenue Gambetta', $result->getStreetName());
-        $this->assertEquals(75020, $result->getPostalCode());
-        $this->assertEquals('Paris', $result->getLocality());
-        $this->assertCount(2, $result->getAdminLevels());
         $this->assertEquals('Paris', $result->getAdminLevels()->get(2)->getName());
         $this->assertEquals('Île-de-France', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('France', $result->getCountry()->getName());
@@ -340,5 +308,23 @@ class GoogleMapsTest extends BaseTestCase
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals('61', $result->getSubpremise());
+    }
+
+    public function testGeocodeBoundsWithRealAddressWithViewportOnly()
+    {
+        $provider = new GoogleMaps($this->getHttpClient());
+        $results = $provider->geocodeQuery(GeocodeQuery::create('Sibbe, Netherlands'));
+
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertCount(1, $results);
+
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results->first();
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertNotNull($result->getBounds());
+        $this->assertEquals(50.8433, $result->getBounds()->getSouth(), '', 0.001);
+        $this->assertEquals(5.8259, $result->getBounds()->getWest(), '', 0.001);
+        $this->assertEquals(50.8460, $result->getBounds()->getNorth(), '', 0.001);
+        $this->assertEquals(5.8286, $result->getBounds()->getEast(), '', 0.001);
     }
 }
