@@ -27,7 +27,7 @@
         "geocoder-php/provider-implementation": "1.0"
     },
     "autoload": {
-        "psr-4": { "Geocoder\\Provider\\ArcGISOnine\\": "" },
+        "psr-4": { "Geocoder\\Provider\\ArcGISOnline\\": "" },
         "exclude-from-classmap": [
             "/Tests/"
         ]
