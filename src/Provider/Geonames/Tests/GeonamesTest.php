@@ -15,6 +15,7 @@ namespace Geocoder\Provider\Geonames\Tests;
 use Geocoder\Collection;
 use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Location;
+use Geocoder\Provider\Geonames\Model\GeonamesAddress;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\Geonames\Geonames;
@@ -68,6 +69,35 @@ JSON;
     }
 
     public function testGeocodeWithRealPlace()
+    {
+        if (!isset($_SERVER['GEONAMES_USERNAME'])) {
+            $this->markTestSkipped('You need to configure the GEONAMES_USERNAME value in phpunit.xml');
+        }
+
+        $provider = new Geonames($this->getHttpClient($_SERVER['GEONAMES_USERNAME']), $_SERVER['GEONAMES_USERNAME']);
+        $results = $provider->geocodeQuery(GeocodeQuery::create('Harrods, London'));
+
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+
+        /** @var GeonamesAddress $result */
+        $result = $results->first();
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(51.49957, $result->getCoordinates()->getLatitude(), '', 0.01);
+        $this->assertEquals(-0.16359, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertEquals('United Kingdom', $result->getCountry()->getName());
+        $this->assertEquals('GB', $result->getCountry()->getCode());
+        $this->assertEquals('Europe/London', $result->getTimezone());
+
+        $this->assertEquals('MALL', $result->getFcode());
+        $this->assertEquals('spot, building, farm', $result->getFclName());
+        $this->assertEquals('Harrods', $result->getName());
+        $this->assertEquals('Harrods', $result->getAsciiName());
+        $this->assertEquals(0, $result->getPopulation());
+        $this->assertEquals(6944333, $result->getGeonameId());
+        $this->assertCount(10, $result->getAlternateNames());
+    }
+
+    public function testGeocodeWithMultipleRealPlaces()
     {
         if (!isset($_SERVER['GEONAMES_USERNAME'])) {
             $this->markTestSkipped('You need to configure the GEONAMES_USERNAME value in phpunit.xml');
@@ -171,7 +201,7 @@ JSON;
         $this->assertEquals('America/New_York', $result->getTimezone());
     }
 
-    public function testGeocodeWithRealPlaceWithLocale()
+    public function testGeocodeWithMultipleRealPlacesWithLocale()
     {
         if (!isset($_SERVER['GEONAMES_USERNAME'])) {
             $this->markTestSkipped('You need to configure the GEONAMES_USERNAME value in phpunit.xml');
