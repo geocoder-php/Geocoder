@@ -1,4 +1,4 @@
-# Bing Maps Geocoder provider
+# MapQuest Geocoder provider
 [![Build Status](https://travis-ci.org/geocoder-php/mapquest-provider.svg?branch=master)](http://travis-ci.org/geocoder-php/mapquest-provider)
 [![Latest Stable Version](https://poser.pugx.org/geocoder-php/mapquest-provider/v/stable)](https://packagist.org/packages/geocoder-php/mapquest-provider)
 [![Total Downloads](https://poser.pugx.org/geocoder-php/mapquest-provider/downloads)](https://packagist.org/packages/geocoder-php/mapquest-provider)

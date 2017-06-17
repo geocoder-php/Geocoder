@@ -1,4 +1,4 @@
-# Bing Maps Geocoder provider
+# Mapzen Geocoder provider
 [![Build Status](https://travis-ci.org/geocoder-php/mapzen-provider.svg?branch=master)](http://travis-ci.org/geocoder-php/mapzen-provider)
 [![Latest Stable Version](https://poser.pugx.org/geocoder-php/mapzen-provider/v/stable)](https://packagist.org/packages/geocoder-php/mapzen-provider)
 [![Total Downloads](https://poser.pugx.org/geocoder-php/mapzen-provider/downloads)](https://packagist.org/packages/geocoder-php/mapzen-provider)

@@ -1,4 +1,4 @@
-# Bing Maps Geocoder provider
+# GeoIP2 Geocoder provider
 [![Build Status](https://travis-ci.org/geocoder-php/geoip2-provider.svg?branch=master)](http://travis-ci.org/geocoder-php/geoip2-provider)
 [![Latest Stable Version](https://poser.pugx.org/geocoder-php/geoip2-provider/v/stable)](https://packagist.org/packages/geocoder-php/geoip2-provider)
 [![Total Downloads](https://poser.pugx.org/geocoder-php/geoip2-provider/downloads)](https://packagist.org/packages/geocoder-php/geoip2-provider)

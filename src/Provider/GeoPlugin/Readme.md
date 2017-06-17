@@ -1,4 +1,4 @@
-# Bing Maps Geocoder provider
+# GeoPlugin Geocoder provider
 [![Build Status](https://travis-ci.org/geocoder-php/geo-plugin-provider.svg?branch=master)](http://travis-ci.org/geocoder-php/geo-plugin-provider)
 [![Latest Stable Version](https://poser.pugx.org/geocoder-php/geo-plugin-provider/v/stable)](https://packagist.org/packages/geocoder-php/geo-plugin-provider)
 [![Total Downloads](https://poser.pugx.org/geocoder-php/geo-plugin-provider/downloads)](https://packagist.org/packages/geocoder-php/geo-plugin-provider)
