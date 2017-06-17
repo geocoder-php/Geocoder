@@ -15,6 +15,11 @@ This is the TomTom provider from the PHP Geocoder. This is a **READ ONLY** repos
 composer require geocoder-php/tomtom-provider
 ```
 
+### Note
+
+The default language-locale is `en`, you can choose between `de`, `es`, `fr`,
+`it`, `nl`, `pl`, `pt` and `sv`.
+
 ### Contribute
 
 Contributions are very welcome! Send a pull request to the [main repository](https://github.com/geocoder-php/Geocoder) or 

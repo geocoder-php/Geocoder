@@ -15,6 +15,10 @@ This is the Google Maps provider from the PHP Geocoder. This is a **READ ONLY** 
 composer require geocoder-php/google-maps-provider
 ```
 
+### Note
+
+A valid `Client ID` is required for GoogleMaps for Business. The private key is optional. 
+
 ### Contribute
 
 Contributions are very welcome! Send a pull request to the [main repository](https://github.com/geocoder-php/Geocoder) or 

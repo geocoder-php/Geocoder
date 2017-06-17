@@ -2,11 +2,7 @@ Geocoder
 ========
 
 [![Build Status](https://travis-ci.org/geocoder-php/Geocoder.svg?branch=master)](http://travis-ci.org/geocoder-php/Geocoder)
-[![Latest Stable Version](https://poser.pugx.org/willdurand/Geocoder/v/stable.png)](https://packagist.org/packages/willdurand/Geocoder)
-[![Total Downloads](https://poser.pugx.org/willdurand/Geocoder/downloads.png)](https://packagist.org/packages/willdurand/Geocoder)
-[![Monthly Downloads](https://poser.pugx.org/willdurand/Geocoder/d/monthly.png)](https://packagist.org/packages/willdurand/Geocoder)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
-
 
 > **Important:** You are browsing the documentation of Geocoder **4.x** (not
 > released yet).
@@ -25,14 +21,8 @@ providing a powerful abstraction layer for geocoding manipulations.
 * [Installation](#installation)
 * [Cookbook](#cookbook)
 * [Usage](#usage)
-* [Special Geocoders and Providers](#special-geocoders-and-providers) 
-  - [The Chain Provider](#the-chain-provider)
-  - [The ProviderAggregator](#the-provideraggregator)
-  - [TimedGeocoder](#timedgeocoder)
 * [Providers](#providers)
-  - [Address-based Providers](#address-based-providers)
-  - [IP-based Providers](#ip-based-providers)
-  - [Locale Aware Providers](#locale-aware-providers)
+* [Special Geocoders and Providers](#special-geocoders-and-providers) 
 * [Dumpers](#dumpers)
 * [Formatters](#formatters)
 * [Versioning](#versioning)
@@ -43,8 +33,8 @@ Installation
 
 To install a Geocoder there are two things you need to know: 
 
-1) What Geocoder provider you want to use
-2) What HTTP client/adapter you want to use. 
+1) What [Geocoder provider](https://packagist.org/providers/geocoder-php/provider-implementation) you want to use
+2) What [HTTP client/adapter](https://packagist.org/providers/php-http/client-implementation) you want to use. 
 
 ### Geocoder providers
 
@@ -67,7 +57,7 @@ Read more about HTTPlug in [their docs](http://docs.php-http.org/en/latest/httpl
 To install Google Maps geocoder with Guzzle 6 you may run the following command: 
 
 ```
-$ composer require geocoder-php/google-maps-provider php-http/guzzle6-adapter php-http/message
+$ composer require geocoder-php/google-maps-provider:@beta php-http/guzzle6-adapter php-http/message geocoder-php/common-http:@beta willdurand/geocoder:@beta
 ```
 
 Cookbook
@@ -81,23 +71,15 @@ We have a small cookbook where you can find examples on common use cases:
 Usage
 -----
 
-[Geocoder](https://github.com/geocoder-php/Geocoder) and its companion
-[Geocoder Extra](https://github.com/geocoder-php/geocoder-extra) provides a lot
-of [providers](#providers).
-
-Choose the one that fits your need first. Let's say the `GoogleMaps` one is what
-you were looking for, so let's see how to use it. In the code snippet below,
-`curl` has been chosen as [HTTP layer](#http-adapters) but it is up to you
-since each HTTP-based provider implements
-[PSR-7](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-7-http-message.md).
+In the code snippet below we use GoogleMaps and Guzzle6. 
 
 ```php
 $adapter  = new \Http\Adapter\Guzzle6\Client();
 $provider = new \Geocoder\Provider\GoogleMaps($adapter);
 $geocoder = new \Geocoder\StatefulGeocoder($provider, 'en');
 
-$geocoder->geocodeQuery(GeocodeQuery::create(...));
-$geocoder->reverseQuery(ReverseQuery::fromCoordinates(...));
+$result = $geocoder->geocodeQuery(GeocodeQuery::create('Buckingham Palace, London'));
+$result = $geocoder->reverseQuery(ReverseQuery::fromCoordinates(...));
 ```
 
 The `Provider` interface has three methods:
@@ -113,38 +95,36 @@ make migration from 3.x smoother.
 * `geocode($streetOrIpAddress)`
 * `reverse($latitude, $longitude)`
 
-### Location & Collection
 
-Both `geocodeQuery()` and `reverseQuery()` methods return a collection of `Location`
-objects (`Collection`), each providing the following API:
+Providers
+---------
 
-* `getCoordinates()` will return a `Coordinates` object (with `latitude` and
-  `longitude` properties);
-* `getLatitude()` will return the `latitude` value;
-* `getLongitude()` will return the `longitude` value;
-* `getBounds()` will return an `Bounds` object (with `south`, `west`, `north`
-  and `east` properties);
-* `getStreetNumber()` will return the `street number/house number` value;
-* `getStreetName()` will return the `street name` value;
-* `getLocality()` will return the `locality` or `city`;
-* `getPostalCode()` will return the `postalCode` or `zipcode`;
-* `getSubLocality()` will return the `city district`, or `sublocality`;
-* `getAdminLevels()` will return an ordered collection (`AdminLevelCollection`)
-  of `AdminLevel` object (with `level`, `name` and `code` properties);
-* `getCountry()` will return a `Country` object (with `name` and `code`
-  properties);
-* `getCountryCode()` will return the ISO `country` code;
-* `getTimezone()` will return the `timezone`.
+Providers perform the geocoding black magic for you (talking to the APIs, fetching results, dealing with errors, etc.) 
+and are highly configurable.
 
-The `AddressCollection` exposes the following methods:
 
-* `count()` (this class implements `Countable`);
-* `first()` retrieves the first `Address`;
-* `slice($offset, $length = null)` returns `Address` objects between `$offset`
-  and `length`;
-* `get($index)` fetches an `Address` using its `$index`;
-* `all()` returns all `Address` objects;
-* `getIterator()` (this class implements `IteratorAggregate`).
+Provider       | Package | Features | Stats
+:------------- |:------- |:-------- |:-------
+[ArcGIS Online](https://github.com/geocoder-php/arcgis-online-provider) | `geocoder-php/arcgis-online-provider` | address, reverse <br> [Website](https://developers.arcgis.com/en/features/geocoding/) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/arcgis-online-provider/v/stable)](https://packagist.org/packages/geocoder-php/arcgis-online-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/arcgis-online-provider/downloads)](https://packagist.org/packages/geocoder-php/arcgis-online-provider)
+[Bing Maps](https://github.com/geocoder-php/bing-maps-provider) | `geocoder-php/bing-maps-provider` | address, reverse <br> [Website](http://msdn.microsoft.com/en-us/library/ff701713.aspx) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/bing-maps-provider/v/stable)](https://packagist.org/packages/geocoder-php/bing-maps-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/bing-maps-provider/downloads)](https://packagist.org/packages/geocoder-php/bing-maps-provider)
+[Chain](https://github.com/geocoder-php/chain-provider) | `geocoder-php/chain-provider` | Interates over multiple providers | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/chain-provider/v/stable)](https://packagist.org/packages/geocoder-php/chain-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/chain-provider/downloads)](https://packagist.org/packages/geocoder-php/chain-provider)
+[FreeGeoIp](https://github.com/geocoder-php/free-geoip-provider) | `geocoder-php/free-geoip-provider` | IPv4, IPv6 <br> [Website](http://freegeoip.net/) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/free-geoip-provider/v/stable)](https://packagist.org/packages/geocoder-php/free-geoip-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/free-geoip-provider/downloads)](https://packagist.org/packages/geocoder-php/free-geoip-provider)
+[GeoIPs](https://github.com/geocoder-php/geoip-provider) | `geocoder-php/geoip-provider` | IPv4, local <br> [Website](http://www.geoips.com/en/) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/geoip-provider/v/stable)](https://packagist.org/packages/geocoder-php/geoip-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/geoip-provider/downloads)](https://packagist.org/packages/geocoder-php/geoip-provider)
+[GeoIP2](https://github.com/geocoder-php/geoip2-provider) | `geocoder-php/geoip2-provider` | IPv4 <br> [Website](https://www.maxmind.com/en/geoip2-databases) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/geoip2-provider/v/stable)](https://packagist.org/packages/geocoder-php/geoip2-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/geoip2-provider/downloads)](https://packagist.org/packages/geocoder-php/geoip2-provider)
+[GeoIPs](https://github.com/geocoder-php/geoips-provider) | `geocoder-php/geoips-provider` | IPv4 <br>  | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/geoips-provider/v/stable)](https://packagist.org/packages/geocoder-php/geoips-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/geoips-provider/downloads)](https://packagist.org/packages/geocoder-php/geoips-provider)
+[Geonames](https://github.com/geocoder-php/geonames-provider) | `geocoder-php/geonames-provider` | address, reverse <br> [Website](http://www.geonames.org/commercial-webservices.html) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/geonames-provider/v/stable)](https://packagist.org/packages/geocoder-php/geonames-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/geonames-provider/downloads)](https://packagist.org/packages/geocoder-php/geonames-provider)
+[GeoPlugin](https://github.com/geocoder-php/geo-plugin-provider) | `geocoder-php/geo-plugin-provider` | IPv4, IPv6 <br> [Website](http://www.geoplugin.com/) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/geo-plugin-provider/v/stable)](https://packagist.org/packages/geocoder-php/geo-plugin-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/geo-plugin-provider/downloads)](https://packagist.org/packages/geocoder-php/geo-plugin-provider)
+[Google Maps](https://github.com/geocoder-php/google-maps-provider) <br> Google Maps for business | `geocoder-php/google-maps-provider` | address, reverse <br> [Website](https://developers.google.com/maps/documentation/geocoding/) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/google-maps-provider/v/stable)](https://packagist.org/packages/geocoder-php/google-maps-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/google-maps-provider/downloads)](https://packagist.org/packages/geocoder-php/google-maps-provider)
+[HostIp](https://github.com/geocoder-php/host-ip-provider) | `geocoder-php/host-ip-provider` | IPv4 <br> [Website](http://www.hostip.info/use.html) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/host-ip-provider/v/stable)](https://packagist.org/packages/geocoder-php/host-ip-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/host-ip-provider/downloads)](https://packagist.org/packages/geocoder-php/host-ip-provider)
+[IpInfoDB](https://github.com/geocoder-php/ip-info-db-provider) | `geocoder-php/ip-info-db-provider` | IPv4 <br> [Website](http://ipinfodb.com/) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/ip-info-db-provider/v/stable)](https://packagist.org/packages/geocoder-php/ip-info-db-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/ip-info-db-provider/downloads)](https://packagist.org/packages/geocoder-php/ip-info-db-provider)
+[MapQuest](https://github.com/geocoder-php/mapquest-provider) | `geocoder-php/mapquest-provider` | address, reverse <br> [Website](http://developer.mapquest.com/web/products/dev-services/geocoding-ws) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/mapquest-provider/v/stable)](https://packagist.org/packages/geocoder-php/mapquest-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/mapquest-provider/downloads)](https://packagist.org/packages/geocoder-php/mapquest-provider)
+[Mapzen](https://github.com/geocoder-php/mapzen-provider) | `geocoder-php/mapzen-provider` | address, reverse <br> [Website](https://mapzen.com/documentation/search/) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/mapzen-provider/v/stable)](https://packagist.org/packages/geocoder-php/mapzen-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/mapzen-provider/downloads)](https://packagist.org/packages/geocoder-php/mapzen-provider)
+[MaxMind](https://github.com/geocoder-php/maxmind-provider) | `geocoder-php/maxmind-provider` | IPv4, IPv6 <br> [Website](https://www.maxmind.com/) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/maxmind-provider/v/stable)](https://packagist.org/packages/geocoder-php/maxmind-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/maxmind-provider/downloads)](https://packagist.org/packages/geocoder-php/maxmind-provider)
+[MaxMind Binary](https://github.com/geocoder-php/maxmind-binary-provider) | `geocoder-php/maxmind-binary-provider` | IPv4, IPv6 <br> [Website](https://www.maxmind.com/) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/maxmind-binary-provider/v/stable)](https://packagist.org/packages/geocoder-php/maxmind-binary-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/maxmind-binary-provider/downloads)](https://packagist.org/packages/geocoder-php/maxmind-binary-provider)
+[Nominatim](https://github.com/geocoder-php/nominatim-provider) <br> (OpenStreetMap) | `geocoder-php/nominatim-provider` | address, reverse, IPv4 <br> [Website](http://wiki.openstreetmap.org/wiki/Nominatim) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/nominatim-provider/v/stable)](https://packagist.org/packages/geocoder-php/nominatim-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/nominatim-provider/downloads)](https://packagist.org/packages/geocoder-php/nominatim-provider)
+[OpenCage](https://github.com/geocoder-php/open-cage-provider) | `geocoder-php/open-cage-provider` | address, reverse <br> [Website](http://geocoder.opencagedata.com/) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/open-cage-provider/v/stable)](https://packagist.org/packages/geocoder-php/open-cage-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/open-cage-provider/downloads)](https://packagist.org/packages/geocoder-php/open-cage-provider)
+[TomTom](https://github.com/geocoder-php/tomtom-provider) | `geocoder-php/tomtom-provider` | address, reverse <br> [Website](https://geocoder.tomtom.com/app/view/index) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/tomtom-provider/v/stable)](https://packagist.org/packages/geocoder-php/tomtom-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/tomtom-provider/downloads)](https://packagist.org/packages/geocoder-php/tomtom-provider)
+[Yandex](https://github.com/geocoder-php/yandex-provider) | `geocoder-php/yandex-provider` | address, reverse <br> [Website](http://api.yandex.com/maps/) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/yandex-provider/v/stable)](https://packagist.org/packages/geocoder-php/yandex-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/yandex-provider/downloads)](https://packagist.org/packages/geocoder-php/yandex-provider)
 
 Special Geocoders and Providers
 -------------------------------
@@ -170,9 +150,8 @@ $chain = new \Geocoder\Provider\Chain([
 
 $geocoder->registerProvider($chain);
 
-$geocode = $geocoder->geocode('10 rue Gambetta, Paris, France');
-var_export($geocode);
-
+$result = $geocoder->geocodeQuery(GeocodeQuery::create('10 rue Gambetta, Paris, France'));
+var_export($result);
 ```
 
 Everything is ok, enjoy!
@@ -183,54 +162,36 @@ The `ProviderAggregator` is used to register several providers so that you can
 decide which provider to use later on.
 
 ``` php
-<?php
-
+$adapter  = new \Http\Adapter\Guzzle6\Client();
 $geocoder = new \Geocoder\ProviderAggregator();
 
 $geocoder->registerProviders([
-    new \Geocoder\Provider\GoogleMaps(
-        $adapter, $locale, $region, $useSsl
-    ),
-    new \Geocoder\Provider\GoogleMapsBusiness(
-        $adapter, '<CLIENT_ID>', '<PRIVATE_KEY>', $locale, $region, $useSsl
-    ),
-    new \Geocoder\Provider\Yandex(
-        $adapter, $locale, $toponym
-    ),
-    new \Geocoder\Provider\MaxMind(
-        $adapter, '<MAXMIND_API_KEY>', $service, $useSsl
-    ),
-    new \Geocoder\Provider\ArcGISOnline(
-        $adapter, $sourceCountry, $useSsl
-    ),
+    new \Geocoder\Provider\GoogleMaps($adapter),
+    new \Geocoder\Provider\GoogleMapsBusiness($adapter, '<CLIENT_ID>'),
+    new \Geocoder\Provider\Yandex($adapter),
+    new \Geocoder\Provider\MaxMind($adapter, '<MAXMIND_API_KEY>'),
+    new \Geocoder\Provider\ArcGISOnline($adapter),
 ]);
 
-$geocoder->registerProvider(
-    new \Geocoder\Provider\Nominatim(
-        $adapter, 'http://your.nominatim.server', $locale
-    )
-);
+$geocoder->registerProvider(new \Geocoder\Provider\Nominatim($adapter, 'https://your.nominatim.server'));
 
 $geocoder
     ->using('google_maps')
-    ->geocode('...');
+    ->geocodeQuery(GeocodeQuery::create( ... ));
 
 $geocoder
     ->limit(10)
-    ->reverse($lat, $lng);
+    ->reverseQuery(ReverseQuery::fromCoordinates($lat, $lng));
 ```
 
 The `ProviderAggregator`'s API is fluent, meaning you can write:
 
 ``` php
-<?php
-
-$addresses = $geocoder
+$locations = $geocoder
     ->registerProvider(new \My\Provider\Custom($adapter))
     ->using('custom')
     ->limit(10)
-    ->geocode('68.145.37.34')
-    ;
+    ->geocodeQuery(GeocodeQuery::create( ... ));
 ```
 
 The `using()` method allows you to choose the `provider` to use by its name.
@@ -247,12 +208,13 @@ The `TimedGeocoder` class profiles each `geocode` and `reverse` call. So you can
 easily figure out how many time/memory was spent for each geocoder/reverse call.
 
 ```php
-// configure you geocoder object
+// configure your provider
+$provider = // ...
 
 $stopwatch = new \Symfony\Component\Stopwatch\Stopwatch();
-$geocoder = new \Geocoder\TimedGeocoder($geocoder, $stopwatch);
+$geocoder = new \Geocoder\TimedGeocoder($provider, $stopwatch);
 
-$geocoder->geocode('Paris, France');
+$geocoder->geocodeQuery(GeocodeQuery::create('Paris, France'));
 
 // Now you can debug your application
 ```
@@ -261,138 +223,23 @@ We use the [symfony/stopwatch](http://symfony.com/doc/current/components/stopwat
 component under the hood. Which means, if you use the Symfony framework the
 geocoder calls will appear in your timeline section in the Web Profiler.
 
-Providers
----------
+### StatefulGeocoder
 
-Providers perform the geocoding black magic for you (talking to the APIs,
-fetching results, dealing with errors, etc.) and are highly configurable.
-
-#### Address-based Providers
-
-Provider       | Name | Reverse? | SSL? | Coverage | Multiple? | Terms
-:------------- |:---- |:-------- |:---- |:-------- |:--------- |:-----
-[ArcGIS Online](https://developers.arcgis.com/en/features/geocoding/) | `arcgis_online` | yes | supported | worldwide | yes | requires API key. 1250 requests free
-[Bing Maps](http://msdn.microsoft.com/en-us/library/ff701713.aspx) | `bing_maps` | yes | no | worldwide | yes | requires API key. Limit 10,000 requests per month
-Chain | `chain` | | | | | meta provider which iterates over a list of providers
-[Geonames](http://www.geonames.org/commercial-webservices.html) | `geonames` | yes |no | worldwide | yes | requires registration, no free tier
-[Google Maps](https://developers.google.com/maps/documentation/geocoding/) | `google_maps` | yes | supported | worldwide | yes | requires API key. Limit 2500 requests per day
-[Google Maps for Business](https://developers.google.com/maps/documentation/business/) | `google_maps_business` | yes | supported | worldwide | yes | requires API key. Limit 100,000 requests per day
-[MapQuest](http://developer.mapquest.com/web/products/dev-services/geocoding-ws) | `map_quest` | yes | no | worldwide | yes | both open and [commercial service](http://platform.mapquest.com/geocoding/) requires API key
-[Mapzen](https://mapzen.com/documentation/search/) | `mapzen` | yes | supported | worldwide | yes | requires API key; limited to 6 request/sec, 30,000 request/day
-[Nominatim](http://wiki.openstreetmap.org/wiki/Nominatim) | `nominatim` | yes | supported | worldwide | yes | requires a domain name (e.g. local installation)
-[OpenCage](http://geocoder.opencagedata.com/) | `opencage` | yes | supported | worldwide | yes | requires API key. 2500 requests/day free
-[OpenStreetMap](http://wiki.openstreetmap.org/wiki/Nominatim) | `openstreetmap` | yes | no | worldwide | yes | heavy users (>1q/s) get banned
-[TomTom](https://geocoder.tomtom.com/app/view/index) | `tomtom` | yes | required | worldwide | yes | requires API key. First 2500 requests or 30 days free
-[Yandex](http://api.yandex.com/maps/) | `yandex` | yes | no | worldwide | yes
-
-Below, you will find more information for these providers.
-
-##### ArcGISOnline
-
-It is possible to specify a `sourceCountry` to restrict result to this specific
-country thus reducing request time (note that this doesn't work on reverse
-geocoding).
-
-##### GeoIP2
-
-It requires either the [database
-file](http://dev.maxmind.com/geoip/geoip2/geolite2/), or the
-[webservice](http://dev.maxmind.com/geoip/geoip2/web-services/) - represented by
-the GeoIP2 , which is injected to the `GeoIP2Adapter`. The
-[geoip2/geoip2](https://packagist.org/packages/geoip2/geoip2) package must be
-installed.
-
-This provider will only work with the corresponding `GeoIP2Adapter`:
-
-``` php
-<?php
-
-// Maxmind GeoIP2 Provider: e.g. the database reader
-$reader   = new \GeoIp2\Database\Reader('/path/to/database');
-
-$adapter  = new \Geocoder\Adapter\GeoIP2Adapter($reader);
-$geocoder = new \Geocoder\Provider\GeoIP2($adapter);
-
-$address   = $geocoder->geocode('74.200.247.59')->first();
-```
-
-##### GoogleMaps
-
-Locale and/or region can be specified:
+The `StatefulGeocoder` class is great when you want your Geocoder to hold state. Say you want to configure locale, 
+limit or bounds in runtime. The `StatefulGeocoder` will append these values on each query. 
 
 ```php
-$geocoder = new \Geocoder\Provider\GoogleMaps(
-    $httpAdapter,
-    $locale,
-    $region,
-    $useSsl, // true|false
-    $apiKey
-);
-```
+// configure your provider
+$provider = // ...
+$geocoder = new \Geocoder\StatefulGeocoder($provider);
 
-##### GoogleMapsBusiness
+$geocoder->setLocale('en');
+$results = $geocoder->geocodeQuery(GeocodeQuery::create('London'));
+echo $results->first()->getLocality(); // London
 
-A valid `Client ID` is required. The private key is optional. This provider also
-supports SSL, and extends the `GoogleMaps` provider.
-
-##### Mapzen
-
-A valid `API key` is required. This provider also supports SSL.
-
-##### MaxMindBinary
-
-This provider requires a data file, and the
-[geoip/geoip](https://packagist.org/packages/geoip/geoip) package must be
-installed.
-
-It is worth mentioning that this provider has **serious performance issues**,
-and should **not** be used in production. For more information, please read
-[issue #301](https://github.com/geocoder-php/Geocoder/issues/301).
-
-##### Nominatim
-
-Access to a Nominatim server is required. See the [Nominatim Wiki
-Page](http://wiki.openstreetmap.org/wiki/Nominatim) for more information.
-
-##### TomTom
-
-The default language-locale is `en`, you can choose between `de`, `es`, `fr`,
-`it`, `nl`, `pl`, `pt` and `sv`.
-
-##### Yandex
-
-The default language-locale is `ru-RU`, you can choose between `uk-UA`, `be-BY`,
-`en-US`, `en-BR` and `tr-TR`. This provider can also reverse information based
-on coordinates (latitude, longitude). It's possible to precise the toponym to
-get more accurate result for reverse geocoding: `house`, `street`, `metro`,
-`district` and `locality`.
-
-#### IP-based Providers
-
-Provider  | Name | IPv4? | IPv6? | Multiple? | Terms | Notes
-:-------- |:---- |:----- |:----- |:--------- |:----- |:-----
-[FreeGeoIp](http://freegeoip.net/) | `free_geo_ip` | yes | yes | no
-[GeoIPs](http://www.geoips.com/en/) | `geo_ips` | yes | no | no | requires API key
-[GeoIP2](https://www.maxmind.com/en/geoip2-databases) (Maxmind) | `maxmind_geoip2` | yes | yes | no
-[GeoPlugin](http://www.geoplugin.com/) | `geo_plugin` | yes | yes | no
-[HostIp](http://www.hostip.info/use.html) | `host_ip` | yes | no | no
-[IpInfoDB](http://ipinfodb.com/) | `ip_info_db` | yes | no | no | requires API key | city precision
-Geoip | `geoip` | yes | no | no | | wrapper around the [PHP extension](http://php.net/manual/en/book.geoip.php) which must be installed
-[MaxMind](https://www.maxmind.com/) web service | `maxmind` | yes | yes | no | requires Omni API key | City/ISP/Org and Omni services, IPv6 on country level
-MaxMind Binary file | `maxmind_binary` | yes | no | no | needs locally installed database files
-
-**Important:** the [Geocoder
-Extra](https://github.com/geocoder-php/geocoder-extra) library contains even
-more official providers!
-
-#### Locale Aware Providers
-
-Providers that are _locale aware_ expose the following methods:
-
-```php
-$geocoder->setLocale('xyz');
-
-$locale = $geocoder->getLocale();
+$geocoder->setLocale('es');
+$results = $geocoder->geocodeQuery(GeocodeQuery::create('London'));
+echo $results->first()->getLocality(); // Londres
 ```
 
 Dumpers
@@ -405,15 +252,13 @@ standard formats.
 
 The **GPS eXchange** format is designed to share geolocated data like point of
 interests, tracks, ways, but also coordinates. **Geocoder** provides a dumper to
-convert an `Address` object in an GPX compliant format.
+convert a `Location` object in an GPX compliant format.
 
-Assuming we got a `$address` object as seen previously:
+Assuming we got a `$location` object as seen previously:
 
 ``` php
-<?php
-
 $dumper = new \Geocoder\Dumper\Gpx();
-$strGpx = $dumper->dump($address);
+$strGpx = $dumper->dump($location);
 
 echo $strGpx;
 ```
@@ -467,18 +312,16 @@ Formatters
 ----------
 
 A common use case is to print geocoded data. Thanks to the `StringFormatter`
-class, it's simple to format an `Address` object as a string:
+class, it's simple to format a `Location` object as a string:
 
 ``` php
-<?php
-
-// $address is an instance of Address
+// $location is an instance of Location
 $formatter = new \Geocoder\Formatter\StringFormatter();
 
-$formatter->format($address, '%S %n, %z %L');
+$formatter->format($location, '%S %n, %z %L');
 // 'Badenerstrasse 120, 8001 Zuerich'
 
-$formatter->format($address, '<p>%S %n, %z %L</p>');
+$formatter->format($location, '<p>%S %n, %z %L</p>');
 // '<p>Badenerstrasse 120, 8001 Zuerich</p>'
 ```
 
@@ -521,12 +364,14 @@ Major version `2` will reach **end of life on December 2015**.
 
 Version `3.x` is the current major stable version of Geocoder.
 
+### Next version
+
+The next version is 4.0 which is currently in beta. 
+
 Contributing
 ------------
 
-See
-[`CONTRIBUTING`](https://github.com/geocoder-php/Geocoder/blob/master/CONTRIBUTING.md#contributing)
-file.
+See [`CONTRIBUTING`](https://github.com/geocoder-php/Geocoder/blob/master/CONTRIBUTING.md#contributing) file.
 
 
 Unit Tests
@@ -569,6 +414,7 @@ Credits
 -------
 
 * William Durand <william.durand1@gmail.com>
+* Tobias Nyholm <tobias.nyholm@gmail.com>
 * [All contributors](https://github.com/geocoder-php/Geocoder/contributors)
 
 

@@ -41,7 +41,7 @@ class ProviderAggregator implements Geocoder
     /**
      * @param int $limit
      */
-    public function __construct($limit = Geocoder::DEFAULT_RESULT_LIMIT)
+    public function __construct(int $limit = Geocoder::DEFAULT_RESULT_LIMIT)
     {
         $this->limit($limit);
     }
@@ -67,7 +67,7 @@ class ProviderAggregator implements Geocoder
      */
     public function getName(): string
     {
-        return 'ProviderAggregator';
+        return 'provider_aggregator';
     }
 
     /**
@@ -89,9 +89,11 @@ class ProviderAggregator implements Geocoder
     }
 
     /**
-     * {@inheritdoc}
+     * @param $limit
+     *
+     * @return $this
      */
-    public function limit($limit)
+    public function limit(int $limit): self
     {
         $this->limit = $limit;
 
@@ -99,9 +101,9 @@ class ProviderAggregator implements Geocoder
     }
 
     /**
-     * {@inheritdoc}
+     * @return int
      */
-    public function getLimit()
+    public function getLimit(): int
     {
         return $this->limit;
     }
@@ -113,7 +115,7 @@ class ProviderAggregator implements Geocoder
      *
      * @return ProviderAggregator
      */
-    public function registerProvider(Provider $provider)
+    public function registerProvider(Provider $provider): self
     {
         $this->providers[$provider->getName()] = $provider;
 
@@ -127,7 +129,7 @@ class ProviderAggregator implements Geocoder
      *
      * @return ProviderAggregator
      */
-    public function registerProviders(array $providers = [])
+    public function registerProviders(array $providers = []): self
     {
         foreach ($providers as $provider) {
             $this->registerProvider($provider);
@@ -143,7 +145,7 @@ class ProviderAggregator implements Geocoder
      *
      * @return ProviderAggregator
      */
-    public function using($name)
+    public function using(string $name): self
     {
         if (!isset($this->providers[$name])) {
             throw new ProviderNotRegistered($name ?? '');
@@ -159,7 +161,7 @@ class ProviderAggregator implements Geocoder
      *
      * @return Provider[]
      */
-    public function getProviders()
+    public function getProviders(): array
     {
         return $this->providers;
     }
@@ -168,8 +170,10 @@ class ProviderAggregator implements Geocoder
      * Returns the current provider in use.
      *
      * @return Provider
+     *
+     * @throws \RuntimeException
      */
-    protected function getProvider()
+    protected function getProvider(): Provider
     {
         if (null === $this->provider) {
             if (0 === count($this->providers)) {

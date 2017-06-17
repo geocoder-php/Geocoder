@@ -81,14 +81,6 @@ class ProviderAggregatorTest extends TestCase
     /**
      * @expectedException \Geocoder\Exception\ProviderNotRegistered
      */
-    public function testUsingNullShouldThrowAnException()
-    {
-        $this->geocoder->using(null);
-    }
-
-    /**
-     * @expectedException \Geocoder\Exception\ProviderNotRegistered
-     */
     public function testUsingAnEmptyProviderNameShouldThrowAnException()
     {
         $this->geocoder->using('');
@@ -207,7 +199,7 @@ class TestableGeocoder extends ProviderAggregator
 {
     public $countCallGetProvider = 0;
 
-    public function getProvider()
+    public function getProvider(): Provider
     {
         ++$this->countCallGetProvider;
 
