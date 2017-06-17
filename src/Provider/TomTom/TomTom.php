@@ -89,6 +89,7 @@ final class TomTom extends AbstractHttpProvider implements LocaleAwareGeocoder, 
         $locations = [];
         foreach ($json['results'] as $item) {
             $locations[] = Address::createFromArray([
+                'providedBy' => $this->getName(),
                 'latitude' => $item['position']['lat'] ?? null,
                 'longitude' => $item['position']['lon'] ?? null,
                 'streetName' => $item['address']['streetName'] ?? null,
@@ -131,6 +132,7 @@ final class TomTom extends AbstractHttpProvider implements LocaleAwareGeocoder, 
         foreach ($results as $item) {
             list($lat, $lon) = explode(',', $item['position']);
             $locations[] = Address::createFromArray([
+                'providedBy' => $this->getName(),
                 'latitude' => $lat,
                 'longitude' => $lon,
                 'streetName' => $item['address']['streetName'] ?? null,

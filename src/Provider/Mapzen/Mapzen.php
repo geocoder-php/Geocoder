@@ -153,6 +153,7 @@ final class Mapzen extends AbstractHttpProvider implements Provider
             }
 
             $results[] = Address::createFromArray([
+                'providedBy' => $this->getName(),
                 'latitude' => $location['geometry']['coordinates'][1],
                 'longitude' => $location['geometry']['coordinates'][0],
                 'bounds' => $bounds,
