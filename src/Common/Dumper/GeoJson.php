@@ -17,47 +17,13 @@ use Geocoder\Location;
 /**
  * @author Jan Sorgalla <jsorgalla@googlemail.com>
  */
-class GeoJson implements Dumper
+final class GeoJson extends AbstractArrayDumper
 {
     /**
      * {@inheritdoc}
      */
     public function dump(Location $location): string
     {
-        $properties = array_filter($location->toArray(), function ($value) {
-            return !empty($value);
-        });
-
-        unset(
-            $properties['latitude'],
-            $properties['longitude'],
-            $properties['bounds']
-        );
-
-        if (0 === count($properties)) {
-            $properties = null;
-        }
-
-        $lat = 0;
-        $lon = 0;
-        if (null !== $coordinates = $location->getCoordinates()) {
-            $lat = $coordinates->getLatitude();
-            $lon = $coordinates->getLongitude();
-        }
-
-        $json = [
-            'type' => 'Feature',
-            'geometry' => [
-                'type' => 'Point',
-                'coordinates' => [$lon, $lat],
-            ],
-            'properties' => $properties,
-        ];
-
-        if (null !== $bounds = $location->getBounds()) {
-            $json['bounds'] = $bounds->toArray();
-        }
-
-        return json_encode($json);
+        return json_encode($this->getArray($location));
     }
 }
