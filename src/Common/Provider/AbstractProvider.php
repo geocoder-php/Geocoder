@@ -12,7 +12,6 @@ declare(strict_types=1);
 
 namespace Geocoder\Provider;
 
-use Geocoder\Geocoder;
 use Geocoder\Location;
 use Geocoder\Model\Address;
 
