@@ -14,7 +14,7 @@ namespace Geocoder\Model;
 
 use Geocoder\Collection;
 use Geocoder\Exception\CollectionIsEmpty;
-use Geocoder\Exception\OutOfBoundsException;
+use Geocoder\Exception\OutOfBounds;
 use Geocoder\Location;
 
 class AddressCollection implements Collection
@@ -90,7 +90,7 @@ class AddressCollection implements Collection
     public function get(int $index): Location
     {
         if (!isset($this->locations[$index])) {
-            throw new OutOfBoundsException(sprintf('The index "%s" does not exist in this collection.', $index));
+            throw new OutOfBounds(sprintf('The index "%s" does not exist in this collection.', $index));
         }
 
         return $this->locations[$index];
