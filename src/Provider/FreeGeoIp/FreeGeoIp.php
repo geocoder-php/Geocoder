@@ -20,36 +20,28 @@ use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Provider\IpAddressGeocoder;
-use Geocoder\Provider\LocaleAwareGeocoder;
 use Geocoder\Provider\Provider;
-use Psr\Http\Message\RequestInterface;
 use Http\Client\HttpClient;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-final class FreeGeoIp extends AbstractHttpProvider implements Provider, IpAddressGeocoder, LocaleAwareGeocoder
+final class FreeGeoIp extends AbstractHttpProvider implements Provider, IpAddressGeocoder
 {
     /**
      * @var string
      */
-    const ENDPOINT_URL = 'https://freegeoip.net/json/%s';
+    private $baseUrl;
 
     /**
-     * @var string|null
+     * @param HttpClient $client
+     * @param string     $baseUrl
      */
-    private $locale;
-
-    /**
-     * {@inheritdoc}
-     *
-     * @param string|null $locale
-     */
-    public function __construct(HttpClient $client, $locale = null)
+    public function __construct(HttpClient $client, string $baseUrl = 'https://freegeoip.net/json/%s')
     {
         parent::__construct($client);
 
-        $this->locale = $locale;
+        $this->baseUrl = $baseUrl;
     }
 
     /**
@@ -66,7 +58,7 @@ final class FreeGeoIp extends AbstractHttpProvider implements Provider, IpAddres
             return new AddressCollection([$this->getLocationForLocalhost()]);
         }
 
-        $content = $this->getUrlContents(sprintf(self::ENDPOINT_URL, $address));
+        $content = $this->getUrlContents(sprintf($this->baseUrl, $address));
         $data = json_decode($content, true);
         $builder = new AddressBuilder($this->getName());
 
@@ -100,21 +92,5 @@ final class FreeGeoIp extends AbstractHttpProvider implements Provider, IpAddres
     public function getName(): string
     {
         return 'free_geo_ip';
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @throws \InvalidArgumentException
-     */
-    protected function getRequest(string $url): RequestInterface
-    {
-        $request = parent::getRequest($url);
-
-        if ($this->locale !== null) {
-            $request = $request->withHeader('Accept-Language', $this->locale);
-        }
-
-        return $request;
     }
 }
