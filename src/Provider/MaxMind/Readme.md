@@ -3,6 +3,7 @@
 [![Latest Stable Version](https://poser.pugx.org/geocoder-php/maxmind-provider/v/stable)](https://packagist.org/packages/geocoder-php/maxmind-provider)
 [![Total Downloads](https://poser.pugx.org/geocoder-php/maxmind-provider/downloads)](https://packagist.org/packages/geocoder-php/maxmind-provider)
 [![Monthly Downloads](https://poser.pugx.org/geocoder-php/maxmind-provider/d/monthly.png)](https://packagist.org/packages/geocoder-php/maxmind-provider)
+[![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/geocoder-php/maxmind-provider.svg?style=flat-square)](https://scrutinizer-ci.com/g/geocoder-php/maxmind-provider)
 [![Quality Score](https://img.shields.io/scrutinizer/g/geocoder-php/maxmind-provider.svg?style=flat-square)](https://scrutinizer-ci.com/g/geocoder-php/maxmind-provider)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 
