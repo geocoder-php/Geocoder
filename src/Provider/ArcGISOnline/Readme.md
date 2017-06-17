@@ -16,6 +16,13 @@ This is the ArcGIS provider from the PHP Geocoder. This is a **READ ONLY** repos
 composer require geocoder-php/arcgis-online-provider
 ```
 
+### Note
+
+It is possible to specify a `sourceCountry` to restrict result to this specific
+country thus reducing request time (note that this doesn't work on reverse
+geocoding).
+
+
 ### Contribute
 
 Contributions are very welcome! Send a pull request to the [main repository](https://github.com/geocoder-php/Geocoder) or 

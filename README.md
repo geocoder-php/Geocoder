@@ -138,117 +138,6 @@ Provider       | Package | Features | Website
 [TomTom](https://github.com/geocoder-php/tomtom-provider) | `geocoder-php/tomtom-provider` | address, reverse <br> [Website](https://geocoder.tomtom.com/app/view/index) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/tomtom-provider/v/stable)](https://packagist.org/packages/geocoder-php/tomtom-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/tomtom-provider/downloads)](https://packagist.org/packages/geocoder-php/tomtom-provider)
 [Yandex](https://github.com/geocoder-php/yandex-provider) | `geocoder-php/yandex-provider` | address, reverse <br> [Website](http://api.yandex.com/maps/) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/yandex-provider/v/stable)](https://packagist.org/packages/geocoder-php/yandex-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/yandex-provider/downloads)](https://packagist.org/packages/geocoder-php/yandex-provider)
 
-
-##### ArcGISOnline
-
-It is possible to specify a `sourceCountry` to restrict result to this specific
-country thus reducing request time (note that this doesn't work on reverse
-geocoding).
-
-##### GeoIP2
-
-It requires either the [database
-file](http://dev.maxmind.com/geoip/geoip2/geolite2/), or the
-[webservice](http://dev.maxmind.com/geoip/geoip2/web-services/) - represented by
-the GeoIP2 , which is injected to the `GeoIP2Adapter`. The
-[geoip2/geoip2](https://packagist.org/packages/geoip2/geoip2) package must be
-installed.
-
-This provider will only work with the corresponding `GeoIP2Adapter`:
-
-``` php
-<?php
-
-// Maxmind GeoIP2 Provider: e.g. the database reader
-$reader   = new \GeoIp2\Database\Reader('/path/to/database');
-
-$adapter  = new \Geocoder\Adapter\GeoIP2Adapter($reader);
-$geocoder = new \Geocoder\Provider\GeoIP2($adapter);
-
-$address   = $geocoder->geocode('74.200.247.59')->first();
-```
-
-##### GoogleMaps
-
-Locale and/or region can be specified:
-
-```php
-$geocoder = new \Geocoder\Provider\GoogleMaps(
-    $httpAdapter,
-    $locale,
-    $region,
-    $useSsl, // true|false
-    $apiKey
-);
-```
-
-##### GoogleMapsBusiness
-
-A valid `Client ID` is required. The private key is optional. This provider also
-supports SSL, and extends the `GoogleMaps` provider.
-
-##### Mapzen
-
-A valid `API key` is required. This provider also supports SSL.
-
-##### MaxMindBinary
-
-This provider requires a data file, and the
-[geoip/geoip](https://packagist.org/packages/geoip/geoip) package must be
-installed.
-
-It is worth mentioning that this provider has **serious performance issues**,
-and should **not** be used in production. For more information, please read
-[issue #301](https://github.com/geocoder-php/Geocoder/issues/301).
-
-##### Nominatim
-
-Access to a Nominatim server is required. See the [Nominatim Wiki
-Page](http://wiki.openstreetmap.org/wiki/Nominatim) for more information.
-
-##### TomTom
-
-The default language-locale is `en`, you can choose between `de`, `es`, `fr`,
-`it`, `nl`, `pl`, `pt` and `sv`.
-
-##### Yandex
-
-The default language-locale is `ru-RU`, you can choose between `uk-UA`, `be-BY`,
-`en-US`, `en-BR` and `tr-TR`. This provider can also reverse information based
-on coordinates (latitude, longitude). It's possible to precise the toponym to
-get more accurate result for reverse geocoding: `house`, `street`, `metro`,
-`district` and `locality`.
-
-#### IP-based Providers
-
-Provider  | Name | IPv4? | IPv6? | Multiple? | Terms | Notes
-:-------- |:---- |:----- |:----- |:--------- |:----- |:-----
-[FreeGeoIp](http://freegeoip.net/) | `free_geo_ip` | yes | yes | no
-[GeoIPs](http://www.geoips.com/en/) | `geo_ips` | yes | no | no | requires API key
-[GeoIP2](https://www.maxmind.com/en/geoip2-databases) (Maxmind) | `maxmind_geoip2` | yes | yes | no
-[GeoPlugin](http://www.geoplugin.com/) | `geo_plugin` | yes | yes | no
-[HostIp](http://www.hostip.info/use.html) | `host_ip` | yes | no | no
-[IpInfoDB](http://ipinfodb.com/) | `ip_info_db` | yes | no | no | requires API key | city precision
-Geoip | `geoip` | yes | no | no | | wrapper around the [PHP extension](http://php.net/manual/en/book.geoip.php) which must be installed
-[MaxMind](https://www.maxmind.com/) web service | `maxmind` | yes | yes | no | requires Omni API key | City/ISP/Org and Omni services, IPv6 on country level
-MaxMind Binary file | `maxmind_binary` | yes | no | no | needs locally installed database files
-
-**Important:** the [Geocoder
-Extra](https://github.com/geocoder-php/geocoder-extra) library contains even
-more official providers!
-
-#### Locale Aware Providers
-
-Providers that are _locale aware_ expose the following methods:
-
-```php
-$geocoder->setLocale('xyz');
-
-$locale = $geocoder->getLocale();
-```
-
-
-
 Special Geocoders and Providers
 -------------------------------
 
@@ -273,9 +162,8 @@ $chain = new \Geocoder\Provider\Chain([
 
 $geocoder->registerProvider($chain);
 
-$geocode = $geocoder->geocode('10 rue Gambetta, Paris, France');
-var_export($geocode);
-
+$result = $geocoder->geocodeQuery(GeocodeQuery::create('10 rue Gambetta, Paris, France'));
+var_export($result);
 ```
 
 Everything is ok, enjoy!
@@ -286,54 +174,38 @@ The `ProviderAggregator` is used to register several providers so that you can
 decide which provider to use later on.
 
 ``` php
-<?php
-
+$adapter  = new \Http\Adapter\Guzzle6\Client();
 $geocoder = new \Geocoder\ProviderAggregator();
 
 $geocoder->registerProviders([
-    new \Geocoder\Provider\GoogleMaps(
-        $adapter, $locale, $region, $useSsl
-    ),
-    new \Geocoder\Provider\GoogleMapsBusiness(
-        $adapter, '<CLIENT_ID>', '<PRIVATE_KEY>', $locale, $region, $useSsl
-    ),
-    new \Geocoder\Provider\Yandex(
-        $adapter, $locale, $toponym
-    ),
-    new \Geocoder\Provider\MaxMind(
-        $adapter, '<MAXMIND_API_KEY>', $service, $useSsl
-    ),
-    new \Geocoder\Provider\ArcGISOnline(
-        $adapter, $sourceCountry, $useSsl
-    ),
+    new \Geocoder\Provider\GoogleMaps($adapter),
+    new \Geocoder\Provider\GoogleMapsBusiness($adapter, '<CLIENT_ID>'),
+    new \Geocoder\Provider\Yandex($adapter),
+    new \Geocoder\Provider\MaxMind($adapter, '<MAXMIND_API_KEY>'),
+    new \Geocoder\Provider\ArcGISOnline($adapter),
 ]);
 
 $geocoder->registerProvider(
-    new \Geocoder\Provider\Nominatim(
-        $adapter, 'http://your.nominatim.server', $locale
-    )
-);
+    new \Geocoder\Provider\Nominatim($adapter, 'https://your.nominatim.server')
+;
 
 $geocoder
     ->using('google_maps')
-    ->geocode('...');
+    ->geocodeQuery(GeocodeQuery::create( ... ));
 
 $geocoder
     ->limit(10)
-    ->reverse($lat, $lng);
+    ->reverseQuery(ReverseQuery::fromCoordinates($lat, $lng));
 ```
 
 The `ProviderAggregator`'s API is fluent, meaning you can write:
 
 ``` php
-<?php
-
 $addresses = $geocoder
     ->registerProvider(new \My\Provider\Custom($adapter))
     ->using('custom')
     ->limit(10)
-    ->geocode('68.145.37.34')
-    ;
+    ->geocodeQuery(GeocodeQuery::create( ... ));
 ```
 
 The `using()` method allows you to choose the `provider` to use by its name.
@@ -379,8 +251,6 @@ convert an `Address` object in an GPX compliant format.
 Assuming we got a `$address` object as seen previously:
 
 ``` php
-<?php
-
 $dumper = new \Geocoder\Dumper\Gpx();
 $strGpx = $dumper->dump($address);
 
@@ -439,8 +309,6 @@ A common use case is to print geocoded data. Thanks to the `StringFormatter`
 class, it's simple to format an `Address` object as a string:
 
 ``` php
-<?php
-
 // $address is an instance of Address
 $formatter = new \Geocoder\Formatter\StringFormatter();
 

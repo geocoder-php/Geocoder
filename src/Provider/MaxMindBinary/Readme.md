@@ -15,6 +15,10 @@ This is the MaxMind Binary provider from the PHP Geocoder. This is a **READ ONLY
 composer require geocoder-php/maxmind-binary-provider
 ```
 
+### Note
+
+This provider requires a data file.
+
 ### Contribute
 
 Contributions are very welcome! Send a pull request to the [main repository](https://github.com/geocoder-php/Geocoder) or 
