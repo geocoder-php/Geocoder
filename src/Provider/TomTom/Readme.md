@@ -3,6 +3,7 @@
 [![Latest Stable Version](https://poser.pugx.org/geocoder-php/tomtom-provider/v/stable)](https://packagist.org/packages/geocoder-php/tomtom-provider)
 [![Total Downloads](https://poser.pugx.org/geocoder-php/tomtom-provider/downloads)](https://packagist.org/packages/geocoder-php/tomtom-provider)
 [![Monthly Downloads](https://poser.pugx.org/geocoder-php/tomtom-provider/d/monthly.png)](https://packagist.org/packages/geocoder-php/tomtom-provider)
+[![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/geocoder-php/tomtom-provider.svg?style=flat-square)](https://scrutinizer-ci.com/g/geocoder-php/tomtom-provider)
 [![Quality Score](https://img.shields.io/scrutinizer/g/geocoder-php/tomtom-provider.svg?style=flat-square)](https://scrutinizer-ci.com/g/geocoder-php/tomtom-provider)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 

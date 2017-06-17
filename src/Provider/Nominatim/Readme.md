@@ -3,6 +3,7 @@
 [![Latest Stable Version](https://poser.pugx.org/geocoder-php/nominatim-provider/v/stable)](https://packagist.org/packages/geocoder-php/nominatim-provider)
 [![Total Downloads](https://poser.pugx.org/geocoder-php/nominatim-provider/downloads)](https://packagist.org/packages/geocoder-php/nominatim-provider)
 [![Monthly Downloads](https://poser.pugx.org/geocoder-php/nominatim-provider/d/monthly.png)](https://packagist.org/packages/geocoder-php/nominatim-provider)
+[![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/geocoder-php/nominatim-provider.svg?style=flat-square)](https://scrutinizer-ci.com/g/geocoder-php/nominatim-provider)
 [![Quality Score](https://img.shields.io/scrutinizer/g/geocoder-php/nominatim-provider.svg?style=flat-square)](https://scrutinizer-ci.com/g/geocoder-php/nominatim-provider)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 
