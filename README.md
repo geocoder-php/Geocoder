@@ -208,13 +208,13 @@ The `TimedGeocoder` class profiles each `geocode` and `reverse` call. So you can
 easily figure out how many time/memory was spent for each geocoder/reverse call.
 
 ```php
-// configure you geocoder object
-$geocoder = // ...
+// configure your provider
+$provider = // ...
 
 $stopwatch = new \Symfony\Component\Stopwatch\Stopwatch();
-$timedGeocoder = new \Geocoder\TimedGeocoder($geocoder, $stopwatch);
+$geocoder = new \Geocoder\TimedGeocoder($provider, $stopwatch);
 
-$timedGeocoder->geocodeQuery(GeocodeQuery::create('Paris, France'));
+$geocoder->geocodeQuery(GeocodeQuery::create('Paris, France'));
 
 // Now you can debug your application
 ```
@@ -222,6 +222,25 @@ $timedGeocoder->geocodeQuery(GeocodeQuery::create('Paris, France'));
 We use the [symfony/stopwatch](http://symfony.com/doc/current/components/stopwatch.html)
 component under the hood. Which means, if you use the Symfony framework the
 geocoder calls will appear in your timeline section in the Web Profiler.
+
+### StatefulGeocoder
+
+The `StatefulGeocoder` class is great when you want your Geocoder to hold state. Say you want to configure locale, 
+limit or bounds in runtime. The `StatefulGeocoder` will append these values on each query. 
+
+```php
+// configure your provider
+$provider = // ...
+$geocoder = new \Geocoder\StatefulGeocoder($provider);
+
+$geocoder->setLocale('en');
+$results = $geocoder->geocodeQuery(GeocodeQuery::create('London'));
+echo $results->first()->getLocality(); // London
+
+$geocoder->setLocale('es');
+$results = $geocoder->geocodeQuery(GeocodeQuery::create('London'));
+echo $results->first()->getLocality(); // Londres
+```
 
 Dumpers
 -------
