@@ -80,6 +80,13 @@ final class AddressBuilder
     private $timezone;
 
     /**
+     * A storage for extra parameters.
+     *
+     * @var array
+     */
+    private $data = [];
+
+    /**
      * @param string $providedBy
      */
     public function __construct(string $providedBy)
@@ -277,34 +284,38 @@ final class AddressBuilder
     }
 
     /**
-     * @param $name
-     * @param $value
+     * @param string $name
+     * @param mixed  $value
      *
      * @return $this
      */
-    public function setValue($name, $value)
+    public function setValue(string $name, $value)
     {
-        $this->$name = $value;
+        $this->data[$name] = $value;
 
         return $this;
     }
 
     /**
-     * @param $name
-     * @param null $default
+     * @param string     $name
+     * @param mixed|null $default
      */
-    public function getValue($name, $default = null)
+    public function getValue(string $name, $default = null)
     {
-        return $this->$name ?? $default;
+        if ($this->hasValue($name)) {
+            return $this->data[$name];
+        }
+
+        return $default;
     }
 
     /**
-     * @param $name
+     * @param string $name
      *
      * @return bool
      */
-    public function hasValue($name)
+    public function hasValue(string $name): bool
     {
-        return property_exists($this, $name);
+        return array_key_exists($name, $this->data);
     }
 }
