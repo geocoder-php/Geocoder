@@ -280,7 +280,7 @@ class Address implements Location
             return null;
         }
 
-        return new Coordinates((float) $latitude, (float) $longitude);
+        return new Coordinates($latitude, $longitude);
     }
 
     /**
@@ -296,7 +296,7 @@ class Address implements Location
             return null;
         }
 
-        return new Bounds((float) $south, (float) $west, (float) $north, (float) $east);
+        return new Bounds($south, $west, $north, $east);
     }
 
     /**
