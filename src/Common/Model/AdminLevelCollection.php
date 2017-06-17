@@ -81,7 +81,7 @@ final class AdminLevelCollection implements \IteratorAggregate, \Countable
     }
 
     /**
-     * @param int $offset
+     * @param int      $offset
      * @param int|null $length
      *
      * @return AdminLevel[]
