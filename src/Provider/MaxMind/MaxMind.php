@@ -60,7 +60,7 @@ final class MaxMind extends AbstractHttpProvider implements Provider, IpAddressG
      * @param string     $apiKey  an API key
      * @param string     $service the specific Maxmind service to use (optional)
      */
-    public function __construct(HttpClient $client, $apiKey, $service = self::CITY_EXTENDED_SERVICE)
+    public function __construct(HttpClient $client, string $apiKey, string $service = self::CITY_EXTENDED_SERVICE)
     {
         parent::__construct($client);
 
@@ -112,7 +112,7 @@ final class MaxMind extends AbstractHttpProvider implements Provider, IpAddressG
      *
      * @return Collection
      */
-    private function executeQuery($url)
+    private function executeQuery(string $url): AddressCollection
     {
         $fields = $this->fieldsForService($this->service);
         $content = $this->getUrlContents($url);
@@ -144,7 +144,7 @@ final class MaxMind extends AbstractHttpProvider implements Provider, IpAddressG
         return new AddressCollection([Address::createFromArray($data)]);
     }
 
-    private function countryCodeToCountryName($code)
+    private function countryCodeToCountryName(string $code): string
     {
         $countryNames = $this->getCountryNames();
 
@@ -177,7 +177,7 @@ final class MaxMind extends AbstractHttpProvider implements Provider, IpAddressG
      *
      * @return string[]
      */
-    private function fieldsForService($service)
+    private function fieldsForService(string $service): array
     {
         switch ($service) {
             case self::CITY_EXTENDED_SERVICE:
@@ -228,7 +228,7 @@ final class MaxMind extends AbstractHttpProvider implements Provider, IpAddressG
     /**
      * @return array
      */
-    private function getCountryNames()
+    private function getCountryNames(): array
     {
         return [
             'A1' => 'Anonymous Proxy',

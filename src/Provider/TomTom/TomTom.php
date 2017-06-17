@@ -48,7 +48,7 @@ final class TomTom extends AbstractHttpProvider implements LocaleAwareGeocoder, 
      * @param HttpClient $client an HTTP adapter
      * @param string     $apiKey an API key
      */
-    public function __construct(HttpClient $client, $apiKey)
+    public function __construct(HttpClient $client, string $apiKey)
     {
         parent::__construct($client);
 

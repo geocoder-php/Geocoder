@@ -50,7 +50,7 @@ final class Geonames extends AbstractHttpProvider implements LocaleAwareGeocoder
      * @param HttpClient $client   An HTTP adapter
      * @param string     $username Username login (Free registration at http://www.geonames.org/login)
      */
-    public function __construct(HttpClient $client, $username)
+    public function __construct(HttpClient $client, string $username)
     {
         parent::__construct($client);
 
@@ -104,9 +104,11 @@ final class Geonames extends AbstractHttpProvider implements LocaleAwareGeocoder
 
     /**
      * @param string $url
-     * @param string $locale
+     * @param string|null $locale
+     *
+     * @return AddressCollection
      */
-    private function executeQuery($url, $locale)
+    private function executeQuery(string $url, string $locale = null): AddressCollection
     {
         if (null !== $locale) {
             // Locale code transformation: for example from it_IT to it

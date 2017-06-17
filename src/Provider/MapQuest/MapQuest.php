@@ -66,7 +66,7 @@ final class MapQuest extends AbstractHttpProvider implements Provider
      * @param string     $apiKey   an API key
      * @param bool       $licensed true to use MapQuest's licensed endpoints, default is false to use the open endpoints (optional)
      */
-    public function __construct(HttpClient $client, $apiKey, $licensed = false)
+    public function __construct(HttpClient $client, string $apiKey, bool $licensed = false)
     {
         parent::__construct($client);
 
@@ -129,8 +129,10 @@ final class MapQuest extends AbstractHttpProvider implements Provider
 
     /**
      * @param string $url
+     *
+     * @return AddressCollection
      */
-    private function executeQuery($url)
+    private function executeQuery(string $url): AddressCollection
     {
         $content = $this->getUrlContents($url);
         $json = json_decode($content, true);

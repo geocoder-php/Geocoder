@@ -63,7 +63,7 @@ final class GeoIPs extends AbstractHttpProvider implements Provider, IpAddressGe
      * @param HttpClient $client An HTTP adapter
      * @param string     $apiKey An API key
      */
-    public function __construct(HttpClient $client, $apiKey)
+    public function __construct(HttpClient $client, string $apiKey)
     {
         parent::__construct($client);
 
@@ -115,8 +115,10 @@ final class GeoIPs extends AbstractHttpProvider implements Provider, IpAddressGe
 
     /**
      * @param string $url
+     *
+     * @return AddressCollection
      */
-    private function executeQuery($url)
+    private function executeQuery(string $url): AddressCollection
     {
         $content = $this->getUrlContents($url);
         $json = json_decode($content, true);
