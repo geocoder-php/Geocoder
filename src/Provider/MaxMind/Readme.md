@@ -1,4 +1,4 @@
-# Bing Maps Geocoder provider
+# MaxMind Geocoder provider
 [![Build Status](https://travis-ci.org/geocoder-php/maxmind-provider.svg?branch=master)](http://travis-ci.org/geocoder-php/maxmind-provider)
 [![Latest Stable Version](https://poser.pugx.org/geocoder-php/maxmind-provider/v/stable)](https://packagist.org/packages/geocoder-php/maxmind-provider)
 [![Total Downloads](https://poser.pugx.org/geocoder-php/maxmind-provider/downloads)](https://packagist.org/packages/geocoder-php/maxmind-provider)

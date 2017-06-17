@@ -1,4 +1,4 @@
-# Bing Maps Geocoder provider
+# Nominatim Geocoder provider
 [![Build Status](https://travis-ci.org/geocoder-php/nominatim-provider.svg?branch=master)](http://travis-ci.org/geocoder-php/nominatim-provider)
 [![Latest Stable Version](https://poser.pugx.org/geocoder-php/nominatim-provider/v/stable)](https://packagist.org/packages/geocoder-php/nominatim-provider)
 [![Total Downloads](https://poser.pugx.org/geocoder-php/nominatim-provider/downloads)](https://packagist.org/packages/geocoder-php/nominatim-provider)

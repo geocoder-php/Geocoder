@@ -1,4 +1,4 @@
-# Bing Maps Geocoder provider
+# OpenCage Geocoder provider
 [![Build Status](https://travis-ci.org/geocoder-php/open-cage-provider.svg?branch=master)](http://travis-ci.org/geocoder-php/open-cage-provider)
 [![Latest Stable Version](https://poser.pugx.org/geocoder-php/open-cage-provider/v/stable)](https://packagist.org/packages/geocoder-php/open-cage-provider)
 [![Total Downloads](https://poser.pugx.org/geocoder-php/open-cage-provider/downloads)](https://packagist.org/packages/geocoder-php/open-cage-provider)
