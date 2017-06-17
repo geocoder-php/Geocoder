@@ -3,6 +3,7 @@
 [![Latest Stable Version](https://poser.pugx.org/willdurand/geocoder/v/stable)](https://packagist.org/packages/willdurand/geocoder)
 [![Total Downloads](https://poser.pugx.org/willdurand/geocoder/downloads)](https://packagist.org/packages/willdurand/geocoder)
 [![Monthly Downloads](https://poser.pugx.org/willdurand/geocoder/d/monthly.png)](https://packagist.org/packages/willdurand/geocoder)
+[![Quality Score](https://img.shields.io/scrutinizer/g/geocoder-php/php-common.svg?style=flat-square)](https://scrutinizer-ci.com/g/geocoder-php/php-common)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 
 ### Note
