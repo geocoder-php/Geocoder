@@ -29,6 +29,9 @@
             "/Tests/"
         ]
     },
+    "scripts": {
+        "test": "vendor/bin/phpunit"
+    },
     "minimum-stability": "dev",
     "extra": {
         "branch-alias": {
