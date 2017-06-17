@@ -47,6 +47,11 @@ final class Bounds
      */
     public function __construct($south, $west, $north, $east)
     {
+        Assert::notNull($south);
+        Assert::notNull($west);
+        Assert::notNull($north);
+        Assert::notNull($east);
+
         $south = (float) $south;
         $north = (float) $north;
         $west = (float) $west;
