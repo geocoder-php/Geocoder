@@ -48,7 +48,8 @@ class DummyProvider extends AbstractHttpProvider
         return new AddressCollection([]);
     }
 
-    public function getName(): string{
+    public function getName(): string
+    {
         return 'dummy';
     }
 }
