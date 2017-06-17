@@ -79,19 +79,20 @@ GPX;
     {
         $name = [];
         $array = $address->toArray();
-        $attrs = [
-            ['streetNumber'],
-            ['streetName'],
-            ['postalCode'],
-            ['locality'],
-            ['adminLevels', 2, 'name'],
-            ['adminLevels', 1, 'name'],
-            ['country'],
-        ];
 
-        foreach ($attrs as $attr) {
-            $name[] = \igorw\get_in($array, $attr);
+        foreach (['streetNumber', 'streetName', 'postalCode', 'locality'] as $attr) {
+            $name[] = $array[$attr];
         }
+
+        if (isset($array['adminLevels'][2])) {
+            $name[] = $array['adminLevels'][2]['name'];
+        }
+
+        if (isset($array['adminLevels'][1])) {
+            $name[] = $array['adminLevels'][1]['name'];
+        }
+
+        $name[] = $array['country'];
 
         return implode(', ', array_filter($name));
     }
