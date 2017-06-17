@@ -105,7 +105,7 @@ final class Chain implements LocaleAwareGeocoder, Provider, LoggerAwareInterface
      *
      * @return Chain
      */
-    public function add(Provider $provider)
+    public function add(Provider $provider): self
     {
         $this->providers[] = $provider;
 

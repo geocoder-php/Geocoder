@@ -104,14 +104,14 @@ final class GeoIP2 extends AbstractProvider implements LocaleAwareGeocoder, IpAd
     /**
      * @param string $address
      */
-    private function executeQuery($address)
+    private function executeQuery(string $address): string
     {
         $uri = sprintf('file://geoip?%s', $address);
 
         try {
             $result = $this->adapter->getContent($uri);
         } catch (AddressNotFoundException $e) {
-            return new AddressCollection([]);
+            return '';
         }
 
         return $result;

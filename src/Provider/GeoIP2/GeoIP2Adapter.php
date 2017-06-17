@@ -61,7 +61,7 @@ class GeoIP2Adapter
      *
      * @return string
      */
-    public function getContent($url)
+    public function getContent(string $url): string
     {
         if (false === filter_var($url, FILTER_VALIDATE_URL)) {
             throw new InvalidArgument(
@@ -99,7 +99,7 @@ class GeoIP2Adapter
      *
      * @return bool
      */
-    protected function isSupportedGeoIP2Model($method)
+    protected function isSupportedGeoIP2Model(string $method): bool
     {
         $availableMethods = [
             self::GEOIP2_MODEL_CITY,
