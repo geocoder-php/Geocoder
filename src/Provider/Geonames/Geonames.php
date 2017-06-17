@@ -16,9 +16,10 @@ use Geocoder\Collection;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\UnsupportedOperation;
-use Geocoder\Model\Address;
+use Geocoder\Model\AddressBuilder;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Model\AdminLevelCollection;
+use Geocoder\Provider\Geonames\Model\GeonamesAddress;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Http\Provider\AbstractHttpProvider;
@@ -52,9 +53,12 @@ final class Geonames extends AbstractHttpProvider implements LocaleAwareGeocoder
      */
     public function __construct(HttpClient $client, string $username)
     {
-        parent::__construct($client);
+        if (empty($username)) {
+            throw new InvalidCredentials('No username provided.');
+        }
 
         $this->username = $username;
+        parent::__construct($client);
     }
 
     /**
@@ -63,9 +67,6 @@ final class Geonames extends AbstractHttpProvider implements LocaleAwareGeocoder
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
         $address = $query->getText();
-        if (null === $this->username) {
-            throw new InvalidCredentials('No username provided.');
-        }
 
         // This API doesn't handle IPs
         if (filter_var($address, FILTER_VALIDATE_IP)) {
@@ -85,9 +86,6 @@ final class Geonames extends AbstractHttpProvider implements LocaleAwareGeocoder
         $coordinates = $query->getCoordinates();
         $longitude = $coordinates->getLongitude();
         $latitude = $coordinates->getLatitude();
-        if (null === $this->username) {
-            throw new InvalidCredentials('No username provided.');
-        }
 
         $url = sprintf(self::REVERSE_ENDPOINT_URL, $latitude, $longitude, $query->getLimit(), $this->username);
 
@@ -132,41 +130,37 @@ final class Geonames extends AbstractHttpProvider implements LocaleAwareGeocoder
 
         $results = [];
         foreach ($data as $item) {
-            $bounds = null;
+            $builder = new AddressBuilder($this->getName());
 
             if (isset($item->bbox)) {
-                $bounds = [
-                    'south' => $item->bbox->south,
-                    'west' => $item->bbox->west,
-                    'north' => $item->bbox->north,
-                    'east' => $item->bbox->east,
-                ];
+                $builder->setBounds($item->bbox->south, $item->bbox->west, $item->bbox->north, $item->bbox->east);
             }
-
-            $adminLevels = [];
 
             for ($level = 1; $level <= AdminLevelCollection::MAX_LEVEL_DEPTH; ++$level) {
                 $adminNameProp = 'adminName'.$level;
                 $adminCodeProp = 'adminCode'.$level;
                 if (!empty($item->$adminNameProp) || !empty($item->$adminCodeProp)) {
-                    $adminLevels[] = [
-                        'name' => empty($item->$adminNameProp) ? null : $item->$adminNameProp,
-                        'code' => empty($item->$adminCodeProp) ? null : $item->$adminCodeProp,
-                        'level' => $level,
-                    ];
+                    $builder->addAdminLevel($level, $item->$adminNameProp ?? null, $item->$adminCodeProp ?? null);
                 }
             }
 
-            $results[] = Address::createFromArray([
-                'latitude' => isset($item->lat) ? $item->lat : null,
-                'longitude' => isset($item->lng) ? $item->lng : null,
-                'bounds' => $bounds,
-                'locality' => isset($item->name) ? $item->name : null,
-                'adminLevels' => $adminLevels,
-                'country' => isset($item->countryName) ? $item->countryName : null,
-                'countryCode' => isset($item->countryCode) ? $item->countryCode : null,
-                'timezone' => isset($item->timezone->timeZoneId) ? $item->timezone->timeZoneId : null,
-            ]);
+            $builder->setCoordinates($item->lat ?? null, $item->lng ?? null);
+            $builder->setLocality($item->name ?? null);
+            $builder->setCountry($item->countryName ?? null);
+            $builder->setCountryCode($item->countryCode ?? null);
+            $builder->setTimezone($item->timezone->timeZoneId ?? null);
+
+            /** @var GeonamesAddress $address */
+            $address = $builder->build(GeonamesAddress::class);
+            $address = $address->withName($item->name ?? null);
+            $address = $address->withAsciiName($item->asciiName ?? null);
+            $address = $address->withFclName($item->fclName ?? null);
+            $address = $address->withAlternateNames($item->alternateNames ?? []);
+            $address = $address->withPopulation($item->population ?? null);
+            $address = $address->withGeonameId($item->geonameId ?? null);
+            $address = $address->withFcode($item->fcode ?? null);
+
+            $results[] = $address;
         }
 
         return new AddressCollection($results);

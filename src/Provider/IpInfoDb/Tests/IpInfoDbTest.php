@@ -184,6 +184,6 @@ class IpInfoDbTest extends BaseTestCase
     public function testReverse()
     {
         $provider = new IpInfoDb($this->getMockedHttpClient(), 'api_key');
-        $provider->reverseQuery(ReverseQuery::fromCoordinates(null, null));
+        $provider->reverseQuery(ReverseQuery::fromCoordinates(0, 0));
     }
 }
