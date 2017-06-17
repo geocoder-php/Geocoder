@@ -12,7 +12,6 @@ declare(strict_types=1);
 
 namespace Geocoder\Provider\GoogleMaps;
 
-use Exception;
 use Geocoder\Collection;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\InvalidServerResponse;
@@ -201,8 +200,9 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocod
         }
 
         if ('REQUEST_DENIED' === $json->status) {
-            throw new Exception(sprintf('API access denied. Request: %s - Message: %s',
-                $url, $json->error_message));
+            throw new InvalidServerResponse(
+                sprintf('API access denied. Request: %s - Message: %s', $url, $json->error_message)
+            );
         }
 
         // you are over your quota

@@ -12,7 +12,9 @@ declare(strict_types=1);
 
 namespace Geocoder\Model;
 
+use Geocoder\Exception\CollectionIsEmpty;
 use Geocoder\Exception\InvalidArgument;
+use Geocoder\Exception\OutOfBoundsException;
 
 /**
  * @author Giorgio Premi <giosh94mhz@gmail.com>
@@ -65,21 +67,26 @@ final class AdminLevelCollection implements \IteratorAggregate, \Countable
     }
 
     /**
-     * @return AdminLevel|null
+     * @return AdminLevel
+     *
+     * @throws CollectionIsEmpty
      */
-    public function first()
+    public function first(): AdminLevel
     {
         if (empty($this->adminLevels)) {
-            return null;
+            throw new CollectionIsEmpty();
         }
 
         return reset($this->adminLevels);
     }
 
     /**
+     * @param int      $offset
+     * @param int|null $length
+     *
      * @return AdminLevel[]
      */
-    public function slice($offset, $length = null)
+    public function slice(int $offset, int $length = null): array
     {
         return array_slice($this->adminLevels, $offset, $length, true);
     }
@@ -87,7 +94,7 @@ final class AdminLevelCollection implements \IteratorAggregate, \Countable
     /**
      * @return bool
      */
-    public function has($level): bool
+    public function has(int $level): bool
     {
         return isset($this->adminLevels[$level]);
     }
@@ -98,7 +105,7 @@ final class AdminLevelCollection implements \IteratorAggregate, \Countable
      * @throws \OutOfBoundsException
      * @throws InvalidArgument
      */
-    public function get($level): AdminLevel
+    public function get(int $level): AdminLevel
     {
         $this->checkLevel($level);
 
@@ -122,14 +129,12 @@ final class AdminLevelCollection implements \IteratorAggregate, \Countable
      *
      * @throws \OutOfBoundsException
      */
-    private function checkLevel($level)
+    private function checkLevel(int $level)
     {
         if ($level <= 0 || $level > self::MAX_LEVEL_DEPTH) {
-            throw new \OutOfBoundsException(sprintf(
-                'Administrative level should be an integer in [1,%d], %d given',
-                self::MAX_LEVEL_DEPTH,
-                $level
-            ));
+            throw new OutOfBoundsException(
+                sprintf('Administrative level should be an integer in [1,%d], %d given', self::MAX_LEVEL_DEPTH, $level)
+            );
         }
     }
 }

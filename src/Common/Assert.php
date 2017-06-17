@@ -12,6 +12,8 @@ declare(strict_types=1);
 
 namespace Geocoder;
 
+use Geocoder\Exception\InvalidArgument;
+
 class Assert
 {
     /**
@@ -21,13 +23,13 @@ class Assert
     public static function latitude($value, $message = '')
     {
         if (!is_float($value)) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgument(
                 sprintf($message ?: 'Expected a double. Got: %s', self::typeToString($value))
             );
         }
 
         if ($value < -90 || $value > 90) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgument(
                 sprintf($message ?: 'Latitude should be between -90 and 90. Got: %s', $value)
             );
         }
@@ -40,13 +42,13 @@ class Assert
     public static function longitude($value, $message = '')
     {
         if (!is_float($value)) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgument(
                 sprintf($message ?: 'Expected a doable. Got: %s', self::typeToString($value))
             );
         }
 
         if ($value < -180 || $value > 180) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgument(
                 sprintf($message ?: 'Latitude should be between -90 and 90. Got: %s', $value)
             );
         }
@@ -59,7 +61,7 @@ class Assert
     public static function notNull($value, $message = '')
     {
         if (null === $value) {
-            throw new \InvalidArgumentException(sprintf($message ?: 'Value cannot be null'));
+            throw new InvalidArgument(sprintf($message ?: 'Value cannot be null'));
         }
     }
 
