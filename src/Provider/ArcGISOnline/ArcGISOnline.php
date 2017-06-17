@@ -160,7 +160,7 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
 
     /**
      * @param string $query
-     * @param int $limit
+     * @param int    $limit
      *
      * @return string
      */
@@ -175,7 +175,7 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
 
     /**
      * @param string $url
-     * @param int $limit
+     * @param int    $limit
      *
      * @return \stdClass
      */

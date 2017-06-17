@@ -168,7 +168,7 @@ final class Nominatim extends AbstractHttpProvider implements LocaleAwareGeocode
     }
 
     /**
-     * @param string $url
+     * @param string      $url
      * @param string|null $locale
      *
      * @return string

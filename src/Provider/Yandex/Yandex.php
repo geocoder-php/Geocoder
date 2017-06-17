@@ -97,9 +97,9 @@ final class Yandex extends AbstractHttpProvider implements LocaleAwareGeocoder, 
     }
 
     /**
-     * @param string $url
+     * @param string      $url
      * @param string|null $locale
-     * @param int $limit
+     * @param int         $limit
      *
      * @return AddressCollection
      */

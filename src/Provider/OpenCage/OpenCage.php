@@ -97,7 +97,7 @@ final class OpenCage extends AbstractHttpProvider implements LocaleAwareGeocoder
     }
 
     /**
-     * @param string $url
+     * @param string      $url
      * @param string|null $locale
      *
      * @return AddressCollection

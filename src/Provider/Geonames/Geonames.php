@@ -103,7 +103,7 @@ final class Geonames extends AbstractHttpProvider implements LocaleAwareGeocoder
     }
 
     /**
-     * @param string $url
+     * @param string      $url
      * @param string|null $locale
      *
      * @return AddressCollection
