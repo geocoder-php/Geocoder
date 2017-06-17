@@ -16,7 +16,6 @@ use Geocoder\Collection;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\UnsupportedOperation;
-use Geocoder\Model\Address;
 use Geocoder\Model\AddressBuilder;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Model\AdminLevelCollection;
@@ -60,7 +59,6 @@ final class Geonames extends AbstractHttpProvider implements LocaleAwareGeocoder
 
         $this->username = $username;
         parent::__construct($client);
-
     }
 
     /**

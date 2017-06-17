@@ -51,6 +51,7 @@ class Assert
             );
         }
     }
+
     /**
      * @param mixed  $value
      * @param string $message
