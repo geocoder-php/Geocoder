@@ -62,10 +62,13 @@ final class MaxMind extends AbstractHttpProvider implements Provider, IpAddressG
      */
     public function __construct(HttpClient $client, string $apiKey, string $service = self::CITY_EXTENDED_SERVICE)
     {
-        parent::__construct($client);
+        if (empty($apiKey)) {
+            throw new InvalidCredentials('No API key provided.');
+        }
 
         $this->apiKey = $apiKey;
         $this->service = $service;
+        parent::__construct($client);
     }
 
     /**
@@ -74,9 +77,6 @@ final class MaxMind extends AbstractHttpProvider implements Provider, IpAddressG
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
         $address = $query->getText();
-        if (null === $this->apiKey) {
-            throw new InvalidCredentials('No API Key provided.');
-        }
 
         if (!filter_var($address, FILTER_VALIDATE_IP)) {
             throw new UnsupportedOperation('The MaxMind provider does not support street addresses, only IP addresses.');

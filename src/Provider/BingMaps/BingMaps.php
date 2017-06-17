@@ -50,9 +50,12 @@ final class BingMaps extends AbstractHttpProvider implements LocaleAwareGeocoder
      */
     public function __construct(HttpClient $client, string $apiKey)
     {
-        parent::__construct($client);
+        if (empty($apiKey)) {
+            throw new InvalidCredentials('No API key provided.');
+        }
 
         $this->apiKey = $apiKey;
+        parent::__construct($client);
     }
 
     /**
@@ -60,10 +63,6 @@ final class BingMaps extends AbstractHttpProvider implements LocaleAwareGeocoder
      */
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
-        if (null === $this->apiKey) {
-            throw new InvalidCredentials('No API key provided.');
-        }
-
         // This API doesn't handle IPs
         if (filter_var($query->getText(), FILTER_VALIDATE_IP)) {
             throw new UnsupportedOperation('The BingMaps provider does not support IP addresses, only street addresses.');
@@ -79,10 +78,6 @@ final class BingMaps extends AbstractHttpProvider implements LocaleAwareGeocoder
      */
     public function reverseQuery(ReverseQuery $query): Collection
     {
-        if (null === $this->apiKey) {
-            throw new InvalidCredentials('No API key provided.');
-        }
-
         $coordinates = $query->getCoordinates();
         $url = sprintf(self::REVERSE_ENDPOINT_URL, $coordinates->getLatitude(), $coordinates->getLongitude(), $this->apiKey);
 
@@ -104,7 +99,7 @@ final class BingMaps extends AbstractHttpProvider implements LocaleAwareGeocoder
      *
      * @return \Geocoder\Collection
      */
-    private function executeQuery(string $url, string $locale, int $limit): Collection
+    private function executeQuery(string $url, string $locale = null, int $limit): Collection
     {
         if (null !== $locale) {
             $url = sprintf('%s&culture=%s', $url, str_replace('_', '-', $locale));

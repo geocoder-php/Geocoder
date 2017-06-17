@@ -41,15 +41,6 @@ class IpInfoDbTest extends BaseTestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\InvalidCredentials
-     */
-    public function testGetDataWithNullApiKey()
-    {
-        $provider = new IpInfoDb($this->getMockedHttpClient(), null);
-        $provider->geocodeQuery(GeocodeQuery::create('foo'));
-    }
-
-    /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The IpInfoDb provider does not support street addresses, only IPv4 addresses.
      */

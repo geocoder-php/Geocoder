@@ -44,12 +44,12 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocod
     const REVERSE_ENDPOINT_URL_SSL = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=%F,%F';
 
     /**
-     * @var string
+     * @var string|null
      */
     private $region;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $apiKey;
 
@@ -59,7 +59,7 @@ final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocod
     private $clientId;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $privateKey;
 

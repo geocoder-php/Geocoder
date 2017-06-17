@@ -47,9 +47,12 @@ final class OpenCage extends AbstractHttpProvider implements LocaleAwareGeocoder
      */
     public function __construct(HttpClient $client, string $apiKey)
     {
-        parent::__construct($client);
+        if (empty($apiKey)) {
+            throw new InvalidCredentials('No API key provided.');
+        }
 
         $this->apiKey = $apiKey;
+        parent::__construct($client);
     }
 
     /**
@@ -58,9 +61,6 @@ final class OpenCage extends AbstractHttpProvider implements LocaleAwareGeocoder
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
         $address = $query->getText();
-        if (null === $this->apiKey) {
-            throw new InvalidCredentials('No API Key provided.');
-        }
 
         // This API doesn't handle IPs
         if (filter_var($address, FILTER_VALIDATE_IP)) {

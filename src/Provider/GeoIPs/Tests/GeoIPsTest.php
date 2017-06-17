@@ -33,15 +33,6 @@ class GeoIPsTest extends BaseTestCase
     }
 
     /**
-     * @expectedException \RuntimeException
-     */
-    public function testGeocodeWithNullApiKey()
-    {
-        $provider = new GeoIPs($this->getMockedHttpClient(), null);
-        $provider->geocodeQuery(GeocodeQuery::create('foo'));
-    }
-
-    /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The GeoIPs provider does not support street addresses, only IPv4 addresses.
      */

@@ -36,15 +36,6 @@ class BingMapsTest extends BaseTestCase
     }
 
     /**
-     * @expectedException \RuntimeException
-     */
-    public function testGeocodeWithNullApiKey()
-    {
-        $provider = new BingMaps($this->getMockedHttpClient(), null);
-        $provider->geocodeQuery(GeocodeQuery::create('foo'));
-    }
-
-    /**
      * @expectedException \Geocoder\Exception\InvalidServerResponse
      */
     public function testGeocodeWithInvalidData()
