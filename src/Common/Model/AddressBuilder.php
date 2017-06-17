@@ -165,8 +165,8 @@ final class AddressBuilder
     }
 
     /**
-     * @param int    $level
-     * @param string $name
+     * @param int         $level
+     * @param string      $name
      * @param string|null $code
      *
      * @return AddressBuilder
