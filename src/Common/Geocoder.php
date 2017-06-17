@@ -51,5 +51,5 @@ interface Geocoder extends Provider
      *
      * @throws \Geocoder\Exception\Exception
      */
-    public function reverse($latitude, $longitude): Collection;
+    public function reverse(float $latitude, float $longitude): Collection;
 }

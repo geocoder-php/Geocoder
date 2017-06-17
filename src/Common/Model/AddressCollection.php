@@ -71,7 +71,7 @@ class AddressCollection implements Collection
     /**
      * @return Location[]
      */
-    public function slice($offset, $length = null)
+    public function slice(int $offset, int $length = null)
     {
         return array_slice($this->locations, $offset, $length);
     }
@@ -79,7 +79,7 @@ class AddressCollection implements Collection
     /**
      * @return bool
      */
-    public function has($index): bool
+    public function has(int $index): bool
     {
         return isset($this->locations[$index]);
     }
@@ -87,7 +87,7 @@ class AddressCollection implements Collection
     /**
      * {@inheritdoc}
      */
-    public function get($index): Location
+    public function get(int $index): Location
     {
         if (!isset($this->locations[$index])) {
             throw new OutOfBoundsException(sprintf('The index "%s" does not exist in this collection.', $index));
@@ -99,7 +99,7 @@ class AddressCollection implements Collection
     /**
      * {@inheritdoc}
      */
-    public function all()
+    public function all(): array
     {
         return $this->locations;
     }

@@ -51,7 +51,7 @@ class TimedGeocoder implements Geocoder
 
         try {
             $result = $this->delegate->geocodeQuery($query);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $this->stopwatch->stop('geocode');
 
             throw $e;
@@ -71,7 +71,7 @@ class TimedGeocoder implements Geocoder
 
         try {
             $result = $this->delegate->reverseQuery($query);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $this->stopwatch->stop('reverse');
 
             throw $e;

@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Geocoder;
 
 use Geocoder\Exception\CollectionIsEmpty;
+use Geocoder\Exception\OutOfBoundsException;
 
 /**
  * This is the interface that is always return from a Geocoder.
@@ -37,22 +38,22 @@ interface Collection extends \IteratorAggregate, \Countable
     /**
      * @return Location[]
      */
-    public function slice($offset, $length = null);
+    public function slice(int $offset, int $length = null);
 
     /**
      * @return bool
      */
-    public function has($index): bool;
+    public function has(int $index): bool;
 
     /**
      * @return Location
      *
-     * @throws \OutOfBoundsException
+     * @throws OutOfBoundsException
      */
-    public function get($index): Location;
+    public function get(int $index): Location;
 
     /**
      * @return Location[]
      */
-    public function all();
+    public function all(): array;
 }
