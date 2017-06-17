@@ -86,7 +86,9 @@ final class HostIp extends AbstractHttpProvider implements Provider, IpAddressGe
             return new AddressCollection([]);
         }
 
-        return new AddressCollection([Address::createFromArray([
+        return new AddressCollection([
+            Address::createFromArray([
+                'providedBy' => $this->getName(),
                 'latitude' => $data['lat'],
                 'longitude' => $data['lng'],
                 'locality' => $data['city'],

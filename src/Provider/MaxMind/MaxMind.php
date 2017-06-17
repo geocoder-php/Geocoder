@@ -140,6 +140,7 @@ final class MaxMind extends AbstractHttpProvider implements Provider, IpAddressG
         }
 
         $data = $this->replaceAdmins($data);
+        $data['providedBy'] = $this->getName();
 
         return new AddressCollection([Address::createFromArray($data)]);
     }

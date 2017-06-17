@@ -71,7 +71,9 @@ final class Geoip extends AbstractProvider implements Provider, IpAddressGeocode
             $region = $results['region'];
         }
 
-        return new AddressCollection([Address::createFromArray([
+        return new AddressCollection([
+            Address::createFromArray([
+                'providedBy' => $this->getName(),
                 'latitude' => $results['latitude'],
                 'longitude' => $results['longitude'],
                 'locality' => $results['city'],

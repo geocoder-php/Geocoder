@@ -142,7 +142,9 @@ final class IpInfoDb extends AbstractHttpProvider implements Provider, IpAddress
             $timezone = timezone_name_from_abbr('', (int) substr($data['timeZone'], 0, strpos($data['timeZone'], ':')) * 3600, 0);
         }
 
-        return new AddressCollection([Address::createFromArray([
+        return new AddressCollection([
+            Address::createFromArray([
+                'providedBy' => $this->getName(),
                 'latitude' => $data['latitude'] ?? null,
                 'longitude' => $data['longitude'] ?? null,
                 'locality' => $data['cityName'] ?? null,

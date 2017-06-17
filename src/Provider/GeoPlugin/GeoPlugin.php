@@ -99,12 +99,13 @@ final class GeoPlugin extends AbstractHttpProvider implements Provider, IpAddres
 
         $results = [];
         $results[] = Address::createFromArray([
-                'locality' => isset($data['geoplugin_city']) ? $data['geoplugin_city'] : null,
-                'country' => isset($data['geoplugin_countryName']) ? $data['geoplugin_countryName'] : null,
-                'countryCode' => isset($data['geoplugin_countryCode']) ? $data['geoplugin_countryCode'] : null,
-                'adminLevels' => $adminLevels,
-                'latitude' => isset($data['geoplugin_latitude']) ? $data['geoplugin_latitude'] : null,
-                'longitude' => isset($data['geoplugin_longitude']) ? $data['geoplugin_longitude'] : null,
+            'providedBy' => $this->getName(),
+            'locality' => isset($data['geoplugin_city']) ? $data['geoplugin_city'] : null,
+            'country' => isset($data['geoplugin_countryName']) ? $data['geoplugin_countryName'] : null,
+            'countryCode' => isset($data['geoplugin_countryCode']) ? $data['geoplugin_countryCode'] : null,
+            'adminLevels' => $adminLevels,
+            'latitude' => isset($data['geoplugin_latitude']) ? $data['geoplugin_latitude'] : null,
+            'longitude' => isset($data['geoplugin_longitude']) ? $data['geoplugin_longitude'] : null,
         ]);
 
         return new AddressCollection($results);

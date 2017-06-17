@@ -158,6 +158,7 @@ final class MapQuest extends AbstractHttpProvider implements Provider
                 }
 
                 $results[] = Address::createFromArray([
+                    'providedBy' => $this->getName(),
                     'latitude' => $location['latLng']['lat'],
                     'longitude' => $location['latLng']['lng'],
                     'streetName' => $location['street'] ?: null,
