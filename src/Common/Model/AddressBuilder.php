@@ -12,6 +12,8 @@ declare(strict_types=1);
 
 namespace Geocoder\Model;
 
+use Geocoder\Exception\LogicException;
+
 /**
  * A class that builds a Location or any of its subclasses.
  *
@@ -102,7 +104,7 @@ final class AddressBuilder
     public function build(string $class = Address::class)
     {
         if (!is_a($class, Address::class, true)) {
-            throw new \LogicException('First parameter to LocationBuilder::build must be a class name extending Geocoder\Model\Address');
+            throw new LogicException('First parameter to LocationBuilder::build must be a class name extending Geocoder\Model\Address');
         }
 
         $country = null;
