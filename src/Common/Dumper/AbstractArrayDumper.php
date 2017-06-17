@@ -20,7 +20,9 @@ use Geocoder\Location;
 abstract class AbstractArrayDumper
 {
     /**
-     * {@inheritdoc}
+     * @param Location $location
+     *
+     * @return array
      */
     protected function getArray(Location $location): array
     {
