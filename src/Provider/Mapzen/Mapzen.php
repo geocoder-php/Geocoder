@@ -48,11 +48,14 @@ final class Mapzen extends AbstractHttpProvider implements Provider
      * @param HttpClient $client an HTTP adapter
      * @param string     $apiKey an API key
      */
-    public function __construct(HttpClient $client, $apiKey)
+    public function __construct(HttpClient $client, string $apiKey)
     {
-        parent::__construct($client);
+        if (empty($apiKey)) {
+            throw new InvalidCredentials('No API key provided.');
+        }
 
         $this->apiKey = $apiKey;
+        parent::__construct($client);
     }
 
     /**
@@ -61,9 +64,6 @@ final class Mapzen extends AbstractHttpProvider implements Provider
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
         $address = $query->getText();
-        if (null === $this->apiKey) {
-            throw new InvalidCredentials('No API Key provided.');
-        }
 
         // This API doesn't handle IPs
         if (filter_var($address, FILTER_VALIDATE_IP)) {
@@ -83,10 +83,6 @@ final class Mapzen extends AbstractHttpProvider implements Provider
         $coordinates = $query->getCoordinates();
         $longitude = $coordinates->getLongitude();
         $latitude = $coordinates->getLatitude();
-        if (null === $this->apiKey) {
-            throw new InvalidCredentials('No API Key provided.');
-        }
-
         $url = sprintf(self::REVERSE_ENDPOINT_URL, $latitude, $longitude, $this->apiKey, $query->getLimit());
 
         return $this->executeQuery($url);
@@ -105,7 +101,7 @@ final class Mapzen extends AbstractHttpProvider implements Provider
      *
      * @return Collection
      */
-    private function executeQuery($url)
+    private function executeQuery(string $url): AddressCollection
     {
         $content = $this->getUrlContents($url);
         $json = json_decode($content, true);

@@ -43,7 +43,7 @@ final class MaxMindBinary extends AbstractProvider implements Provider, IpAddres
      * @throws FunctionNotFound if maxmind's lib not installed
      * @throws InvalidArgument  if dat file is not correct (optional)
      */
-    public function __construct($datFile, $openFlag = null)
+    public function __construct(string $datFile, int $openFlag = null)
     {
         if (false === function_exists('geoip_open')) {
             throw new FunctionNotFound(

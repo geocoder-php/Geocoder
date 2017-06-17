@@ -33,26 +33,6 @@ class GeonamesTest extends BaseTestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\InvalidCredentials
-     * @expectedExceptionMessage No username provided.
-     */
-    public function testGeocodeWithNullUsername()
-    {
-        $provider = new Geonames($this->getMockedHttpClient(), null);
-        $provider->geocodeQuery(GeocodeQuery::create('foo'));
-    }
-
-    /**
-     * @expectedException \Geocoder\Exception\InvalidCredentials
-     * @expectedExceptionMessage No username provided.
-     */
-    public function testReverseWithNullUsername()
-    {
-        $provider = new Geonames($this->getMockedHttpClient(), null);
-        $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
-    }
-
-    /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The Geonames provider does not support IP addresses.
      */

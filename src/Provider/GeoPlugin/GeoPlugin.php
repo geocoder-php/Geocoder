@@ -70,8 +70,10 @@ final class GeoPlugin extends AbstractHttpProvider implements Provider, IpAddres
 
     /**
      * @param string $url
+     *
+     * @return AddressCollection
      */
-    private function executeQuery($url)
+    private function executeQuery(string $url): AddressCollection
     {
         $content = $this->getUrlContents($url);
         $json = json_decode($content, true);

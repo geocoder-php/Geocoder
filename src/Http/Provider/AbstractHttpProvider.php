@@ -55,7 +55,7 @@ abstract class AbstractHttpProvider extends AbstractProvider
      *
      * @throws InvalidServerResponse
      */
-    protected function getUrlContents($url): string
+    protected function getUrlContents(string $url): string
     {
         $request = $this->getMessageFactory()->createRequest('GET', $url);
         $response = $this->getHttpClient()->sendRequest($request);

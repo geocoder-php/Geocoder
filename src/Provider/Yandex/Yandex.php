@@ -48,7 +48,7 @@ final class Yandex extends AbstractHttpProvider implements LocaleAwareGeocoder, 
      * @param HttpClient $client  an HTTP adapter
      * @param string     $toponym toponym biasing only for reverse geocoding (optional)
      */
-    public function __construct(HttpClient $client, $toponym = null)
+    public function __construct(HttpClient $client, string $toponym = null)
     {
         parent::__construct($client);
 
@@ -97,11 +97,13 @@ final class Yandex extends AbstractHttpProvider implements LocaleAwareGeocoder, 
     }
 
     /**
-     * @param string $url
-     * @param string $locale
-     * @param int    $limit
+     * @param string      $url
+     * @param string|null $locale
+     * @param int         $limit
+     *
+     * @return AddressCollection
      */
-    private function executeQuery($url, $locale, $limit)
+    private function executeQuery(string $url, string $locale = null, int $limit): AddressCollection
     {
         if (null !== $locale) {
             $url = sprintf('%s&lang=%s', $url, str_replace('_', '-', $locale));

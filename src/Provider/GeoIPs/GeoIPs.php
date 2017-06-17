@@ -63,11 +63,14 @@ final class GeoIPs extends AbstractHttpProvider implements Provider, IpAddressGe
      * @param HttpClient $client An HTTP adapter
      * @param string     $apiKey An API key
      */
-    public function __construct(HttpClient $client, $apiKey)
+    public function __construct(HttpClient $client, string $apiKey)
     {
-        parent::__construct($client);
+        if (empty($apiKey)) {
+            throw new InvalidCredentials('No API key provided.');
+        }
 
         $this->apiKey = $apiKey;
+        parent::__construct($client);
     }
 
     /**
@@ -76,10 +79,6 @@ final class GeoIPs extends AbstractHttpProvider implements Provider, IpAddressGe
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
         $address = $query->getText();
-        if (null === $this->apiKey) {
-            throw new InvalidCredentials('No API key provided.');
-        }
-
         if (!filter_var($address, FILTER_VALIDATE_IP)) {
             throw new UnsupportedOperation('The GeoIPs provider does not support street addresses, only IPv4 addresses.');
         }
@@ -115,8 +114,10 @@ final class GeoIPs extends AbstractHttpProvider implements Provider, IpAddressGe
 
     /**
      * @param string $url
+     *
+     * @return AddressCollection
      */
-    private function executeQuery($url)
+    private function executeQuery(string $url): AddressCollection
     {
         $content = $this->getUrlContents($url);
         $json = json_decode($content, true);

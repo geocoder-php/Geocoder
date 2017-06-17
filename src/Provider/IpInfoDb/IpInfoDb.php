@@ -57,7 +57,7 @@ final class IpInfoDb extends AbstractHttpProvider implements Provider, IpAddress
      *
      * @throws \Geocoder\Exception\InvalidArgument
      */
-    public function __construct(HttpClient $client, $apiKey, $precision = 'city')
+    public function __construct(HttpClient $client, string $apiKey, string $precision = 'city')
     {
         parent::__construct($client);
 
@@ -128,7 +128,7 @@ final class IpInfoDb extends AbstractHttpProvider implements Provider, IpAddress
      *
      * @return Collection
      */
-    private function executeQuery($url)
+    private function executeQuery(string $url): AddressCollection
     {
         $content = $this->getUrlContents($url);
         $data = json_decode($content, true);
