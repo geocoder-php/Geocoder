@@ -4,7 +4,6 @@ sudo: false
 addons:
     apt_packages:
         - parallel
-        - libgeoip-dev
 
 branches:
     except:
@@ -29,8 +28,6 @@ matrix:
         - php: 7.1
 
 before_install:
-    - pecl install geoip-1.1.1
-    - composer require "geoip/geoip" --no-update
     - |
       # General configuration
       stty cols 120

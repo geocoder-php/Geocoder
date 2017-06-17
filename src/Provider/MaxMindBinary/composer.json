@@ -13,7 +13,6 @@
     ],
     "require": {
         "php": "^7.0",
-        "ext-geoip": "*",
         "geoip/geoip": "^1.17",
         "willdurand/geocoder": "^4.0"
     },
