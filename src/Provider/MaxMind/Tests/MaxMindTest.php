@@ -136,7 +136,6 @@ class MaxMindTest extends BaseTestCase
         $this->assertEquals('Plano', $result->getLocality());
         $this->assertNull($result->getSubLocality());
         $this->assertCount(1, $result->getAdminLevels());
-        $this->assertNull($result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('TX', $result->getAdminLevels()->get(1)->getCode());
         $this->assertEquals('United States', $result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
@@ -168,7 +167,6 @@ class MaxMindTest extends BaseTestCase
         $this->assertEquals('San Francisco', $result->getLocality());
         $this->assertNull($result->getSubLocality());
         $this->assertCount(1, $result->getAdminLevels());
-        $this->assertNull($result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('CA', $result->getAdminLevels()->get(1)->getCode());
         $this->assertEquals('United States', $result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
