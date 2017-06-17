@@ -173,9 +173,7 @@ $geocoder->registerProviders([
     new \Geocoder\Provider\ArcGISOnline($adapter),
 ]);
 
-$geocoder->registerProvider(
-    new \Geocoder\Provider\Nominatim($adapter, 'https://your.nominatim.server')
-;
+$geocoder->registerProvider(new \Geocoder\Provider\Nominatim($adapter, 'https://your.nominatim.server'));
 
 $geocoder
     ->using('google_maps')
