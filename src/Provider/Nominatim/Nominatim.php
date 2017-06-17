@@ -127,7 +127,6 @@ final class Nominatim extends AbstractHttpProvider implements LocaleAwareGeocode
     private function xmlResultToArray(\DOMElement $resultNode, \DOMElement $addressNode): Location
     {
         $builder = new AddressBuilder($this->getName());
-        $adminLevels = [];
 
         foreach (['state', 'county'] as $i => $tagName) {
             if (null !== ($adminLevel = $this->getNodeValue($addressNode->getElementsByTagName($tagName)))) {

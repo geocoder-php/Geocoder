@@ -15,6 +15,7 @@ namespace Geocoder\Provider\GoogleMaps\Tests;
 use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Location;
+use Geocoder\Provider\GoogleMaps\Model\GoogleAddress;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\GoogleMaps\GoogleMaps;
@@ -304,7 +305,7 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var Location $result */
+        /** @var GoogleAddress $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals('61', $result->getSubpremise());

@@ -124,7 +124,7 @@ class TomTomTest extends BaseTestCase
      */
     public function testWithoutApiKey()
     {
-        $provider = new TomTom($this->getMockedHttpClient(), '');
+        new TomTom($this->getMockedHttpClient(), '');
     }
 
     /**

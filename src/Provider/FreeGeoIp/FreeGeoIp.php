@@ -50,8 +50,8 @@ final class FreeGeoIp extends AbstractHttpProvider implements Provider, IpAddres
         $data = json_decode($content, true);
         $builder = new AddressBuilder($this->getName());
 
-        if (!empty($data['region_name']) || !empty($data['region_code'])) {
-            $builder->addAdminLevel(1, $data['region_name'] ?? null, $data['region_code'] ?? null);
+        if (!empty($data['region_name'])) {
+            $builder->addAdminLevel(1, $data['region_name'], $data['region_code'] ?? null);
         }
 
         if ($data['latitude'] !== 0 || $data['longitude'] !== 0) {
