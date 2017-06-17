@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Geocoder package.
  * For the full copyright and license information, please view the LICENSE
@@ -19,7 +21,7 @@ use Http\Client\HttpClient;
  */
 class IntegrationTest extends ProviderIntegrationTest
 {
-    protected $skippedTests  = [
+    protected $skippedTests = [
         'testGeocodeQuery' => 'We get wrongs cords',
         'testReverseQueryWithNoResults' => 'We weirdly find stuff here...',
     ];
