@@ -67,7 +67,7 @@ install:
         elif [[ $deps = high ]]; then
             echo "$COMPONENTS" | parallel --gnu -j10% "tfold {} 'cd {} && $GEOIP_EXT && $COMPOSER_UP && $PHPUNIT_X$LEGACY'"
         elif [[ $deps = low ]]; then
-            echo "$COMPONENTS" | parallel --gnu -j10% "tfold {} 'cd {} && $GEOIP_EXT && $COMPOSER_UP --prefer-lowest --prefer-stable && $PHPUNIT_X'" &&
+            echo "$COMPONENTS" | parallel --gnu -j10% "tfold {} 'cd {} && $GEOIP_EXT && $COMPOSER_UP --prefer-lowest --prefer-stable && $PHPUNIT_X'"
         else
             echo "$COMPONENTS" | parallel --gnu "tfold {} $PHPUNIT_X {}"
             tfold tty-group $PHPUNIT --group tty
