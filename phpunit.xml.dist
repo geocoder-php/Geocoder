@@ -34,6 +34,7 @@
         <testsuite name="Geocoder Test Suite">
             <directory>./tests/</directory>
             <directory>./src/Common/Tests/</directory>
+            <directory>./src/Http/Tests/</directory>
             <directory>./src/Provider/*/Tests/</directory>
         </testsuite>
     </testsuites>
@@ -43,8 +44,10 @@
             <directory>./src/</directory>
             <exclude>
                 <directory>./src/Common/Tests</directory>
+                <directory>./src/Http/Tests</directory>
                 <directory>./src/Provider/*/Tests</directory>
                 <directory>./src/Common/vendor</directory>
+                <directory>./src/Http/vendor</directory>
                 <directory>./src/Provider/*/vendor</directory>
             </exclude>
         </whitelist>
