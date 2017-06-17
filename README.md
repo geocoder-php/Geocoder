@@ -358,12 +358,14 @@ Major version `2` will reach **end of life on December 2015**.
 
 Version `3.x` is the current major stable version of Geocoder.
 
+### Next version
+
+The next version is 4.0 which is currently in beta. 
+
 Contributing
 ------------
 
-See
-[`CONTRIBUTING`](https://github.com/geocoder-php/Geocoder/blob/master/CONTRIBUTING.md#contributing)
-file.
+See [`CONTRIBUTING`](https://github.com/geocoder-php/Geocoder/blob/master/CONTRIBUTING.md#contributing) file.
 
 
 Unit Tests
@@ -406,6 +408,7 @@ Credits
 -------
 
 * William Durand <william.durand1@gmail.com>
+* Tobias Nyholm <tobias.nyholm@gmail.com>
 * [All contributors](https://github.com/geocoder-php/Geocoder/contributors)
 
 
