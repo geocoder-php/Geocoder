@@ -33,7 +33,7 @@ before_install:
       [ -d ~/.composer ] || mkdir ~/.composer
       export PHPUNIT=$(readlink -f ./phpunit)
       export PHPUNIT_X="$PHPUNIT --exclude-group benchmark"
-      export COMPOSER_UP='composer update --no-progress --no-suggest --ansi'
+      export COMPOSER_UP='composer update --no-progress --no-suggest --ansi --prefer-dist'
 
       # If "geoip-1.1.1" exits in a provider's .travis.yml, then install the dependency.
       export GEOIP_EXT='(grep -Fq "geoip-1.1.1" .travis.yml && sleep 60 && pecl install geoip-1.1.1 && echo "Installed php-geoip") || (echo "Did not install php-geoip"')
