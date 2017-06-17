@@ -19,7 +19,7 @@ use Geocoder\Exception\UnsupportedOperation;
 /**
  * @author Jens Wiese <jens@howtrueisfalse.de>
  */
-final class GeoIP2Adapter
+class GeoIP2Adapter
 {
     /**
      * GeoIP2 models (e.g. city or country).
