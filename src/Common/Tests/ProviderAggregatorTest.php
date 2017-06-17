@@ -207,7 +207,7 @@ class TestableGeocoder extends ProviderAggregator
 {
     public $countCallGetProvider = 0;
 
-    public function getProvider()
+    public function getProvider(): Provider
     {
         ++$this->countCallGetProvider;
 
