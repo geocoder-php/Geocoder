@@ -21,6 +21,7 @@ use Geocoder\Query\ReverseQuery;
 use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Provider\IpAddressGeocoder;
 use Geocoder\Provider\Provider;
+use Http\Client\HttpClient;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -30,7 +31,18 @@ final class FreeGeoIp extends AbstractHttpProvider implements Provider, IpAddres
     /**
      * @var string
      */
-    const ENDPOINT_URL = 'https://freegeoip.net/json/%s';
+    private $baseUrl;
+
+    /**
+     * @param HttpClient $client
+     * @param string     $baseUrl
+     */
+    public function __construct(HttpClient $client, string $baseUrl = 'https://freegeoip.net/json/%s')
+    {
+        parent::__construct($client);
+
+        $this->baseUrl = $baseUrl;
+    }
 
     /**
      * {@inheritdoc}
@@ -46,7 +58,7 @@ final class FreeGeoIp extends AbstractHttpProvider implements Provider, IpAddres
             return new AddressCollection([$this->getLocationForLocalhost()]);
         }
 
-        $content = $this->getUrlContents(sprintf(self::ENDPOINT_URL, $address));
+        $content = $this->getUrlContents(sprintf($this->baseUrl, $address));
         $data = json_decode($content, true);
         $builder = new AddressBuilder($this->getName());
 
