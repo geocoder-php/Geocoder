@@ -29,6 +29,19 @@ class IntegrationTest extends ProviderIntegrationTest
     protected $testIpv6 = false;
     protected $testHttpProvider = false;
 
+    public static function setUpBeforeClass()
+    {
+        if (false == function_exists('geoip_open')) {
+            self::markTestSkipped('The maxmind\'s official lib required to run these tests.');
+        }
+
+        if (false == function_exists('GeoIP_record_by_addr')) {
+            self::markTestSkipped('The maxmind\'s official lib required to run these tests.');
+        }
+
+        parent::setUpBeforeClass();
+    }
+
     protected function createProvider(HttpClient $httpClient)
     {
         return new MaxMindBinary(__DIR__.'/fixtures/GeoLiteCity.dat');
