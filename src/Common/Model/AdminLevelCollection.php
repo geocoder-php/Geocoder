@@ -14,7 +14,7 @@ namespace Geocoder\Model;
 
 use Geocoder\Exception\CollectionIsEmpty;
 use Geocoder\Exception\InvalidArgument;
-use Geocoder\Exception\OutOfBoundsException;
+use Geocoder\Exception\OutOfBounds;
 
 /**
  * @author Giorgio Premi <giosh94mhz@gmail.com>
@@ -132,7 +132,7 @@ final class AdminLevelCollection implements \IteratorAggregate, \Countable
     private function checkLevel(int $level)
     {
         if ($level <= 0 || $level > self::MAX_LEVEL_DEPTH) {
-            throw new OutOfBoundsException(
+            throw new OutOfBounds(
                 sprintf('Administrative level should be an integer in [1,%d], %d given', self::MAX_LEVEL_DEPTH, $level)
             );
         }
