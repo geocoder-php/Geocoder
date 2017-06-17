@@ -53,7 +53,7 @@ final class Chain implements LocaleAwareGeocoder, Provider, LoggerAwareInterface
                 if (!$result->isEmpty()) {
                     return $result;
                 }
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 $this->log(
                     'alert',
                     sprintf('Provider "%s" could geocode address: "%s".', $provider->getName(), $query->getText()),
@@ -77,7 +77,7 @@ final class Chain implements LocaleAwareGeocoder, Provider, LoggerAwareInterface
                 if (!$result->isEmpty()) {
                     return $result;
                 }
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 $coordinates = $query->getCoordinates();
                 $this->log(
                     'alert',

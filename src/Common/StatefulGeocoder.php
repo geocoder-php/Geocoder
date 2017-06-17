@@ -47,7 +47,7 @@ class StatefulGeocoder implements Geocoder, LocaleAwareGeocoder
      * @param Provider $provider
      * @param string   $locale
      */
-    public function __construct(Provider $provider, $locale = null)
+    public function __construct(Provider $provider, string $locale = null)
     {
         $this->provider = $provider;
         $this->locale = $locale;
@@ -76,7 +76,7 @@ class StatefulGeocoder implements Geocoder, LocaleAwareGeocoder
     /**
      * {@inheritdoc}
      */
-    public function reverse($latitude, $longitude): Collection
+    public function reverse(float $latitude, float $longitude): Collection
     {
         $query = ReverseQuery::fromCoordinates($latitude, $longitude)
             ->withLimit($this->limit);

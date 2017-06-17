@@ -119,7 +119,7 @@ final class AdminLevelCollection implements \IteratorAggregate, \Countable
     /**
      * @return AdminLevel[]
      */
-    public function all()
+    public function all(): array
     {
         return $this->adminLevels;
     }
