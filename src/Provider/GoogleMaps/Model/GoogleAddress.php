@@ -44,7 +44,7 @@ final class GoogleAddress extends Address
      *
      * @return GoogleAddress
      */
-    public function withLocationType($locationType)
+    public function withLocationType(string $locationType = null)
     {
         $new = clone $this;
         $new->locationType = $locationType;
@@ -63,7 +63,7 @@ final class GoogleAddress extends Address
     /**
      * @return array
      */
-    public function getResultType()
+    public function getResultType(): array
     {
         return $this->resultType;
     }
@@ -92,7 +92,7 @@ final class GoogleAddress extends Address
     /**
      * @param null|string $formattedAddress
      */
-    public function withFormattedAddress($formattedAddress)
+    public function withFormattedAddress(string $formattedAddress = null)
     {
         $new = clone $this;
         $new->formattedAddress = $formattedAddress;
@@ -111,7 +111,7 @@ final class GoogleAddress extends Address
     /**
      * @param null|string $subpremise
      */
-    public function withSubpremise($subpremise)
+    public function withSubpremise(string $subpremise = null)
     {
         $new = clone $this;
         $new->subpremise = $subpremise;
