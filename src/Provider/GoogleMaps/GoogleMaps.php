@@ -22,7 +22,7 @@ use Geocoder\Model\AddressCollection;
 use Geocoder\Model\AddressBuilder;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Provider\AbstractHttpProvider;
+use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Provider\GoogleMaps\Model\GoogleAddress;
 use Geocoder\Provider\LocaleAwareGeocoder;
 use Geocoder\Provider\Provider;
