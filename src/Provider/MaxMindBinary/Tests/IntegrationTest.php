@@ -13,6 +13,8 @@ namespace Geocoder\Provider\MaxMindBinary\Tests;
 use Geocoder\IntegrationTest\ProviderIntegrationTest;
 use Geocoder\Provider\MaxMindBinary\MaxMindBinary;
 use Http\Client\HttpClient;
+use Http\Discovery\ClassDiscovery;
+use Nyholm\Psr7\Httplug\DiscoveryStrategy;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
@@ -36,6 +38,8 @@ class IntegrationTest extends ProviderIntegrationTest
         if (false == function_exists('GeoIP_record_by_addr')) {
             self::markTestSkipped('The maxmind\'s official lib required to run these tests.');
         }
+
+        parent::setUpBeforeClass();
     }
 
     protected function createProvider(HttpClient $httpClient)
