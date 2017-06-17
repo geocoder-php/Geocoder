@@ -244,11 +244,7 @@ class Address implements Location
                 continue;
             }
 
-            $adminLevels[] = new AdminLevel(
-                $adminLevel['level'],
-                $name,
-                $adminLevel['code'] ?? null
-            );
+            $adminLevels[] = new AdminLevel($adminLevel['level'], $name, $adminLevel['code'] ?? null);
         }
 
         return new static(

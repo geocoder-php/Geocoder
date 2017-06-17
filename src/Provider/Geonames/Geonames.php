@@ -139,8 +139,8 @@ final class Geonames extends AbstractHttpProvider implements LocaleAwareGeocoder
             for ($level = 1; $level <= AdminLevelCollection::MAX_LEVEL_DEPTH; ++$level) {
                 $adminNameProp = 'adminName'.$level;
                 $adminCodeProp = 'adminCode'.$level;
-                if (!empty($item->$adminNameProp) || !empty($item->$adminCodeProp)) {
-                    $builder->addAdminLevel($level, $item->$adminNameProp ?? null, $item->$adminCodeProp ?? null);
+                if (!empty($item->$adminNameProp)) {
+                    $builder->addAdminLevel($level, $item->$adminNameProp, $item->$adminCodeProp ?? null);
                 }
             }
 
