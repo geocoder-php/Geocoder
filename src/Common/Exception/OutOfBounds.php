@@ -13,6 +13,6 @@ namespace Geocoder\Exception;
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-class OutOfBounds extends \OutOfBoundsException implements Exception
+final class OutOfBounds extends \OutOfBoundsException implements Exception
 {
 }

@@ -18,7 +18,7 @@ use Geocoder\Location;
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-class StringFormatter
+final class StringFormatter
 {
     const STREET_NUMBER = '%n';
 

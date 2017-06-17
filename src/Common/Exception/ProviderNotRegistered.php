@@ -15,7 +15,7 @@ namespace Geocoder\Exception;
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-class ProviderNotRegistered extends \RuntimeException implements Exception
+final class ProviderNotRegistered extends \RuntimeException implements Exception
 {
     /**
      * @param string $providerName

@@ -21,7 +21,7 @@ use Geocoder\Provider\Provider;
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-class StatefulGeocoder implements Geocoder, LocaleAwareGeocoder
+final class StatefulGeocoder implements Geocoder, LocaleAwareGeocoder
 {
     /**
      * @var string
