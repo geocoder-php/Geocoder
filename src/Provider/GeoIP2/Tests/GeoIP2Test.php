@@ -20,7 +20,6 @@ use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\GeoIP2\GeoIP2;
 use Geocoder\Provider\GeoIP2\GeoIP2Adapter;
 use GeoIp2\Database\Reader;
-
 use GeoIp2\Exception\AuthenticationException;
 use GeoIp2\Exception\OutOfQueriesException;
 use Geocoder\Exception\InvalidCredentials;
