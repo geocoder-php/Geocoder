@@ -21,8 +21,10 @@ use Geocoder\Provider\GeoIP2\GeoIP2;
 use Geocoder\Provider\GeoIP2\GeoIP2Adapter;
 use GeoIp2\Database\Reader;
 
-use GeoIp2\Exception\{AuthenticationException, OutOfQueriesException};
-use Geocoder\Exception\{InvalidCredentials, QuotaExceeded};
+use GeoIp2\Exception\AuthenticationException;
+use GeoIp2\Exception\OutOfQueriesException;
+use Geocoder\Exception\InvalidCredentials;
+use Geocoder\Exception\QuotaExceeded;
 
 /**
  * @author Jens Wiese <jens@howtrueisfalse.de>
@@ -244,11 +246,11 @@ class GeoIP2Test extends BaseTestCase
         $results = $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
-    public static function provideDataForTestingExceptions() : array
+    public static function provideDataForTestingExceptions(): array
     {
         return [
-            [ new AuthenticationException('Credentials are no good'), InvalidCredentials::class ],
-            [ new OutOfQueriesException('You ran out'), QuotaExceeded::class ],
+            [new AuthenticationException('Credentials are no good'), InvalidCredentials::class],
+            [new OutOfQueriesException('You ran out'), QuotaExceeded::class],
         ];
     }
 

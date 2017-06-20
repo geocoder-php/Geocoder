@@ -22,8 +22,13 @@ use Geocoder\Provider\IpAddressGeocoder;
 use Geocoder\Provider\LocaleAwareGeocoder;
 use Geocoder\Provider\Provider;
 
-use Geocoder\Exception\{UnsupportedOperation, InvalidCredentials, QuotaExceeded};
-use GeoIp2\Exception\{AddressNotFoundException, AuthenticationException, OutOfQueriesException};
+use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Exception\InvalidCredentials;
+use Geocoder\Exception\QuotaExceeded;
+
+use GeoIp2\Exception\AddressNotFoundException;
+use GeoIp2\Exception\AuthenticationException;
+use GeoIp2\Exception\OutOfQueriesException;
 
 /**
  * @author Jens Wiese <jens@howtrueisfalse.de>
