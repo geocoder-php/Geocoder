@@ -21,8 +21,12 @@ use Geocoder\Provider\AbstractProvider;
 use Geocoder\Provider\IpAddressGeocoder;
 use Geocoder\Provider\LocaleAwareGeocoder;
 use Geocoder\Provider\Provider;
-use GeoIp2\Exception\AddressNotFoundException;
 use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Exception\InvalidCredentials;
+use Geocoder\Exception\QuotaExceeded;
+use GeoIp2\Exception\AddressNotFoundException;
+use GeoIp2\Exception\AuthenticationException;
+use GeoIp2\Exception\OutOfQueriesException;
 
 /**
  * @author Jens Wiese <jens@howtrueisfalse.de>
@@ -114,6 +118,18 @@ final class GeoIP2 extends AbstractProvider implements LocaleAwareGeocoder, IpAd
             $result = $this->adapter->getContent($uri);
         } catch (AddressNotFoundException $e) {
             return '';
+        } catch (AuthenticationException $e) {
+            throw new InvalidCredentials(
+                $e->getMessage(),
+                $e->getCode(),
+                $e
+            );
+        } catch (OutOfQueriesException $e) {
+            throw new QuotaExceeded(
+                $e->getMessage(),
+                $e->getCode(),
+                $e
+            );
         }
 
         return $result;

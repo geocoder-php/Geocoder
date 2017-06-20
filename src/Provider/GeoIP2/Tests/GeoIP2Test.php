@@ -20,6 +20,10 @@ use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\GeoIP2\GeoIP2;
 use Geocoder\Provider\GeoIP2\GeoIP2Adapter;
 use GeoIp2\Database\Reader;
+use GeoIp2\Exception\AuthenticationException;
+use GeoIp2\Exception\OutOfQueriesException;
+use Geocoder\Exception\InvalidCredentials;
+use Geocoder\Exception\QuotaExceeded;
 
 /**
  * @author Jens Wiese <jens@howtrueisfalse.de>
@@ -221,6 +225,32 @@ class GeoIP2Test extends BaseTestCase
         $provider = new GeoIP2($adapter);
         $locality = $provider->geocodeQuery(GeocodeQuery::create('79.114.34.148'))->first()->getLocality();
         $this->assertEquals('Timișoara', $locality);
+    }
+
+    /**
+     * @dataProvider provideDataForTestingExceptions
+     *
+     * @param \Exception $original
+     * @param string     $replacementClass
+     */
+    public function testExceptionConversion(\Exception $original, string $replacementClass)
+    {
+        $adapter = $this->getGeoIP2AdapterMock($original);
+        $provider = new GeoIP2($adapter);
+
+        self::expectException($replacementClass);
+        self::expectExceptionMessage($original->getMessage());
+        self::expectExceptionCode($original->getCode());
+
+        $results = $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
+    }
+
+    public static function provideDataForTestingExceptions(): array
+    {
+        return [
+            [new AuthenticationException('Credentials are no good'), InvalidCredentials::class],
+            [new OutOfQueriesException('You ran out'), QuotaExceeded::class],
+        ];
     }
 
     /**
