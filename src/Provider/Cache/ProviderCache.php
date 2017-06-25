@@ -57,7 +57,7 @@ final class ProviderCache implements Provider
      */
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
-        $cacheKey = sha1((string)$query);
+        $cacheKey = $this->getCacheKey($query);
         if (null !== $result = $this->cache->get($cacheKey)) {
             return $result;
         }
@@ -73,7 +73,7 @@ final class ProviderCache implements Provider
      */
     public function reverseQuery(ReverseQuery $query): Collection
     {
-        $cacheKey = sha1((string)$query);
+        $cacheKey = $this->getCacheKey($query);
         if (null !== $result = $this->cache->get($cacheKey)) {
             return $result;
         }
@@ -95,5 +95,16 @@ final class ProviderCache implements Provider
     public function __call($method, $args)
     {
         return call_user_func_array([$this->realProvider, $method], $args);
+    }
+
+    /**
+     * @param GeocodeQuery|ReverseQuery $query
+     *
+     * @return string
+     */
+    private function getCacheKey($query): string
+    {
+        // Include the major version number of the geocoder to avoid issues unserializing.
+        return 'v4'.sha1((string) $query);
     }
 }
