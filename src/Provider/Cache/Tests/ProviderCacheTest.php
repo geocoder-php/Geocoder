@@ -76,7 +76,6 @@ class ProviderCacheTest extends TestCase
         $result = new AddressCollection([Address::createFromArray([])]);
         $ttl = 4711;
 
-
         $this->cacheMock->expects($this->once())
             ->method('get')
             ->willReturn(null);
@@ -101,14 +100,12 @@ class ProviderCacheTest extends TestCase
         $result = new AddressCollection([Address::createFromArray([])]);
         $ttl = 4711;
 
-
         $this->cacheMock->expects($this->once())
             ->method('get')
             ->willReturn($result);
 
         $this->cacheMock->expects($this->never())
             ->method('set');
-
 
         $this->providerMock->expects($this->never())
             ->method('geocodeQuery');
@@ -123,7 +120,6 @@ class ProviderCacheTest extends TestCase
         $result = new AddressCollection([Address::createFromArray([])]);
         $ttl = 4711;
 
-
         $this->cacheMock->expects($this->once())
             ->method('get')
             ->willReturn(null);
@@ -133,12 +129,10 @@ class ProviderCacheTest extends TestCase
             ->with($query, $result, $ttl)
             ->willReturn(null);
 
-
         $this->providerMock->expects($this->once())
             ->method('reverseQuery')
             ->with($query)
             ->willReturn($result);
-
 
         $providerCache = new ProviderCache($this->providerMock, $this->cacheMock, $ttl);
         $providerCache->reverseQuery($query);
@@ -150,14 +144,12 @@ class ProviderCacheTest extends TestCase
         $result = new AddressCollection([Address::createFromArray([])]);
         $ttl = 4711;
 
-
         $this->cacheMock->expects($this->once())
             ->method('get')
             ->willReturn($result);
 
         $this->cacheMock->expects($this->never())
             ->method('set');
-
 
         $this->providerMock->expects($this->never())
             ->method('reverseQuery');

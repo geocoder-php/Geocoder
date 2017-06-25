@@ -13,21 +13,12 @@ declare(strict_types=1);
 namespace Geocoder\Provider\Cache;
 
 use Geocoder\Collection;
-use Geocoder\Exception\InvalidCredentials;
-use Geocoder\Exception\UnsupportedOperation;
-use Geocoder\Model\Address;
-use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Http\Provider\AbstractHttpProvider;
-use Geocoder\Provider\LocaleAwareGeocoder;
 use Geocoder\Provider\Provider;
-use Http\Client\HttpClient;
 use Psr\SimpleCache\CacheInterface;
 
 /**
- *
- *
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
 final class ProviderCache implements Provider
@@ -44,15 +35,15 @@ final class ProviderCache implements Provider
 
     /**
      * How log a result is going to be cached.
+     *
      * @var int|null
      */
     private $lifetime;
 
     /**
-     *
-     * @param Provider $realProvider
+     * @param Provider       $realProvider
      * @param CacheInterface $cache
-     * @param int $lifetime
+     * @param int            $lifetime
      */
     public function __construct(Provider $realProvider, CacheInterface $cache, int $lifetime = null)
     {
