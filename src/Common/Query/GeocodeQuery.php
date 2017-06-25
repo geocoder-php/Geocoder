@@ -180,13 +180,14 @@ final class GeocodeQuery
 
     /**
      * String for logging. This is also a unique key for the query
+     *
      * @return string
      */
     public function __toString()
     {
         return sprintf('GeocodeQuery: %s', json_encode([
-            'text'=>$this->getText(),
-            'bounds'=> $this->getBounds() ? $this->getBounds()->toArray() : 'null',
+            'text' => $this->getText(),
+            'bounds' => $this->getBounds() ? $this->getBounds()->toArray() : 'null',
             'locale' => $this->getLocale(),
             'limit' => $this->getLimit(),
             'data' => $this->getAllData(),
