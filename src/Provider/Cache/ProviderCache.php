@@ -1,0 +1,106 @@
+<?php
+
+declare(strict_types=1);
+
+/*
+ * This file is part of the Geocoder package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license    MIT License
+ */
+
+namespace Geocoder\Provider\Cache;
+
+use Geocoder\Collection;
+use Geocoder\Exception\InvalidCredentials;
+use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Model\Address;
+use Geocoder\Model\AddressCollection;
+use Geocoder\Query\GeocodeQuery;
+use Geocoder\Query\ReverseQuery;
+use Geocoder\Http\Provider\AbstractHttpProvider;
+use Geocoder\Provider\LocaleAwareGeocoder;
+use Geocoder\Provider\Provider;
+use Http\Client\HttpClient;
+use Psr\SimpleCache\CacheInterface;
+
+/**
+ *
+ *
+ * @author Tobias Nyholm <tobias.nyholm@gmail.com>
+ */
+final class ProviderCache implements Provider
+{
+    /**
+     * @var Provider
+     */
+    private $realProvider;
+
+    /**
+     * @var CacheInterface
+     */
+    private $cache;
+
+    /**
+     * How log a result is going to be cached.
+     * @var int|null
+     */
+    private $lifetime;
+
+    /**
+     *
+     * @param Provider $realProvider
+     * @param CacheInterface $cache
+     * @param int $lifetime
+     */
+    public function __construct(Provider $realProvider, CacheInterface $cache, int $lifetime = null)
+    {
+        $this->realProvider = $realProvider;
+        $this->cache = $cache;
+        $this->lifetime = $lifetime;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function geocodeQuery(GeocodeQuery $query): Collection
+    {
+        if (null !== $result = $this->cache->get(sha1($query))) {
+            return $result;
+        }
+
+        $result = $this->realProvider->geocodeQuery($query);
+        $this->cache->set(sha1($query), $result, $this->lifetime);
+
+        return $result;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function reverseQuery(ReverseQuery $query): Collection
+    {
+        if (null !== $result = $this->cache->get(sha1($query))) {
+            return $result;
+        }
+
+        $result = $this->realProvider->reverseQuery($query);
+        $this->cache->set(sha1($query), $result, $this->lifetime);
+
+        return $result;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getName(): string
+    {
+        return sprintf('%s (cache)', $this->realProvider->getName());
+    }
+
+    public function __call($method, $args)
+    {
+        return call_user_func_array([$this->realProvider, $method], $args);
+    }
+}
