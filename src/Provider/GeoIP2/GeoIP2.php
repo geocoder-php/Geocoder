@@ -18,8 +18,6 @@ use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\AbstractProvider;
-use Geocoder\Provider\IpAddressGeocoder;
-use Geocoder\Provider\LocaleAwareGeocoder;
 use Geocoder\Provider\Provider;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Exception\InvalidCredentials;

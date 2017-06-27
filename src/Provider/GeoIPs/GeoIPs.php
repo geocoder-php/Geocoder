@@ -23,7 +23,6 @@ use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Http\Provider\AbstractHttpProvider;
-use Geocoder\Provider\IpAddressGeocoder;
 use Geocoder\Provider\Provider;
 use Http\Client\HttpClient;
 
