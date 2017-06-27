@@ -30,7 +30,9 @@
         "php-http/curl-client": "^1.7",
         "php-http/mock-client": "^1.0",
         "nyholm/psr7": "^0.2.2",
-        "nyholm/nsa": "^1.1"
+        "nyholm/nsa": "^1.1",
+        "cache/simple-cache-bridge": "^0.1.1",
+        "cache/array-adapter": "^0.5.0"
     },
     "suggest": {
         "ext-geoip": "Enabling the geoip extension allows you to use the MaxMindProvider.",

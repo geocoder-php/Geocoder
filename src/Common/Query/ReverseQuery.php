@@ -155,4 +155,20 @@ final class ReverseQuery
     {
         return $this->data;
     }
+
+    /**
+     * String for logging. This is also a unique key for the query
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return sprintf('ReverseQuery: %s', json_encode([
+            'lat' => $this->getCoordinates()->getLatitude(),
+            'lng' => $this->getCoordinates()->getLongitude(),
+            'locale' => $this->getLocale(),
+            'limit' => $this->getLimit(),
+            'data' => $this->getAllData(),
+        ]));
+    }
 }
