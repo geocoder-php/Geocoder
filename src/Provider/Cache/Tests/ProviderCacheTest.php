@@ -82,7 +82,7 @@ class ProviderCacheTest extends TestCase
 
         $this->cacheMock->expects($this->once())
             ->method('set')
-            ->with($query, $result, $ttl)
+            ->with($this->anything(), $result, $ttl)
             ->willReturn(null);
 
         $this->providerMock->expects($this->once())
@@ -126,7 +126,7 @@ class ProviderCacheTest extends TestCase
 
         $this->cacheMock->expects($this->once())
             ->method('set')
-            ->with($query, $result, $ttl)
+            ->with($this->anything(), $result, $ttl)
             ->willReturn(null);
 
         $this->providerMock->expects($this->once())
