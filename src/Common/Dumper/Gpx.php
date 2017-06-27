@@ -18,7 +18,7 @@ use Geocoder\Location;
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-class Gpx implements Dumper
+final class Gpx extends AbstractDumper implements Dumper
 {
     /**
      * @param Location $location
@@ -68,32 +68,5 @@ GPX
 GPX;
 
         return $gpx;
-    }
-
-    /**
-     * @param Location $address
-     *
-     * @return string
-     */
-    protected function formatName(Location $address): string
-    {
-        $name = [];
-        $array = $address->toArray();
-
-        foreach (['streetNumber', 'streetName', 'postalCode', 'locality'] as $attr) {
-            $name[] = $array[$attr];
-        }
-
-        if (isset($array['adminLevels'][2])) {
-            $name[] = $array['adminLevels'][2]['name'];
-        }
-
-        if (isset($array['adminLevels'][1])) {
-            $name[] = $array['adminLevels'][1]['name'];
-        }
-
-        $name[] = $array['country'];
-
-        return implode(', ', array_filter($name));
     }
 }

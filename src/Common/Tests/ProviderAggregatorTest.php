@@ -17,8 +17,8 @@ use Geocoder\Geocoder;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\ProviderAggregator;
-use Geocoder\Provider\LocaleAwareGeocoder;
 use Geocoder\Provider\Provider;
+use Nyholm\NSA;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -27,13 +27,13 @@ use PHPUnit\Framework\TestCase;
 class ProviderAggregatorTest extends TestCase
 {
     /**
-     * @var TestableGeocoder
+     * @var ProviderAggregator
      */
     protected $geocoder;
 
     protected function setUp()
     {
-        $this->geocoder = new TestableGeocoder();
+        $this->geocoder = new ProviderAggregator();
     }
 
     public function testRegisterProvider()
@@ -41,7 +41,7 @@ class ProviderAggregatorTest extends TestCase
         $provider = new MockProvider('test');
         $this->geocoder->registerProvider($provider);
 
-        $this->assertSame($provider, $this->geocoder->getProvider());
+        $this->assertSame($provider, NSA::invokeMethod($this->geocoder, 'getProvider'));
     }
 
     public function testRegisterProviders()
@@ -49,7 +49,7 @@ class ProviderAggregatorTest extends TestCase
         $provider = new MockProvider('test');
         $this->geocoder->registerProviders([$provider]);
 
-        $this->assertSame($provider, $this->geocoder->getProvider());
+        $this->assertSame($provider, NSA::invokeMethod($this->geocoder, 'getProvider'));
     }
 
     public function testUsing()
@@ -58,16 +58,16 @@ class ProviderAggregatorTest extends TestCase
         $provider2 = new MockProvider('test2');
         $this->geocoder->registerProviders([$provider1, $provider2]);
 
-        $this->assertSame($provider1, $this->geocoder->getProvider());
+        $this->assertSame($provider1, NSA::invokeMethod($this->geocoder, 'getProvider'));
 
         $this->geocoder->using('test1');
-        $this->assertSame($provider1, $this->geocoder->getProvider());
+        $this->assertSame($provider1, NSA::invokeMethod($this->geocoder, 'getProvider'));
 
         $this->geocoder->using('test2');
-        $this->assertSame($provider2, $this->geocoder->getProvider());
+        $this->assertSame($provider2, NSA::invokeMethod($this->geocoder, 'getProvider'));
 
         $this->geocoder->using('test1');
-        $this->assertSame($provider1, $this->geocoder->getProvider());
+        $this->assertSame($provider1, NSA::invokeMethod($this->geocoder, 'getProvider'));
     }
 
     /**
@@ -109,7 +109,7 @@ class ProviderAggregatorTest extends TestCase
      */
     public function testGetProvider()
     {
-        $this->geocoder->getProvider();
+        NSA::invokeMethod($this->geocoder, 'getProvider');
         $this->fail('getProvider() should throw an exception');
     }
 
@@ -121,7 +121,7 @@ class ProviderAggregatorTest extends TestCase
             $provider3 = new MockProvider('test3'),
         ]);
 
-        $this->assertSame($provider1, $this->geocoder->getProvider());
+        $this->assertSame($provider1, NSA::invokeMethod($this->geocoder, 'getProvider'));
     }
 
     public function testDefaultMaxResults()
@@ -165,44 +165,5 @@ class MockProvider implements Provider
 
     public function returnResult(array $data = [])
     {
-    }
-}
-
-class MockLocaleAwareProvider extends MockProvider implements LocaleAwareGeocoder
-{
-}
-
-class MockProviderWithData extends MockProvider
-{
-    public function geocode($address)
-    {
-        return $this->returnResult([
-            'latitude' => 123,
-            'longitude' => 456,
-        ]);
-    }
-}
-
-class MockProviderWithRequestCount extends MockProvider
-{
-    public $geocodeCount = 0;
-
-    public function geocode($address)
-    {
-        ++$this->geocodeCount;
-
-        return parent::geocode($address);
-    }
-}
-
-class TestableGeocoder extends ProviderAggregator
-{
-    public $countCallGetProvider = 0;
-
-    public function getProvider(): Provider
-    {
-        ++$this->countCallGetProvider;
-
-        return parent::getProvider();
     }
 }

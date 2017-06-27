@@ -17,7 +17,7 @@ namespace Geocoder\Exception;
  *
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-class InvalidServerResponse extends \RuntimeException implements Exception
+final class InvalidServerResponse extends \RuntimeException implements Exception
 {
     /**
      * @param string $query

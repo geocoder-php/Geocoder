@@ -21,7 +21,7 @@ use Geocoder\Provider\Provider;
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-class StatefulGeocoder implements Geocoder, LocaleAwareGeocoder
+final class StatefulGeocoder implements Geocoder, LocaleAwareGeocoder
 {
     /**
      * @var string
@@ -66,7 +66,7 @@ class StatefulGeocoder implements Geocoder, LocaleAwareGeocoder
             $query->withLocale($this->locale);
         }
 
-        if (!empty($this->bouds)) {
+        if (!empty($this->bounds)) {
             $query->withBounds($this->bounds);
         }
 

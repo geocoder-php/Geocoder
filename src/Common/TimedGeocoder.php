@@ -22,7 +22,7 @@ use Symfony\Component\Stopwatch\Stopwatch;
  *
  * @author Markus Bachmann <markus.bachmann@bachi.biz>
  */
-class TimedGeocoder implements Geocoder
+final class TimedGeocoder implements Geocoder
 {
     use GeocoderTrait;
 

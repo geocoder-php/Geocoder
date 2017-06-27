@@ -17,6 +17,6 @@ namespace Geocoder\Exception;
  *
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class ExtensionNotLoaded extends \RuntimeException implements Exception
+final class ExtensionNotLoaded extends \RuntimeException implements Exception
 {
 }

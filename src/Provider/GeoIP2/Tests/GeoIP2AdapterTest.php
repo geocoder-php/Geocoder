@@ -84,7 +84,7 @@ class GeoIP2AdapterTest extends TestCase
     {
         $geoIp2Provider = $this->getGeoIP2ProviderMock();
         $geoIp2Provider
-            ->expects($this->any())
+            ->expects($this->once())
             ->method($geoIp2Model)
             ->with('127.0.0.1')
             ->will($this->returnValue(
