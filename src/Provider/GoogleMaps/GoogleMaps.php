@@ -30,7 +30,7 @@ use Http\Client\HttpClient;
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-final class GoogleMaps extends AbstractHttpProvider implements LocaleAwareGeocoder, Provider
+final class GoogleMaps extends AbstractHttpProvider implements  Provider
 {
     /**
      * @var string

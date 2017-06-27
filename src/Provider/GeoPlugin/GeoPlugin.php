@@ -26,7 +26,7 @@ use Geocoder\Provider\Provider;
 /**
  * @author Andrea Cristaudo <andrea.cristaudo@gmail.com>
  */
-final class GeoPlugin extends AbstractHttpProvider implements Provider, IpAddressGeocoder
+final class GeoPlugin extends AbstractHttpProvider implements Provider
 {
     /**
      * @var string

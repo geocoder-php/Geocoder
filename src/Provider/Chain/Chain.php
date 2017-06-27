@@ -24,7 +24,7 @@ use Psr\Log\LoggerAwareTrait;
 /**
  * @author Markus Bachmann <markus.bachmann@bachi.biz>
  */
-final class Chain implements LocaleAwareGeocoder, Provider, LoggerAwareInterface
+final class Chain implements  Provider, LoggerAwareInterface
 {
     use LoggerAwareTrait;
 

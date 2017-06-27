@@ -24,7 +24,7 @@ use Geocoder\Provider\AbstractProvider;
 use Geocoder\Provider\IpAddressGeocoder;
 use Geocoder\Provider\Provider;
 
-final class MaxMindBinary extends AbstractProvider implements Provider, IpAddressGeocoder
+final class MaxMindBinary extends AbstractProvider implements Provider
 {
     /**
      * @var string

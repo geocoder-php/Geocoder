@@ -27,7 +27,7 @@ use Http\Client\HttpClient;
 /**
  * @author David Guyon <dguyon@gmail.com>
  */
-final class BingMaps extends AbstractHttpProvider implements LocaleAwareGeocoder, Provider
+final class BingMaps extends AbstractHttpProvider implements  Provider
 {
     /**
      * @var string

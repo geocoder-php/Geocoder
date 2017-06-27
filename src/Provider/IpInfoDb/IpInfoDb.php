@@ -28,7 +28,7 @@ use Http\Client\HttpClient;
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-final class IpInfoDb extends AbstractHttpProvider implements Provider, IpAddressGeocoder
+final class IpInfoDb extends AbstractHttpProvider implements Provider
 {
     /**
      * @var string

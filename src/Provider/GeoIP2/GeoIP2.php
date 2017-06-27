@@ -31,7 +31,7 @@ use GeoIp2\Exception\OutOfQueriesException;
 /**
  * @author Jens Wiese <jens@howtrueisfalse.de>
  */
-final class GeoIP2 extends AbstractProvider implements LocaleAwareGeocoder, IpAddressGeocoder, Provider
+final class GeoIP2 extends AbstractProvider implements Provider
 {
     /**
      * @var GeoIP2Adapter

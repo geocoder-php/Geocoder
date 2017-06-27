@@ -27,7 +27,7 @@ use Http\Client\HttpClient;
 /**
  * @author Antoine Corcy <contact@sbin.dk>
  */
-final class TomTom extends AbstractHttpProvider implements LocaleAwareGeocoder, Provider
+final class TomTom extends AbstractHttpProvider implements  Provider
 {
     /**
      * @var string

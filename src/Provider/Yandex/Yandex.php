@@ -27,7 +27,7 @@ use Http\Client\HttpClient;
 /**
  * @author Antoine Corcy <contact@sbin.dk>
  */
-final class Yandex extends AbstractHttpProvider implements LocaleAwareGeocoder, Provider
+final class Yandex extends AbstractHttpProvider implements  Provider
 {
     /**
      * @var string

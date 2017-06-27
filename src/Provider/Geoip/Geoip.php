@@ -28,7 +28,7 @@ use Geocoder\Provider\Provider;
  *
  * @see http://php.net/manual/ref.geoip.php
  */
-final class Geoip extends AbstractProvider implements Provider, IpAddressGeocoder
+final class Geoip extends AbstractProvider implements Provider
 {
     public function __construct()
     {

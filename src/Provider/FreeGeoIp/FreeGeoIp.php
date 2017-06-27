@@ -26,7 +26,7 @@ use Http\Client\HttpClient;
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-final class FreeGeoIp extends AbstractHttpProvider implements Provider, IpAddressGeocoder
+final class FreeGeoIp extends AbstractHttpProvider implements Provider
 {
     /**
      * @var string

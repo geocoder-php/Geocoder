@@ -25,7 +25,7 @@ use Geocoder\Provider\Provider;
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-final class HostIp extends AbstractHttpProvider implements Provider, IpAddressGeocoder
+final class HostIp extends AbstractHttpProvider implements Provider
 {
     /**
      * @var string

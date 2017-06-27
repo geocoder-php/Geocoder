@@ -29,7 +29,7 @@ use Http\Client\HttpClient;
 /**
  * @author mtm <mtm@opencagedata.com>
  */
-final class OpenCage extends AbstractHttpProvider implements LocaleAwareGeocoder, Provider
+final class OpenCage extends AbstractHttpProvider implements  Provider
 {
     /**
      * @var string

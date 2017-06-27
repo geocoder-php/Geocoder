@@ -33,7 +33,7 @@ use Http\Client\HttpClient;
  *
  * @see http://www.geoips.com/en/developer/api-guide
  */
-final class GeoIPs extends AbstractHttpProvider implements Provider, IpAddressGeocoder
+final class GeoIPs extends AbstractHttpProvider implements Provider
 {
     /**
      * @var string
