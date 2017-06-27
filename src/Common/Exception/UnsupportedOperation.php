@@ -18,6 +18,6 @@ namespace Geocoder\Exception;
  *
  * @author William Durand <william.durand1@gmail.com>
  */
-class UnsupportedOperation extends InvalidArgument implements Exception
+final class UnsupportedOperation extends InvalidArgument implements Exception
 {
 }

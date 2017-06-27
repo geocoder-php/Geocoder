@@ -17,6 +17,7 @@ use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\Provider;
 use Geocoder\Provider\Chain\Chain;
+use Nyholm\NSA;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -30,6 +31,7 @@ class ChainTest extends TestCase
         $chain = new Chain();
 
         $chain->add($mock);
+        $this->assertCount(1, NSA::getProperty($chain, 'providers'));
     }
 
     public function testGetName()

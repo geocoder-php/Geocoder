@@ -15,7 +15,7 @@ namespace Geocoder\Exception;
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-class FunctionNotFound extends \RuntimeException implements Exception
+final class FunctionNotFound extends \RuntimeException implements Exception
 {
     /**
      * @param string $functionName

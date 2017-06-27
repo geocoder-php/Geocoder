@@ -17,7 +17,7 @@ use Geocoder\Location;
 /**
  * @author Jan Sorgalla <jsorgalla@googlemail.com>
  */
-class Wkt implements Dumper
+final class Wkt implements Dumper
 {
     /**
      * {@inheritdoc}

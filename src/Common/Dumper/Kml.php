@@ -17,7 +17,7 @@ use Geocoder\Location;
 /**
  * @author Jan Sorgalla <jsorgalla@googlemail.com>
  */
-class Kml extends Gpx implements Dumper
+final class Kml extends AbstractDumper implements Dumper
 {
     /**
      * {@inheritdoc}

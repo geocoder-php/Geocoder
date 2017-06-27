@@ -17,6 +17,6 @@ namespace Geocoder\Exception;
  *
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-class CollectionIsEmpty extends \LogicException implements Exception
+final class CollectionIsEmpty extends \LogicException implements Exception
 {
 }

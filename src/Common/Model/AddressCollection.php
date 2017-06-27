@@ -17,7 +17,7 @@ use Geocoder\Exception\CollectionIsEmpty;
 use Geocoder\Exception\OutOfBounds;
 use Geocoder\Location;
 
-class AddressCollection implements Collection
+final class AddressCollection implements Collection
 {
     /**
      * @var Location[]
