@@ -1,0 +1,45 @@
+{
+    "name": "geocoder-php/pickpoint-provider",
+    "type": "library",
+    "description": "Geocoder PickPoint adapter",
+    "keywords": [],
+    "homepage": "http://geocoder-php.org/Geocoder/",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Vladimir Kalinkin",
+            "email": "vova.kalinkin@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.0",
+        "geocoder-php/common-http": "^4.0",
+        "willdurand/geocoder": "^4.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.1",
+        "geocoder-php/provider-integration-tests": "^1.0",
+        "php-http/message": "^1.0",
+        "php-http/curl-client": "^1.7",
+        "nyholm/psr7": "^0.2.2"
+    },
+    "provide": {
+        "geocoder-php/provider-implementation": "1.0"
+    },
+    "autoload": {
+        "psr-4": { "Geocoder\\Provider\\PickPoint\\": "" },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-ci": "vendor/bin/phpunit --coverage-text --coverage-clover=build/coverage.xml"
+    },
+    "minimum-stability": "dev",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "4.0-dev"
+        }
+    }
+}
