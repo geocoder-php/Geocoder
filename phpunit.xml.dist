@@ -27,6 +27,7 @@
         <server name="OPENCAGE_API_KEY" value="YOUR_GEOCODING_KEY" />
         <server name="MAPZEN_API_KEY" value="YOUR_MAPZEN_API_KEY" />
         <server name="IPINFODB_API_KEY" value="YOUR_API_KEY" />
+        <server name="PICKPOINT_API_KEY" value="YOUR_API_KEY" />
         <!--<server name="MAXMIND_API_KEY" value="YOUR_API_KEY" />-->
     </php>
 
