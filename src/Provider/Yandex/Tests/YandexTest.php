@@ -18,7 +18,6 @@ use Geocoder\Location;
 use Geocoder\Provider\Yandex\Model\YandexAddress;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Tests\TestCase;
 use Geocoder\Provider\Yandex\Yandex;
 
 /**
