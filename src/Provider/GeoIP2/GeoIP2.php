@@ -18,8 +18,6 @@ use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\AbstractProvider;
-use Geocoder\Provider\IpAddressGeocoder;
-use Geocoder\Provider\LocaleAwareGeocoder;
 use Geocoder\Provider\Provider;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Exception\InvalidCredentials;
@@ -31,7 +29,7 @@ use GeoIp2\Exception\OutOfQueriesException;
 /**
  * @author Jens Wiese <jens@howtrueisfalse.de>
  */
-final class GeoIP2 extends AbstractProvider implements LocaleAwareGeocoder, IpAddressGeocoder, Provider
+final class GeoIP2 extends AbstractProvider implements Provider
 {
     /**
      * @var GeoIP2Adapter

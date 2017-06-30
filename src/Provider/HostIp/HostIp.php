@@ -19,13 +19,12 @@ use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Http\Provider\AbstractHttpProvider;
-use Geocoder\Provider\IpAddressGeocoder;
 use Geocoder\Provider\Provider;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-final class HostIp extends AbstractHttpProvider implements Provider, IpAddressGeocoder
+final class HostIp extends AbstractHttpProvider implements Provider
 {
     /**
      * @var string

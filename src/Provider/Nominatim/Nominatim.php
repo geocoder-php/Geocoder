@@ -21,14 +21,13 @@ use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Http\Provider\AbstractHttpProvider;
-use Geocoder\Provider\LocaleAwareGeocoder;
 use Geocoder\Provider\Provider;
 use Http\Client\HttpClient;
 
 /**
  * @author Niklas Närhinen <niklas@narhinen.net>
  */
-final class Nominatim extends AbstractHttpProvider implements LocaleAwareGeocoder, Provider
+final class Nominatim extends AbstractHttpProvider implements Provider
 {
     /**
      * @var string

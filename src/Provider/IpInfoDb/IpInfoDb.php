@@ -21,14 +21,13 @@ use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Http\Provider\AbstractHttpProvider;
-use Geocoder\Provider\IpAddressGeocoder;
 use Geocoder\Provider\Provider;
 use Http\Client\HttpClient;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-final class IpInfoDb extends AbstractHttpProvider implements Provider, IpAddressGeocoder
+final class IpInfoDb extends AbstractHttpProvider implements Provider
 {
     /**
      * @var string
