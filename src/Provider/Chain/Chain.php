@@ -16,7 +16,6 @@ use Geocoder\Collection;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Provider\LocaleAwareGeocoder;
 use Geocoder\Provider\Provider;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
@@ -24,7 +23,7 @@ use Psr\Log\LoggerAwareTrait;
 /**
  * @author Markus Bachmann <markus.bachmann@bachi.biz>
  */
-final class Chain implements LocaleAwareGeocoder, Provider, LoggerAwareInterface
+final class Chain implements Provider, LoggerAwareInterface
 {
     use LoggerAwareTrait;
 

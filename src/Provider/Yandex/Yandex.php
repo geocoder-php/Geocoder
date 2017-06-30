@@ -20,14 +20,13 @@ use Geocoder\Provider\Yandex\Model\YandexAddress;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Http\Provider\AbstractHttpProvider;
-use Geocoder\Provider\LocaleAwareGeocoder;
 use Geocoder\Provider\Provider;
 use Http\Client\HttpClient;
 
 /**
  * @author Antoine Corcy <contact@sbin.dk>
  */
-final class Yandex extends AbstractHttpProvider implements LocaleAwareGeocoder, Provider
+final class Yandex extends AbstractHttpProvider implements Provider
 {
     /**
      * @var string

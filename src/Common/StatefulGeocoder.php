@@ -15,13 +15,12 @@ namespace Geocoder;
 use Geocoder\Model\Bounds;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Provider\LocaleAwareGeocoder;
 use Geocoder\Provider\Provider;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-final class StatefulGeocoder implements Geocoder, LocaleAwareGeocoder
+final class StatefulGeocoder implements Geocoder
 {
     /**
      * @var string

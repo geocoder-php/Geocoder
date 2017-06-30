@@ -20,14 +20,13 @@ use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Http\Provider\AbstractHttpProvider;
-use Geocoder\Provider\LocaleAwareGeocoder;
 use Geocoder\Provider\Provider;
 use Http\Client\HttpClient;
 
 /**
  * @author David Guyon <dguyon@gmail.com>
  */
-final class BingMaps extends AbstractHttpProvider implements LocaleAwareGeocoder, Provider
+final class BingMaps extends AbstractHttpProvider implements Provider
 {
     /**
      * @var string

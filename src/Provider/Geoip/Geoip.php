@@ -20,7 +20,6 @@ use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\AbstractProvider;
-use Geocoder\Provider\IpAddressGeocoder;
 use Geocoder\Provider\Provider;
 
 /**
@@ -28,7 +27,7 @@ use Geocoder\Provider\Provider;
  *
  * @see http://php.net/manual/ref.geoip.php
  */
-final class Geoip extends AbstractProvider implements Provider, IpAddressGeocoder
+final class Geoip extends AbstractProvider implements Provider
 {
     public function __construct()
     {

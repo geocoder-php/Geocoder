@@ -23,7 +23,6 @@ use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Http\Provider\AbstractHttpProvider;
-use Geocoder\Provider\IpAddressGeocoder;
 use Geocoder\Provider\Provider;
 use Http\Client\HttpClient;
 
@@ -33,7 +32,7 @@ use Http\Client\HttpClient;
  *
  * @see http://www.geoips.com/en/developer/api-guide
  */
-final class GeoIPs extends AbstractHttpProvider implements Provider, IpAddressGeocoder
+final class GeoIPs extends AbstractHttpProvider implements Provider
 {
     /**
      * @var string

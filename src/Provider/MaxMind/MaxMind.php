@@ -21,14 +21,13 @@ use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Http\Provider\AbstractHttpProvider;
-use Geocoder\Provider\IpAddressGeocoder;
 use Geocoder\Provider\Provider;
 use Http\Client\HttpClient;
 
 /**
  * @author Andrea Cristaudo <andrea.cristaudo@gmail.com>
  */
-final class MaxMind extends AbstractHttpProvider implements Provider, IpAddressGeocoder
+final class MaxMind extends AbstractHttpProvider implements Provider
 {
     /**
      * @var string Country, City, ISP and Organization
