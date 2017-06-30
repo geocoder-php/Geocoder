@@ -127,6 +127,15 @@ Provider       | Package | Features | Stats
 [TomTom](https://github.com/geocoder-php/tomtom-provider) | `geocoder-php/tomtom-provider` | address, reverse <br> [Website](https://geocoder.tomtom.com/app/view/index) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/tomtom-provider/v/stable)](https://packagist.org/packages/geocoder-php/tomtom-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/tomtom-provider/downloads)](https://packagist.org/packages/geocoder-php/tomtom-provider)
 [Yandex](https://github.com/geocoder-php/yandex-provider) | `geocoder-php/yandex-provider` | address, reverse <br> [Website](http://api.yandex.com/maps/) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/yandex-provider/v/stable)](https://packagist.org/packages/geocoder-php/yandex-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/yandex-provider/downloads)](https://packagist.org/packages/geocoder-php/yandex-provider)
 
+#### Other packages
+
+There are two "abstract" or "base" packages that most providers require. Those are
+
+Nmae       | Package | Features | Stats
+:--------- |:------- |:-------- |:-------
+[PHP common](https://github.com/geocoder-php/php-common) | `willdurand/geocoderr` | Models, interfaces, exceptions etc | [![Latest Stable Version](https://poser.pugx.org/willdurand/geocoder/v/stable)](https://packagist.org/packages/willdurand/geocoder) <br>[![Total Downloads](https://poser.pugx.org/willdurand/geocoder/downloads)](https://packagist.org/packages/willdurand/geocoder)
+[HTTP common](https://github.com/geocoder-php/php-common-http) | `geocoder-php/common-http` | `AbstractHttpProcider`, HTTPlug | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/common-http/v/stable)](https://packagist.org/packages/geocoder-php/common-http) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/common-http/downloads)](https://packagist.org/packages/geocoder-php/common-http)
+
 Special Geocoders and Providers
 -------------------------------
 
