@@ -129,9 +129,9 @@ Provider       | Package | Features | Stats
 
 #### Other packages
 
-There are two "abstract" or "base" packages that most providers require. Those are
+There are two "*abstract*" or "*base*" packages that most providers depend on.
 
-Nmae       | Package | Features | Stats
+Name       | Package | Features | Stats
 :--------- |:------- |:-------- |:-------
 [PHP common](https://github.com/geocoder-php/php-common) | `willdurand/geocoderr` | Models, interfaces, exceptions etc | [![Latest Stable Version](https://poser.pugx.org/willdurand/geocoder/v/stable)](https://packagist.org/packages/willdurand/geocoder) <br>[![Total Downloads](https://poser.pugx.org/willdurand/geocoder/downloads)](https://packagist.org/packages/willdurand/geocoder)
 [HTTP common](https://github.com/geocoder-php/php-common-http) | `geocoder-php/common-http` | `AbstractHttpProcider`, HTTPlug | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/common-http/v/stable)](https://packagist.org/packages/geocoder-php/common-http) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/common-http/downloads)](https://packagist.org/packages/geocoder-php/common-http)
