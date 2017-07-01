@@ -1,7 +1,7 @@
 {
-    "name": "willdurand/geocoder",
+    "name": "geocoder-php/geocoder",
     "type": "library",
-    "description": "The almost missing Geocoder PHP 5.4 library.",
+    "description": "A development package for all providers",
     "keywords": ["geocoder", "geocoding", "abstraction", "geoip"],
     "homepage": "http://geocoder-php.org",
     "license": "MIT",
@@ -51,6 +51,7 @@
     "scripts": {
         "test": "vendor/bin/phpunit"
     },
+    "minimum-stability": "dev",
     "extra": {
         "branch-alias": {
             "dev-master": "4.0-dev"
