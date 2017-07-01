@@ -21,7 +21,7 @@ use Geocoder\Provider\Provider;
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-final class ProviderAggregator implements Geocoder
+class ProviderAggregator implements Geocoder
 {
     /**
      * @var Provider[]
