@@ -26,7 +26,6 @@ class NominatimTest extends BaseTestCase
         return __DIR__.'/.cached_responses';
     }
 
-
     public function testGeocodeWithLocalhostIPv4()
     {
         $provider = Nominatim::withOpenStreetMapServer($this->getMockedHttpClient());

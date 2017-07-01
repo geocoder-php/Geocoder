@@ -17,7 +17,6 @@ use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Location;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Tests\TestCase;
 use Geocoder\Provider\OpenCage\OpenCage;
 
 /**
@@ -29,7 +28,6 @@ class OpenCageTest extends BaseTestCase
     {
         return __DIR__.'/.cached_responses';
     }
-
 
     public function testGetName()
     {
@@ -45,7 +43,6 @@ class OpenCageTest extends BaseTestCase
         $this->assertInstanceOf(Collection::class, $result);
         $this->assertEquals(0, $result->count());
     }
-
 
     public function testGeocodeWithRealAddress()
     {
