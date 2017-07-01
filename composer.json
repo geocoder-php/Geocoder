@@ -51,7 +51,7 @@
     "scripts": {
         "test": "vendor/bin/phpunit"
     },
-    "minimum-stabillity": "dev",
+    "minimum-stability": "dev",
     "extra": {
         "branch-alias": {
             "dev-master": "4.0-dev"
