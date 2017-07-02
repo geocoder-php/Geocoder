@@ -30,6 +30,46 @@ final class GeonamesAddress extends Address
     private $fclName;
 
     /**
+     * @var string|null
+     */
+    private $fipsCode;
+
+    /**
+     * @var string|null
+     */
+    private $capital;
+
+    /**
+     * @var string|null
+     */
+    private $continent;
+
+    /**
+     * @var array
+     */
+    private $languages = [];
+
+    /**
+     * @var int|null
+     */
+    private $isoNumeric;
+
+    /**
+     * @var string|null
+     */
+    private $isoAlpha3;
+
+    /**
+     * @var float|null
+     */
+    private $areaInSqKm;
+
+    /**
+     * @var string|null
+     */
+    private $currencyCode;
+
+    /**
      * @var int|null
      */
     private $population;
@@ -117,6 +157,174 @@ final class GeonamesAddress extends Address
     {
         $new = clone $this;
         $new->fclName = $fclName;
+
+        return $new;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getFipsCode()
+    {
+        return $this->fipsCode;
+    }
+
+    /**
+     * @param null|string $fipsCode
+     *
+     * @return GeonamesAddress
+     */
+    public function withFipsCode($fipsCode)
+    {
+        $new = clone $this;
+        $new->fipsCode = $fipsCode;
+
+        return $new;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getCapital()
+    {
+        return $this->capital;
+    }
+
+    /**
+     * @param null|string $capital
+     *
+     * @return GeonamesAddress
+     */
+    public function withCapital($capital)
+    {
+        $new = clone $this;
+        $new->capital = $capital;
+
+        return $new;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getContinent()
+    {
+        return $this->continent;
+    }
+
+    /**
+     * @param null|string $continent
+     *
+     * @return GeonamesAddress
+     */
+    public function withContinent($continent)
+    {
+        $new = clone $this;
+        $new->continent = $continent;
+
+        return $new;
+    }
+
+    /**
+     * @return array
+     */
+    public function getLanguages()
+    {
+        return $this->languages;
+    }
+
+    /**
+     * @param string $languages
+     *
+     * @return GeonamesAddress
+     */
+    public function withLanguages($languages)
+    {
+        $new = clone $this;
+        $new->languages = explode(',', $languages);
+
+        return $new;
+    }
+
+    /**
+     * @return null|int
+     */
+    public function getIsoNumeric()
+    {
+        return $this->isoNumeric;
+    }
+
+    /**
+     * @param null|int $isoNumeric
+     *
+     * @return GeonamesAddress
+     */
+    public function withIsoNumeric($isoNumeric)
+    {
+        $new = clone $this;
+        $new->isoNumeric = $isoNumeric;
+
+        return $new;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getIsoAlpha3()
+    {
+        return $this->isoAlpha3;
+    }
+
+    /**
+     * @param null|string $isoAlpha3
+     *
+     * @return GeonamesAddress
+     */
+    public function withIsoAlpha3($isoAlpha3)
+    {
+        $new = clone $this;
+        $new->isoAlpha3 = $isoAlpha3;
+
+        return $new;
+    }
+
+    /**
+     * @return null|float
+     */
+    public function getAreaInSqKm()
+    {
+        return $this->areaInSqKm;
+    }
+
+    /**
+     * @param null|float $areaInSqKm
+     *
+     * @return GeonamesAddress
+     */
+    public function withAreaInSqKm($areaInSqKm)
+    {
+        $new = clone $this;
+        $new->areaInSqKm = $areaInSqKm;
+
+        return $new;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getCurrencyCode()
+    {
+        return $this->currencyCode;
+    }
+
+    /**
+     * @param null|string $currencyCode
+     *
+     * @return GeonamesAddress
+     */
+    public function withCurrencyCode($currencyCode)
+    {
+        $new = clone $this;
+        $new->currencyCode = $currencyCode;
 
         return $new;
     }

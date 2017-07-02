@@ -44,6 +44,11 @@ final class Geonames extends AbstractHttpProvider implements Provider
     /**
      * @var string
      */
+    const BASE_ENDPOINT_URL = 'http://api.geonames.org/%s?username=%s';
+
+    /**
+     * @var string
+     */
     private $username;
 
     /**
@@ -89,6 +94,43 @@ final class Geonames extends AbstractHttpProvider implements Provider
         $url = sprintf(self::REVERSE_ENDPOINT_URL, $latitude, $longitude, $query->getLimit(), $this->username);
 
         return $this->executeQuery($url, $query->getLocale());
+    }
+
+    /**
+     * @param string|null $country
+     *
+     * @param string|null $locale
+     *
+     * @param int|null $maxRows
+     *
+     * @param int|null $startRow
+     *
+     * @return Collection
+     *
+     * @throws \Geocoder\Exception\Exception
+     */
+    public function getCountryInfo(string $country = null, string $locale = null, int $maxRows = null, int $startRow = null): Collection
+    {
+        $url = sprintf(self::BASE_ENDPOINT_URL, 'countryInfoJSON', $this->username);
+
+        if (isset($country))
+        {
+            $url = sprintf('%s&country=%s', $url, $country);
+        }
+
+        if (isset($maxRows))
+        {
+            $url = sprintf('%s&maxRows=%d', $url, $maxRows);
+        }
+
+        if (isset($startRow))
+        {
+            $url = sprintf('%s&startRow=%d', $url, $startRow);
+        }
+
+        $url = sprintf('%s&style=FULL', $url);
+
+        return $this->executeExtendedQuery($url, $locale);
     }
 
     /**
@@ -158,6 +200,58 @@ final class Geonames extends AbstractHttpProvider implements Provider
             $address = $address->withPopulation($item->population ?? null);
             $address = $address->withGeonameId($item->geonameId ?? null);
             $address = $address->withFcode($item->fcode ?? null);
+
+            $results[] = $address;
+        }
+
+        return new AddressCollection($results);
+    }
+
+    /**
+     * @param string      $url
+     * @param string|null $locale
+     *
+     * @return AddressCollection
+     */
+    private function executeExtendedQuery(string $url, string $locale = null)
+    {
+        if (null !== $locale) {
+            // Locale code transformation: for example from it_IT to it
+            $url = sprintf('%s&lang=%s', $url, substr($locale, 0, 2));
+        }
+
+        $content = $this->getUrlContents($url);
+        if (null === $json = json_decode($content)) {
+            throw InvalidServerResponse::create($url);
+        }
+
+        $data = $json->geonames;
+
+        if (empty($data)) {
+            return new AddressCollection([]);
+        }
+
+        $results = [];
+        foreach ($data as $item) {
+            $builder = new AddressBuilder($this->getName());
+
+            $builder->setBounds($item->south, $item->west, $item->north, $item->east);
+
+            $builder->setCountry($item->countryName ?? null);
+            $builder->setCountryCode($item->countryCode ?? null);
+
+            /** @var GeonamesAddress $address */
+            $address = $builder->build(GeonamesAddress::class);
+            $address = $address->withPopulation($item->population ?? null);
+            $address = $address->withGeonameId($item->geonameId ?? null);
+            $address = $address->withFipsCode($item->fipsCode ?? null);
+            $address = $address->withLanguages($item->langesuages ?? '');
+            $address = $address->withCapital($item->capital ?? null);
+            $address = $address->withContinent($item->continent ?? null);
+            $address = $address->withIsoNumeric($item->isoNumeric ?? null);
+            $address = $address->withIsoAlpha3($item->isoAlpha3 ?? null);
+            $address = $address->withAreaInSqKm($item->areaInSqKm ?? null);
+            $address = $address->withCurrencyCode($item->currencyCode ?? null);
 
             $results[] = $address;
         }
