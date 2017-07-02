@@ -2,6 +2,16 @@
 
 The change log describes what is "Added", "Removed", "Changed" or "Fixed" between each release.
 
+## Unreleased
+
+### Added 
+
+- The constructor of `ProvierAggregator` will accept a callable that can decide what providers should be used for a specific query. 
+
+### Changed
+
+- `ProvierAggregator::getProvider` is now private
+
 ## 4.0.0 - Beta 2
 
 ### Added
