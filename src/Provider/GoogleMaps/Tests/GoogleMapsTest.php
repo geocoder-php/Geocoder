@@ -327,7 +327,6 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertEquals('Durmitor Nacionalni Park', $result->getPointOfInterest());
         $this->assertEquals('Montenegro', $result->getPolitical());
         $this->assertEquals('Montenegro', $result->getCountry());
-
     }
 
     public function testGeocodeBoundsWithRealAddressWithViewportOnly()
