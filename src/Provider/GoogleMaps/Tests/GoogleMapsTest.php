@@ -310,6 +310,7 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals('61', $result->getSubpremise());
     }
+
     public function testGeocodeWithAdditonalAddressComponents()
     {
         $provider = new GoogleMaps($this->getHttpClient());
@@ -328,6 +329,7 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertEquals('Montenegro', $result->getCountry());
 
     }
+
     public function testGeocodeBoundsWithRealAddressWithViewportOnly()
     {
         $provider = new GoogleMaps($this->getHttpClient());

@@ -293,7 +293,7 @@ final class GoogleAddress extends Address
      */
     public function getPolitical(): string
     {
-    return $this->political;
+        return $this->political;
     }
 
     /**
