@@ -310,7 +310,24 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals('61', $result->getSubpremise());
     }
+    public function testGeocodeWithAdditonalAddressComponents()
+    {
+        $provider = new GoogleMaps($this->getHttpClient());
+        $results = $provider->geocodeQuery(GeocodeQuery::create('Durmitor Nacionalni Park'));
 
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertCount(1, $results);
+
+        /** @var GoogleAddress $result */
+        $result = $results->first();
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals('Durmitor Nacionalni Park', $result->getNaturalFeature());
+        $this->assertEquals('Durmitor Nacionalni Park', $result->getPark());
+        $this->assertEquals('Durmitor Nacionalni Park', $result->getPointOfInterest());
+        $this->assertEquals('Montenegro', $result->getPolitical());
+        $this->assertEquals('Montenegro', $result->getCountry());
+
+    }
     public function testGeocodeBoundsWithRealAddressWithViewportOnly()
     {
         $provider = new GoogleMaps($this->getHttpClient());

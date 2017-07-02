@@ -37,7 +37,62 @@ final class GoogleAddress extends Address
     /**
      * @var string|null
      */
+    private $streetAddress;
+
+    /**
+     * @var string|null
+     */
+    private $intersection;
+
+    /**
+     * @var string|null
+     */
+    private $political;
+
+    /**
+     * @var string|null
+     */
+    private $colloquialArea;
+
+    /**
+     * @var string|null
+     */
+    private $ward;
+
+    /**
+     * @var string|null
+     */
+    private $neighborhood;
+
+    /**
+     * @var string|null
+     */
+    private $premise;
+
+    /**
+     * @var string|null
+     */
     private $subpremise;
+
+    /**
+     * @var string|null
+     */
+    private $naturalFeature;
+
+    /**
+     * @var string|null
+     */
+    private $airport;
+
+    /**
+     * @var string|null
+     */
+    private $park;
+
+    /**
+     * @var string|null
+     */
+    private $pointOfInterest;
 
     /**
      * @param null|string $locationType
@@ -103,7 +158,197 @@ final class GoogleAddress extends Address
     /**
      * @return null|string
      */
-    public function getSubpremise()
+    public function getAirport(): string
+    {
+        return $this->airport;
+    }
+
+    /**
+     * @param null|string $airport
+     */
+    public function withAirport(string $airport = null)
+    {
+        $new = clone $this;
+        $new->airport = $airport;
+
+        return $new;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getColloquialArea(): string
+    {
+        return $this->colloquialArea;
+    }
+
+    /**
+     * @param null|string $colloquialArea
+     */
+    public function withColloquialArea(string $colloquialArea = null)
+    {
+        $new = clone $this;
+        $new->colloquialArea = $colloquialArea;
+
+        return $new;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getIntersection(): string
+    {
+        return $this->intersection;
+    }
+
+    /**
+     * @param null|string $intersection
+     */
+    public function withIntersection(string $intersection = null)
+    {
+        $new = clone $this;
+        $new->intersection = $intersection;
+
+        return $new;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getNaturalFeature(): string
+    {
+        return $this->naturalFeature;
+    }
+
+    /**
+     * @param null|string $naturalFeature
+     */
+    public function withNaturalFeature(string $naturalFeature = null)
+    {
+        $new = clone $this;
+        $new->naturalFeature = $naturalFeature;
+
+        return $new;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getNeighborhood(): string
+    {
+        return $this->neighborhood;
+    }
+
+    /**
+     * @param null|string $neighborhood
+     */
+    public function withNeighborhood(string $neighborhood = null)
+    {
+        $new = clone $this;
+        $new->neighborhood = $neighborhood;
+
+        return $new;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getPark(): string
+    {
+        return $this->park;
+    }
+
+    /**
+     * @param null|string $park
+     */
+    public function withPark(string $park = null)
+    {
+        $new = clone $this;
+        $new->park = $park;
+
+        return $new;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getPointOfInterest(): string
+    {
+        return $this->pointOfInterest;
+    }
+
+    /**
+     * @param null|string $pointOfInterest
+     */
+    public function withPointOfInterest(string $pointOfInterest = null)
+    {
+        $new = clone $this;
+        $new->pointOfInterest = $pointOfInterest;
+
+        return $new;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getPolitical(): string
+    {
+    return $this->political;
+    }
+
+    /**
+     * @param null|string $political
+     */
+    public function withPolitical(string $political = null)
+    {
+        $new = clone $this;
+        $new->political = $political;
+
+        return $new;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getPremise(): string
+    {
+        return $this->premise;
+    }
+
+    /**
+     * @param null|string $premise
+     */
+    public function withPremise($premise = null)
+    {
+        $new = clone $this;
+        $new->premise = $premise;
+
+        return $new;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getStreetAddress(): string
+    {
+        return $this->streetAddress;
+    }
+
+    /**
+     * @param null|string $streetAddress
+     */
+    public function withStreetAddress(string $streetAddress = null)
+    {
+        $new = clone $this;
+        $new->streetAddress = $streetAddress;
+
+        return $new;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getSubpremise(): string
     {
         return $this->subpremise;
     }
@@ -115,6 +360,25 @@ final class GoogleAddress extends Address
     {
         $new = clone $this;
         $new->subpremise = $subpremise;
+
+        return $new;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getWard(): string
+    {
+        return $this->ward;
+    }
+
+    /**
+     * @param null|string $ward
+     */
+    public function withWard(string $ward = null)
+    {
+        $new = clone $this;
+        $new->ward = $ward;
 
         return $new;
     }
