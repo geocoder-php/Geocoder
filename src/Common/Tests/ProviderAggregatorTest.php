@@ -41,13 +41,12 @@ class ProviderAggregatorTest extends TestCase
     public function testGeocode()
     {
         $provider1 = new MockProvider('test1');
-        $provider1->result = [Address::createFromArray(['providedBy'=>'p1'])];
+        $provider1->result = [Address::createFromArray(['providedBy' => 'p1'])];
         $provider2 = new MockProvider('test2');
-        $provider2->result = [Address::createFromArray(['providedBy'=>'p2'])];
+        $provider2->result = [Address::createFromArray(['providedBy' => 'p2'])];
 
         $this->geocoder->registerProvider($provider1);
         $this->geocoder->registerProvider($provider2);
-
 
         $result = $this->geocoder->geocode('foo');
         $this->assertEquals('p1', $result->first()->getProvidedBy());
@@ -56,9 +55,9 @@ class ProviderAggregatorTest extends TestCase
     public function testReverse()
     {
         $provider1 = new MockProvider('test1');
-        $provider1->result = [Address::createFromArray(['providedBy'=>'p1'])];
+        $provider1->result = [Address::createFromArray(['providedBy' => 'p1'])];
         $provider2 = new MockProvider('test2');
-        $provider2->result = [Address::createFromArray(['providedBy'=>'p2'])];
+        $provider2->result = [Address::createFromArray(['providedBy' => 'p2'])];
 
         $this->geocoder->registerProvider($provider1);
         $this->geocoder->registerProvider($provider2);
@@ -73,7 +72,7 @@ class ProviderAggregatorTest extends TestCase
         $provider = new MockProvider('test');
         $this->geocoder->registerProvider($provider);
 
-        $this->assertSame(['test'=>$provider], NSA::getProperty($this->geocoder, 'providers'));
+        $this->assertSame(['test' => $provider], NSA::getProperty($this->geocoder, 'providers'));
     }
 
     public function testRegisterProviders()
@@ -81,7 +80,7 @@ class ProviderAggregatorTest extends TestCase
         $provider = new MockProvider('test');
         $this->geocoder->registerProviders([$provider]);
 
-        $this->assertSame(['test'=>$provider], NSA::getProperty($this->geocoder, 'providers'));
+        $this->assertSame(['test' => $provider], NSA::getProperty($this->geocoder, 'providers'));
     }
 
     /**

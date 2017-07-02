@@ -40,6 +40,7 @@ class ProviderAggregator implements Geocoder
 
     /**
      * A callable that decided what provider to use.
+     *
      * @var callable
      */
     private $decider;
@@ -185,8 +186,8 @@ class ProviderAggregator implements Geocoder
      * Get a provider to use for this query.
      *
      * @param GeocodeQuery|ReverseQuery $query
-     * @param Provider[] $providers
-     * @param Provider $currentProvider
+     * @param Provider[]                $providers
+     * @param Provider                  $currentProvider
      *
      * @return Provider
      *
