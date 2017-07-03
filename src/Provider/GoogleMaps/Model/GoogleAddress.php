@@ -158,7 +158,7 @@ final class GoogleAddress extends Address
     /**
      * @return null|string
      */
-    public function getAirport(): string
+    public function getAirport()
     {
         return $this->airport;
     }
@@ -177,7 +177,7 @@ final class GoogleAddress extends Address
     /**
      * @return null|string
      */
-    public function getColloquialArea(): string
+    public function getColloquialArea()
     {
         return $this->colloquialArea;
     }
@@ -196,7 +196,7 @@ final class GoogleAddress extends Address
     /**
      * @return null|string
      */
-    public function getIntersection(): string
+    public function getIntersection()
     {
         return $this->intersection;
     }
@@ -215,7 +215,7 @@ final class GoogleAddress extends Address
     /**
      * @return null|string
      */
-    public function getNaturalFeature(): string
+    public function getNaturalFeature()
     {
         return $this->naturalFeature;
     }
@@ -234,7 +234,7 @@ final class GoogleAddress extends Address
     /**
      * @return null|string
      */
-    public function getNeighborhood(): string
+    public function getNeighborhood()
     {
         return $this->neighborhood;
     }
@@ -253,7 +253,7 @@ final class GoogleAddress extends Address
     /**
      * @return null|string
      */
-    public function getPark(): string
+    public function getPark()
     {
         return $this->park;
     }
@@ -272,7 +272,7 @@ final class GoogleAddress extends Address
     /**
      * @return null|string
      */
-    public function getPointOfInterest(): string
+    public function getPointOfInterest()
     {
         return $this->pointOfInterest;
     }
@@ -291,7 +291,7 @@ final class GoogleAddress extends Address
     /**
      * @return null|string
      */
-    public function getPolitical(): string
+    public function getPolitical()
     {
         return $this->political;
     }
@@ -310,7 +310,7 @@ final class GoogleAddress extends Address
     /**
      * @return null|string
      */
-    public function getPremise(): string
+    public function getPremise()
     {
         return $this->premise;
     }
@@ -329,7 +329,7 @@ final class GoogleAddress extends Address
     /**
      * @return null|string
      */
-    public function getStreetAddress(): string
+    public function getStreetAddress()
     {
         return $this->streetAddress;
     }
@@ -348,7 +348,7 @@ final class GoogleAddress extends Address
     /**
      * @return null|string
      */
-    public function getSubpremise(): string
+    public function getSubpremise()
     {
         return $this->subpremise;
     }
@@ -367,7 +367,7 @@ final class GoogleAddress extends Address
     /**
      * @return null|string
      */
-    public function getWard(): string
+    public function getWard()
     {
         return $this->ward;
     }

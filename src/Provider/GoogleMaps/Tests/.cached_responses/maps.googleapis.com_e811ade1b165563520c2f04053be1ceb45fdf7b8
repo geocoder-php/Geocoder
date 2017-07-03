@@ -1,0 +1,45 @@
+s:1394:"{
+   "results" : [
+      {
+         "address_components" : [
+            {
+               "long_name" : "Durmitor Nacionalni Park",
+               "short_name" : "Durmitor Nacionalni Park",
+               "types" : [ "establishment", "natural_feature", "park", "point_of_interest" ]
+            },
+            {
+               "long_name" : "Žabljak",
+               "short_name" : "Žabljak",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "Montenegro",
+               "short_name" : "ME",
+               "types" : [ "country", "political" ]
+            }
+         ],
+         "formatted_address" : "Durmitor Nacionalni Park, Žabljak, Montenegro",
+         "geometry" : {
+            "location" : {
+               "lat" : 43.1,
+               "lng" : 19.0166667
+            },
+            "location_type" : "GEOMETRIC_CENTER",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 43.1013489802915,
+                  "lng" : 19.0180156802915
+               },
+               "southwest" : {
+                  "lat" : 43.09865101970851,
+                  "lng" : 19.0153177197085
+               }
+            }
+         },
+         "place_id" : "ChIJ73t1OUxHTRMRDu6MnXs-VUQ",
+         "types" : [ "establishment", "natural_feature", "park", "point_of_interest" ]
+      }
+   ],
+   "status" : "OK"
+}
+";

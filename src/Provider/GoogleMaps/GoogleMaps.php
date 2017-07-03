@@ -264,8 +264,8 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
             if (isset($result->formatted_address)) {
                 $address = $address->withFormattedAddress($result->formatted_address);
             }
-            if ($builder->hasValue('streetAddress')) {
-                $address = $address->withStreetAddress($builder->getValue('streetAddress'));
+            if ($builder->hasValue('street_address')) {
+                $address = $address->withStreetAddress($builder->getValue('street_address'));
             }
             if ($builder->hasValue('intersection')) {
                 $address = $address->withIntersection($builder->getValue('intersection'));
@@ -273,8 +273,8 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
             if ($builder->hasValue('political')) {
                 $address = $address->withPolitical($builder->getValue('political'));
             }
-            if ($builder->hasValue('colloquialArea')) {
-                $address = $address->withColloquialArea($builder->getValue('colloquialArea'));
+            if ($builder->hasValue('colloquial_area')) {
+                $address = $address->withColloquialArea($builder->getValue('colloquial_area'));
             }
             if ($builder->hasValue('ward')) {
                 $address = $address->withWard($builder->getValue('ward'));
@@ -288,8 +288,8 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
             if ($builder->hasValue('subpremise')) {
                 $address = $address->withSubpremise($builder->getValue('subpremise'));
             }
-            if ($builder->hasValue('naturalFeature')) {
-                $address = $address->withNaturalFeature($builder->getValue('naturalFeature'));
+            if ($builder->hasValue('natural_feature')) {
+                $address = $address->withNaturalFeature($builder->getValue('natural_feature'));
             }
             if ($builder->hasValue('airport')) {
                 $address = $address->withAirport($builder->getValue('airport'));
@@ -297,8 +297,8 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
             if ($builder->hasValue('park')) {
                 $address = $address->withPark($builder->getValue('park'));
             }
-            if ($builder->hasValue('pointOfInterest')) {
-                $address = $address->withPointOfInterest($builder->getValue('pointOfInterest'));
+            if ($builder->hasValue('point_of_interest')) {
+                $address = $address->withPointOfInterest($builder->getValue('point_of_interest'));
             }
             $results[] = $address;
 
@@ -366,7 +366,7 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
             case 'airport':
             case 'park':
             case 'point_of_interest':
-                $builder->setValue((strpos($type, '_')) ? lcfirst(str_replace('_', '', ucwords($type, '_'))) : $type, $values->long_name);
+                $builder->setValue($type, $values->long_name);
                 break;
 
             default:
