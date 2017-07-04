@@ -19,6 +19,7 @@ use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Model\AddressBuilder;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Model\AdminLevelCollection;
+use Geocoder\Provider\Geonames\Model\CountryInfo;
 use Geocoder\Provider\Geonames\Model\GeonamesAddress;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
@@ -98,15 +99,10 @@ final class Geonames extends AbstractHttpProvider implements Provider
 
     /**
      * @param string|null $country
-     *
      * @param string|null $locale
-     *
      * @param int|null $maxRows
-     *
      * @param int|null $startRow
-     *
      * @return Collection
-     *
      * @throws \Geocoder\Exception\Exception
      */
     public function getCountryInfo(string $country = null, string $locale = null, int $maxRows = null, int $startRow = null): Collection
@@ -240,17 +236,18 @@ final class Geonames extends AbstractHttpProvider implements Provider
             $builder->setCountry($item->countryName ?? null);
             $builder->setCountryCode($item->countryCode ?? null);
 
-            /** @var GeonamesAddress $address */
-            $address = $builder->build(GeonamesAddress::class);
-            $address = $address->withPopulation($item->population ?? null);
-            $address = $address->withGeonameId($item->geonameId ?? null);
-            $address = $address->withFipsCode($item->fipsCode ?? null);
-            $address = $address->withLanguages($item->langesuages ?? '');
-            $address = $address->withCapital($item->capital ?? null);
+            /** @var CountryInfo $address */
+            $address = $builder->build(CountryInfo::class);
             $address = $address->withContinent($item->continent ?? null);
-            $address = $address->withIsoNumeric($item->isoNumeric ?? null);
+            $address = $address->withCapital($item->capital ?? null);
+            $address = $address->withLanguages($item->langesuages ?? '');
+            $address = $address->withGeonameId($item->geonameId ?? null);
             $address = $address->withIsoAlpha3($item->isoAlpha3 ?? null);
+            $address = $address->withFipsCode($item->fipsCode ?? null);
+            $address = $address->withPopulation($item->population ?? null);
+            $address = $address->withIsoNumeric($item->isoNumeric ?? null);
             $address = $address->withAreaInSqKm($item->areaInSqKm ?? null);
+            $address = $address->withContinentName($item->continentName ?? null);
             $address = $address->withCurrencyCode($item->currencyCode ?? null);
 
             $results[] = $address;
