@@ -456,8 +456,7 @@ final class GoogleAddress extends Address
     public function withSubLocalityLevel(array $subLocalityLevel)
     {
         $subLocalityLevels = [];
-        foreach ($subLocalityLevel as $level)
-        {
+        foreach ($subLocalityLevel as $level){
 
             if (empty($level['level'])) {
                 continue;
@@ -471,9 +470,10 @@ final class GoogleAddress extends Address
             $subLocalityLevels[] = new SubLocalityLevel($level['level'], $name, $level['code'] ?? null);
         }
 
-		$new = clone $this;
-		$new->subLocalityLevels = new SubLocalityLevelCollection($subLocalityLevels);
+        $new = clone $this;
+        $new->subLocalityLevels = new SubLocalityLevelCollection($subLocalityLevels);
 
-		return $new;
+        return $new;
     }
+
 }
