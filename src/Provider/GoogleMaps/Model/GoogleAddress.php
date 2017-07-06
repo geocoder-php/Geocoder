@@ -457,7 +457,6 @@ final class GoogleAddress extends Address
     {
         $subLocalityLevels = [];
         foreach ($subLocalityLevel as $level) {
-
             if (empty($level['level'])) {
                 continue;
             }
@@ -475,5 +474,4 @@ final class GoogleAddress extends Address
 
         return $new;
     }
-
 }
