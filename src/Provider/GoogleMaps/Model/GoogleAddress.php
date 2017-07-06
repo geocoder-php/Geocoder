@@ -132,9 +132,9 @@ final class GoogleAddress extends Address
         return $this->subLocalityLevels;
     }
 
-
     /**
      * @param array $subLocalityLevel
+     *
      * @return $this
      */
     public function withSubLocalityLevel(array $subLocalityLevel)
@@ -159,4 +159,5 @@ final class GoogleAddress extends Address
 
         return $new;
     }
+
 }
