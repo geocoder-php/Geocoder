@@ -314,7 +314,7 @@ class GoogleMapsTest extends BaseTestCase
     public function testReverseWithSubLocalityLevel()
     {
         $provider = new GoogleMaps($this->getHttpClient());
-        $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(36.2745084,136.9003169));
+        $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(36.2745084, 136.9003169));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);

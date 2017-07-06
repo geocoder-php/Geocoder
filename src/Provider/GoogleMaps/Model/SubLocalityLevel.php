@@ -12,7 +12,6 @@ declare(strict_types=1);
 
 namespace Geocoder\Provider\GoogleMaps\Model;
 
-
 final class SubLocalityLevel
 {
     /**
