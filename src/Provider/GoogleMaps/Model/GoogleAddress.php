@@ -40,6 +40,11 @@ final class GoogleAddress extends Address
     private $subpremise;
 
     /**
+     * @var SubLocalityLevelCollection
+     */
+    private $subLocalityLevels;
+
+    /**
      * @param null|string $locationType
      *
      * @return GoogleAddress
@@ -117,5 +122,42 @@ final class GoogleAddress extends Address
         $new->subpremise = $subpremise;
 
         return $new;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSubLocalityLevels()
+    {
+        return $this->subLocalityLevels;
+    }
+
+
+    /**
+     * @param array $subLocalityLevel
+     * @return $this
+     */
+    public function withSubLocalityLevel(array $subLocalityLevel)
+    {
+        $subLocalityLevels = [];
+        foreach ($subLocalityLevel as $level)
+        {
+
+            if (empty($level['level'])) {
+                continue;
+            }
+
+            $name = $level['name'] ?? $level['code'] ?? null;
+            if (empty($name)) {
+                continue;
+            }
+
+            $subLocalityLevels[] = new SubLocalityLevel($level['level'], $name, $level['code'] ?? null);
+        }
+
+		$new = clone $this;
+		$new->subLocalityLevels = new SubLocalityLevelCollection($subLocalityLevels);
+
+		return $new;
     }
 }
