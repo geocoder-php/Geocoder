@@ -27,7 +27,6 @@ final class SubLocalityLevel
     /**
      * @var string|null
      */
-
     private $code;
 
     /**
