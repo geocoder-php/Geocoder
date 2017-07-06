@@ -227,7 +227,7 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
 
             // update coordinates
             $coordinates = $result->geometry->location;
-           $builder->setCoordinates($coordinates->lat, $coordinates->lng);
+            $builder->setCoordinates($coordinates->lat, $coordinates->lng);
 
             if (isset($result->geometry->bounds)) {
                 $builder->setBounds(
@@ -316,10 +316,10 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
             case 'sublocality_level_5':
                 $newSubLocalityLevel[] = [
                     'level' => intval(substr($type, -1)),
-                    'name'  => $values->long_name,
-                    'code'	=> $values->short_name
+                    'name' => $values->long_name,
+                    'code' => $values->short_name
                 ];
-                $subLocalityLevel = ( $builder->hasValue('subLocalityLevel')) ? $builder->getValue('subLocalityLevel') : [];
+                $subLocalityLevel = ($builder->hasValue('subLocalityLevel')) ? $builder->getValue('subLocalityLevel') : [];
                 $builder->setValue('subLocalityLevel', array_merge($newSubLocalityLevel, $subLocalityLevel));
                 break;
 
