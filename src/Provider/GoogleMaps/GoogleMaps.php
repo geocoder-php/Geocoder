@@ -224,6 +224,10 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
             $address = $address->withPark($builder->getValue('park'));
             $address = $address->withPointOfInterest($builder->getValue('point_of_interest'));
             $address = $address->withEstablishment($builder->getValue('establishment'));
+            if ($builder->hasValue('subLocalityLevel')) {
+                $address = $address->withSubLocalityLevel($builder->getValue('subLocalityLevel'));
+            }
+
             $results[] = $address;
 
             if (count($results) >= $limit) {
@@ -243,6 +247,7 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
      */
     private function updateAddressComponent(AddressBuilder $builder, string $type, $values)
     {
+        $newSubLocalityLevel = [];
         switch ($type) {
             case 'postal_code':
                 $builder->setPostalCode($values->long_name);
@@ -259,6 +264,20 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
             case 'administrative_area_level_4':
             case 'administrative_area_level_5':
                 $builder->addAdminLevel(intval(substr($type, -1)), $values->long_name, $values->short_name);
+                break;
+
+            case 'sublocality_level_1':
+            case 'sublocality_level_2':
+            case 'sublocality_level_3':
+            case 'sublocality_level_4':
+            case 'sublocality_level_5':
+                $newSubLocalityLevel[] = [
+                    'level' => intval(substr($type, -1)),
+                    'name'  => $values->long_name,
+                    'code'	=> $values->short_name
+                ];
+                $subLocalityLevel = ( $builder->hasValue('subLocalityLevel')) ? $builder->getValue('subLocalityLevel') : [];
+                $builder->setValue('subLocalityLevel', array_merge($newSubLocalityLevel, $subLocalityLevel));
                 break;
 
             case 'country':
