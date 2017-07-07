@@ -441,7 +441,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return array
+     * @return array SubLocalityLevelCollection
      */
     public function getSubLocalityLevels()
     {
@@ -453,7 +453,7 @@ final class GoogleAddress extends Address
      *
      * @return $this
      */
-    public function withSubLocalityLevel(array $subLocalityLevel)
+    public function withSubLocalityLevels(array $subLocalityLevel)
     {
         $subLocalityLevels = [];
         foreach ($subLocalityLevel as $level) {

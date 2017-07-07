@@ -16,6 +16,10 @@ use Geocoder\Exception\CollectionIsEmpty;
 use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\OutOfBounds;
 
+/**
+ * Class SubLocalityLevelCollection
+ * @package Geocoder\Provider\GoogleMaps\Model
+ */
 final class SubLocalityLevelCollection implements \IteratorAggregate, \Countable
 {
     const MAX_LEVEL_DEPTH = 5;

@@ -390,7 +390,7 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertEquals('Kita-ku', $result->getWard());
     }
 
-    public function testReverseWithSubLocalityLevel()
+    public function testReverseWithSubLocalityLevels()
     {
         $provider = new GoogleMaps($this->getHttpClient());
         $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(36.2745084, 136.9003169));
