@@ -329,6 +329,24 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertEquals('Montenegro', $result->getCountry());
     }
 
+    public function testGeocodewithPremiseComponent()
+    {
+        $provider = new GoogleMaps($this->getHttpClient());
+
+        $results = $provider->geocodeQuery(GeocodeQuery::create('1125 17th St, Denver, CO 80202'));
+
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertCount(1, $results);
+
+        /** @var GoogleAddress $result */
+        $result = $results->first();
+
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals('1125 17th Street', $result->getPremise());
+        $this->assertEquals('Denver', $result->getLocality());
+        $this->assertEquals('United States', $result->getCountry());
+    }
+
     public function testGeocodeBoundsWithRealAddressWithViewportOnly()
     {
         $provider = new GoogleMaps($this->getHttpClient());
