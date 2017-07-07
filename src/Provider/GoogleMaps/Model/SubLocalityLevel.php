@@ -12,6 +12,10 @@ declare(strict_types=1);
 
 namespace Geocoder\Provider\GoogleMaps\Model;
 
+/**
+ * Class SubLocalityLevel
+ * @package Geocoder\Provider\GoogleMaps\Model
+ */
 final class SubLocalityLevel
 {
     /**
@@ -56,7 +60,7 @@ final class SubLocalityLevel
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
