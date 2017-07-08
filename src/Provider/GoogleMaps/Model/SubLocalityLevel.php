@@ -14,7 +14,6 @@ namespace Geocoder\Provider\GoogleMaps\Model;
 
 /**
  * Class SubLocalityLevel
- * @package Geocoder\Provider\GoogleMaps\Model
  */
 final class SubLocalityLevel
 {
