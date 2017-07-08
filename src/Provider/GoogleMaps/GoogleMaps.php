@@ -264,45 +264,19 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
             if (isset($result->formatted_address)) {
                 $address = $address->withFormattedAddress($result->formatted_address);
             }
-            if ($builder->hasValue('street_address')) {
-                $address = $address->withStreetAddress($builder->getValue('street_address'));
-            }
-            if ($builder->hasValue('intersection')) {
-                $address = $address->withIntersection($builder->getValue('intersection'));
-            }
-            if ($builder->hasValue('political')) {
-                $address = $address->withPolitical($builder->getValue('political'));
-            }
-            if ($builder->hasValue('colloquial_area')) {
-                $address = $address->withColloquialArea($builder->getValue('colloquial_area'));
-            }
-            if ($builder->hasValue('ward')) {
-                $address = $address->withWard($builder->getValue('ward'));
-            }
-            if ($builder->hasValue('neighborhood')) {
-                $address = $address->withNeighborhood($builder->getValue('neighborhood'));
-            }
-            if ($builder->hasValue('premise')) {
-                $address = $address->withPremise($builder->getValue('premise'));
-            }
-            if ($builder->hasValue('subpremise')) {
-                $address = $address->withSubpremise($builder->getValue('subpremise'));
-            }
-            if ($builder->hasValue('natural_feature')) {
-                $address = $address->withNaturalFeature($builder->getValue('natural_feature'));
-            }
-            if ($builder->hasValue('airport')) {
-                $address = $address->withAirport($builder->getValue('airport'));
-            }
-            if ($builder->hasValue('park')) {
-                $address = $address->withPark($builder->getValue('park'));
-            }
-            if ($builder->hasValue('point_of_interest')) {
-                $address = $address->withPointOfInterest($builder->getValue('point_of_interest'));
-            }
-            if ($builder->hasValue('establishment')) {
-                $address = $address->withEstablishment($builder->getValue('establishment'));
-            }
+            $address = $address->withStreetAddress($builder->getValue('street_address'));
+            $address = $address->withIntersection($builder->getValue('intersection'));
+            $address = $address->withPolitical($builder->getValue('political'));
+            $address = $address->withColloquialArea($builder->getValue('colloquial_area'));
+            $address = $address->withWard($builder->getValue('ward'));
+            $address = $address->withNeighborhood($builder->getValue('neighborhood'));
+            $address = $address->withPremise($builder->getValue('premise'));
+            $address = $address->withSubpremise($builder->getValue('subpremise'));
+            $address = $address->withNaturalFeature($builder->getValue('natural_feature'));
+            $address = $address->withAirport($builder->getValue('airport'));
+            $address = $address->withPark($builder->getValue('park'));
+            $address = $address->withPointOfInterest($builder->getValue('point_of_interest'));
+            $address = $address->withEstablishment($builder->getValue('establishment'));
             $results[] = $address;
 
             if (count($results) >= $limit) {
