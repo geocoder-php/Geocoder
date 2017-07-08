@@ -300,6 +300,9 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
             if ($builder->hasValue('point_of_interest')) {
                 $address = $address->withPointOfInterest($builder->getValue('point_of_interest'));
             }
+            if ($builder->hasValue('establishment')) {
+                $address = $address->withEstablishment($builder->getValue('establishment'));
+            }
             $results[] = $address;
 
             if (count($results) >= $limit) {
@@ -366,6 +369,7 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
             case 'airport':
             case 'park':
             case 'point_of_interest':
+            case 'establishment':
                 $builder->setValue($type, $values->long_name);
                 break;
 

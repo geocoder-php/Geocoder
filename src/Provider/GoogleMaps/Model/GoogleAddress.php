@@ -95,6 +95,11 @@ final class GoogleAddress extends Address
     private $pointOfInterest;
 
     /**
+     * @var string|null
+     */
+    private $establishment;
+
+    /**
      * @param null|string $locationType
      *
      * @return GoogleAddress
@@ -379,6 +384,24 @@ final class GoogleAddress extends Address
     {
         $new = clone $this;
         $new->ward = $ward;
+
+        return $new;
+    }
+    /**
+     * @return null|string
+     */
+    public function getEstablishment()
+    {
+        return $this->establishment;
+    }
+
+    /**
+     * @param null|string $ward
+     */
+    public function withEstablishment(string $establishment = null)
+    {
+        $new = clone $this;
+        $new->establishment = $establishment;
 
         return $new;
     }
