@@ -311,6 +311,85 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertEquals('61', $result->getSubpremise());
     }
 
+    public function testGeocodeWithNaturalFeatureComponent()
+    {
+        $provider = new GoogleMaps($this->getHttpClient());
+        $results = $provider->geocodeQuery(GeocodeQuery::create('Durmitor Nacionalni Park'));
+
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertCount(1, $results);
+
+        /** @var GoogleAddress $result */
+        $result = $results->first();
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals('Durmitor Nacionalni Park', $result->getNaturalFeature());
+        $this->assertEquals('Durmitor Nacionalni Park', $result->getPark());
+        $this->assertEquals('Durmitor Nacionalni Park', $result->getPointOfInterest());
+        $this->assertEquals('Montenegro', $result->getPolitical());
+        $this->assertEquals('Montenegro', $result->getCountry());
+    }
+
+    public function testGeocodeWithAirportComponent()
+    {
+        $provider = new GoogleMaps($this->getHttpClient());
+        $results = $provider->geocodeQuery(GeocodeQuery::create('Brisbane Airport'));
+
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertCount(1, $results);
+
+        /** @var GoogleAddress $result */
+        $result = $results->first();
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals('Brisbane Airport', $result->getAirport());
+        $this->assertEquals('Brisbane Airport', $result->getEstablishment());
+        $this->assertEquals('Brisbane Airport', $result->getPointOfInterest());
+    }
+
+    public function testGeocodeWithPremiseComponent()
+    {
+        $provider = new GoogleMaps($this->getHttpClient());
+        $results = $provider->geocodeQuery(GeocodeQuery::create('1125 17th St, Denver, CO 80202'));
+
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertCount(1, $results);
+
+        /** @var GoogleAddress $result */
+        $result = $results->first();
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals('1125 17th Street', $result->getPremise());
+        $this->assertEquals('Denver', $result->getLocality());
+        $this->assertEquals('United States', $result->getCountry());
+        $this->assertEquals('Central', $result->getNeighborhood());
+    }
+
+    public function testGeocodeWithColloquialAreaComponent()
+    {
+        $provider = new GoogleMaps($this->getHttpClient());
+        $results = $provider->geocodeQuery(GeocodeQuery::create('darwin'));
+
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertCount(3, $results);
+
+        /** @var GoogleAddress $result */
+        $result = $results->first();
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals('Darwin', $result->getColloquialArea());
+    }
+
+    public function testGeocodeWithWardComponent()
+    {
+        $provider = new GoogleMaps($this->getHttpClient());
+        $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(35.03937, 135.729243));
+
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertCount(5, $results);
+
+        /** @var GoogleAddress $result */
+        $result = $results->first();
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals('Kita-ku', $result->getWard());
+    }
+
     public function testGeocodeBoundsWithRealAddressWithViewportOnly()
     {
         $provider = new GoogleMaps($this->getHttpClient());
