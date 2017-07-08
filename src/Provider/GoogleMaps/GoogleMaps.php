@@ -225,7 +225,7 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
             $address = $address->withPointOfInterest($builder->getValue('point_of_interest'));
             $address = $address->withEstablishment($builder->getValue('establishment'));
             if ($builder->hasValue('subLocalityLevel')) {
-                $address = $address->withSubLocalityLevels($builder->getValue('subLocalityLevel',[]));
+                $address = $address->withSubLocalityLevels($builder->getValue('subLocalityLevel', []));
             }
 
             $results[] = $address;
@@ -276,7 +276,7 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
                     'name' => $values->long_name,
                     'code' => $values->short_name,
                 ];
-                $subLocalityLevel = ($builder->hasValue('subLocalityLevel')) ? $builder->getValue('subLocalityLevel',[]) : [];
+                $subLocalityLevel = ($builder->hasValue('subLocalityLevel')) ? $builder->getValue('subLocalityLevel', []) : [];
                 $builder->setValue('subLocalityLevel', array_merge($newSubLocalityLevel, $subLocalityLevel));
                 break;
 
