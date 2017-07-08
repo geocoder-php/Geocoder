@@ -387,6 +387,7 @@ final class GoogleAddress extends Address
 
         return $new;
     }
+
     /**
      * @return null|string
      */

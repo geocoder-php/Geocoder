@@ -374,13 +374,12 @@ class GoogleMapsTest extends BaseTestCase
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals('Darwin', $result->getColloquialArea());
-
     }
 
     public function testGeocodeWithWardComponent()
     {
         $provider = new GoogleMaps($this->getHttpClient());
-        $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(35.03937,135.729243));
+        $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(35.03937, 135.729243));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
@@ -389,7 +388,6 @@ class GoogleMapsTest extends BaseTestCase
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals('Kita-ku', $result->getWard());
-
     }
 
     public function testGeocodeBoundsWithRealAddressWithViewportOnly()
