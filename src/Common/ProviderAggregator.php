@@ -39,11 +39,19 @@ class ProviderAggregator implements Geocoder
     private $limit;
 
     /**
+     * A callable that decided what provider to use.
+     *
+     * @var callable
+     */
+    private $decider;
+
+    /**
      * @param int $limit
      */
-    public function __construct(int $limit = Geocoder::DEFAULT_RESULT_LIMIT)
+    public function __construct(int $limit = Geocoder::DEFAULT_RESULT_LIMIT, callable $decider = null)
     {
         $this->limit($limit);
+        $this->decider = $decider ?? __CLASS__.'::getProvider';
     }
 
     /**
@@ -51,7 +59,11 @@ class ProviderAggregator implements Geocoder
      */
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
-        return $this->getProvider()->geocodeQuery($query);
+        if (null === $query->getLimit()) {
+            $query = $query->withLimit($this->limit);
+        }
+
+        return call_user_func($this->decider, $query, $this->providers, $this->provider)->geocodeQuery($query);
     }
 
     /**
@@ -59,7 +71,11 @@ class ProviderAggregator implements Geocoder
      */
     public function reverseQuery(ReverseQuery $query): Collection
     {
-        return $this->getProvider()->reverseQuery($query);
+        if (null === $query->getLimit()) {
+            $query = $query->withLimit($this->limit);
+        }
+
+        return call_user_func($this->decider, $query, $this->providers, $this->provider)->reverseQuery($query);
     }
 
     /**
@@ -167,22 +183,29 @@ class ProviderAggregator implements Geocoder
     }
 
     /**
-     * Returns the current provider in use.
+     * Get a provider to use for this query.
+     *
+     * @param GeocodeQuery|ReverseQuery $query
+     * @param Provider[]                $providers
+     * @param Provider                  $currentProvider
      *
      * @return Provider
      *
-     * @throws \RuntimeException
+     * @throws ProviderNotRegistered
      */
-    protected function getProvider(): Provider
+    private static function getProvider($query, array $providers, Provider $currentProvider = null): Provider
     {
-        if (null === $this->provider) {
-            if (0 === count($this->providers)) {
-                throw ProviderNotRegistered::noProviderRegistered();
-            }
-
-            $this->using(key($this->providers));
+        if (null !== $currentProvider) {
+            return $currentProvider;
         }
 
-        return $this->provider;
+        if (0 === count($providers)) {
+            throw ProviderNotRegistered::noProviderRegistered();
+        }
+
+        // Take first
+        $key = key($providers);
+
+        return $providers[$key];
     }
 }
