@@ -14,6 +14,8 @@ namespace Geocoder\Tests;
 
 use Geocoder\Collection;
 use Geocoder\Geocoder;
+use Geocoder\Model\Address;
+use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\ProviderAggregator;
@@ -36,12 +38,41 @@ class ProviderAggregatorTest extends TestCase
         $this->geocoder = new ProviderAggregator();
     }
 
+    public function testGeocode()
+    {
+        $provider1 = new MockProvider('test1');
+        $provider1->result = [Address::createFromArray(['providedBy' => 'p1'])];
+        $provider2 = new MockProvider('test2');
+        $provider2->result = [Address::createFromArray(['providedBy' => 'p2'])];
+
+        $this->geocoder->registerProvider($provider1);
+        $this->geocoder->registerProvider($provider2);
+
+        $result = $this->geocoder->geocode('foo');
+        $this->assertEquals('p1', $result->first()->getProvidedBy());
+    }
+
+    public function testReverse()
+    {
+        $provider1 = new MockProvider('test1');
+        $provider1->result = [Address::createFromArray(['providedBy' => 'p1'])];
+        $provider2 = new MockProvider('test2');
+        $provider2->result = [Address::createFromArray(['providedBy' => 'p2'])];
+
+        $this->geocoder->registerProvider($provider1);
+        $this->geocoder->registerProvider($provider2);
+        $this->geocoder->using('test2');
+
+        $result = $this->geocoder->reverse(0.1, 0.2);
+        $this->assertEquals('p2', $result->first()->getProvidedBy());
+    }
+
     public function testRegisterProvider()
     {
         $provider = new MockProvider('test');
         $this->geocoder->registerProvider($provider);
 
-        $this->assertSame($provider, NSA::invokeMethod($this->geocoder, 'getProvider'));
+        $this->assertSame(['test' => $provider], NSA::getProperty($this->geocoder, 'providers'));
     }
 
     public function testRegisterProviders()
@@ -49,25 +80,7 @@ class ProviderAggregatorTest extends TestCase
         $provider = new MockProvider('test');
         $this->geocoder->registerProviders([$provider]);
 
-        $this->assertSame($provider, NSA::invokeMethod($this->geocoder, 'getProvider'));
-    }
-
-    public function testUsing()
-    {
-        $provider1 = new MockProvider('test1');
-        $provider2 = new MockProvider('test2');
-        $this->geocoder->registerProviders([$provider1, $provider2]);
-
-        $this->assertSame($provider1, NSA::invokeMethod($this->geocoder, 'getProvider'));
-
-        $this->geocoder->using('test1');
-        $this->assertSame($provider1, NSA::invokeMethod($this->geocoder, 'getProvider'));
-
-        $this->geocoder->using('test2');
-        $this->assertSame($provider2, NSA::invokeMethod($this->geocoder, 'getProvider'));
-
-        $this->geocoder->using('test1');
-        $this->assertSame($provider1, NSA::invokeMethod($this->geocoder, 'getProvider'));
+        $this->assertSame(['test' => $provider], NSA::getProperty($this->geocoder, 'providers'));
     }
 
     /**
@@ -109,19 +122,21 @@ class ProviderAggregatorTest extends TestCase
      */
     public function testGetProvider()
     {
-        NSA::invokeMethod($this->geocoder, 'getProvider');
+        NSA::invokeMethod($this->geocoder, 'getProvider', GeocodeQuery::create('foo'), [], null);
         $this->fail('getProvider() should throw an exception');
     }
 
     public function testGetProviderWithMultipleProvidersReturnsTheFirstOne()
     {
-        $this->geocoder->registerProviders([
+        $providers = [
             $provider1 = new MockProvider('test1'),
             $provider2 = new MockProvider('test2'),
             $provider3 = new MockProvider('test3'),
-        ]);
+        ];
 
-        $this->assertSame($provider1, NSA::invokeMethod($this->geocoder, 'getProvider'));
+        $query = GeocodeQuery::create('foo');
+        $this->assertSame($provider1, NSA::invokeMethod($this->geocoder, 'getProvider', $query, $providers, null));
+        $this->assertSame($provider2, NSA::invokeMethod($this->geocoder, 'getProvider', $query, $providers, $provider2));
     }
 
     public function testDefaultMaxResults()
@@ -134,6 +149,8 @@ class MockProvider implements Provider
 {
     protected $name;
 
+    public $result = [];
+
     public function __construct($name)
     {
         $this->name = $name;
@@ -141,12 +158,12 @@ class MockProvider implements Provider
 
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
-        return $this->returnResult([]);
+        return $this->returnResult();
     }
 
     public function reverseQuery(ReverseQuery $query): Collection
     {
-        return $this->returnResult([]);
+        return $this->returnResult();
     }
 
     public function getName(): string
@@ -163,7 +180,8 @@ class MockProvider implements Provider
         return $this;
     }
 
-    public function returnResult(array $data = [])
+    private function returnResult()
     {
+        return new AddressCollection($this->result);
     }
 }
