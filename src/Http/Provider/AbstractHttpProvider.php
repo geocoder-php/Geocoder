@@ -43,7 +43,7 @@ abstract class AbstractHttpProvider extends AbstractProvider
     public function __construct(HttpClient $client, MessageFactory $factory = null)
     {
         $this->client = $client;
-        $this->messageFactory = $factory;
+        $this->messageFactory = $factory ?: MessageFactoryDiscovery::find();
     }
 
     /**
@@ -92,26 +92,6 @@ abstract class AbstractHttpProvider extends AbstractProvider
      */
     protected function getMessageFactory(): MessageFactory
     {
-        if ($this->messageFactory === null) {
-            $this->messageFactory = MessageFactoryDiscovery::find();
-        }
-
         return $this->messageFactory;
-    }
-
-    /**
-     * @param HttpClient $client
-     */
-    public function setClient(HttpClient $client)
-    {
-        $this->client = $client;
-    }
-
-    /**
-     * @param MessageFactory $messageFactory
-     */
-    public function setMessageFactory(MessageFactory $messageFactory)
-    {
-        $this->messageFactory = $messageFactory;
     }
 }

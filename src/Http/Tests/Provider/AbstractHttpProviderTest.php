@@ -18,11 +18,17 @@ use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Http\Client\HttpClient;
+use Http\Discovery\ClassDiscovery;
 use Http\Mock\Client;
 use PHPUnit\Framework\TestCase;
 
 class AbstractHttpProviderTest extends TestCase
 {
+    public static function setUpBeforeClass()
+    {
+        ClassDiscovery::prependStrategy('\Nyholm\Psr7\Httplug\DiscoveryStrategy');
+    }
+
     public function testHttpClientGetter()
     {
         $client = $this->getMockBuilder(Client::class)->disableOriginalConstructor()->getMock();
