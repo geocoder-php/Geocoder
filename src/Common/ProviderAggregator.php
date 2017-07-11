@@ -46,11 +46,12 @@ class ProviderAggregator implements Geocoder
     private $decider;
 
     /**
-     * @param int $limit
+     * @param callable|null $decider
+     * @param int           $limit
      */
-    public function __construct(int $limit = Geocoder::DEFAULT_RESULT_LIMIT, callable $decider = null)
+    public function __construct(callable $decider = null, int $limit = Geocoder::DEFAULT_RESULT_LIMIT)
     {
-        $this->limit($limit);
+        $this->limit = $limit;
         $this->decider = $decider ?? __CLASS__.'::getProvider';
     }
 
@@ -102,26 +103,6 @@ class ProviderAggregator implements Geocoder
     {
         return $this->reverseQuery(ReverseQuery::create(new Coordinates($latitude, $longitude))
             ->withLimit($this->limit));
-    }
-
-    /**
-     * @param $limit
-     *
-     * @return $this
-     */
-    public function limit(int $limit): self
-    {
-        $this->limit = $limit;
-
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getLimit(): int
-    {
-        return $this->limit;
     }
 
     /**

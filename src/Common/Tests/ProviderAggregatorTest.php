@@ -138,11 +138,6 @@ class ProviderAggregatorTest extends TestCase
         $this->assertSame($provider1, NSA::invokeMethod($this->geocoder, 'getProvider', $query, $providers, null));
         $this->assertSame($provider2, NSA::invokeMethod($this->geocoder, 'getProvider', $query, $providers, $provider2));
     }
-
-    public function testDefaultMaxResults()
-    {
-        $this->assertSame(Geocoder::DEFAULT_RESULT_LIMIT, $this->geocoder->getLimit());
-    }
 }
 
 class MockProvider implements Provider
