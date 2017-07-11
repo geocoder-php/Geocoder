@@ -11,6 +11,9 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 ### Changed
 
 - `ProvierAggregator::getProvider` is now private
+- `ProvierAggregator::limit` was removed
+- `ProvierAggregator::getLimit` was removed
+- `ProvierAggregator::__constructor` changed the order of the parameters. 
 
 ## 4.0.0 - Beta 2
 
