@@ -343,7 +343,7 @@ final class GoogleAddress extends Address
      *
      * @return GoogleAddress
      */
-    public function withPremise($premise = null)
+    public function withPremise(string $premise = null)
     {
         $new = clone $this;
         $new->premise = $premise;
