@@ -181,33 +181,7 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
     {
         $url = $this->buildQuery($url, $locale, $region);
         $content = $this->getUrlContents($url);
-
-        // Throw exception if invalid clientID and/or privateKey used with GoogleMapsBusinessProvider
-        if (strpos($content, "Provided 'signature' is not valid for the provided client ID") !== false) {
-            throw new InvalidCredentials(sprintf('Invalid client ID / API Key %s', $url));
-        }
-
-        $json = json_decode($content);
-
-        // API error
-        if (!isset($json)) {
-            throw InvalidServerResponse::create($url);
-        }
-
-        if ('REQUEST_DENIED' === $json->status && 'The provided API key is invalid.' === $json->error_message) {
-            throw new InvalidCredentials(sprintf('API key is invalid %s', $url));
-        }
-
-        if ('REQUEST_DENIED' === $json->status) {
-            throw new InvalidServerResponse(
-                sprintf('API access denied. Request: %s - Message: %s', $url, $json->error_message)
-            );
-        }
-
-        // you are over your quota
-        if ('OVER_QUERY_LIMIT' === $json->status) {
-            throw new QuotaExceeded(sprintf('Daily quota exceeded %s', $url));
-        }
+        $json = $this->validateResponse($url, $content);
 
         // no result
         if (!isset($json->results) || !count($json->results) || 'OK' !== $json->status) {
@@ -217,40 +191,13 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
         $results = [];
         foreach ($json->results as $result) {
             $builder = new AddressBuilder($this->getName());
+            $this->parseCoordinates($builder, $result);
 
             // update address components
             foreach ($result->address_components as $component) {
                 foreach ($component->types as $type) {
                     $this->updateAddressComponent($builder, $type, $component);
                 }
-            }
-
-            // update coordinates
-            $coordinates = $result->geometry->location;
-            $builder->setCoordinates($coordinates->lat, $coordinates->lng);
-
-            if (isset($result->geometry->bounds)) {
-                $builder->setBounds(
-                    $result->geometry->bounds->southwest->lat,
-                    $result->geometry->bounds->southwest->lng,
-                    $result->geometry->bounds->northeast->lat,
-                    $result->geometry->bounds->northeast->lng
-                );
-            } elseif (isset($result->geometry->viewport)) {
-                $builder->setBounds(
-                    $result->geometry->viewport->southwest->lat,
-                    $result->geometry->viewport->southwest->lng,
-                    $result->geometry->viewport->northeast->lat,
-                    $result->geometry->viewport->northeast->lng
-                );
-            } elseif ('ROOFTOP' === $result->geometry->location_type) {
-                // Fake bounds
-                $builder->setBounds(
-                    $coordinates->lat,
-                    $coordinates->lng,
-                    $coordinates->lat,
-                    $coordinates->lng
-                );
             }
 
             /** @var GoogleAddress $address */
@@ -376,5 +323,85 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
         $encodedSignature = str_replace(['+', '/'], ['-', '_'], base64_encode($signature));
 
         return sprintf('%s&signature=%s', $query, $encodedSignature);
+    }
+
+    /**
+     * Decode the response content and validate it to make sure it does not have any errors.
+     *
+     * @param string $url
+     * @param string $content
+     *
+     * @return mixed result form json_decode()
+     *
+     * @throws InvalidCredentials
+     * @throws InvalidServerResponse
+     * @throws QuotaExceeded
+     */
+    private function validateResponse(string $url, $content)
+    {
+        // Throw exception if invalid clientID and/or privateKey used with GoogleMapsBusinessProvider
+        if (strpos($content, "Provided 'signature' is not valid for the provided client ID") !== false) {
+            throw new InvalidCredentials(sprintf('Invalid client ID / API Key %s', $url));
+        }
+
+        $json = json_decode($content);
+
+        // API error
+        if (!isset($json)) {
+            throw InvalidServerResponse::create($url);
+        }
+
+        if ('REQUEST_DENIED' === $json->status && 'The provided API key is invalid.' === $json->error_message) {
+            throw new InvalidCredentials(sprintf('API key is invalid %s', $url));
+        }
+
+        if ('REQUEST_DENIED' === $json->status) {
+            throw new InvalidServerResponse(
+                sprintf('API access denied. Request: %s - Message: %s', $url, $json->error_message)
+            );
+        }
+
+        // you are over your quota
+        if ('OVER_QUERY_LIMIT' === $json->status) {
+            throw new QuotaExceeded(sprintf('Daily quota exceeded %s', $url));
+        }
+
+        return $json;
+    }
+
+    /**
+     * Parse coordinats and bounds.
+     *
+     * @param AddressBuilder $builder
+     * @param $result
+     */
+    private function parseCoordinates(AddressBuilder $builder, $result)
+    {
+        $coordinates = $result->geometry->location;
+        $builder->setCoordinates($coordinates->lat, $coordinates->lng);
+
+        if (isset($result->geometry->bounds)) {
+            $builder->setBounds(
+                $result->geometry->bounds->southwest->lat,
+                $result->geometry->bounds->southwest->lng,
+                $result->geometry->bounds->northeast->lat,
+                $result->geometry->bounds->northeast->lng
+            );
+        } elseif (isset($result->geometry->viewport)) {
+            $builder->setBounds(
+                $result->geometry->viewport->southwest->lat,
+                $result->geometry->viewport->southwest->lng,
+                $result->geometry->viewport->northeast->lat,
+                $result->geometry->viewport->northeast->lng
+            );
+        } elseif ('ROOFTOP' === $result->geometry->location_type) {
+            // Fake bounds
+            $builder->setBounds(
+                $coordinates->lat,
+                $coordinates->lng,
+                $coordinates->lat,
+                $coordinates->lng
+            );
+        }
     }
 }
