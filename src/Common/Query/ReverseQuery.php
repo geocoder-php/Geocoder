@@ -18,7 +18,7 @@ use Geocoder\Model\Coordinates;
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-final class ReverseQuery
+final class ReverseQuery implements Query
 {
     /**
      * @var Coordinates
