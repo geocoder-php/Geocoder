@@ -15,9 +15,9 @@ namespace Geocoder\Provider;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\QuotaExceeded;
-use Http\Message\MessageFactory;
-use Http\Discovery\MessageFactoryDiscovery;
 use Http\Client\HttpClient;
+use Http\Discovery\MessageFactoryDiscovery;
+use Http\Message\MessageFactory;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -36,7 +36,7 @@ abstract class AbstractHttpProvider extends AbstractProvider
     private $messageFactory;
 
     /**
-     * @param HttpClient $client
+     * @param HttpClient          $client
      * @param MessageFactory|null $factory
      */
     public function __construct(HttpClient $client, MessageFactory $factory = null)
