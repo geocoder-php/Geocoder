@@ -16,9 +16,9 @@ use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\QuotaExceeded;
 use Geocoder\Provider\AbstractProvider;
-use Http\Message\MessageFactory;
-use Http\Discovery\MessageFactoryDiscovery;
 use Http\Client\HttpClient;
+use Http\Discovery\MessageFactoryDiscovery;
+use Http\Message\MessageFactory;
 use Psr\Http\Message\RequestInterface;
 
 
@@ -70,7 +70,7 @@ abstract class AbstractHttpProvider extends AbstractProvider
             throw InvalidServerResponse::create($url, $statusCode);
         }
 
-        $body = (string) $response->getBody();
+        $body = (string)$response->getBody();
         if (empty($body)) {
             throw InvalidServerResponse::emptyResponse($url);
         }
