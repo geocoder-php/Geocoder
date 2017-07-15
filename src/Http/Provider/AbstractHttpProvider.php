@@ -21,7 +21,6 @@ use Http\Discovery\MessageFactoryDiscovery;
 use Http\Message\MessageFactory;
 use Psr\Http\Message\RequestInterface;
 
-
 /**
  * @author William Durand <william.durand1@gmail.com>
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
@@ -70,7 +69,7 @@ abstract class AbstractHttpProvider extends AbstractProvider
             throw InvalidServerResponse::create($url, $statusCode);
         }
 
-        $body = (string)$response->getBody();
+        $body = (string) $response->getBody();
         if (empty($body)) {
             throw InvalidServerResponse::emptyResponse($url);
         }
@@ -95,7 +94,6 @@ abstract class AbstractHttpProvider extends AbstractProvider
     {
         return $this->messageFactory;
     }
-
 
     /**
      * @param string $url
