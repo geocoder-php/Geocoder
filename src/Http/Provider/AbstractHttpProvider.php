@@ -59,6 +59,7 @@ abstract class AbstractHttpProvider extends AbstractProvider
     protected function getUrlContents(string $url): string
     {
         $request = $this->getRequest($url);
+        $response = $this->getHttpClient()->sendRequest($request);
 
         $statusCode = $response->getStatusCode();
         if (401 === $statusCode || 403 === $statusCode) {
