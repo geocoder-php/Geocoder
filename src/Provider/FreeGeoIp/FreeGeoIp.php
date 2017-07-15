@@ -70,10 +70,6 @@ final class FreeGeoIp extends AbstractHttpProvider implements Provider, IpAddres
             ])]);
         }
 
-        if ($locale = $query->getLocale()) {
-            $this->locale = $locale;
-        }
-
         $content = $this->getUrlContents(sprintf(self::ENDPOINT_URL, $address));
         $data = json_decode($content, true);
         $builder = new AddressBuilder($this->getName());
@@ -106,14 +102,6 @@ final class FreeGeoIp extends AbstractHttpProvider implements Provider, IpAddres
     public function getName(): string
     {
         return 'free_geo_ip';
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getLocale()
-    {
-        return $this->locale;
     }
 
     /**
