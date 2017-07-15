@@ -22,7 +22,6 @@ use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Provider\Provider;
 use Http\Client\HttpClient;
 use Psr\Http\Message\RequestInterface;
-use Http\Client\HttpClient;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -35,32 +34,23 @@ final class FreeGeoIp extends AbstractHttpProvider implements Provider
     private $baseUrl;
 
     /**
-     * @var string|null
+     * @var string
      */
     private $locale;
 
     /**
      * @param HttpClient $client
+     * @param string     $locale
      * @param string     $baseUrl
      */
-    public function __construct(HttpClient $client, string $baseUrl = 'https://freegeoip.net/json/%s')
-    {
-        parent::__construct($client);
-
-        $this->baseUrl = $baseUrl;
-    }
-
-    /**
-     * {@inheritdoc}
-     * @param string|null $locale
-     */
-    public function __construct(HttpClient $client, $locale = null)
+    public function __construct(HttpClient $client, string $locale = 'ru', string $baseUrl = 'https://freegeoip.net/json/%s')
     {
         parent::__construct($client);
 
         $this->locale = $locale;
-    }
 
+        $this->baseUrl = $baseUrl;
+    }
 
     /**
      * {@inheritdoc}
@@ -74,10 +64,6 @@ final class FreeGeoIp extends AbstractHttpProvider implements Provider
 
         if (in_array($address, ['127.0.0.1', '::1'])) {
             return new AddressCollection([$this->getLocationForLocalhost()]);
-        }
-
-        if ($locale = $query->getLocale()) {
-            $this->locale = $locale;
         }
 
         $content = $this->getUrlContents(sprintf($this->baseUrl, $address));
@@ -114,15 +100,6 @@ final class FreeGeoIp extends AbstractHttpProvider implements Provider
     public function getName(): string
     {
         return 'free_geo_ip';
-    }
-
-
-    /**
-     * @return string|null
-     */
-    public function getLocale(): ?string
-    {
-        return $this->locale;
     }
 
     /**
