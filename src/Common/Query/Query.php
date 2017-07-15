@@ -2,10 +2,15 @@
 
 declare(strict_types=1);
 
+/*
+ * This file is part of the Geocoder package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license    MIT License
+ */
+
 namespace Geocoder\Query;
-
-use Geocoder\Model\Bounds;
-
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
@@ -28,7 +33,7 @@ interface Query
 
     /**
      * @param string $name
-     * @param mixed $value
+     * @param mixed  $value
      *
      * @return GeocodeQuery
      */
@@ -45,7 +50,7 @@ interface Query
     public function getLimit(): int;
 
     /**
-     * @param string $name
+     * @param string     $name
      * @param mixed|null $default
      *
      * @return mixed
@@ -60,5 +65,5 @@ interface Query
     /**
      * @return string
      */
-    public function __toString(): string;
+    public function __toString();
 }
