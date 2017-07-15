@@ -2,6 +2,14 @@
 
 declare(strict_types=1);
 
+/*
+ * This file is part of the Geocoder package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license    MIT License
+ */
+
 namespace Geocoder\Plugin;
 
 use Geocoder\Query\Query;
@@ -24,8 +32,8 @@ interface Plugin
      * Handle the Query and return the Collection coming from the next callable.
      *
      * @param Query    $query
-     * @param callable $next    Next middleware in the chain, the query is passed as the first argument
-     * @param callable $first   First middleware in the chain, used to to restart a request
+     * @param callable $next  Next middleware in the chain, the query is passed as the first argument
+     * @param callable $first First middleware in the chain, used to to restart a request
      *
      * @return Promise Resolves a Collection or fails with an Geocoder\Exception\Exception
      */

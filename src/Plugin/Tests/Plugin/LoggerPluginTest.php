@@ -2,21 +2,24 @@
 
 declare(strict_types=1);
 
+/*
+ * This file is part of the Geocoder package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license    MIT License
+ */
+
 namespace Geocoder\Plugin\Tests\Plugin;
 
 use Geocoder\Exception\QuotaExceeded;
 use Geocoder\Model\AddressCollection;
-use Geocoder\Plugin\Plugin\LimitPlugin;
-use Geocoder\Plugin\Plugin\LocalePlugin;
 use Geocoder\Plugin\Plugin\LoggerPlugin;
 use Geocoder\Plugin\PluginProvider;
 use Geocoder\Provider\Provider;
 use Geocoder\Query\GeocodeQuery;
-use Geocoder\Query\Query;
-use League\Flysystem\Adapter\Local;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\AbstractLogger;
-use Psr\Log\LoggerInterface;
 
 class LoggerPluginTest extends TestCase
 {
@@ -28,7 +31,7 @@ class LoggerPluginTest extends TestCase
             ->getMock();
         $logger->expects($this->once())
             ->method('log')
-            ->with('info', $this->callback(function($message) {
+            ->with('info', $this->callback(function ($message) {
                 return false !== strstr($message, 'Got 0 results');
             }));
 
@@ -59,7 +62,7 @@ class LoggerPluginTest extends TestCase
             ->getMock();
         $logger->expects($this->once())
             ->method('log')
-            ->with('error', $this->callback(function($message) {
+            ->with('error', $this->callback(function ($message) {
                 return false !== strstr($message, 'QuotaExceeded');
             }));
 

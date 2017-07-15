@@ -2,6 +2,14 @@
 
 declare(strict_types=1);
 
+/*
+ * This file is part of the Geocoder package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license    MIT License
+ */
+
 namespace Geocoder\Plugin;
 
 use Geocoder\Collection;
@@ -16,7 +24,6 @@ use Geocoder\Query\ReverseQuery;
 use Geocoder\Plugin\Exception\LoopException;
 
 /**
- *
  * @author Joel Wurtz <joel.wurtz@gmail.com>
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
@@ -41,8 +48,8 @@ class PluginProvider implements Provider
 
     /**
      * @param Provider $provider
-     * @param Plugin[]                   $plugins
-     * @param array                      $options {
+     * @param Plugin[] $plugins
+     * @param array    $options  {
      *
      *     @var int      $max_restarts
      * }
@@ -55,7 +62,7 @@ class PluginProvider implements Provider
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
@@ -71,7 +78,7 @@ class PluginProvider implements Provider
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function reverseQuery(ReverseQuery $query): Collection
     {
@@ -87,7 +94,7 @@ class PluginProvider implements Provider
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getName(): string
     {

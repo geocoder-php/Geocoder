@@ -2,6 +2,14 @@
 
 declare(strict_types=1);
 
+/*
+ * This file is part of the Geocoder package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license    MIT License
+ */
+
 namespace Geocoder\Plugin\Tests;
 
 use Geocoder\Model\AddressCollection;
@@ -19,7 +27,7 @@ class PluginProviderTest extends TestCase
     public function testDispatchQueries()
     {
         $geocodeQuery = GeocodeQuery::create('foo');
-        $reverseQuery = ReverseQuery::fromCoordinates(47,11);
+        $reverseQuery = ReverseQuery::fromCoordinates(47, 11);
         $collection = new AddressCollection([]);
 
         $provider = $this->getMockBuilder(Provider::class)
@@ -64,7 +72,7 @@ class PluginProviderTest extends TestCase
         $pluginA->expects($this->once())
             ->method('handleQuery')
             ->with($geocodeQuery, $this->isType('callable'), $this->isType('callable'))
-            ->willReturnCallback(function(Query $query, callable $next, callable $first) {
+            ->willReturnCallback(function (Query $query, callable $next, callable $first) {
                 return $next($query);
             });
 
@@ -72,10 +80,9 @@ class PluginProviderTest extends TestCase
         $this->assertSame($collection, $pluginProvider->geocodeQuery($geocodeQuery));
     }
 
-
     public function testPluginsIsBeingUsedWhenReverse()
     {
-        $reverseQuery = ReverseQuery::fromCoordinates(47,11);
+        $reverseQuery = ReverseQuery::fromCoordinates(47, 11);
         $collection = new AddressCollection([]);
 
         $provider = $this->getMockBuilder(Provider::class)
@@ -96,7 +103,7 @@ class PluginProviderTest extends TestCase
         $pluginA->expects($this->once())
             ->method('handleQuery')
             ->with($reverseQuery, $this->isType('callable'), $this->isType('callable'))
-            ->willReturnCallback(function(Query $query, callable $next, callable $first) {
+            ->willReturnCallback(function (Query $query, callable $next, callable $first) {
                 return $next($query);
             });
 
@@ -128,7 +135,7 @@ class PluginProviderTest extends TestCase
         $pluginA->expects($this->any())
             ->method('handleQuery')
             ->with($geocodeQuery, $this->isType('callable'), $this->isType('callable'))
-            ->willReturnCallback(function(Query $query, callable $next, callable $first) {
+            ->willReturnCallback(function (Query $query, callable $next, callable $first) {
                 return $first($query);
             });
 

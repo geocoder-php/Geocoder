@@ -2,15 +2,20 @@
 
 declare(strict_types=1);
 
+/*
+ * This file is part of the Geocoder package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license    MIT License
+ */
+
 namespace Geocoder\Plugin\Tests\Plugin;
 
 use Cache\Adapter\Void\VoidCachePool;
 use Geocoder\Plugin\Plugin\CachePlugin;
-use Geocoder\Plugin\Plugin\LimitPlugin;
-use Geocoder\Plugin\Plugin\LocalePlugin;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\Query;
-use League\Flysystem\Adapter\Local;
 use PHPUnit\Framework\TestCase;
 
 class CachePluginTest extends TestCase
@@ -34,16 +39,17 @@ class CachePluginTest extends TestCase
             ->with('v4'.$queryString, 'result', $ttl)
             ->willReturn(true);
 
-        $first = function(Query $query) {
+        $first = function (Query $query) {
             $this->fail('Plugin should not restart the chain');
         };
-        $next = function(Query $query) {
+        $next = function (Query $query) {
             return 'result';
         };
 
         $plugin = new CachePlugin($cache, $ttl);
         $this->assertEquals('result', $plugin->handleQuery($query, $next, $first));
     }
+
     public function testPluginHit()
     {
         $query = GeocodeQuery::create('foo');
@@ -59,10 +65,10 @@ class CachePluginTest extends TestCase
             ->willReturn('result');
         $cache->expects($this->never())->method('set');
 
-        $first = function(Query $query) {
+        $first = function (Query $query) {
             $this->fail('Plugin should not restart the chain');
         };
-        $next = function(Query $query) {
+        $next = function (Query $query) {
             $this->fail('Plugin not call $next on cache hit');
         };
 
