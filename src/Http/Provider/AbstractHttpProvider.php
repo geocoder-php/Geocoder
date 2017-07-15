@@ -21,6 +21,7 @@ use Http\Discovery\MessageFactoryDiscovery;
 use Http\Client\HttpClient;
 use Psr\Http\Message\RequestInterface;
 
+
 /**
  * @author William Durand <william.durand1@gmail.com>
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
@@ -59,7 +60,6 @@ abstract class AbstractHttpProvider extends AbstractProvider
     protected function getUrlContents(string $url): string
     {
         $request = $this->getRequest($url);
-        $response = $this->getHttpClient()->sendRequest($request);
 
         $statusCode = $response->getStatusCode();
         if (401 === $statusCode || 403 === $statusCode) {
@@ -95,6 +95,7 @@ abstract class AbstractHttpProvider extends AbstractProvider
     {
         return $this->messageFactory;
     }
+
 
     /**
      * @param string $url
