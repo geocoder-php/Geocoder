@@ -20,24 +20,24 @@ interface Query
     /**
      * @param string $locale
      *
-     * @return GeocodeQuery
+     * @return Query
      */
-    public function withLocale(string $locale): GeocodeQuery;
+    public function withLocale(string $locale);
 
     /**
      * @param int $limit
      *
-     * @return GeocodeQuery
+     * @return Query
      */
-    public function withLimit(int $limit): GeocodeQuery;
+    public function withLimit(int $limit);
 
     /**
      * @param string $name
      * @param mixed  $value
      *
-     * @return GeocodeQuery
+     * @return Query
      */
-    public function withData(string $name, $value): GeocodeQuery;
+    public function withData(string $name, $value);
 
     /**
      * @return string|null
