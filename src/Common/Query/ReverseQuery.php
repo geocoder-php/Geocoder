@@ -70,6 +70,19 @@ final class ReverseQuery
     }
 
     /**
+     * @param Coordinates $coordinates
+     *
+     * @return ReverseQuery
+     */
+    public function withCoordinates(Coordinates $coordinates): ReverseQuery
+    {
+        $new = clone $this;
+        $new->coordinates = $coordinates;
+
+        return $new;
+    }
+
+    /**
      * @param int $limit
      *
      * @return ReverseQuery
