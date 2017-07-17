@@ -71,6 +71,19 @@ final class GeocodeQuery
     }
 
     /**
+     * @param string $text
+     *
+     * @return GeocodeQuery
+     */
+    public function withTest(string $text): GeocodeQuery
+    {
+        $new = clone $this;
+        $new->text = $text;
+
+        return $new;
+    }
+
+    /**
      * @param Bounds $bounds
      *
      * @return GeocodeQuery
