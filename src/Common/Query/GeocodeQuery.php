@@ -75,7 +75,7 @@ final class GeocodeQuery implements Query
      *
      * @return GeocodeQuery
      */
-    public function withTest(string $text): GeocodeQuery
+    public function withText(string $text): GeocodeQuery
     {
         $new = clone $this;
         $new->text = $text;
