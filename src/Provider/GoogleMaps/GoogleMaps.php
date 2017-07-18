@@ -227,7 +227,6 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
             if ($builder->hasValue('subLocalityLevel')) {
                 $address = $address->withSubLocalityLevels($builder->getValue('subLocalityLevel', []));
             }
-
             $results[] = $address;
 
             if (count($results) >= $limit) {
