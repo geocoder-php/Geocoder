@@ -17,7 +17,7 @@ use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\OutOfBounds;
 
 /**
- * Class SubLocalityLevelCollection
+ * Class SubLocalityLevelCollection is used only for GoogleMap provider, contains functions for working with arrays of SubLocalityLevel
  */
 final class SubLocalityLevelCollection implements \IteratorAggregate, \Countable
 {
@@ -30,6 +30,8 @@ final class SubLocalityLevelCollection implements \IteratorAggregate, \Countable
 
     /**
      * @param SubLocalityLevel[] $subLocalityLevels
+     *
+     * @throws InvalidArgument
      */
     public function __construct(array $subLocalityLevels = [])
     {
@@ -92,6 +94,8 @@ final class SubLocalityLevelCollection implements \IteratorAggregate, \Countable
     }
 
     /**
+     * @param int $level
+     *
      * @return bool
      */
     public function has(int $level)
@@ -100,6 +104,8 @@ final class SubLocalityLevelCollection implements \IteratorAggregate, \Countable
     }
 
     /**
+     * @param int $level
+     *
      * @return SubLocalityLevel
      *
      * @throws \OutOfBoundsException

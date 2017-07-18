@@ -13,7 +13,7 @@ declare(strict_types=1);
 namespace Geocoder\Provider\GoogleMaps\Model;
 
 /**
- * Class SubLocalityLevel
+ * Class SubLocalityLevel is used only for GoogleMap provider, and contains functions for working with concrete subLocalityLevel
  */
 final class SubLocalityLevel
 {

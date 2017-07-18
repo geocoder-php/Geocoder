@@ -105,7 +105,7 @@ final class GoogleAddress extends Address
     private $subLocalityLevels;
 
     /**
-     * @param null|string $locationType
+     * @param string|null $locationType
      *
      * @return GoogleAddress
      */
@@ -118,7 +118,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getLocationType()
     {
@@ -147,7 +147,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getFormattedAddress()
     {
@@ -168,7 +168,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getAirport()
     {
@@ -189,7 +189,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getColloquialArea()
     {
@@ -210,7 +210,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getIntersection()
     {
@@ -231,7 +231,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getNaturalFeature()
     {
@@ -252,7 +252,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getNeighborhood()
     {
@@ -273,7 +273,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getPark()
     {
@@ -294,7 +294,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getPointOfInterest()
     {
@@ -315,7 +315,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getPolitical()
     {
@@ -336,7 +336,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getPremise()
     {
@@ -357,7 +357,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getStreetAddress()
     {
@@ -378,7 +378,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getSubpremise()
     {
@@ -399,7 +399,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getWard()
     {
@@ -420,7 +420,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getEstablishment()
     {
