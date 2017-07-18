@@ -14,12 +14,12 @@ namespace Geocoder\Provider\FreeGeoIp;
 
 use Geocoder\Collection;
 use Geocoder\Exception\UnsupportedOperation;
-use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Model\AddressBuilder;
 use Geocoder\Model\AddressCollection;
-use Geocoder\Provider\Provider;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
+use Geocoder\Http\Provider\AbstractHttpProvider;
+use Geocoder\Provider\Provider;
 use Http\Client\HttpClient;
 use Psr\Http\Message\RequestInterface;
 
@@ -43,11 +43,7 @@ final class FreeGeoIp extends AbstractHttpProvider implements Provider
      * @param string     $locale
      * @param string     $baseUrl
      */
-    public function __construct(
-        HttpClient $client,
-        string $locale = '',
-        string $baseUrl = 'https://freegeoip.net/json/%s'
-    )
+    public function __construct(HttpClient $client, string $locale = '', string $baseUrl = 'https://freegeoip.net/json/%s')
     {
         parent::__construct($client);
 
