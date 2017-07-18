@@ -115,16 +115,12 @@ class PluginProviderTest extends TestCase
     {
         $this->expectException(LoopException::class);
         $geocodeQuery = GeocodeQuery::create('foo');
-        $collection = new AddressCollection([]);
 
         $provider = $this->getMockBuilder(Provider::class)
             ->disableOriginalConstructor()
             ->setMethods(['geocodeQuery', 'reverseQuery', 'getName'])
             ->getMock();
-        $provider->expects($this->once())
-            ->method('geocodeQuery')
-            ->with($geocodeQuery)
-            ->willReturn($collection);
+        $provider->expects($this->never())->method('geocodeQuery');
         $provider->expects($this->never())->method('reverseQuery');
         $provider->expects($this->never())->method('getName');
 
@@ -136,10 +132,20 @@ class PluginProviderTest extends TestCase
             ->method('handleQuery')
             ->with($geocodeQuery, $this->isType('callable'), $this->isType('callable'))
             ->willReturnCallback(function (Query $query, callable $next, callable $first) {
+                return $next($query);
+            });
+        $pluginB = $this->getMockBuilder(Plugin::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['handleQuery'])
+            ->getMock();
+        $pluginB->expects($this->any())
+            ->method('handleQuery')
+            ->with($geocodeQuery, $this->isType('callable'), $this->isType('callable'))
+            ->willReturnCallback(function (Query $query, callable $next, callable $first) {
                 return $first($query);
             });
 
-        $pluginProvider = new PluginProvider($provider, [$pluginA]);
+        $pluginProvider = new PluginProvider($provider, [$pluginA, $pluginB]);
         $pluginProvider->geocodeQuery($geocodeQuery);
     }
 }

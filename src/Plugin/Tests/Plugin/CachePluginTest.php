@@ -24,7 +24,7 @@ class CachePluginTest extends TestCase
     {
         $ttl = 4711;
         $query = GeocodeQuery::create('foo');
-        $queryString = $query->__toString();
+        $queryString = sha1($query->__toString());
         $cache = $this->getMockBuilder(VoidCachePool::class)
             ->disableOriginalConstructor()
             ->setMethods(['get', 'set'])
@@ -53,7 +53,7 @@ class CachePluginTest extends TestCase
     public function testPluginHit()
     {
         $query = GeocodeQuery::create('foo');
-        $queryString = $query->__toString();
+        $queryString = sha1($query->__toString());
         $cache = $this->getMockBuilder(VoidCachePool::class)
             ->disableOriginalConstructor()
             ->setMethods(['get', 'set'])
