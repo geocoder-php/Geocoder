@@ -100,7 +100,12 @@ final class GoogleAddress extends Address
     private $establishment;
 
     /**
-     * @param null|string $locationType
+     * @var SubLocalityLevelCollection
+     */
+    private $subLocalityLevels;
+
+    /**
+     * @param string|null $locationType
      *
      * @return GoogleAddress
      */
@@ -113,7 +118,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getLocationType()
     {
@@ -142,7 +147,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getFormattedAddress()
     {
@@ -163,7 +168,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getAirport()
     {
@@ -184,7 +189,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getColloquialArea()
     {
@@ -205,7 +210,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getIntersection()
     {
@@ -226,7 +231,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getNaturalFeature()
     {
@@ -247,7 +252,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getNeighborhood()
     {
@@ -268,7 +273,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getPark()
     {
@@ -289,7 +294,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getPointOfInterest()
     {
@@ -310,7 +315,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getPolitical()
     {
@@ -331,7 +336,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getPremise()
     {
@@ -352,7 +357,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getStreetAddress()
     {
@@ -373,7 +378,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getSubpremise()
     {
@@ -394,7 +399,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getWard()
     {
@@ -415,7 +420,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getEstablishment()
     {
@@ -431,6 +436,41 @@ final class GoogleAddress extends Address
     {
         $new = clone $this;
         $new->establishment = $establishment;
+
+        return $new;
+    }
+
+    /**
+     * @return array SubLocalityLevelCollection
+     */
+    public function getSubLocalityLevels()
+    {
+        return $this->subLocalityLevels;
+    }
+
+    /**
+     * @param array $subLocalityLevel
+     *
+     * @return $this
+     */
+    public function withSubLocalityLevels(array $subLocalityLevel)
+    {
+        $subLocalityLevels = [];
+        foreach ($subLocalityLevel as $level) {
+            if (empty($level['level'])) {
+                continue;
+            }
+
+            $name = $level['name'] ?? $level['code'] ?? null;
+            if (empty($name)) {
+                continue;
+            }
+
+            $subLocalityLevels[] = new SubLocalityLevel($level['level'], $name, $level['code'] ?? null);
+        }
+
+        $new = clone $this;
+        $new->subLocalityLevels = new SubLocalityLevelCollection($subLocalityLevels);
 
         return $new;
     }

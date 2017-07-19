@@ -390,6 +390,21 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertEquals('Kita-ku', $result->getWard());
     }
 
+    public function testReverseWithSubLocalityLevels()
+    {
+        $provider = new GoogleMaps($this->getHttpClient());
+        $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(36.2745084, 136.9003169));
+
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertCount(5, $results);
+
+        /** @var GoogleAddress $result */
+        $result = $results->first();
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals('Iijima', $result->getSubLocalityLevels()->get(1)->getName());
+        $this->assertEquals('５８', $result->getSubLocalityLevels()->get(4)->getName());
+    }
+
     public function testGeocodeBoundsWithRealAddressWithViewportOnly()
     {
         $provider = new GoogleMaps($this->getHttpClient());
