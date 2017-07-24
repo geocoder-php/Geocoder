@@ -115,7 +115,7 @@ abstract class AbstractProvider
     protected function fixEncoding(array $results)
     {
         return array_map(function ($value) {
-            return is_string($value) ? utf8_encode($value) : $value;
+            return is_string($value) && mb_detect_encoding($value) != 'UTF-8' ? utf8_encode($value) : $value;
         }, $results);
     }
 }
