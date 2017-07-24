@@ -108,6 +108,7 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertEquals('Île-de-France', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('France', $result->getCountry()->getName());
         $this->assertEquals('FR', $result->getCountry()->getCode());
+        $this->assertEquals('ChIJ4b303vJt5kcRF9AQdh4ZjWc', $result->getId());
 
         // not provided
         $this->assertNull($result->getTimezone());
@@ -129,6 +130,7 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertEquals(2.224199, $result->getBounds()->getWest(), '', 0.0001);
         $this->assertEquals(48.902145, $result->getBounds()->getNorth(), '', 0.0001);
         $this->assertEquals(2.4699209, $result->getBounds()->getEast(), '', 0.0001);
+        $this->assertEquals('ChIJD7fiBh9u5kcRYJSMaMOCCwQ', $result->getId());
     }
 
     /**
@@ -160,6 +162,7 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertEquals('Île-de-France', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('France', $result->getCountry()->getName());
         $this->assertEquals('FR', $result->getCountry()->getCode());
+        $this->assertEquals('ChIJ9aLL3vJt5kcR61GCze3v6fg', $result->getId());
     }
 
     public function testGeocodeWithCityDistrict()
