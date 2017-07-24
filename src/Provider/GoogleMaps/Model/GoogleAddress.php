@@ -22,6 +22,11 @@ final class GoogleAddress extends Address
     /**
      * @var string|null
      */
+    private $id;
+
+    /**
+     * @var string|null
+     */
     private $locationType;
 
     /**
@@ -98,6 +103,29 @@ final class GoogleAddress extends Address
      * @var string|null
      */
     private $establishment;
+
+    /**
+     * @param null|string $id
+     *
+     * @return GoogleAddress
+     */
+    public function withId(string $id = null)
+    {
+        $new = clone $this;
+        $new->id = $id;
+
+        return $new;
+    }
+
+    /**
+     * @see https://developers.google.com/places/place-id
+     *
+     * @return null|string
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * @param null|string $locationType
