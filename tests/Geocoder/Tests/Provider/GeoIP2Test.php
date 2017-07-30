@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geocoder package.
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -45,7 +45,7 @@ class GeoIP2Test extends TestCase
 
     public function testGeocodeWithLocalhostIPv4()
     {
-        $results  = $this->provider->geocode('127.0.0.1');
+        $results = $this->provider->geocode('127.0.0.1');
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -67,47 +67,47 @@ class GeoIP2Test extends TestCase
     }
 
     /**
-     * Provides data for geocode test
+     * Provides data for geocode test.
      *
      * @return array
      */
     public static function provideDataForRetrievingGeodata()
     {
-        $testdata = array(
-            'Response with data' => array(
+        $testdata = [
+            'Response with data' => [
                 '74.200.247.59',
                 '{"city":{"geoname_id":2911298,"names":{"de":"Hamburg","en":"Hamburg","es":"Hamburgo","fr":"Hambourg","ja":"\u30cf\u30f3\u30d6\u30eb\u30af","pt-BR":"Hamburgo","ru":"\u0413\u0430\u043c\u0431\u0443\u0440\u0433","zh-CN":"\u6c49\u5821\u5e02"}},"continent":{"code":"EU","geoname_id":6255148,"names":{"de":"Europa","en":"Europe","es":"Europa","fr":"Europe","ja":"\u30e8\u30fc\u30ed\u30c3\u30d1","pt-BR":"Europa","ru":"\u0415\u0432\u0440\u043e\u043f\u0430","zh-CN":"\u6b27\u6d32"}},"country":{"geoname_id":2921044,"iso_code":"DE","names":{"de":"Deutschland","en":"Germany","es":"Alemania","fr":"Allemagne","ja":"\u30c9\u30a4\u30c4\u9023\u90a6\u5171\u548c\u56fd","pt-BR":"Alemanha","ru":"\u0413\u0435\u0440\u043c\u0430\u043d\u0438\u044f","zh-CN":"\u5fb7\u56fd"}},"location":{"latitude":53.55,"longitude":10,"time_zone":"Europe\/Berlin"},"registered_country":{"geoname_id":2921044,"iso_code":"DE","names":{"de":"Deutschland","en":"Germany","es":"Alemania","fr":"Allemagne","ja":"\u30c9\u30a4\u30c4\u9023\u90a6\u5171\u548c\u56fd","pt-BR":"Alemanha","ru":"\u0413\u0435\u0440\u043c\u0430\u043d\u0438\u044f","zh-CN":"\u5fb7\u56fd"}},"subdivisions":[{"geoname_id":2911297,"iso_code":"HH","names":{"de":"Hamburg","en":"Hamburg","es":"Hamburgo","fr":"Hambourg"}}],"traits":{"ip_address":"74.200.247.59"},"postal":{"code":"EC4N"}}',
-                array(
-                    'latitude' => 53.55,
-                    'longitude' => 10,
+                [
+                    'latitude'      => 53.55,
+                    'longitude'     => 10,
                     'boundsDefined' => null,
-                    'streetNumber' => null,
-                    'streetName' => null,
-                    'locality' => 'Hamburg',
-                    'subLocality' => null,
-                    'postalCode' => 'EC4N',
-                    'adminLevels' => [1 => [
+                    'streetNumber'  => null,
+                    'streetName'    => null,
+                    'locality'      => 'Hamburg',
+                    'subLocality'   => null,
+                    'postalCode'    => 'EC4N',
+                    'adminLevels'   => [1 => [
                         'name' => 'Hamburg',
                         'code' => 'HH',
                     ]],
-                    'country' => 'Germany',
-                    'countryCode' => 'DE',
-                    'timezone' => 'Europe/Berlin',
-                )
-            ),
-            'Response with all possible data' => array(
+                    'country'       => 'Germany',
+                    'countryCode'   => 'DE',
+                    'timezone'      => 'Europe/Berlin',
+                ],
+            ],
+            'Response with all possible data' => [
                 '93.36.20.217',
                 '{"country": {"iso_code": "IT","names": {"pt-BR": "Itália","es": "Italia","ru": "Италия","en": "Italy","zh-CN": "意大利","fr": "Italie","de": "Italien","ja": "イタリア共和国"},"geoname_id": 3175395},"location": {"longitude": 9.2667,"latitude": 45.5833,"time_zone": "Europe/Rome"},"subdivisions": [{"iso_code": "25","names": {"en": "Lombardy","fr": "Lombardie","de": "Lombardei","es": "Lombardía"},"geoname_id": 3174618},{"iso_code": "MB","names": {"en": "Monza Brianza"},"geoname_id": 6955700}],"postal": {"code": "20900"},"city": {"names": {"pt-BR": "Monza","es": "Monza","ru": "Монца","en": "Monza","zh-CN": "蒙扎","fr": "Monza","de": "Monza","ja": "モンツァ"},"geoname_id": 3172629},"continent": {"names": {"pt-BR": "Europa","es": "Europa","ru": "Европа","en": "Europe","zh-CN": "欧洲","fr": "Europe","de": "Europa","ja": "ヨーロッパ"},"geoname_id": 6255148,"code": "EU"},"registered_country": {"iso_code": "IT","names": {"pt-BR": "Itália","es": "Italia","ru": "Италия","en": "Italy","zh-CN": "意大利","fr": "Italie","de": "Italien","ja": "イタリア共和国"},"geoname_id": 3175395},"traits": {"domain": "fastwebnet.it","autonomous_system_number": 12874,"ip_address": "93.36.20.217","organization": "Fastweb","isp": "Fastweb","autonomous_system_organization": "Fastweb SpA"},"represented_country": {"names": {}}}',
-                array(
-                    'latitude' => 45.5833,
-                    'longitude' => 9.2667,
+                [
+                    'latitude'      => 45.5833,
+                    'longitude'     => 9.2667,
                     'boundsDefined' => null,
-                    'streetNumber' => null,
-                    'streetName' => null,
-                    'locality' => 'Monza',
-                    'subLocality' => null,
-                    'postalCode' => '20900',
-                    'adminLevels' => [
+                    'streetNumber'  => null,
+                    'streetName'    => null,
+                    'locality'      => 'Monza',
+                    'subLocality'   => null,
+                    'postalCode'    => '20900',
+                    'adminLevels'   => [
                         1 => [
                             'name' => 'Lombardy',
                             'code' => '25',
@@ -117,30 +117,48 @@ class GeoIP2Test extends TestCase
                             'code' => 'MB',
                         ],
                     ],
-                    'country' => 'Italy',
-                    'countryCode' => 'IT',
-                    'timezone' => 'Europe/Rome',
-                )
-            ),
-            'Response with all data null' => array(
+                    'country'       => 'Italy',
+                    'countryCode'   => 'IT',
+                    'timezone'      => 'Europe/Rome',
+                ],
+            ],
+            'Response with all data null' => [
                 '74.200.247.59',
                 '{}',
-                array(
-                    'latitude' => null,
-                    'longitude' => null,
+                [
+                    'latitude'      => null,
+                    'longitude'     => null,
                     'boundsDefined' => null,
-                    'streetNumber' => null,
-                    'streetName' => null,
-                    'locality' => null,
-                    'subLocality' => null,
-                    'postalCode' => null,
-                    'adminLevels' => [],
-                    'country' => null,
-                    'countryCode' => null,
-                    'timezone' => null,
-                )
-            )
-        );
+                    'streetNumber'  => null,
+                    'streetName'    => null,
+                    'locality'      => null,
+                    'subLocality'   => null,
+                    'postalCode'    => null,
+                    'adminLevels'   => [],
+                    'country'       => null,
+                    'countryCode'   => null,
+                    'timezone'      => null,
+                ],
+            ],
+            'Response with data already in UTF-8 will not be utf8_encoded' => [
+                '95.94.10.138',
+                '{"city":{"geoname_id":2262963,"names":{"de":"Set\u00fabal","en":"Set\u00fabal","es":"Set\u00fabal","fr":"Set\u00fabal","ja":"\u30bb\u30c8\u30a5\u30fc\u30d0\u30eb","pt-BR":"Set\u00fabal","ru":"\u0421\u0435\u0442\u0443\u0431\u0430\u043b","zh-CN":"\u585e\u56fe\u5df4\u5c14"}},"continent":{"code":"EU","geoname_id":6255148,"names":{"de":"Europa","en":"Europe","es":"Europa","fr":"Europe","ja":"\u30e8\u30fc\u30ed\u30c3\u30d1","pt-BR":"Europa","ru":"\u0415\u0432\u0440\u043e\u043f\u0430","zh-CN":"\u6b27\u6d32"}},"country":{"geoname_id":2264397,"iso_code":"PT","names":{"de":"Portugal","en":"Portugal","es":"Portugal","fr":"Portugal","ja":"\u30dd\u30eb\u30c8\u30ac\u30eb\u5171\u548c\u56fd","pt-BR":"Portugal","ru":"\u041f\u043e\u0440\u0442\u0443\u0433\u0430\u043b\u0438\u044f","zh-CN":"\u8461\u8404\u7259"}},"location":{"accuracy_radius":1,"latitude":38.5333,"longitude":-8.9,"time_zone":"Europe\/Lisbon"},"postal":{"code":"2900-058"},"registered_country":{"geoname_id":2264397,"iso_code":"PT","names":{"de":"Portugal","en":"Portugal","es":"Portugal","fr":"Portugal","ja":"\u30dd\u30eb\u30c8\u30ac\u30eb\u5171\u548c\u56fd","pt-BR":"Portugal","ru":"\u041f\u043e\u0440\u0442\u0443\u0433\u0430\u043b\u0438\u044f","zh-CN":"\u8461\u8404\u7259"}},"subdivisions":[{"geoname_id":2262961,"iso_code":"15","names":{"en":"Set\u00fabal","es":"Set\u00fabal","pt-BR":"Set\u00fabal"}}],"traits":{"ip_address":"95.94.10.138"}}',
+                [
+                    'latitude'      => 38.533299999999997,
+                    'longitude'     => -8.9000000000000004,
+                    'boundsDefined' => null,
+                    'streetNumber'  => null,
+                    'streetName'    => null,
+                    'locality'      => 'Setúbal',
+                    'subLocality'   => null,
+                    'postalCode'    => '2900-058',
+                    'adminLevels'   => [],
+                    'country'       => 'Portugal',
+                    'countryCode'   => 'PT',
+                    'timezone'      => 'Europe/Lisbon',
+                ],
+            ],
+        ];
 
         return $testdata;
     }

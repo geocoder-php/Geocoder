@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geocoder package.
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -18,14 +18,13 @@ use Geocoder\Model\AddressFactory;
  */
 abstract class AbstractProvider
 {
-
     /**
      * @var AddressFactory
      */
     private $factory;
 
     /**
-     * @var integer
+     * @var int
      */
     private $limit = Provider::MAX_RESULTS;
 
@@ -35,7 +34,9 @@ abstract class AbstractProvider
     }
 
     /**
-     * {@inheritDoc}
+     * @param int $limit
+     *
+     * @return AbstractProvider
      */
     public function limit($limit)
     {
@@ -45,7 +46,7 @@ abstract class AbstractProvider
     }
 
     /**
-     * {@inheritDoc}
+     * @return int
      */
     public function getLimit()
     {
@@ -108,14 +109,14 @@ abstract class AbstractProvider
     }
 
     /**
-    * @param array $results
-    *
-    * @return array
-    */
+     * @param array $results
+     *
+     * @return array
+     */
     protected function fixEncoding(array $results)
     {
         return array_map(function ($value) {
-            return is_string($value) ? utf8_encode($value) : $value;
+            return is_string($value) && mb_detect_encoding($value) !== 'UTF-8' ? utf8_encode($value) : $value;
         }, $results);
     }
 }
