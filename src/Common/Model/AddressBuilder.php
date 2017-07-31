@@ -300,6 +300,19 @@ final class AddressBuilder
     }
 
     /**
+     * @param string $name
+     * @param mixed  $value
+     *
+     * @return AddressBuilder
+     */
+    public function setValueInArray(string $name, $value): self
+    {
+        $this->data[$name][] = $value;
+
+        return $this;
+    }
+
+    /**
      * @param string     $name
      * @param mixed|null $default
      *
