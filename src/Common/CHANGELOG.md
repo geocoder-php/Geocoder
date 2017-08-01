@@ -4,6 +4,25 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 
 ## Unreleased
 
+## 4.0.0
+
+No changes since Beta 5. 
+
+## 4.0.0 - Beta 5
+
+### Changed
+
+- `GeocodeQuery::withTest` was renamed to `GeocodeQuery::withText`
+
+## 4.0.0 - Beta 4
+
+### Added
+
+- Add `GeocodeQuery::withText` and `ReverseQuery::withCoordinates`.
+- Create interface for GeocodeQuery and ReverseQuery
+
+## 4.0.0 - Beta 3
+
 ### Added 
 
 - The constructor of `ProvierAggregator` will accept a callable that can decide what providers should be used for a specific query. 
@@ -14,6 +33,8 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 - `ProvierAggregator::limit` was removed
 - `ProvierAggregator::getLimit` was removed
 - `ProvierAggregator::__constructor` changed the order of the parameters. 
+- `ProvierAggregator` is not final. 
+
 
 ## 4.0.0 - Beta 2
 
