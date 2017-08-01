@@ -4,8 +4,7 @@ Geocoder
 [![Build Status](https://travis-ci.org/geocoder-php/Geocoder.svg?branch=master)](http://travis-ci.org/geocoder-php/Geocoder)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 
-> **Important:** You are browsing the documentation of Geocoder **4.x** (not
-> released yet).
+> **Important:** You are browsing the documentation of Geocoder **4.x**.
 >
 > Documentation for version **3.x** is available here: [Geocoder 3.x
 > documentation](https://github.com/geocoder-php/Geocoder/blob/3.x/README.md).
@@ -57,7 +56,7 @@ Read more about HTTPlug in [their docs](http://docs.php-http.org/en/latest/httpl
 To install Google Maps geocoder with Guzzle 6 you may run the following command: 
 
 ```
-$ composer require geocoder-php/google-maps-provider:@beta php-http/guzzle6-adapter php-http/message geocoder-php/common-http:@beta willdurand/geocoder:@beta
+$ composer require geocoder-php/google-maps-provider php-http/guzzle6-adapter php-http/message
 ```
 
 Cookbook
@@ -107,7 +106,8 @@ Provider       | Package | Features | Stats
 :------------- |:------- |:-------- |:-------
 [ArcGIS Online](https://github.com/geocoder-php/arcgis-online-provider) | `geocoder-php/arcgis-online-provider` | address, reverse <br> [Website](https://developers.arcgis.com/en/features/geocoding/) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/arcgis-online-provider/v/stable)](https://packagist.org/packages/geocoder-php/arcgis-online-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/arcgis-online-provider/downloads)](https://packagist.org/packages/geocoder-php/arcgis-online-provider)
 [Bing Maps](https://github.com/geocoder-php/bing-maps-provider) | `geocoder-php/bing-maps-provider` | address, reverse <br> [Website](http://msdn.microsoft.com/en-us/library/ff701713.aspx) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/bing-maps-provider/v/stable)](https://packagist.org/packages/geocoder-php/bing-maps-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/bing-maps-provider/downloads)](https://packagist.org/packages/geocoder-php/bing-maps-provider)
-[Chain](https://github.com/geocoder-php/chain-provider) | `geocoder-php/chain-provider` | Interates over multiple providers | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/chain-provider/v/stable)](https://packagist.org/packages/geocoder-php/chain-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/chain-provider/downloads)](https://packagist.org/packages/geocoder-php/chain-provider)
+[Cache](https://github.com/geocoder-php/cache-provider) | `geocoder-php/cache-provider` | Wraps a provider and cached the results | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/cache-provider/v/stable)](https://packagist.org/packages/geocoder-php/cache-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/cache-provider/downloads)](https://packagist.org/packages/geocoder-php/cache-provider)
+[Chain](https://github.com/geocoder-php/chain-provider) | `geocoder-php/chain-provider` | Iterates over multiple providers | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/chain-provider/v/stable)](https://packagist.org/packages/geocoder-php/chain-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/chain-provider/downloads)](https://packagist.org/packages/geocoder-php/chain-provider)
 [FreeGeoIp](https://github.com/geocoder-php/free-geoip-provider) | `geocoder-php/free-geoip-provider` | IPv4, IPv6 <br> [Website](http://freegeoip.net/) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/free-geoip-provider/v/stable)](https://packagist.org/packages/geocoder-php/free-geoip-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/free-geoip-provider/downloads)](https://packagist.org/packages/geocoder-php/free-geoip-provider)
 [GeoIPs](https://github.com/geocoder-php/geoip-provider) | `geocoder-php/geoip-provider` | IPv4, local <br> [Website](http://www.geoips.com/en/) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/geoip-provider/v/stable)](https://packagist.org/packages/geocoder-php/geoip-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/geoip-provider/downloads)](https://packagist.org/packages/geocoder-php/geoip-provider)
 [GeoIP2](https://github.com/geocoder-php/geoip2-provider) | `geocoder-php/geoip2-provider` | IPv4 <br> [Website](https://www.maxmind.com/en/geoip2-databases) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/geoip2-provider/v/stable)](https://packagist.org/packages/geocoder-php/geoip2-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/geoip2-provider/downloads)](https://packagist.org/packages/geocoder-php/geoip2-provider)
