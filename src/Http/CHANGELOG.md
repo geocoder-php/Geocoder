@@ -2,6 +2,10 @@
 
 The change log describes what is "Added", "Removed", "Changed" or "Fixed" between each release.
 
+## 4.0.0
+
+No changes since beta 2. 
+
 ## 4.0.0-beta2
 
 - Removed `AbstractHttpProvider::setMessageFactory`.
