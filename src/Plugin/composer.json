@@ -2,7 +2,7 @@
     "name": "geocoder-php/plugin",
     "type": "library",
     "description": "Plugins to Geocoder providers",
-    "keywords": ["http geocoder"],
+    "keywords": ["geocoder plugin"],
     "homepage": "http://geocoder-php.org",
     "license": "MIT",
     "authors": [
