@@ -33,6 +33,7 @@ providing a powerful abstraction layer for geocoding manipulations.
       - [Nominatim](#nominatim)
       - [TomTom](#tomtom)
       - [Yandex](#yandex)
+      - [LocationIQ](#locationiq)
     - [IP-based Providers](#ip-based-providers)
     - [Locale Aware Providers](#locale-aware-providers)
     - [The Chain Provider](#the-chain-provider)
@@ -243,6 +244,7 @@ Chain | `chain` | | | | | meta provider which iterates over a list of providers
 [OpenStreetMap](http://wiki.openstreetmap.org/wiki/Nominatim) | `openstreetmap` | yes | no | worldwide | yes | heavy users (>1q/s) get banned
 [TomTom](https://geocoder.tomtom.com/app/view/index) | `tomtom` | yes | required | worldwide | yes | requires API key. First 2500 requests or 30 days free
 [Yandex](http://api.yandex.com/maps/) | `yandex` | yes | no | worldwide | yes
+[LocationIQ](https://locationiq.org) | `locationiq` | yes | no | worldwide | yes | requires API key. Limit 10,000 requests per day
 
 Below, you will find more information for these providers.
 
@@ -366,6 +368,7 @@ $chain = new \Geocoder\Provider\Chain([
     new \Geocoder\Provider\HostIp($adapter),
     new \Geocoder\Provider\GoogleMaps($adapter, 'fr_FR', 'France', true),
     new \Geocoder\Provider\BingMaps($adapter, '<API_KEY>'),
+    new \Geocoder\Provider\LocationIQ($adapter, '<API_KEY>'),
     // ...
 ]);
 
@@ -558,6 +561,7 @@ following lines and add your own API keys:
     <!-- <server name="TOMTOM_MAP_KEY" value="YOUR_MAP_KEY" /> -->
     <!-- <server name="GOOGLE_GEOCODING_KEY" value="YOUR_GEOCODING_KEY" /> -->
     <!-- <server name="OPENCAGE_API_KEY" value="YOUR_API_KEY" /> -->
+    <!-- <server name="LOCATIONIQ_API_KEY" value="YOUR_API_KEY" /> -->
 </php>
 ```
 
