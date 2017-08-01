@@ -1,7 +1,7 @@
 CHANGELOG
 =========
 
-### 4.0.0 (2016-xx-xx)
+### 4.0.0 (2017-08-01)
 
 * Dropped support for PHP < 7
 * Introduced `GeocodeQuery` and `ReverseQuery`. 
