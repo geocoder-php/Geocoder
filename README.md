@@ -385,13 +385,22 @@ and upper. Last version is:
 
 Major version `2` will reach **end of life on December 2015**.
 
+#### 3.x
+
+As of January 2017, version [3.x](https://github.com/geocoder-php/Geocoder/tree/3.x)
+is in a **feature frozen** state. All new features should be contributed to version 4.0
+and upper. Last version is:
+[3.3.2](https://github.com/geocoder-php/php-common/releases/tag/v3.3.2).
+
+Major version `3` will reach **end of life on October 2017**.
+
 ### Stable Version
 
-Version `3.x` is the current major stable version of Geocoder.
+Version `4.x` is the current major stable version of Geocoder.
 
 ### Next version
 
-The next version is 4.0 which is currently in beta. 
+There is no new major version planned at this time. 
 
 Contributing
 ------------
