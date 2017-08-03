@@ -73,8 +73,11 @@ Usage
 In the code snippet below we use GoogleMaps and Guzzle6. 
 
 ```php
+use Geocoder\Query\GeocodeQuery;
+use Geocoder\Query\ReverseQuery;
+
 $adapter  = new \Http\Adapter\Guzzle6\Client();
-$provider = new \Geocoder\Provider\GoogleMaps($adapter);
+$provider = new \Geocoder\Provider\GoogleMaps\GoogleMaps($adapter);
 $geocoder = new \Geocoder\StatefulGeocoder($provider, 'en');
 
 $result = $geocoder->geocodeQuery(GeocodeQuery::create('Buckingham Palace, London'));
@@ -133,8 +136,9 @@ There are two "*abstract*" or "*base*" packages that most providers depend on.
 
 Name       | Package | Features | Stats
 :--------- |:------- |:-------- |:-------
-[PHP common](https://github.com/geocoder-php/php-common) | `willdurand/geocoderr` | Models, interfaces, exceptions etc | [![Latest Stable Version](https://poser.pugx.org/willdurand/geocoder/v/stable)](https://packagist.org/packages/willdurand/geocoder) <br>[![Total Downloads](https://poser.pugx.org/willdurand/geocoder/downloads)](https://packagist.org/packages/willdurand/geocoder)
-[HTTP common](https://github.com/geocoder-php/php-common-http) | `geocoder-php/common-http` | `AbstractHttpProcider`, HTTPlug | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/common-http/v/stable)](https://packagist.org/packages/geocoder-php/common-http) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/common-http/downloads)](https://packagist.org/packages/geocoder-php/common-http)
+[PHP common](https://github.com/geocoder-php/php-common) | `willdurand/geocoder` | Models, interfaces, exceptions etc | [![Latest Stable Version](https://poser.pugx.org/willdurand/geocoder/v/stable)](https://packagist.org/packages/willdurand/geocoder) <br>[![Total Downloads](https://poser.pugx.org/willdurand/geocoder/downloads)](https://packagist.org/packages/willdurand/geocoder)
+[HTTP common](https://github.com/geocoder-php/php-common-http) | `geocoder-php/common-http` | `AbstractHttpProvider`, HTTPlug | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/common-http/v/stable)](https://packagist.org/packages/geocoder-php/common-http) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/common-http/downloads)](https://packagist.org/packages/geocoder-php/common-http)
+[Plugin](https://github.com/geocoder-php/plugin) | `geocoder-php/plugin` | Plugin provider | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/plugin/v/stable)](https://packagist.org/packages/geocoder-php/plugin) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/plugin/downloads)](https://packagist.org/packages/geocoder-php/plugin)
 
 Special Geocoders and Providers
 -------------------------------
@@ -147,14 +151,16 @@ when a provider returns a result. The result is returned by `GoogleMaps` because
 `FreeGeoIp` and `HostIp` cannot geocode street addresses. `BingMaps` is ignored.
 
 ``` php
+use Geocoder\Query\GeocodeQuery;
+
 $geocoder = new \Geocoder\ProviderAggregator();
 $adapter  = new \Http\Adapter\Guzzle6\Client();
 
-$chain = new \Geocoder\Provider\Chain([
-    new \Geocoder\Provider\FreeGeoIp($adapter),
-    new \Geocoder\Provider\HostIp($adapter),
-    new \Geocoder\Provider\GoogleMaps($adapter, 'France'),
-    new \Geocoder\Provider\BingMaps($adapter, '<API_KEY>'),
+$chain = new \Geocoder\Provider\Chain\Chain([
+    new \Geocoder\Provider\FreeGeoIp\FreeGeoIp($adapter),
+    new \Geocoder\Provider\HostIp\HostIp($adapter),
+    new \Geocoder\Provider\GoogleMaps\GoogleMaps($adapter, 'France'),
+    new \Geocoder\Provider\BingMaps\BingMaps($adapter, '<API_KEY>'),
     // ...
 ]);
 
@@ -172,18 +178,21 @@ The `ProviderAggregator` is used to register several providers so that you can
 decide which provider to use later on.
 
 ``` php
+use Geocoder\Query\GeocodeQuery;
+use Geocoder\Query\ReverseQuery;
+
 $adapter  = new \Http\Adapter\Guzzle6\Client();
 $geocoder = new \Geocoder\ProviderAggregator();
 
 $geocoder->registerProviders([
-    new \Geocoder\Provider\GoogleMaps($adapter),
-    new \Geocoder\Provider\GoogleMapsBusiness($adapter, '<CLIENT_ID>'),
-    new \Geocoder\Provider\Yandex($adapter),
-    new \Geocoder\Provider\MaxMind($adapter, '<MAXMIND_API_KEY>'),
-    new \Geocoder\Provider\ArcGISOnline($adapter),
+    new \Geocoder\Provider\GoogleMaps\GoogleMaps($adapter),
+    new \Geocoder\Provider\GoogleMaps\GoogleMapsBusiness($adapter, '<CLIENT_ID>'),
+    new \Geocoder\Provider\Yandex\Yandex($adapter),
+    new \Geocoder\Provider\MaxMind\MaxMind($adapter, '<MAXMIND_API_KEY>'),
+    new \Geocoder\Provider\ArcGISOnline\ArcGISOnline($adapter),
 ]);
 
-$geocoder->registerProvider(new \Geocoder\Provider\Nominatim($adapter, 'https://your.nominatim.server'));
+$geocoder->registerProvider(new \Geocoder\Provider\Nominatim\Nominatim($adapter, 'https://your.nominatim.server'));
 
 $geocoder
     ->using('google_maps')
@@ -197,6 +206,8 @@ $geocoder
 The `ProviderAggregator`'s API is fluent, meaning you can write:
 
 ``` php
+use Geocoder\Query\GeocodeQuery;
+
 $locations = $geocoder
     ->registerProvider(new \My\Provider\Custom($adapter))
     ->using('custom')
@@ -218,6 +229,8 @@ The `TimedGeocoder` class profiles each `geocode` and `reverse` call. So you can
 easily figure out how many time/memory was spent for each geocoder/reverse call.
 
 ```php
+use Geocoder\Query\GeocodeQuery;
+
 // configure your provider
 $provider = // ...
 
@@ -239,6 +252,8 @@ The `StatefulGeocoder` class is great when you want your Geocoder to hold state.
 limit or bounds in runtime. The `StatefulGeocoder` will append these values on each query. 
 
 ```php
+use Geocoder\Query\GeocodeQuery;
+
 // configure your provider
 $provider = // ...
 $geocoder = new \Geocoder\StatefulGeocoder($provider);
