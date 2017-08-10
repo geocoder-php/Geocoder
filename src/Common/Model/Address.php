@@ -265,7 +265,7 @@ class Address implements Location
             $data['postalCode'],
             $data['locality'],
             $data['subLocality'],
-            self::createCountry($data['country'],  $data['countryCode']).
+            self::createCountry($data['country'], $data['countryCode']),
             $data['timezone']
         );
     }
