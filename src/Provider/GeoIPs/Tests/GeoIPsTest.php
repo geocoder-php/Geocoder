@@ -127,8 +127,7 @@ class GeoIPsTest extends BaseTestCase
         $this->assertNull($result->getPostalCode());
         $this->assertNull($result->getLocality());
         $this->assertEmpty($result->getAdminLevels());
-        $this->assertNull($result->getCountry()->getName());
-        $this->assertNull($result->getCountry()->getCode());
+        $this->assertNull($result->getCountry());
         $this->assertNull($result->getTimezone());
     }
 
