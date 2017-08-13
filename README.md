@@ -62,7 +62,7 @@ $ composer require geocoder-php/google-maps-provider php-http/guzzle6-adapter ph
 ### Framework integration
 
 If you are using a framework then you may be interested in our excellent framework integrations. Check out our
-[Laravel service provider](https://github.com/geocoder-php/GeocoderLaravel) and our [Symfony Bundle](https://github.com/geocoder-php/BazingaGeocoderBundle). 
+[Laravel Package](https://github.com/geocoder-php/GeocoderLaravel) and our [Symfony Bundle](https://github.com/geocoder-php/BazingaGeocoderBundle). 
 
 
 Cookbook
