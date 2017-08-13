@@ -404,6 +404,7 @@ class GoogleMapsTest extends BaseTestCase
         /** @var GoogleAddress $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf('\Geocoder\Model\AdminLevelCollection', $result->getSubLocalityLevels());
         $this->assertEquals('Iijima', $result->getSubLocalityLevels()->get(1)->getName());
         $this->assertEquals('58', $result->getSubLocalityLevels()->get(4)->getName());
         $this->assertEquals(1, $result->getSubLocalityLevels()->get(1)->getLevel());

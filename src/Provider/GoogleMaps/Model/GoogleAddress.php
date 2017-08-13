@@ -13,6 +13,8 @@ declare(strict_types=1);
 namespace Geocoder\Provider\GoogleMaps\Model;
 
 use Geocoder\Model\Address;
+use Geocoder\Model\AdminLevel;
+use Geocoder\Model\AdminLevelCollection;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
@@ -105,7 +107,7 @@ final class GoogleAddress extends Address
     private $establishment;
 
     /**
-     * @var SubLocalityLevelCollection
+     * @var AdminLevelCollection
      */
     private $subLocalityLevels;
 
@@ -469,7 +471,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return array SubLocalityLevelCollection
+     * @return AdminLevelCollection
      */
     public function getSubLocalityLevels()
     {
@@ -494,11 +496,11 @@ final class GoogleAddress extends Address
                 continue;
             }
 
-            $subLocalityLevels[] = new SubLocalityLevel($level['level'], $name, $level['code'] ?? null);
+            $subLocalityLevels[] = new AdminLevel($level['level'], $name, $level['code'] ?? null);
         }
 
         $new = clone $this;
-        $new->subLocalityLevels = new SubLocalityLevelCollection($subLocalityLevels);
+        $new->subLocalityLevels = new AdminLevelCollection($subLocalityLevels);
 
         return $new;
     }
