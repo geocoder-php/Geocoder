@@ -59,6 +59,12 @@ To install Google Maps geocoder with Guzzle 6 you may run the following command:
 $ composer require geocoder-php/google-maps-provider php-http/guzzle6-adapter php-http/message
 ```
 
+### Framework integration
+
+If you are using a framework then you may be interested in our excellent framework integrations. Check out our
+[Laravel service provider](https://github.com/geocoder-php/GeocoderLaravel) and our [Symfony Bundle](https://github.com/geocoder-php/BazingaGeocoderBundle). 
+
+
 Cookbook
 --------
 
