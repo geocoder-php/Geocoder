@@ -230,6 +230,7 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
             $address = $address->withPark($builder->getValue('park'));
             $address = $address->withPointOfInterest($builder->getValue('point_of_interest'));
             $address = $address->withEstablishment($builder->getValue('establishment'));
+            $address = $address->withSubLocalityLevels($builder->getValue('subLocalityLevel', []));
             $results[] = $address;
 
             if (count($results) >= $limit) {
@@ -252,11 +253,13 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
         switch ($type) {
             case 'postal_code':
                 $builder->setPostalCode($values->long_name);
+
                 break;
 
             case 'locality':
             case 'postal_town':
                 $builder->setLocality($values->long_name);
+
                 break;
 
             case 'administrative_area_level_1':
@@ -265,23 +268,43 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
             case 'administrative_area_level_4':
             case 'administrative_area_level_5':
                 $builder->addAdminLevel(intval(substr($type, -1)), $values->long_name, $values->short_name);
+
+                break;
+
+            case 'sublocality_level_1':
+            case 'sublocality_level_2':
+            case 'sublocality_level_3':
+            case 'sublocality_level_4':
+            case 'sublocality_level_5':
+                $subLocalityLevel = $builder->getValue('subLocalityLevel', []);
+                $subLocalityLevel[] = [
+                    'level' => intval(substr($type, -1)),
+                    'name' => $values->long_name,
+                    'code' => $values->short_name,
+                ];
+                $builder->setValue('subLocalityLevel', $subLocalityLevel);
+
                 break;
 
             case 'country':
                 $builder->setCountry($values->long_name);
                 $builder->setCountryCode($values->short_name);
+
                 break;
 
             case 'street_number':
                 $builder->setStreetNumber($values->long_name);
+
                 break;
 
             case 'route':
                 $builder->setStreetName($values->long_name);
+
                 break;
 
             case 'sublocality':
                 $builder->setSubLocality($values->long_name);
+
                 break;
 
             case 'street_address':
@@ -298,6 +321,7 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
             case 'point_of_interest':
             case 'establishment':
                 $builder->setValue($type, $values->long_name);
+
                 break;
 
             default:
