@@ -250,7 +250,6 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
      */
     private function updateAddressComponent(AddressBuilder $builder, string $type, $values)
     {
-        $newSubLocalityLevel = [];
         switch ($type) {
             case 'postal_code':
                 $builder->setPostalCode($values->long_name);
@@ -274,12 +273,13 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
             case 'sublocality_level_3':
             case 'sublocality_level_4':
             case 'sublocality_level_5':
-                $newSubLocalityLevel = [
+                $subLocalityLevel = $builder->getValue('subLocalityLevel', []);
+                $subLocalityLevel[] = [
                     'level' => intval(substr($type, -1)),
                     'name' => $values->long_name,
                     'code' => $values->short_name,
                 ];
-                $builder->setValueInArray('subLocalityLevel', $newSubLocalityLevel);
+                $builder->setValue('subLocalityLevel', $subLocalityLevel);
                 break;
 
             case 'country':
