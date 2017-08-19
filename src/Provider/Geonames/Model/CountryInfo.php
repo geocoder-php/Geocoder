@@ -91,6 +91,14 @@ final class CountryInfo
     private $currencyCode;
 
     /**
+     * @return Bounds
+     */
+    public function getBounds(): Bounds
+    {
+        return $this->bounds;
+    }
+
+    /**
      * @param float $south
      * @param float $west
      * @param float $north

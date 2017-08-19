@@ -102,10 +102,10 @@ final class Geonames extends AbstractHttpProvider implements Provider
      * @param string|null $locale
      * @param int|null    $maxRows
      * @param int|null    $startRow
-     * @return AddressCollection
+     * @return array
      * @throws \Geocoder\Exception\Exception
      */
-    public function getCountryInfo(string $country = null, string $locale = null, int $maxRows = null, int $startRow = null): AddressCollection
+    public function getCountryInfo(string $country = null, string $locale = null, int $maxRows = 10, int $startRow = 0): array
     {
         $url = sprintf(self::BASE_ENDPOINT_URL, 'countryInfoJSON', $this->username);
 
@@ -136,7 +136,7 @@ final class Geonames extends AbstractHttpProvider implements Provider
         $data = $json->geonames;
 
         if (empty($data)) {
-            return new AddressCollection([]);
+            return [];
         }
 
         $results = [];
@@ -161,7 +161,7 @@ final class Geonames extends AbstractHttpProvider implements Provider
                 ->withCurrencyCode($item->currencyCode ?? null);
         }
 
-        return new AddressCollection($results);
+        return $results;
     }
 
     /**
