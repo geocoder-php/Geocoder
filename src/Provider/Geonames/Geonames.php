@@ -102,7 +102,9 @@ final class Geonames extends AbstractHttpProvider implements Provider
      * @param string|null $locale
      * @param int|null    $maxRows
      * @param int|null    $startRow
+     *
      * @return array
+     *
      * @throws \Geocoder\Exception\Exception
      */
     public function getCountryInfo(string $country = null, string $locale = null, int $maxRows = 10, int $startRow = 0): array

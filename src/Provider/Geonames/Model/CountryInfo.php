@@ -318,6 +318,7 @@ final class CountryInfo
 
     /**
      * @param string|null $countryCode
+     *
      * @return CountryInfo
      */
     public function withCountryCode(string $countryCode = null): self
