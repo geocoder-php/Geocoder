@@ -20,12 +20,12 @@ class CountryInfoTest extends BaseTestCase
 {
     protected function getCacheDir()
     {
-        return __DIR__ . '/.cached_responses';
+        return __DIR__.'/.cached_responses';
     }
 
     public function testCountryInfoWithOneCountry()
     {
-        if ( ! isset($_SERVER['GEONAMES_USERNAME'])) {
+        if (!isset($_SERVER['GEONAMES_USERNAME'])) {
             $this->markTestSkipped('You need to configure the GEONAMES_USERNAME value in phpunit.xml');
         }
 
@@ -57,7 +57,7 @@ class CountryInfoTest extends BaseTestCase
 
     public function testCountryInfoWithMultipleCountries()
     {
-        if ( ! isset($_SERVER['GEONAMES_USERNAME'])) {
+        if (!isset($_SERVER['GEONAMES_USERNAME'])) {
             $this->markTestSkipped('You need to configure the GEONAMES_USERNAME value in phpunit.xml');
         }
 
@@ -69,7 +69,7 @@ class CountryInfoTest extends BaseTestCase
 
     public function testCountryInfoWithInvalidCountry()
     {
-        if ( ! isset($_SERVER['GEONAMES_USERNAME'])) {
+        if (!isset($_SERVER['GEONAMES_USERNAME'])) {
             $this->markTestSkipped('You need to configure the GEONAMES_USERNAME value in phpunit.xml');
         }
 
@@ -81,7 +81,7 @@ class CountryInfoTest extends BaseTestCase
 
     public function testCountryInfoWithLocale()
     {
-        if ( ! isset($_SERVER['GEONAMES_USERNAME'])) {
+        if (!isset($_SERVER['GEONAMES_USERNAME'])) {
             $this->markTestSkipped('You need to configure the GEONAMES_USERNAME value in phpunit.xml');
         }
 
@@ -96,7 +96,7 @@ class CountryInfoTest extends BaseTestCase
 
     public function testCountryInfoWithNoCountry()
     {
-        if ( ! isset($_SERVER['GEONAMES_USERNAME'])) {
+        if (!isset($_SERVER['GEONAMES_USERNAME'])) {
             $this->markTestSkipped('You need to configure the GEONAMES_USERNAME value in phpunit.xml');
         }
 
