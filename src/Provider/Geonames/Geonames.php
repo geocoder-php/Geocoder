@@ -102,10 +102,10 @@ final class Geonames extends AbstractHttpProvider implements Provider
      * @param string|null $locale
      * @param int|null    $maxRows
      * @param int|null    $startRow
-     * @return Collection
+     * @return AddressCollection
      * @throws \Geocoder\Exception\Exception
      */
-    public function getCountryInfo(string $country = null, string $locale = null, int $maxRows = null, int $startRow = null): Collection
+    public function getCountryInfo(string $country = null, string $locale = null, int $maxRows = null, int $startRow = null): AddressCollection
     {
         $url = sprintf(self::BASE_ENDPOINT_URL, 'countryInfoJSON', $this->username);
 
@@ -140,29 +140,25 @@ final class Geonames extends AbstractHttpProvider implements Provider
         }
 
         $results = [];
+
         foreach ($data as $item) {
-            $builder = new AddressBuilder($this->getName());
+            $countryInfo = new CountryInfo();
 
-            $builder->setBounds($item->south, $item->west, $item->north, $item->east);
-
-            $builder->setCountry($item->countryName ?? null);
-            $builder->setCountryCode($item->countryCode ?? null);
-
-            /** @var CountryInfo $address */
-            $address = $builder->build(CountryInfo::class);
-            $address = $address->withContinent($item->continent ?? null);
-            $address = $address->withCapital($item->capital ?? null);
-            $address = $address->withLanguages($item->langesuages ?? '');
-            $address = $address->withGeonameId($item->geonameId ?? null);
-            $address = $address->withIsoAlpha3($item->isoAlpha3 ?? null);
-            $address = $address->withFipsCode($item->fipsCode ?? null);
-            $address = $address->withPopulation($item->population ?? null);
-            $address = $address->withIsoNumeric($item->isoNumeric ?? null);
-            $address = $address->withAreaInSqKm($item->areaInSqKm ?? null);
-            $address = $address->withContinentName($item->continentName ?? null);
-            $address = $address->withCurrencyCode($item->currencyCode ?? null);
-
-            $results[] = $address;
+            $results[] = $countryInfo
+                ->setBounds($item->south, $item->west, $item->north, $item->east)
+                ->withContinent($item->continent ?? null)
+                ->withCapital($item->capital ?? null)
+                ->withLanguages($item->langesuages ?? '')
+                ->withGeonameId($item->geonameId ?? null)
+                ->withIsoAlpha3($item->isoAlpha3 ?? null)
+                ->withFipsCode($item->fipsCode ?? null)
+                ->withPopulation($item->population ?? null)
+                ->withIsoNumeric($item->isoNumeric ?? null)
+                ->withAreaInSqKm($item->areaInSqKm ?? null)
+                ->withCountryCode($item->countryCode ?? null)
+                ->withCountryName($item->countryName ?? null)
+                ->withContinentName($item->continentName ?? null)
+                ->withCurrencyCode($item->currencyCode ?? null);
         }
 
         return new AddressCollection($results);

@@ -12,11 +12,19 @@ declare(strict_types=1);
 
 namespace Geocoder\Provider\Geonames\Model;
 
+use Geocoder\Exception\InvalidArgument;
+use Geocoder\Model\Bounds;
+
 /**
  * @author Srihari Thalla <thallasrihari@gmail.com>
  */
 final class CountryInfo
 {
+    /**
+     * @var Bounds|null
+     */
+    private $bounds;
+
     /**
      * @var string|null
      */
@@ -65,12 +73,43 @@ final class CountryInfo
     /**
      * @var string|null
      */
+    private $countryCode;
+
+    /**
+     * @var string|null
+     */
+    private $countryName;
+
+    /**
+     * @var string|null
+     */
     private $continentName;
 
     /**
      * @var string|null
      */
     private $currencyCode;
+
+    /**
+     * @param float $south
+     * @param float $west
+     * @param float $north
+     * @param float $east
+     *
+     * @return CountryInfo
+     */
+    public function setBounds(float $south, float $west, float $north, float $east): self
+    {
+        $new = clone $this;
+
+        try {
+            $new->bounds = new Bounds($south, $west, $north, $east);
+        } catch (InvalidArgument $e) {
+            $new->bounds = null;
+        }
+
+        return $new;
+    }
 
     /**
      * @return null|string
@@ -85,7 +124,7 @@ final class CountryInfo
      *
      * @return CountryInfo
      */
-    public function withContinent(string $continent = null)
+    public function withContinent(string $continent = null): self
     {
         $new = clone $this;
         $new->continent = $continent;
@@ -106,7 +145,7 @@ final class CountryInfo
      *
      * @return CountryInfo
      */
-    public function withCapital(string $capital = null)
+    public function withCapital(string $capital = null): self
     {
         $new = clone $this;
         $new->capital = $capital;
@@ -117,7 +156,7 @@ final class CountryInfo
     /**
      * @return array
      */
-    public function getLanguages()
+    public function getLanguages(): array
     {
         return $this->languages;
     }
@@ -127,7 +166,7 @@ final class CountryInfo
      *
      * @return CountryInfo
      */
-    public function withLanguages(string $languages = '')
+    public function withLanguages(string $languages = ''): self
     {
         $new = clone $this;
         $new->languages = explode(',', $languages);
@@ -148,7 +187,7 @@ final class CountryInfo
      *
      * @return CountryInfo
      */
-    public function withGeonameId(string $geonameId = null)
+    public function withGeonameId(int $geonameId = null): self
     {
         $new = clone $this;
         $new->geonameId = null === $geonameId ? null : (int) $geonameId;
@@ -169,7 +208,7 @@ final class CountryInfo
      *
      * @return CountryInfo
      */
-    public function withIsoAlpha3(string $isoAlpha3 = null)
+    public function withIsoAlpha3(string $isoAlpha3 = null): self
     {
         $new = clone $this;
         $new->isoAlpha3 = $isoAlpha3;
@@ -190,7 +229,7 @@ final class CountryInfo
      *
      * @return CountryInfo
      */
-    public function withFipsCode(string $fipsCode = null)
+    public function withFipsCode(string $fipsCode = null): self
     {
         $new = clone $this;
         $new->fipsCode = $fipsCode;
@@ -211,7 +250,7 @@ final class CountryInfo
      *
      * @return CountryInfo
      */
-    public function withPopulation(string $population = null)
+    public function withPopulation(string $population = null): self
     {
         $new = clone $this;
         $new->population = null === $population ? null : (int) $population;
@@ -228,11 +267,11 @@ final class CountryInfo
     }
 
     /**
-     * @param null|int $isoNumeric
+     * @param string|null $isoNumeric
      *
      * @return CountryInfo
      */
-    public function withIsoNumeric(string $isoNumeric = null)
+    public function withIsoNumeric(string $isoNumeric = null): self
     {
         $new = clone $this;
         $new->isoNumeric = null === $isoNumeric ? null : (int) $isoNumeric;
@@ -249,14 +288,55 @@ final class CountryInfo
     }
 
     /**
-     * @param null|float $areaInSqKm
+     * @param string|null $areaInSqKm
      *
      * @return CountryInfo
      */
-    public function withAreaInSqKm(float $areaInSqKm = null)
+    public function withAreaInSqKm(string $areaInSqKm = null): self
     {
         $new = clone $this;
         $new->areaInSqKm = null === $areaInSqKm ? null : (float) $areaInSqKm;
+
+        return $new;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getCountryCode()
+    {
+        return $this->countryCode;
+    }
+
+    /**
+     * @param string|null $countryCode
+     * @return CountryInfo
+     */
+    public function withCountryCode(string $countryCode = null): self
+    {
+        $new = clone $this;
+        $new->countryCode = $countryCode;
+
+        return $new;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getCountryName()
+    {
+        return $this->countryName;
+    }
+
+    /**
+     * @param string|null $countryName
+     *
+     * @return CountryInfo
+     */
+    public function withCountryName(string $countryName = null): self
+    {
+        $new = clone $this;
+        $new->countryName = $countryName;
 
         return $new;
     }
@@ -274,7 +354,7 @@ final class CountryInfo
      *
      * @return CountryInfo
      */
-    public function withContinentName(string $continentName = null)
+    public function withContinentName(string $continentName = null): self
     {
         $new = clone $this;
         $new->continentName = $continentName;
@@ -295,7 +375,7 @@ final class CountryInfo
      *
      * @return CountryInfo
      */
-    public function withCurrencyCode(string $currencyCode = null)
+    public function withCurrencyCode(string $currencyCode = null): self
     {
         $new = clone $this;
         $new->currencyCode = $currencyCode;
