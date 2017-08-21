@@ -91,9 +91,9 @@ final class CountryInfo
     private $currencyCode;
 
     /**
-     * @return Bounds
+     * @return Bounds|null
      */
-    public function getBounds(): Bounds
+    public function getBounds()
     {
         return $this->bounds;
     }
