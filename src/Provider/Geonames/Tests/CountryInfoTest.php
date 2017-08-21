@@ -103,6 +103,6 @@ class CountryInfoTest extends BaseTestCase
         $provider = new Geonames($this->getHttpClient($_SERVER['GEONAMES_USERNAME']), $_SERVER['GEONAMES_USERNAME']);
         $results = $provider->getCountryInfo();
 
-        $this->assertEquals(10, count($results));
+        $this->assertEquals(250, count($results));
     }
 }

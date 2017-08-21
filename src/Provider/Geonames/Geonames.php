@@ -100,27 +100,17 @@ final class Geonames extends AbstractHttpProvider implements Provider
     /**
      * @param string|null $country
      * @param string|null $locale
-     * @param int|null    $maxRows
-     * @param int|null    $startRow
      *
      * @return array
      *
      * @throws \Geocoder\Exception\Exception
      */
-    public function getCountryInfo(string $country = null, string $locale = null, int $maxRows = 10, int $startRow = 0): array
+    public function getCountryInfo(string $country = null, string $locale = null): array
     {
         $url = sprintf(self::BASE_ENDPOINT_URL, 'countryInfoJSON', $this->username);
 
         if (isset($country)) {
             $url = sprintf('%s&country=%s', $url, $country);
-        }
-
-        if (isset($maxRows)) {
-            $url = sprintf('%s&maxRows=%d', $url, $maxRows);
-        }
-
-        if (isset($startRow)) {
-            $url = sprintf('%s&startRow=%d', $url, $startRow);
         }
 
         $url = sprintf('%s&style=FULL', $url);
