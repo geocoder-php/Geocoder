@@ -2,7 +2,7 @@
     "name": "geocoder-php/locationiq-provider",
     "type": "library",
     "description": "Geocoder LocationIQ adapter",
-    "keywords": [],
+    "keywords": ["geocoder", "geocoding", "address", "locationiq"],
     "homepage": "http://geocoder-php.org/Geocoder/",
     "license": "MIT",
     "authors": [
