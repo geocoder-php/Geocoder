@@ -51,7 +51,7 @@ Here is a list of all officially supported clients and adapters by HTTPlug: http
 
 Read more about HTTPlug in [their docs](http://docs.php-http.org/en/latest/httplug/users.html).
 
-### Summery (Just give me the command)
+### Summary (Just give me the command)
 
 To install Google Maps geocoder with Guzzle 6 you may run the following command: 
 
