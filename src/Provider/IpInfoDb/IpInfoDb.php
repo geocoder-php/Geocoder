@@ -64,10 +64,12 @@ final class IpInfoDb extends AbstractHttpProvider implements Provider
         switch ($precision) {
             case 'city':
                 $this->endpointUrl = self::CITY_PRECISION_ENDPOINT_URL;
+
                 break;
 
             case 'country':
                 $this->endpointUrl = self::COUNTRY_PRECISION_ENDPOINT_URL;
+
                 break;
 
             default:
