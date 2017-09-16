@@ -265,10 +265,7 @@ class Address implements Location
             $data['postalCode'],
             $data['locality'],
             $data['subLocality'],
-            new Country(
-                $data['country'],
-                $data['countryCode']
-            ),
+            self::createCountry($data['country'], $data['countryCode']),
             $data['timezone']
         );
     }
@@ -286,6 +283,21 @@ class Address implements Location
         }
 
         return new Coordinates($latitude, $longitude);
+    }
+
+    /**
+     * @param string|null $name
+     * @param string|null $code
+     *
+     * @return Country|null
+     */
+    private static function createCountry($name, $code)
+    {
+        if (null === $name && null === $code) {
+            return null;
+        }
+
+        return new Country($name, $code);
     }
 
     /**

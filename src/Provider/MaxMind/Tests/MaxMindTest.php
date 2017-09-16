@@ -111,8 +111,7 @@ class MaxMindTest extends BaseTestCase
         $this->assertNull($result->getLocality());
         $this->assertNull($result->getSubLocality());
         $this->assertEmpty($result->getAdminLevels());
-        $this->assertNull($result->getCountry()->getName());
-        $this->assertNull($result->getCountry()->getCode());
+        $this->assertNull($result->getCountry());
         $this->assertNull($result->getTimezone());
     }
 

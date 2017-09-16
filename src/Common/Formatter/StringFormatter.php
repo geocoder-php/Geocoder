@@ -50,8 +50,13 @@ final class StringFormatter
      */
     public function format(Location $location, string $format): string
     {
-        if (null !== $code = $location->getCountry()->getCode()) {
-            $code = strtoupper($code);
+        $countryName = null;
+        $code = null;
+        if (null !== $country = $location->getCountry()) {
+            $countryName = $country->getName();
+            if (null !== $code = $country->getCode()) {
+                $code = strtoupper($code);
+            }
         }
 
         $replace = [
@@ -60,7 +65,7 @@ final class StringFormatter
             self::LOCALITY => $location->getLocality(),
             self::POSTAL_CODE => $location->getPostalCode(),
             self::SUB_LOCALITY => $location->getSubLocality(),
-            self::COUNTRY => $location->getCountry()->getName(),
+            self::COUNTRY => $countryName,
             self::COUNTRY_CODE => $code,
             self::TIMEZONE => $location->getTimezone(),
         ];

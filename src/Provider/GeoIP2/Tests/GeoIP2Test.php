@@ -194,13 +194,20 @@ class GeoIP2Test extends BaseTestCase
             $this->assertNull($result->getBounds());
         }
 
+        $countryName = null;
+        $countryCode = null;
+        if (null !== $country = $result->getCountry()) {
+            $countryName = $country->getName();
+            $countryCode = $country->getCode();
+        }
+
         $this->assertEquals($expectedGeodata['streetNumber'], $result->getStreetNumber());
         $this->assertEquals($expectedGeodata['streetName'], $result->getStreetName());
         $this->assertEquals($expectedGeodata['locality'], $result->getLocality());
         $this->assertEquals($expectedGeodata['subLocality'], $result->getSubLocality());
         $this->assertEquals($expectedGeodata['postalCode'], $result->getPostalCode());
-        $this->assertEquals($expectedGeodata['country'], $result->getCountry()->getName());
-        $this->assertEquals($expectedGeodata['countryCode'], $result->getCountry()->getCode());
+        $this->assertEquals($expectedGeodata['country'], $countryName);
+        $this->assertEquals($expectedGeodata['countryCode'], $countryCode);
         $this->assertEquals($expectedGeodata['timezone'], $result->getTimezone());
         foreach ($expectedGeodata['adminLevels'] as $level => $data) {
             $this->assertEquals($data['name'], $result->getAdminLevels()->get($level)->getName());
