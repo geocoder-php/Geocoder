@@ -14,7 +14,7 @@
     "require": {
         "php": "^7.0",
         "geocoder-php/common-http": "^4.0",
-        "willdurand/geocoder": "^4.0"
+        "willdurand/geocoder": "^4.1"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.1",

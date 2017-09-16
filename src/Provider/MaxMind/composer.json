@@ -13,7 +13,7 @@
     ],
     "require": {
         "php": "^7.0",
-        "willdurand/geocoder": "^4.0",
+        "willdurand/geocoder": "^4.1",
         "igorw/get-in": "^1.0"
     },
     "require-dev": {
