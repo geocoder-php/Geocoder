@@ -4,6 +4,12 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 
 ## Unreleased
 
+## 4.1.0
+
+### Changed
+
+- Make sure a `Country` never will be empty of data. 
+
 ## 4.0.0
 
 No changes since Beta 5. 
