@@ -32,7 +32,7 @@ final class LocationIQ extends AbstractHttpProvider implements Provider
     /**
      * @var string
      */
-    const BASE_API_URL = 'https://locationiq.org/v1';
+    const BASE_API_URL = 'http://locationiq.org/v1';
 
     /**
      * @var string
