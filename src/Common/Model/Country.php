@@ -12,7 +12,11 @@ declare(strict_types=1);
 
 namespace Geocoder\Model;
 
+use Geocoder\Exception\InvalidArgument;
+
 /**
+ * A Country has either a name or a code. A Country will never be without data.
+ *
  * @author William Durand <william.durand1@gmail.com>
  */
 final class Country
@@ -33,6 +37,10 @@ final class Country
      */
     public function __construct(string $name = null, string $code = null)
     {
+        if (null === $name && null === $code) {
+            throw new InvalidArgument('A country must have either a name or a code');
+        }
+
         $this->name = $name;
         $this->code = $code;
     }
