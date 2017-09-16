@@ -55,7 +55,7 @@
         "test": "vendor/bin/phpunit"
     },
     "minimum-stability": "dev",
-    "prefer-dist": true,
+    "prefer-stable": true,
     "extra": {
         "branch-alias": {
             "dev-master": "4.0-dev"
