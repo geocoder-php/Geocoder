@@ -19,6 +19,7 @@ use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Model\AddressBuilder;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Model\AdminLevelCollection;
+use Geocoder\Provider\Geonames\Model\CountryInfo;
 use Geocoder\Provider\Geonames\Model\GeonamesAddress;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
@@ -40,6 +41,11 @@ final class Geonames extends AbstractHttpProvider implements Provider
      * @var string
      */
     const REVERSE_ENDPOINT_URL = 'http://api.geonames.org/findNearbyPlaceNameJSON?lat=%F&lng=%F&style=full&maxRows=%d&username=%s';
+
+    /**
+     * @var string
+     */
+    const BASE_ENDPOINT_URL = 'http://api.geonames.org/%s?username=%s';
 
     /**
      * @var string
@@ -89,6 +95,65 @@ final class Geonames extends AbstractHttpProvider implements Provider
         $url = sprintf(self::REVERSE_ENDPOINT_URL, $latitude, $longitude, $query->getLimit(), $this->username);
 
         return $this->executeQuery($url, $query->getLocale());
+    }
+
+    /**
+     * @param string|null $country
+     * @param string|null $locale
+     *
+     * @return array
+     *
+     * @throws \Geocoder\Exception\Exception
+     */
+    public function getCountryInfo(string $country = null, string $locale = null): array
+    {
+        $url = sprintf(self::BASE_ENDPOINT_URL, 'countryInfoJSON', $this->username);
+
+        if (isset($country)) {
+            $url = sprintf('%s&country=%s', $url, $country);
+        }
+
+        $url = sprintf('%s&style=FULL', $url);
+
+        if (null !== $locale) {
+            // Locale code transformation: for example from it_IT to it
+            $url = sprintf('%s&lang=%s', $url, substr($locale, 0, 2));
+        }
+
+        $content = $this->getUrlContents($url);
+        if (null === $json = json_decode($content)) {
+            throw InvalidServerResponse::create($url);
+        }
+
+        $data = $json->geonames;
+
+        if (empty($data)) {
+            return [];
+        }
+
+        $results = [];
+
+        foreach ($data as $item) {
+            $countryInfo = new CountryInfo();
+
+            $results[] = $countryInfo
+                ->setBounds($item->south, $item->west, $item->north, $item->east)
+                ->withContinent($item->continent ?? null)
+                ->withCapital($item->capital ?? null)
+                ->withLanguages($item->langesuages ?? '')
+                ->withGeonameId($item->geonameId ?? null)
+                ->withIsoAlpha3($item->isoAlpha3 ?? null)
+                ->withFipsCode($item->fipsCode ?? null)
+                ->withPopulation($item->population ?? null)
+                ->withIsoNumeric($item->isoNumeric ?? null)
+                ->withAreaInSqKm($item->areaInSqKm ?? null)
+                ->withCountryCode($item->countryCode ?? null)
+                ->withCountryName($item->countryName ?? null)
+                ->withContinentName($item->continentName ?? null)
+                ->withCurrencyCode($item->currencyCode ?? null);
+        }
+
+        return $results;
     }
 
     /**
