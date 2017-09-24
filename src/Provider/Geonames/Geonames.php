@@ -125,6 +125,10 @@ final class Geonames extends AbstractHttpProvider implements Provider
             throw InvalidServerResponse::create($url);
         }
 
+        if (!isset($json->geonames)) {
+            return [];
+        }
+
         $data = $json->geonames;
 
         if (empty($data)) {
