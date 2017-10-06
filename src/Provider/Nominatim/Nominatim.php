@@ -156,7 +156,7 @@ final class Nominatim extends AbstractHttpProvider implements Provider
         if ($boundsAttr) {
             $bounds = [];
             list($bounds['south'], $bounds['north'], $bounds['west'], $bounds['east']) = explode(',', $boundsAttr);
-            $builder->setBounds($bounds['south'], $bounds['north'], $bounds['west'], $bounds['east']);
+            $builder->setBounds($bounds['south'], $bounds['west'], $bounds['north'], $bounds['east']);
         }
 
         return $builder->build();
