@@ -84,7 +84,7 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
         $provider = new self($client, $region, $apiKey);
         $provider->clientId = $clientId;
         $provider->privateKey = $privateKey;
-        $provider->channel    = $channel;
+        $provider->channel = $channel;
 
         return $provider;
     }
@@ -148,7 +148,7 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
      *
      * @return string query with extra params
      */
-    private function buildQuery(string $url, string $locale = null, string $region = null) : string
+    private function buildQuery(string $url, string $locale = null, string $region = null): string
     {
         if (null !== $locale) {
             $url = sprintf('%s&language=%s', $url, $locale);
