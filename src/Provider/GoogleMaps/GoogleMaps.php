@@ -75,11 +75,11 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
      * @param string     $privateKey Your Private Key (optional)
      * @param string     $region     Region biasing (optional)
      * @param string     $apiKey     Google Geocoding API key (optional)
-     * @param string     $channel    Google Channel parameter
+     * @param string     $channel    Google Channel parameter (optional)
      *
      * @return GoogleMaps
      */
-    public static function business(HttpClient $client, string  $clientId, string $privateKey = null, string $region = null, string $apiKey = null, string $channel = null)
+    public static function business(HttpClient $client, string $clientId, string $privateKey = null, string $region = null, string $apiKey = null, string $channel = null)
     {
         $provider = new self($client, $region, $apiKey);
         $provider->clientId = $clientId;
