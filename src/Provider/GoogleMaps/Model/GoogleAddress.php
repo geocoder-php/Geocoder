@@ -399,7 +399,7 @@ final class GoogleAddress extends Address
      *
      * @return GoogleAddress
      */
-    public function withStreetAddress(string $streetAddress = null) : GoogleAddress
+    public function withStreetAddress(string $streetAddress = null): GoogleAddress
     {
         $new = clone $this;
         $new->streetAddress = $streetAddress;
@@ -473,7 +473,7 @@ final class GoogleAddress extends Address
     /**
      * @return AdminLevelCollection
      */
-    public function getSubLocalityLevels() : AdminLevelCollection
+    public function getSubLocalityLevels(): AdminLevelCollection
     {
         return $this->subLocalityLevels;
     }
