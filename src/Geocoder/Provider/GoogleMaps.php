@@ -250,6 +250,8 @@ class GoogleMaps extends AbstractHttpProvider implements LocaleAwareProvider
                 $resultSet['countryCode'] = $values->short_name;
                 break;
 
+            case 'establishment':
+            case 'point_of_interest':
             case 'street_number':
                 $resultSet['streetNumber'] = $values->long_name;
                 break;
