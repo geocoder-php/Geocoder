@@ -361,9 +361,9 @@ Here is the mapping:
 
 * Street Number: `%n`
 * Street Name: `%S`
-* City: `%L`
-* City District: `%D`
-* Zipcode: `%z`
+* City (Locality): `%L`
+* City District (Sub-Locality): `%D`
+* Zipcode (Postal Code): `%z`
 * Admin Level Name: `%A1`, `%A2`, `%A3`, `%A4`, `%A5`
 * Admin Level Code: `%a1`, `%a2`, `%a3`, `%a4`, `%a5`
 * Country: `%C`
