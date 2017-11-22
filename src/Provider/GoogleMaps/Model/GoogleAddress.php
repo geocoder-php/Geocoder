@@ -116,7 +116,7 @@ final class GoogleAddress extends Address
      *
      * @return GoogleAddress
      */
-    public function withId(string $id = null)
+    public function withId(string $id = null): GoogleAddress
     {
         $new = clone $this;
         $new->id = $id;
@@ -139,7 +139,7 @@ final class GoogleAddress extends Address
      *
      * @return GoogleAddress
      */
-    public function withLocationType(string $locationType = null)
+    public function withLocationType(string $locationType = null): GoogleAddress
     {
         $new = clone $this;
         $new->locationType = $locationType;
@@ -168,7 +168,7 @@ final class GoogleAddress extends Address
      *
      * @return GoogleAddress
      */
-    public function withResultType(array $resultType)
+    public function withResultType(array $resultType): GoogleAddress
     {
         $new = clone $this;
         $new->resultType = $resultType;
@@ -189,7 +189,7 @@ final class GoogleAddress extends Address
      *
      * @return GoogleAddress
      */
-    public function withFormattedAddress(string $formattedAddress = null)
+    public function withFormattedAddress(string $formattedAddress = null): GoogleAddress
     {
         $new = clone $this;
         $new->formattedAddress = $formattedAddress;
@@ -210,7 +210,7 @@ final class GoogleAddress extends Address
      *
      * @return GoogleAddress
      */
-    public function withAirport(string $airport = null)
+    public function withAirport(string $airport = null): GoogleAddress
     {
         $new = clone $this;
         $new->airport = $airport;
@@ -231,7 +231,7 @@ final class GoogleAddress extends Address
      *
      * @return GoogleAddress
      */
-    public function withColloquialArea(string $colloquialArea = null)
+    public function withColloquialArea(string $colloquialArea = null): GoogleAddress
     {
         $new = clone $this;
         $new->colloquialArea = $colloquialArea;
@@ -252,7 +252,7 @@ final class GoogleAddress extends Address
      *
      * @return GoogleAddress
      */
-    public function withIntersection(string $intersection = null)
+    public function withIntersection(string $intersection = null): GoogleAddress
     {
         $new = clone $this;
         $new->intersection = $intersection;
@@ -273,7 +273,7 @@ final class GoogleAddress extends Address
      *
      * @return GoogleAddress
      */
-    public function withNaturalFeature(string $naturalFeature = null)
+    public function withNaturalFeature(string $naturalFeature = null): GoogleAddress
     {
         $new = clone $this;
         $new->naturalFeature = $naturalFeature;
@@ -294,7 +294,7 @@ final class GoogleAddress extends Address
      *
      * @return GoogleAddress
      */
-    public function withNeighborhood(string $neighborhood = null)
+    public function withNeighborhood(string $neighborhood = null): GoogleAddress
     {
         $new = clone $this;
         $new->neighborhood = $neighborhood;
@@ -315,7 +315,7 @@ final class GoogleAddress extends Address
      *
      * @return GoogleAddress
      */
-    public function withPark(string $park = null)
+    public function withPark(string $park = null): GoogleAddress
     {
         $new = clone $this;
         $new->park = $park;
@@ -357,7 +357,7 @@ final class GoogleAddress extends Address
      *
      * @return GoogleAddress
      */
-    public function withPolitical(string $political = null)
+    public function withPolitical(string $political = null): GoogleAddress
     {
         $new = clone $this;
         $new->political = $political;
@@ -374,11 +374,11 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @param null $premise
+     * @param string $premise
      *
      * @return GoogleAddress
      */
-    public function withPremise(string $premise = null)
+    public function withPremise(string $premise = null): GoogleAddress
     {
         $new = clone $this;
         $new->premise = $premise;
@@ -399,7 +399,7 @@ final class GoogleAddress extends Address
      *
      * @return GoogleAddress
      */
-    public function withStreetAddress(string $streetAddress = null)
+    public function withStreetAddress(string $streetAddress = null): GoogleAddress
     {
         $new = clone $this;
         $new->streetAddress = $streetAddress;
@@ -420,7 +420,7 @@ final class GoogleAddress extends Address
      *
      * @return GoogleAddress
      */
-    public function withSubpremise(string $subpremise = null)
+    public function withSubpremise(string $subpremise = null): GoogleAddress
     {
         $new = clone $this;
         $new->subpremise = $subpremise;
@@ -441,7 +441,7 @@ final class GoogleAddress extends Address
      *
      * @return GoogleAddress
      */
-    public function withWard(string $ward = null)
+    public function withWard(string $ward = null): GoogleAddress
     {
         $new = clone $this;
         $new->ward = $ward;
@@ -462,7 +462,7 @@ final class GoogleAddress extends Address
      *
      * @return GoogleAddress
      */
-    public function withEstablishment(string $establishment = null)
+    public function withEstablishment(string $establishment = null): GoogleAddress
     {
         $new = clone $this;
         $new->establishment = $establishment;
@@ -473,7 +473,7 @@ final class GoogleAddress extends Address
     /**
      * @return AdminLevelCollection
      */
-    public function getSubLocalityLevels()
+    public function getSubLocalityLevels(): AdminLevelCollection
     {
         return $this->subLocalityLevels;
     }
@@ -483,7 +483,7 @@ final class GoogleAddress extends Address
      *
      * @return $this
      */
-    public function withSubLocalityLevels(array $subLocalityLevel)
+    public function withSubLocalityLevels(array $subLocalityLevel): GoogleAddress
     {
         $subLocalityLevels = [];
         foreach ($subLocalityLevel as $level) {
@@ -491,7 +491,7 @@ final class GoogleAddress extends Address
                 continue;
             }
 
-            $name = $level['name'] ?? $level['code'] ?? null;
+            $name = $level['name'] ?? $level['code'] ?? '';
             if (empty($name)) {
                 continue;
             }
