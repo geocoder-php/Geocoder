@@ -65,7 +65,7 @@ final class FreeGeoIp extends AbstractHttpProvider implements Provider
             $builder->addAdminLevel(1, $data['region_name'], $data['region_code'] ?? null);
         }
 
-        if ($data['latitude'] !== 0 || $data['longitude'] !== 0) {
+        if (0 !== $data['latitude'] || 0 !== $data['longitude']) {
             $builder->setCoordinates($data['latitude'] ?? null, $data['longitude'] ?? null);
         }
         $builder->setLocality(empty($data['city']) ? null : $data['city']);

@@ -64,7 +64,7 @@ final class ReverseQuery implements Query
      *
      * @return ReverseQuery
      */
-    public static function fromCoordinates($latitude, $longitude): ReverseQuery
+    public static function fromCoordinates($latitude, $longitude): self
     {
         return new self(new Coordinates($latitude, $longitude));
     }
@@ -74,7 +74,7 @@ final class ReverseQuery implements Query
      *
      * @return ReverseQuery
      */
-    public function withCoordinates(Coordinates $coordinates): ReverseQuery
+    public function withCoordinates(Coordinates $coordinates): self
     {
         $new = clone $this;
         $new->coordinates = $coordinates;
@@ -87,7 +87,7 @@ final class ReverseQuery implements Query
      *
      * @return ReverseQuery
      */
-    public function withLimit(int $limit): ReverseQuery
+    public function withLimit(int $limit): self
     {
         $new = clone $this;
         $new->limit = $limit;
@@ -100,7 +100,7 @@ final class ReverseQuery implements Query
      *
      * @return ReverseQuery
      */
-    public function withLocale(string $locale): ReverseQuery
+    public function withLocale(string $locale): self
     {
         $new = clone $this;
         $new->locale = $locale;
@@ -114,7 +114,7 @@ final class ReverseQuery implements Query
      *
      * @return ReverseQuery
      */
-    public function withData(string $name, $value): ReverseQuery
+    public function withData(string $name, $value): self
     {
         $new = clone $this;
         $new->data[$name] = $value;

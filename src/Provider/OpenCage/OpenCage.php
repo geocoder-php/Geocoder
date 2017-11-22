@@ -124,7 +124,7 @@ final class OpenCage extends AbstractHttpProvider implements Provider
             }
         }
 
-        if (!isset($json['total_results']) || $json['total_results'] == 0) {
+        if (!isset($json['total_results']) || 0 == $json['total_results']) {
             return new AddressCollection([]);
         }
 

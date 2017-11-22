@@ -370,7 +370,7 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
     private function validateResponse(string $url, $content)
     {
         // Throw exception if invalid clientID and/or privateKey used with GoogleMapsBusinessProvider
-        if (strpos($content, "Provided 'signature' is not valid for the provided client ID") !== false) {
+        if (false !== strpos($content, "Provided 'signature' is not valid for the provided client ID")) {
             throw new InvalidCredentials(sprintf('Invalid client ID / API Key %s', $url));
         }
 

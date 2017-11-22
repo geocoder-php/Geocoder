@@ -65,7 +65,7 @@ final class GeocodeQuery implements Query
      *
      * @return GeocodeQuery
      */
-    public static function create(string $text): GeocodeQuery
+    public static function create(string $text): self
     {
         return new self($text);
     }
@@ -75,7 +75,7 @@ final class GeocodeQuery implements Query
      *
      * @return GeocodeQuery
      */
-    public function withText(string $text): GeocodeQuery
+    public function withText(string $text): self
     {
         $new = clone $this;
         $new->text = $text;
@@ -88,7 +88,7 @@ final class GeocodeQuery implements Query
      *
      * @return GeocodeQuery
      */
-    public function withBounds(Bounds $bounds): GeocodeQuery
+    public function withBounds(Bounds $bounds): self
     {
         $new = clone $this;
         $new->bounds = $bounds;
@@ -101,7 +101,7 @@ final class GeocodeQuery implements Query
      *
      * @return GeocodeQuery
      */
-    public function withLocale(string $locale): GeocodeQuery
+    public function withLocale(string $locale): self
     {
         $new = clone $this;
         $new->locale = $locale;
@@ -114,7 +114,7 @@ final class GeocodeQuery implements Query
      *
      * @return GeocodeQuery
      */
-    public function withLimit(int $limit): GeocodeQuery
+    public function withLimit(int $limit): self
     {
         $new = clone $this;
         $new->limit = $limit;
@@ -128,7 +128,7 @@ final class GeocodeQuery implements Query
      *
      * @return GeocodeQuery
      */
-    public function withData(string $name, $value): GeocodeQuery
+    public function withData(string $name, $value): self
     {
         $new = clone $this;
         $new->data[$name] = $value;
