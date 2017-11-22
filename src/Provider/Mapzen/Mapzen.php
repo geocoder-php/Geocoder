@@ -116,7 +116,7 @@ final class Mapzen extends AbstractHttpProvider implements Provider
             }
         }
 
-        if (!isset($json['type']) || $json['type'] !== 'FeatureCollection' || !isset($json['features']) || count($json['features']) === 0) {
+        if (!isset($json['type']) || 'FeatureCollection' !== $json['type'] || !isset($json['features']) || 0 === count($json['features'])) {
             return new AddressCollection([]);
         }
 

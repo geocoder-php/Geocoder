@@ -25,7 +25,7 @@ final class InvalidServerResponse extends \RuntimeException implements Exception
      *
      * @return InvalidServerResponse
      */
-    public static function create(string $query, int $code = 0): InvalidServerResponse
+    public static function create(string $query, int $code = 0): self
     {
         return new self(sprintf('The geocoder server returned an invalid response (%d) for query "%s". We could not parse it.', $code, $query));
     }
@@ -35,7 +35,7 @@ final class InvalidServerResponse extends \RuntimeException implements Exception
      *
      * @return InvalidServerResponse
      */
-    public static function emptyResponse(string $query): InvalidServerResponse
+    public static function emptyResponse(string $query): self
     {
         return new self(sprintf('The geocoder server returned an empty response for query "%s".', $query));
     }
