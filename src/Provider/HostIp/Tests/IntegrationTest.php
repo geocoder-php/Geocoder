@@ -24,8 +24,11 @@ class IntegrationTest extends ProviderIntegrationTest
     protected $skippedTests = [
         'testGeocodeIpv4' => 'api.hostip.info does not resolve..',
     ];
+
     protected $testAddress = false;
+
     protected $testReverse = false;
+
     protected $testIpv6 = false;
 
     protected function createProvider(HttpClient $httpClient)

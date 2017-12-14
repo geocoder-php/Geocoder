@@ -25,8 +25,11 @@ class IntegrationTest extends ProviderIntegrationTest
     ];
 
     protected $testAddress = false;
+
     protected $testReverse = false;
+
     protected $testIpv6 = false;
+
     protected $testHttpProvider = false;
 
     public static function setUpBeforeClass()

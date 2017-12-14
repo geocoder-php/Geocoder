@@ -26,6 +26,7 @@ class IntegrationTest extends ProviderIntegrationTest
     ];
 
     protected $testIpv4 = false;
+
     protected $testIpv6 = false;
 
     protected function createProvider(HttpClient $httpClient)
