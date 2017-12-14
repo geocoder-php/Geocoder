@@ -20,8 +20,11 @@ use Http\Client\HttpClient;
 class IntegrationTest extends ProviderIntegrationTest
 {
     protected $testAddress = true;
+
     protected $testReverse = true;
+
     protected $testIpv4 = true;
+
     protected $testIpv6 = false;
 
     protected function createProvider(HttpClient $httpClient)

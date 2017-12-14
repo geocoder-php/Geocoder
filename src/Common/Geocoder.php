@@ -23,6 +23,7 @@ interface Geocoder extends Provider
      * Version of this package.
      */
     const MAJOR_VERSION = 4;
+
     const VERSION = '4.0';
 
     /**

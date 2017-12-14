@@ -26,8 +26,11 @@ class IntegrationTest extends ProviderIntegrationTest
     ];
 
     protected $testAddress = true;
+
     protected $testReverse = true;
+
     protected $testIpv4 = false;
+
     protected $testIpv6 = false;
 
     protected function createProvider(HttpClient $httpClient)

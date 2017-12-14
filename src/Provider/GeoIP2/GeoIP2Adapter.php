@@ -25,6 +25,7 @@ class GeoIP2Adapter
      * GeoIP2 models (e.g. city or country).
      */
     const GEOIP2_MODEL_CITY = 'city';
+
     const GEOIP2_MODEL_COUNTRY = 'country';
 
     /**
