@@ -91,7 +91,7 @@ final class Nominatim extends AbstractHttpProvider implements Provider
 
         $results = [];
         foreach ($places as $place) {
-            $results[] = $this->xmlResultToArray($place, $place, $attribution);
+            $results[] = $this->xmlResultToArray($place, $place, $attribution, FALSE);
         }
 
         return new AddressCollection($results);
@@ -114,10 +114,11 @@ final class Nominatim extends AbstractHttpProvider implements Provider
         }
 
         $searchResult = $doc->getElementsByTagName('reversegeocode')->item(0);
+        $attribution = $searchResult->getAttribute('attribution');
         $addressParts = $searchResult->getElementsByTagName('addressparts')->item(0);
         $result = $searchResult->getElementsByTagName('result')->item(0);
 
-        return new AddressCollection([$this->xmlResultToArray($result, $addressParts)]);
+        return new AddressCollection([$this->xmlResultToArray($result, $addressParts, $attribution, TRUE)]);
     }
 
     /**
@@ -126,7 +127,7 @@ final class Nominatim extends AbstractHttpProvider implements Provider
      *
      * @return Location
      */
-    private function xmlResultToArray(\DOMElement $resultNode, \DOMElement $addressNode, string $attribution = 'Data © OpenStreetMap contributors, ODbL 1.0. http://www.openstreetmap.org/copyright'): Location
+    private function xmlResultToArray(\DOMElement $resultNode, \DOMElement $addressNode, string $attribution = 'Data © OpenStreetMap contributors, ODbL 1.0. http://www.openstreetmap.org/copyright', bool $reverse): Location
     {
         $builder = new AddressBuilder($this->getName());
 
@@ -173,13 +174,21 @@ final class Nominatim extends AbstractHttpProvider implements Provider
             $builder->setBounds($bounds['south'], $bounds['west'], $bounds['north'], $bounds['east']);
         }
 
-        $location = $builder->build(NominatimAddress::class);
-        $location = $location->withAttribution($attribution);
-        $location = $location->withClass($resultNode->getAttribute('class'));
-        $location = $location->withDisplayName($resultNode->getAttribute('display_name'));
-        $location = $location->withOSMId(intval($resultNode->getAttribute('osm_id')));
-        $location = $location->withOSMType($resultNode->getAttribute('osm_type'));
-        $location = $location->withType($resultNode->getAttribute('type'));
+        if ($reverse === FALSE) {
+          $location = $builder->build(NominatimAddress::class);
+          $location = $location->withAttribution($attribution);
+          $location = $location->withClass($resultNode->getAttribute('class'));
+          $location = $location->withDisplayName($resultNode->getAttribute('display_name'));
+          $location = $location->withOSMId(intval($resultNode->getAttribute('osm_id')));
+          $location = $location->withOSMType($resultNode->getAttribute('osm_type'));
+          $location = $location->withType($resultNode->getAttribute('type'));
+        } else {
+          $location = $builder->build(NominatimAddress::class);
+          $location = $location->withAttribution($attribution);
+          $location = $location->withDisplayName($resultNode->nodeValue);
+          $location = $location->withOSMId(intval($resultNode->getAttribute('osm_id')));
+          $location = $location->withOSMType($resultNode->getAttribute('osm_type'));
+        }
 
         return $location;
     }
