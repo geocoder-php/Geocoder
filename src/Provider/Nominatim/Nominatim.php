@@ -91,7 +91,7 @@ final class Nominatim extends AbstractHttpProvider implements Provider
 
         $results = [];
         foreach ($places as $place) {
-            $results[] = $this->xmlResultToArray($place, $place, $attribution, FALSE);
+            $results[] = $this->xmlResultToArray($place, $place, $attribution, false);
         }
 
         return new AddressCollection($results);
@@ -118,7 +118,7 @@ final class Nominatim extends AbstractHttpProvider implements Provider
         $addressParts = $searchResult->getElementsByTagName('addressparts')->item(0);
         $result = $searchResult->getElementsByTagName('result')->item(0);
 
-        return new AddressCollection([$this->xmlResultToArray($result, $addressParts, $attribution, TRUE)]);
+        return new AddressCollection([$this->xmlResultToArray($result, $addressParts, $attribution, true)]);
     }
 
     /**
@@ -174,20 +174,20 @@ final class Nominatim extends AbstractHttpProvider implements Provider
             $builder->setBounds($bounds['south'], $bounds['west'], $bounds['north'], $bounds['east']);
         }
 
-        if ($reverse === FALSE) {
-          $location = $builder->build(NominatimAddress::class);
-          $location = $location->withAttribution($attribution);
-          $location = $location->withClass($resultNode->getAttribute('class'));
-          $location = $location->withDisplayName($resultNode->getAttribute('display_name'));
-          $location = $location->withOSMId(intval($resultNode->getAttribute('osm_id')));
-          $location = $location->withOSMType($resultNode->getAttribute('osm_type'));
-          $location = $location->withType($resultNode->getAttribute('type'));
+        if (false === $reverse) {
+            $location = $builder->build(NominatimAddress::class);
+            $location = $location->withAttribution($attribution);
+            $location = $location->withClass($resultNode->getAttribute('class'));
+            $location = $location->withDisplayName($resultNode->getAttribute('display_name'));
+            $location = $location->withOSMId(intval($resultNode->getAttribute('osm_id')));
+            $location = $location->withOSMType($resultNode->getAttribute('osm_type'));
+            $location = $location->withType($resultNode->getAttribute('type'));
         } else {
-          $location = $builder->build(NominatimAddress::class);
-          $location = $location->withAttribution($attribution);
-          $location = $location->withDisplayName($resultNode->nodeValue);
-          $location = $location->withOSMId(intval($resultNode->getAttribute('osm_id')));
-          $location = $location->withOSMType($resultNode->getAttribute('osm_type'));
+            $location = $builder->build(NominatimAddress::class);
+            $location = $location->withAttribution($attribution);
+            $location = $location->withDisplayName($resultNode->nodeValue);
+            $location = $location->withOSMId(intval($resultNode->getAttribute('osm_id')));
+            $location = $location->withOSMType($resultNode->getAttribute('osm_type'));
         }
 
         return $location;
