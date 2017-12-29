@@ -27,7 +27,7 @@ use Http\Client\HttpClient;
 
 /**
  * @author Niklas Närhinen <niklas@narhinen.net>
- * @author Jonathahn Beliën <jbe@geo6.be>
+ * @author Jonathan Beliën <jbe@geo6.be>
  */
 final class Nominatim extends AbstractHttpProvider implements Provider
 {

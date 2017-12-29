@@ -15,7 +15,7 @@ namespace Geocoder\Provider\Nominatim\Model;
 use Geocoder\Model\Address;
 
 /**
- * @author Jonathahn Beliën <jbe@geo6.be>
+ * @author Jonathan Beliën <jbe@geo6.be>
  */
 final class NominatimAddress extends Address
 {
