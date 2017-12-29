@@ -148,6 +148,7 @@ final class Nominatim extends AbstractHttpProvider implements Provider
             $localityFieldContent = $this->getNodeValue($addressNode->getElementsByTagName($localityField));
             if (!empty($localityFieldContent)) {
                 $builder->setLocality($localityFieldContent);
+
                 break;
             }
         }

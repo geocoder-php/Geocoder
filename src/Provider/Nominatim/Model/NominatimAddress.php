@@ -113,7 +113,7 @@ final class NominatimAddress extends Address
     }
 
     /**
-     * @return null|integer
+     * @return null|int
      */
     public function getOSMId()
     {
