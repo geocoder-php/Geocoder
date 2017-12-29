@@ -133,6 +133,7 @@ XML;
 
         $this->assertEquals('Data © OpenStreetMap contributors, ODbL 1.0. http://www.openstreetmap.org/copyright', $result->getAttribution());
         $this->assertEquals('building', $result->getClass());
+        $this->assertEquals('35, Avenue Jean de Bologne - Jean de Bolognelaan, Heysel - Heizel, Laeken / Laken, Ville de Bruxelles - Stad Brussel, Brussel-Hoofdstad - Bruxelles-Capitale, Région de Bruxelles-Capitale - Brussels Hoofdstedelijk Gewest, 1020, België / Belgique / Belgien', $result->getDisplayName());
         $this->assertEquals(220754533, $result->getOSMId());
         $this->assertEquals('way', $result->getOSMType());
         $this->assertEquals('yes', $result->getType());
