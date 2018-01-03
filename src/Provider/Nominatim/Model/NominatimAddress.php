@@ -121,7 +121,7 @@ final class NominatimAddress extends Address
     }
 
     /**
-     * @param null|string $osmId
+     * @param null|int $osmId
      *
      * @return NominatimAddress
      */

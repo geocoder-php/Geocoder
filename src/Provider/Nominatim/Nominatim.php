@@ -127,7 +127,7 @@ final class Nominatim extends AbstractHttpProvider implements Provider
      *
      * @return Location
      */
-    private function xmlResultToArray(\DOMElement $resultNode, \DOMElement $addressNode, string $attribution = 'Data © OpenStreetMap contributors, ODbL 1.0. http://www.openstreetmap.org/copyright', bool $reverse): Location
+    private function xmlResultToArray(\DOMElement $resultNode, \DOMElement $addressNode, string $attribution, bool $reverse): Location
     {
         $builder = new AddressBuilder($this->getName());
 
