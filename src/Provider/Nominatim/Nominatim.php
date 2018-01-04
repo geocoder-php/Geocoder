@@ -174,20 +174,17 @@ final class Nominatim extends AbstractHttpProvider implements Provider
             $builder->setBounds($bounds['south'], $bounds['west'], $bounds['north'], $bounds['east']);
         }
 
+        $location = $builder->build(NominatimAddress::class);
+        $location = $location->withAttribution($attribution);
+        $location = $location->withOSMId(intval($resultNode->getAttribute('osm_id')));
+        $location = $location->withOSMType($resultNode->getAttribute('osm_type'));
+
         if (false === $reverse) {
-            $location = $builder->build(NominatimAddress::class);
-            $location = $location->withAttribution($attribution);
             $location = $location->withClass($resultNode->getAttribute('class'));
             $location = $location->withDisplayName($resultNode->getAttribute('display_name'));
-            $location = $location->withOSMId(intval($resultNode->getAttribute('osm_id')));
-            $location = $location->withOSMType($resultNode->getAttribute('osm_type'));
             $location = $location->withType($resultNode->getAttribute('type'));
         } else {
-            $location = $builder->build(NominatimAddress::class);
-            $location = $location->withAttribution($attribution);
             $location = $location->withDisplayName($resultNode->nodeValue);
-            $location = $location->withOSMId(intval($resultNode->getAttribute('osm_id')));
-            $location = $location->withOSMType($resultNode->getAttribute('osm_type'));
         }
 
         return $location;
