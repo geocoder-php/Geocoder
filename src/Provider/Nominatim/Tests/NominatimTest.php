@@ -111,4 +111,31 @@ XML;
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals('Rue Quincampoix', $result->getStreetName());
     }
+
+    public function testGeocodeWithRealAddress()
+    {
+        $provider = Nominatim::withOpenStreetMapServer($this->getHttpClient());
+        $results = $provider->geocodeQuery(GeocodeQuery::create('35 avenue jean de bologne 1020 bruxelles'));
+
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertCount(1, $results);
+
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results->first();
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(50.896344, $result->getCoordinates()->getLatitude(), '', 0.01);
+        $this->assertEquals(4.3605984, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertEquals('Avenue Jean de Bologne - Jean de Bolognelaan', $result->getStreetName());
+        $this->assertEquals('1020', $result->getPostalCode());
+        $this->assertEquals('Ville de Bruxelles - Stad Brussel', $result->getLocality());
+        $this->assertEquals('Heysel - Heizel', $result->getSubLocality());
+        $this->assertEquals('BE', $result->getCountry()->getCode());
+
+        $this->assertEquals('Data © OpenStreetMap contributors, ODbL 1.0. http://www.openstreetmap.org/copyright', $result->getAttribution());
+        $this->assertEquals('building', $result->getClass());
+        $this->assertEquals('35, Avenue Jean de Bologne - Jean de Bolognelaan, Heysel - Heizel, Laeken / Laken, Ville de Bruxelles - Stad Brussel, Brussel-Hoofdstad - Bruxelles-Capitale, Région de Bruxelles-Capitale - Brussels Hoofdstedelijk Gewest, 1020, België / Belgique / Belgien', $result->getDisplayName());
+        $this->assertEquals(220754533, $result->getOSMId());
+        $this->assertEquals('way', $result->getOSMType());
+        $this->assertEquals('yes', $result->getType());
+    }
 }
