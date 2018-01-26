@@ -85,21 +85,21 @@ final class HostIp extends AbstractHttpProvider implements Provider
             return new AddressCollection([]);
         }
 
-		// Return empty collection if address was not found
-        if ($data['lat'] === null
-        &&  $data['lng'] === null
-        &&  $data['city'] === '(Unknown City?)'
-        &&  $data['country_name'] === '(Unknown Country?)'
-        &&  $data['country_code'] === 'XX') {
+        // Return empty collection if address was not found
+        if (null === $data['lat']
+        && null === $data['lng']
+        && '(Unknown City?)' === $data['city']
+        && '(Unknown Country?)' === $data['country_name']
+        && 'XX' === $data['country_code']) {
             return new AddressCollection([]);
         }
 
-		// Return empty collection if address was not found
-        if ($data['lat'] === null
-        &&  $data['lng'] === null
-        &&  $data['city'] === '(Private Address)'
-        &&  $data['country_name'] === '(Private Address)'
-        &&  $data['country_code'] === 'XX') {
+        // Return empty collection if address was not found
+        if (null === $data['lat']
+        && null === $data['lng']
+        && '(Private Address)' === $data['city']
+        && '(Private Address)' === $data['country_name']
+        && 'XX' === $data['country_code']) {
             return new AddressCollection([]);
         }
 
