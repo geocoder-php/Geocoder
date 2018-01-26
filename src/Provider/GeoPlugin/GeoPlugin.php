@@ -86,13 +86,13 @@ final class GeoPlugin extends AbstractHttpProvider implements Provider
         }
 
         // Return empty collection if address was not found
-        if ($json['geoplugin_regionName'] === ''
-        &&  $json['geoplugin_regionCode'] === ''
-        &&  $json['geoplugin_city'] === ''
-        &&  $json['geoplugin_countryName'] === ''
-        &&  $json['geoplugin_countryCode'] === ''
-        &&  $json['geoplugin_latitude'] === '0'
-        &&  $json['geoplugin_longitude'] === '0') {
+        if ('' === $json['geoplugin_regionName']
+        && '' === $json['geoplugin_regionCode']
+        && '' === $json['geoplugin_city']
+        && '' === $json['geoplugin_countryName']
+        && '' === $json['geoplugin_countryCode']
+        && '0' === $json['geoplugin_latitude']
+        && '0' === $json['geoplugin_longitude']) {
             return new AddressCollection([]);
         }
 
