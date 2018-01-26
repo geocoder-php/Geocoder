@@ -61,15 +61,15 @@ final class FreeGeoIp extends AbstractHttpProvider implements Provider
         $data = json_decode($content, true);
 
         // Return empty collection if address was not found
-        if ($data['region_name'] === ''
-        &&  $data['region_code'] === ''
-        &&  $data['latitude'] === 0
-        &&  $data['longitude'] === 0
-        &&  $data['city'] === ''
-        &&  $data['zip_code'] === ''
-        &&  $data['country_name'] === ''
-        &&  $data['country_code'] === ''
-        &&  $data['time_zone'] === '') {
+        if ('' === $data['region_name']
+        && '' === $data['region_code']
+        && 0 === $data['latitude']
+        && 0 === $data['longitude']
+        && '' === $data['city']
+        && '' === $data['zip_code']
+        && '' === $data['country_name']
+        && '' === $data['country_code']
+        && '' === $data['time_zone']) {
             return new AddressCollection([]);
         }
 
