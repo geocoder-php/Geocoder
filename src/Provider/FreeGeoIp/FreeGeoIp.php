@@ -21,6 +21,7 @@ use Geocoder\Query\ReverseQuery;
 use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Provider\Provider;
 use Http\Client\HttpClient;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -33,13 +34,20 @@ final class FreeGeoIp extends AbstractHttpProvider implements Provider
     private $baseUrl;
 
     /**
+     * @var string
+     */
+    private $locale;
+
+    /**
      * @param HttpClient $client
+     * @param string     $locale
      * @param string     $baseUrl
      */
-    public function __construct(HttpClient $client, string $baseUrl = 'https://freegeoip.net/json/%s')
+    public function __construct(HttpClient $client, string $locale = '', string $baseUrl = 'https://freegeoip.net/json/%s')
     {
         parent::__construct($client);
 
+        $this->locale = $locale;
         $this->baseUrl = $baseUrl;
     }
 
@@ -105,5 +113,21 @@ final class FreeGeoIp extends AbstractHttpProvider implements Provider
     public function getName(): string
     {
         return 'free_geo_ip';
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @throws \InvalidArgumentException
+     */
+    protected function getRequest(string $url): RequestInterface
+    {
+        $request = parent::getRequest($url);
+
+        if (!empty($this->locale)) {
+            $request = $request->withHeader('Accept-Language', $this->locale);
+        }
+
+        return $request;
     }
 }
