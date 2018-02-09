@@ -59,6 +59,20 @@ final class FreeGeoIp extends AbstractHttpProvider implements Provider
 
         $content = $this->getUrlContents(sprintf($this->baseUrl, $address));
         $data = json_decode($content, true);
+
+        // Return empty collection if address was not found
+        if ('' === $data['region_name']
+        && '' === $data['region_code']
+        && 0 === $data['latitude']
+        && 0 === $data['longitude']
+        && '' === $data['city']
+        && '' === $data['zip_code']
+        && '' === $data['country_name']
+        && '' === $data['country_code']
+        && '' === $data['time_zone']) {
+            return new AddressCollection([]);
+        }
+
         $builder = new AddressBuilder($this->getName());
 
         if (!empty($data['region_name'])) {
