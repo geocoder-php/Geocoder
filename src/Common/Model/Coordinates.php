@@ -67,7 +67,7 @@ final class Coordinates
     {
         return $this->longitude;
     }
-    
+
     /**
      * Returns the coordinates as a tuple
      *
