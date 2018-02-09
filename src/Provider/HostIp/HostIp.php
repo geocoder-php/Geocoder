@@ -85,6 +85,24 @@ final class HostIp extends AbstractHttpProvider implements Provider
             return new AddressCollection([]);
         }
 
+        // Return empty collection if address was not found
+        if (null === $data['lat']
+        && null === $data['lng']
+        && '(Unknown City?)' === $data['city']
+        && '(Unknown Country?)' === $data['country_name']
+        && 'XX' === $data['country_code']) {
+            return new AddressCollection([]);
+        }
+
+        // Return empty collection if address was not found
+        if (null === $data['lat']
+        && null === $data['lng']
+        && '(Private Address)' === $data['city']
+        && '(Private Address)' === $data['country_name']
+        && 'XX' === $data['country_code']) {
+            return new AddressCollection([]);
+        }
+
         return new AddressCollection([
             Address::createFromArray([
                 'providedBy' => $this->getName(),
