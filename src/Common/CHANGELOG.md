@@ -4,6 +4,16 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 
 ## Unreleased
 
+## 4.2.0
+
+### Added
+
+- Add `Coordinates::toArray`
+
+### Fixed
+
+- Bug in `StatefulGeocoder` where different locale or bounds did not have any effect. 
+
 ## 4.1.0
 
 ### Changed
