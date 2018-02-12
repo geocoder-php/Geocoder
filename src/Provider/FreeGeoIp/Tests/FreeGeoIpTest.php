@@ -160,6 +160,42 @@ class FreeGeoIpTest extends BaseTestCase
         $this->assertEquals('GB', $results->first()->getCountry()->getCode());
     }
 
+    public function testGeocodeWithRuLocale()
+    {
+        $provider = new FreeGeoIp($this->getHttpClient());
+        $results = $provider->geocodeQuery(GeocodeQuery::create('81.27.51.253')->withLocale('ru'));
+
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertCount(1, $results);
+        $this->assertEquals('Владимирская область', $results->first()->getAdminLevels()->first()->getName());
+        $this->assertEquals('Владимир', $results->first()->getLocality());
+        $this->assertEquals('Россия', $results->first()->getCountry()->getName());
+    }
+
+    public function testGeocodeWithFrLocale()
+    {
+        $provider = new FreeGeoIp($this->getHttpClient());
+        $results = $provider->geocodeQuery(GeocodeQuery::create('81.27.51.252')->withLocale('fr'));
+
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertCount(1, $results);
+        $this->assertEquals('Oblast de Vladimir', $results->first()->getAdminLevels()->first()->getName());
+        $this->assertEquals('Vladimir', $results->first()->getLocality());
+        $this->assertEquals('Russie', $results->first()->getCountry()->getName());
+    }
+
+    public function testGeocodeWithIncorrectLocale()
+    {
+        $provider = new FreeGeoIp($this->getHttpClient());
+        $results = $provider->geocodeQuery(GeocodeQuery::create('81.27.51.251')->withLocale('wrong_locale'));
+
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertCount(1, $results);
+        $this->assertEquals('Vladimirskaya Oblast\'', $results->first()->getAdminLevels()->first()->getName());
+        $this->assertEquals('Vladimir', $results->first()->getLocality());
+        $this->assertEquals('Russia', $results->first()->getCountry()->getName());
+    }
+
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The FreeGeoIp provider is not able to do reverse geocoding.
