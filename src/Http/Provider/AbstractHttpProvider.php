@@ -59,6 +59,7 @@ abstract class AbstractHttpProvider extends AbstractProvider
     protected function getUrlContents(string $url): string
     {
         $request = $this->getRequest($url);
+
         return $this->getRequestContents($request);
     }
 
