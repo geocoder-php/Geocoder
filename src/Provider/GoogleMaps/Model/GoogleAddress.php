@@ -473,7 +473,7 @@ final class GoogleAddress extends Address
     /**
      * @return AdminLevelCollection
      */
-    public function getSubLocalityLevels(): AdminLevelCollection
+    public function getSubLocalityLevels()
     {
         return $this->subLocalityLevels;
     }
