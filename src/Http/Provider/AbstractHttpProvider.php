@@ -92,7 +92,7 @@ abstract class AbstractHttpProvider extends AbstractProvider
         } elseif (429 === $statusCode) {
             throw new QuotaExceeded();
         } elseif ($statusCode >= 300) {
-            throw InvalidServerResponse::create($request, $statusCode);
+            throw InvalidServerResponse::create((string) $request->getUri(), $statusCode);
         }
 
         $body = (string) $response->getBody();
