@@ -18,6 +18,13 @@ namespace Geocoder\Query;
 interface Query
 {
     /**
+     * @param string $text
+     *
+     * @return Query
+     */
+    public function withText(string $text);
+    
+    /**
      * @param string $locale
      *
      * @return Query
