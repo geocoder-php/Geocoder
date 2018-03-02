@@ -23,7 +23,7 @@ interface Query
      * @return Query
      */
     public function withText(string $text);
-    
+
     /**
      * @param string $locale
      *
