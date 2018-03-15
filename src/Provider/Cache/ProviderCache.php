@@ -26,26 +26,26 @@ final class ProviderCache implements Provider
     /**
      * @var Provider
      */
-    private $realProvider;
+    protected $realProvider;
 
     /**
      * @var CacheInterface
      */
-    private $cache;
+    protected $cache;
 
     /**
      * How log a result is going to be cached.
      *
      * @var int|null
      */
-    private $lifetime;
+    protected $lifetime;
 
     /**
      * @param Provider       $realProvider
      * @param CacheInterface $cache
      * @param int            $lifetime
      */
-    public function __construct(Provider $realProvider, CacheInterface $cache, int $lifetime = null)
+    final public function __construct(Provider $realProvider, CacheInterface $cache, int $lifetime = null)
     {
         $this->realProvider = $realProvider;
         $this->cache = $cache;
@@ -55,7 +55,7 @@ final class ProviderCache implements Provider
     /**
      * {@inheritdoc}
      */
-    public function geocodeQuery(GeocodeQuery $query): Collection
+    final public function geocodeQuery(GeocodeQuery $query): Collection
     {
         $cacheKey = $this->getCacheKey($query);
         if (null !== $result = $this->cache->get($cacheKey)) {
@@ -71,7 +71,7 @@ final class ProviderCache implements Provider
     /**
      * {@inheritdoc}
      */
-    public function reverseQuery(ReverseQuery $query): Collection
+    final public function reverseQuery(ReverseQuery $query): Collection
     {
         $cacheKey = $this->getCacheKey($query);
         if (null !== $result = $this->cache->get($cacheKey)) {
@@ -92,7 +92,7 @@ final class ProviderCache implements Provider
         return sprintf('%s (cache)', $this->realProvider->getName());
     }
 
-    public function __call($method, $args)
+    final public function __call($method, $args)
     {
         return call_user_func_array([$this->realProvider, $method], $args);
     }
@@ -102,7 +102,7 @@ final class ProviderCache implements Provider
      *
      * @return string
      */
-    private function getCacheKey($query): string
+    protected function getCacheKey($query): string
     {
         // Include the major version number of the geocoder to avoid issues unserializing.
         return 'v4'.sha1((string) $query);
