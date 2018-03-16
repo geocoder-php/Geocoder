@@ -21,7 +21,7 @@ use Psr\SimpleCache\CacheInterface;
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-final class ProviderCache implements Provider
+class ProviderCache implements Provider
 {
     /**
      * @var Provider
