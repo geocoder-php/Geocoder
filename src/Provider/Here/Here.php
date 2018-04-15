@@ -71,7 +71,6 @@ final class Here extends AbstractHttpProvider implements Provider
      */
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
-
         // This API doesn't handle IPs
         if (filter_var($query->getText(), FILTER_VALIDATE_IP)) {
             throw new UnsupportedOperation('The HereMaps provider does not support IP addresses, only street addresses.');
@@ -93,8 +92,10 @@ final class Here extends AbstractHttpProvider implements Provider
     {
         $coordinates = $query->getCoordinates();
         $url = sprintf(self::REVERSE_ENDPOINT_URL, $coordinates->getLatitude(), $coordinates->getLongitude(), $this->appId, $this->appCode, $query->getLimit());
+        
         return $this->executeQuery($url, $query->getLimit());
     }
+    
     /**
      * @param string $url
      * @param string $locale
@@ -143,7 +144,7 @@ final class Here extends AbstractHttpProvider implements Provider
     /**
      * {@inheritdoc}
      */
-    public function getName() : string
+    public function getName(): string
     {
         return 'Here';
     }
