@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * This file is part of the Geocoder package.
@@ -69,7 +69,7 @@ final class Here extends AbstractHttpProvider implements Provider
     /**
      * {@inheritdoc}
      */
-    public function geocodeQuery(GeocodeQuery $query) : Collection
+    public function geocodeQuery(GeocodeQuery $query): Collection
     {
 
         // This API doesn't handle IPs
@@ -89,7 +89,7 @@ final class Here extends AbstractHttpProvider implements Provider
     /**
      * {@inheritdoc}
      */
-    public function reverseQuery(ReverseQuery $query) : Collection
+    public function reverseQuery(ReverseQuery $query): Collection
     {
         $coordinates = $query->getCoordinates();
         $url = sprintf(self::REVERSE_ENDPOINT_URL, $coordinates->getLatitude(), $coordinates->getLongitude(), $this->appId, $this->appCode, $query->getLimit());
@@ -102,7 +102,7 @@ final class Here extends AbstractHttpProvider implements Provider
      *
      * @return \Geocoder\Collection
      */
-    private function executeQuery(string $url, int $limit) : Collection
+    private function executeQuery(string $url, int $limit): Collection
     {
         $content = $this->getUrlContents($url);
         $json = json_decode($content, true);
