@@ -53,9 +53,8 @@ final class Here extends AbstractHttpProvider implements Provider
      * @param HttpAdapterInterface $adapter An HTTP adapter.
      * @param string               $appId   An App ID.
      * @param string               $apoCode An App code.
-     * @param string               $locale  A locale (optional).
      */
-    public function __construct(HttpClient $client, $appId, $appCode, $locale = null)
+    public function __construct(HttpClient $client, $appId, $appCode)
     {
         if (empty($appId) || empty($appCode)) {
             throw new InvalidCredentials('No API key provided.');
