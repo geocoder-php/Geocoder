@@ -92,10 +92,10 @@ final class Here extends AbstractHttpProvider implements Provider
     {
         $coordinates = $query->getCoordinates();
         $url = sprintf(self::REVERSE_ENDPOINT_URL, $coordinates->getLatitude(), $coordinates->getLongitude(), $this->appId, $this->appCode, $query->getLimit());
-        
+
         return $this->executeQuery($url, $query->getLimit());
     }
-    
+
     /**
      * @param string $url
      * @param string $locale
