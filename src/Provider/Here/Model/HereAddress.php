@@ -34,7 +34,6 @@ final class HereAddress extends Address
      */
     private $locationName;
 
-
     /**
      * @return null|string
      */
