@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /*
  * This file is part of the Geocoder package.
@@ -48,7 +48,7 @@ final class HereAddress extends Address
      *
      * @return HereAddress
      */
-    public function withLocationId(string $locationId = null) : self
+    public function withLocationId(string $locationId = null): self
     {
         $new = clone $this;
         $new->locationId = $locationId;
@@ -69,7 +69,7 @@ final class HereAddress extends Address
      *
      * @return HereAddress
      */
-    public function withLocationType(string $locationType = null) : self
+    public function withLocationType(string $locationType = null): self
     {
         $new = clone $this;
         $new->locationType = $locationType;
@@ -90,7 +90,7 @@ final class HereAddress extends Address
      *
      * @return HereAddress
      */
-    public function withLocationName(string $locationName = null) : self
+    public function withLocationName(string $locationName = null): self
     {
         $new = clone $this;
         $new->locationName = $locationName;
