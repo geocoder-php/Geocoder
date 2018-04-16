@@ -51,8 +51,8 @@ final class Here extends AbstractHttpProvider implements Provider
 
     /**
      * @param HttpClient $adapter An HTTP adapter.
-     * @param string               $appId   An App ID.
-     * @param string               $apoCode An App code.
+     * @param string     $appId   An App ID.
+     * @param string     $apoCode An App code.
      */
     public function __construct(HttpClient $client, $appId, $appCode)
     {
