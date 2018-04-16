@@ -50,7 +50,7 @@ final class Here extends AbstractHttpProvider implements Provider
     private $appCode = null;
 
     /**
-     * @param HttpAdapterInterface $adapter An HTTP adapter.
+     * @param HttpClient $adapter An HTTP adapter.
      * @param string               $appId   An App ID.
      * @param string               $apoCode An App code.
      */
