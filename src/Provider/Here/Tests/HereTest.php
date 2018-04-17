@@ -130,9 +130,9 @@ class HereTest extends BaseTestCase
     }
 
     /**
-    * @expectedException \Geocoder\Exception\InvalidCredentials
-    * @expectedExceptionMessage Invalid or missing api key.
-    */
+     * @expectedException \Geocoder\Exception\InvalidCredentials
+     * @expectedExceptionMessage Invalid or missing api key.
+     */
     public function testGeocodeInvalidApiKey()
     {
         $provider = new Here(
