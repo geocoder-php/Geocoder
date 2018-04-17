@@ -110,8 +110,9 @@ final class Here extends AbstractHttpProvider implements Provider
             return new AddressCollection([]);
         }
 
-		if(!isset($json['Response']['View'][0]))
+		if(!isset($json['Response']['View'][0])){
 			return new AddressCollection([]);
+			}
 		
         $locations = $json['Response']['View'][0]['Result'];
 
