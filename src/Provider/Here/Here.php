@@ -110,10 +110,10 @@ final class Here extends AbstractHttpProvider implements Provider
             return new AddressCollection([]);
         }
 
-		if(!isset($json['Response']['View'][0])){
-			return new AddressCollection([]);
-			}
-		
+        if (!isset($json['Response']['View'][0])) {
+            return new AddressCollection([]);
+        }
+        
         $locations = $json['Response']['View'][0]['Result'];
 
         foreach ($locations as $loc) {
@@ -130,7 +130,7 @@ final class Here extends AbstractHttpProvider implements Provider
             $builder->setLocality($location['Address']['City'] ?? null);
             $builder->setSubLocality($location['Address']['District'] ?? null);
             $builder->setCountry($location['Address']['AdditionalData'][0]['value'] ?? null);
-			$builder->setCountryCode($location['Address']['Country'] ?? null);
+            $builder->setCountryCode($location['Address']['Country'] ?? null);
 
             $address = $builder->build(HereAddress::class);
             $address = $address->withLocationId($location['LocationId']);

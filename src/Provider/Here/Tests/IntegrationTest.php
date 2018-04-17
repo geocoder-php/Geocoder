@@ -27,7 +27,7 @@ class IntegrationTest extends ProviderIntegrationTest
 
     protected $testIpv6 = false;
 
-     protected function createProvider(HttpClient $httpClient)
+    protected function createProvider(HttpClient $httpClient)
     {
         return new Here($httpClient, self::getAppId(), self::getAppCode());
     }
@@ -40,14 +40,13 @@ class IntegrationTest extends ProviderIntegrationTest
     {
         return $_SERVER['HERE_APP_ID'];
     }
-	
+    
     protected function getAppId()
     {
         return $_SERVER['HERE_APP_ID'];
     }
-	protected function getAppCode()
+    protected function getAppCode()
     {
         return $_SERVER['HERE_APP_CODE'];
     }
-	
 }

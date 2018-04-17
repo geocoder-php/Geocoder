@@ -95,7 +95,6 @@ JSON;
         $this->assertEquals('Paris', $result->getLocality());
         $this->assertEquals('France', $result->getCountry()->getName());
         $this->assertEquals('FRA', $result->getCountry()->getCode());
-        
     }
 
     public function testGeocodeWithRealAddressReturnsSingleResults()
@@ -120,20 +119,19 @@ JSON;
         $this->assertEquals(2.3967311, $result->getBounds()->getWest(), '', 0.01);
         $this->assertEquals(48.8641758, $result->getBounds()->getNorth(), '', 0.01);
         $this->assertEquals(2.4001489, $result->getBounds()->getEast(), '', 0.01);
-		$this->assertEquals(10, $result->getStreetNumber());
+        $this->assertEquals(10, $result->getStreetNumber());
         
         $this->assertEquals('Avenue Gambetta', $result->getStreetName());
         $this->assertEquals(75020, $result->getPostalCode());
         $this->assertEquals('Paris', $result->getLocality());
         $this->assertEquals('France', $result->getCountry()->getName());
         $this->assertEquals('FRA', $result->getCountry()->getCode());
-
     }
 
 
     public function testReverseWithRealCoordinatesReturnsSingleResult()
     {
-                if (!isset($_SERVER['HERE_APP_ID']) || !isset($_SERVER['HERE_APP_CODE'])) {
+        if (!isset($_SERVER['HERE_APP_ID']) || !isset($_SERVER['HERE_APP_CODE'])) {
             $this->markTestSkipped('You need to configure the HERE_APP_ID and HERE_APP_CODE value in phpunit.xml');
         }
 
@@ -159,7 +157,6 @@ JSON;
         $this->assertEquals('Paris', $result->getLocality());
         $this->assertEquals('France', $result->getCountry()->getName());
         $this->assertEquals('FRA', $result->getCountry()->getCode());
-
     }
 
     /**
