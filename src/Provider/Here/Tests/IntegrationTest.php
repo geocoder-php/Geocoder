@@ -36,15 +36,17 @@ class IntegrationTest extends ProviderIntegrationTest
     {
         return __DIR__.'/.cached_responses';
     }
+
     protected function getApiKey()
     {
         return $_SERVER['HERE_APP_ID'];
     }
-    
+
     protected function getAppId()
     {
         return $_SERVER['HERE_APP_ID'];
     }
+
     protected function getAppCode()
     {
         return $_SERVER['HERE_APP_CODE'];

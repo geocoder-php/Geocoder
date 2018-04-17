@@ -13,6 +13,7 @@ declare(strict_types=1);
 /**
  * @author Sébastien Barré <sebastien@sheub.eu>
  */
+
 namespace Geocoder\Provider\Here\Tests;
 
 use Geocoder\IntegrationTest\BaseTestCase;
@@ -120,14 +121,13 @@ JSON;
         $this->assertEquals(48.8641758, $result->getBounds()->getNorth(), '', 0.01);
         $this->assertEquals(2.4001489, $result->getBounds()->getEast(), '', 0.01);
         $this->assertEquals(10, $result->getStreetNumber());
-        
+
         $this->assertEquals('Avenue Gambetta', $result->getStreetName());
         $this->assertEquals(75020, $result->getPostalCode());
         $this->assertEquals('Paris', $result->getLocality());
         $this->assertEquals('France', $result->getCountry()->getName());
         $this->assertEquals('FRA', $result->getCountry()->getCode());
     }
-
 
     public function testReverseWithRealCoordinatesReturnsSingleResult()
     {
