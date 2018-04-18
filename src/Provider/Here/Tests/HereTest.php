@@ -122,7 +122,7 @@ class HereTest extends BaseTestCase
         $provider = new Here($this->getHttpClient(), $_SERVER['HERE_APP_ID'], $_SERVER['HERE_APP_CODE']);
         $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
     }
-    
+
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The Here provider does not support IP addresses, only street addresses.
@@ -152,7 +152,6 @@ class HereTest extends BaseTestCase
         );
         $provider->geocodeQuery(GeocodeQuery::create('New York'));
     }
-
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
