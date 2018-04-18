@@ -57,7 +57,7 @@ final class Here extends AbstractHttpProvider implements Provider
     public function __construct(HttpClient $client, $appId, $appCode)
     {
         if (empty($appId) || empty($appCode)) {
-            throw new InvalidCredentials('appId or appCode missing.');
+            throw new InvalidCredentials('Invalid or missing api key.');
         }
         $this->appId = $appId;
         $this->appCode = $appCode;

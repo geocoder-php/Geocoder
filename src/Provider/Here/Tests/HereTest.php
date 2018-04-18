@@ -113,12 +113,16 @@ class HereTest extends BaseTestCase
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The Here provider does not support IP addresses, only street addresses.
      */
-    public function testGeocodeWithLocalhostIPv4()
+    public function testGeocodeIpv4()
     {
-        $provider = new Here($this->getMockedHttpClient(), 'appId', 'appCode');
+        if (!isset($_SERVER['HERE_APP_ID']) || !isset($_SERVER['HERE_APP_CODE'])) {
+            $this->markTestSkipped('You need to configure the HERE_APP_ID and HERE_APP_CODE value in phpunit.xml');
+        }
+
+        $provider = new Here($this->getHttpClient(), $_SERVER['HERE_APP_ID'], $_SERVER['HERE_APP_CODE']);
         $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
     }
-
+    
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The Here provider does not support IP addresses, only street addresses.
@@ -149,15 +153,6 @@ class HereTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('New York'));
     }
 
-    public function testGeocodeWithRealIPv4()
-    {
-        if (!isset($_SERVER['HERE_APP_ID']) || !isset($_SERVER['HERE_APP_CODE'])) {
-            $this->markTestSkipped('You need to configure the HERE_APP_ID and HERE_APP_CODE value in phpunit.xml');
-        }
-
-        $provider = new Here($this->getHttpClient(), $_SERVER['HERE_APP_ID'], $_SERVER['HERE_APP_CODE']);
-        $provider->geocodeQuery(GeocodeQuery::create('88.188.221.14'));
-    }
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
