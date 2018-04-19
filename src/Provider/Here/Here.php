@@ -25,7 +25,7 @@ use Geocoder\Provider\Here\Model\HereAddress;
 use Http\Client\HttpClient;
 
 /**
- * @author Sébastien Barré <info@zoestha.de>
+ * @author Sébastien Barré <sebastien@sheub.eu>
  */
 final class Here extends AbstractHttpProvider implements Provider
 {
@@ -54,7 +54,7 @@ final class Here extends AbstractHttpProvider implements Provider
      * @param string     $appId   An App ID.
      * @param string     $apoCode An App code.
      */
-    public function __construct(HttpClient $client, $appId, $appCode)
+    public function __construct(HttpClient $client, string $appId, string $appCode)
     {
         if (empty($appId) || empty($appCode)) {
             throw new InvalidCredentials('Invalid or missing api key.');
@@ -106,6 +106,18 @@ final class Here extends AbstractHttpProvider implements Provider
     {
         $content = $this->getUrlContents($url);
         $json = json_decode($content, true);
+
+        if (isset($json['type'])) {
+            switch ($json['type']['subtype']) {
+                case 'InvalidInputData':
+                    throw new InvalidArgument('Input parameter validation failed.');
+                case 'QuotaExceeded':
+                    throw new QuotaExceeded('Valid request but quota exceeded.');
+                case 'InvalidCredentials':
+                    throw new InvalidCredentials('Invalid or missing api key.');
+            }
+        }
+        
         if (!isset($json['Response']) || empty($json['Response'])) {
             return new AddressCollection([]);
         }

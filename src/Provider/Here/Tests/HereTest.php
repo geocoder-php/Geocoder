@@ -142,7 +142,7 @@ class HereTest extends BaseTestCase
         $provider = new Here(
             $this->getMockedHttpClient(
                 '{
-					    "type": {
+					"type": {
 						"subtype": "InvalidCredentials"
 					}
                 }'
