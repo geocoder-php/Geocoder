@@ -71,7 +71,7 @@ class HereTest extends BaseTestCase
         }
 
         $provider = new Here($this->getHttpClient(), $_SERVER['HERE_APP_ID'], $_SERVER['HERE_APP_CODE']);
-        $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(48.86321648955345, 2.3887719959020615));
+        $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(48.8632156, 2.3887722));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -84,8 +84,8 @@ class HereTest extends BaseTestCase
         $this->assertNotNull($result->getBounds());
         $this->assertEquals(48.86323, $result->getBounds()->getSouth(), '', 0.0001);
         $this->assertEquals(2.38847, $result->getBounds()->getWest(), '', 0.0001);
-        $this->assertEquals(48.86339, $result->getBounds()->getNorth(), '', 0.0001);
-        $this->assertEquals(2.38948, $result->getBounds()->getEast(), '', 0.0001);
+        $this->assertEquals(48.86323, $result->getBounds()->getNorth(), '', 0.0001);
+        $this->assertEquals(2.38883, $result->getBounds()->getEast(), '', 0.0001);
         $this->assertNull($result->getStreetNumber());
         $this->assertEquals('Avenue Gambetta', $result->getStreetName());
         $this->assertEquals(75020, $result->getPostalCode());
