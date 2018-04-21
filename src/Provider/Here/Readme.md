@@ -7,7 +7,7 @@
 [![Quality Score](https://img.shields.io/scrutinizer/g/geocoder-php/here-provider.svg?style=flat-square)](https://scrutinizer-ci.com/g/geocoder-php/nominatim-provider)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 
-This is the here provider from the PHP Geocoder. This is a **READ ONLY** repository. See the
+This is the Here provider from the PHP Geocoder. This is a **READ ONLY** repository. See the
 [main repo](https://github.com/geocoder-php/Geocoder) for information and documentation. 
 
 ### Install
@@ -15,11 +15,12 @@ This is the here provider from the PHP Geocoder. This is a **READ ONLY** reposit
 ```bash
 composer require geocoder-php/here-provider
 ```
-
 ### Note
+## App Id and App Code
+Get your Here creditentials at https://developer.here.com/
 
-The default language-locale is `en`, you can choose between `de`, `es`, `fr`,
-`it`, `nl`, `pl`, `pt` and `sv`.
+## Language parameter
+Define the preferred language of address elements in the result. Without a preferred language, the Here Geocoder will return results in an official country language or in a regional primary language so that local people will understand. Language code must be provided according to RFC 4647 standard.
 
 ### Contribute
 

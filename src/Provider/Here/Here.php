@@ -117,7 +117,7 @@ final class Here extends AbstractHttpProvider implements Provider
                     throw new InvalidCredentials('Invalid or missing api key.');
             }
         }
-        
+
         if (!isset($json['Response']) || empty($json['Response'])) {
             return new AddressCollection([]);
         }
