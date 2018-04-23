@@ -146,7 +146,7 @@ final class Mapzen extends AbstractHttpProvider implements Provider
             $props = $location['properties'];
 
             $adminLevels = [];
-            foreach (['region', 'locality', 'macroregion', 'country'] as $i => $component) {
+            foreach (['region', 'county', 'locality', 'macroregion', 'country'] as $i => $component) {
                 if (isset($props[$component])) {
                     $adminLevels[] = ['name' => $props[$component], 'level' => $i + 1];
                 }
