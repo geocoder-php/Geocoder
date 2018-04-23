@@ -136,7 +136,7 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
         $region = !empty($data->Region) ? $data->Region : null;
         $county = !empty($data->Subregion) ? $data->Subregion : null;
         $countryCode = !empty($data->CountryCode) ? $data->CountryCode : null;
-        
+
         $adminLevels = [];
         foreach (['Region', 'Subregion'] as $i => $property) {
             if (!empty($data->{$property})) {
