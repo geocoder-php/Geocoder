@@ -19,7 +19,7 @@ use Geocoder\Model\Bounds;
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-final class GeocodeQuery implements Query
+class GeocodeQuery implements Query
 {
     /**
      * The address or text that should be geocoded.
