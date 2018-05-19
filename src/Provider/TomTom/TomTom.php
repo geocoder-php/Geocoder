@@ -74,6 +74,10 @@ final class TomTom extends AbstractHttpProvider implements Provider
         if (null !== $query->getLocale()) {
             $url = sprintf('%s&language=%s', $url, $query->getLocale());
         }
+        
+        if (null !== $query->getData('countrySet')) {
+            $url = sprintf('%s&countrySet=%s', $url, $query->getData('countrySet'));
+        }
 
         $content = $this->getUrlContents($url);
         if (false !== stripos($content, 'Developer Inactive')) {
