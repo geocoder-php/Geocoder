@@ -18,7 +18,7 @@ Just some months before the release of 4.0 of `willdurand/geocoder` we changed t
 from https://github.com/geocoder-php/Geocoder. The new repository will only contain classes and interfaces shared between 
 multiple providers. The original repository is still used for issues and pull requests. 
 
-The new repository architecture allows us to use a [git subtree split](www.subtreesplit.com) from geocoder-php/Geocoder
+The new repository architecture allows us to use a [git subtree split](https://www.subtreesplit.com) from geocoder-php/Geocoder
 to geocoder-php/php-common and to each provider. 
 
 Versions before 4.0 `willdurand/geocoder` will still work as usual, but with the new repository. 
