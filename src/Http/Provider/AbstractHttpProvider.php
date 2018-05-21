@@ -19,7 +19,6 @@ use Geocoder\Provider\AbstractProvider;
 use Http\Message\MessageFactory;
 use Http\Discovery\MessageFactoryDiscovery;
 use Http\Client\HttpClient;
-use Psr\Http\Message\RequestInterface;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -58,32 +57,7 @@ abstract class AbstractHttpProvider extends AbstractProvider
      */
     protected function getUrlContents(string $url): string
     {
-        $request = $this->getRequest($url);
-
-        return $this->getRequestContents($request);
-    }
-
-    /**
-     * @param string $url
-     *
-     * @return RequestInterface
-     */
-    protected function getRequest(string $url): RequestInterface
-    {
-        return $this->getMessageFactory()->createRequest('GET', $url);
-    }
-
-    /**
-     * Send request and return contents. If content is empty, an exception will be thrown.
-     *
-     * @param RequestInterface $request
-     *
-     * @return string
-     *
-     * @throws InvalidServerResponse
-     */
-    protected function getRequestContents(RequestInterface $request): string
-    {
+        $request = $this->getMessageFactory()->createRequest('GET', $url);
         $response = $this->getHttpClient()->sendRequest($request);
 
         $statusCode = $response->getStatusCode();
@@ -92,12 +66,12 @@ abstract class AbstractHttpProvider extends AbstractProvider
         } elseif (429 === $statusCode) {
             throw new QuotaExceeded();
         } elseif ($statusCode >= 300) {
-            throw InvalidServerResponse::create((string) $request->getUri(), $statusCode);
+            throw InvalidServerResponse::create($url, $statusCode);
         }
 
         $body = (string) $response->getBody();
         if (empty($body)) {
-            throw InvalidServerResponse::emptyResponse((string) $request->getUri());
+            throw InvalidServerResponse::emptyResponse($url);
         }
 
         return $body;
