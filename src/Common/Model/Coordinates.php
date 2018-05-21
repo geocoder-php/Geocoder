@@ -67,4 +67,14 @@ final class Coordinates
     {
         return $this->longitude;
     }
+
+    /**
+     * Returns the coordinates as a tuple
+     *
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return [$this->getLongitude(), $this->getLatitude()];
+    }
 }

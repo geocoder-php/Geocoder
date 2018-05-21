@@ -62,11 +62,11 @@ final class StatefulGeocoder implements Geocoder
             ->withLimit($this->limit);
 
         if (!empty($this->locale)) {
-            $query->withLocale($this->locale);
+            $query = $query->withLocale($this->locale);
         }
 
         if (!empty($this->bounds)) {
-            $query->withBounds($this->bounds);
+            $query = $query->withBounds($this->bounds);
         }
 
         return $this->provider->geocodeQuery($query);
@@ -112,7 +112,7 @@ final class StatefulGeocoder implements Geocoder
     {
         $locale = $query->getLocale();
         if (empty($locale) && null !== $this->locale) {
-            $query->withLocale($this->locale);
+            $query = $query->withLocale($this->locale);
         }
 
         return $this->provider->reverseQuery($query);
