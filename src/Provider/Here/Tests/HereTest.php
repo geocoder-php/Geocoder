@@ -29,7 +29,7 @@ class HereTest extends BaseTestCase
     {
         return __DIR__.'/.cached_responses';
     }
-    
+
     /**
      * Get a real HTTP client. If a cache dir is set to a path it will use cached responses.
      *
@@ -44,13 +44,15 @@ class HereTest extends BaseTestCase
         }
     }
 
+    // testGeocodeQuery()
+
     public function testGeocodeWithRealAddress()
     {
         if (!isset($_SERVER['HERE_APP_ID']) || !isset($_SERVER['HERE_APP_CODE'])) {
             $this->markTestSkipped('You need to configure the HERE_APP_ID and HERE_APP_CODE value in phpunit.xml');
         }
 
-        $provider = new Here($this->getHttpClient($_SERVER['HERE_APP_ID'], $_SERVER['HERE_APP_CODE']), $_SERVER['HERE_APP_ID'], $_SERVER['HERE_APP_CODE']) ;
+        $provider = new Here($this->getHttpClient($_SERVER['HERE_APP_ID'], $_SERVER['HERE_APP_CODE']), $_SERVER['HERE_APP_ID'], $_SERVER['HERE_APP_CODE']);
         $results = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France')->withLocale('fr-FR'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -81,7 +83,7 @@ class HereTest extends BaseTestCase
             $this->markTestSkipped('You need to configure the HERE_APP_ID and HERE_APP_CODE value in phpunit.xml');
         }
 
-        $provider = new Here($this->getHttpClient($_SERVER['HERE_APP_ID'], $_SERVER['HERE_APP_CODE']), $_SERVER['HERE_APP_ID'], $_SERVER['HERE_APP_CODE']) ;
+        $provider = new Here($this->getHttpClient($_SERVER['HERE_APP_ID'], $_SERVER['HERE_APP_CODE']), $_SERVER['HERE_APP_ID'], $_SERVER['HERE_APP_CODE']);
         $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(48.8632156, 2.3887722));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
