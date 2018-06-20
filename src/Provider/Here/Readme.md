@@ -17,7 +17,7 @@ composer require geocoder-php/here-provider
 ```
 ### Note
 ## App Id and App Code
-Get your Here creditentials at https://developer.here.com/
+Get your Here credentials at https://developer.here.com/
 
 ## Language parameter
 Define the preferred language of address elements in the result. Without a preferred language, the Here Geocoder will return results in an official country language or in a regional primary language so that local people will understand. Language code must be provided according to RFC 4647 standard.
