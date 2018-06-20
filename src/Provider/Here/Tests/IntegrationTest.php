@@ -15,9 +15,6 @@ require_once 'CachedResponseClient.php';
 use Geocoder\IntegrationTest\ProviderIntegrationTest;
 use Geocoder\Provider\Here\Here;
 use Geocoder\Collection;
-use Geocoder\Exception\InvalidCredentials;
-use Geocoder\Exception\InvalidServerResponse;
-use Geocoder\Exception\QuotaExceeded;
 use Geocoder\Location;
 use Geocoder\Model\AdminLevelCollection;
 use Geocoder\Model\Bounds;
@@ -27,11 +24,8 @@ use Geocoder\Provider\Provider;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Http\Client\HttpClient;
-use Http\Discovery\ClassDiscovery;
 use Http\Discovery\HttpClientDiscovery;
-use Nyholm\Psr7\Response;
-use PHPUnit\Framework\TestCase;
-use Psr\Http\Message\ResponseInterface;
+
 
 
 /**
@@ -91,7 +85,7 @@ class IntegrationTest extends ProviderIntegrationTest
     {
         return $_SERVER['HERE_APP_CODE'];
     }
-    
+
     public function testGeocodeQuery()
     {
         if (isset($this->skippedTests[__FUNCTION__])) {
@@ -117,7 +111,6 @@ class IntegrationTest extends ProviderIntegrationTest
         }
     }
 
-    
     public function testGeocodeQueryWithNoResults()
     {
         if (isset($this->skippedTests[__FUNCTION__])) {
