@@ -26,8 +26,6 @@ use Geocoder\Query\ReverseQuery;
 use Http\Client\HttpClient;
 use Http\Discovery\HttpClientDiscovery;
 
-
-
 /**
  * @author Sébastien Barré <sebastien@sheub.eu>
  */
