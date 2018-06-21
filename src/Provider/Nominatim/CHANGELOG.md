@@ -2,6 +2,12 @@
 
 The change log describes what is "Added", "Removed", "Changed" or "Fixed" between each release.
 
+## 5.0.0
+
+### Removed
+
+- Removed lookup by IP. Nominatim server never supported this feature. PHP module returned no/empty results for any IP. Now it returns `UnsupportedOperation` exception.
+
 ## 4.1.0
 
 ### Added
