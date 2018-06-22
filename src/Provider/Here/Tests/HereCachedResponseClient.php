@@ -10,6 +10,7 @@
 
 namespace Geocoder\Provider\Here\Tests;
 
+use Geocoder\IntegrationTest\CachedResponseClient;
 use Http\Client\HttpClient;
 use Nyholm\Psr7\Factory\StreamFactory;
 use Nyholm\Psr7\Response;
@@ -20,7 +21,7 @@ use Psr\Http\Message\RequestInterface;
  *
  * @author Sébastien Barré <sebastien@sheub.eu> override the provider-integration-tests: CachedResponseClient class
  */
-class CachedResponseClient implements HttpClient
+class HereCachedResponseClient extends CachedResponseClient
 {
     /**
      * @var HttpClient

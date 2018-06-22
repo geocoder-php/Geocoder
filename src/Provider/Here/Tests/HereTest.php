@@ -38,7 +38,7 @@ class HereTest extends BaseTestCase
     protected function getHttpClient($apiKey = null, $appCode = null)
     {
         if (null !== $cacheDir = $this->getCacheDir()) {
-            return new CachedResponseClient(new HttplugClient(), $cacheDir, $apiKey, $appCode);
+            return new HereCachedResponseClient(new HttplugClient(), $cacheDir, $apiKey, $appCode);
         } else {
             return new HttplugClient();
         }

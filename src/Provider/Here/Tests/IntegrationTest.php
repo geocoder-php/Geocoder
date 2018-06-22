@@ -10,7 +10,7 @@
 
 namespace Geocoder\Provider\Here\Tests;
 
-require_once 'CachedResponseClient.php';
+require_once 'HereCachedResponseClient.php';
 
 use Geocoder\IntegrationTest\ProviderIntegrationTest;
 use Geocoder\Provider\Here\Here;
@@ -25,8 +25,6 @@ use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Http\Client\HttpClient;
 use Http\Discovery\HttpClientDiscovery;
-
-
 
 /**
  * @author Sébastien Barré <sebastien@sheub.eu>
@@ -50,7 +48,7 @@ class IntegrationTest extends ProviderIntegrationTest
     /**
      * This client will make real request if cache was not found.
      *
-     * @return CachedResponseClient
+     * @return HereCachedResponseClient
      */
     private function getCachedHttpClient()
     {
@@ -65,7 +63,7 @@ class IntegrationTest extends ProviderIntegrationTest
                 ->willThrowException($e);
         }
 
-        return new CachedResponseClient($client, $this->getCacheDir(), $this->getAppId(), $this->getAppCode());
+        return new HereCachedResponseClient($client, $this->getCacheDir(), $this->getAppId(), $this->getAppCode());
     }
 
     protected function getApiKey()
