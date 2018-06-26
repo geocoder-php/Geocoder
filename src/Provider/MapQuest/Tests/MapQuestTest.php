@@ -18,7 +18,6 @@ use Geocoder\Location;
 use Geocoder\Model\AddressBuilder;
 use Geocoder\Model\AdminLevel;
 use Geocoder\Model\Bounds;
-use Geocoder\Provider\MapQuest\GeocodeQuery as MapQuestGeocodeQuery;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\MapQuest\MapQuest;
@@ -131,7 +130,9 @@ class MapQuestTest extends BaseTestCase
             ->setCountryCode('US');
         $address = $addressBuilder->build();
 
-        $results = $provider->geocodeQuery(MapQuestGeocodeQuery::createFromAddress($address));
+        $query = GeocodeQuery::create('foobar');
+        $query = $query->withData(MapQuest::DATA_KEY_ADDRESS, $address);
+        $results = $provider->geocodeQuery($query);
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -273,7 +274,9 @@ class MapQuestTest extends BaseTestCase
         $addressBuilder->setLocality('Hanover');
         $address = $addressBuilder->build();
 
-        $results = $provider->geocodeQuery(MapQuestGeocodeQuery::createFromAddress($address));
+        $query = GeocodeQuery::create('foobar');
+        $query = $query->withData(MapQuest::DATA_KEY_ADDRESS, $address);
+        $results = $provider->geocodeQuery($query);
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
@@ -353,8 +356,9 @@ class MapQuestTest extends BaseTestCase
         $addressBuilder->setLocality('Hanover');
         $address = $addressBuilder->build();
 
-        $query = MapQuestGeocodeQuery::createFromAddress($address)
-            ->withBounds(new Bounds('39', '-77', '41', '-75'));
+        $query = GeocodeQuery::create('foobar');
+        $query = $query->withData(MapQuest::DATA_KEY_ADDRESS, $address);
+        $query = $query->withBounds(new Bounds('39', '-77', '41', '-75'));
         $results = $provider->geocodeQuery($query);
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
