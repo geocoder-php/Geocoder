@@ -60,29 +60,13 @@ final class FreeGeoIp extends AbstractHttpProvider implements Provider
             return new AddressCollection([$this->getLocationForLocalhost()]);
         }
 
-        $url = sprintf($this->baseUrl, $address);
-        $request = $this->getMessageFactory()->createRequest('GET', $url);
+        $request = $this->getRequest(sprintf($this->baseUrl, $address));
 
         if (null !== $query->getLocale()) {
             $request = $request->withHeader('Accept-Language', $query->getLocale());
         }
 
-        $response = $this->getHttpClient()->sendRequest($request);
-
-        $statusCode = $response->getStatusCode();
-        if (401 === $statusCode || 403 === $statusCode) {
-            throw new InvalidCredentials();
-        } elseif (429 === $statusCode) {
-            throw new QuotaExceeded();
-        } elseif ($statusCode >= 300) {
-            throw InvalidServerResponse::create($url, $statusCode);
-        }
-
-        $body = (string) $response->getBody();
-        if (empty($body)) {
-            throw InvalidServerResponse::emptyResponse($url);
-        }
-
+        $body = $this->getParsedResponse($request);
         $data = json_decode($body, true);
 
         // Return empty collection if address was not found
