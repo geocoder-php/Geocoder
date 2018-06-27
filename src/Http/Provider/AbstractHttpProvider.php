@@ -60,7 +60,7 @@ abstract class AbstractHttpProvider extends AbstractProvider
     {
         $request = $this->getRequest($url);
 
-        return $this->getRequestContents($request);
+        return $this->getParsedResponse($request);
     }
 
     /**
@@ -82,7 +82,7 @@ abstract class AbstractHttpProvider extends AbstractProvider
      *
      * @throws InvalidServerResponse
      */
-    protected function getRequestContents(RequestInterface $request): string
+    protected function getParsedResponse(RequestInterface $request): string
     {
         $response = $this->getHttpClient()->sendRequest($request);
 
