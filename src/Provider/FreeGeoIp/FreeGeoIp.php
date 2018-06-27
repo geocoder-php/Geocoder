@@ -13,9 +13,6 @@ declare(strict_types=1);
 namespace Geocoder\Provider\FreeGeoIp;
 
 use Geocoder\Collection;
-use Geocoder\Exception\InvalidCredentials;
-use Geocoder\Exception\InvalidServerResponse;
-use Geocoder\Exception\QuotaExceeded;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Model\AddressBuilder;
 use Geocoder\Model\AddressCollection;
