@@ -43,14 +43,8 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
 
     const TYPE_AIRPORT = 'airport';
 
-    /** @var string */
-    const ENDPOINT_URL = 'http://places-dsn.algolia.net/1/places/query';
-
     /** @var string */
     const ENDPOINT_URL_SSL = 'https://places-dsn.algolia.net/1/places/query';
-
-    /** @var bool */
-    private $useSsl;
 
     /** @var string */
     private $apiKey;
@@ -64,14 +58,13 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
     /** @var HttpClient */
     private $client;
 
-    public function __construct(HttpClient $client, string $apiKey, string $appId, bool $useSsl = true)
+    public function __construct(HttpClient $client, string $apiKey, string $appId)
     {
         parent::__construct($client);
 
         $this->apiKey = $apiKey;
         $this->client = $client;
         $this->appId = $appId;
-        $this->useSsl = $useSsl;
     }
 
     public function getName(): string
@@ -82,9 +75,8 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
         $this->query = $query;
-        $uri = $this->useSsl ? self::ENDPOINT_URL_SSL : self::ENDPOINT_URL;
-
-        $jsonResponse = json_decode($this->getUrlContents($uri));
+        
+        $jsonResponse = json_decode($this->getUrlContents(self::ENDPOINT_URL_SSL));
 
         if (is_null($jsonResponse)) {
             return new AddressCollection([]);
