@@ -75,7 +75,7 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
         $this->query = $query;
-        
+
         $jsonResponse = json_decode($this->getUrlContents(self::ENDPOINT_URL_SSL));
 
         if (is_null($jsonResponse)) {
