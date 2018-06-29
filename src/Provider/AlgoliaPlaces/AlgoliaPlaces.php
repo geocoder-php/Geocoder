@@ -26,6 +26,7 @@ use Geocoder\Provider\Provider;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Http\Client\HttpClient;
+use Psr\Http\Message\RequestInterface;
 
 class AlgoliaPlaces extends AbstractHttpProvider implements Provider
 {
@@ -103,33 +104,14 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
         ];
     }
 
-    protected function getUrlContents(string $url): string
+    protected function getRequest(string $url): RequestInterface
     {
-        $request = $this->getMessageFactory()->createRequest(
+        return $this->getMessageFactory()->createRequest(
             'POST',
             $url,
             $this->buildHeaders(),
             $this->buildData()
         );
-        $response = $this->getHttpClient()->sendRequest($request);
-
-        $statusCode = $response->getStatusCode();
-        if (401 === $statusCode || 403 === $statusCode) {
-            throw new InvalidCredentials();
-        }
-        if (429 === $statusCode) {
-            throw new QuotaExceeded();
-        }
-        if ($statusCode >= 300) {
-            throw InvalidServerResponse::create($url, $statusCode);
-        }
-
-        $body = (string) $response->getBody();
-        if (empty($body)) {
-            throw InvalidServerResponse::emptyResponse($url);
-        }
-
-        return $body;
     }
 
     private function buildData(): string
