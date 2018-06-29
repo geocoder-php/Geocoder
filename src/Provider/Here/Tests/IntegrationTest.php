@@ -10,8 +10,6 @@
 
 namespace Geocoder\Provider\Here\Tests;
 
-//require_once 'HereCachedResponseClient.php';
-
 use Geocoder\IntegrationTest\ProviderIntegrationTest;
 use Geocoder\IntegrationTest\CachedResponseClient;
 use Geocoder\Provider\Here\Here;
