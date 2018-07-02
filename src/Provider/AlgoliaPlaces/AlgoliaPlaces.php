@@ -72,6 +72,11 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
 
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
+        // This API doesn't handle IPs
+        if (filter_var($query->getText(), FILTER_VALIDATE_IP)) {
+            throw new UnsupportedOperation('The AlgoliaPlaces provider does not support IP addresses, only street addresses.');
+        }
+
         $this->query = $query;
 
         $jsonResponse = json_decode($this->getUrlContents(self::ENDPOINT_URL_SSL));
@@ -85,7 +90,7 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
 
     public function reverseQuery(ReverseQuery $query): Collection
     {
-        throw new UnsupportedOperation('The AlgoliaPlaces provided does not support reverse geocoding.');
+        throw new UnsupportedOperation('The AlgoliaPlaces provider does not support reverse geocoding.');
     }
 
     public function getTypes(): array
@@ -173,15 +178,24 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
     {
         $results = [];
 
+        // 1. degradedQuery: checkfor if(degradedQuery) and set results accordingly
+
         foreach ($jsonResponse->hits as $result) {
             $builder = new AddressBuilder($this->getName());
             $builder->setCoordinates($result->_geoloc->lat, $result->_geoloc->lng);
             $builder->setCountry($result->country);
             $builder->setCountryCode($result->country_code);
             $builder->setLocality($result->city[0]);
-            $builder->setPostalCode($result->postcode[0]);
+            if (isset($result->postcode)) {
+                $builder->setPostalCode($result->postcode[0]);
+            }
+
+            // 2. setStreetNumber($result->locale_name) AlgoliaPlaces does not offer streetnumber
+            // precision for the geocoding (with the exception to addresses situated in France)
+            if (isset($result->locale_name)) {
+                $builder->setStreetNumber($result->locale_name);
+            }
             $builder->setStreetName($result->locale_names[0]);
-            $builder->setStreetNumber($result->locale_name);
             foreach ($result->administrative ?? [] as $i => $adminLevel) {
                 $builder->addAdminLevel($i + 1, $adminLevel);
             }
