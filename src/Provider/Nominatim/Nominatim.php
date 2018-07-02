@@ -210,7 +210,16 @@ final class Nominatim extends AbstractHttpProvider implements Provider
             $url = sprintf('%s&accept-language=%s', $url, $locale);
         }
 
-        return $this->getUrlContents($url);
+        $request = $this->getRequest($url);
+
+        if (isset($_SERVER['HTTP_USER_AGENT'])) {
+            $request = $request->withHeader('User-Agent', $_SERVER['HTTP_USER_AGENT']);
+        }
+        if (isset($_SERVER['HTTP_REFERER'])) {
+            $request = $request->withHeader('Referer', $_SERVER['HTTP_REFERER']);
+        }
+
+        return $this->getParsedResponse($request);
     }
 
     private function getGeocodeEndpointUrl(): string
