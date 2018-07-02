@@ -6,6 +6,11 @@
          colors="true"
          bootstrap="vendor/autoload.php"
 >
+    <php>
+        <server name="ALGOLIA_API_KEY" value="" />
+		<server name="ALGOLIA_APP_ID" value="" />
+        <server name="USE_CACHED_RESPONSES" value="false" />
+    </php>
     <testsuites>
         <testsuite name="Geocoder Test Suite">
             <directory>./Tests/</directory>
