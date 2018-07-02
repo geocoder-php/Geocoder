@@ -192,7 +192,9 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
             $builder->setCoordinates($result->_geoloc->lat, $result->_geoloc->lng);
             $builder->setCountry($result->country);
             $builder->setCountryCode($result->country_code);
-            $builder->setLocality($result->city[0]);
+            if (isset($result->city)) {
+                $builder->setLocality($result->city[0]);
+            }
             if (isset($result->postcode)) {
                 $builder->setPostalCode($result->postcode[0]);
             }
