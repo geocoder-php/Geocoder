@@ -32,12 +32,12 @@ final class Mapzen extends AbstractHttpProvider implements Provider
     /**
      * @var string
      */
-    const GEOCODE_ENDPOINT_URL = 'https://search.mapzen.com/v1/search?text=%s&api_key=%s&size=%d';
+    const GEOCODE_ENDPOINT_URL = 'https://api.geocode.earth/v1/search?text=%s&api_key=%s&size=%d';
 
     /**
      * @var string
      */
-    const REVERSE_ENDPOINT_URL = 'https://search.mapzen.com/v1/reverse?point.lat=%f&point.lon=%f&api_key=%s&size=%d';
+    const REVERSE_ENDPOINT_URL = 'https://api.geocode.earth/v1/reverse?point.lat=%f&point.lon=%f&api_key=%s&size=%d';
 
     /**
      * @var string
