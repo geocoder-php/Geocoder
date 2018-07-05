@@ -79,19 +79,19 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
 
         $this->query = $query;
 
-        $jsonResponse = json_decode($this->getUrlContents(self::ENDPOINT_URL_SSL), true);
+        $jsonResponse = json_decode($this->getUrlContents(self::ENDPOINT_URL_SSL));
 
         if (is_null($jsonResponse)) {
             return new AddressCollection([]);
         }
 
-        if ($jsonResponse['degradedQuery']) {
+        if ($jsonResponse->nbHits == 0) {
             return new AddressCollection([]);
         }
-
-        if ($jsonResponse['nbHits'] == 0) {
+        if ($jsonResponse->degradedQuery) {
             return new AddressCollection([]);
         }
+        
 
         return $this->buildResult($jsonResponse);
     }
@@ -185,29 +185,31 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
     private function buildResult($jsonResponse): AddressCollection
     {
         $results = [];
+
+        //error_log(\json_encode($jsonResponse));
         // 1. degradedQuery: checkfor if(degradedQuery) and set results accordingly?
         // 2. setStreetNumber($result->locale_name) AlgoliaPlaces does not offer streetnumber
         // precision for the geocoding (with the exception to addresses situated in France)
 
-        foreach ($jsonResponse['hits'] as $result) {
+        foreach ($jsonResponse->hits as $result) {
             $builder = new AddressBuilder($this->getName());
-            $builder->setCoordinates($result['_geoloc']['lat'], $result['_geoloc']['lng']);
-            $builder->setCountry($result['country']);
-            $builder->setCountryCode($result['country_code']);
-            if (isset($result['city'])) {
-                $builder->setLocality($result['city'][0]);
+            $builder->setCoordinates($result->_geoloc->lat, $result->_geoloc->lng);
+            $builder->setCountry($result->country);
+            $builder->setCountryCode($result->country_code);
+            if (isset($result->city)) {
+                $builder->setLocality($result->city[0]);
             }
-            if (isset($result['postcode'])) {
-                $builder->setPostalCode($result['postcode'][0]);
+            if (isset($result->postcode)) {
+                $builder->setPostalCode($result->postcode[0]);
             }
-            if (isset($result['locale_name'])) {
-                $builder->setStreetNumber($result['locale_name']);
+            if (isset($result->locale_name)) {
+                $builder->setStreetNumber($result->locale_name);
             }
-            if (isset($result['locale_names']) && isset($result['locale_names'][0])) {
-                $builder->setStreetName($result['locale_names'][0]);
+            if (isset($result->locale_names) && isset($result->locale_names[0])) {
+                $builder->setStreetName($result->locale_names[0]);
             }
-            foreach ($result['administrative'] ?? [] as $i => $adminLevel) {
-                $builder->addAdminLevel($i + 1, json_encode($adminLevel));
+            foreach ($result->administrative ?? [] as $i => $adminLevel) {
+                $builder->addAdminLevel($i + 1, $adminLevel);
             }
 
             $results[] = $builder->build(Address::class);
