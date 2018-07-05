@@ -89,6 +89,10 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
             return new AddressCollection([]);
         }
 
+        if ($jsonResponse['nbHits'] == 0) {
+            return new AddressCollection([]);
+        }
+
         return $this->buildResult($jsonResponse);
     }
 
@@ -203,7 +207,7 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
                 $builder->setStreetName($result['locale_names'][0]);
             }
             foreach ($result['administrative'] ?? [] as $i => $adminLevel) {
-                $builder->addAdminLevel($i + 1, $adminLevel);
+                $builder->addAdminLevel($i + 1, json_encode($adminLevel));
             }
 
             $results[] = $builder->build(Address::class);
