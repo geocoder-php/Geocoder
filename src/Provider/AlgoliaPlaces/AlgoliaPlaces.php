@@ -183,7 +183,7 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
         // 2. setStreetNumber($result->locale_name) AlgoliaPlaces does not offer streetnumber
         // precision for the geocoding (with the exception to addresses situated in France)
 
-        if ($jsonResponse->nbHits === 0 || $jsonResponse->degradedQuery) {
+        if ($jsonResponse->nbHits == 0 || $jsonResponse->degradedQuery) {
             return new AddressCollection([]);
         }
 
