@@ -85,7 +85,7 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
             return new AddressCollection([]);
         }
 
-        if ($jsonResponse['nbHits'] == 0 || $jsonResponse['degradedQuery']) {
+        if ($jsonResponse['degradedQuery']) {
             return new AddressCollection([]);
         }
 
