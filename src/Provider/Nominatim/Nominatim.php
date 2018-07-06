@@ -81,13 +81,10 @@ final class Nominatim extends AbstractHttpProvider implements Provider
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
         $address = $query->getText();
-        // This API does not support IPv6
-        if (filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
-            throw new UnsupportedOperation('The Nominatim provider does not support IPv6 addresses.');
-        }
 
-        if ('127.0.0.1' === $address) {
-            return new AddressCollection([$this->getLocationForLocalhost()]);
+        // This API doesn't handle IPs
+        if (filter_var($address, FILTER_VALIDATE_IP)) {
+            throw new UnsupportedOperation('The Nominatim provider does not support IP addresses.');
         }
 
         $url = sprintf($this->getGeocodeEndpointUrl(), urlencode($address), $query->getLimit());

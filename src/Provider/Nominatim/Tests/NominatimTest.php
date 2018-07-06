@@ -26,25 +26,19 @@ class NominatimTest extends BaseTestCase
         return __DIR__.'/.cached_responses';
     }
 
+    /**
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
+     * @expectedExceptionMessage The Nominatim provider does not support IP addresses.
+     */
     public function testGeocodeWithLocalhostIPv4()
     {
         $provider = Nominatim::withOpenStreetMapServer($this->getMockedHttpClient(), 'Geocoder PHP/Nominatim Provider/Nominatim Test');
-        $results = $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
-
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
-        $this->assertCount(1, $results);
-
-        /** @var Location $result */
-        $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals('localhost', $result->getLocality());
-        $this->assertEmpty($result->getAdminLevels());
-        $this->assertEquals('localhost', $result->getCountry()->getName());
+        $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
     }
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The Nominatim provider does not support IPv6 addresses.
+     * @expectedExceptionMessage The Nominatim provider does not support IP addresses.
      */
     public function testGeocodeWithLocalhostIPv6()
     {
@@ -54,7 +48,7 @@ class NominatimTest extends BaseTestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The Nominatim provider does not support IPv6 addresses.
+     * @expectedExceptionMessage The Nominatim provider does not support IP addresses.
      */
     public function testGeocodeWithRealIPv6()
     {

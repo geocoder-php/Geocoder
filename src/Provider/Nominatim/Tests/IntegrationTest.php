@@ -23,7 +23,7 @@ class IntegrationTest extends ProviderIntegrationTest
 
     protected $testReverse = true;
 
-    protected $testIpv4 = true;
+    protected $testIpv4 = false;
 
     protected $testIpv6 = false;
 
