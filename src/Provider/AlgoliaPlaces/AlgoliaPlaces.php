@@ -83,17 +83,13 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
 
         if (is_null($jsonResponse)) {
             return new AddressCollection([]);
-        }
-
-        if ($jsonResponse['degradedQuery']) {
+        } elseif ($jsonResponse['degradedQuery']) {
             return new AddressCollection([]);
-        }
-
-        if ($jsonResponse['nbHits'] == 0) {
+        } elseif ($jsonResponse['nbHits'] == 0) {
             return new AddressCollection([]);
+        } else {
+            return $this->buildResult($jsonResponse);
         }
-
-        return $this->buildResult($jsonResponse);
     }
 
     public function reverseQuery(ReverseQuery $query): Collection
@@ -189,6 +185,7 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
         // 2. setStreetNumber($result->locale_name) AlgoliaPlaces does not offer streetnumber
         // precision for the geocoding (with the exception to addresses situated in France)
 
+        // error_log(json_encode($jsonResponse));
         foreach ($jsonResponse['hits'] as $result) {
             $builder = new AddressBuilder($this->getName());
             $builder->setCoordinates($result['_geoloc']['lat'], $result['_geoloc']['lng']);
@@ -207,7 +204,7 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
                 $builder->setStreetName($result['locale_names'][0]);
             }
             foreach ($result['administrative'] ?? [] as $i => $adminLevel) {
-                $builder->addAdminLevel($i + 1, json_encode($adminLevel));
+                $builder->addAdminLevel($i + 1, $adminLevel);
             }
 
             $results[] = $builder->build(Address::class);
