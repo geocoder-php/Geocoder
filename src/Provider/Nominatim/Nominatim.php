@@ -55,7 +55,7 @@ final class Nominatim extends AbstractHttpProvider implements Provider
      */
     public static function withOpenStreetMapServer(HttpClient $client, string $userAgent, string $referer = '')
     {
-        return new self($client, 'https://vps.geocode.be/test.php', $userAgent, $referer);
+        return new self($client, 'https://nominatim.openstreetmap.org', $userAgent, $referer);
     }
 
     /**
