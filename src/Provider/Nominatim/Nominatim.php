@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Geocoder\Provider\Nominatim;
 
 use Geocoder\Collection;
+use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Location;
@@ -37,25 +38,41 @@ final class Nominatim extends AbstractHttpProvider implements Provider
     private $rootUrl;
 
     /**
+     * @var string
+     */
+    private $userAgent;
+
+    /**
+     * @var string
+     */
+    private $referer;
+
+    /**
      * @param HttpClient  $client
      * @param string|null $locale
      *
      * @return Nominatim
      */
-    public static function withOpenStreetMapServer(HttpClient $client)
+    public static function withOpenStreetMapServer(HttpClient $client, string $userAgent, string $referer = '')
     {
-        return new self($client, 'https://nominatim.openstreetmap.org');
+        return new self($client, 'https://vps.geocode.be/test.php', $userAgent, $referer);
     }
 
     /**
      * @param HttpClient $client  an HTTP adapter
      * @param string     $rootUrl Root URL of the nominatim server
      */
-    public function __construct(HttpClient $client, $rootUrl)
+    public function __construct(HttpClient $client, $rootUrl, string $userAgent, string $referer = '')
     {
         parent::__construct($client);
 
         $this->rootUrl = rtrim($rootUrl, '/');
+        $this->userAgent = $userAgent;
+        $this->referer = $referer;
+
+        if (empty($this->userAgent)) {
+            throw new InvalidArgument('The User-Agent must be set to use the Nominatim provider.');
+        }
     }
 
     /**
@@ -211,12 +228,10 @@ final class Nominatim extends AbstractHttpProvider implements Provider
         }
 
         $request = $this->getRequest($url);
+        $request = $request->withHeader('User-Agent', $this->userAgent);
 
-        if (isset($_SERVER['HTTP_USER_AGENT'])) {
-            $request = $request->withHeader('User-Agent', $_SERVER['HTTP_USER_AGENT']);
-        }
-        if (isset($_SERVER['HTTP_REFERER'])) {
-            $request = $request->withHeader('Referer', $_SERVER['HTTP_REFERER']);
+        if (!empty($this->referer)) {
+            $request = $request->withHeader('Referer', $this->referer);
         }
 
         return $this->getParsedResponse($request);
