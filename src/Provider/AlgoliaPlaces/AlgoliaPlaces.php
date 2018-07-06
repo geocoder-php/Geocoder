@@ -181,6 +181,8 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
     private function buildResult($jsonResponse): AddressCollection
     {
         $results = [];
+
+        //error_log(\json_encode($jsonResponse));
         // 1. degradedQuery: checkfor if(degradedQuery) and set results accordingly?
         // 2. setStreetNumber($result->locale_name) AlgoliaPlaces does not offer streetnumber
         // precision for the geocoding (with the exception to addresses situated in France)
