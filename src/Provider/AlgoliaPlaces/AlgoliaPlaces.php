@@ -129,7 +129,35 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
             $this->buildData()
         );
     }
+    /**
+     * Send request and return contents. If content is empty, an exception will be thrown.
+     *
+     * @param RequestInterface $request
+     *
+     * @return string
+     *
+     * @throws InvalidServerResponse
+     */
+    protected function getParsedResponse(RequestInterface $request): string
+    {
+        $response = $this->getHttpClient()->sendRequest($request);
 
+        $statusCode = $response->getStatusCode();
+        if (401 === $statusCode || 403 === $statusCode) {
+            throw new InvalidCredentials();
+        } elseif (429 === $statusCode) {
+            throw new QuotaExceeded();
+        } elseif ($statusCode >= 300) {
+            throw InvalidServerResponse::create((string) $request->getUri(), $statusCode);
+        }
+
+        $body = (string) $response->getBody();
+        if (empty($body)) {
+            throw InvalidServerResponse::emptyResponse((string) $request->getUri());
+        }
+
+        return $body;
+    }
     private function buildData(): string
     {
         $query = $this->query;
