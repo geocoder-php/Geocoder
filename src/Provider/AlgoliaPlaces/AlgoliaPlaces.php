@@ -80,11 +80,11 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
         $this->query = $query;
 
         error_log('This is geocodeQuery');
-        error_log(json_encode($query));
+        error_log(json_encode($query->getText()));
         
         $jsonResponse = json_decode($this->getUrlContents(self::ENDPOINT_URL_SSL), true);
 
-        error_log(json_encode($jsonResponse));
+        // error_log(json_encode($jsonResponse));
         if (is_null($jsonResponse)) {
             return new AddressCollection([]);
         } elseif ($jsonResponse['degradedQuery']) {
