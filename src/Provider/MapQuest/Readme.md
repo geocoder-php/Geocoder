@@ -27,22 +27,28 @@ Quote from [MapQuest Developer: Specifying Locations](https://developer.mapquest
 > allows for a higher degree of address specification by entering the full address in its individual location parameters.
 > The 5-Box Input format is beneficial as it bypasses the parsing functionality of the single-line request.
 
-To pass an Address object as a part of the geocode query, we provide the class `Geocoder\Provider\MapQuest\GeocodeQuery`.
-An object of class `Geocoder\Provider\MapQuest\GeocodeQuery` can be passed instead of the regular `Geocoder\Query\GeocodeQuery`
-as the argument to the `geocodeQuery` method of the provider. If you have an object of a class that implements
-`Geocoder\Location` stored in the variable `$address`, this new type of GeocodeQuery can be created with:
+If you have an object of a class that implements `Geocoder\Location` stored in the variable `$address`,
+this new type of GeocodeQuery can be created with:
 ```
-$query = \Geocoder\Provider\MapQuest\GeocodeQuery::createFromAddress($address);
+$query = GeocodeQuery::create('foobar');
+$query = $query->withData(MapQuest::DATA_KEY_ADDRESS, $address);
 ```
 
-This new GeocodeQuery class will also work fine with all the other providers. It will provide them with
-a text version of the address when they require a location as a string instead of a `Geocoder\Location` implementation.
+If you want the GeocodeQuery to also work fine with all the other providers,
+you will need to convert the `$address` object to a text string first.
+Say you have stored this text string in the variable `$addressAsString`, the the example will read as follows:
+```
+$query = GeocodeQuery::create($addressAsString);
+$query = $query->withData(MapQuest::DATA_KEY_ADDRESS, $address);
+```
+
+Here is a more complete example with use statements, and building of the address object:
 
 **Example**
 ```
 use Geocoder\Model\AddressBuilder;
-use Geocoder\Provider\MapQuest\GeocodeQuery as MapQuestGeocodeQuery;
 use Geocoder\Provider\MapQuest\MapQuest;
+use Geocoder\Query\GeocodeQuery;
 
 $provider = new MapQuest($httpClient, $apiKey);
 
@@ -60,21 +66,12 @@ $addressBuilder
   ->setCountryCode('US');
 $address = $addressBuilder->build();
 
-$query = MapQuestGeocodeQuery::createFromAddress($address);
+$query = GeocodeQuery::create('dummy data');
+$query = $query->withData(MapQuest::DATA_KEY_ADDRESS, $address);
+
 $results = $provider->geocodeQuery($query);
 ```
 
-
-Alternatively you may use the regular `Geocoder\Query\GeocodeQuery` instead with the address passed as data, like this:
-```
-use Geocoder\Model\Address;
-use Geocoder\Provider\MapQuest\GeocodeQuery as MapQuestGeocodeQuery;
-use Geocoder\Query\GeocodeQuery;
-
-$address = new Address( ... );
-$query = GeocodeQuery::create('location string');
-$query = $query->withData(MapQuestGeocodeQuery::DATA_KEY_ADDRESS, $address);
-```
 ### Contribute
 
 Contributions are very welcome! Send a pull request to the [main repository](https://github.com/geocoder-php/Geocoder) or 
