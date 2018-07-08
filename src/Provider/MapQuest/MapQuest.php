@@ -25,7 +25,7 @@ use Geocoder\Model\AddressCollection;
 use Geocoder\Model\AdminLevel;
 use Geocoder\Model\Bounds;
 use Geocoder\Model\Country;
-use Geocoder\Query\GeocodeQuery as CommonGeocodeQuery;
+use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\Provider;
 use Http\Client\HttpClient;
@@ -36,47 +36,32 @@ use Psr\Http\Message\ResponseInterface;
  */
 final class MapQuest extends AbstractHttpProvider implements Provider
 {
+    const DATA_KEY_ADDRESS = 'address';
+
     const KEY_API_KEY = 'key';
-
     const KEY_LOCATION = 'location';
-
     const KEY_OUT_FORMAT = 'outFormat';
-
     const KEY_MAX_RESULTS = 'maxResults';
-
     const KEY_THUMB_MAPS = 'thumbMaps';
-
     const KEY_INTL_MODE = 'intlMode';
-
     const KEY_BOUNDING_BOX = 'boundingBox';
-
     const KEY_LAT = 'lat';
-
     const KEY_LNG = 'lng';
-
     const MODE_5BOX = '5BOX';
-
     const OPEN_BASE_URL = 'https://open.mapquestapi.com/geocoding/v1/';
-
     const LICENSED_BASE_URL = 'https://www.mapquestapi.com/geocoding/v1/';
-
     const GEOCODE_ENDPOINT = 'address';
-
     const DEFAULT_GEOCODE_PARAMS = [
         self::KEY_LOCATION => '',
         self::KEY_OUT_FORMAT => 'json',
         self::KEY_API_KEY => '',
     ];
-
     const DEFAULT_GEOCODE_OPTIONS = [
         self::KEY_MAX_RESULTS => 3,
         self::KEY_THUMB_MAPS => false,
     ];
-
     const REVERSE_ENDPOINT = 'reverse';
-
     const ADMIN_LEVEL_STATE = 1;
-
     const ADMIN_LEVEL_COUNTY = 2;
 
     /**
@@ -118,7 +103,7 @@ final class MapQuest extends AbstractHttpProvider implements Provider
     /**
      * {@inheritdoc}
      */
-    public function geocodeQuery(CommonGeocodeQuery $query): Collection
+    public function geocodeQuery(GeocodeQuery $query): Collection
     {
         $params = static::DEFAULT_GEOCODE_PARAMS;
         $params[static::KEY_API_KEY] = $this->apiKey;
@@ -128,7 +113,7 @@ final class MapQuest extends AbstractHttpProvider implements Provider
 
         $useGetQuery = true;
 
-        $address = $this->extractAddressFromQuery($query);
+        $address = $query->getData(self::DATA_KEY_ADDRESS);
         if ($address instanceof Location) {
             $params[static::KEY_LOCATION] = $this->mapAddressToArray($address);
             $options[static::KEY_INTL_MODE] = static::MODE_5BOX;
@@ -163,15 +148,6 @@ final class MapQuest extends AbstractHttpProvider implements Provider
 
             return $this->executePostQuery(static::GEOCODE_ENDPOINT, $params);
         }
-    }
-
-    private function extractAddressFromQuery(CommonGeocodeQuery $query)
-    {
-        if ($query instanceof GetAddressInterface) {
-            return $query->getAddress();
-        }
-
-        return $query->getData(GeocodeQuery::DATA_KEY_ADDRESS);
     }
 
     /**
