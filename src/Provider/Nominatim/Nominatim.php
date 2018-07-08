@@ -48,8 +48,9 @@ final class Nominatim extends AbstractHttpProvider implements Provider
     private $referer;
 
     /**
-     * @param HttpClient  $client
-     * @param string|null $locale
+     * @param HttpClient $client    an HTTP client
+     * @param string     $userAgent Value of the User-Agent header
+     * @param string     $referer   Value of the Referer header
      *
      * @return Nominatim
      */
@@ -59,8 +60,10 @@ final class Nominatim extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * @param HttpClient $client  an HTTP adapter
-     * @param string     $rootUrl Root URL of the nominatim server
+     * @param HttpClient $client    an HTTP client
+     * @param string     $rootUrl   Root URL of the nominatim server
+     * @param string     $userAgent Value of the User-Agent header
+     * @param string     $referer   Value of the Referer header
      */
     public function __construct(HttpClient $client, $rootUrl, string $userAgent, string $referer = '')
     {
