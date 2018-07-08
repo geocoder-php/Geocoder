@@ -113,7 +113,7 @@ final class MapQuest extends AbstractHttpProvider implements Provider
 
         $useGetQuery = true;
 
-        $address = $query->getData(self::DATA_KEY_ADDRESS);
+        $address = $this->extractAddressFromQuery($query);
         if ($address instanceof Location) {
             $params[static::KEY_LOCATION] = $this->mapAddressToArray($address);
             $options[static::KEY_INTL_MODE] = static::MODE_5BOX;
@@ -174,6 +174,11 @@ final class MapQuest extends AbstractHttpProvider implements Provider
     public function getName(): string
     {
         return 'map_quest';
+    }
+
+    private function extractAddressFromQuery(GeocodeQuery $query)
+    {
+        return $query->getData(static::DATA_KEY_ADDRESS);
     }
 
     private function getUrl($endpoint): string
