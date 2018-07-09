@@ -1,4 +1,14 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
+
+/*
+ * This file is part of the Geocoder package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license    MIT License
+ */
 
 namespace Geocoder\Provider\Mapbox;
 
@@ -134,10 +144,10 @@ final class Mapbox extends AbstractHttpProvider implements Provider
     private $geocodingMode;
 
     /**
-     * @param HttpClient $client An HTTP adapter
-     * @param string $accessToken Your Mapbox access token
+     * @param HttpClient  $client        An HTTP adapter
+     * @param string      $accessToken   Your Mapbox access token
      * @param string|null $country
-     * @param string $geocodingMode
+     * @param string      $geocodingMode
      */
     public function __construct(
         HttpClient $client,
@@ -179,13 +189,13 @@ final class Mapbox extends AbstractHttpProvider implements Provider
         }
 
         if (null !== $locationType = $query->getData('location_type')) {
-            $urlParameters['types'] = is_array($locationType) ? join(',', $locationType) : $locationType;
+            $urlParameters['types'] = is_array($locationType) ? implode(',', $locationType) : $locationType;
         } else {
             $urlParameters['types'] = self::DEFAULT_TYPE;
         }
 
         if ($urlParameters) {
-            $url .= '?' . http_build_query($urlParameters);
+            $url .= '?'.http_build_query($urlParameters);
         }
 
         return $this->fetchUrl($url, $query->getLimit(), $query->getLocale(), $query->getData('country', $this->country));
@@ -202,13 +212,13 @@ final class Mapbox extends AbstractHttpProvider implements Provider
         );
 
         if (null !== $locationType = $query->getData('location_type')) {
-            $urlParameters['types'] = is_array($locationType) ? join(',', $locationType) : $locationType;
+            $urlParameters['types'] = is_array($locationType) ? implode(',', $locationType) : $locationType;
         } else {
             $urlParameters['types'] = self::DEFAULT_TYPE;
         }
 
         if ($urlParameters) {
-            $url .= '?' . http_build_query($urlParameters);
+            $url .= '?'.http_build_query($urlParameters);
         }
 
         return $this->fetchUrl($url, $query->getLimit(), $query->getLocale(), $query->getData('country', $this->country));
@@ -223,11 +233,11 @@ final class Mapbox extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * @param string $url
-     *
-     * @param int $limit
+     * @param string      $url
+     * @param int         $limit
      * @param string|null $locale
      * @param string|null $country
+     *
      * @return string query with extra params
      */
     private function buildQuery(string $url, int $limit, string $locale = null, string $country = null): string
@@ -241,15 +251,15 @@ final class Mapbox extends AbstractHttpProvider implements Provider
 
         $separator = parse_url($url, PHP_URL_QUERY) ? '&' : '?';
 
-        return $url . $separator . http_build_query($parameters);
+        return $url.$separator.http_build_query($parameters);
     }
 
     /**
-     *
-     * @param string $url
-     * @param int $limit
+     * @param string      $url
+     * @param int         $limit
      * @param string|null $locale
      * @param string|null $country
+     *
      * @return AddressCollection
      */
     private function fetchUrl(string $url, int $limit, string $locale = null, string $country = null): AddressCollection
@@ -316,7 +326,7 @@ final class Mapbox extends AbstractHttpProvider implements Provider
      *
      * @param AddressBuilder $builder
      * @param string         $type    Component type
-     * @param array         $value  The component value
+     * @param array          $value   The component value
      */
     private function updateAddressComponent(AddressBuilder $builder, string $type, array $value)
     {
@@ -372,12 +382,12 @@ final class Mapbox extends AbstractHttpProvider implements Provider
      *
      * @return array
      */
-    private function validateResponse(string $url, $content) : array
+    private function validateResponse(string $url, $content): array
     {
         $json = json_decode($content, true);
 
         // API error
-        if (!isset($json) || json_last_error() !== JSON_ERROR_NONE) {
+        if (!isset($json) || JSON_ERROR_NONE !== json_last_error()) {
             throw InvalidServerResponse::create($url);
         }
 
@@ -388,7 +398,7 @@ final class Mapbox extends AbstractHttpProvider implements Provider
      * Parse coordinats and bounds.
      *
      * @param AddressBuilder $builder
-     * @param array $result
+     * @param array          $result
      */
     private function parseCoordinates(AddressBuilder $builder, array $result)
     {

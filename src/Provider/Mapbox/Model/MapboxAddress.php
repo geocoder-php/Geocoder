@@ -1,4 +1,14 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
+
+/*
+ * This file is part of the Geocoder package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license    MIT License
+ */
 
 namespace Geocoder\Provider\Mapbox\Model;
 
@@ -66,15 +76,16 @@ final class MapboxAddress extends Address
     {
         return $this->streetName;
     }
+
     /**
      * @param string|null $streetName
      *
      * @return MapboxAddress
      */
-    public function withStreetName(string $streetName= null)
+    public function withStreetName(string $streetName = null)
     {
         $new = clone $this;
-        $new->streetName= $streetName;
+        $new->streetName = $streetName;
 
         return $new;
     }
@@ -128,6 +139,7 @@ final class MapboxAddress extends Address
     {
         return $this->formattedAddress;
     }
+
     /**
      * @param string|null $formattedAddress
      *
