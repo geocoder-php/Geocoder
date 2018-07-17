@@ -133,26 +133,26 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
      *
      * @throws InvalidServerResponse
      */
-    //~ protected function getParsedResponse(RequestInterface $request): string
-    //~ {
-    //~ $response = $this->getHttpClient()->sendRequest($request);
+    protected function getParsedResponse(RequestInterface $request): string
+    {
+        $response = $this->getHttpClient()->sendRequest($request);
 
-    //~ $statusCode = $response->getStatusCode();
-    //~ if (401 === $statusCode || 403 === $statusCode) {
-    //~ throw new InvalidCredentials();
-    //~ } elseif (429 === $statusCode) {
-    //~ throw new QuotaExceeded();
-    //~ } elseif ($statusCode >= 300) {
-    //~ throw InvalidServerResponse::create((string) $request->getUri(), $statusCode);
-    //~ }
+        $statusCode = $response->getStatusCode();
+        if (401 === $statusCode || 403 === $statusCode) {
+            throw new InvalidCredentials();
+        } elseif (429 === $statusCode) {
+            throw new QuotaExceeded();
+        } elseif ($statusCode >= 300) {
+            throw InvalidServerResponse::create((string) $request->getUri(), $statusCode);
+        }
 
-    //~ $body = (string) $response->getBody();
-    //~ if (empty($body)) {
-    //~ throw InvalidServerResponse::emptyResponse((string) $request->getUri());
-    //~ }
+        $body = (string) $response->getBody();
+        if (empty($body)) {
+            throw InvalidServerResponse::emptyResponse((string) $request->getUri());
+        }
 
-    //~ return $body;
-    //~ }
+        return $body;
+    }
     private function buildData(): string
     {
         $query = $this->query;
