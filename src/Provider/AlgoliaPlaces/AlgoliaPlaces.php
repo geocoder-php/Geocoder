@@ -79,9 +79,6 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
 
         $this->query = $query;
 
-        error_log('This is geocodeQuery');
-        error_log(json_encode($query->getText()));
-        
         $request = $this->getRequest(self::ENDPOINT_URL_SSL);
         $jsonResponse = json_decode($this->getParsedResponse($request), true);
         // $jsonResponse = json_decode($this->getUrlContents(self::ENDPOINT_URL_SSL), true);
@@ -120,8 +117,6 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
 
     protected function getRequest(string $url): RequestInterface
     {
-       error_log('This is getRequest');
-
         return $this->getMessageFactory()->createRequest(
             'POST',
             $url,
@@ -138,26 +133,26 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
      *
      * @throws InvalidServerResponse
      */
-    protected function getParsedResponse(RequestInterface $request): string
-    {
-        $response = $this->getHttpClient()->sendRequest($request);
+    //~ protected function getParsedResponse(RequestInterface $request): string
+    //~ {
+    //~ $response = $this->getHttpClient()->sendRequest($request);
 
-        $statusCode = $response->getStatusCode();
-        if (401 === $statusCode || 403 === $statusCode) {
-            throw new InvalidCredentials();
-        } elseif (429 === $statusCode) {
-            throw new QuotaExceeded();
-        } elseif ($statusCode >= 300) {
-            throw InvalidServerResponse::create((string) $request->getUri(), $statusCode);
-        }
+    //~ $statusCode = $response->getStatusCode();
+    //~ if (401 === $statusCode || 403 === $statusCode) {
+    //~ throw new InvalidCredentials();
+    //~ } elseif (429 === $statusCode) {
+    //~ throw new QuotaExceeded();
+    //~ } elseif ($statusCode >= 300) {
+    //~ throw InvalidServerResponse::create((string) $request->getUri(), $statusCode);
+    //~ }
 
-        $body = (string) $response->getBody();
-        if (empty($body)) {
-            throw InvalidServerResponse::emptyResponse((string) $request->getUri());
-        }
+    //~ $body = (string) $response->getBody();
+    //~ if (empty($body)) {
+    //~ throw InvalidServerResponse::emptyResponse((string) $request->getUri());
+    //~ }
 
-        return $body;
-    }
+    //~ return $body;
+    //~ }
     private function buildData(): string
     {
         $query = $this->query;
@@ -229,7 +224,9 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
         foreach ($jsonResponse['hits'] as $result) {
             $builder = new AddressBuilder($this->getName());
             $builder->setCoordinates($result['_geoloc']['lat'], $result['_geoloc']['lng']);
-            $builder->setCountry($result['country']);
+            if (isset($result['country'])) {
+                $builder->setCountry($result['country']);
+            }
             $builder->setCountryCode($result['country_code']);
             if (isset($result['city'])) {
                 $builder->setLocality($result['city'][0]);
@@ -246,7 +243,7 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
             foreach ($result['administrative'] ?? [] as $i => $adminLevel) {
                 $builder->addAdminLevel($i + 1, $adminLevel[0]);
             }
-
+            
             $results[] = $builder->build(Address::class);
         }
 
