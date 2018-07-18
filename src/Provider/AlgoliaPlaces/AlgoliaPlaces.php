@@ -94,9 +94,8 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
         }
         if ($jsonResponse['nbHits'] == 0) {
             return new AddressCollection([]);
-        } else {
-            return $this->buildResult($jsonResponse);
         }
+        return $this->buildResult($jsonResponse);
     }
 
     public function reverseQuery(ReverseQuery $query): Collection
