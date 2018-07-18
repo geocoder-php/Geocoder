@@ -86,14 +86,13 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
         $jsonResponse = json_decode($this->getParsedResponse($request), true);
         // $jsonResponse = json_decode($this->getUrlContents(self::ENDPOINT_URL_SSL), true);
 
-        // error_log(json_encode($jsonResponse));
         if (is_null($jsonResponse)) {
             return new AddressCollection([]);
-        } elseif ($jsonResponse['degradedQuery']) {
+        }
+        if ($jsonResponse['degradedQuery']) {
             return new AddressCollection([]);
-        } elseif ($jsonResponse['nbHits'] == 0) {
-            return new AddressCollection([]);
-        } elseif ($jsonResponse['query'] == 'jsajhgsdkfjhsfkjhaldkadjaslgldasd') {
+        }
+        if ($jsonResponse['nbHits'] == 0) {
             return new AddressCollection([]);
         } else {
             return $this->buildResult($jsonResponse);
