@@ -83,8 +83,8 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
         $this->query = $query;
 
         $request = $this->getRequest(self::ENDPOINT_URL_SSL);
-        //$jsonResponse = json_decode($this->getParsedResponse($request), true);
-        $jsonResponse = json_decode($this->getUrlContents(self::ENDPOINT_URL_SSL), true);
+        $jsonResponse = json_decode($this->getParsedResponse($request), true);
+        //$jsonResponse = json_decode($this->getUrlContents(self::ENDPOINT_URL_SSL), true);
 
         if (is_null($jsonResponse)) {
             return new AddressCollection([]);
@@ -136,23 +136,23 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
      */
     //~ protected function getParsedResponse(RequestInterface $request): string
     //~ {
-        //~ $response = $this->getHttpClient()->sendRequest($request);
+    //~ $response = $this->getHttpClient()->sendRequest($request);
 
-        //~ $statusCode = $response->getStatusCode();
-        //~ if (401 === $statusCode || 403 === $statusCode) {
-            //~ throw new InvalidCredentials();
-        //~ } elseif (429 === $statusCode) {
-            //~ throw new QuotaExceeded();
-        //~ } elseif ($statusCode >= 300) {
-            //~ throw InvalidServerResponse::create((string) $request->getUri(), $statusCode);
-        //~ }
+    //~ $statusCode = $response->getStatusCode();
+    //~ if (401 === $statusCode || 403 === $statusCode) {
+    //~ throw new InvalidCredentials();
+    //~ } elseif (429 === $statusCode) {
+    //~ throw new QuotaExceeded();
+    //~ } elseif ($statusCode >= 300) {
+    //~ throw InvalidServerResponse::create((string) $request->getUri(), $statusCode);
+    //~ }
 
-        //~ $body = (string) $response->getBody();
-        //~ if (empty($body)) {
-            //~ throw InvalidServerResponse::emptyResponse((string) $request->getUri());
-        //~ }
+    //~ $body = (string) $response->getBody();
+    //~ if (empty($body)) {
+    //~ throw InvalidServerResponse::emptyResponse((string) $request->getUri());
+    //~ }
 
-        //~ return $body;
+    //~ return $body;
     //~ }
     private function buildData(): string
     {
