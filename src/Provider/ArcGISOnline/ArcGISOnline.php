@@ -27,7 +27,7 @@ use Http\Client\HttpClient;
 /**
  * @author ALKOUM Dorian <baikunz@gmail.com>
  */
-final class ArcGISOnline extends AbstractHttpProvider implements Provider
+class ArcGISOnline extends AbstractHttpProvider implements Provider
 {
     /**
      * @var string
@@ -42,7 +42,7 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
     /**
      * @var string
      */
-    private $sourceCountry;
+    protected $sourceCountry;
 
     /**
      * @param HttpClient $client        An HTTP adapter
@@ -166,7 +166,7 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
      *
      * @return string
      */
-    private function buildQuery(string $query, int $limit): string
+    protected function buildQuery(string $query, int $limit): string
     {
         if (null !== $this->sourceCountry) {
             $query = sprintf('%s&sourceCountry=%s', $query, $this->sourceCountry);
@@ -181,7 +181,7 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
      *
      * @return \stdClass
      */
-    private function executeQuery(string $url, int $limit): \stdClass
+    protected function executeQuery(string $url, int $limit): \stdClass
     {
         $url = $this->buildQuery($url, $limit);
         $content = $this->getUrlContents($url);
