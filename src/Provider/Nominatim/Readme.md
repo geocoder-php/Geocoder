@@ -8,7 +8,9 @@
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 
 This is the Nominatim provider from the PHP Geocoder. This is a **READ ONLY** repository. See the
-[main repo](https://github.com/geocoder-php/Geocoder) for information and documentation. 
+[main repo](https://github.com/geocoder-php/Geocoder) for information and documentation.
+
+All usage of the Nominatim provider using `nominatim.openstreetmap.org` must follow the [Nominatim Usage Policy](https://operations.osmfoundation.org/policies/nominatim/) !
 
 ### Install
 

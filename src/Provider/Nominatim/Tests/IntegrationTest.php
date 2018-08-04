@@ -23,13 +23,13 @@ class IntegrationTest extends ProviderIntegrationTest
 
     protected $testReverse = true;
 
-    protected $testIpv4 = true;
+    protected $testIpv4 = false;
 
     protected $testIpv6 = false;
 
     protected function createProvider(HttpClient $httpClient)
     {
-        return Nominatim::withOpenStreetMapServer($httpClient);
+        return Nominatim::withOpenStreetMapServer($httpClient, 'Geocoder PHP/Nominatim Provider/Integration Test');
     }
 
     protected function getCacheDir()
