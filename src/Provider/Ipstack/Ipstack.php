@@ -76,9 +76,7 @@ final class Ipstack extends AbstractHttpProvider implements Provider
             $url = sprintf('%s&language=%s', $url, $query->getLocale());
         }
 
-        $request = $this->getRequest($url);
-
-        $body = $this->getParsedResponse($request);
+        $body = $this->getUrlContents($url);
         $data = json_decode($body, true);
 
         // https://ipstack.com/documentation#errors
