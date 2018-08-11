@@ -164,6 +164,7 @@ Provider       | Package | Features | Stats
 [IpInfoDB](https://github.com/geocoder-php/ip-info-db-provider) | `geocoder-php/ip-info-db-provider` | IPv4 <br> [Website](http://ipinfodb.com/) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/ip-info-db-provider/v/stable)](https://packagist.org/packages/geocoder-php/ip-info-db-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/ip-info-db-provider/downloads)](https://packagist.org/packages/geocoder-php/ip-info-db-provider)
 [MaxMind](https://github.com/geocoder-php/maxmind-provider) | `geocoder-php/maxmind-provider` | IPv4, IPv6 <br> [Website](https://www.maxmind.com/) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/maxmind-provider/v/stable)](https://packagist.org/packages/geocoder-php/maxmind-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/maxmind-provider/downloads)](https://packagist.org/packages/geocoder-php/maxmind-provider)
 [MaxMind Binary](https://github.com/geocoder-php/maxmind-binary-provider) | `geocoder-php/maxmind-binary-provider` | IPv4, IPv6 <br> [Website](https://www.maxmind.com/) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/maxmind-binary-provider/v/stable)](https://packagist.org/packages/geocoder-php/maxmind-binary-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/maxmind-binary-provider/downloads)](https://packagist.org/packages/geocoder-php/maxmind-binary-provider)
+[ipstack](https://github.com/geocoder-php/ipstack-provider) | `geocoder-php/ipstack-provider` | IPv4, IPv6 <br> [Website](https://ipstack.com/) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/ipstack-provider/v/stable)](https://packagist.org/packages/geocoder-php/ipstack-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/ipstack-provider/downloads)](https://packagist.org/packages/geocoder-php/ipstack-provider)
 
 #### Other packages
 
@@ -475,6 +476,7 @@ following lines and add your own API keys:
     <!-- <server name="OPENCAGE_API_KEY" value="YOUR_API_KEY" /> -->
     <!-- <server name="PICKPOINT_API_KEY" value="YOUR_API_KEY" /> -->
     <!-- <server name="LOCATIONIQ_API_KEY" value="YOUR_API_KEY" /> -->
+    <!-- <server name="IPSTACK_API_KEY" value="YOUR_API_KEY" /> -->
 </php>
 ```
 
