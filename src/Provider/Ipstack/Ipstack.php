@@ -75,7 +75,6 @@ final class Ipstack extends AbstractHttpProvider implements Provider
         $body = $this->getParsedResponse($request);
         $data = json_decode($body, true);
 
-
         // https://ipstack.com/documentation#errors
         if (isset($data['error'])) {
             switch ($data['error']['code']) {
@@ -119,7 +118,6 @@ final class Ipstack extends AbstractHttpProvider implements Provider
 
         return new AddressCollection($locations);
     }
-
 
     /**
      * {@inheritdoc}

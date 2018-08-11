@@ -21,7 +21,7 @@ class IpstackTest extends BaseTestCase
 {
     protected function getCacheDir()
     {
-        return __DIR__ . '/.cached_responses';
+        return __DIR__ .'/.cached_responses';
     }
 
     public function testGetName()
@@ -112,7 +112,7 @@ class IpstackTest extends BaseTestCase
      */
     public function testGeocodeWith301Code()
     {
-        $json = <<<JSON
+        $json = <<<'JSON'
 {"success":false,"error":{"code":301}}
 JSON;
         $provider = new Ipstack($this->getMockedHttpClient($json), 'api_key');
@@ -125,7 +125,7 @@ JSON;
      */
     public function testGeocodeWith303Code()
     {
-        $json = <<<JSON
+        $json = <<<'JSON'
 {"success":false,"error":{"code":303,"type":"batch_not_supported_on_plan","info":"Bulk requests are not supported on your plan. Please upgrade your subscription."}}
 JSON;
         $provider = new Ipstack($this->getMockedHttpClient($json), 'api_key');
@@ -138,7 +138,7 @@ JSON;
      */
     public function testGeocodeWith104Code()
     {
-        $json = <<<JSON
+        $json = <<<'JSON'
 {"success":false,"error":{"code":104}}
 JSON;
         $provider = new Ipstack($this->getMockedHttpClient($json), 'api_key');
@@ -151,7 +151,7 @@ JSON;
      */
     public function testGeocodeWith101Code()
     {
-        $json = <<<JSON
+        $json = <<<'JSON'
 {"success":false,"error":{"code":101,"type":"invalid_access_key","info":"You have not supplied a valid API Access Key. [Technical Support: support@apilayer.com]"}}
 JSON;
         $provider = new Ipstack($this->getMockedHttpClient($json), 'api_key');
