@@ -96,6 +96,23 @@ class IpstackTest extends BaseTestCase
         $this->assertEquals('US', $result->getCountry()->getCode());
     }
 
+    public function testGeocodeWithRealIPv4InFrench()
+    {
+        $provider = new Ipstack($this->getHttpClient($_SERVER['IPSTACK_API_KEY']), $_SERVER['IPSTACK_API_KEY']);
+        $results = $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59')->withLocale('fr'));
+
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertCount(1, $results);
+
+        /** @var Location $result */
+        $result = $results->first();
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(37.751, $result->getCoordinates()->getLatitude(), '', 0.01);
+        $this->assertEquals(-97.822, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertEquals('États-Unis', $result->getCountry()->getName());
+        $this->assertEquals('US', $result->getCountry()->getCode());
+    }
+
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The Ipstack provider is not able to do reverse geocoding.

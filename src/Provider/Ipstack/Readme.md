@@ -16,6 +16,11 @@ This is the Ipstack provider from the PHP Geocoder. This is a **READ ONLY** repo
 composer require geocoder-php/ipstack-provider
 ```
 
+### Note
+
+The default language-locale is `en`, you can choose between `de`, `es`, `fr`,
+`ja`, `pt-br`, `ru` `zh`.
+
 ### Contribute
 
 Contributions are very welcome! Send a pull request to the [main repository](https://github.com/geocoder-php/Geocoder) or 

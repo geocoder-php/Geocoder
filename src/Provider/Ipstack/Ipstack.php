@@ -70,7 +70,13 @@ final class Ipstack extends AbstractHttpProvider implements Provider
             return new AddressCollection([$this->getLocationForLocalhost()]);
         }
 
-        $request = $this->getRequest(sprintf(self::GEOCODE_ENDPOINT_URL, $address, $this->apiKey));
+        $url = sprintf(sprintf(self::GEOCODE_ENDPOINT_URL, $address, $this->apiKey));
+
+        if (null !== $query->getLocale()) {
+            $url = sprintf('%s&language=%s', $url, $query->getLocale());
+        }
+
+        $request = $this->getRequest($url);
 
         $body = $this->getParsedResponse($request);
         $data = json_decode($body, true);
