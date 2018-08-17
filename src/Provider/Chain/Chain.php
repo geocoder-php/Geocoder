@@ -55,8 +55,12 @@ final class Chain implements Provider, LoggerAwareInterface
             } catch (\Throwable $e) {
                 $this->log(
                     'alert',
-                    sprintf('Provider "%s" could geocode address: "%s".', $provider->getName(), $query->getText()),
-                    ['exception' => $e]
+                    'Provider "{providerName}" could not geocode address: "{address}".',
+                    [
+                        'exception' => $e,
+                        'providerName' => $provider->getName(),
+                        'address' => $query->getText(),
+                    ]
                 );
             }
         }
