@@ -15,6 +15,9 @@ namespace Geocoder\Provider\AlgoliaPlaces;
 use Geocoder\Collection;
 use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Exception\InvalidCredentials;
+use Geocoder\Exception\InvalidServerResponse;
+use Geocoder\Exception\QuotaExceeded;
 use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Model\Address;
 use Geocoder\Model\AddressBuilder;
@@ -72,11 +75,25 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
 
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
+        // This API doesn't handle IPs
+        if (filter_var($query->getText(), FILTER_VALIDATE_IP)) {
+            throw new UnsupportedOperation('The AlgoliaPlaces provider does not support IP addresses, only street addresses.');
+        }
+
         $this->query = $query;
 
-        $jsonResponse = json_decode($this->getUrlContents(self::ENDPOINT_URL_SSL));
+        $request = $this->getRequest(self::ENDPOINT_URL_SSL);
+        $jsonParsed = AbstractHttpProvider::getParsedResponse($request);
+        $jsonResponse = json_decode($jsonParsed, true);
 
         if (is_null($jsonResponse)) {
+            return new AddressCollection([]);
+        }
+
+        if ($jsonResponse['degradedQuery']) {
+            return new AddressCollection([]);
+        }
+        if ($jsonResponse['nbHits'] == 0) {
             return new AddressCollection([]);
         }
 
@@ -110,7 +127,35 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
             $this->buildData()
         );
     }
+    /**
+     * Send request and return contents. If content is empty, an exception will be thrown.
+     *
+     * @param RequestInterface $request
+     *
+     * @return string
+     *
+     * @throws InvalidServerResponse
+     */
+    //~ protected function getParsedResponse(RequestInterface $request): string
+    //~ {
+    //~ $response = $this->getHttpClient()->sendRequest($request);
 
+    //~ $statusCode = $response->getStatusCode();
+    //~ if (401 === $statusCode || 403 === $statusCode) {
+    //~ throw new InvalidCredentials();
+    //~ } elseif (429 === $statusCode) {
+    //~ throw new QuotaExceeded();
+    //~ } elseif ($statusCode >= 300) {
+    //~ throw InvalidServerResponse::create((string) $request->getUri(), $statusCode);
+    //~ }
+
+    //~ $body = (string) $response->getBody();
+    //~ if (empty($body)) {
+    //~ throw InvalidServerResponse::emptyResponse((string) $request->getUri());
+    //~ }
+
+    //~ return $body;
+    //~ }
     private function buildData(): string
     {
         $query = $this->query;
@@ -173,19 +218,34 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
     {
         $results = [];
 
-        foreach ($jsonResponse->hits as $result) {
-            $builder = new AddressBuilder($this->getName());
-            $builder->setCoordinates($result->_geoloc->lat, $result->_geoloc->lng);
-            $builder->setCountry($result->country);
-            $builder->setCountryCode($result->country_code);
-            $builder->setLocality($result->city[0]);
-            $builder->setPostalCode($result->postcode[0]);
-            $builder->setStreetName($result->locale_names[0]);
-            $builder->setStreetNumber($result->locale_name);
-            foreach ($result->administrative ?? [] as $i => $adminLevel) {
-                $builder->addAdminLevel($i + 1, $adminLevel);
-            }
+        //error_log(\json_encode($jsonResponse));
+        // 1. degradedQuery: checkfor if(degradedQuery) and set results accordingly?
+        // 2. setStreetNumber($result->locale_name) AlgoliaPlaces does not offer streetnumber
+        // precision for the geocoding (with the exception to addresses situated in France)
 
+        // error_log(json_encode($jsonResponse));
+        foreach ($jsonResponse['hits'] as $result) {
+            $builder = new AddressBuilder($this->getName());
+            $builder->setCoordinates($result['_geoloc']['lat'], $result['_geoloc']['lng']);
+            if (isset($result['country'])) {
+                $builder->setCountry($result['country']);
+            }
+            $builder->setCountryCode($result['country_code']);
+            if (isset($result['city'])) {
+                $builder->setLocality($result['city'][0]);
+            }
+            if (isset($result['postcode'])) {
+                $builder->setPostalCode($result['postcode'][0]);
+            }
+            if (isset($result['locale_name'])) {
+                $builder->setStreetNumber($result['locale_name']);
+            }
+            if (isset($result['locale_names']) && isset($result['locale_names'][0])) {
+                $builder->setStreetName($result['locale_names'][0]);
+            }
+            foreach ($result['administrative'] ?? [] as $i => $adminLevel) {
+                $builder->addAdminLevel($i + 1, $adminLevel[0]);
+            }
             $results[] = $builder->build(Address::class);
         }
 
