@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Geocoder\Provider\Nominatim;
 
 use Geocoder\Collection;
+use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Location;
@@ -37,25 +38,44 @@ final class Nominatim extends AbstractHttpProvider implements Provider
     private $rootUrl;
 
     /**
-     * @param HttpClient  $client
-     * @param string|null $locale
+     * @var string
+     */
+    private $userAgent;
+
+    /**
+     * @var string
+     */
+    private $referer;
+
+    /**
+     * @param HttpClient $client    an HTTP client
+     * @param string     $userAgent Value of the User-Agent header
+     * @param string     $referer   Value of the Referer header
      *
      * @return Nominatim
      */
-    public static function withOpenStreetMapServer(HttpClient $client)
+    public static function withOpenStreetMapServer(HttpClient $client, string $userAgent, string $referer = '')
     {
-        return new self($client, 'https://nominatim.openstreetmap.org');
+        return new self($client, 'https://nominatim.openstreetmap.org', $userAgent, $referer);
     }
 
     /**
-     * @param HttpClient $client  an HTTP adapter
-     * @param string     $rootUrl Root URL of the nominatim server
+     * @param HttpClient $client    an HTTP client
+     * @param string     $rootUrl   Root URL of the nominatim server
+     * @param string     $userAgent Value of the User-Agent header
+     * @param string     $referer   Value of the Referer header
      */
-    public function __construct(HttpClient $client, $rootUrl)
+    public function __construct(HttpClient $client, $rootUrl, string $userAgent, string $referer = '')
     {
         parent::__construct($client);
 
         $this->rootUrl = rtrim($rootUrl, '/');
+        $this->userAgent = $userAgent;
+        $this->referer = $referer;
+
+        if (empty($this->userAgent)) {
+            throw new InvalidArgument('The User-Agent must be set to use the Nominatim provider.');
+        }
     }
 
     /**
@@ -64,13 +84,10 @@ final class Nominatim extends AbstractHttpProvider implements Provider
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
         $address = $query->getText();
-        // This API does not support IPv6
-        if (filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
-            throw new UnsupportedOperation('The Nominatim provider does not support IPv6 addresses.');
-        }
 
-        if ('127.0.0.1' === $address) {
-            return new AddressCollection([$this->getLocationForLocalhost()]);
+        // This API doesn't handle IPs
+        if (filter_var($address, FILTER_VALIDATE_IP)) {
+            throw new UnsupportedOperation('The Nominatim provider does not support IP addresses.');
         }
 
         $url = sprintf($this->getGeocodeEndpointUrl(), urlencode($address), $query->getLimit());
@@ -210,7 +227,14 @@ final class Nominatim extends AbstractHttpProvider implements Provider
             $url = sprintf('%s&accept-language=%s', $url, $locale);
         }
 
-        return $this->getUrlContents($url);
+        $request = $this->getRequest($url);
+        $request = $request->withHeader('User-Agent', $this->userAgent);
+
+        if (!empty($this->referer)) {
+            $request = $request->withHeader('Referer', $this->referer);
+        }
+
+        return $this->getParsedResponse($request);
     }
 
     private function getGeocodeEndpointUrl(): string

@@ -8,7 +8,7 @@
 >
     <php>
         <server name="ALGOLIA_API_KEY" value="" />
-		<server name="ALGOLIA_APP_ID" value="" />
+    		<server name="ALGOLIA_APP_ID" value="" />
         <server name="USE_CACHED_RESPONSES" value="true" />
     </php>
     <testsuites>

@@ -86,22 +86,23 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
         $jsonParsed = AbstractHttpProvider::getParsedResponse($request);
         $jsonResponse = json_decode($jsonParsed, true);
 
-
         if (is_null($jsonResponse)) {
             return new AddressCollection([]);
         }
+
         if ($jsonResponse['degradedQuery']) {
             return new AddressCollection([]);
         }
         if ($jsonResponse['nbHits'] == 0) {
             return new AddressCollection([]);
         }
+
         return $this->buildResult($jsonResponse);
     }
 
     public function reverseQuery(ReverseQuery $query): Collection
     {
-        throw new UnsupportedOperation('The AlgoliaPlaces provider does not support reverse geocoding.');
+        throw new UnsupportedOperation('The AlgoliaPlaces provided does not support reverse geocoding.');
     }
 
     public function getTypes(): array
@@ -245,7 +246,6 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
             foreach ($result['administrative'] ?? [] as $i => $adminLevel) {
                 $builder->addAdminLevel($i + 1, $adminLevel[0]);
             }
-            
             $results[] = $builder->build(Address::class);
         }
 
