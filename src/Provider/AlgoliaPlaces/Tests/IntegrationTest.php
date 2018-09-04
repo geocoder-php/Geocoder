@@ -38,7 +38,7 @@ class IntegrationTest extends ProviderIntegrationTest
 
     protected function createProvider(HttpClient $httpClient)
     {
-        return new AlgoliaPlaces($httpClient, $this->getAppId(), $this->getAppCode());
+        return new AlgoliaPlaces($httpClient, $this->getApiKey(), $this->getAppId());
     }
 
     protected function getCacheDir()
@@ -64,25 +64,17 @@ class IntegrationTest extends ProviderIntegrationTest
                 ->willThrowException($e);
         }
 
-        return new CachedResponseClient($client, $this->getCacheDir(), $this->getAppId(), $this->getAppCode());
+        return new CachedResponseClient($client, $this->getCacheDir(), $this->getAppId());
     }
 
     protected function getApiKey()
     {
-        return $_SERVER['ALGOLIA_APP_ID'];
+        return $_SERVER['ALGOLIA_API_KEY'];
     }
 
     protected function getAppId()
     {
         return $_SERVER['ALGOLIA_APP_ID'];
-    }
-
-    /**
-     * @return string the AlgoliaPlaces AppCode or substring to be removed from cache.
-     */
-    protected function getAppCode()
-    {
-        return $_SERVER['ALGOLIA_API_KEY'];
     }
 
     public function testGeocodeQuery()
