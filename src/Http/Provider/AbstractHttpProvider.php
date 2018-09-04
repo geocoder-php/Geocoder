@@ -58,8 +58,6 @@ abstract class AbstractHttpProvider extends AbstractProvider
      */
     protected function getUrlContents(string $url): string
     {
-       //error_log('This is getUrlContents');
-
         $request = $this->getRequest($url);
 
         return $this->getParsedResponse($request);
@@ -72,8 +70,6 @@ abstract class AbstractHttpProvider extends AbstractProvider
      */
     protected function getRequest(string $url): RequestInterface
     {
-        //error_log('This is getRequest but the other one');
-
         return $this->getMessageFactory()->createRequest('GET', $url);
     }
 
