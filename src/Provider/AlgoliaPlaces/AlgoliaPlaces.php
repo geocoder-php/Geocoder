@@ -15,9 +15,6 @@ namespace Geocoder\Provider\AlgoliaPlaces;
 use Geocoder\Collection;
 use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\UnsupportedOperation;
-use Geocoder\Exception\InvalidCredentials;
-use Geocoder\Exception\InvalidServerResponse;
-use Geocoder\Exception\QuotaExceeded;
 use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Model\Address;
 use Geocoder\Model\AddressBuilder;
@@ -93,7 +90,7 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
         if ($jsonResponse['degradedQuery']) {
             return new AddressCollection([]);
         }
-        if ($jsonResponse['nbHits'] == 0) {
+        if (0 == $jsonResponse['nbHits']) {
             return new AddressCollection([]);
         }
 
@@ -146,7 +143,7 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
     {
         $type = $query->getData('type', '');
         if (!empty($type) && !in_array($type, $this->getTypes())) {
-            throw new InvalidArgument('The type provided to AlgoliaPlace provider must be one those "' . implode('", "', $this->getTypes()) . '"".');
+            throw new InvalidArgument('The type provided to AlgoliaPlace provider must be one those "'.implode('", "', $this->getTypes()).'"".');
         }
 
         return $type;

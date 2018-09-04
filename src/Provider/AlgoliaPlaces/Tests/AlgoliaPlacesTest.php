@@ -20,7 +20,6 @@ use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\IntegrationTest\CachedResponseClient;
 use Geocoder\Location;
 use Geocoder\Query\GeocodeQuery;
-use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\AlgoliaPlaces\AlgoliaPlaces;
 use Http\Client\Curl\Client as HttplugClient;
 
@@ -110,9 +109,9 @@ class AlgoliaPlacesTest extends BaseTestCase
     }
 
     /**
-    * @expectedException \Geocoder\Exception\UnsupportedOperation
-    * @expectedExceptionMessage The AlgoliaPlaces provider does not support IP addresses, only street addresses.
-    */
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
+     * @expectedExceptionMessage The AlgoliaPlaces provider does not support IP addresses, only street addresses.
+     */
     public function testGeocodeWithRealIPv6()
     {
         if (!isset($_SERVER['ALGOLIA_APP_ID']) || !isset($_SERVER['ALGOLIA_API_KEY'])) {
