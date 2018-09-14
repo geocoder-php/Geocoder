@@ -72,7 +72,7 @@ class MapzenTest extends BaseTestCase
         $this->assertEquals('Acklam Road', $result->getStreetName());
         $this->assertEquals('London', $result->getLocality());
         $this->assertCount(4, $result->getAdminLevels());
-        $this->assertEquals('London', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('London', $result->getAdminLevels()->get(3)->getName());
         $this->assertEquals('Kensington and Chelsea', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('United Kingdom', $result->getCountry()->getName());
         $this->assertEquals('GBR', $result->getCountry()->getCode());
@@ -101,7 +101,7 @@ class MapzenTest extends BaseTestCase
         $this->assertEquals('Lancaster', $result->getLocality());
         $this->assertCount(4, $result->getAdminLevels());
         $this->assertEquals('Lancashire', $result->getAdminLevels()->get(1)->getName());
-        $this->assertEquals('England', $result->getAdminLevels()->get(3)->getName());
+        $this->assertEquals('England', $result->getAdminLevels()->get(4)->getName());
         $this->assertEquals('United Kingdom', $result->getCountry()->getName());
         $this->assertEquals('GBR', $result->getCountry()->getCode());
     }
@@ -142,8 +142,8 @@ class MapzenTest extends BaseTestCase
         $this->assertEquals(42.027323000000003, $result->getCoordinates()->getLatitude(), '', 0.01);
         $this->assertEquals(-88.204203000000007, $result->getCoordinates()->getLongitude(), '', 0.01);
         $this->assertNull($result->getLocality());
-        $this->assertCount(2, $result->getAdminLevels());
-        $this->assertEquals('United States', $result->getAdminLevels()->get(4)->getName());
+        $this->assertCount(3, $result->getAdminLevels());
+        $this->assertEquals('United States', $result->getAdminLevels()->get(5)->getName());
         $this->assertEquals('Illinois', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('United States', $result->getCountry()->getName());
 
@@ -163,8 +163,8 @@ class MapzenTest extends BaseTestCase
         $this->assertEquals(39.192889999999998, $result->getCoordinates()->getLatitude(), '', 0.01);
         $this->assertEquals(-76.724140000000006, $result->getCoordinates()->getLongitude(), '', 0.01);
         $this->assertEquals('Hanover', $result->getLocality());
-        $this->assertTrue($result->getAdminLevels()->has(4));
-        $this->assertEquals('Hanover', $result->getAdminLevels()->get(2)->getName());
+        $this->assertCount(4, $result->getAdminLevels());
+        $this->assertEquals('Hanover', $result->getAdminLevels()->get(3)->getName());
         $this->assertEquals('United States', $result->getCountry()->getName());
     }
 
@@ -189,7 +189,7 @@ class MapzenTest extends BaseTestCase
         $this->assertEquals('Kalbacher Hauptstraße', $result->getStreetName());
         $this->assertEquals(60437, $result->getPostalCode());
         $this->assertEquals('Frankfurt am Main', $result->getLocality());
-        $this->assertCount(3, $result->getAdminLevels());
+        $this->assertCount(4, $result->getAdminLevels());
         $this->assertEquals('Frankfurt am Main', $result->getAdminLevels()->get(2)->getName());
         $this->assertEquals('Hessen', $result->getAdminLevels()->get(1)->getName());
         $this->assertNull($result->getAdminLevels()->get(1)->getCode());
