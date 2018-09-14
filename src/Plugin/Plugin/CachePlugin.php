@@ -12,8 +12,10 @@ declare(strict_types=1);
 
 namespace Geocoder\Plugin\Plugin;
 
+use Geocoder\Model\Coordinates;
 use Geocoder\Plugin\Plugin;
 use Geocoder\Query\Query;
+use Geocoder\Query\ReverseQuery;
 use Psr\SimpleCache\CacheInterface;
 
 /**
@@ -36,13 +38,20 @@ class CachePlugin implements Plugin
     private $lifetime;
 
     /**
-     * @param CacheInterface $cache
-     * @param int            $lifetime
+     * @var int|null
      */
-    public function __construct(CacheInterface $cache, int $lifetime = null)
+    private $precision;
+
+    /**
+     * @param CacheInterface $cache
+     * @param int|null       $lifetime
+     * @param int|null       $precision
+     */
+    public function __construct(CacheInterface $cache, int $lifetime = null, int $precision = null)
     {
         $this->cache = $cache;
         $this->lifetime = $lifetime;
+        $this->precision = $precision;
     }
 
     /**
@@ -68,6 +77,13 @@ class CachePlugin implements Plugin
      */
     private function getCacheKey(Query $query): string
     {
+        if (null !== $this->precision && $query instanceof ReverseQuery) {
+            $query = $query->withCoordinates(new Coordinates(
+                number_format($query->getCoordinates()->getLatitude(), $this->precision),
+                number_format($query->getCoordinates()->getLongitude(), $this->precision)
+            ));
+        }
+
         // Include the major version number of the geocoder to avoid issues unserializing.
         return 'v4'.sha1((string) $query);
     }
