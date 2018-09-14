@@ -39,29 +39,46 @@ final class MapQuest extends AbstractHttpProvider implements Provider
     const DATA_KEY_ADDRESS = 'address';
 
     const KEY_API_KEY = 'key';
+
     const KEY_LOCATION = 'location';
+
     const KEY_OUT_FORMAT = 'outFormat';
+
     const KEY_MAX_RESULTS = 'maxResults';
+
     const KEY_THUMB_MAPS = 'thumbMaps';
+
     const KEY_INTL_MODE = 'intlMode';
+
     const KEY_BOUNDING_BOX = 'boundingBox';
+
     const KEY_LAT = 'lat';
+
     const KEY_LNG = 'lng';
+
     const MODE_5BOX = '5BOX';
+
     const OPEN_BASE_URL = 'https://open.mapquestapi.com/geocoding/v1/';
+
     const LICENSED_BASE_URL = 'https://www.mapquestapi.com/geocoding/v1/';
+
     const GEOCODE_ENDPOINT = 'address';
+
     const DEFAULT_GEOCODE_PARAMS = [
         self::KEY_LOCATION => '',
         self::KEY_OUT_FORMAT => 'json',
         self::KEY_API_KEY => '',
     ];
+
     const DEFAULT_GEOCODE_OPTIONS = [
         self::KEY_MAX_RESULTS => 3,
         self::KEY_THUMB_MAPS => false,
     ];
+
     const REVERSE_ENDPOINT = 'reverse';
+
     const ADMIN_LEVEL_STATE = 1;
+
     const ADMIN_LEVEL_COUNTY = 2;
 
     /**
