@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Geocoder\Provider\Here\Tests;
 
 use Geocoder\IntegrationTest\BaseTestCase;
+use Geocoder\IntegrationTest\CachedResponseClient;
 use Geocoder\Location;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
@@ -38,7 +39,7 @@ class HereTest extends BaseTestCase
     protected function getHttpClient($apiKey = null, $appCode = null)
     {
         if (null !== $cacheDir = $this->getCacheDir()) {
-            return new HereCachedResponseClient(new HttplugClient(), $cacheDir, $apiKey, $appCode);
+            return new CachedResponseClient(new HttplugClient(), $cacheDir, $apiKey, $appCode);
         } else {
             return new HttplugClient();
         }

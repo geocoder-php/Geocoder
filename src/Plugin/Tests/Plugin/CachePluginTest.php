@@ -13,9 +13,12 @@ declare(strict_types=1);
 namespace Geocoder\Plugin\Tests\Plugin;
 
 use Cache\Adapter\Void\VoidCachePool;
+use Generator;
+use Geocoder\Model\Coordinates;
 use Geocoder\Plugin\Plugin\CachePlugin;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\Query;
+use Geocoder\Query\ReverseQuery;
 use PHPUnit\Framework\TestCase;
 
 class CachePluginTest extends TestCase
@@ -50,10 +53,23 @@ class CachePluginTest extends TestCase
         $this->assertEquals('result', $plugin->handleQuery($query, $next, $first));
     }
 
-    public function testPluginHit()
+    public function getQueryProvider(): Generator
     {
         $query = GeocodeQuery::create('foo');
-        $queryString = sha1($query->__toString());
+        $key = sha1($query->__toString());
+        yield [$query, $key];
+
+        $query = ReverseQuery::create(new Coordinates(12.123456, 12.123456));
+        $lessPreciseQuery = $query->withCoordinates(new Coordinates(12.1235, 12.1235));
+        $key = sha1((string) $lessPreciseQuery);
+        yield [$query, $key];
+    }
+
+    /**
+     * @dataProvider getQueryProvider
+     */
+    public function testPluginHit(Query $query, string $key)
+    {
         $cache = $this->getMockBuilder(VoidCachePool::class)
             ->disableOriginalConstructor()
             ->setMethods(['get', 'set'])
@@ -61,7 +77,7 @@ class CachePluginTest extends TestCase
 
         $cache->expects($this->once())
             ->method('get')
-            ->with('v4'.$queryString)
+            ->with('v4'.$key)
             ->willReturn('result');
         $cache->expects($this->never())->method('set');
 
@@ -72,7 +88,7 @@ class CachePluginTest extends TestCase
             $this->fail('Plugin not call $next on cache hit');
         };
 
-        $plugin = new CachePlugin($cache);
+        $plugin = new CachePlugin($cache, 0, 4);
         $this->assertEquals('result', $plugin->handleQuery($query, $next, $first));
     }
 }
