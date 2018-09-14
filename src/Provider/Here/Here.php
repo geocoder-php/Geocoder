@@ -42,12 +42,12 @@ final class Here extends AbstractHttpProvider implements Provider
     /**
      * @var string
      */
-    private $appId = null;
+    private $appId;
 
     /**
      * @var string
      */
-    private $appCode = null;
+    private $appCode;
 
     /**
      * @param HttpClient $adapter An HTTP adapter.
