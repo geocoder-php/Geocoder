@@ -10,10 +10,6 @@ declare(strict_types=1);
  * @license    MIT License
  */
 
-/**
- * @author Sébastien Barré <sebastien@sheub.eu>
- */
-
 namespace Geocoder\Provider\AlgoliaPlaces\Tests;
 
 use Geocoder\IntegrationTest\BaseTestCase;
@@ -23,6 +19,9 @@ use Geocoder\Query\GeocodeQuery;
 use Geocoder\Provider\AlgoliaPlaces\AlgoliaPlaces;
 use Http\Client\Curl\Client as HttplugClient;
 
+/**
+ * @author Sébastien Barré <sebastien@sheub.eu>
+ */
 class AlgoliaPlacesTest extends BaseTestCase
 {
     protected function getCacheDir()

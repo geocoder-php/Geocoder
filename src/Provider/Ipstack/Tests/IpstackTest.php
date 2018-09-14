@@ -17,6 +17,9 @@ use Geocoder\Provider\Ipstack\Ipstack;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 
+/**
+ * @author Jonas Gielen <gielenjonas@gmail.com>
+ */
 class IpstackTest extends BaseTestCase
 {
     protected function getCacheDir()
