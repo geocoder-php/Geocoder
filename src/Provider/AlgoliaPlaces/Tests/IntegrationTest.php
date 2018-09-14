@@ -8,11 +8,11 @@
  * @license    MIT License
  */
 
-namespace Geocoder\Provider\Here\Tests;
+namespace Geocoder\Provider\AlgoliaPlaces\Tests;
 
 use Geocoder\IntegrationTest\ProviderIntegrationTest;
 use Geocoder\IntegrationTest\CachedResponseClient;
-use Geocoder\Provider\Here\Here;
+use Geocoder\Provider\AlgoliaPlaces\AlgoliaPlaces;
 use Geocoder\Collection;
 use Geocoder\Location;
 use Geocoder\Model\AdminLevelCollection;
@@ -34,9 +34,11 @@ class IntegrationTest extends ProviderIntegrationTest
 
     protected $testIpv6 = false;
 
+    protected $testReverse = false;
+
     protected function createProvider(HttpClient $httpClient)
     {
-        return new Here($httpClient, $this->getAppId(), $this->getAppCode());
+        return new AlgoliaPlaces($httpClient, $this->getApiKey(), $this->getAppId());
     }
 
     protected function getCacheDir()
@@ -62,25 +64,17 @@ class IntegrationTest extends ProviderIntegrationTest
                 ->willThrowException($e);
         }
 
-        return new CachedResponseClient($client, $this->getCacheDir(), $this->getAppId(), $this->getAppCode());
+        return new CachedResponseClient($client, $this->getCacheDir(), $this->getAppId());
     }
 
     protected function getApiKey()
     {
-        return $_SERVER['HERE_APP_ID'];
+        return $_SERVER['ALGOLIA_API_KEY'];
     }
 
     protected function getAppId()
     {
-        return $_SERVER['HERE_APP_ID'];
-    }
-
-    /**
-     * @return string the Here AppCode or substring to be removed from cache.
-     */
-    protected function getAppCode()
-    {
-        return $_SERVER['HERE_APP_CODE'];
+        return $_SERVER['ALGOLIA_APP_ID'];
     }
 
     public function testGeocodeQuery()
@@ -93,7 +87,7 @@ class IntegrationTest extends ProviderIntegrationTest
         }
 
         $provider = $this->createProvider($this->getCachedHttpClient());
-        $query = GeocodeQuery::create('10 Downing St, London, UK')->withLocale('en');
+        $query = GeocodeQuery::create('10 Downing Street, Westminster, Greater London, United Kingdom')->withLocale('en');
         $result = $provider->geocodeQuery($query);
         $this->assertWellFormattedResult($result);
 

@@ -1,19 +1,20 @@
 {
-    "name": "geocoder-php/here-provider",
+    "name": "geocoder-php/algolia-places-provider",
     "type": "library",
-    "description": "Geocoder here adapter",
+    "description": "Geocoder AlgoliaPlaces adapter",
     "keywords": [],
     "homepage": "http://geocoder-php.org/Geocoder/",
     "license": "MIT",
     "authors": [
         {
-            "name": "William Durand",
-            "email": "william.durand1@gmail.com"
+            "name": "Fabien Lalanne",
+            "email": "lalanne.fabien@gmail.com"
         }
     ],
     "require": {
         "php": "^7.0",
-        "geocoder-php/common-http": "^4.0",
+        "ext-json": "*",
+        "geocoder-php/common-http": "^4.1",
         "willdurand/geocoder": "^4.0"
     },
     "require-dev": {
@@ -27,7 +28,7 @@
         "geocoder-php/provider-implementation": "1.0"
     },
     "autoload": {
-        "psr-4": { "Geocoder\\Provider\\Here\\": "" },
+        "psr-4": { "Geocoder\\Provider\\AlgoliaPlaces\\": "" },
         "exclude-from-classmap": [
             "/Tests/"
         ]
@@ -37,6 +38,7 @@
         "test-ci": "vendor/bin/phpunit --coverage-text --coverage-clover=build/coverage.xml"
     },
     "minimum-stability": "dev",
+    "prefer-stable": true,
     "extra": {
         "branch-alias": {
             "dev-master": "4.0-dev"
