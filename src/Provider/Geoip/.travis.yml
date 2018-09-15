@@ -1,7 +1,7 @@
 language: php
 sudo: false
 
-php: 7.0
+php: 7.2
 
 addons:
     apt_packages:
