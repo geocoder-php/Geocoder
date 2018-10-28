@@ -1,0 +1,69 @@
+s:2115:"{
+   "results" : [
+      {
+         "address_components" : [
+            {
+               "long_name" : "4",
+               "short_name" : "4",
+               "types" : [ "street_number" ]
+            },
+            {
+               "long_name" : "Göran Olsgatan",
+               "short_name" : "Göran Olsgatan",
+               "types" : [ "route" ]
+            },
+            {
+               "long_name" : "Gamla Staden",
+               "short_name" : "Gamla Staden",
+               "types" : [ "political", "sublocality", "sublocality_level_1" ]
+            },
+            {
+               "long_name" : "Malmö",
+               "short_name" : "Malmö",
+               "types" : [ "postal_town" ]
+            },
+            {
+               "long_name" : "Skåne län",
+               "short_name" : "Skåne län",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "Sweden",
+               "short_name" : "SE",
+               "types" : [ "country", "political" ]
+            },
+            {
+               "long_name" : "211 22",
+               "short_name" : "211 22",
+               "types" : [ "postal_code" ]
+            }
+         ],
+         "formatted_address" : "Göran Olsgatan 4, 211 22 Malmö, Sweden",
+         "geometry" : {
+            "location" : {
+               "lat" : 55.6069245,
+               "lng" : 13.0033279
+            },
+            "location_type" : "ROOFTOP",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 55.60827348029149,
+                  "lng" : 13.0046768802915
+               },
+               "southwest" : {
+                  "lat" : 55.60557551970849,
+                  "lng" : 13.0019789197085
+               }
+            }
+         },
+         "place_id" : "ChIJuSSfYfyjU0YRK-5BbDS1mzw",
+         "plus_code" : {
+            "compound_code" : "J243+Q8 Malmö, Sweden",
+            "global_code" : "9F7MJ243+Q8"
+         },
+         "types" : [ "church", "establishment", "place_of_worship", "point_of_interest" ]
+      }
+   ],
+   "status" : "OK"
+}
+";
