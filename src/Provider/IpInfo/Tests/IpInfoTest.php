@@ -121,10 +121,10 @@ class IpInfoTest extends BaseTestCase
         /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(37.751, $result->getCoordinates()->getLatitude(), '', 0.001);
-        $this->assertEquals(-97.822, $result->getCoordinates()->getLongitude(), '', 0.001);
-        $this->assertNull($result->getPostalCode());
-        $this->assertEmpty($result->getLocality());
+        $this->assertEquals(39.934, $result->getCoordinates()->getLatitude(), '', 0.001);
+        $this->assertEquals(-74.891, $result->getCoordinates()->getLongitude(), '', 0.001);
+        $this->assertEquals('08054', $result->getPostalCode());
+        $this->assertEquals('Mount Laurel', $result->getLocality());
         $this->assertNull($result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
         $this->assertNull($result->getTimezone());
