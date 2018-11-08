@@ -109,7 +109,8 @@ class NominatimTest extends BaseTestCase
         $this->assertEquals('yes', $result->getType());
     }
 
-    public function testGeocodeWithCountrycodes() {
+    public function testGeocodeWithCountrycodes()
+    {
         $provider = Nominatim::withOpenStreetMapServer($this->getHttpClient(), 'Geocoder PHP/Nominatim Provider/Nominatim Test');
 
         $query = GeocodeQuery::create('palais royal')
@@ -126,11 +127,12 @@ class NominatimTest extends BaseTestCase
         }
     }
 
-    public function testGeocodeWithViewbox() {
+    public function testGeocodeWithViewbox()
+    {
         $provider = Nominatim::withOpenStreetMapServer($this->getHttpClient(), 'Geocoder PHP/Nominatim Provider/Nominatim Test');
 
         $query = GeocodeQuery::create('35 avenue jean de bologne 1020 bruxelles')
-            ->withData('viewbox', [4.3539793798,50.8934444743,4.3638069937,50.9000218934])
+            ->withData('viewbox', [4.3539793798, 50.8934444743, 4.3638069937, 50.9000218934])
             ->withData('bounded', true);
 
         $results = $provider->geocodeQuery($query);

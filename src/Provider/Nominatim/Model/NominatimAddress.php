@@ -77,12 +77,10 @@ final class NominatimAddress extends Address
     {
         return $this->category;
     }
-    /**
-     * @return null|string
-     */
+
     public function getClass()
     {
-        return $this->category;
+        return $this->getCategory();
     }
 
     /**
@@ -97,12 +95,10 @@ final class NominatimAddress extends Address
 
         return $new;
     }
+
     public function withClass(string $category = null): self
     {
-        $new = clone $this;
-        $new->category = $category;
-
-        return $new;
+        return $this->withCategory($category);
     }
 
     /**
