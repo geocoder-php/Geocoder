@@ -56,36 +56,11 @@ class NominatimTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('::ffff:88.188.221.14'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\InvalidServerResponse
-     */
-    public function testGeocodeWithAddressGetsEmptyContent()
-    {
-        $provider = Nominatim::withOpenStreetMapServer($this->getMockedHttpClient('<foo></foo>'), 'Geocoder PHP/Nominatim Provider/Nominatim Test');
-        $provider->geocodeQuery(GeocodeQuery::create('Läntinen Pitkäkatu 35, Turku'));
-    }
-
-    /**
-     * @expectedException \Geocoder\Exception\InvalidServerResponse
-     */
-    public function testGeocodeWithAddressGetsEmptyXML()
-    {
-        $emptyXML = <<<'XML'
-<?xml version="1.0" encoding="utf-8"?><searchresults_empty></searchresults_empty>
-XML;
-        $provider = Nominatim::withOpenStreetMapServer($this->getMockedHttpClient($emptyXML), 'Geocoder PHP/Nominatim Provider/Nominatim Test');
-        $provider->geocodeQuery(GeocodeQuery::create('Läntinen Pitkäkatu 35, Turku'));
-    }
-
     public function testReverseWithCoordinatesGetsError()
     {
-        $errorXml = <<<'XML'
-<?xml version="1.0" encoding="UTF-8" ?>
-<reversegeocode querystring='format=xml&amp;lat=-80.000000&amp;lon=-170.000000&amp;addressdetails=1'>
-    <error>Unable to geocode</error>
-</reversegeocode>
-XML;
-        $provider = Nominatim::withOpenStreetMapServer($this->getMockedHttpClient($errorXml), 'Geocoder PHP/Nominatim Provider/Nominatim Test');
+        $errorJSON = '{"error":"Unable to geocode"}';
+
+        $provider = Nominatim::withOpenStreetMapServer($this->getMockedHttpClient($errorJSON), 'Geocoder PHP/Nominatim Provider/Nominatim Test');
         $result = $provider->reverseQuery(ReverseQuery::fromCoordinates(-80.000000, -170.000000));
 
         $this->assertInstanceOf(Collection::class, $result);
@@ -125,8 +100,8 @@ XML;
         $this->assertEquals('Heysel - Heizel', $result->getSubLocality());
         $this->assertEquals('BE', $result->getCountry()->getCode());
 
-        $this->assertEquals('Data © OpenStreetMap contributors, ODbL 1.0. http://www.openstreetmap.org/copyright', $result->getAttribution());
-        $this->assertEquals('building', $result->getClass());
+        $this->assertEquals('Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright', $result->getAttribution());
+        $this->assertEquals('building', $result->getCategory());
         $this->assertEquals('35, Avenue Jean de Bologne - Jean de Bolognelaan, Heysel - Heizel, Laeken / Laken, Ville de Bruxelles - Stad Brussel, Brussel-Hoofdstad - Bruxelles-Capitale, Région de Bruxelles-Capitale - Brussels Hoofdstedelijk Gewest, 1020, België / Belgique / Belgien', $result->getDisplayName());
         $this->assertEquals(220754533, $result->getOSMId());
         $this->assertEquals('way', $result->getOSMType());
