@@ -114,6 +114,20 @@ final class Nominatim extends AbstractHttpProvider implements Provider
             }
         }
 
+        $viewbox = $query->getData('viewbox');
+        if (!is_null($viewbox) && is_array($viewbox) && count($viewbox) === 4) {
+            $url .= '&'.http_build_query([
+                'viewbox' => implode(',', $viewbox),
+            ]);
+
+            $bounded = $query->getData('bounded');
+            if (!is_null($bounded) && $bounded === true) {
+                $url .= '&'.http_build_query([
+                    'bounded' => 1,
+                ]);
+            }
+        }
+
         $content = $this->executeQuery($url, $query->getLocale());
 
         $json = json_decode($content);
