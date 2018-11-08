@@ -77,6 +77,13 @@ final class NominatimAddress extends Address
     {
         return $this->category;
     }
+    /**
+     * @return null|string
+     */
+    public function getClass()
+    {
+        return $this->category;
+    }
 
     /**
      * @param null|string $category
