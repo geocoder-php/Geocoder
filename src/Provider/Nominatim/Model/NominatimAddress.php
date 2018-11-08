@@ -97,6 +97,13 @@ final class NominatimAddress extends Address
 
         return $new;
     }
+    public function withClass(string $category = null): self
+    {
+        $new = clone $this;
+        $new->category = $category;
+
+        return $new;
+    }
 
     /**
      * @return null|string
