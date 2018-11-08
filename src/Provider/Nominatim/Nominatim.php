@@ -99,6 +99,21 @@ final class Nominatim extends AbstractHttpProvider implements Provider
                 'limit'          => $query->getLimit(),
             ]);
 
+        $countrycodes = $query->getData('countrycodes');
+        if (!is_null($countrycodes)) {
+            if (is_array($countrycodes)) {
+                $countrycodes = array_map('strtolower', $countrycodes);
+
+                $url .= '&'.http_build_query([
+                    'countrycodes' => implode(',', $countrycodes),
+                ]);
+            } else {
+                $url .= '&'.http_build_query([
+                    'countrycodes' => strtolower($countrycodes),
+                ]);
+            }
+        }
+
         $content = $this->executeQuery($url, $query->getLocale());
 
         $json = json_decode($content);
