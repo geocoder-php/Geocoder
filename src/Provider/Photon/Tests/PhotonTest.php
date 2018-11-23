@@ -73,5 +73,10 @@ class PhotonTest extends BaseTestCase
         $this->assertEquals('Avenue Jean de Bologne - Jean de Bolognelaan', $result->getStreetName());
         $this->assertEquals('1020', $result->getPostalCode());
         $this->assertEquals('Ville de Bruxelles - Stad Brussel', $result->getLocality());
+
+        $this->assertEquals(220754533, $result->getOSMId());
+        $this->assertEquals('W', $result->getOSMType());
+        $this->assertEquals('building', $result->getOSMTag()->key);
+        $this->assertEquals('yes', $result->getOSMTag()->value);
     }
 }
