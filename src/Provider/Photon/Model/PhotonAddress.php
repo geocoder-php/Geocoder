@@ -105,5 +105,4 @@ final class PhotonAddress extends Address
 
         return $new;
     }
-
 }
