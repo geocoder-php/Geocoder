@@ -96,7 +96,7 @@ final class PhotonAddress extends Address
 
         if (!is_null($key) && !is_null($value)) {
             $new->osmTag = (object) [
-                'key'   => $key,
+                'key' => $key,
                 'value' => $value,
             ];
         } else {

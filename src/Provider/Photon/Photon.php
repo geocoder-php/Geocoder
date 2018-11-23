@@ -13,7 +13,6 @@ declare(strict_types=1);
 namespace Geocoder\Provider\Photon;
 
 use Geocoder\Collection;
-use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Location;

@@ -12,9 +12,7 @@ declare(strict_types=1);
 
 namespace Geocoder\Provider\Photon\Tests;
 
-use Geocoder\Collection;
 use Geocoder\IntegrationTest\BaseTestCase;
-use Geocoder\Location;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\Photon\Photon;
@@ -103,5 +101,4 @@ class PhotonTest extends BaseTestCase
         $this->assertEquals('highway', $result->getOSMTag()->key);
         $this->assertEquals('tertiary', $result->getOSMTag()->value);
     }
-
 }
