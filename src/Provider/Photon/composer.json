@@ -36,7 +36,7 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {
-        "test": "phpunit",
-        "test-ci": "phpunit --coverage-text --coverage-clover=build/coverage.xml"
+        "test": "vendor/bin/phpunit",
+        "test-ci": "vendor/bin/phpunit --coverage-text --coverage-clover=build/coverage.xml"
     }
 }
