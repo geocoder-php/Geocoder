@@ -2,6 +2,12 @@
 
 The change log describes what is "Added", "Removed", "Changed" or "Fixed" between each release.
 
+## To be release
+
+### Fixed
+
+- Fix the Bounds query builder format
+
 ## 1.0.0
 
 First release of this library. 
