@@ -40,10 +40,10 @@ final class Bounds
     private $east;
 
     /**
-     * @param float $south
-     * @param float $west
-     * @param float $north
-     * @param float $east
+     * @param float $south South bound, also min latitude
+     * @param float $west  West bound, also min longitude
+     * @param float $north North bound, also max latitude
+     * @param float $east  East bound, also max longitude
      */
     public function __construct($south, $west, $north, $east)
     {

@@ -179,8 +179,9 @@ final class Mapbox extends AbstractHttpProvider implements Provider
 
         $urlParameters = [];
         if ($query->getBounds()) {
+            // Format is "minLon,minLat,maxLon,maxLat"
             $urlParameters['bbox'] = sprintf(
-                '%s,%s|%s,%s',
+                '%s,%s,%s,%s',
                 $query->getBounds()->getWest(),
                 $query->getBounds()->getSouth(),
                 $query->getBounds()->getEast(),
