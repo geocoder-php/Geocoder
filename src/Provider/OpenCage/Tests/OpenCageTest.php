@@ -77,7 +77,10 @@ class OpenCageTest extends BaseTestCase
         $this->assertEquals('France', $result->getCountry()->getName());
         $this->assertEquals('FR', $result->getCountry()->getCode());
         $this->assertEquals('Europe/Paris', $result->getTimezone());
+        $this->assertEquals('31UDQ5519412427', $result->getMGRS());
+        $this->assertEquals('JN18eu67qd', $result->getMaidenhead());
         $this->assertEquals('u09tyr78tz64jdcgfnhe', $result->getGeohash());
+        $this->assertEquals('listed.emphasis.greeting', $result->getWhat3words());
         $this->assertEquals('10 Avenue Gambetta, 75020 Paris, France', $result->getFormattedAddress());
     }
 
@@ -113,7 +116,10 @@ class OpenCageTest extends BaseTestCase
         $this->assertEquals('United Kingdom', $result->getCountry()->getName());
         $this->assertEquals('GB', $result->getCountry()->getCode());
         $this->assertEquals('Europe/London', $result->getTimezone());
+        $this->assertEquals('30UWE1316588979', $result->getMGRS());
+        $this->assertEquals('IO84ob41dr', $result->getMaidenhead());
         $this->assertEquals('gcw52r3csd02c23bwucn', $result->getGeohash());
+        $this->assertEquals('heave.dock.wage', $result->getWhat3words());
         $this->assertEquals('Saint Nicholas Arcades, Lancaster Gate, Lancaster LA1 1LZ, United Kingdom', $result->getFormattedAddress());
     }
 

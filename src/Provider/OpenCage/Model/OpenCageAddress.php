@@ -18,13 +18,74 @@ final class OpenCageAddress extends Address
 {
     /**
      * @var string|null
+     * @see https://en.wikipedia.org/wiki/Military_Grid_Reference_System
+     */
+    private $mgrs;
+
+    /**
+     * @var string|null
+     * @see https://en.wikipedia.org/wiki/Maidenhead_Locator_System
+     */
+    private $maidenhead;
+
+    /**
+     * @var string|null
+     * @see https://en.wikipedia.org/wiki/Geohash
      */
     private $geohash;
 
     /**
      * @var string|null
+     * @see https://what3words.com/
+     */
+    private $what3words;
+
+    /**
+     * @var string|null
      */
     private $formattedAddress;
+
+    /**
+     * @param null|string $mgrs
+     *
+     * @return OpenCageAddress
+     */
+    public function withMGRS(string $mgrs = null): self
+    {
+        $new = clone $this;
+        $new->mgrs = $mgrs;
+
+        return $new;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getMGRS()
+    {
+        return $this->mgrs;
+    }
+
+    /**
+     * @param null|string $maidenhead
+     *
+     * @return OpenCageAddress
+     */
+    public function withMaidenhead(string $maidenhead = null): self
+    {
+        $new = clone $this;
+        $new->maidenhead = $maidenhead;
+
+        return $new;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getMaidenhead()
+    {
+        return $this->maidenhead;
+    }
 
     /**
      * @param null|string $geohash
@@ -45,6 +106,27 @@ final class OpenCageAddress extends Address
     public function getGeohash()
     {
         return $this->geohash;
+    }
+
+    /**
+     * @param null|string $what3words
+     *
+     * @return OpenCageAddress
+     */
+    public function withWhat3words(string $what3words = null): self
+    {
+        $new = clone $this;
+        $new->what3words = $what3words;
+
+        return $new;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getWhat3words()
+    {
+        return $this->what3words;
     }
 
     /**
