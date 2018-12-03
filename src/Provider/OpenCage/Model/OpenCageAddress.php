@@ -18,24 +18,28 @@ final class OpenCageAddress extends Address
 {
     /**
      * @var string|null
+     *
      * @see https://en.wikipedia.org/wiki/Military_Grid_Reference_System
      */
     private $mgrs;
 
     /**
      * @var string|null
+     *
      * @see https://en.wikipedia.org/wiki/Maidenhead_Locator_System
      */
     private $maidenhead;
 
     /**
      * @var string|null
+     *
      * @see https://en.wikipedia.org/wiki/Geohash
      */
     private $geohash;
 
     /**
      * @var string|null
+     *
      * @see https://what3words.com/
      */
     private $what3words;
