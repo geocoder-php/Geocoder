@@ -14,6 +14,7 @@ namespace Geocoder\Provider\OpenCage\Tests;
 
 use Geocoder\Collection;
 use Geocoder\IntegrationTest\BaseTestCase;
+use Geocoder\Model\AddressCollection;
 use Geocoder\Provider\OpenCage\Model\OpenCageAddress;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
@@ -53,12 +54,12 @@ class OpenCageTest extends BaseTestCase
         $provider = new OpenCage($this->getHttpClient($_SERVER['OPENCAGE_API_KEY']), $_SERVER['OPENCAGE_API_KEY']);
         $results = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(AddressCollection::class, $results);
         $this->assertCount(2, $results);
 
         /** @var OpenCageAddress $result */
         $result = $results->first();
-        $this->assertInstanceOf('Geocoder\Provider\OpenCage\Model\OpenCageAddress', $result);
+        $this->assertInstanceOf(OpenCageAddress::class, $result);
         $this->assertEquals(48.866205, $result->getCoordinates()->getLatitude(), '', 0.01);
         $this->assertEquals(2.389089, $result->getCoordinates()->getLongitude(), '', 0.01);
         $this->assertNotNull($result->getBounds());
@@ -89,12 +90,12 @@ class OpenCageTest extends BaseTestCase
         $provider = new OpenCage($this->getHttpClient($_SERVER['OPENCAGE_API_KEY']), $_SERVER['OPENCAGE_API_KEY']);
         $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(54.0484068, -2.7990345));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var OpenCageAddress $result */
         $result = $results->first();
-        $this->assertInstanceOf('Geocoder\Provider\OpenCage\Model\OpenCageAddress', $result);
+        $this->assertInstanceOf(OpenCageAddress::class, $result);
         $this->assertEquals(54.0484068, $result->getCoordinates()->getLatitude(), '', 0.001);
         $this->assertEquals(-2.7990345, $result->getCoordinates()->getLongitude(), '', 0.001);
         $this->assertNotNull($result->getBounds());
@@ -125,12 +126,12 @@ class OpenCageTest extends BaseTestCase
         $provider = new OpenCage($this->getHttpClient($_SERVER['OPENCAGE_API_KEY']), $_SERVER['OPENCAGE_API_KEY']);
         $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(49.1390924, 1.6572462));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var OpenCageAddress $result */
         $result = $results->first();
-        $this->assertInstanceOf('Geocoder\Provider\OpenCage\Model\OpenCageAddress', $result);
+        $this->assertInstanceOf(OpenCageAddress::class, $result);
         $this->assertEquals('Bray-et-Lû', $result->getLocality());
     }
 
@@ -143,12 +144,12 @@ class OpenCageTest extends BaseTestCase
         $provider = new OpenCage($this->getHttpClient($_SERVER['OPENCAGE_API_KEY']), $_SERVER['OPENCAGE_API_KEY']);
         $results = $provider->geocodeQuery(GeocodeQuery::create('Hanover'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(AddressCollection::class, $results);
         $this->assertCount(5, $results);
 
         /** @var OpenCageAddress $result */
         $result = $results->first();
-        $this->assertInstanceOf('Geocoder\Provider\OpenCage\Model\OpenCageAddress', $result);
+        $this->assertInstanceOf(OpenCageAddress::class, $result);
         $this->assertEquals(52.374478, $result->getCoordinates()->getLatitude(), '', 0.01);
         $this->assertEquals(9.738553, $result->getCoordinates()->getLongitude(), '', 0.01);
         $this->assertEquals('Hanover', $result->getLocality());
@@ -159,7 +160,7 @@ class OpenCageTest extends BaseTestCase
 
         /** @var OpenCageAddress $result */
         $result = $results->get(1);
-        $this->assertInstanceOf('Geocoder\Provider\OpenCage\Model\OpenCageAddress', $result);
+        $this->assertInstanceOf(OpenCageAddress::class, $result);
         $this->assertEquals(18.3840489, $result->getCoordinates()->getLatitude(), '', 0.01);
         $this->assertEquals(-78.131485, $result->getCoordinates()->getLongitude(), '', 0.01);
         $this->assertNull($result->getLocality());
@@ -169,7 +170,7 @@ class OpenCageTest extends BaseTestCase
 
         /** @var OpenCageAddress $result */
         $result = $results->get(2);
-        $this->assertInstanceOf('Geocoder\Provider\OpenCage\Model\OpenCageAddress', $result);
+        $this->assertInstanceOf(OpenCageAddress::class, $result);
         $this->assertEquals(43.7033073, $result->getCoordinates()->getLatitude(), '', 0.01);
         $this->assertEquals(-72.2885663, $result->getCoordinates()->getLongitude(), '', 0.01);
         $this->assertEquals('Hanover', $result->getLocality());
@@ -188,12 +189,12 @@ class OpenCageTest extends BaseTestCase
         $provider = new OpenCage($this->getHttpClient($_SERVER['OPENCAGE_API_KEY']), $_SERVER['OPENCAGE_API_KEY']);
         $results = $provider->geocodeQuery(GeocodeQuery::create('Kalbacher Hauptstraße 10, 60437 Frankfurt, Germany'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(AddressCollection::class, $results);
         $this->assertCount(2, $results);
 
         /** @var OpenCageAddress $result */
         $result = $results->first();
-        $this->assertInstanceOf('Geocoder\Provider\OpenCage\Model\OpenCageAddress', $result);
+        $this->assertInstanceOf(OpenCageAddress::class, $result);
         $this->assertEquals(50.189062, $result->getCoordinates()->getLatitude(), '', 0.01);
         $this->assertEquals(8.636567, $result->getCoordinates()->getLongitude(), '', 0.01);
         $this->assertEquals(10, $result->getStreetNumber());
@@ -217,12 +218,12 @@ class OpenCageTest extends BaseTestCase
         $provider = new OpenCage($this->getHttpClient($_SERVER['OPENCAGE_API_KEY']), $_SERVER['OPENCAGE_API_KEY']);
         $results = $provider->geocodeQuery(GeocodeQuery::create('London')->withLocale('es'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(AddressCollection::class, $results);
         $this->assertCount(5, $results);
 
         /** @var OpenCageAddress $result */
         $result = $results->first();
-        $this->assertInstanceOf('Geocoder\Provider\OpenCage\Model\OpenCageAddress', $result);
+        $this->assertInstanceOf(OpenCageAddress::class, $result);
         $this->assertEquals('Londres', $result->getLocality());
         $this->assertCount(2, $result->getAdminLevels());
         $this->assertEquals('Londres', $result->getAdminLevels()->get(2)->getName());
