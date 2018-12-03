@@ -17,8 +17,9 @@ use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\QuotaExceeded;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Collection;
-use Geocoder\Model\Address;
+use Geocoder\Model\AddressBuilder;
 use Geocoder\Model\AddressCollection;
+use Geocoder\Provider\OpenCage\Model\OpenCageAddress;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Http\Provider\AbstractHttpProvider;
@@ -136,48 +137,96 @@ final class OpenCage extends AbstractHttpProvider implements Provider
 
         $results = [];
         foreach ($locations as $location) {
-            $bounds = [
-                'south' => null,
-                'west' => null,
-                'north' => null,
-                'east' => null,
-            ];
-            if (isset($location['bounds'])) {
-                $bounds = [
-                    'south' => $location['bounds']['southwest']['lat'],
-                    'west' => $location['bounds']['southwest']['lng'],
-                    'north' => $location['bounds']['northeast']['lat'],
-                    'east' => $location['bounds']['northeast']['lng'],
-                ];
-            }
+            $builder = new AddressBuilder($this->getName());
+            $this->parseCoordinates($builder, $location);
 
-            $comp = $location['components'];
+            $components = $location['components'];
+            $annotations = $location['annotations'];
 
-            $adminLevels = [];
-            foreach (['state', 'county'] as $i => $component) {
-                if (isset($comp[$component])) {
-                    $adminLevels[] = ['name' => $comp[$component], 'level' => $i + 1];
-                }
-            }
+            $this->parseAdminsLevels($builder, $components);
+            $this->parseCountry($builder, $components);
+            $builder->setLocality($this->guessLocality($components));
+            $builder->setSubLocality($this->guessSubLocality($components));
+            $builder->setStreetNumber(isset($components['house_number']) ? $components['house_number'] : null);
+            $builder->setStreetName($this->guessStreetName($components));
+            $builder->setPostalCode(isset($components['postcode']) ? $components['postcode'] : null);
+            $builder->setTimezone(isset($annotations['timezone']['name']) ? $annotations['timezone']['name'] : null);
 
-            $results[] = Address::createFromArray([
-                'providedBy' => $this->getName(),
-                'latitude' => $location['geometry']['lat'],
-                'longitude' => $location['geometry']['lng'],
-                'bounds' => $bounds ?: [],
-                'streetNumber' => isset($comp['house_number']) ? $comp['house_number'] : null,
-                'streetName' => $this->guessStreetName($comp),
-                'subLocality' => $this->guessSubLocality($comp),
-                'locality' => $this->guessLocality($comp),
-                'postalCode' => isset($comp['postcode']) ? $comp['postcode'] : null,
-                'adminLevels' => $adminLevels,
-                'country' => isset($comp['country']) ? $comp['country'] : null,
-                'countryCode' => isset($comp['country_code']) ? strtoupper($comp['country_code']) : null,
-                'timezone' => isset($location['annotations']['timezone']['name']) ? $location['annotations']['timezone']['name'] : null,
-            ]);
+            /** @var OpenCageAddress $address */
+            $address = $builder->build(OpenCageAddress::class);
+            $address = $address->withMGRS(isset($annotations['MGRS']) ? $annotations['MGRS'] : null);
+            $address = $address->withMaidenhead(isset($annotations['Maidenhead']) ? $annotations['Maidenhead'] : null);
+            $address = $address->withGeohash(isset($annotations['geohash']) ? $annotations['geohash'] : null);
+            $address = $address->withWhat3words(isset($annotations['what3words'], $annotations['what3words']['words']) ? $annotations['what3words']['words'] : null);
+            $address = $address->withFormattedAddress($location['formatted']);
+
+            $results[] = $address;
         }
 
         return new AddressCollection($results);
+    }
+
+    /**
+     * @param AddressBuilder $builder
+     * @param array          $location
+     */
+    private function parseCoordinates(AddressBuilder $builder, array $location)
+    {
+        $builder->setCoordinates($location['geometry']['lat'], $location['geometry']['lng']);
+
+        $bounds = [
+            'south' => null,
+            'west' => null,
+            'north' => null,
+            'east' => null,
+        ];
+
+        if (isset($location['bounds'])) {
+            $bounds = [
+                'south' => $location['bounds']['southwest']['lat'],
+                'west' => $location['bounds']['southwest']['lng'],
+                'north' => $location['bounds']['northeast']['lat'],
+                'east' => $location['bounds']['northeast']['lng'],
+            ];
+        }
+
+        $builder->setBounds(
+            $bounds['south'],
+            $bounds['west'],
+            $bounds['north'],
+            $bounds['east']
+        );
+    }
+
+    /**
+     * @param AddressBuilder $builder
+     * @param array          $components
+     */
+    private function parseAdminsLevels(AddressBuilder $builder, array $components)
+    {
+        if (isset($components['state'])) {
+            $stateCode = isset($components['state_code']) ? $components['state_code'] : null;
+            $builder->addAdminLevel(1, $components['state'], $stateCode);
+        }
+
+        if (isset($components['county'])) {
+            $builder->addAdminLevel(2, $components['county']);
+        }
+    }
+
+    /**
+     * @param AddressBuilder $builder
+     * @param array          $components
+     */
+    private function parseCountry(AddressBuilder $builder, array $components)
+    {
+        if (isset($components['country'])) {
+            $builder->setCountry($components['country']);
+        }
+
+        if (isset($components['country_code'])) {
+            $builder->setCountryCode(\strtoupper($components['country_code']));
+        }
     }
 
     /**
