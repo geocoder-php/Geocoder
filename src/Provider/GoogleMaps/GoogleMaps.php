@@ -115,6 +115,11 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
             $url .= sprintf('&bounds=%s,%s|%s,%s', $bounds->getSouth(), $bounds->getWest(), $bounds->getNorth(), $bounds->getEast());
         }
 
+        if (null !== $components = $query->getData('components')) {
+            $serializedComponents = is_string($components) ? $components : $this->serializeComponents($components);
+            $url .= sprintf('&components=%s', urlencode($serializedComponents));
+        }
+
         return $this->fetchUrl($url, $query->getLocale(), $query->getLimit(), $query->getData('region', $this->region));
     }
 
@@ -364,6 +369,20 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
         $encodedSignature = str_replace(['+', '/'], ['-', '_'], base64_encode($signature));
 
         return sprintf('%s&signature=%s', $query, $encodedSignature);
+    }
+
+    /**
+     * Serialize the component query parameter.
+     *
+     * @param array $components
+     *
+     * @return string
+     */
+    private function serializeComponents(array $components): string
+    {
+        return implode('|', array_map(function ($name, $value) {
+            return sprintf('%s:%s', $name, $value);
+        }, array_keys($components), $components));
     }
 
     /**

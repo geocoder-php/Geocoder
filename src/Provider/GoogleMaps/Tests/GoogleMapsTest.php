@@ -215,6 +215,91 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertEquals('New York', $result->getAdminLevels()->get(1)->getName());
     }
 
+    public function testGeocodeWithComponentFiltering()
+    {
+        if (!isset($_SERVER['GOOGLE_GEOCODING_KEY'])) {
+            $this->markTestSkipped('You need to configure the GOOGLE_GEOCODING_KEY value in phpunit.xml');
+        }
+
+        $provider = new GoogleMaps($this->getHttpClient($_SERVER['GOOGLE_GEOCODING_KEY']), null, $_SERVER['GOOGLE_GEOCODING_KEY']);
+
+        $query = GeocodeQuery::create('Sankt Petri')->withData('components', [
+            'country' => 'SE',
+            'locality' => 'Malmö',
+        ]);
+
+        $results = $provider->geocodeQuery($query);
+
+        $this->assertInstanceOf(AddressCollection::class, $results);
+        $this->assertCount(1, $results);
+
+        /** @var Location $result */
+        $result = $results->first();
+        $this->assertInstanceOf(Address::class, $result);
+        $this->assertEquals('Malmö', $result->getLocality());
+        $this->assertNotNull($result->getCountry());
+        $this->assertEquals('SE', $result->getCountry()->getCode());
+    }
+
+    public function testCorrectlySerializesComponents()
+    {
+        $uri = '';
+
+        $provider = new GoogleMaps(
+            $this->getMockedHttpClientCallback(
+                function (RequestInterface $request) use (&$uri) {
+                    $uri = (string) $request->getUri();
+                }
+            )
+        );
+
+        $query = GeocodeQuery::create('address')->withData('components', [
+            'country' => 'SE',
+            'postal_code' => '22762',
+            'locality' => 'Lund',
+        ]);
+
+        try {
+            $provider->geocodeQuery($query);
+        } catch (InvalidServerResponse $e) {
+        }
+
+        $this->assertEquals(
+            'https://maps.googleapis.com/maps/api/geocode/json'.
+            '?address=address'.
+            '&components=country%3ASE%7Cpostal_code%3A22762%7Clocality%3ALund',
+            $uri
+        );
+    }
+
+    public function testCorrectlySetsComponents()
+    {
+        $uri = '';
+
+        $provider = new GoogleMaps(
+            $this->getMockedHttpClientCallback(
+                function (RequestInterface $request) use (&$uri) {
+                    $uri = (string) $request->getUri();
+                }
+            )
+        );
+
+        $query = GeocodeQuery::create('address')
+            ->withData('components', 'country:SE|postal_code:22762|locality:Lund');
+
+        try {
+            $provider->geocodeQuery($query);
+        } catch (InvalidServerResponse $e) {
+        }
+
+        $this->assertEquals(
+            'https://maps.googleapis.com/maps/api/geocode/json'.
+            '?address=address'.
+            '&components=country%3ASE%7Cpostal_code%3A22762%7Clocality%3ALund',
+            $uri
+        );
+    }
+
     /**
      * @expectedException \Geocoder\Exception\InvalidCredentials
      * @expectedExceptionMessage API key is invalid https://maps.googleapis.com/maps/api/geocode/json?address=Columbia%20University&key=fake_key
