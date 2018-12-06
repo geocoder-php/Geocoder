@@ -42,6 +42,11 @@ class Address implements Location
     /**
      * @var string|null
      */
+    private $streetShortName;
+
+    /**
+     * @var string|null
+     */
     private $subLocality;
 
     /**
@@ -81,6 +86,7 @@ class Address implements Location
      * @param Bounds|null          $bounds
      * @param string|null          $streetNumber
      * @param string|null          $streetName
+     * @param string|null          $streetShortName
      * @param string|null          $postalCode
      * @param string|null          $locality
      * @param string|null          $subLocality
@@ -94,6 +100,7 @@ class Address implements Location
         Bounds $bounds = null,
         string $streetNumber = null,
         string $streetName = null,
+        string $streetShortName = null,
         string $postalCode = null,
         string $locality = null,
         string $subLocality = null,
@@ -106,6 +113,7 @@ class Address implements Location
         $this->bounds = $bounds;
         $this->streetNumber = $streetNumber;
         $this->streetName = $streetName;
+        $this->streetShortName = $streetShortName;
         $this->postalCode = $postalCode;
         $this->locality = $locality;
         $this->subLocality = $subLocality;
@@ -151,6 +159,14 @@ class Address implements Location
     public function getStreetName()
     {
         return $this->streetName;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getStreetShortName()
+    {
+        return $this->streetShortName;
     }
 
     /**
@@ -222,6 +238,7 @@ class Address implements Location
             ],
             'streetNumber' => null,
             'streetName' => null,
+            'streetShortName' => null,
             'locality' => null,
             'postalCode' => null,
             'subLocality' => null,
@@ -262,6 +279,7 @@ class Address implements Location
             ),
             $data['streetNumber'],
             $data['streetName'],
+            $data['streetShortName'],
             $data['postalCode'],
             $data['locality'],
             $data['subLocality'],
@@ -358,6 +376,7 @@ class Address implements Location
             'bounds' => null !== $this->bounds ? $this->bounds->toArray() : $noBounds,
             'streetNumber' => $this->streetNumber,
             'streetName' => $this->streetName,
+            'streetShortName' => $this->streetShortName,
             'postalCode' => $this->postalCode,
             'locality' => $this->locality,
             'subLocality' => $this->subLocality,

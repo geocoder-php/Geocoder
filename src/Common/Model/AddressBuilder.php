@@ -50,6 +50,11 @@ final class AddressBuilder
     /**
      * @var string|null
      */
+    private $streetShortName;
+
+    /**
+     * @var string|null
+     */
     private $locality;
 
     /**
@@ -120,6 +125,7 @@ final class AddressBuilder
             $this->bounds,
             $this->streetNumber,
             $this->streetName,
+            $this->streetShortName,
             $this->postalCode,
             $this->locality,
             $this->subLocality,
@@ -198,6 +204,18 @@ final class AddressBuilder
     public function setStreetName($streetName): self
     {
         $this->streetName = $streetName;
+
+        return $this;
+    }
+
+    /**
+     * @param null|string $streetShortName
+     *
+     * @return AddressBuilder
+     */
+    public function setStreetShortName($streetShortName): self
+    {
+        $this->streetShortName = $streetShortName;
 
         return $this;
     }
