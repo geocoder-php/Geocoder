@@ -71,16 +71,33 @@ final class NominatimAddress extends Address
     }
 
     /**
+     * @deprecated
+     *
+     * @return null|string
+     */
+    public function getClass()
+    {
+        return $this->getCategory();
+    }
+
+    /**
+     * @deprecated
+     *
+     * @param null|string $category
+     *
+     * @return NominatimAddress
+     */
+    public function withClass(string $category = null) : self
+    {
+        return $this->withCategory($category);
+    }
+
+    /**
      * @return null|string
      */
     public function getCategory()
     {
         return $this->category;
-    }
-
-    public function getClass()
-    {
-        return $this->getCategory();
     }
 
     /**
@@ -94,11 +111,6 @@ final class NominatimAddress extends Address
         $new->category = $category;
 
         return $new;
-    }
-
-    public function withClass(string $category = null): self
-    {
-        return $this->withCategory($category);
     }
 
     /**
