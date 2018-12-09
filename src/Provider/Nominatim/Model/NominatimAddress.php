@@ -87,7 +87,7 @@ final class NominatimAddress extends Address
      *
      * @return NominatimAddress
      */
-    public function withClass(string $category = null) : self
+    public function withClass(string $category = null): self
     {
         return $this->withCategory($category);
     }
