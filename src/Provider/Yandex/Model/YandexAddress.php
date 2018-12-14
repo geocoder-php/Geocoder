@@ -32,6 +32,13 @@ final class YandexAddress extends Address
     private $name;
 
     /**
+     * The kind of this location.
+     *
+     * @var string|null
+     */
+    private $kind;
+
+    /**
      * @return null|string
      */
     public function getPrecision()
@@ -69,6 +76,27 @@ final class YandexAddress extends Address
     {
         $new = clone $this;
         $new->name = $name;
+
+        return $new;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getKind(): string
+    {
+        return $this->kind;
+    }
+
+    /**
+     * @param string|null $kind
+     *
+     * @return YandexAddress
+     */
+    public function withKind(string $kind = null): self
+    {
+        $new = clone $this;
+        $new->kind = $kind;
 
         return $new;
     }
