@@ -169,7 +169,7 @@ Provider       | Package | Features | Stats
 [MaxMind](https://github.com/geocoder-php/maxmind-provider) | `geocoder-php/maxmind-provider` | IPv4, IPv6 <br> [Website](https://www.maxmind.com/) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/maxmind-provider/v/stable)](https://packagist.org/packages/geocoder-php/maxmind-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/maxmind-provider/downloads)](https://packagist.org/packages/geocoder-php/maxmind-provider)
 [MaxMind Binary](https://github.com/geocoder-php/maxmind-binary-provider) | `geocoder-php/maxmind-binary-provider` | IPv4, IPv6 <br> [Website](https://www.maxmind.com/) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/maxmind-binary-provider/v/stable)](https://packagist.org/packages/geocoder-php/maxmind-binary-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/maxmind-binary-provider/downloads)](https://packagist.org/packages/geocoder-php/maxmind-binary-provider)
 
-#### Other packages
+### Other packages
 
 There are two "*abstract*" or "*base*" packages that most providers depend on.
 
