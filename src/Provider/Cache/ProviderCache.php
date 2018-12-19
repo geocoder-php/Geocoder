@@ -34,7 +34,7 @@ class ProviderCache implements Provider
     protected $cache;
 
     /**
-     * How log a result is going to be cached.
+     * How long a result is going to be cached.
      *
      * @var int|null
      */
