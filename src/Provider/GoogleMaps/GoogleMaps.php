@@ -310,6 +310,7 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
 
             case 'route':
                 $builder->setStreetName($values->long_name);
+                $builder->setStreetShortName($values->short_name);
 
                 break;
 

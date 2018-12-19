@@ -457,4 +457,41 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertEquals(50.8460, $result->getBounds()->getNorth(), '', 0.001);
         $this->assertEquals(5.8286, $result->getBounds()->getEast(), '', 0.001);
     }
+
+    /**
+     * Test for real address with short street name
+     *
+     * @throws \Geocoder\Exception\Exception
+     */
+    public function testStreetShortNameWithRealAddress()
+    {
+        $provider = new GoogleMaps($this->getHttpClient(), 'Florida');
+        $results = $provider->geocodeQuery(GeocodeQuery::create('17141 Collins Ave, Sunny Isles Beach, USA')->withLocale('en-US'));
+
+        $this->assertInstanceOf(AddressCollection::class, $results);
+        $this->assertCount(1, $results);
+
+        /** @var Location $result */
+        $result = $results->first();
+        $this->assertInstanceOf(Address::class, $result);
+        $this->assertEquals(25.934944, $result->getCoordinates()->getLatitude(), '', 0.001);
+        $this->assertEquals(-80.120918, $result->getCoordinates()->getLongitude(), '', 0.001);
+        $this->assertNotNull($result->getBounds());
+        $this->assertEquals(25.935036, $result->getBounds()->getSouth(), '', 0.001);
+        $this->assertEquals(-80.120636, $result->getBounds()->getWest(), '', 0.001);
+        $this->assertEquals(25.934815, $result->getBounds()->getNorth(), '', 0.001);
+        $this->assertEquals(-80.121261, $result->getBounds()->getEast(), '', 0.001);
+        $this->assertEquals(17141, $result->getStreetNumber());
+        $this->assertEquals('Collins Avenue', $result->getStreetName());
+        $this->assertEquals('Collins Ave', $result->getStreetShortName());
+        $this->assertEquals(33160, $result->getPostalCode());
+        $this->assertEquals('Sunny Isles Beach', $result->getLocality());
+        $this->assertEquals('Miami-Dade County', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('Florida', $result->getAdminLevels()->get(1)->getName());
+        $this->assertEquals('United States', $result->getCountry()->getName());
+        $this->assertEquals('US', $result->getCountry()->getCode());
+
+        // not provided
+        $this->assertNull($result->getTimezone());
+    }
 }
