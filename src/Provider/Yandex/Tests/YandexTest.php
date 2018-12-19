@@ -416,5 +416,6 @@ class YandexTest extends BaseTestCase
         /** @var YandexAddress $first */
         $first = $results->first();
         $this->assertEquals('метро Озерки', $first->getName());
+        $this->assertEquals('metro', $first->getKind());
     }
 }

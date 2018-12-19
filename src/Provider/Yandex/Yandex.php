@@ -168,6 +168,7 @@ final class Yandex extends AbstractHttpProvider implements Provider
             $location = $builder->build(YandexAddress::class);
             $location = $location->withPrecision(isset($flatArray['precision']) ? $flatArray['precision'] : null);
             $location = $location->withName(isset($flatArray['name']) ? $flatArray['name'] : null);
+            $location = $location->withKind($flatArray['kind'] ?? null);
             $locations[] = $location;
         }
 
