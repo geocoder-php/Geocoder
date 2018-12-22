@@ -27,7 +27,7 @@ final class NominatimAddress extends Address
     /**
      * @var string|null
      */
-    private $class;
+    private $category;
 
     /**
      * @var string|null
@@ -71,22 +71,44 @@ final class NominatimAddress extends Address
     }
 
     /**
+     * @deprecated
+     *
      * @return null|string
      */
     public function getClass()
     {
-        return $this->class;
+        return $this->getCategory();
     }
 
     /**
-     * @param null|string $class
+     * @deprecated
+     *
+     * @param null|string $category
      *
      * @return NominatimAddress
      */
-    public function withClass(string $class = null): self
+    public function withClass(string $category = null): self
+    {
+        return $this->withCategory($category);
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param null|string $category
+     *
+     * @return NominatimAddress
+     */
+    public function withCategory(string $category = null): self
     {
         $new = clone $this;
-        $new->class = $class;
+        $new->category = $category;
 
         return $new;
     }

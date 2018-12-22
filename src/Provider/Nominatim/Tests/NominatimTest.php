@@ -56,36 +56,11 @@ class NominatimTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('::ffff:88.188.221.14'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\InvalidServerResponse
-     */
-    public function testGeocodeWithAddressGetsEmptyContent()
-    {
-        $provider = Nominatim::withOpenStreetMapServer($this->getMockedHttpClient('<foo></foo>'), 'Geocoder PHP/Nominatim Provider/Nominatim Test');
-        $provider->geocodeQuery(GeocodeQuery::create('Läntinen Pitkäkatu 35, Turku'));
-    }
-
-    /**
-     * @expectedException \Geocoder\Exception\InvalidServerResponse
-     */
-    public function testGeocodeWithAddressGetsEmptyXML()
-    {
-        $emptyXML = <<<'XML'
-<?xml version="1.0" encoding="utf-8"?><searchresults_empty></searchresults_empty>
-XML;
-        $provider = Nominatim::withOpenStreetMapServer($this->getMockedHttpClient($emptyXML), 'Geocoder PHP/Nominatim Provider/Nominatim Test');
-        $provider->geocodeQuery(GeocodeQuery::create('Läntinen Pitkäkatu 35, Turku'));
-    }
-
     public function testReverseWithCoordinatesGetsError()
     {
-        $errorXml = <<<'XML'
-<?xml version="1.0" encoding="UTF-8" ?>
-<reversegeocode querystring='format=xml&amp;lat=-80.000000&amp;lon=-170.000000&amp;addressdetails=1'>
-    <error>Unable to geocode</error>
-</reversegeocode>
-XML;
-        $provider = Nominatim::withOpenStreetMapServer($this->getMockedHttpClient($errorXml), 'Geocoder PHP/Nominatim Provider/Nominatim Test');
+        $errorJSON = '{"error":"Unable to geocode"}';
+
+        $provider = Nominatim::withOpenStreetMapServer($this->getMockedHttpClient($errorJSON), 'Geocoder PHP/Nominatim Provider/Nominatim Test');
         $result = $provider->reverseQuery(ReverseQuery::fromCoordinates(-80.000000, -170.000000));
 
         $this->assertInstanceOf(Collection::class, $result);
@@ -117,16 +92,68 @@ XML;
         /** @var \Geocoder\Model\Address $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(50.896344, $result->getCoordinates()->getLatitude(), '', 0.01);
-        $this->assertEquals(4.3605984, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertEquals(50.896344, $result->getCoordinates()->getLatitude(), '', 0.00001);
+        $this->assertEquals(4.3605984, $result->getCoordinates()->getLongitude(), '', 0.00001);
+        $this->assertEquals('35', $result->getStreetNumber());
         $this->assertEquals('Avenue Jean de Bologne - Jean de Bolognelaan', $result->getStreetName());
         $this->assertEquals('1020', $result->getPostalCode());
         $this->assertEquals('Ville de Bruxelles - Stad Brussel', $result->getLocality());
         $this->assertEquals('Heysel - Heizel', $result->getSubLocality());
         $this->assertEquals('BE', $result->getCountry()->getCode());
 
-        $this->assertEquals('Data © OpenStreetMap contributors, ODbL 1.0. http://www.openstreetmap.org/copyright', $result->getAttribution());
-        $this->assertEquals('building', $result->getClass());
+        $this->assertEquals('Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright', $result->getAttribution());
+        $this->assertEquals('building', $result->getCategory());
+        $this->assertEquals('35, Avenue Jean de Bologne - Jean de Bolognelaan, Heysel - Heizel, Laeken / Laken, Ville de Bruxelles - Stad Brussel, Brussel-Hoofdstad - Bruxelles-Capitale, Région de Bruxelles-Capitale - Brussels Hoofdstedelijk Gewest, 1020, België / Belgique / Belgien', $result->getDisplayName());
+        $this->assertEquals(220754533, $result->getOSMId());
+        $this->assertEquals('way', $result->getOSMType());
+        $this->assertEquals('yes', $result->getType());
+    }
+
+    public function testGeocodeWithCountrycodes()
+    {
+        $provider = Nominatim::withOpenStreetMapServer($this->getHttpClient(), 'Geocoder PHP/Nominatim Provider/Nominatim Test');
+
+        $query = GeocodeQuery::create('palais royal')
+            ->withData('countrycodes', 'be');
+
+        $results = $provider->geocodeQuery($query);
+
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertGreaterThanOrEqual(1, $results->count());
+
+        /** @var \Geocoder\Model\Address $result */
+        foreach ($results as $result) {
+            $this->assertEquals('BE', $result->getCountry()->getCode());
+        }
+    }
+
+    public function testGeocodeWithViewbox()
+    {
+        $provider = Nominatim::withOpenStreetMapServer($this->getHttpClient(), 'Geocoder PHP/Nominatim Provider/Nominatim Test');
+
+        $query = GeocodeQuery::create('35 avenue jean de bologne 1020 bruxelles')
+            ->withData('viewbox', [4.3539793798, 50.8934444743, 4.3638069937, 50.9000218934])
+            ->withData('bounded', true);
+
+        $results = $provider->geocodeQuery($query);
+
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertCount(1, $results);
+
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results->first();
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(50.896344, $result->getCoordinates()->getLatitude(), '', 0.00001);
+        $this->assertEquals(4.3605984, $result->getCoordinates()->getLongitude(), '', 0.00001);
+        $this->assertEquals('35', $result->getStreetNumber());
+        $this->assertEquals('Avenue Jean de Bologne - Jean de Bolognelaan', $result->getStreetName());
+        $this->assertEquals('1020', $result->getPostalCode());
+        $this->assertEquals('Ville de Bruxelles - Stad Brussel', $result->getLocality());
+        $this->assertEquals('Heysel - Heizel', $result->getSubLocality());
+        $this->assertEquals('BE', $result->getCountry()->getCode());
+
+        $this->assertEquals('Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright', $result->getAttribution());
+        $this->assertEquals('building', $result->getCategory());
         $this->assertEquals('35, Avenue Jean de Bologne - Jean de Bolognelaan, Heysel - Heizel, Laeken / Laken, Ville de Bruxelles - Stad Brussel, Brussel-Hoofdstad - Bruxelles-Capitale, Région de Bruxelles-Capitale - Brussels Hoofdstedelijk Gewest, 1020, België / Belgique / Belgien', $result->getDisplayName());
         $this->assertEquals(220754533, $result->getOSMId());
         $this->assertEquals('way', $result->getOSMType());

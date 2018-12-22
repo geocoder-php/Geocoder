@@ -7,7 +7,6 @@
          bootstrap="vendor/autoload.php"
 >
     <php>
-        <server name="BINGMAPS_API_KEY" value="YOUR_API_KEY" />
         <server name="USE_CACHED_RESPONSES" value="true" />
     </php>
 
