@@ -66,7 +66,7 @@ install:
         if [[ $skip ]]; then
             echo -e "\\n\\e[1;34mIntermediate PHP version $PHP is skipped for pull requests.\\e[0m"
         elif [[ $deps = high ]]; then
-            echo "$COMPONENTS" | parallel --gnu -j10% "tfold {} 'cd {} && $GEOIP_EXT && $COMPOSER_UP && $PHPUNIT_X$LEGACY'"
+            echo "$COMPONENTS" | parallel --gnu -j10% "tfold {} 'cd {} && $GEOIP_EXT && composer require --dev roave/backward-compatibility-check && $COMPOSER_UP && $PHPUNIT_X$LEGACY' && ./vendor/bin/roave-backward-compatibility-check"
         elif [[ $deps = low ]]; then
             echo "$COMPONENTS" | parallel --gnu -j10% "tfold {} 'cd {} && $GEOIP_EXT && $COMPOSER_UP --prefer-lowest --prefer-stable && $PHPUNIT_X'"
         else
