@@ -25,6 +25,8 @@ matrix:
         - php: 7.0
         - php: 7.1
         - php: 7.2
+        - php: 7.3
+          env: deps="bc"
 
 before_install:
     - |
@@ -66,7 +68,7 @@ install:
         if [[ $skip ]]; then
             echo -e "\\n\\e[1;34mIntermediate PHP version $PHP is skipped for pull requests.\\e[0m"
         elif [[ $deps = high ]]; then
-            echo "$COMPONENTS" | parallel --gnu -j10% "tfold {} 'cd {} && $GEOIP_EXT && composer require --dev roave/backward-compatibility-check && $COMPOSER_UP && $PHPUNIT_X$LEGACY' && ./vendor/bin/roave-backward-compatibility-check"
+            echo "$COMPONENTS" | parallel --gnu -j10% "tfold {} 'cd {} && $GEOIP_EXT && $COMPOSER_UP && $PHPUNIT_X$LEGACY'"
         elif [[ $deps = low ]]; then
             echo "$COMPONENTS" | parallel --gnu -j10% "tfold {} 'cd {} && $GEOIP_EXT && $COMPOSER_UP --prefer-lowest --prefer-stable && $PHPUNIT_X'"
         else
@@ -77,4 +79,4 @@ install:
 
 script:
     - (run_tests)
-
+    - if [[ $deps = bc ]]; then composer require --dev roave/backward-compatibility-check && ./vendor/bin/roave-backward-compatibility-check; fi
