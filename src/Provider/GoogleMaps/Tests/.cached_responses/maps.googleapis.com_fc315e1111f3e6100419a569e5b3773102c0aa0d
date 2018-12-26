@@ -1,0 +1,75 @@
+s:2261:"{
+   "results" : [
+      {
+         "address_components" : [
+            {
+               "long_name" : "17141",
+               "short_name" : "17141",
+               "types" : [ "street_number" ]
+            },
+            {
+               "long_name" : "Collins Avenue",
+               "short_name" : "Collins Ave",
+               "types" : [ "route" ]
+            },
+            {
+               "long_name" : "Sunny Isles Beach",
+               "short_name" : "Sunny Isles Beach",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "Miami-Dade County",
+               "short_name" : "Miami-Dade County",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "Florida",
+               "short_name" : "FL",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "United States",
+               "short_name" : "US",
+               "types" : [ "country", "political" ]
+            },
+            {
+               "long_name" : "33160",
+               "short_name" : "33160",
+               "types" : [ "postal_code" ]
+            }
+         ],
+         "formatted_address" : "17141 Collins Ave, Sunny Isles Beach, FL 33160, USA",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : 25.9350362,
+                  "lng" : -80.1206364
+               },
+               "southwest" : {
+                  "lat" : 25.9348152,
+                  "lng" : -80.1212609
+               }
+            },
+            "location" : {
+               "lat" : 25.934944,
+               "lng" : -80.12091819999999
+            },
+            "location_type" : "ROOFTOP",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 25.9362746802915,
+                  "lng" : -80.11959966970849
+               },
+               "southwest" : {
+                  "lat" : 25.9335767197085,
+                  "lng" : -80.1222976302915
+               }
+            }
+         },
+         "place_id" : "ChIJ83rJXR-t2YgRVNLjsqI6Of0",
+         "types" : [ "premise" ]
+      }
+   ],
+   "status" : "OK"
+}
+";

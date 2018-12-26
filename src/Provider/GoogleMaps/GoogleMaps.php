@@ -242,6 +242,7 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
             $address = $address->withPointOfInterest($builder->getValue('point_of_interest'));
             $address = $address->withEstablishment($builder->getValue('establishment'));
             $address = $address->withSubLocalityLevels($builder->getValue('subLocalityLevel', []));
+            $address = $address->withStreetShortName($builder->getValue('streetShortName'));
             $results[] = $address;
 
             if (count($results) >= $limit) {
@@ -310,7 +311,7 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
 
             case 'route':
                 $builder->setStreetName($values->long_name);
-                $builder->setStreetShortName($values->short_name);
+                $builder->setValue('streetShortName', $values->short_name);
 
                 break;
 

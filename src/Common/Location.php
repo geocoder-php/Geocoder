@@ -54,13 +54,6 @@ interface Location
     public function getStreetName();
 
     /**
-     * Returns the street short name value.
-     *
-     * @return string|null
-     */
-    public function getStreetShortName();
-
-    /**
      * Returns the city or locality value.
      *
      * @return string|null

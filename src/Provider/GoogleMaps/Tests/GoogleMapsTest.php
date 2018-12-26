@@ -471,9 +471,9 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertInstanceOf(AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
-        /** @var Location $result */
+        /** @var GoogleAddress $result */
         $result = $results->first();
-        $this->assertInstanceOf(Address::class, $result);
+        $this->assertInstanceOf(GoogleAddress::class, $result);
         $this->assertEquals(25.934944, $result->getCoordinates()->getLatitude(), '', 0.001);
         $this->assertEquals(-80.120918, $result->getCoordinates()->getLongitude(), '', 0.001);
         $this->assertNotNull($result->getBounds());

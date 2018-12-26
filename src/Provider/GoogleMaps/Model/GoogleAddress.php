@@ -112,6 +112,11 @@ final class GoogleAddress extends Address
     private $subLocalityLevels;
 
     /**
+     * @var string|null
+     */
+    private $streetShortName;
+
+    /**
      * @param null|string $id
      *
      * @return GoogleAddress
@@ -501,6 +506,27 @@ final class GoogleAddress extends Address
 
         $new = clone $this;
         $new->subLocalityLevels = new AdminLevelCollection($subLocalityLevels);
+
+        return $new;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getStreetShortName()
+    {
+        return $this->streetShortName;
+    }
+
+    /**
+     * @param string|null $streetShortName
+     *
+     * @return $this
+     */
+    public function withStreetShortName(string $streetShortName = null)
+    {
+        $new = clone $this;
+        $new->streetShortName = $streetShortName;
 
         return $new;
     }
