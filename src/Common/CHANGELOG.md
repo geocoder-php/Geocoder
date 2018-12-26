@@ -4,6 +4,11 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 
 ## Unreleased
 
+## 4.2.1
+
+### Fixed
+- Bug in `AddressBuilder` where same expression is compare twice
+
 ## 4.2.0
 
 ### Added
