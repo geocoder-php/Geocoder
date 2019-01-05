@@ -17,7 +17,7 @@ use Geocoder\Location;
 /**
  * @author Jan Sorgalla <jsorgalla@googlemail.com>
  */
-final class GeoJson extends AbstractArrayDumper
+final class GeoJson extends AbstractArrayDumper implements Dumper
 {
     /**
      * {@inheritdoc}
