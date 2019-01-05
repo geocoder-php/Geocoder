@@ -27,7 +27,7 @@ class IntegrationTest extends ProviderIntegrationTest
 
     protected function createProvider(HttpClient $httpClient)
     {
-        return new GoogleMaps($httpClient);
+        return new GoogleMaps($httpClient, null, $_SERVER['GOOGLE_GEOCODING_KEY']);
     }
 
     protected function getCacheDir()

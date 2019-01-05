@@ -326,12 +326,12 @@ class GoogleMapsTest extends BaseTestCase
 
     /**
      * @expectedException \Geocoder\Exception\InvalidCredentials
-     * @expectedExceptionMessage API key is invalid https://maps.googleapis.com/maps/api/geocode/json?address=Columbia%20University&key=fake_key
+     * @expectedExceptionMessage API key is invalid https://maps.googleapis.com/maps/api/geocode/json?address=Columbia&key=fake_key
      */
     public function testGeocodeWithRealInvalidApiKey()
     {
         $provider = new GoogleMaps($this->getHttpClient($this->testAPIKey), null, $this->testAPIKey);
-        $provider->geocodeQuery(GeocodeQuery::create('Columbia University'));
+        $provider->geocodeQuery(GeocodeQuery::create('Columbia'));
     }
 
     public function testGeocodePostalTown()
@@ -516,7 +516,7 @@ class GoogleMapsTest extends BaseTestCase
         $results = $provider->geocodeQuery(GeocodeQuery::create('1125 17th St, Denver, CO 80202'));
 
         $this->assertInstanceOf(AddressCollection::class, $results);
-        $this->assertCount(2, $results);
+        $this->assertCount(1, $results);
 
         /** @var GoogleAddress $result */
         $result = $results->first();
@@ -538,7 +538,7 @@ class GoogleMapsTest extends BaseTestCase
         $results = $provider->geocodeQuery(GeocodeQuery::create('darwin'));
 
         $this->assertInstanceOf(AddressCollection::class, $results);
-        $this->assertCount(1, $results);
+        $this->assertCount(3, $results);
 
         /** @var GoogleAddress $result */
         $result = $results->first();
@@ -605,8 +605,8 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertInstanceOf(Address::class, $result);
         $this->assertNotNull($result->getBounds());
         $this->assertEquals(50.8376, $result->getBounds()->getSouth(), '', 0.001);
-        $this->assertEquals(5.8259, $result->getBounds()->getWest(), '', 0.001);
-        $this->assertEquals(50.8460, $result->getBounds()->getNorth(), '', 0.001);
-        $this->assertEquals(5.8286, $result->getBounds()->getEast(), '', 0.001);
+        $this->assertEquals(5.8113, $result->getBounds()->getWest(), '', 0.001);
+        $this->assertEquals(50.8517, $result->getBounds()->getNorth(), '', 0.001);
+        $this->assertEquals(5.8433, $result->getBounds()->getEast(), '', 0.001);
     }
 }
