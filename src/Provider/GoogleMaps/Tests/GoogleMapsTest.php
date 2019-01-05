@@ -90,7 +90,7 @@ class GoogleMapsTest extends BaseTestCase
             $this->markTestSkipped('You need to configure the GOOGLE_GEOCODING_KEY value in phpunit.xml');
         }
 
-        $provider = new GoogleMaps($this->getHttpClient($_SERVER['GOOGLE_GEOCODING_KEY']), 'Île-de-France', $_SERVER['GOOGLE_GEOCODING_KEY']);
+        $provider = new GoogleMaps($this->getHttpClient($_SERVER['GOOGLE_GEOCODING_KEY']), 'Ile-de-France', $_SERVER['GOOGLE_GEOCODING_KEY']);
 
         $results = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France')->withLocale('fr-FR'));
 
