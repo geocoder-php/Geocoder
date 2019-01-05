@@ -20,7 +20,6 @@
     },
     "require-dev": {
         "geocoder-php/provider-integration-tests": "^1.0",
-        "nyholm/psr7": "^1.0",
         "php-http/curl-client": "^1.7",
         "php-http/message": "^1.0",
         "phpunit/phpunit": "6.3.*"

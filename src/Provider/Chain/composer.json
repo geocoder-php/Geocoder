@@ -20,7 +20,6 @@
         "phpunit/phpunit": "6.3.*",
         "php-http/message": "^1.0",
         "php-http/curl-client": "^1.7",
-        "nyholm/psr7": "^0.2.2",
         "nyholm/nsa": "^1.1"
     },
     "provide": {

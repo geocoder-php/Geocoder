@@ -26,7 +26,7 @@
         "symfony/stopwatch": "~2.5",
         "php-http/message": "^1.0",
         "php-http/mock-client": "^1.0",
-        "nyholm/psr7": "^0.2.2"
+        "nyholm/psr7": "^1.0"
     },
     "autoload": {
         "psr-4": { "Geocoder\\Http\\": "" },
