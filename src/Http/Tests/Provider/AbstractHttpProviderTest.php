@@ -18,7 +18,6 @@ use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Http\Client\HttpClient;
-use Http\Discovery\ClassDiscovery;
 use Http\Mock\Client;
 use PHPUnit\Framework\TestCase;
 
