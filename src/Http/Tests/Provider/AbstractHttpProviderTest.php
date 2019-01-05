@@ -24,11 +24,6 @@ use PHPUnit\Framework\TestCase;
 
 class AbstractHttpProviderTest extends TestCase
 {
-    public static function setUpBeforeClass()
-    {
-        ClassDiscovery::prependStrategy('\Nyholm\Psr7\Httplug\DiscoveryStrategy');
-    }
-
     public function testHttpClientGetter()
     {
         $client = $this->getMockBuilder(Client::class)->disableOriginalConstructor()->getMock();
