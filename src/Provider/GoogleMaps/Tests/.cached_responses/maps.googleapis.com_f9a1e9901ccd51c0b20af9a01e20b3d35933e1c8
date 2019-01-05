@@ -1,4 +1,8 @@
-s:14972:"{
+s:17865:"{
+   "plus_code" : {
+      "compound_code" : "V97Q+7H Paris, France",
+      "global_code" : "8FW4V97Q+7H"
+   },
    "results" : [
       {
          "address_components" : [
@@ -41,35 +45,39 @@ s:14972:"{
          "formatted_address" : "12 Avenue Gambetta, 75020 Paris, France",
          "geometry" : {
             "location" : {
-               "lat" : 48.8630886,
-               "lng" : 2.3889524
+               "lat" : 48.8631361,
+               "lng" : 2.3889219
             },
             "location_type" : "ROOFTOP",
             "viewport" : {
                "northeast" : {
-                  "lat" : 48.86443758029149,
-                  "lng" : 2.390301380291502
+                  "lat" : 48.8644850802915,
+                  "lng" : 2.390270880291502
                },
                "southwest" : {
-                  "lat" : 48.8617396197085,
-                  "lng" : 2.387603419708498
+                  "lat" : 48.8617871197085,
+                  "lng" : 2.387572919708498
                }
             }
          },
          "place_id" : "ChIJ9aLL3vJt5kcR61GCze3v6fg",
+         "plus_code" : {
+            "compound_code" : "V97Q+7H Paris, France",
+            "global_code" : "8FW4V97Q+7H"
+         },
          "types" : [ "street_address" ]
       },
       {
          "address_components" : [
             {
-               "long_name" : "Père-Lachaise",
-               "short_name" : "Père-Lachaise",
-               "types" : [ "neighborhood", "political" ]
+               "long_name" : "10",
+               "short_name" : "10",
+               "types" : [ "street_number" ]
             },
             {
-               "long_name" : "20th arrondissement",
-               "short_name" : "20th arrondissement",
-               "types" : [ "political", "sublocality", "sublocality_level_1" ]
+               "long_name" : "Avenue Gambetta",
+               "short_name" : "Avenue Gambetta",
+               "types" : [ "route" ]
             },
             {
                "long_name" : "Paris",
@@ -97,36 +105,153 @@ s:14972:"{
                "types" : [ "postal_code" ]
             }
          ],
-         "formatted_address" : "Père-Lachaise, 75020 Paris, France",
+         "formatted_address" : "10 Avenue Gambetta, 75020 Paris, France",
          "geometry" : {
-            "bounds" : {
-               "northeast" : {
-                  "lat" : 48.8707461,
-                  "lng" : 2.4064679
-               },
-               "southwest" : {
-                  "lat" : 48.856442,
-                  "lng" : 2.383115
-               }
-            },
             "location" : {
-               "lat" : 48.8627872,
-               "lng" : 2.3928087
+               "lat" : 48.8630842,
+               "lng" : 2.3889015
             },
-            "location_type" : "APPROXIMATE",
+            "location_type" : "ROOFTOP",
             "viewport" : {
                "northeast" : {
-                  "lat" : 48.8707461,
-                  "lng" : 2.4064679
+                  "lat" : 48.8644331802915,
+                  "lng" : 2.390250480291502
                },
                "southwest" : {
-                  "lat" : 48.856442,
-                  "lng" : 2.383115
+                  "lat" : 48.8617352197085,
+                  "lng" : 2.387552519708498
                }
             }
          },
-         "place_id" : "ChIJ8eVDMoxt5kcRHsuLm96IHm8",
-         "types" : [ "neighborhood", "political" ]
+         "place_id" : "ChIJh02L3vJt5kcRh2WYTFt29tY",
+         "plus_code" : {
+            "compound_code" : "V97Q+6H Paris, France",
+            "global_code" : "8FW4V97Q+6H"
+         },
+         "types" : [ "establishment", "health", "point_of_interest" ]
+      },
+      {
+         "address_components" : [
+            {
+               "long_name" : "12",
+               "short_name" : "12",
+               "types" : [ "street_number" ]
+            },
+            {
+               "long_name" : "Avenue Gambetta",
+               "short_name" : "Avenue Gambetta",
+               "types" : [ "route" ]
+            },
+            {
+               "long_name" : "Paris",
+               "short_name" : "Paris",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "Paris",
+               "short_name" : "Paris",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "Île-de-France",
+               "short_name" : "Île-de-France",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "France",
+               "short_name" : "FR",
+               "types" : [ "country", "political" ]
+            },
+            {
+               "long_name" : "75020",
+               "short_name" : "75020",
+               "types" : [ "postal_code" ]
+            }
+         ],
+         "formatted_address" : "12 Avenue Gambetta, 75020 Paris, France",
+         "geometry" : {
+            "location" : {
+               "lat" : 48.863231,
+               "lng" : 2.388866
+            },
+            "location_type" : "RANGE_INTERPOLATED",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 48.8645799802915,
+                  "lng" : 2.390214980291502
+               },
+               "southwest" : {
+                  "lat" : 48.8618820197085,
+                  "lng" : 2.387517019708498
+               }
+            }
+         },
+         "place_id" : "EicxMiBBdmVudWUgR2FtYmV0dGEsIDc1MDIwIFBhcmlzLCBGcmFuY2UiGhIYChQKEgn_6nXc8m3mRxEVegAPC1uUURAM",
+         "types" : [ "street_address" ]
+      },
+      {
+         "address_components" : [
+            {
+               "long_name" : "Place Auguste Métivier",
+               "short_name" : "Place Auguste Métivier",
+               "types" : [ "route" ]
+            },
+            {
+               "long_name" : "Paris",
+               "short_name" : "Paris",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "Paris",
+               "short_name" : "Paris",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "Île-de-France",
+               "short_name" : "Île-de-France",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "France",
+               "short_name" : "FR",
+               "types" : [ "country", "political" ]
+            },
+            {
+               "long_name" : "75020",
+               "short_name" : "75020",
+               "types" : [ "postal_code" ]
+            }
+         ],
+         "formatted_address" : "Place Auguste Métivier, 75020 Paris, France",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : 48.8631767,
+                  "lng" : 2.3886528
+               },
+               "southwest" : {
+                  "lat" : 48.86308349999999,
+                  "lng" : 2.3880477
+               }
+            },
+            "location" : {
+               "lat" : 48.8631386,
+               "lng" : 2.3883477
+            },
+            "location_type" : "GEOMETRIC_CENTER",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 48.8644790802915,
+                  "lng" : 2.389699230291502
+               },
+               "southwest" : {
+                  "lat" : 48.8617811197085,
+                  "lng" : 2.387001269708498
+               }
+            }
+         },
+         "place_id" : "ChIJnZPA4_Jt5kcRlLyR-MkaJqs",
+         "types" : [ "route" ]
       },
       {
          "address_components" : [
@@ -195,60 +320,6 @@ s:14972:"{
       {
          "address_components" : [
             {
-               "long_name" : "Paris",
-               "short_name" : "Paris",
-               "types" : [ "locality", "political" ]
-            },
-            {
-               "long_name" : "Paris",
-               "short_name" : "Paris",
-               "types" : [ "administrative_area_level_2", "political" ]
-            },
-            {
-               "long_name" : "Île-de-France",
-               "short_name" : "Île-de-France",
-               "types" : [ "administrative_area_level_1", "political" ]
-            },
-            {
-               "long_name" : "France",
-               "short_name" : "FR",
-               "types" : [ "country", "political" ]
-            }
-         ],
-         "formatted_address" : "Paris, France",
-         "geometry" : {
-            "bounds" : {
-               "northeast" : {
-                  "lat" : 48.9021449,
-                  "lng" : 2.4699208
-               },
-               "southwest" : {
-                  "lat" : 48.815573,
-                  "lng" : 2.224199
-               }
-            },
-            "location" : {
-               "lat" : 48.856614,
-               "lng" : 2.3522219
-            },
-            "location_type" : "APPROXIMATE",
-            "viewport" : {
-               "northeast" : {
-                  "lat" : 48.9021449,
-                  "lng" : 2.4699208
-               },
-               "southwest" : {
-                  "lat" : 48.815573,
-                  "lng" : 2.225193
-               }
-            }
-         },
-         "place_id" : "ChIJD7fiBh9u5kcRYJSMaMOCCwQ",
-         "types" : [ "locality", "political" ]
-      },
-      {
-         "address_components" : [
-            {
                "long_name" : "75020",
                "short_name" : "75020",
                "types" : [ "postal_code" ]
@@ -313,6 +384,11 @@ s:14972:"{
                "types" : [ "administrative_area_level_2", "political" ]
             },
             {
+               "long_name" : "Paris",
+               "short_name" : "Paris",
+               "types" : [ "locality", "political" ]
+            },
+            {
                "long_name" : "Île-de-France",
                "short_name" : "Île-de-France",
                "types" : [ "administrative_area_level_1", "political" ]
@@ -347,12 +423,66 @@ s:14972:"{
                },
                "southwest" : {
                   "lat" : 48.815573,
-                  "lng" : 2.225193
+                  "lng" : 2.224199
                }
             }
          },
          "place_id" : "ChIJD7fiBh9u5kcRMCqLaMOCCwM",
          "types" : [ "administrative_area_level_2", "political" ]
+      },
+      {
+         "address_components" : [
+            {
+               "long_name" : "Paris",
+               "short_name" : "Paris",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "Paris",
+               "short_name" : "Paris",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "Île-de-France",
+               "short_name" : "Île-de-France",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "France",
+               "short_name" : "FR",
+               "types" : [ "country", "political" ]
+            }
+         ],
+         "formatted_address" : "Paris, France",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : 48.9021449,
+                  "lng" : 2.4699208
+               },
+               "southwest" : {
+                  "lat" : 48.815573,
+                  "lng" : 2.224199
+               }
+            },
+            "location" : {
+               "lat" : 48.856614,
+               "lng" : 2.3522219
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 48.9021449,
+                  "lng" : 2.4699208
+               },
+               "southwest" : {
+                  "lat" : 48.815573,
+                  "lng" : 2.224199
+               }
+            }
+         },
+         "place_id" : "ChIJD7fiBh9u5kcRYJSMaMOCCwQ",
+         "types" : [ "locality", "political" ]
       },
       {
          "address_components" : [
@@ -401,50 +531,6 @@ s:14972:"{
       {
          "address_components" : [
             {
-               "long_name" : "Paris Metropolitan Area",
-               "short_name" : "Paris Metropolitan Area",
-               "types" : [ "political" ]
-            },
-            {
-               "long_name" : "France",
-               "short_name" : "FR",
-               "types" : [ "country", "political" ]
-            }
-         ],
-         "formatted_address" : "Paris Metropolitan Area, France",
-         "geometry" : {
-            "bounds" : {
-               "northeast" : {
-                  "lat" : 49.44956,
-                  "lng" : 3.5590339
-               },
-               "southwest" : {
-                  "lat" : 48.065382,
-                  "lng" : 1.3557489
-               }
-            },
-            "location" : {
-               "lat" : 48.8575712,
-               "lng" : 2.2771715
-            },
-            "location_type" : "APPROXIMATE",
-            "viewport" : {
-               "northeast" : {
-                  "lat" : 49.44956,
-                  "lng" : 3.5590339
-               },
-               "southwest" : {
-                  "lat" : 48.065382,
-                  "lng" : 1.3557489
-               }
-            }
-         },
-         "place_id" : "ChIJW36m20gL5kcRiMnAEpHgyq8",
-         "types" : [ "political" ]
-      },
-      {
-         "address_components" : [
-            {
                "long_name" : "France",
                "short_name" : "FR",
                "types" : [ "country", "political" ]
@@ -458,7 +544,7 @@ s:14972:"{
                   "lng" : 9.6624999
                },
                "southwest" : {
-                  "lat" : 41.3253001,
+                  "lat" : 41.31433,
                   "lng" : -5.5591
                }
             },
@@ -469,12 +555,12 @@ s:14972:"{
             "location_type" : "APPROXIMATE",
             "viewport" : {
                "northeast" : {
-                  "lat" : 51.0891285,
-                  "lng" : 9.5597934
+                  "lat" : 51.1241999,
+                  "lng" : 9.6624999
                },
                "southwest" : {
-                  "lat" : 41.342778,
-                  "lng" : -5.1422579
+                  "lat" : 41.31433,
+                  "lng" : -5.5591
                }
             }
          },

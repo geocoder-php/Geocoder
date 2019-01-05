@@ -1,4 +1,4 @@
-s:2168:"{
+s:2307:"{
    "results" : [
       {
          "address_components" : [
@@ -62,6 +62,10 @@ s:2168:"{
             }
          },
          "place_id" : "ChIJKZMcRH4IvUcReVYGvQMQ3EA",
+         "plus_code" : {
+            "compound_code" : "5JQP+HM Frankfurt, Germany",
+            "global_code" : "9F2C5JQP+HM"
+         },
          "types" : [ "street_address" ]
       }
    ],

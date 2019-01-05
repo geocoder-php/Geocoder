@@ -1,17 +1,7 @@
-s:1921:"{
+s:1701:"{
    "results" : [
       {
          "address_components" : [
-            {
-               "long_name" : "10",
-               "short_name" : "10",
-               "types" : [ "street_number" ]
-            },
-            {
-               "long_name" : "Avenue Gambetta",
-               "short_name" : "Avenue Gambetta",
-               "types" : [ "route" ]
-            },
             {
                "long_name" : "Paris",
                "short_name" : "Paris",
@@ -31,33 +21,38 @@ s:1921:"{
                "long_name" : "France",
                "short_name" : "FR",
                "types" : [ "country", "political" ]
-            },
-            {
-               "long_name" : "75020",
-               "short_name" : "75020",
-               "types" : [ "postal_code" ]
             }
          ],
-         "formatted_address" : "10 Avenue Gambetta, 75020 Paris, France",
+         "formatted_address" : "Paris, France",
          "geometry" : {
-            "location" : {
-               "lat" : 48.8631013,
-               "lng" : 2.3888086
-            },
-            "location_type" : "ROOFTOP",
-            "viewport" : {
+            "bounds" : {
                "northeast" : {
-                  "lat" : 48.8644502802915,
-                  "lng" : 2.390157580291502
+                  "lat" : 48.9021449,
+                  "lng" : 2.4699208
                },
                "southwest" : {
-                  "lat" : 48.8617523197085,
-                  "lng" : 2.387459619708498
+                  "lat" : 48.815573,
+                  "lng" : 2.224199
+               }
+            },
+            "location" : {
+               "lat" : 48.856614,
+               "lng" : 2.3522219
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 48.9021449,
+                  "lng" : 2.4699208
+               },
+               "southwest" : {
+                  "lat" : 48.815573,
+                  "lng" : 2.224199
                }
             }
          },
-         "place_id" : "ChIJ4b303vJt5kcRF9AQdh4ZjWc",
-         "types" : [ "street_address" ]
+         "place_id" : "ChIJD7fiBh9u5kcRYJSMaMOCCwQ",
+         "types" : [ "locality", "political" ]
       }
    ],
    "status" : "OK"

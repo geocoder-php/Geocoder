@@ -70,7 +70,7 @@ class GoogleMapsTest extends BaseTestCase
      */
     public function testGeocodeWithRealIp()
     {
-        $provider = new GoogleMaps($this->getHttpClient());
+        $provider = $this->getGoogleMapsProvider();
         $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
@@ -86,7 +86,12 @@ class GoogleMapsTest extends BaseTestCase
 
     public function testGeocodeWithRealAddress()
     {
-        $provider = new GoogleMaps($this->getHttpClient(), 'Île-de-France');
+        if (!isset($_SERVER['GOOGLE_GEOCODING_KEY'])) {
+            $this->markTestSkipped('You need to configure the GOOGLE_GEOCODING_KEY value in phpunit.xml');
+        }
+
+        $provider = new GoogleMaps($this->getHttpClient($_SERVER['GOOGLE_GEOCODING_KEY']), 'Ile-de-France', $_SERVER['GOOGLE_GEOCODING_KEY']);
+
         $results = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France')->withLocale('fr-FR'));
 
         $this->assertInstanceOf(AddressCollection::class, $results);
@@ -118,7 +123,7 @@ class GoogleMapsTest extends BaseTestCase
 
     public function testGeocodeBoundsWithRealAddressForNonRooftopLocation()
     {
-        $provider = new GoogleMaps($this->getHttpClient());
+        $provider = $this->getGoogleMapsProvider();
         $results = $provider->geocodeQuery(GeocodeQuery::create('Paris, France'));
 
         $this->assertInstanceOf(AddressCollection::class, $results);
@@ -146,7 +151,7 @@ class GoogleMapsTest extends BaseTestCase
 
     public function testReverseWithRealCoordinates()
     {
-        $provider = new GoogleMaps($this->getHttpClient());
+        $provider = $this->getGoogleMapsProvider();
         $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(48.8631507, 2.388911));
 
         $this->assertInstanceOf(AddressCollection::class, $results);
@@ -169,7 +174,7 @@ class GoogleMapsTest extends BaseTestCase
 
     public function testGeocodeWithCityDistrict()
     {
-        $provider = new GoogleMaps($this->getHttpClient());
+        $provider = $this->getGoogleMapsProvider();
         $results = $provider->geocodeQuery(GeocodeQuery::create('Kalbacher Hauptstraße 10, 60437 Frankfurt, Germany'));
 
         $this->assertInstanceOf(AddressCollection::class, $results);
@@ -185,7 +190,7 @@ class GoogleMapsTest extends BaseTestCase
      * @expectedException \Geocoder\Exception\InvalidCredentials
      * @expectedExceptionMessage API key is invalid https://maps.googleapis.com/maps/api/geocode/json?address=10%20avenue%20Gambetta%2C%20Paris%2C%20France
      */
-    public function testGeocodeWithInavlidApiKey()
+    public function testGeocodeWithInvalidApiKey()
     {
         $provider = new GoogleMaps($this->getMockedHttpClient('{"error_message":"The provided API key is invalid.", "status":"REQUEST_DENIED"}'));
         $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
@@ -193,12 +198,7 @@ class GoogleMapsTest extends BaseTestCase
 
     public function testGeocodeWithRealValidApiKey()
     {
-        if (!isset($_SERVER['GOOGLE_GEOCODING_KEY'])) {
-            $this->markTestSkipped('You need to configure the GOOGLE_GEOCODING_KEY value in phpunit.xml');
-        }
-
-        $provider = new GoogleMaps($this->getHttpClient($_SERVER['GOOGLE_GEOCODING_KEY']), null, $_SERVER['GOOGLE_GEOCODING_KEY']);
-
+        $provider = $this->getGoogleMapsProvider();
         $results = $provider->geocodeQuery(GeocodeQuery::create('Columbia University'));
 
         $this->assertInstanceOf(AddressCollection::class, $results);
@@ -217,12 +217,7 @@ class GoogleMapsTest extends BaseTestCase
 
     public function testGeocodeWithComponentFiltering()
     {
-        if (!isset($_SERVER['GOOGLE_GEOCODING_KEY'])) {
-            $this->markTestSkipped('You need to configure the GOOGLE_GEOCODING_KEY value in phpunit.xml');
-        }
-
-        $provider = new GoogleMaps($this->getHttpClient($_SERVER['GOOGLE_GEOCODING_KEY']), null, $_SERVER['GOOGLE_GEOCODING_KEY']);
-
+        $provider = $this->getGoogleMapsProvider();
         $query = GeocodeQuery::create('Sankt Petri')->withData('components', [
             'country' => 'SE',
             'locality' => 'Malmö',
@@ -302,18 +297,17 @@ class GoogleMapsTest extends BaseTestCase
 
     /**
      * @expectedException \Geocoder\Exception\InvalidCredentials
-     * @expectedExceptionMessage API key is invalid https://maps.googleapis.com/maps/api/geocode/json?address=Columbia%20University&key=fake_key
+     * @expectedExceptionMessage API key is invalid https://maps.googleapis.com/maps/api/geocode/json?address=Columbia&key=fake_key
      */
     public function testGeocodeWithRealInvalidApiKey()
     {
-        $provider = new GoogleMaps($this->getHttpClient(), null, $this->testAPIKey);
-
-        $provider->geocodeQuery(GeocodeQuery::create('Columbia University'));
+        $provider = new GoogleMaps($this->getHttpClient($this->testAPIKey), null, $this->testAPIKey);
+        $provider->geocodeQuery(GeocodeQuery::create('Columbia'));
     }
 
     public function testGeocodePostalTown()
     {
-        $provider = new GoogleMaps($this->getHttpClient());
+        $provider = $this->getGoogleMapsProvider();
         $results = $provider->geocodeQuery(GeocodeQuery::create('CF37, United Kingdom'));
 
         $this->assertInstanceOf(AddressCollection::class, $results);
@@ -416,7 +410,7 @@ class GoogleMapsTest extends BaseTestCase
 
     public function testGeocodeWithSupremise()
     {
-        $provider = new GoogleMaps($this->getHttpClient());
+        $provider = $this->getGoogleMapsProvider();
         $results = $provider->geocodeQuery(GeocodeQuery::create('2123 W Mineral Ave Apt 61,Littleton,CO8 0120'));
 
         $this->assertInstanceOf(AddressCollection::class, $results);
@@ -430,7 +424,7 @@ class GoogleMapsTest extends BaseTestCase
 
     public function testGeocodeWithNaturalFeatureComponent()
     {
-        $provider = new GoogleMaps($this->getHttpClient());
+        $provider = $this->getGoogleMapsProvider();
         $results = $provider->geocodeQuery(GeocodeQuery::create('Durmitor Nacionalni Park'));
 
         $this->assertInstanceOf(AddressCollection::class, $results);
@@ -439,16 +433,16 @@ class GoogleMapsTest extends BaseTestCase
         /** @var GoogleAddress $result */
         $result = $results->first();
         $this->assertInstanceOf(Address::class, $result);
-        $this->assertEquals('Durmitor Nacionalni Park', $result->getNaturalFeature());
-        $this->assertEquals('Durmitor Nacionalni Park', $result->getPark());
-        $this->assertEquals('Durmitor Nacionalni Park', $result->getPointOfInterest());
+        $this->assertEquals('Durmitor National Park', $result->getNaturalFeature());
+        $this->assertEquals('Durmitor National Park', $result->getPark());
+        $this->assertEquals('Durmitor National Park', $result->getPointOfInterest());
         $this->assertEquals('Montenegro', $result->getPolitical());
         $this->assertEquals('Montenegro', $result->getCountry());
     }
 
     public function testGeocodeWithAirportComponent()
     {
-        $provider = new GoogleMaps($this->getHttpClient());
+        $provider = $this->getGoogleMapsProvider();
         $results = $provider->geocodeQuery(GeocodeQuery::create('Brisbane Airport'));
 
         $this->assertInstanceOf(AddressCollection::class, $results);
@@ -464,7 +458,7 @@ class GoogleMapsTest extends BaseTestCase
 
     public function testGeocodeWithPremiseComponent()
     {
-        $provider = new GoogleMaps($this->getHttpClient());
+        $provider = $this->getGoogleMapsProvider();
         $results = $provider->geocodeQuery(GeocodeQuery::create('1125 17th St, Denver, CO 80202'));
 
         $this->assertInstanceOf(AddressCollection::class, $results);
@@ -481,7 +475,7 @@ class GoogleMapsTest extends BaseTestCase
 
     public function testGeocodeWithColloquialAreaComponent()
     {
-        $provider = new GoogleMaps($this->getHttpClient());
+        $provider = $this->getGoogleMapsProvider();
         $results = $provider->geocodeQuery(GeocodeQuery::create('darwin'));
 
         $this->assertInstanceOf(AddressCollection::class, $results);
@@ -495,7 +489,7 @@ class GoogleMapsTest extends BaseTestCase
 
     public function testGeocodeWithWardComponent()
     {
-        $provider = new GoogleMaps($this->getHttpClient());
+        $provider = $this->getGoogleMapsProvider();
         $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(35.03937, 135.729243));
 
         $this->assertInstanceOf(AddressCollection::class, $results);
@@ -509,7 +503,7 @@ class GoogleMapsTest extends BaseTestCase
 
     public function testReverseWithSubLocalityLevels()
     {
-        $provider = new GoogleMaps($this->getHttpClient());
+        $provider = $this->getGoogleMapsProvider();
         $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(36.2745084, 136.9003169));
 
         $this->assertInstanceOf(AddressCollection::class, $results);
@@ -519,7 +513,6 @@ class GoogleMapsTest extends BaseTestCase
         $result = $results->first();
         $this->assertInstanceOf(Address::class, $result);
         $this->assertInstanceOf('\Geocoder\Model\AdminLevelCollection', $result->getSubLocalityLevels());
-        $this->assertEquals('Iijima', $result->getSubLocalityLevels()->get(1)->getName());
         $this->assertEquals('58', $result->getSubLocalityLevels()->get(4)->getName());
         $this->assertEquals(1, $result->getSubLocalityLevels()->get(1)->getLevel());
         $this->assertEquals(4, $result->getSubLocalityLevels()->get(4)->getLevel());
@@ -527,7 +520,7 @@ class GoogleMapsTest extends BaseTestCase
 
     public function testGeocodeBoundsWithRealAddressWithViewportOnly()
     {
-        $provider = new GoogleMaps($this->getHttpClient());
+        $provider = $this->getGoogleMapsProvider();
         $results = $provider->geocodeQuery(GeocodeQuery::create('Sibbe, Netherlands'));
 
         $this->assertInstanceOf(AddressCollection::class, $results);
@@ -537,9 +530,24 @@ class GoogleMapsTest extends BaseTestCase
         $result = $results->first();
         $this->assertInstanceOf(Address::class, $result);
         $this->assertNotNull($result->getBounds());
-        $this->assertEquals(50.8433, $result->getBounds()->getSouth(), '', 0.001);
-        $this->assertEquals(5.8259, $result->getBounds()->getWest(), '', 0.001);
-        $this->assertEquals(50.8460, $result->getBounds()->getNorth(), '', 0.001);
-        $this->assertEquals(5.8286, $result->getBounds()->getEast(), '', 0.001);
+        $this->assertEquals(50.8376, $result->getBounds()->getSouth(), '', 0.001);
+        $this->assertEquals(5.8113, $result->getBounds()->getWest(), '', 0.001);
+        $this->assertEquals(50.8517, $result->getBounds()->getNorth(), '', 0.001);
+        $this->assertEquals(5.8433, $result->getBounds()->getEast(), '', 0.001);
+    }
+
+    private function getGoogleMapsProvider(): GoogleMaps
+    {
+        if (!isset($_SERVER['GOOGLE_GEOCODING_KEY'])) {
+            $this->markTestSkipped('You need to configure the GOOGLE_GEOCODING_KEY value in phpunit.xml');
+        }
+
+        $provider = new GoogleMaps(
+            $this->getHttpClient($_SERVER['GOOGLE_GEOCODING_KEY']),
+            null,
+            $_SERVER['GOOGLE_GEOCODING_KEY']
+        );
+
+        return $provider;
     }
 }

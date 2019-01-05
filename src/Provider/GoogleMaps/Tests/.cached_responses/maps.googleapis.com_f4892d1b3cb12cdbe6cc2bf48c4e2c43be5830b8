@@ -1,12 +1,7 @@
-s:2162:"{
+s:2267:"{
    "results" : [
       {
          "address_components" : [
-            {
-               "long_name" : "10 Downing Street",
-               "short_name" : "10 Downing Street",
-               "types" : [ "establishment", "point_of_interest" ]
-            },
             {
                "long_name" : "10",
                "short_name" : "10",
@@ -16,6 +11,11 @@ s:2162:"{
                "long_name" : "Downing Street",
                "short_name" : "Downing St",
                "types" : [ "route" ]
+            },
+            {
+               "long_name" : "Westminster",
+               "short_name" : "Westminster",
+               "types" : [ "neighborhood", "political" ]
             },
             {
                "long_name" : "London",
@@ -38,18 +38,18 @@ s:2162:"{
                "types" : [ "country", "political" ]
             },
             {
-               "long_name" : "SW1A 2AA",
-               "short_name" : "SW1A 2AA",
+               "long_name" : "SW1A 2AB",
+               "short_name" : "SW1A 2AB",
                "types" : [ "postal_code" ]
             }
          ],
-         "formatted_address" : "10 Downing Street, 10 Downing St, London SW1A 2AA, UK",
+         "formatted_address" : "10 Downing St, Westminster, London SW1A 2AB, UK",
          "geometry" : {
             "location" : {
                "lat" : 51.5033635,
                "lng" : -0.1276248
             },
-            "location_type" : "APPROXIMATE",
+            "location_type" : "ROOFTOP",
             "viewport" : {
                "northeast" : {
                   "lat" : 51.5047124802915,
@@ -61,8 +61,12 @@ s:2162:"{
                }
             }
          },
-         "place_id" : "ChIJRxzRQcUEdkgRGVaKyzmkgvg",
-         "types" : [ "establishment", "point_of_interest" ]
+         "place_id" : "ChIJHcZsasUEdkgRNJXdCfMeyi4",
+         "plus_code" : {
+            "compound_code" : "GV3C+8X Westminster, London, United Kingdom",
+            "global_code" : "9C3XGV3C+8X"
+         },
+         "types" : [ "street_address" ]
       }
    ],
    "status" : "OK"
