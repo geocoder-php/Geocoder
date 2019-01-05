@@ -1,16 +1,20 @@
-s:12245:"{
+s:14690:"{
+   "plus_code" : {
+      "compound_code" : "7WF2+R4 Shirakawa, Gifu Prefecture, Japan",
+      "global_code" : "8Q8R7WF2+R4"
+   },
    "results" : [
       {
          "address_components" : [
             {
                "long_name" : "58",
                "short_name" : "58",
-               "types" : [ "political", "sublocality", "sublocality_level_4" ]
+               "types" : [ "premise" ]
             },
             {
                "long_name" : "Iijima",
                "short_name" : "Iijima",
-               "types" : [ "political", "sublocality", "sublocality_level_1" ]
+               "types" : [ "political", "sublocality", "sublocality_level_2" ]
             },
             {
                "long_name" : "Shirakawa-mura",
@@ -20,7 +24,7 @@ s:12245:"{
             {
                "long_name" : "Ōno-gun",
                "short_name" : "Ōno-gun",
-               "types" : [ "colloquial_area", "locality", "political" ]
+               "types" : [ "administrative_area_level_2", "political" ]
             },
             {
                "long_name" : "Gifu-ken",
@@ -57,14 +61,87 @@ s:12245:"{
             }
          },
          "place_id" : "ChIJoUqPmeNx-F8RIqCiIn6xce8",
-         "types" : [ "political", "sublocality", "sublocality_level_4" ]
+         "plus_code" : {
+            "compound_code" : "7WF2+R4 Shirakawa, Gifu Prefecture, Japan",
+            "global_code" : "8Q8R7WF2+R4"
+         },
+         "types" : [ "street_address" ]
+      },
+      {
+         "address_components" : [
+            {
+               "long_name" : "飛越峡合掌ライン",
+               "short_name" : "国道156号線",
+               "types" : [ "route" ]
+            },
+            {
+               "long_name" : "Iijima",
+               "short_name" : "Iijima",
+               "types" : [ "political", "sublocality", "sublocality_level_2" ]
+            },
+            {
+               "long_name" : "Shirakawa-mura",
+               "short_name" : "Shirakawa-mura",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "Ōno-gun",
+               "short_name" : "Ōno-gun",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "Gifu-ken",
+               "short_name" : "Gifu-ken",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "Japan",
+               "short_name" : "JP",
+               "types" : [ "country", "political" ]
+            },
+            {
+               "long_name" : "501-5625",
+               "short_name" : "501-5625",
+               "types" : [ "postal_code" ]
+            }
+         ],
+         "formatted_address" : "Japan, 〒501-5625 Gifu-ken, Ōno-gun, Shirakawa-mura, Iijima, 飛越峡合掌ライン",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : 36.2746529,
+                  "lng" : 136.9013632
+               },
+               "southwest" : {
+                  "lat" : 36.274264,
+                  "lng" : 136.9013518
+               }
+            },
+            "location" : {
+               "lat" : 36.2744584,
+               "lng" : 136.9013622
+            },
+            "location_type" : "GEOMETRIC_CENTER",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 36.2758074302915,
+                  "lng" : 136.9027064802915
+               },
+               "southwest" : {
+                  "lat" : 36.2731094697085,
+                  "lng" : 136.9000085197085
+               }
+            }
+         },
+         "place_id" : "ChIJ_WGgeONx-F8R2wVuMKGPm3M",
+         "types" : [ "route" ]
       },
       {
          "address_components" : [
             {
                "long_name" : "Iijima",
                "short_name" : "Iijima",
-               "types" : [ "political", "sublocality", "sublocality_level_1" ]
+               "types" : [ "political", "sublocality", "sublocality_level_2" ]
             },
             {
                "long_name" : "Shirakawa",
@@ -74,7 +151,7 @@ s:12245:"{
             {
                "long_name" : "Ono District",
                "short_name" : "Ono District",
-               "types" : [ "colloquial_area", "locality", "political" ]
+               "types" : [ "administrative_area_level_2", "political" ]
             },
             {
                "long_name" : "Gifu Prefecture",
@@ -121,7 +198,125 @@ s:12245:"{
             }
          },
          "place_id" : "ChIJZ73unyJu-F8RieEMKWRaKmk",
-         "types" : [ "political", "sublocality", "sublocality_level_1" ]
+         "types" : [ "political", "sublocality", "sublocality_level_2" ]
+      },
+      {
+         "address_components" : [
+            {
+               "long_name" : "501-5625",
+               "short_name" : "501-5625",
+               "types" : [ "postal_code" ]
+            },
+            {
+               "long_name" : "Iijima",
+               "short_name" : "Iijima",
+               "types" : [ "political", "sublocality", "sublocality_level_2" ]
+            },
+            {
+               "long_name" : "Shirakawa",
+               "short_name" : "Shirakawa",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "Ono District",
+               "short_name" : "Ono District",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "Gifu Prefecture",
+               "short_name" : "Gifu Prefecture",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "Japan",
+               "short_name" : "JP",
+               "types" : [ "country", "political" ]
+            }
+         ],
+         "formatted_address" : "501-5625, Japan",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : 36.2956679,
+                  "lng" : 136.913839
+               },
+               "southwest" : {
+                  "lat" : 36.2591263,
+                  "lng" : 136.8505725
+               }
+            },
+            "location" : {
+               "lat" : 36.2736013,
+               "lng" : 136.8802095
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 36.2956679,
+                  "lng" : 136.913839
+               },
+               "southwest" : {
+                  "lat" : 36.2591263,
+                  "lng" : 136.8505725
+               }
+            }
+         },
+         "place_id" : "ChIJoUqPmeNx-F8RL5ms3YP5lb4",
+         "types" : [ "postal_code" ]
+      },
+      {
+         "address_components" : [
+            {
+               "long_name" : "Ono District",
+               "short_name" : "Ono District",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "Shirakawa",
+               "short_name" : "Shirakawa",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "Gifu Prefecture",
+               "short_name" : "Gifu Prefecture",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "Japan",
+               "short_name" : "JP",
+               "types" : [ "country", "political" ]
+            }
+         ],
+         "formatted_address" : "Shirakawa, Ono District, Gifu Prefecture, Japan",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : 36.3675281,
+                  "lng" : 136.9756969
+               },
+               "southwest" : {
+                  "lat" : 36.09305459999999,
+                  "lng" : 136.7651288
+               }
+            },
+            "location" : {
+               "lat" : 36.2101602,
+               "lng" : 136.8679395
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 36.3675281,
+                  "lng" : 136.9756969
+               },
+               "southwest" : {
+                  "lat" : 36.09305459999999,
+                  "lng" : 136.7651288
+               }
+            }
+         },
+         "place_id" : "ChIJf8xDSH5w-F8RAS3RRLXecwk",
+         "types" : [ "administrative_area_level_2", "political" ]
       },
       {
          "address_components" : [
@@ -133,7 +328,7 @@ s:12245:"{
             {
                "long_name" : "Ono District",
                "short_name" : "Ono District",
-               "types" : [ "colloquial_area", "locality", "political" ]
+               "types" : [ "administrative_area_level_2", "political" ]
             },
             {
                "long_name" : "Gifu Prefecture",
@@ -180,127 +375,9 @@ s:12245:"{
       {
          "address_components" : [
             {
-               "long_name" : "Ono District",
-               "short_name" : "Ono District",
-               "types" : [ "colloquial_area", "locality", "political" ]
-            },
-            {
                "long_name" : "Gifu Prefecture",
                "short_name" : "Gifu Prefecture",
                "types" : [ "administrative_area_level_1", "political" ]
-            },
-            {
-               "long_name" : "Japan",
-               "short_name" : "JP",
-               "types" : [ "country", "political" ]
-            }
-         ],
-         "formatted_address" : "Ono District, Gifu Prefecture, Japan",
-         "geometry" : {
-            "bounds" : {
-               "northeast" : {
-                  "lat" : 36.3675281,
-                  "lng" : 136.9756969
-               },
-               "southwest" : {
-                  "lat" : 36.09305459999999,
-                  "lng" : 136.7651288
-               }
-            },
-            "location" : {
-               "lat" : 36.2101602,
-               "lng" : 136.8679395
-            },
-            "location_type" : "APPROXIMATE",
-            "viewport" : {
-               "northeast" : {
-                  "lat" : 36.3675281,
-                  "lng" : 136.9756969
-               },
-               "southwest" : {
-                  "lat" : 36.09305459999999,
-                  "lng" : 136.7651288
-               }
-            }
-         },
-         "place_id" : "ChIJf8xDSH5w-F8RAS3RRLXecwk",
-         "types" : [ "colloquial_area", "locality", "political" ]
-      },
-      {
-         "address_components" : [
-            {
-               "long_name" : "501-5625",
-               "short_name" : "501-5625",
-               "types" : [ "postal_code" ]
-            },
-            {
-               "long_name" : "Iijima",
-               "short_name" : "Iijima",
-               "types" : [ "political", "sublocality", "sublocality_level_1" ]
-            },
-            {
-               "long_name" : "Shirakawa",
-               "short_name" : "Shirakawa",
-               "types" : [ "locality", "political" ]
-            },
-            {
-               "long_name" : "Ono District",
-               "short_name" : "Ono District",
-               "types" : [ "colloquial_area", "locality", "political" ]
-            },
-            {
-               "long_name" : "Gifu Prefecture",
-               "short_name" : "Gifu Prefecture",
-               "types" : [ "administrative_area_level_1", "political" ]
-            },
-            {
-               "long_name" : "Japan",
-               "short_name" : "JP",
-               "types" : [ "country", "political" ]
-            }
-         ],
-         "formatted_address" : "501-5625, Japan",
-         "geometry" : {
-            "bounds" : {
-               "northeast" : {
-                  "lat" : 36.2956679,
-                  "lng" : 136.913839
-               },
-               "southwest" : {
-                  "lat" : 36.2591263,
-                  "lng" : 136.8505725
-               }
-            },
-            "location" : {
-               "lat" : 36.2736013,
-               "lng" : 136.8802096
-            },
-            "location_type" : "APPROXIMATE",
-            "viewport" : {
-               "northeast" : {
-                  "lat" : 36.2956679,
-                  "lng" : 136.913839
-               },
-               "southwest" : {
-                  "lat" : 36.2591263,
-                  "lng" : 136.8505725
-               }
-            }
-         },
-         "place_id" : "ChIJoUqPmeNx-F8RL5ms3YP5lb4",
-         "types" : [ "postal_code" ]
-      },
-      {
-         "address_components" : [
-            {
-               "long_name" : "Gifu Prefecture",
-               "short_name" : "Gifu Prefecture",
-               "types" : [
-                  "administrative_area_level_1",
-                  "establishment",
-                  "point_of_interest",
-                  "political"
-               ]
             },
             {
                "long_name" : "Japan",
@@ -327,22 +404,17 @@ s:12245:"{
             "location_type" : "APPROXIMATE",
             "viewport" : {
                "northeast" : {
-                  "lat" : 36.4649601,
+                  "lat" : 36.4649704,
                   "lng" : 137.6529394
                },
                "southwest" : {
-                  "lat" : 35.134148,
-                  "lng" : 136.2761585
+                  "lat" : 35.1337286,
+                  "lng" : 136.2761468
                }
             }
          },
          "place_id" : "ChIJi8OICvLxAmARZ9bM7q0UJ68",
-         "types" : [
-            "administrative_area_level_1",
-            "establishment",
-            "point_of_interest",
-            "political"
-         ]
+         "types" : [ "administrative_area_level_1", "political" ]
       },
       {
          "address_components" : [
@@ -371,12 +443,12 @@ s:12245:"{
             "location_type" : "APPROXIMATE",
             "viewport" : {
                "northeast" : {
-                  "lat" : 45.52177229999999,
-                  "lng" : 145.8162778
+                  "lat" : 45.6412626,
+                  "lng" : 154.0031455
                },
                "southwest" : {
-                  "lat" : 24.0459244,
-                  "lng" : 122.9338302
+                  "lat" : 20.3585295,
+                  "lng" : 122.8554688
                }
             }
          },

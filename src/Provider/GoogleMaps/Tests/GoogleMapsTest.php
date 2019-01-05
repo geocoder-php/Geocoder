@@ -477,9 +477,9 @@ class GoogleMapsTest extends BaseTestCase
         /** @var GoogleAddress $result */
         $result = $results->first();
         $this->assertInstanceOf(Address::class, $result);
-        $this->assertEquals('Durmitor Nacionalni Park', $result->getNaturalFeature());
-        $this->assertEquals('Durmitor Nacionalni Park', $result->getPark());
-        $this->assertEquals('Durmitor Nacionalni Park', $result->getPointOfInterest());
+        $this->assertEquals('Durmitor National Park', $result->getNaturalFeature());
+        $this->assertEquals('Durmitor National Park', $result->getPark());
+        $this->assertEquals('Durmitor National Park', $result->getPointOfInterest());
         $this->assertEquals('Montenegro', $result->getPolitical());
         $this->assertEquals('Montenegro', $result->getCountry());
     }
@@ -516,7 +516,7 @@ class GoogleMapsTest extends BaseTestCase
         $results = $provider->geocodeQuery(GeocodeQuery::create('1125 17th St, Denver, CO 80202'));
 
         $this->assertInstanceOf(AddressCollection::class, $results);
-        $this->assertCount(1, $results);
+        $this->assertCount(2, $results);
 
         /** @var GoogleAddress $result */
         $result = $results->first();
@@ -538,7 +538,7 @@ class GoogleMapsTest extends BaseTestCase
         $results = $provider->geocodeQuery(GeocodeQuery::create('darwin'));
 
         $this->assertInstanceOf(AddressCollection::class, $results);
-        $this->assertCount(3, $results);
+        $this->assertCount(1, $results);
 
         /** @var GoogleAddress $result */
         $result = $results->first();
@@ -582,7 +582,6 @@ class GoogleMapsTest extends BaseTestCase
         $result = $results->first();
         $this->assertInstanceOf(Address::class, $result);
         $this->assertInstanceOf('\Geocoder\Model\AdminLevelCollection', $result->getSubLocalityLevels());
-        $this->assertEquals('Iijima', $result->getSubLocalityLevels()->get(1)->getName());
         $this->assertEquals('58', $result->getSubLocalityLevels()->get(4)->getName());
         $this->assertEquals(1, $result->getSubLocalityLevels()->get(1)->getLevel());
         $this->assertEquals(4, $result->getSubLocalityLevels()->get(4)->getLevel());
@@ -605,7 +604,7 @@ class GoogleMapsTest extends BaseTestCase
         $result = $results->first();
         $this->assertInstanceOf(Address::class, $result);
         $this->assertNotNull($result->getBounds());
-        $this->assertEquals(50.8433, $result->getBounds()->getSouth(), '', 0.001);
+        $this->assertEquals(50.8376, $result->getBounds()->getSouth(), '', 0.001);
         $this->assertEquals(5.8259, $result->getBounds()->getWest(), '', 0.001);
         $this->assertEquals(50.8460, $result->getBounds()->getNorth(), '', 0.001);
         $this->assertEquals(5.8286, $result->getBounds()->getEast(), '', 0.001);

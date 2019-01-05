@@ -1,4 +1,4 @@
-s:1854:"{
+s:2055:"{
    "results" : [
       {
          "address_components" : [
@@ -19,12 +19,12 @@ s:1854:"{
             },
             {
                "long_name" : "Paris",
-               "short_name" : "75",
+               "short_name" : "Paris",
                "types" : [ "administrative_area_level_2", "political" ]
             },
             {
                "long_name" : "Île-de-France",
-               "short_name" : "IDF",
+               "short_name" : "Île-de-France",
                "types" : [ "administrative_area_level_1", "political" ]
             },
             {
@@ -41,20 +41,25 @@ s:1854:"{
          "formatted_address" : "10 Avenue Gambetta, 75020 Paris, France",
          "geometry" : {
             "location" : {
-               "lat" : 48.8631013,
-               "lng" : 2.3888086
+               "lat" : 48.8630842,
+               "lng" : 2.3889015
             },
             "location_type" : "ROOFTOP",
             "viewport" : {
                "northeast" : {
-                  "lat" : 48.8644502802915,
-                  "lng" : 2.390157580291502
+                  "lat" : 48.8644331802915,
+                  "lng" : 2.390250480291502
                },
                "southwest" : {
-                  "lat" : 48.8617523197085,
-                  "lng" : 2.387459619708498
+                  "lat" : 48.8617352197085,
+                  "lng" : 2.387552519708498
                }
             }
+         },
+         "place_id" : "ChIJ4b303vJt5kcRF9AQdh4ZjWc",
+         "plus_code" : {
+            "compound_code" : "V97Q+6H Paris, France",
+            "global_code" : "8FW4V97Q+6H"
          },
          "types" : [ "street_address" ]
       }

@@ -1,4 +1,4 @@
-s:2211:"{
+s:2371:"{
    "results" : [
       {
          "address_components" : [
@@ -62,6 +62,10 @@ s:2211:"{
             }
          },
          "place_id" : "ChIJb5rRQ__hk2sREHAg11ujAg8",
+         "plus_code" : {
+            "compound_code" : "J44C+8P Brisbane Airport, Queensland, Australia",
+            "global_code" : "5R4MJ44C+8P"
+         },
          "types" : [ "airport", "establishment", "point_of_interest" ]
       }
    ],
