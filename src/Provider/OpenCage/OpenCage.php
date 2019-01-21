@@ -236,7 +236,7 @@ final class OpenCage extends AbstractHttpProvider implements Provider
      */
     protected function guessLocality(array $components)
     {
-        $localityKeys = ['city', 'town', 'village', 'hamlet'];
+        $localityKeys = ['city', 'town', 'municipality', 'village', 'hamlet', 'locality', 'croft'];
 
         return $this->guessBestComponent($components, $localityKeys);
     }
@@ -248,7 +248,7 @@ final class OpenCage extends AbstractHttpProvider implements Provider
      */
     protected function guessStreetName(array $components)
     {
-        $streetNameKeys = ['road', 'street', 'street_name', 'residential'];
+        $streetNameKeys = ['road', 'footway', 'street', 'street_name', 'residential', 'path', 'pedestrian', 'road_reference', 'road_reference_intl'];
 
         return $this->guessBestComponent($components, $streetNameKeys);
     }
@@ -260,7 +260,7 @@ final class OpenCage extends AbstractHttpProvider implements Provider
      */
     protected function guessSubLocality(array $components)
     {
-        $subLocalityKeys = ['suburb', 'neighbourhood', 'city_district'];
+        $subLocalityKeys = ['neighbourhood', 'suburb', 'city_district', 'district', 'quarter', 'houses', 'subdivision'];
 
         return $this->guessBestComponent($components, $subLocalityKeys);
     }

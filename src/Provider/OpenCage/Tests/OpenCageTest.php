@@ -107,7 +107,7 @@ class OpenCageTest extends BaseTestCase
         $this->assertEquals(54.049472, $result->getBounds()->getNorth(), '', 0.001);
         $this->assertEquals(-2.7980925, $result->getBounds()->getEast(), '', 0.001);
         $this->assertNull($result->getStreetNumber());
-        $this->assertNull($result->getStreetName());
+        $this->assertEquals('Lancaster Gate', $result->getStreetName());
         $this->assertEquals('LA1 1LZ', $result->getPostalCode());
         $this->assertEquals('Lancaster', $result->getLocality());
         $this->assertCount(2, $result->getAdminLevels());
