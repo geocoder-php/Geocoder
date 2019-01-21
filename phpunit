@@ -1,9 +1,18 @@
 #!/usr/bin/env php
 <?php
 
-if (!file_exists(__DIR__.'/vendor/phpunit/phpunit/phpunit')) {
+$found = false;
+$candidates = [\getcwd(), __DIR__];
+// Find a good path
+foreach ($candidates as $path) {
+    if (file_exists($path.'/vendor/phpunit/phpunit/phpunit')) {
+        require $path.'/vendor/phpunit/phpunit/phpunit';
+        $found = true;
+        break;
+    }
+}
+
+if (!$found) {
     echo "Unable to find the `PHPUnit` script in `vendor/phpunit/phpunit/`.\nPlease run `composer update` before running this command.\n";
     exit(1);
 }
-
-require __DIR__.'/vendor/phpunit/phpunit/phpunit';
