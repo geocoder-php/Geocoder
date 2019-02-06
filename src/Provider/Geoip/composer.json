@@ -17,7 +17,7 @@
         "willdurand/geocoder": "^4.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "6.3.*",
+        "phpunit/phpunit": "^6.5 || ^7.5",
         "geocoder-php/provider-integration-tests": "^1.0.1"
     },
     "provide": {
