@@ -238,6 +238,25 @@ class OpenCageTest extends BaseTestCase
         $this->assertEquals('GB', $result->getCountry()->getCode());
     }
 
+    public function testAmbiguousResults()
+    {
+        $provider = new OpenCage($this->getHttpClient($_SERVER['OPENCAGE_API_KEY']), $_SERVER['OPENCAGE_API_KEY']);
+        $results = $provider->geocodeQuery(GeocodeQuery::create('Gera-Ost Gera  07546 DE'));
+
+        $this->assertCount(2, $results);
+        /** @var OpenCageAddress $result */
+        $result = $results->first();
+        $this->assertEquals('ID', $result->getCountry()->getCode());
+
+        $results = $provider->geocodeQuery(GeocodeQuery::create('Gera-Ost Gera  07546 DE')->withData('countrycode', 'DE'));
+
+        $this->assertCount(1, $results);
+        /** @var OpenCageAddress $result */
+        $result = $results->first();
+        $this->assertEquals('DE', $result->getCountry()->getCode());
+    }
+
+
     /**
      * @expectedException \Geocoder\Exception\QuotaExceeded
      * @expectedExceptionMessage Valid request but quota exceeded.
