@@ -256,7 +256,6 @@ class OpenCageTest extends BaseTestCase
         $this->assertEquals('DE', $result->getCountry()->getCode());
     }
 
-
     /**
      * @expectedException \Geocoder\Exception\QuotaExceeded
      * @expectedExceptionMessage Valid request but quota exceeded.
