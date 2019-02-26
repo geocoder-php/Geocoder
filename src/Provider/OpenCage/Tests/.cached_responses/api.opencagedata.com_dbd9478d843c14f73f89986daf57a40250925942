@@ -1,0 +1,105 @@
+s:3186:"{
+   "documentation" : "https://opencagedata.com/api",
+   "licenses" : [
+      {
+         "name" : "CC-BY-SA",
+         "url" : "https://creativecommons.org/licenses/by-sa/3.0/"
+      },
+      {
+         "name" : "ODbL",
+         "url" : "https://opendatacommons.org/licenses/odbl/summary/"
+      }
+   ],
+   "results" : [
+      {
+         "annotations" : {
+            "DMS" : {
+               "lat" : "50\u00b0 53' 24.36000'' N",
+               "lng" : "12\u00b0 6' 6.84000'' E"
+            },
+            "MGRS" : "33UTS9617941605",
+            "Maidenhead" : "JO60bv23fo",
+            "Mercator" : {
+               "x" : 1347177.346,
+               "y" : 6568701.319
+            },
+            "OSM" : {
+               "url" : "https://www.openstreetmap.org/?mlat=50.89010&mlon=12.10190#map=17/50.89010/12.10190"
+            },
+            "callingcode" : 49,
+            "currency" : {
+               "alternate_symbols" : [],
+               "decimal_mark" : ",",
+               "html_entity" : "&#x20AC;",
+               "iso_code" : "EUR",
+               "iso_numeric" : 978,
+               "name" : "Euro",
+               "smallest_denomination" : 1,
+               "subunit" : "Cent",
+               "subunit_to_unit" : 100,
+               "symbol" : "\u20ac",
+               "symbol_first" : 1,
+               "thousands_separator" : "."
+            },
+            "flag" : "\ud83c\udde9\ud83c\uddea",
+            "geohash" : "u309e2k26dnxjg0gc3kr",
+            "qibla" : 133.36,
+            "sun" : {
+               "rise" : {
+                  "apparent" : 1551074640,
+                  "astronomical" : 1551068100,
+                  "civil" : 1551072660,
+                  "nautical" : 1551070380
+               },
+               "set" : {
+                  "apparent" : 1551113160,
+                  "astronomical" : 1551119760,
+                  "civil" : 1551115140,
+                  "nautical" : 1551117420
+               }
+            },
+            "timezone" : {
+               "name" : "Europe/Berlin",
+               "now_in_dst" : 0,
+               "offset_sec" : 3600,
+               "offset_string" : 100,
+               "short_name" : "CET"
+            },
+            "what3words" : {
+               "words" : "flinch.stubble.radar"
+            }
+         },
+         "components" : {
+            "ISO_3166-1_alpha-2" : "DE",
+            "ISO_3166-1_alpha-3" : "DEU",
+            "_type" : "postcode",
+            "continent" : "Europe",
+            "country" : "Germany",
+            "country_code" : "de",
+            "political_union" : "European Union",
+            "postcode" : "07546"
+         },
+         "confidence" : 7,
+         "formatted" : "07546, Germany",
+         "geometry" : {
+            "lat" : 50.8901,
+            "lng" : 12.1019
+         }
+      }
+   ],
+   "status" : {
+      "code" : 200,
+      "message" : "OK"
+   },
+   "stay_informed" : {
+      "blog" : "https://blog.opencagedata.com",
+      "twitter" : "https://twitter.com/opencagedata"
+   },
+   "thanks" : "For using an OpenCage Data API",
+   "timestamp" : {
+      "created_http" : "Mon, 25 Feb 2019 14:22:01 GMT",
+      "created_unix" : 1551104521
+   },
+   "total_results" : 1
+}
+";

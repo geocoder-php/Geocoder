@@ -1,0 +1,496 @@
+s:16129:"{
+   "documentation" : "https://opencagedata.com/api",
+   "licenses" : [
+      {
+         "name" : "CC-BY-SA",
+         "url" : "https://creativecommons.org/licenses/by-sa/3.0/"
+      },
+      {
+         "name" : "ODbL",
+         "url" : "https://opendatacommons.org/licenses/odbl/summary/"
+      }
+   ],
+   "results" : [
+      {
+         "annotations" : {
+            "DMS" : {
+               "lat" : "31\u00b0 50' 44.57364'' N",
+               "lng" : "102\u00b0 22' 3.67320'' W"
+            },
+            "FIPS" : {
+               "county" : "48135",
+               "state" : "48"
+            },
+            "MGRS" : "13RGR4909026354",
+            "Maidenhead" : "DM81tu52vx",
+            "Mercator" : {
+               "x" : -11395518.791,
+               "y" : 3720532.562
+            },
+            "OSM" : {
+               "edit_url" : "https://www.openstreetmap.org/edit?relation=2336480#map=17/31.84571/-102.36769",
+               "url" : "https://www.openstreetmap.org/?mlat=31.84571&mlon=-102.36769#map=17/31.84571/-102.36769"
+            },
+            "callingcode" : 1,
+            "currency" : {
+               "alternate_symbols" : [
+                  "US$"
+               ],
+               "decimal_mark" : ".",
+               "disambiguate_symbol" : "US$",
+               "html_entity" : "$",
+               "iso_code" : "USD",
+               "iso_numeric" : 840,
+               "name" : "United States Dollar",
+               "smallest_denomination" : 1,
+               "subunit" : "Cent",
+               "subunit_to_unit" : 100,
+               "symbol" : "$",
+               "symbol_first" : 1,
+               "thousands_separator" : ","
+            },
+            "flag" : "\ud83c\uddfa\ud83c\uddf8",
+            "geohash" : "9txjnt64sp80vmh11ctj",
+            "qibla" : 39.25,
+            "sun" : {
+               "rise" : {
+                  "apparent" : 1551187080,
+                  "astronomical" : 1551182220,
+                  "civil" : 1551185640,
+                  "nautical" : 1551183900
+               },
+               "set" : {
+                  "apparent" : 1551141840,
+                  "astronomical" : 1551146760,
+                  "civil" : 1551143340,
+                  "nautical" : 1551145020
+               }
+            },
+            "timezone" : {
+               "name" : "America/Chicago",
+               "now_in_dst" : 0,
+               "offset_sec" : -21600,
+               "offset_string" : -600,
+               "short_name" : "CST"
+            },
+            "what3words" : {
+               "words" : "translated.smudges.nimbly"
+            },
+            "wikidata" : "Q128361"
+         },
+         "bounds" : {
+            "northeast" : {
+               "lat" : 31.9567349,
+               "lng" : -102.2481799
+            },
+            "southwest" : {
+               "lat" : 31.79747,
+               "lng" : -102.4420576
+            }
+         },
+         "components" : {
+            "ISO_3166-1_alpha-2" : "US",
+            "ISO_3166-1_alpha-3" : "USA",
+            "_type" : "city",
+            "city" : "Odessa",
+            "continent" : "North America",
+            "country" : "USA",
+            "country_code" : "us",
+            "county" : "Ector County",
+            "state" : "Texas",
+            "state_code" : "TX"
+         },
+         "confidence" : 5,
+         "formatted" : "Odessa, TX, United States of America",
+         "geometry" : {
+            "lat" : 31.8457149,
+            "lng" : -102.367687
+         }
+      },
+      {
+         "annotations" : {
+            "DMS" : {
+               "lat" : "39\u00b0 27' 26.40240'' N",
+               "lng" : "75\u00b0 39' 40.74624'' W"
+            },
+            "FIPS" : {
+               "county" : "10003",
+               "state" : "10"
+            },
+            "MGRS" : "18SVJ4310567738",
+            "Maidenhead" : "FM29ek09ps",
+            "Mercator" : {
+               "x" : -8422579.437,
+               "y" : 4760235.066
+            },
+            "OSM" : {
+               "edit_url" : "https://www.openstreetmap.org/edit?way=376077146#map=17/39.45733/-75.66132",
+               "url" : "https://www.openstreetmap.org/?mlat=39.45733&mlon=-75.66132#map=17/39.45733/-75.66132"
+            },
+            "callingcode" : 1,
+            "currency" : {
+               "alternate_symbols" : [
+                  "US$"
+               ],
+               "decimal_mark" : ".",
+               "disambiguate_symbol" : "US$",
+               "html_entity" : "$",
+               "iso_code" : "USD",
+               "iso_numeric" : 840,
+               "name" : "United States Dollar",
+               "smallest_denomination" : 1,
+               "subunit" : "Cent",
+               "subunit_to_unit" : 100,
+               "symbol" : "$",
+               "symbol_first" : 1,
+               "thousands_separator" : ","
+            },
+            "flag" : "\ud83c\uddfa\ud83c\uddf8",
+            "geohash" : "dr40qqcpekpvmwj736ch",
+            "qibla" : 57.44,
+            "sun" : {
+               "rise" : {
+                  "apparent" : 1551181080,
+                  "astronomical" : 1551175740,
+                  "civil" : 1551179460,
+                  "nautical" : 1551177600
+               },
+               "set" : {
+                  "apparent" : 1551221460,
+                  "astronomical" : 1551140460,
+                  "civil" : 1551223080,
+                  "nautical" : 1551225000
+               }
+            },
+            "timezone" : {
+               "name" : "America/New_York",
+               "now_in_dst" : 0,
+               "offset_sec" : -18000,
+               "offset_string" : -500,
+               "short_name" : "EST"
+            },
+            "what3words" : {
+               "words" : "eyeliner.telegrams.caves"
+            },
+            "wikidata" : "Q754420"
+         },
+         "bounds" : {
+            "northeast" : {
+               "lat" : 39.4626109,
+               "lng" : -75.6489727
+            },
+            "southwest" : {
+               "lat" : 39.4496208,
+               "lng" : -75.6722776
+            }
+         },
+         "components" : {
+            "ISO_3166-1_alpha-2" : "US",
+            "ISO_3166-1_alpha-3" : "USA",
+            "_type" : "city",
+            "city" : "Odessa",
+            "continent" : "North America",
+            "country" : "USA",
+            "country_code" : "us",
+            "county" : "New Castle County",
+            "postcode" : "19730",
+            "state" : "Delaware",
+            "state_code" : "DE"
+         },
+         "confidence" : 8,
+         "formatted" : "Odessa, DE 19730, United States of America",
+         "geometry" : {
+            "lat" : 39.457334,
+            "lng" : -75.6613184
+         }
+      },
+      {
+         "annotations" : {
+            "DMS" : {
+               "lat" : "46\u00b0 29' 6.87084'' N",
+               "lng" : "30\u00b0 44' 36.20184'' E"
+            },
+            "MGRS" : "36TUS2680150437",
+            "Maidenhead" : "KN56il96ek",
+            "Mercator" : {
+               "x" : 3422338.453,
+               "y" : 5827452.859
+            },
+            "OSM" : {
+               "edit_url" : "https://www.openstreetmap.org/edit?node=26150437#map=17/46.48524/30.74339",
+               "url" : "https://www.openstreetmap.org/?mlat=46.48524&mlon=30.74339#map=17/46.48524/30.74339"
+            },
+            "callingcode" : 380,
+            "currency" : {
+               "alternate_symbols" : [],
+               "decimal_mark" : ".",
+               "html_entity" : "&#x20B4;",
+               "iso_code" : "UAH",
+               "iso_numeric" : 980,
+               "name" : "Ukrainian Hryvnia",
+               "smallest_denomination" : 1,
+               "subunit" : "Kopiyka",
+               "subunit_to_unit" : 100,
+               "symbol" : "\u20b4",
+               "symbol_first" : 0,
+               "thousands_separator" : ","
+            },
+            "flag" : "\ud83c\uddfa\ud83c\udde6",
+            "geohash" : "u8mb7w6shvhth9jw97wd",
+            "qibla" : 160.51,
+            "sun" : {
+               "rise" : {
+                  "apparent" : 1551156120,
+                  "astronomical" : 1551150120,
+                  "civil" : 1551154320,
+                  "nautical" : 1551152220
+               },
+               "set" : {
+                  "apparent" : 1551195540,
+                  "astronomical" : 1551201540,
+                  "civil" : 1551197340,
+                  "nautical" : 1551199440
+               }
+            },
+            "timezone" : {
+               "name" : "Europe/Kiev",
+               "now_in_dst" : 0,
+               "offset_sec" : 7200,
+               "offset_string" : 200,
+               "short_name" : "EET"
+            },
+            "what3words" : {
+               "words" : "uncle.gifts.padlock"
+            },
+            "wikidata" : "Q1874"
+         },
+         "bounds" : {
+            "northeast" : {
+               "lat" : 46.6452419,
+               "lng" : 30.9033894
+            },
+            "southwest" : {
+               "lat" : 46.3252419,
+               "lng" : 30.5833894
+            }
+         },
+         "components" : {
+            "ISO_3166-1_alpha-2" : "UA",
+            "ISO_3166-1_alpha-3" : "UKR",
+            "_type" : "city",
+            "city" : "Odesa",
+            "continent" : "Europe",
+            "country" : "Ukraine",
+            "country_code" : "ua",
+            "county" : "Prymors'kyi Rayon",
+            "postcode" : "65026",
+            "state" : "Odesa Oblast"
+         },
+         "confidence" : 3,
+         "formatted" : "Odesa, 65026, Ukraine",
+         "geometry" : {
+            "lat" : 46.4852419,
+            "lng" : 30.7433894
+         }
+      },
+      {
+         "annotations" : {
+            "DMS" : {
+               "lat" : "46\u00b0 29' 9.19788'' N",
+               "lng" : "30\u00b0 41' 1.14360'' E"
+            },
+            "MGRS" : "36TUS2221850642",
+            "Maidenhead" : "KN56il26ao",
+            "Mercator" : {
+               "x" : 3415688.406,
+               "y" : 5827557.033
+            },
+            "OSM" : {
+               "edit_url" : "https://www.openstreetmap.org/edit?relation=1413934#map=17/46.48589/30.68365",
+               "url" : "https://www.openstreetmap.org/?mlat=46.48589&mlon=30.68365#map=17/46.48589/30.68365"
+            },
+            "callingcode" : 380,
+            "currency" : {
+               "alternate_symbols" : [],
+               "decimal_mark" : ".",
+               "html_entity" : "&#x20B4;",
+               "iso_code" : "UAH",
+               "iso_numeric" : 980,
+               "name" : "Ukrainian Hryvnia",
+               "smallest_denomination" : 1,
+               "subunit" : "Kopiyka",
+               "subunit_to_unit" : 100,
+               "symbol" : "\u20b4",
+               "symbol_first" : 0,
+               "thousands_separator" : ","
+            },
+            "flag" : "\ud83c\uddfa\ud83c\udde6",
+            "geohash" : "u8mb6nrpuvskzny5435e",
+            "qibla" : 160.38,
+            "sun" : {
+               "rise" : {
+                  "apparent" : 1551156180,
+                  "astronomical" : 1551150120,
+                  "civil" : 1551154320,
+                  "nautical" : 1551152220
+               },
+               "set" : {
+                  "apparent" : 1551195540,
+                  "astronomical" : 1551201540,
+                  "civil" : 1551197340,
+                  "nautical" : 1551199440
+               }
+            },
+            "timezone" : {
+               "name" : "Europe/Kiev",
+               "now_in_dst" : 0,
+               "offset_sec" : 7200,
+               "offset_string" : 200,
+               "short_name" : "EET"
+            },
+            "what3words" : {
+               "words" : "teaches.successor.reissued"
+            },
+            "wikidata" : "Q1874"
+         },
+         "bounds" : {
+            "northeast" : {
+               "lat" : 46.6291187,
+               "lng" : 30.8313753
+            },
+            "southwest" : {
+               "lat" : 46.342707,
+               "lng" : 30.6114013
+            }
+         },
+         "components" : {
+            "ISO_3166-1_alpha-2" : "UA",
+            "ISO_3166-1_alpha-3" : "UKR",
+            "_type" : "county",
+            "continent" : "Europe",
+            "country" : "Ukraine",
+            "country_code" : "ua",
+            "county" : "Odesa",
+            "state" : "Odesa Oblast"
+         },
+         "confidence" : 4,
+         "formatted" : "Odesa, Ukraine",
+         "geometry" : {
+            "lat" : 46.4858883,
+            "lng" : 30.683651
+         }
+      },
+      {
+         "annotations" : {
+            "DMS" : {
+               "lat" : "28\u00b0 10' 59.59920'' N",
+               "lng" : "82\u00b0 33' 14.50044'' W"
+            },
+            "FIPS" : {
+               "county" : "12101",
+               "state" : "12"
+            },
+            "MGRS" : "17RLM4745218476",
+            "Maidenhead" : "EL88re33mx",
+            "Mercator" : {
+               "x" : -9189872.351,
+               "y" : 3251917.748
+            },
+            "OSM" : {
+               "edit_url" : "https://www.openstreetmap.org/edit?way=33612675#map=17/28.18322/-82.55403",
+               "url" : "https://www.openstreetmap.org/?mlat=28.18322&mlon=-82.55403#map=17/28.18322/-82.55403"
+            },
+            "callingcode" : 1,
+            "currency" : {
+               "alternate_symbols" : [
+                  "US$"
+               ],
+               "decimal_mark" : ".",
+               "disambiguate_symbol" : "US$",
+               "html_entity" : "$",
+               "iso_code" : "USD",
+               "iso_numeric" : 840,
+               "name" : "United States Dollar",
+               "smallest_denomination" : 1,
+               "subunit" : "Cent",
+               "subunit_to_unit" : 100,
+               "symbol" : "$",
+               "symbol_first" : 1,
+               "thousands_separator" : ","
+            },
+            "flag" : "\ud83c\uddfa\ud83c\uddf8",
+            "geohash" : "djj236tgptr5y0r83sbe",
+            "qibla" : 54.66,
+            "sun" : {
+               "rise" : {
+                  "apparent" : 1551182160,
+                  "astronomical" : 1551177480,
+                  "civil" : 1551180780,
+                  "nautical" : 1551179160
+               },
+               "set" : {
+                  "apparent" : 1551223680,
+                  "astronomical" : 1551141960,
+                  "civil" : 1551225120,
+                  "nautical" : 1551140340
+               }
+            },
+            "timezone" : {
+               "name" : "America/New_York",
+               "now_in_dst" : 0,
+               "offset_sec" : -18000,
+               "offset_string" : -500,
+               "short_name" : "EST"
+            },
+            "what3words" : {
+               "words" : "january.popping.tilt"
+            },
+            "wikidata" : "Q2149988"
+         },
+         "bounds" : {
+            "northeast" : {
+               "lat" : 28.194999,
+               "lng" : -82.515912
+            },
+            "southwest" : {
+               "lat" : 28.1727024,
+               "lng" : -82.592524
+            }
+         },
+         "components" : {
+            "ISO_3166-1_alpha-2" : "US",
+            "ISO_3166-1_alpha-3" : "USA",
+            "_type" : "village",
+            "continent" : "North America",
+            "country" : "USA",
+            "country_code" : "us",
+            "county" : "Pasco County",
+            "hamlet" : "Gulf Pine",
+            "locality" : "Odessa",
+            "state" : "Florida",
+            "state_code" : "FL"
+         },
+         "confidence" : 7,
+         "formatted" : "Gulf Pine, FL, United States of America",
+         "geometry" : {
+            "lat" : 28.183222,
+            "lng" : -82.5540279
+         }
+      }
+   ],
+   "status" : {
+      "code" : 200,
+      "message" : "OK"
+   },
+   "stay_informed" : {
+      "blog" : "https://blog.opencagedata.com",
+      "twitter" : "https://twitter.com/opencagedata"
+   },
+   "thanks" : "For using an OpenCage Data API",
+   "timestamp" : {
+      "created_http" : "Tue, 26 Feb 2019 07:46:30 GMT",
+      "created_unix" : 1551167190
+   },
+   "total_results" : 5
+}
+";

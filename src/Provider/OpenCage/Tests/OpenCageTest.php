@@ -15,6 +15,7 @@ namespace Geocoder\Provider\OpenCage\Tests;
 use Geocoder\Collection;
 use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Model\AddressCollection;
+use Geocoder\Model\Bounds;
 use Geocoder\Provider\OpenCage\Model\OpenCageAddress;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
@@ -236,6 +237,59 @@ class OpenCageTest extends BaseTestCase
         $this->assertEquals('Inglaterra', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('Reino Unido', $result->getCountry()->getName());
         $this->assertEquals('GB', $result->getCountry()->getCode());
+    }
+
+    public function testAmbiguousResultCountryCode()
+    {
+        $provider = new OpenCage($this->getHttpClient($_SERVER['OPENCAGE_API_KEY']), $_SERVER['OPENCAGE_API_KEY']);
+        $results = $provider->geocodeQuery(GeocodeQuery::create('Gera-Ost Gera  07546 DE'));
+
+        $this->assertCount(2, $results);
+        /** @var OpenCageAddress $result */
+        $result = $results->first();
+        $this->assertEquals('ID', $result->getCountry()->getCode());
+
+        $results = $provider->geocodeQuery(GeocodeQuery::create('Gera-Ost Gera  07546 DE')->withData('countrycode', 'DE'));
+
+        $this->assertCount(1, $results);
+        /** @var OpenCageAddress $result */
+        $result = $results->first();
+        $this->assertEquals('DE', $result->getCountry()->getCode());
+    }
+
+    public function testAmbiguousResultBounds()
+    {
+        $provider = new OpenCage($this->getHttpClient($_SERVER['OPENCAGE_API_KEY']), $_SERVER['OPENCAGE_API_KEY']);
+        $results = $provider->geocodeQuery(GeocodeQuery::create('Gera-Ost Gera  07546 DE'));
+
+        $this->assertCount(2, $results);
+        /** @var OpenCageAddress $result */
+        $result = $results->first();
+        $this->assertEquals('ID', $result->getCountry()->getCode());
+
+        $bounds = new Bounds(50.8613807, 11.7525627, 50.8850706, 12.511183);
+        $results = $provider->geocodeQuery(GeocodeQuery::create('Gera-Ost Gera  07546 DE')->withBounds($bounds));
+
+        $this->assertCount(1, $results);
+        /** @var OpenCageAddress $result */
+        $result = $results->first();
+        $this->assertEquals('DE', $result->getCountry()->getCode());
+    }
+
+    public function testAmbiguousResultProximity()
+    {
+        $provider = new OpenCage($this->getHttpClient($_SERVER['OPENCAGE_API_KEY']), $_SERVER['OPENCAGE_API_KEY']);
+        $results = $provider->geocodeQuery(GeocodeQuery::create('odessa'));
+
+        /** @var OpenCageAddress $result */
+        $result = $results->first();
+        $this->assertEquals('UA', $result->getCountry()->getCode());
+
+        $results = $provider->geocodeQuery(GeocodeQuery::create('odessa')->withData('proximity', '31.918807,-102.474021'));
+
+        /** @var OpenCageAddress $result */
+        $result = $results->first();
+        $this->assertEquals('US', $result->getCountry()->getCode());
     }
 
     /**
