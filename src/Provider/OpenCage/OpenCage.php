@@ -72,7 +72,7 @@ final class OpenCage extends AbstractHttpProvider implements Provider
             $url = sprintf('%s&countrycode=%s', $url, $countryCode);
         }
         if (null !== $bounds = $query->getBounds()) {
-            $url = sprintf('%s&bounds=%s,%s,%s,%s', $url, $bounds->getSouth(), $bounds->getWest(), $bounds->getNorth(), $bounds->getEast());
+            $url = sprintf('%s&bounds=%s,%s,%s,%s', $url, $bounds->getWest(), $bounds->getSouth(), $bounds->getEast(), $bounds->getNorth());
         }
         if (null !== $proximity = $query->getData('proximity')) {
             $url = sprintf('%s&proximity=%s', $url, $proximity);

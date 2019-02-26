@@ -1,0 +1,116 @@
+s:3492:"{
+   "documentation" : "https://opencagedata.com/api",
+   "licenses" : [
+      {
+         "name" : "CC-BY-SA",
+         "url" : "https://creativecommons.org/licenses/by-sa/3.0/"
+      },
+      {
+         "name" : "ODbL",
+         "url" : "https://opendatacommons.org/licenses/odbl/summary/"
+      }
+   ],
+   "results" : [
+      {
+         "annotations" : {
+            "DMS" : {
+               "lat" : "50\u00b0 52' 49.04400'' N",
+               "lng" : "12\u00b0 4' 54.73200'' E"
+            },
+            "MGRS" : "33UTS9472740569",
+            "Maidenhead" : "JO60av91tg",
+            "Mercator" : {
+               "x" : 1344947.616,
+               "y" : 6566974.954
+            },
+            "OSM" : {
+               "url" : "https://www.openstreetmap.org/?mlat=50.88029&mlon=12.08187#map=17/50.88029/12.08187"
+            },
+            "callingcode" : 49,
+            "currency" : {
+               "alternate_symbols" : [],
+               "decimal_mark" : ",",
+               "html_entity" : "&#x20AC;",
+               "iso_code" : "EUR",
+               "iso_numeric" : 978,
+               "name" : "Euro",
+               "smallest_denomination" : 1,
+               "subunit" : "Cent",
+               "subunit_to_unit" : 100,
+               "symbol" : "\u20ac",
+               "symbol_first" : 1,
+               "thousands_separator" : "."
+            },
+            "flag" : "\ud83c\udde9\ud83c\uddea",
+            "geohash" : "u3096ymxpvx0pm7kp4dj",
+            "qibla" : 133.33,
+            "sun" : {
+               "rise" : {
+                  "apparent" : 1551074640,
+                  "astronomical" : 1551068100,
+                  "civil" : 1551072660,
+                  "nautical" : 1551070380
+               },
+               "set" : {
+                  "apparent" : 1551113160,
+                  "astronomical" : 1551119760,
+                  "civil" : 1551115140,
+                  "nautical" : 1551117480
+               }
+            },
+            "timezone" : {
+               "name" : "Europe/Berlin",
+               "now_in_dst" : 0,
+               "offset_sec" : 3600,
+               "offset_string" : 100,
+               "short_name" : "CET"
+            },
+            "what3words" : {
+               "words" : "slogans.tone.dodging"
+            }
+         },
+         "bounds" : {
+            "northeast" : {
+               "lat" : 50.9673837,
+               "lng" : 12.1546343
+            },
+            "southwest" : {
+               "lat" : 50.8090048,
+               "lng" : 12.0107396
+            }
+         },
+         "components" : {
+            "ISO_3166-1_alpha-2" : "DE",
+            "ISO_3166-1_alpha-3" : "DEU",
+            "_type" : "city",
+            "continent" : "Europe",
+            "country" : "Germany",
+            "country_code" : "de",
+            "political_union" : "European Union",
+            "state" : "Free Thuringia",
+            "town" : "Gera"
+         },
+         "confidence" : 6,
+         "formatted" : "Gera, Free Thuringia, Germany",
+         "geometry" : {
+            "lat" : 50.88029,
+            "lng" : 12.08187
+         }
+      }
+   ],
+   "status" : {
+      "code" : 200,
+      "message" : "OK"
+   },
+   "stay_informed" : {
+      "blog" : "https://blog.opencagedata.com",
+      "twitter" : "https://twitter.com/opencagedata"
+   },
+   "thanks" : "For using an OpenCage Data API",
+   "timestamp" : {
+      "created_http" : "Mon, 25 Feb 2019 15:30:47 GMT",
+      "created_unix" : 1551108647
+   },
+   "total_results" : 1
+}
+";
