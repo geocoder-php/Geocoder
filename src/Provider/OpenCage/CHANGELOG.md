@@ -2,6 +2,12 @@
 
 The change log describes what is "Added", "Removed", "Changed" or "Fixed" between each release.
 
+## 4.3.0
+
+### Added
+
+- Support for parameters to reduce ambiguity with [*ambiguous results*](https://opencagedata.com/api#ambiguous-results)
+
 ## 4.2.0
 
 ### Changed
