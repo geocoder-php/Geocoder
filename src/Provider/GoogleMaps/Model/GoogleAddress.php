@@ -499,6 +499,17 @@ final class GoogleAddress extends Address
             $subLocalityLevels[] = new AdminLevel($level['level'], $name, $level['code'] ?? null);
         }
 
+        $subLocalityLevels = array_filter($subLocalityLevels, function($adminLevel) use ($subLocalityLevels) {
+            foreach ($subLocalityLevels as $localityLevel) {
+                if ($adminLevel->getLevel() === $localityLevel->getLevel() 
+                 && $adminLevel->getName()  === $localityLevel->getName() 
+                 && $adminLevel->getCode()  === $localityLevel->getCode()) {
+                    return false;
+                }
+            }
+            return true;
+        });
+
         $new = clone $this;
         $new->subLocalityLevels = new AdminLevelCollection($subLocalityLevels);
 
