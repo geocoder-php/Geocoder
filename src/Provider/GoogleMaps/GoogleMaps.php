@@ -247,6 +247,7 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
             $address = $address->withPointOfInterest($builder->getValue('point_of_interest'));
             $address = $address->withEstablishment($builder->getValue('establishment'));
             $address = $address->withSubLocalityLevels($builder->getValue('subLocalityLevel', []));
+            $address = $address->withPartialMatch($result->partial_match ?? false);
             $results[] = $address;
 
             if (count($results) >= $limit) {
