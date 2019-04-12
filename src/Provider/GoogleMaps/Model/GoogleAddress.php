@@ -112,7 +112,7 @@ final class GoogleAddress extends Address
     private $subLocalityLevels;
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $partialMatch;
 
