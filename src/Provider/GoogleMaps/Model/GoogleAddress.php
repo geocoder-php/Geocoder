@@ -507,6 +507,7 @@ final class GoogleAddress extends Address
                     return false;
                 }
             }
+
             return true;
         });
 
