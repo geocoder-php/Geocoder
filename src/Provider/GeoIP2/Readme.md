@@ -27,8 +27,8 @@ This provider will only work with the corresponding `GeoIP2Adapter`:
 // Maxmind GeoIP2 Provider: e.g. the database reader
 $reader = new \GeoIp2\Database\Reader('/path/to/database');
 
-$adapter = new \Geocoder\Adapter\GeoIP2Adapter($reader);
-$geocoder = new \Geocoder\Provider\GeoIP2($adapter);
+$adapter = new \Geocoder\Provider\GeoIP2\GeoIP2Adapter($reader);
+$geocoder = new \Geocoder\Provider\GeoIP2\GeoIP2($adapter);
 
 $address = $geocoder->geocode('74.200.247.59')->first();
 ```
