@@ -104,9 +104,9 @@ final class MaxMindBinary extends AbstractProvider implements Provider
             Address::createFromArray([
                 'providedBy' => $this->getName(),
                 'countryCode' => $geoIpRecord->country_code,
-                'country' => utf8_encode($geoIpRecord->country_name),
+                'country' => null === $geoIpRecord->country_name ? null : utf8_encode($geoIpRecord->country_name),
                 'adminLevels' => $adminLevels,
-                'locality' => utf8_encode($geoIpRecord->city),
+                'locality' => null === $geoIpRecord->city ? null : utf8_encode($geoIpRecord->city),
                 'latitude' => $geoIpRecord->latitude,
                 'longitude' => $geoIpRecord->longitude,
                 'postalCode' => $geoIpRecord->postal_code,
