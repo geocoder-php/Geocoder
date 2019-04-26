@@ -504,6 +504,8 @@ final class GoogleAddress extends Address
             $subLocalityLevels[] = new AdminLevel($level['level'], $name, $level['code'] ?? null);
         }
 
+        $subLocalityLevels = array_unique($subLocalityLevels);
+
         $new = clone $this;
         $new->subLocalityLevels = new AdminLevelCollection($subLocalityLevels);
 
