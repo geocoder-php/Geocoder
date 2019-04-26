@@ -2,6 +2,17 @@
 
 The change log describes what is "Added", "Removed", "Changed" or "Fixed" between each release.
 
+## 4.4.0
+
+### Added
+
+- Added [partial_match](https://developers.google.com/maps/documentation/geocoding/intro#Results)
+  > `partial_match` indicates that the geocoder did not return an exact match for the original request, though it was able to match part of the requested address. You may wish to examine the original request for misspellings and/or an incomplete address.
+
+### Fixed
+
+- Fix "*Administrative level X is defined twice*" issue
+
 ## 4.3.0
 
 ### Added
