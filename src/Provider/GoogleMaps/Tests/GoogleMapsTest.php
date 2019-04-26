@@ -116,6 +116,7 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertEquals('France', $result->getCountry()->getName());
         $this->assertEquals('FR', $result->getCountry()->getCode());
         $this->assertEquals('ChIJ4b303vJt5kcRF9AQdh4ZjWc', $result->getId());
+        $this->assertEquals(false, $result->isPartialMatch());
 
         // not provided
         $this->assertNull($result->getTimezone());
@@ -138,6 +139,7 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertEquals(48.902145, $result->getBounds()->getNorth(), '', 0.0001);
         $this->assertEquals(2.4699209, $result->getBounds()->getEast(), '', 0.0001);
         $this->assertEquals('ChIJD7fiBh9u5kcRYJSMaMOCCwQ', $result->getId());
+        $this->assertEquals(false, $result->isPartialMatch());
     }
 
     /**
@@ -170,6 +172,7 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertEquals('France', $result->getCountry()->getName());
         $this->assertEquals('FR', $result->getCountry()->getCode());
         $this->assertEquals('ChIJ9aLL3vJt5kcR61GCze3v6fg', $result->getId());
+        $this->assertEquals(false, $result->isPartialMatch());
     }
 
     public function testGeocodeWithCityDistrict()
@@ -184,6 +187,7 @@ class GoogleMapsTest extends BaseTestCase
         $result = $results->first();
         $this->assertInstanceOf(Address::class, $result);
         $this->assertEquals('Kalbach-Riedberg', $result->getSubLocality());
+        $this->assertEquals(false, $result->isPartialMatch());
     }
 
     /**
@@ -213,6 +217,7 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertEquals('Manhattan', $result->getSubLocality());
         $this->assertCount(2, $result->getAdminLevels());
         $this->assertEquals('New York', $result->getAdminLevels()->get(1)->getName());
+        $this->assertEquals(false, $result->isPartialMatch());
     }
 
     public function testGeocodeWithComponentFiltering()
@@ -234,6 +239,7 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertEquals('Malmö', $result->getLocality());
         $this->assertNotNull($result->getCountry());
         $this->assertEquals('SE', $result->getCountry()->getCode());
+        $this->assertEquals(false, $result->isPartialMatch());
     }
 
     public function testCorrectlySerializesComponents()
@@ -317,6 +323,7 @@ class GoogleMapsTest extends BaseTestCase
         $result = $results->first();
         $this->assertInstanceOf(Address::class, $result);
         $this->assertEquals('Pontypridd', $result->getLocality());
+        $this->assertEquals(false, $result->isPartialMatch());
     }
 
     public function testBusinessQueryWithoutPrivateKey()
@@ -420,6 +427,7 @@ class GoogleMapsTest extends BaseTestCase
         $result = $results->first();
         $this->assertInstanceOf(Address::class, $result);
         $this->assertEquals('61', $result->getSubpremise());
+        $this->assertEquals(true, $result->isPartialMatch()); // 2123 W Mineral Ave #61, Littleton, CO 80120, USA
     }
 
     public function testGeocodeWithNaturalFeatureComponent()
@@ -438,6 +446,7 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertEquals('Durmitor National Park', $result->getPointOfInterest());
         $this->assertEquals('Montenegro', $result->getPolitical());
         $this->assertEquals('Montenegro', $result->getCountry());
+        $this->assertEquals(false, $result->isPartialMatch());
     }
 
     public function testGeocodeWithAirportComponent()
@@ -454,6 +463,7 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertEquals('Brisbane Airport', $result->getAirport());
         $this->assertEquals('Brisbane Airport', $result->getEstablishment());
         $this->assertEquals('Brisbane Airport', $result->getPointOfInterest());
+        $this->assertEquals(false, $result->isPartialMatch());
     }
 
     public function testGeocodeWithPremiseComponent()
@@ -471,6 +481,7 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertEquals('Denver', $result->getLocality());
         $this->assertEquals('United States', $result->getCountry());
         $this->assertEquals('Central', $result->getNeighborhood());
+        $this->assertEquals(false, $result->isPartialMatch());
     }
 
     public function testGeocodeWithColloquialAreaComponent()
@@ -485,6 +496,7 @@ class GoogleMapsTest extends BaseTestCase
         $result = $results->first();
         $this->assertInstanceOf(Address::class, $result);
         $this->assertEquals('Darwin', $result->getColloquialArea());
+        $this->assertEquals(false, $result->isPartialMatch());
     }
 
     public function testGeocodeWithWardComponent()
@@ -499,6 +511,7 @@ class GoogleMapsTest extends BaseTestCase
         $result = $results->first();
         $this->assertInstanceOf(Address::class, $result);
         $this->assertEquals('Kita-ku', $result->getWard());
+        $this->assertEquals(false, $result->isPartialMatch());
     }
 
     public function testReverseWithSubLocalityLevels()
@@ -516,6 +529,7 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertEquals('58', $result->getSubLocalityLevels()->get(4)->getName());
         $this->assertEquals(1, $result->getSubLocalityLevels()->get(1)->getLevel());
         $this->assertEquals(4, $result->getSubLocalityLevels()->get(4)->getLevel());
+        $this->assertEquals(false, $result->isPartialMatch());
     }
 
     public function testGeocodeBoundsWithRealAddressWithViewportOnly()
@@ -534,6 +548,7 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertEquals(5.8113, $result->getBounds()->getWest(), '', 0.001);
         $this->assertEquals(50.8517, $result->getBounds()->getNorth(), '', 0.001);
         $this->assertEquals(5.8433, $result->getBounds()->getEast(), '', 0.001);
+        $this->assertEquals(false, $result->isPartialMatch());
     }
 
     private function getGoogleMapsProvider(): GoogleMaps
