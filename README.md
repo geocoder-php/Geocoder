@@ -17,6 +17,7 @@ Geocoder
 **Geocoder** is a PHP library which helps you build geo-aware applications by
 providing a powerful abstraction layer for geocoding manipulations.
 
+* [What is Geocoding?](#what-is-geocoding)
 * [Installation](#installation)
 * [Cookbook](#cookbook)
 * [Usage](#usage)
@@ -25,6 +26,15 @@ providing a powerful abstraction layer for geocoding manipulations.
 * [Dumpers](#dumpers)
 * [Formatters](#formatters)
 * [Versioning](#versioning)
+
+
+What is Geocoding
+------------
+Quoting [google maps geocoding documentation](https://developers.google.com/maps/documentation/geocoding/start):
+
+> Geocoding is the process of converting addresses (like a street address) into geographic coordinates (like latitude and longitude), which you can use to place markers on a map, or position the map.
+> 
+> Reverse geocoding is the process of converting geographic coordinates into a human-readable address.
 
 
 Installation
