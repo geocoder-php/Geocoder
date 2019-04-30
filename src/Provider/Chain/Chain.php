@@ -28,6 +28,16 @@ final class Chain implements Provider, LoggerAwareInterface
     use LoggerAwareTrait;
 
     /**
+     * @var string
+     */
+    private $geocodeQueryLogLevel;
+
+    /**
+     * @var string
+     */
+    private $reverseQueryLogLevel;
+
+    /**
      * @var Provider[]
      */
     private $providers = [];
@@ -35,9 +45,21 @@ final class Chain implements Provider, LoggerAwareInterface
     /**
      * @param Provider[] $providers
      */
-    public function __construct(array $providers = [])
+    public function __construct(array $providers = [], string $geocodeQueryLogLevel = 'alert', string $reverseQueryLogLevel = 'alert')
     {
         $this->providers = $providers;
+        $this->geocodeQueryLogLevel = $geocodeQueryLogLevel;
+        $this->reverseQueryLogLevel = $reverseQueryLogLevel;
+    }
+
+    public function setGeocodeQueryLogLevel(string $level)
+    {
+        $this->geocodeQueryLogLevel = $level;
+    }
+
+    public function setReverseQueryLogLevel(string $level)
+    {
+        $this->reverseQueryLogLevel = $level;
     }
 
     /**
@@ -54,7 +76,7 @@ final class Chain implements Provider, LoggerAwareInterface
                 }
             } catch (\Throwable $e) {
                 $this->log(
-                    'alert',
+                    $this->geocodeQueryLogLevel,
                     'Provider "{providerName}" could not geocode address: "{address}".',
                     [
                         'exception' => $e,
@@ -83,7 +105,7 @@ final class Chain implements Provider, LoggerAwareInterface
             } catch (\Throwable $e) {
                 $coordinates = $query->getCoordinates();
                 $this->log(
-                    'alert',
+                    $this->reverseQueryLogLevel,
                     sprintf('Provider "%s" could reverse coordinates: %f, %f.', $provider->getName(), $coordinates->getLatitude(), $coordinates->getLongitude()),
                     ['exception' => $e]
                 );
