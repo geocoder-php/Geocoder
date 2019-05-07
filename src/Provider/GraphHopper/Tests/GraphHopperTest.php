@@ -12,7 +12,6 @@ declare(strict_types=1);
 
 namespace Geocoder\Provider\GraphHopper\Tests;
 
-use Geocoder\Collection;
 use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;

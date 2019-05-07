@@ -14,7 +14,6 @@ namespace Geocoder\Provider\GraphHopper;
 
 use Geocoder\Collection;
 use Geocoder\Exception\InvalidCredentials;
-use Geocoder\Exception\QuotaExceeded;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Model\Address;
 use Geocoder\Model\AddressCollection;
