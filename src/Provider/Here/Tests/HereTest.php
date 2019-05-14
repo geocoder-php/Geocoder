@@ -78,6 +78,48 @@ class HereTest extends BaseTestCase
         $this->assertEquals('FRA', $result->getCountry()->getCode());
     }
 
+    public function testGeocodeWithAdminLevel()
+    {
+        if (!isset($_SERVER['HERE_APP_ID']) || !isset($_SERVER['HERE_APP_CODE'])) {
+            $this->markTestSkipped('You need to configure the HERE_APP_ID and HERE_APP_CODE value in phpunit.xml');
+        }
+
+        $provider = new Here($this->getHttpClient($_SERVER['HERE_APP_ID'], $_SERVER['HERE_APP_CODE']), $_SERVER['HERE_APP_ID'], $_SERVER['HERE_APP_CODE']);
+        $results = $provider->geocodeQuery(GeocodeQuery::create('Sant Roc, Santa Coloma de Cervelló, Espanya')->withLocale('ca'));
+
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertCount(1, $results);
+
+        /** @var Location $result */
+        $result = $results->first();
+
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(41.37854, $result->getCoordinates()->getLatitude(), '', 0.01);
+        $this->assertEquals(2.01196, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertNotNull($result->getBounds());
+        $this->assertEquals(41.36505, $result->getBounds()->getSouth(), '', 0.01);
+        $this->assertEquals(1.99398, $result->getBounds()->getWest(), '', 0.01);
+        $this->assertEquals(41.39203, $result->getBounds()->getNorth(), '', 0.01);
+        $this->assertEquals(2.02994, $result->getBounds()->getEast(), '', 0.01);
+
+        $this->assertEquals('08690', $result->getPostalCode());
+        $this->assertEquals('Sant Roc', $result->getSubLocality());
+        $this->assertEquals('Santa Coloma de Cervelló', $result->getLocality());
+        $this->assertEquals('Espanya', $result->getCountry()->getName());
+        $this->assertEquals('ESP', $result->getCountry()->getCode());
+
+        $this->assertEquals('Espanya', $result->getAdminLevels()->get(1)->getName());
+        $this->assertEquals('CountryName', $result->getAdminLevels()->get(1)->getCode());
+        $this->assertEquals('Catalunya', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('StateName', $result->getAdminLevels()->get(2)->getCode());
+        $this->assertEquals('Barcelona', $result->getAdminLevels()->get(3)->getName());
+        $this->assertEquals('CountyName', $result->getAdminLevels()->get(3)->getCode());
+
+        $this->assertEquals('Espanya', $result->getAdditionalDataValue('CountryName'));
+        $this->assertEquals('Catalunya', $result->getAdditionalDataValue('StateName'));
+        $this->assertEquals('Barcelona', $result->getAdditionalDataValue('CountyName'));
+    }
+
     public function testReverseWithRealCoordinates()
     {
         if (!isset($_SERVER['HERE_APP_ID']) || !isset($_SERVER['HERE_APP_CODE'])) {

@@ -13,7 +13,9 @@ declare(strict_types=1);
 namespace Geocoder\Provider\Here;
 
 use Geocoder\Collection;
+use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\InvalidCredentials;
+use Geocoder\Exception\QuotaExceeded;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Model\AddressBuilder;
 use Geocoder\Model\AddressCollection;
@@ -50,9 +52,9 @@ final class Here extends AbstractHttpProvider implements Provider
     private $appCode;
 
     /**
-     * @param HttpClient $adapter An HTTP adapter.
+     * @param HttpClient $client  An HTTP adapter.
      * @param string     $appId   An App ID.
-     * @param string     $apoCode An App code.
+     * @param string     $appCode An App code.
      */
     public function __construct(HttpClient $client, string $appId, string $appCode)
     {
@@ -97,10 +99,9 @@ final class Here extends AbstractHttpProvider implements Provider
 
     /**
      * @param string $url
-     * @param string $locale
      * @param int    $limit
      *
-     * @return \Geocoder\Collection
+     * @return Collection
      */
     private function executeQuery(string $url, int $limit): Collection
     {
@@ -144,9 +145,23 @@ final class Here extends AbstractHttpProvider implements Provider
             $builder->setCountry($location['Address']['AdditionalData'][0]['value'] ?? null);
             $builder->setCountryCode($location['Address']['Country'] ?? null);
 
+            $additionalDataAll = [];
+            if (isset($location['Address']['AdditionalData'])) {
+                $levels = ['CountryName', 'StateName', 'CountyName'];
+
+                foreach ($location['Address']['AdditionalData'] as $i => $additionalData) {
+                    $additionalDataAll[$additionalData['key']] = $additionalData['value'];
+
+                    if (in_array($additionalData['key'], $levels)) {
+                        $builder->addAdminLevel(array_search($additionalData['key'], $levels) + 1, $additionalData['value'], $additionalData['key']);
+                    }
+                }
+            }
+
             $address = $builder->build(HereAddress::class);
             $address = $address->withLocationId($location['LocationId']);
             $address = $address->withLocationType($location['LocationType']);
+            $address = $address->withAdditionalData($additionalDataAll);
             $results[] = $address;
 
             if (count($results) >= $limit) {
