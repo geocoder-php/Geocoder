@@ -35,6 +35,7 @@
         <server name="ALGOLIA_API_KEY" value="YOUR_API_KEY" />
         <server name="MAPBOX_GEOCODING_KEY" value="YOUR_GEOCODING_KEY" />
         <server name="IPSTACK_API_KEY" value="YOUR_API_KEY" />
+        <server name="GRAPHHOPPER_API_KEY" value="YOUR_API_KEY" />
         <!--<server name="MAXMIND_API_KEY" value="YOUR_API_KEY" />-->
     </php>
 
