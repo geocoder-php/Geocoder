@@ -19,6 +19,7 @@ use Geocoder\Exception\QuotaExceeded;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Model\AddressBuilder;
 use Geocoder\Model\AddressCollection;
+use Geocoder\Model\AdminLevelCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Http\Provider\AbstractHttpProvider;
@@ -96,6 +97,22 @@ final class Here extends AbstractHttpProvider implements Provider
 
         $url = sprintf($this->useCIT ? self::GEOCODE_CIT_ENDPOINT_URL : self::GEOCODE_ENDPOINT_URL, $this->appId, $this->appCode, rawurlencode($query->getText()));
 
+        if (null !== $query->getData('country')) {
+            $url = sprintf('%s&country=%s', $url, rawurlencode($query->getData('country')));
+        }
+
+        if (null !== $query->getData('state')) {
+            $url = sprintf('%s&state=%s', $url, rawurlencode($query->getData('state')));
+        }
+
+        if (null !== $query->getData('county')) {
+            $url = sprintf('%s&county=%s', $url, rawurlencode($query->getData('county')));
+        }
+
+        if (null !== $query->getData('city')) {
+            $url = sprintf('%s&city=%s', $url, rawurlencode($query->getData('city')));
+        }
+
         if (null !== $query->getLocale()) {
             $url = sprintf('%s&language=%s', $url, $query->getLocale());
         }
@@ -165,6 +182,10 @@ final class Here extends AbstractHttpProvider implements Provider
             if (isset($location['Address']['AdditionalData'])) {
                 foreach ($location['Address']['AdditionalData'] as $i => $additionalData) {
                     $builder->addAdminLevel($i + 1, $additionalData['value'], $additionalData['key']);
+
+                    if ($i + 1 == AdminLevelCollection::MAX_LEVEL_DEPTH) {
+                        break;
+                    }
                 }
             }
 

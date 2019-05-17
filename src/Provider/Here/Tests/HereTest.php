@@ -116,6 +116,106 @@ class HereTest extends BaseTestCase
         $this->assertEquals('CountyName', $result->getAdminLevels()->get(3)->getCode());
     }
 
+    public function testGeocodeWithExtraFilterCountry()
+    {
+        if (!isset($_SERVER['HERE_APP_ID']) || !isset($_SERVER['HERE_APP_CODE'])) {
+            $this->markTestSkipped('You need to configure the HERE_APP_ID and HERE_APP_CODE value in phpunit.xml');
+        }
+
+        $provider = new Here($this->getHttpClient($_SERVER['HERE_APP_ID'], $_SERVER['HERE_APP_CODE']), $_SERVER['HERE_APP_ID'], $_SERVER['HERE_APP_CODE']);
+
+        $queryBarcelonaFromSpain     = GeocodeQuery::create('Barcelona')->withData('country', 'ES')->withLocale('ca');
+        $queryBarcelonaFromVenezuela = GeocodeQuery::create('Barcelona')->withData('country', 'VE')->withLocale('ca');
+
+        $resultsSpain     = $provider->geocodeQuery($queryBarcelonaFromSpain);
+        $resultsVenezuela = $provider->geocodeQuery($queryBarcelonaFromVenezuela);
+
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $resultsSpain);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $resultsVenezuela);
+        $this->assertCount(1, $resultsSpain);
+        $this->assertCount(1, $resultsVenezuela);
+
+        $resultSpain     = $resultsSpain->first();
+        $resultVenezuela = $resultsVenezuela->first();
+
+        $this->assertEquals('Barcelona', $resultSpain->getLocality());
+        $this->assertEquals('Barcelona', $resultVenezuela->getLocality());
+        $this->assertEquals('Espanya', $resultSpain->getCountry()->getName());
+        $this->assertEquals('República Bolivariana De Venezuela', $resultVenezuela->getCountry()->getName());
+        $this->assertEquals('ESP', $resultSpain->getCountry()->getCode());
+        $this->assertEquals('VEN', $resultVenezuela->getCountry()->getCode());
+    }
+
+    public function testGeocodeWithExtraFilterCity()
+    {
+        if (!isset($_SERVER['HERE_APP_ID']) || !isset($_SERVER['HERE_APP_CODE'])) {
+            $this->markTestSkipped('You need to configure the HERE_APP_ID and HERE_APP_CODE value in phpunit.xml');
+        }
+
+        $provider = new Here($this->getHttpClient($_SERVER['HERE_APP_ID'], $_SERVER['HERE_APP_CODE']), $_SERVER['HERE_APP_ID'], $_SERVER['HERE_APP_CODE']);
+
+        $queryStreetCity1 = GeocodeQuery::create('Carrer de Barcelona')->withData('city', 'Sant Vicenç dels Horts')->withLocale('ca')->withLimit(1);
+        $queryStreetCity2 = GeocodeQuery::create('Carrer de Barcelona')->withData('city', 'Girona')->withLocale('ca')->withLimit(1);
+        $queryStreetCity3 = GeocodeQuery::create('Carrer de Barcelona')->withData('city', 'Pallejà')->withLocale('ca')->withLimit(1);
+
+        $resultsCity1 = $provider->geocodeQuery($queryStreetCity1);
+        $resultsCity2 = $provider->geocodeQuery($queryStreetCity2);
+        $resultsCity3 = $provider->geocodeQuery($queryStreetCity3);
+
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $resultsCity1);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $resultsCity2);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $resultsCity3);
+
+        $resultCity1 = $resultsCity1->first();
+        $resultCity2 = $resultsCity2->first();
+        $resultCity3 = $resultsCity3->first();
+
+        $this->assertEquals('Carrer de Barcelona', $resultCity1->getStreetName());
+        $this->assertEquals('Carrer de Barcelona', $resultCity2->getStreetName());
+        $this->assertEquals('Carrer de Barcelona', $resultCity3->getStreetName());
+        $this->assertEquals('Sant Vicenç dels Horts', $resultCity1->getLocality());
+        $this->assertEquals('Girona', $resultCity2->getLocality());
+        $this->assertEquals('Pallejà', $resultCity3->getLocality());
+        $this->assertEquals('Espanya', $resultCity1->getCountry()->getName());
+        $this->assertEquals('Espanya', $resultCity2->getCountry()->getName());
+        $this->assertEquals('Espanya', $resultCity3->getCountry()->getName());
+        $this->assertEquals('ESP', $resultCity1->getCountry()->getCode());
+        $this->assertEquals('ESP', $resultCity2->getCountry()->getCode());
+        $this->assertEquals('ESP', $resultCity3->getCountry()->getCode());
+    }
+
+    public function testGeocodeWithExtraFilterCounty()
+    {
+        if (!isset($_SERVER['HERE_APP_ID']) || !isset($_SERVER['HERE_APP_CODE'])) {
+            $this->markTestSkipped('You need to configure the HERE_APP_ID and HERE_APP_CODE value in phpunit.xml');
+        }
+
+        $provider = new Here($this->getHttpClient($_SERVER['HERE_APP_ID'], $_SERVER['HERE_APP_CODE']), $_SERVER['HERE_APP_ID'], $_SERVER['HERE_APP_CODE']);
+
+        $queryCityRegion1 = GeocodeQuery::create('Cabanes')->withData('county', 'Girona')->withLocale('ca')->withLimit(1);
+        $queryCityRegion2 = GeocodeQuery::create('Cabanes')->withData('county', 'Castelló')->withLocale('ca')->withLimit(1);
+
+        $resultsRegion1 = $provider->geocodeQuery($queryCityRegion1);
+        $resultsRegion2 = $provider->geocodeQuery($queryCityRegion2);
+
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $resultsRegion1);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $resultsRegion2);
+
+        $resultRegion1 = $resultsRegion1->first();
+        $resultRegion2 = $resultsRegion2->first();
+
+        $this->assertEquals('Cabanes', $resultRegion1->getLocality());
+        $this->assertEquals('Cabanes', $resultRegion2->getLocality());
+        $this->assertEquals('Girona', $resultRegion1->getAdminLevels()->get(3)->getName());
+        $this->assertEquals('Castelló', $resultRegion2->getAdminLevels()->get(3)->getName());
+        $this->assertEquals('Catalunya', $resultRegion1->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('Comunitat Valenciana', $resultRegion2->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('Espanya', $resultRegion1->getCountry()->getName());
+        $this->assertEquals('Espanya', $resultRegion2->getCountry()->getName());
+        $this->assertEquals('ESP', $resultRegion1->getCountry()->getCode());
+        $this->assertEquals('ESP', $resultRegion2->getCountry()->getCode());
+    }
+
     public function testReverseWithRealCoordinates()
     {
         if (!isset($_SERVER['HERE_APP_ID']) || !isset($_SERVER['HERE_APP_CODE'])) {
