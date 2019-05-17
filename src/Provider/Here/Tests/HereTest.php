@@ -114,10 +114,6 @@ class HereTest extends BaseTestCase
         $this->assertEquals('StateName', $result->getAdminLevels()->get(2)->getCode());
         $this->assertEquals('Barcelona', $result->getAdminLevels()->get(3)->getName());
         $this->assertEquals('CountyName', $result->getAdminLevels()->get(3)->getCode());
-
-        $this->assertEquals('Espanya', $result->getAdditionalDataValue('CountryName'));
-        $this->assertEquals('Catalunya', $result->getAdditionalDataValue('StateName'));
-        $this->assertEquals('Barcelona', $result->getAdditionalDataValue('CountyName'));
     }
 
     public function testReverseWithRealCoordinates()

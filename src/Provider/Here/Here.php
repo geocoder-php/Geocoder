@@ -162,23 +162,15 @@ final class Here extends AbstractHttpProvider implements Provider
             $builder->setCountry($location['Address']['AdditionalData'][0]['value'] ?? null);
             $builder->setCountryCode($location['Address']['Country'] ?? null);
 
-            $additionalDataAll = [];
             if (isset($location['Address']['AdditionalData'])) {
-                $levels = ['CountryName', 'StateName', 'CountyName'];
-
                 foreach ($location['Address']['AdditionalData'] as $i => $additionalData) {
-                    $additionalDataAll[$additionalData['key']] = $additionalData['value'];
-
-                    if (in_array($additionalData['key'], $levels)) {
-                        $builder->addAdminLevel(array_search($additionalData['key'], $levels) + 1, $additionalData['value'], $additionalData['key']);
-                    }
+                    $builder->addAdminLevel($i + 1, $additionalData['value'], $additionalData['key']);
                 }
             }
 
             $address = $builder->build(HereAddress::class);
             $address = $address->withLocationId($location['LocationId']);
             $address = $address->withLocationType($location['LocationType']);
-            $address = $address->withAdditionalData($additionalDataAll);
             $results[] = $address;
 
             if (count($results) >= $limit) {

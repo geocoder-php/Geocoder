@@ -35,11 +35,6 @@ final class HereAddress extends Address
     private $locationName;
 
     /**
-     * @var array|null
-     */
-    private $additionalData;
-
-    /**
      * @return null|string
      */
     public function getLocationId()
@@ -100,65 +95,5 @@ final class HereAddress extends Address
         $new->locationName = $locationName;
 
         return $new;
-    }
-
-    /**
-     * @return null|array
-     */
-    public function getAdditionalData()
-    {
-        return $this->additionalData;
-    }
-
-    /**
-     * @param null|array $additionalData
-     *
-     * @return HereAddress
-     */
-    public function withAdditionalData(array $additionalData = null): self
-    {
-        $new = clone $this;
-        $new->additionalData = $additionalData;
-
-        return $new;
-    }
-
-    /**
-     * @param string     $name
-     * @param null|mixed $value
-     *
-     * @return HereAddress
-     */
-    public function addAdditionalData(string $name, $value = null): self
-    {
-        $new = clone $this;
-        $new->additionalData[$name] = $value;
-
-        return $new;
-    }
-
-    /**
-     * @param string     $name
-     * @param null|mixed $default
-     *
-     * @return mixed
-     */
-    public function getAdditionalDataValue(string $name, $default = null)
-    {
-        if ($this->hasAdditionalDataValue($name)) {
-            return $this->additionalData[$name];
-        }
-
-        return $default;
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return bool
-     */
-    public function hasAdditionalDataValue(string $name): bool
-    {
-        return array_key_exists($name, $this->additionalData);
     }
 }
