@@ -21,7 +21,7 @@ providing a powerful abstraction layer for geocoding manipulations.
 * [Cookbook](#cookbook)
 * [Usage](#usage)
 * [Providers](#providers)
-* [Special Geocoders and Providers](#special-geocoders-and-providers) 
+* [Special Geocoders and Providers](#special-geocoders-and-providers)
 * [Dumpers](#dumpers)
 * [Formatters](#formatters)
 * [Versioning](#versioning)
@@ -30,14 +30,14 @@ providing a powerful abstraction layer for geocoding manipulations.
 Installation
 ------------
 
-To install a Geocoder there are two things you need to know: 
+To install a Geocoder there are two things you need to know:
 
 1) What [Geocoder provider](https://packagist.org/providers/geocoder-php/provider-implementation) you want to use
-2) What [HTTP client/adapter](https://packagist.org/providers/php-http/client-implementation) you want to use. 
+2) What [HTTP client/adapter](https://packagist.org/providers/php-http/client-implementation) you want to use.
 
 ### Geocoder providers
 
-Since 4.0 we do not include providers by default. You need to select a *geocoder provider*. You will see a list of 
+Since 4.0 we do not include providers by default. You need to select a *geocoder provider*. You will see a list of
 providers [at Packagist](https://packagist.org/providers/geocoder-php/provider-implementation)
 
 ### HTTP Clients
@@ -53,7 +53,7 @@ Read more about HTTPlug in [their docs](http://docs.php-http.org/en/latest/httpl
 
 ### Summary (Just give me the command)
 
-To install Google Maps geocoder with Guzzle 6 you may run the following command: 
+To install Google Maps geocoder with Guzzle 6 you may run the following command:
 
 ```
 $ composer require geocoder-php/google-maps-provider php-http/guzzle6-adapter php-http/message
@@ -62,7 +62,7 @@ $ composer require geocoder-php/google-maps-provider php-http/guzzle6-adapter ph
 ### Framework integration
 
 If you are using a framework then you may be interested in our excellent framework integrations. Check out our
-[Laravel Package](https://github.com/geocoder-php/GeocoderLaravel) and our [Symfony Bundle](https://github.com/geocoder-php/BazingaGeocoderBundle). 
+[Laravel Package](https://github.com/geocoder-php/GeocoderLaravel) and our [Symfony Bundle](https://github.com/geocoder-php/BazingaGeocoderBundle).
 
 
 Cookbook
@@ -76,7 +76,7 @@ We have a small cookbook where you can find examples on common use cases:
 Usage
 -----
 
-In the code snippet below we use GoogleMaps and Guzzle6. 
+In the code snippet below we use GoogleMaps and Guzzle6.
 
 ```php
 use Geocoder\Query\GeocodeQuery;
@@ -107,7 +107,7 @@ make migration from 3.x smoother.
 Providers
 ---------
 
-Providers perform the geocoding black magic for you (talking to the APIs, fetching results, dealing with errors, etc.) 
+Providers perform the geocoding black magic for you (talking to the APIs, fetching results, dealing with errors, etc.)
 and are highly configurable.
 
 ### Special providers
@@ -288,8 +288,8 @@ geocoder calls will appear in your timeline section in the Web Profiler.
 
 ### StatefulGeocoder
 
-The `StatefulGeocoder` class is great when you want your Geocoder to hold state. Say you want to configure locale, 
-limit or bounds in runtime. The `StatefulGeocoder` will append these values on each query. 
+The `StatefulGeocoder` class is great when you want your Geocoder to hold state. Say you want to configure locale,
+limit or bounds in runtime. The `StatefulGeocoder` will append these values on each query.
 
 ```php
 use Geocoder\Query\GeocodeQuery;
@@ -440,7 +440,7 @@ Version `4.x` is the current major stable version of Geocoder.
 
 ### Next version
 
-There is no new major version planned at this time. 
+There is no new major version planned at this time.
 
 Contributing
 ------------
