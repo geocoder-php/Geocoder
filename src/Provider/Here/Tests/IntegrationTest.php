@@ -34,9 +34,9 @@ class IntegrationTest extends ProviderIntegrationTest
 
     protected $testIpv6 = false;
 
-    protected function createProvider(HttpClient $httpClient)
+    protected function createProvider(HttpClient $httpClient, bool $useCIT = false)
     {
-        return new Here($httpClient, $this->getAppId(), $this->getAppCode());
+        return new Here($httpClient, $this->getAppId(), $this->getAppCode(), $useCIT);
     }
 
     protected function getCacheDir()
@@ -108,6 +108,31 @@ class IntegrationTest extends ProviderIntegrationTest
         }
     }
 
+    public function testGeocodeQueryCIT()
+    {
+        if (isset($this->skippedTests[__FUNCTION__])) {
+            $this->markTestSkipped($this->skippedTests[__FUNCTION__]);
+        }
+        if (!$this->testAddress) {
+            $this->markTestSkipped('Geocoding address is not supported by this provider');
+        }
+
+        $provider = $this->createProvider($this->getCachedHttpClient(), true);
+        $query = GeocodeQuery::create('10 Downing St, London, UK')->withLocale('en');
+        $result = $provider->geocodeQuery($query);
+        $this->assertWellFormattedResult($result);
+
+        // Check Downing Street
+        $location = $result->first();
+        $this->assertEquals(51.5033, $location->getCoordinates()->getLatitude(), 'Latitude should be in London', 0.1);
+        $this->assertEquals(-0.1276, $location->getCoordinates()->getLongitude(), 'Longitude should be in London', 0.1);
+        $this->assertContains('Downing', $location->getStreetName(), 'Street name should contain "Downing St"');
+
+        if (null !== $streetNumber = $location->getStreetNumber()) {
+            $this->assertContains('10', $streetNumber, 'Street number should contain "10"');
+        }
+    }
+
     public function testGeocodeQueryWithNoResults()
     {
         if (isset($this->skippedTests[__FUNCTION__])) {
@@ -134,6 +159,22 @@ class IntegrationTest extends ProviderIntegrationTest
         }
 
         $provider = $this->createProvider($this->getCachedHttpClient());
+
+        // Close to the white house
+        $result = $provider->reverseQuery(ReverseQuery::fromCoordinates(38.900206, -77.036991)->withLocale('en'));
+        $this->assertWellFormattedResult($result);
+    }
+
+    public function testReverseQueryCIT()
+    {
+        if (isset($this->skippedTests[__FUNCTION__])) {
+            $this->markTestSkipped($this->skippedTests[__FUNCTION__]);
+        }
+        if (!$this->testReverse) {
+            $this->markTestSkipped('Reverse geocoding address is not supported by this provider');
+        }
+
+        $provider = $this->createProvider($this->getCachedHttpClient(), true);
 
         // Close to the white house
         $result = $provider->reverseQuery(ReverseQuery::fromCoordinates(38.900206, -77.036991)->withLocale('en'));

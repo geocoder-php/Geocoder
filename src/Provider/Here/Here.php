@@ -42,6 +42,16 @@ final class Here extends AbstractHttpProvider implements Provider
     /**
      * @var string
      */
+    const GEOCODE_CIT_ENDPOINT_URL = 'https://geocoder.cit.api.here.com/6.2/geocode.json?app_id=%s&app_code=%s&searchtext=%s&gen=8';
+
+    /**
+     * @var string
+     */
+    const REVERSE_CIT_ENDPOINT_URL = 'https://reverse.geocoder.cit.api.here.com/6.2/reversegeocode.json?prox=%F,%F&250&app_id=%s&app_code=%s&mode=retrieveAddresses&gen=8&maxresults=%d';
+
+    /**
+     * @var string
+     */
     private $appId;
 
     /**
@@ -50,17 +60,24 @@ final class Here extends AbstractHttpProvider implements Provider
     private $appCode;
 
     /**
-     * @param HttpClient $adapter An HTTP adapter.
-     * @param string     $appId   An App ID.
-     * @param string     $apoCode An App code.
+     * @var bool
      */
-    public function __construct(HttpClient $client, string $appId, string $appCode)
+    private $useCIT;
+
+    /**
+     * @param HttpClient $client  An HTTP adapter.
+     * @param string     $appId   An App ID.
+     * @param string     $appCode An App code.
+     * @param bool       $useCIT  Use Customer Integration Testing environment (CIT) instead of production.
+     */
+    public function __construct(HttpClient $client, string $appId, string $appCode, bool $useCIT = false)
     {
         if (empty($appId) || empty($appCode)) {
             throw new InvalidCredentials('Invalid or missing api key.');
         }
         $this->appId = $appId;
         $this->appCode = $appCode;
+        $this->useCIT = $useCIT;
 
         parent::__construct($client);
     }
@@ -75,7 +92,7 @@ final class Here extends AbstractHttpProvider implements Provider
             throw new UnsupportedOperation('The Here provider does not support IP addresses, only street addresses.');
         }
 
-        $url = sprintf(self::GEOCODE_ENDPOINT_URL, $this->appId, $this->appCode, rawurlencode($query->getText()));
+        $url = sprintf($this->useCIT ? self::GEOCODE_CIT_ENDPOINT_URL : self::GEOCODE_ENDPOINT_URL, $this->appId, $this->appCode, rawurlencode($query->getText()));
 
         if (null !== $query->getLocale()) {
             $url = sprintf('%s&language=%s', $url, $query->getLocale());
@@ -90,14 +107,13 @@ final class Here extends AbstractHttpProvider implements Provider
     public function reverseQuery(ReverseQuery $query): Collection
     {
         $coordinates = $query->getCoordinates();
-        $url = sprintf(self::REVERSE_ENDPOINT_URL, $coordinates->getLatitude(), $coordinates->getLongitude(), $this->appId, $this->appCode, $query->getLimit());
+        $url = sprintf($this->useCIT ? self::REVERSE_CIT_ENDPOINT_URL : self::REVERSE_ENDPOINT_URL, $coordinates->getLatitude(), $coordinates->getLongitude(), $this->appId, $this->appCode, $query->getLimit());
 
         return $this->executeQuery($url, $query->getLimit());
     }
 
     /**
      * @param string $url
-     * @param string $locale
      * @param int    $limit
      *
      * @return \Geocoder\Collection
