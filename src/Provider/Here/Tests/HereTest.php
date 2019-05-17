@@ -124,10 +124,10 @@ class HereTest extends BaseTestCase
 
         $provider = new Here($this->getHttpClient($_SERVER['HERE_APP_ID'], $_SERVER['HERE_APP_CODE']), $_SERVER['HERE_APP_ID'], $_SERVER['HERE_APP_CODE']);
 
-        $queryBarcelonaFromSpain     = GeocodeQuery::create('Barcelona')->withData('country', 'ES')->withLocale('ca');
+        $queryBarcelonaFromSpain = GeocodeQuery::create('Barcelona')->withData('country', 'ES')->withLocale('ca');
         $queryBarcelonaFromVenezuela = GeocodeQuery::create('Barcelona')->withData('country', 'VE')->withLocale('ca');
 
-        $resultsSpain     = $provider->geocodeQuery($queryBarcelonaFromSpain);
+        $resultsSpain = $provider->geocodeQuery($queryBarcelonaFromSpain);
         $resultsVenezuela = $provider->geocodeQuery($queryBarcelonaFromVenezuela);
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $resultsSpain);
@@ -135,7 +135,7 @@ class HereTest extends BaseTestCase
         $this->assertCount(1, $resultsSpain);
         $this->assertCount(1, $resultsVenezuela);
 
-        $resultSpain     = $resultsSpain->first();
+        $resultSpain = $resultsSpain->first();
         $resultVenezuela = $resultsVenezuela->first();
 
         $this->assertEquals('Barcelona', $resultSpain->getLocality());

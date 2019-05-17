@@ -183,7 +183,7 @@ final class Here extends AbstractHttpProvider implements Provider
                 foreach ($location['Address']['AdditionalData'] as $i => $additionalData) {
                     $builder->addAdminLevel($i + 1, $additionalData['value'], $additionalData['key']);
 
-                    if ($i + 1 == AdminLevelCollection::MAX_LEVEL_DEPTH) {
+                    if (AdminLevelCollection::MAX_LEVEL_DEPTH == $i + 1) {
                         break;
                     }
                 }
