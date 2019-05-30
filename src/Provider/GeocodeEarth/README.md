@@ -16,6 +16,11 @@ This is the Geocode Earth provider from the PHP Geocoder. This is a **READ ONLY*
 composer require geocoder-php/geocode-earth-provider
 ```
 
+### API Documentation
+
+Geocode Earth uses the Pelias Geocoder under the hood. You can view it's [documentation here](https://github.com/pelias/documentation).    
+The base API endpoint is https://api.geocode.earth.
+
 ### Contribute
 
 Contributions are very welcome! Send a pull request to the [main repository](https://github.com/geocoder-php/Geocoder) or 
