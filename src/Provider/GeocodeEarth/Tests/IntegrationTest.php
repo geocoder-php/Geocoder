@@ -22,7 +22,6 @@ use Http\Client\HttpClient;
 class IntegrationTest extends ProviderIntegrationTest
 {
     protected $skippedTests = [
-        'testGeocodeQuery' => 'We get wrongs cords',
         'testReverseQueryWithNoResults' => 'We weirdly find stuff here...',
     ];
 

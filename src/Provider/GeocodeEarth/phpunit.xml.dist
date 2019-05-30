@@ -7,7 +7,7 @@
          bootstrap="vendor/autoload.php"
 >
     <php>
-        <server name="GEOCODE_EARTH_API_KEY" value="YOUR_MAPZEN_API_KEY" />
+        <server name="GEOCODE_EARTH_API_KEY" value="YOUR_GEOCODE_EARTH_API_KEY" />
         <server name="USE_CACHED_RESPONSES" value="true" />
     </php>
 
