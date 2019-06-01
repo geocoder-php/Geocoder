@@ -15,17 +15,30 @@ This is the GeoIP2 provider from the PHP Geocoder. This is a **READ ONLY** repos
 composer require geocoder-php/geoip2-provider
 ```
 
-### Note
+## Usage
+The provider requires either a database file, or paid access to the web service.
 
-It requires either the [database file](http://dev.maxmind.com/geoip/geoip2/geolite2/), or the
-[webservice](http://dev.maxmind.com/geoip/geoip2/web-services/) - represented by
-the GeoIP2 , which is injected to the `GeoIP2Adapter`. 
-
-This provider will only work with the corresponding `GeoIP2Adapter`:
+### Using a database file
+Both free [geolite2](https://dev.maxmind.com/geoip/geoip2/geolite2/) and the paid precision
+ [city](https://www.maxmind.com/en/geoip2-city) and [country](https://www.maxmind.com/en/geoip2-country-database)
+ databases are supported.
 
 ``` php
-// Maxmind GeoIP2 Provider: e.g. the database reader
-$reader = new \GeoIp2\Database\Reader('/path/to/database');
+//Use a Maxmind GeoIP2 Database:
+$reader = new \GeoIp2\Database\Reader('/path/to/geolite2.mmdb');
+
+$adapter = new \Geocoder\Provider\GeoIP2\GeoIP2Adapter($reader);
+$geocoder = new \Geocoder\Provider\GeoIP2\GeoIP2($adapter);
+
+$address = $geocoder->geocode('74.200.247.59')->first();
+```
+
+### Using the Precision Web Service (API)
+The provider also support the Precision Web Services. Please note that these API are paid, and billed per request.
+
+``` php
+// Use the Maxmind GeoIP2 API:
+$reader = new \GeoIp2\WebService\Client(<account_id>, '<licence_key>');
 
 $adapter = new \Geocoder\Provider\GeoIP2\GeoIP2Adapter($reader);
 $geocoder = new \Geocoder\Provider\GeoIP2\GeoIP2($adapter);
