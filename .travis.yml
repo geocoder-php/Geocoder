@@ -15,6 +15,10 @@ env:
     global:
         - MIN_PHP=7.0
 
+cache:
+    directories:
+        - $HOME/.composer/cache/files
+
 matrix:
     fast_finish: true
     include:
