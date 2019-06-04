@@ -19,6 +19,7 @@ use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\Provider;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
+use Psr\Log\LogLevel;
 
 /**
  * @author Markus Bachmann <markus.bachmann@bachi.biz>
@@ -30,12 +31,12 @@ final class Chain implements Provider, LoggerAwareInterface
     /**
      * @var string
      */
-    private $geocodeQueryLogLevel;
+    private $geocodeQueryLogLevel = LogLevel::ALERT;
 
     /**
      * @var string
      */
-    private $reverseQueryLogLevel;
+    private $reverseQueryLogLevel = LogLevel::ALERT;
 
     /**
      * @var Provider[]
@@ -45,11 +46,9 @@ final class Chain implements Provider, LoggerAwareInterface
     /**
      * @param Provider[] $providers
      */
-    public function __construct(array $providers = [], string $geocodeQueryLogLevel = 'alert', string $reverseQueryLogLevel = 'alert')
+    public function __construct(array $providers = [])
     {
         $this->providers = $providers;
-        $this->geocodeQueryLogLevel = $geocodeQueryLogLevel;
-        $this->reverseQueryLogLevel = $reverseQueryLogLevel;
     }
 
     public function setGeocodeQueryLogLevel(string $level)
