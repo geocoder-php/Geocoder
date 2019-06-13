@@ -7,16 +7,11 @@
 [![Quality Score](https://img.shields.io/scrutinizer/g/geocoder-php/mapzen-provider.svg?style=flat-square)](https://scrutinizer-ci.com/g/geocoder-php/mapzen-provider)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 
-This is the Mapzen provider from the PHP Geocoder. This is a **READ ONLY** repository. See the
-[main repo](https://github.com/geocoder-php/Geocoder) for information and documentation. 
+# Abandoned
+Mapzen has shut down as their APIs as of February 1, 2018.
+This package is abandoned.
 
-### Install
+### Alternatives
 
-```bash
-composer require geocoder-php/mapzen-provider
-```
-
-### Contribute
-
-Contributions are very welcome! Send a pull request to the [main repository](https://github.com/geocoder-php/Geocoder) or 
-report any issues you find on the [issue tracker](https://github.com/geocoder-php/Geocoder/issues).
+Please see the list of providers in the main repo:    
+https://github.com/geocoder-php/Geocoder

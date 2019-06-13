@@ -25,7 +25,9 @@ use Geocoder\Provider\Provider;
 use Http\Client\HttpClient;
 
 /**
- * @author Gary Gale <gary@vicchi.org>
+ * Mapzen has shut down as their APIs as of February 1, 2018.
+ *
+ * @deprecated https://github.com/geocoder-php/Geocoder/issues/808
  */
 final class Mapzen extends AbstractHttpProvider implements Provider
 {
@@ -45,6 +47,10 @@ final class Mapzen extends AbstractHttpProvider implements Provider
     private $apiKey;
 
     /**
+     * Mapzen has shut down as their APIs as of February 1, 2018.
+     *
+     * @deprecated https://github.com/geocoder-php/Geocoder/issues/808
+     *
      * @param HttpClient $client an HTTP adapter
      * @param string     $apiKey an API key
      */
