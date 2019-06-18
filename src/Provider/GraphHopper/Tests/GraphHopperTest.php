@@ -36,7 +36,7 @@ class GraphHopperTest extends BaseTestCase
     public function testGeocodeWithRealAddress()
     {
         if (!isset($_SERVER['GRAPHHOPPER_API_KEY'])) {
-            $this->markTestSkipped('You need to configure the GRAPHHOPPER_API_KEY value in phpunit.xml');
+            $this->markTestSkipped('You need to configure the GRAPHHOPPER_API_KEY value in phpunit.xml.');
         }
 
         $provider = new GraphHopper($this->getHttpClient($_SERVER['GRAPHHOPPER_API_KEY']), $_SERVER['GRAPHHOPPER_API_KEY']);
@@ -58,7 +58,7 @@ class GraphHopperTest extends BaseTestCase
     public function testGeocodeWithRealAddressAndLocale()
     {
         if (!isset($_SERVER['GRAPHHOPPER_API_KEY'])) {
-            $this->markTestSkipped('You need to configure the GRAPHHOPPER_API_KEY value in phpunit.xml');
+            $this->markTestSkipped('You need to configure the GRAPHHOPPER_API_KEY value in phpunit.xml.');
         }
 
         $provider = new GraphHopper($this->getHttpClient($_SERVER['GRAPHHOPPER_API_KEY']), $_SERVER['GRAPHHOPPER_API_KEY']);
@@ -80,7 +80,7 @@ class GraphHopperTest extends BaseTestCase
     public function testReverseWithRealCoordinates()
     {
         if (!isset($_SERVER['GRAPHHOPPER_API_KEY'])) {
-            $this->markTestSkipped('You need to configure the GRAPHHOPPER_API_KEY value in phpunit.xml');
+            $this->markTestSkipped('You need to configure the GRAPHHOPPER_API_KEY value in phpunit.xml.');
         }
 
         $provider = new GraphHopper($this->getHttpClient($_SERVER['GRAPHHOPPER_API_KEY']), $_SERVER['GRAPHHOPPER_API_KEY']);

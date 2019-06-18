@@ -15,16 +15,21 @@ env:
     global:
         - MIN_PHP=7.0
 
+cache:
+    directories:
+        - $HOME/.composer/cache/files
+
 matrix:
     fast_finish: true
     include:
-        - php: 7.2
+        - php: 7.3
           env: deps="low"
-        - php: 7.2
+        - php: 7.3
           env: deps="high"
         - php: 7.0
         - php: 7.1
         - php: 7.2
+        - php: 7.3
 
 before_install:
     - |
