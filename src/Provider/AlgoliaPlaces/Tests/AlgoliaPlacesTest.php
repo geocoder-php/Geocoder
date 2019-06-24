@@ -43,7 +43,7 @@ class AlgoliaPlacesTest extends BaseTestCase
         }
     }
 
-    public function testGeocodeQuery()
+    public function testGeocodeQueryWithLocale()
     {
         if (!isset($_SERVER['ALGOLIA_APP_ID']) || !isset($_SERVER['ALGOLIA_API_KEY'])) {
             $this->markTestSkipped('You need to configure the ALGOLIA_APP_ID and ALGOLIA_API_KEY value in phpunit.xml');
@@ -66,6 +66,40 @@ class AlgoliaPlacesTest extends BaseTestCase
         $this->assertEquals('Paris 20e Arrondissement', $result->getLocality());
         $this->assertEquals('France', $result->getCountry()->getName());
         $this->assertEquals('fr', $result->getCountry()->getCode());
+    }
+
+    public function testGeocodeQueryWithoutLocale()
+    {
+        if (!isset($_SERVER['ALGOLIA_APP_ID']) || !isset($_SERVER['ALGOLIA_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the ALGOLIA_APP_ID and ALGOLIA_API_KEY value in phpunit.xml');
+        }
+
+        $provider = new AlgoliaPlaces($this->getHttpClient($_SERVER['ALGOLIA_API_KEY'], $_SERVER['ALGOLIA_APP_ID']), $_SERVER['ALGOLIA_API_KEY'], $_SERVER['ALGOLIA_APP_ID']);
+        $results = $provider->geocodeQuery(GeocodeQuery::create('Paris, France'));
+
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertCount(20, $results);
+
+        /** @var Location $result */
+        $result = $results->first();
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(48.8546, $result->getCoordinates()->getLatitude(), '', 0.01);
+        $this->assertEquals(2.34771, $result->getCoordinates()->getLongitude(), '', 0.01);
+
+        $this->assertNull($result->getStreetName());
+        $this->assertSame('75000', $result->getPostalCode());
+        $this->assertSame('Paris', $result->getLocality());
+        $this->assertSame('France', $result->getCountry()->getName());
+        $this->assertSame('fr', $result->getCountry()->getCode());
+    }
+
+    public function testGeocodeUnauthenticated()
+    {
+        $provider = new AlgoliaPlaces($this->getHttpClient());
+        $results = $provider->geocodeQuery(GeocodeQuery::create('Paris, France'));
+
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertCount(20, $results);
     }
 
     public function testGetName()
