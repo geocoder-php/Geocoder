@@ -7,8 +7,13 @@
 [![Quality Score](https://img.shields.io/scrutinizer/g/geocoder-php/geoips-provider.svg?style=flat-square)](https://scrutinizer-ci.com/g/geocoder-php/geoips-provider)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 
-This is the GeoIPs provider from the PHP Geocoder. This is a **READ ONLY** repository. See the
-[main repo](https://github.com/geocoder-php/Geocoder) for information and documentation. 
+# Abandoned
+GeoIPs has shut down as their APIs. 
+This package is abandoned.
+
+## Alternatives
+https://github.com/geocoder-php/Geocoder#ip
+
 
 ### Install
 
