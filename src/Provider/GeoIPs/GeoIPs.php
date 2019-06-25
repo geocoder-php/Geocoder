@@ -27,6 +27,9 @@ use Geocoder\Provider\Provider;
 use Http\Client\HttpClient;
 
 /**
+ * @author Andrea Cristaudo <andrea.cristaudo@gmail.com>
+ * @author Arthur Bodera <abodera@thinkscape.pro>
+ *
  * @deprecated The GeoIPs provider has shut down
  * @see https://github.com/geocoder-php/Geocoder/issues/965
  */
