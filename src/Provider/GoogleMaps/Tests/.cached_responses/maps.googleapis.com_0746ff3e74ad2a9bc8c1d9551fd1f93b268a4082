@@ -1,4 +1,4 @@
-s:2219:"{
+s:2230:"{
    "results" : [
       {
          "address_components" : [
@@ -47,17 +47,17 @@ s:2219:"{
          "geometry" : {
             "location" : {
                "lat" : 39.5751588,
-               "lng" : -105.0135374
+               "lng" : -105.0135375
             },
-            "location_type" : "ROOFTOP",
+            "location_type" : "RANGE_INTERPOLATED",
             "viewport" : {
                "northeast" : {
                   "lat" : 39.57650778029149,
-                  "lng" : -105.0121884197085
+                  "lng" : -105.0121885197085
                },
                "southwest" : {
                   "lat" : 39.5738098197085,
-                  "lng" : -105.0148863802915
+                  "lng" : -105.0148864802915
                }
             }
          },
