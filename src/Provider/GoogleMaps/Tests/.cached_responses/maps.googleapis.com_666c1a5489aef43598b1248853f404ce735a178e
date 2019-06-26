@@ -1,4 +1,4 @@
-s:1636:"{
+s:1649:"{
    "results" : [
       {
          "address_components" : [
@@ -46,7 +46,7 @@ s:1636:"{
             "compound_code" : "R25P+2X New York, United States",
             "global_code" : "87G8R25P+2X"
          },
-         "types" : [ "establishment", "point_of_interest", "university" ]
+         "types" : [ "establishment", "point_of_interest", "political", "university" ]
       }
    ],
    "status" : "OK"
