@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Geocoder\Provider\Chain;
 
 use Geocoder\Collection;
+use Geocoder\Exception\LogicException;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
@@ -33,6 +34,11 @@ final class Chain implements Provider, LoggerAwareInterface
     private $providers = [];
 
     /**
+     * @var \Throwable[]|null
+     */
+    private $previousQueryExceptions;
+
+    /**
      * @param Provider[] $providers
      */
     public function __construct(array $providers = [])
@@ -45,6 +51,8 @@ final class Chain implements Provider, LoggerAwareInterface
      */
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
+        $this->previousQueryExceptions = [];
+
         foreach ($this->providers as $provider) {
             try {
                 $result = $provider->geocodeQuery($query);
@@ -53,6 +61,8 @@ final class Chain implements Provider, LoggerAwareInterface
                     return $result;
                 }
             } catch (\Throwable $e) {
+                $this->previousQueryExceptions[] = $e;
+
                 $this->log(
                     'alert',
                     'Provider "{providerName}" could not geocode address: "{address}".',
@@ -73,6 +83,8 @@ final class Chain implements Provider, LoggerAwareInterface
      */
     public function reverseQuery(ReverseQuery $query): Collection
     {
+        $this->previousQueryExceptions = [];
+
         foreach ($this->providers as $provider) {
             try {
                 $result = $provider->reverseQuery($query);
@@ -81,10 +93,13 @@ final class Chain implements Provider, LoggerAwareInterface
                     return $result;
                 }
             } catch (\Throwable $e) {
+                $this->previousQueryExceptions[] = $e;
+
                 $coordinates = $query->getCoordinates();
                 $this->log(
                     'alert',
-                    sprintf('Provider "%s" could reverse coordinates: %f, %f.', $provider->getName(), $coordinates->getLatitude(), $coordinates->getLongitude()),
+                    sprintf('Provider "%s" could reverse coordinates: %f, %f.', $provider->getName(),
+                        $coordinates->getLatitude(), $coordinates->getLongitude()),
                     ['exception' => $e]
                 );
             }
@@ -116,8 +131,20 @@ final class Chain implements Provider, LoggerAwareInterface
     }
 
     /**
-     * @param $level
-     * @param $message
+     * @return \Throwable[]
+     */
+    public function getPreviousQueryExceptions(): array
+    {
+        if (null === $this->previousQueryExceptions) {
+            throw new LogicException('A query must be made before retrieving exceptions');
+        }
+
+        return $this->previousQueryExceptions;
+    }
+
+    /**
+     * @param       $level
+     * @param       $message
      * @param array $context
      */
     private function log($level, $message, array $context = [])

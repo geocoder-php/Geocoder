@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Geocoder\Provider\Chain\Tests;
 
+use Geocoder\Exception\QuotaExceeded;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
@@ -80,5 +81,37 @@ class ChainTest extends TestCase
         $chain = new Chain([$mockOne, $mockTwo]);
 
         $this->assertEquals($result, $chain->geocodeQuery($query));
+    }
+
+    public function testFetchingChainExceptions()
+    {
+        $query = GeocodeQuery::create('Paris');
+        $mockOne = $this->getMockBuilder('Geocoder\\Provider\\Provider')->getMock();
+        $mockOne->expects($this->once())
+            ->method('geocodeQuery')
+            ->will($this->returnCallback(function () {
+                throw new \Exception('example exception 1');
+            }));
+
+        $mockTwo = $this->getMockBuilder('Geocoder\\Provider\\Provider')->getMock();
+        $mockTwo->expects($this->once())
+            ->method('geocodeQuery')
+            ->will($this->returnCallback(function () {
+                throw new QuotaExceeded('example exception 2');
+            }));
+
+        $mockThree = $this->getMockBuilder('Geocoder\\Provider\\Provider')->getMock();
+        $result = new AddressCollection(['foo' => 'bar']);
+        $mockThree->expects($this->once())
+            ->method('geocodeQuery')
+            ->with($query)
+            ->will($this->returnValue($result));
+
+        $chain = new Chain([$mockOne, $mockTwo, $mockThree]);
+
+        $this->assertEquals($result, $chain->geocodeQuery($query));
+        $this->assertCount(2, $chain->getPreviousQueryExceptions());
+        $this->assertInstanceOf(\Exception::class, $chain->getPreviousQueryExceptions()[0]);
+        $this->assertInstanceOf(QuotaExceeded::class, $chain->getPreviousQueryExceptions()[1]);
     }
 }
