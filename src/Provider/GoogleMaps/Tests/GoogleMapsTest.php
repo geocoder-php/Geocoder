@@ -19,6 +19,7 @@ use Geocoder\Model\Address;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Provider\GoogleMaps\Model\GoogleAddress;
 use Geocoder\Query\GeocodeQuery;
+use Geocoder\Query\LookupQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\GoogleMaps\GoogleMaps;
 use Psr\Http\Message\RequestInterface;
@@ -172,6 +173,39 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertEquals('France', $result->getCountry()->getName());
         $this->assertEquals('FR', $result->getCountry()->getCode());
         $this->assertEquals('ChIJ9aLL3vJt5kcR61GCze3v6fg', $result->getId());
+        $this->assertEquals(false, $result->isPartialMatch());
+    }
+
+    /**
+     * @expectedException \Geocoder\Exception\InvalidServerResponse
+     */
+    public function testLookup()
+    {
+        $provider = new GoogleMaps($this->getMockedHttpClient());
+        $provider->lookupQuery(new LookupQuery('1'));
+    }
+
+    public function testLookupWithRealId()
+    {
+        $place_id = 'Ei5TdmFydnN0b2xzdsOkZ2VuIDEwLCAxMjYgMzggSMOkZ2Vyc3RlbiwgU3dlZGVuIhoSGAoUChIJMV6ykqx3X0YRj43VlDVv6T0QCg';
+        $provider = $this->getGoogleMapsProvider();
+        $results = $provider->lookupQuery(new LookupQuery($place_id));
+
+        $this->assertInstanceOf(AddressCollection::class, $results);
+        $this->assertCount(1, $results);
+
+        /** @var GoogleAddress $result */
+        $result = $results->first();
+        $this->assertInstanceOf(Address::class, $result);
+        $this->assertEquals($place_id, $result->getId());
+        $this->assertEquals(10, $result->getStreetNumber());
+        $this->assertEquals('Svarvstolsvägen', $result->getStreetName());
+        $this->assertEquals('126 38', $result->getPostalCode());
+        $this->assertEquals('Hägersten', $result->getLocality());
+        $this->assertCount(1, $result->getAdminLevels());
+        $this->assertEquals('Stockholms län', $result->getAdminLevels()->get(1)->getName());
+        $this->assertEquals('Sweden', $result->getCountry()->getName());
+        $this->assertEquals('SE', $result->getCountry()->getCode());
         $this->assertEquals(false, $result->isPartialMatch());
     }
 

@@ -20,6 +20,7 @@ use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Model\AddressBuilder;
 use Geocoder\Query\GeocodeQuery;
+use Geocoder\Query\LookupQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Provider\GoogleMaps\Model\GoogleAddress;
@@ -40,6 +41,11 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
      * @var string
      */
     const REVERSE_ENDPOINT_URL_SSL = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=%F,%F';
+
+    /**
+     * @var string
+     */
+    const LOOKUP_ENDPOINT_URL_SSL = 'https://maps.googleapis.com/maps/api/geocode/json?place_id=%s';
 
     /**
      * @var string|null
@@ -137,6 +143,12 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
         }
 
         return $this->fetchUrl($url, $query->getLocale(), $query->getLimit(), $query->getData('region', $this->region));
+    }
+
+    public function lookupQuery(LookupQuery $query): Collection
+    {
+        $url = sprintf(self::LOOKUP_ENDPOINT_URL_SSL, $query->getId());
+        return $this->fetchUrl($url, null, 1);
     }
 
     /**

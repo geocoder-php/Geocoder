@@ -1,0 +1,65 @@
+s:2068:"{
+   "results" : [
+      {
+         "address_components" : [
+            {
+               "long_name" : "10",
+               "short_name" : "10",
+               "types" : [ "street_number" ]
+            },
+            {
+               "long_name" : "Svarvstolsvägen",
+               "short_name" : "Svarvstolsvägen",
+               "types" : [ "route" ]
+            },
+            {
+               "long_name" : "Hägersten-Liljeholmen",
+               "short_name" : "Hägersten-Liljeholmen",
+               "types" : [ "political", "sublocality", "sublocality_level_1" ]
+            },
+            {
+               "long_name" : "Hägersten",
+               "short_name" : "Hägersten",
+               "types" : [ "postal_town" ]
+            },
+            {
+               "long_name" : "Stockholms län",
+               "short_name" : "Stockholms län",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "Sweden",
+               "short_name" : "SE",
+               "types" : [ "country", "political" ]
+            },
+            {
+               "long_name" : "126 38",
+               "short_name" : "126 38",
+               "types" : [ "postal_code" ]
+            }
+         ],
+         "formatted_address" : "Svarvstolsvägen 10, 126 38 Hägersten, Sweden",
+         "geometry" : {
+            "location" : {
+               "lat" : 59.29695329999999,
+               "lng" : 17.9975976
+            },
+            "location_type" : "RANGE_INTERPOLATED",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 59.2983022802915,
+                  "lng" : 17.9989465802915
+               },
+               "southwest" : {
+                  "lat" : 59.29560431970849,
+                  "lng" : 17.9962486197085
+               }
+            }
+         },
+         "place_id" : "Ei5TdmFydnN0b2xzdsOkZ2VuIDEwLCAxMjYgMzggSMOkZ2Vyc3RlbiwgU3dlZGVuIhoSGAoUChIJMV6ykqx3X0YRj43VlDVv6T0QCg",
+         "types" : [ "street_address" ]
+      }
+   ],
+   "status" : "OK"
+}
+";
