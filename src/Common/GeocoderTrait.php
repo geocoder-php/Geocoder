@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Geocoder;
 
 use Geocoder\Query\GeocodeQuery;
+use Geocoder\Query\LookupQuery;
 use Geocoder\Query\ReverseQuery;
 
 /**
@@ -25,6 +26,8 @@ trait GeocoderTrait
     abstract public function geocodeQuery(GeocodeQuery $query): Collection;
 
     abstract public function reverseQuery(ReverseQuery $query): Collection;
+
+    abstract public function lookupQuery(LookupQuery $query): Collection;
 
     /**
      * {@inheritdoc}
@@ -40,5 +43,13 @@ trait GeocoderTrait
     public function reverse(float $latitude, float $longitude): Collection
     {
         return $this->reverseQuery(ReverseQuery::fromCoordinates($latitude, $longitude));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function lookup($id) : Collection
+    {
+        return $this->lookupQuery(new LookupQuery($id));
     }
 }

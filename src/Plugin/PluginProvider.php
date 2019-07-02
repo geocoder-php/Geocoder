@@ -19,6 +19,7 @@ use Geocoder\Plugin\Promise\GeocoderFulfilledPromise;
 use Geocoder\Plugin\Promise\GeocoderRejectedPromise;
 use Geocoder\Provider\Provider;
 use Geocoder\Query\GeocodeQuery;
+use Geocoder\Query\LookupQuery;
 use Geocoder\Query\Query;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Plugin\Exception\LoopException;
@@ -85,6 +86,22 @@ class PluginProvider implements Provider
         $pluginChain = $this->createPluginChain($this->plugins, function (ReverseQuery $query) {
             try {
                 return new GeocoderFulfilledPromise($this->provider->reverseQuery($query));
+            } catch (Exception $exception) {
+                return new GeocoderRejectedPromise($exception);
+            }
+        });
+
+        return $pluginChain($query)->wait();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function lookupQuery(LookupQuery $query): Collection
+    {
+        $pluginChain = $this->createPluginChain($this->plugins, function (LookupQuery $query) {
+            try {
+                return new GeocoderFulfilledPromise($this->provider->lookupQuery($query));
             } catch (Exception $exception) {
                 return new GeocoderRejectedPromise($exception);
             }

@@ -12,8 +12,11 @@ declare(strict_types=1);
 
 namespace Geocoder\Provider;
 
+use Geocoder\Collection;
 use Geocoder\Location;
 use Geocoder\Model\Address;
+use Geocoder\Model\AddressCollection;
+use Geocoder\Query\LookupQuery;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -32,5 +35,13 @@ abstract class AbstractProvider implements Provider
             'locality' => 'localhost',
             'country' => 'localhost',
         ]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function lookupQuery(LookupQuery $query) : Collection
+    {
+        return new AddressCollection([]);
     }
 }

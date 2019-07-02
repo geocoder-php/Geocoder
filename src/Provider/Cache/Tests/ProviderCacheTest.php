@@ -17,6 +17,7 @@ use Geocoder\Model\AddressCollection;
 use Geocoder\Provider\Cache\ProviderCache;
 use Geocoder\Provider\Provider;
 use Geocoder\Query\GeocodeQuery;
+use Geocoder\Query\LookupQuery;
 use Geocoder\Query\ReverseQuery;
 use PHPUnit\Framework\TestCase;
 use Psr\SimpleCache\CacheInterface;
@@ -46,7 +47,7 @@ class ProviderCacheTest extends TestCase
             ->getMock();
 
         $this->providerMock = $this->getMockBuilder(Provider::class)
-            ->setMethods(['getFoo', 'getName', 'geocodeQuery', 'reverseQuery'])
+            ->setMethods(['getFoo', 'getName', 'geocodeQuery', 'reverseQuery', 'lookupQuery'])
             ->getMock();
     }
 
@@ -156,5 +157,49 @@ class ProviderCacheTest extends TestCase
 
         $providerCache = new ProviderCache($this->providerMock, $this->cacheMock, $ttl);
         $providerCache->reverseQuery($query);
+    }
+
+    public function testLookupMiss()
+    {
+        $query = new LookupQuery('1');
+        $result = new AddressCollection([Address::createFromArray([])]);
+        $ttl = 4711;
+
+        $this->cacheMock->expects($this->once())
+            ->method('get')
+            ->willReturn(null);
+
+        $this->cacheMock->expects($this->once())
+            ->method('set')
+            ->with($this->anything(), $result, $ttl)
+            ->willReturn(null);
+
+        $this->providerMock->expects($this->once())
+            ->method('lookupQuery')
+            ->with($query)
+            ->willReturn($result);
+
+        $providerCache = new ProviderCache($this->providerMock, $this->cacheMock, $ttl);
+        $providerCache->lookupQuery($query);
+    }
+
+    public function testLookupHit()
+    {
+        $query = new LookupQuery('1');
+        $result = new AddressCollection([Address::createFromArray([])]);
+        $ttl = 4711;
+
+        $this->cacheMock->expects($this->once())
+            ->method('get')
+            ->willReturn($result);
+
+        $this->cacheMock->expects($this->never())
+            ->method('set');
+
+        $this->providerMock->expects($this->never())
+            ->method('reverseQuery');
+
+        $providerCache = new ProviderCache($this->providerMock, $this->cacheMock, $ttl);
+        $providerCache->lookupQuery($query);
     }
 }

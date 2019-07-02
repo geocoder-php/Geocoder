@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Geocoder;
 
 use Geocoder\Query\GeocodeQuery;
+use Geocoder\Query\LookupQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\Provider;
 use Symfony\Component\Stopwatch\Stopwatch;
@@ -78,6 +79,26 @@ final class TimedGeocoder implements Geocoder
         }
 
         $this->stopwatch->stop('reverse');
+
+        return $result;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function lookupQuery(LookupQuery $query): Collection
+    {
+        $this->stopwatch->start('lookup', 'geocoder');
+
+        try {
+            $result = $this->delegate->lookupQuery($query);
+        } catch (\Throwable $e) {
+            $this->stopwatch->stop('lookup');
+
+            throw $e;
+        }
+
+        $this->stopwatch->stop('lookup');
 
         return $result;
     }

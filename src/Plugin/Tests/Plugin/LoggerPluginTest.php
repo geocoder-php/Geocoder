@@ -40,13 +40,14 @@ class LoggerPluginTest extends TestCase
 
         $provider = $this->getMockBuilder(Provider::class)
             ->disableOriginalConstructor()
-            ->setMethods(['geocodeQuery', 'reverseQuery', 'getName'])
+            ->setMethods(['geocodeQuery', 'reverseQuery', 'lookupQuery', 'getName'])
             ->getMock();
         $provider->expects($this->once())
             ->method('geocodeQuery')
             ->with($geocodeQuery)
             ->willReturn($collection);
         $provider->expects($this->never())->method('reverseQuery');
+        $provider->expects($this->never())->method('lookupQuery');
         $provider->expects($this->never())->method('getName');
 
         $pluginProvider = new PluginProvider($provider, [new LoggerPlugin($logger)]);
@@ -69,12 +70,13 @@ class LoggerPluginTest extends TestCase
         $geocodeQuery = GeocodeQuery::create('foo');
         $provider = $this->getMockBuilder(Provider::class)
             ->disableOriginalConstructor()
-            ->setMethods(['geocodeQuery', 'reverseQuery', 'getName'])
+            ->setMethods(['geocodeQuery', 'reverseQuery', 'lookupQuery', 'getName'])
             ->getMock();
         $provider->expects($this->once())
             ->method('geocodeQuery')
             ->willThrowException(new QuotaExceeded());
         $provider->expects($this->never())->method('reverseQuery');
+        $provider->expects($this->never())->method('lookupQuery');
         $provider->expects($this->never())->method('getName');
 
         $pluginProvider = new PluginProvider($provider, [new LoggerPlugin($logger)]);

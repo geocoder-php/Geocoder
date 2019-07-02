@@ -15,6 +15,7 @@ namespace Geocoder;
 use Geocoder\Exception\ProviderNotRegistered;
 use Geocoder\Model\Coordinates;
 use Geocoder\Query\GeocodeQuery;
+use Geocoder\Query\LookupQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\Provider;
 
@@ -79,6 +80,11 @@ class ProviderAggregator implements Geocoder
         return call_user_func($this->decider, $query, $this->providers, $this->provider)->reverseQuery($query);
     }
 
+    public function lookupQuery(LookupQuery $query): Collection
+    {
+        return call_user_func($this->decider, $query, $this->providers, $this->provider)->lookupQuery($query);
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -103,6 +109,14 @@ class ProviderAggregator implements Geocoder
     {
         return $this->reverseQuery(ReverseQuery::create(new Coordinates($latitude, $longitude))
             ->withLimit($this->limit));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function lookup($id): Collection
+    {
+        return $this->lookupQuery(new LookupQuery($id));
     }
 
     /**

@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Geocoder;
 
 use Geocoder\Provider\Provider;
+use Geocoder\Query\LookupQuery;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -53,4 +54,15 @@ interface Geocoder extends Provider
      * @throws \Geocoder\Exception\Exception
      */
     public function reverse(float $latitude, float $longitude): Collection;
+
+    /**
+     * Lookup a location by it's provider-specific id.
+     *
+     * @param mixed $id
+     *
+     * @return Collection
+     *
+     * @throws \Geocoder\Exception\Exception
+     */
+    public function lookup($id) : Collection;
 }

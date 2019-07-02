@@ -14,6 +14,7 @@ namespace Geocoder\Provider\Cache;
 
 use Geocoder\Collection;
 use Geocoder\Query\GeocodeQuery;
+use Geocoder\Query\LookupQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\Provider;
 use Psr\SimpleCache\CacheInterface;
@@ -87,6 +88,22 @@ class ProviderCache implements Provider
     /**
      * {@inheritdoc}
      */
+    final public function lookupQuery(LookupQuery $query): Collection
+    {
+        $cacheKey = $this->getCacheKey($query);
+        if (null !== $result = $this->cache->get($cacheKey)) {
+            return $result;
+        }
+
+        $result = $this->realProvider->lookupQuery($query);
+        $this->cache->set($cacheKey, $result, $this->lifetime);
+
+        return $result;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getName(): string
     {
         return sprintf('%s (cache)', $this->realProvider->getName());
@@ -98,7 +115,7 @@ class ProviderCache implements Provider
     }
 
     /**
-     * @param GeocodeQuery|ReverseQuery $query
+     * @param GeocodeQuery|ReverseQuery|LookupQuery $query
      *
      * @return string
      */

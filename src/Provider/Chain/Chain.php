@@ -15,6 +15,7 @@ namespace Geocoder\Provider\Chain;
 use Geocoder\Collection;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
+use Geocoder\Query\LookupQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\Provider;
 use Psr\Log\LoggerAwareInterface;
@@ -86,6 +87,34 @@ final class Chain implements Provider, LoggerAwareInterface
                     'alert',
                     sprintf('Provider "%s" could reverse coordinates: %f, %f.', $provider->getName(), $coordinates->getLatitude(), $coordinates->getLongitude()),
                     ['exception' => $e]
+                );
+            }
+        }
+
+        return new AddressCollection();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function lookupQuery(LookupQuery $query): Collection
+    {
+        foreach ($this->providers as $provider) {
+            try {
+                $result = $provider->lookupQuery($query);
+
+                if (!$result->isEmpty()) {
+                    return $result;
+                }
+            } catch (\Throwable $e) {
+                $this->log(
+                    'alert',
+                    'Provider "{providerName}" could not lookup id: "{id}".',
+                    [
+                        'exception' => $e,
+                        'providerName' => $provider->getName(),
+                        'id' => $query->getId(),
+                    ]
                 );
             }
         }
