@@ -15,6 +15,11 @@ class LookupQuery implements Query
     protected $id;
 
     /**
+     * @var string|null
+     */
+    private $locale;
+
+    /**
      * @param mixed $id
      */
     public function __construct($id)
@@ -32,11 +37,14 @@ class LookupQuery implements Query
     /**
      * @param string $locale
      *
-     * @return Query
+     * @return GeocodeQuery
      */
-    public function withLocale(string $locale)
+    public function withLocale(string $locale): self
     {
-        throw new InvalidArgument('Lookup query does not support this option');
+        $new = clone $this;
+        $new->locale = $locale;
+
+        return $new;
     }
 
     /**
@@ -65,7 +73,7 @@ class LookupQuery implements Query
      */
     public function getLocale()
     {
-        throw new InvalidArgument('Lookup query does not support this option');
+        return $this->locale;
     }
 
     /**
@@ -73,7 +81,7 @@ class LookupQuery implements Query
      */
     public function getLimit(): int
     {
-        throw new InvalidArgument('Lookup query does not support this option');
+        return 1;
     }
 
     /**

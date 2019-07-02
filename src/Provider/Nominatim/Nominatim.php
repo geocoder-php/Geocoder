@@ -20,6 +20,7 @@ use Geocoder\Location;
 use Geocoder\Model\AddressBuilder;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
+use Geocoder\Query\LookupQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Provider\Provider;
@@ -178,6 +179,42 @@ final class Nominatim extends AbstractHttpProvider implements Provider
         }
 
         return new AddressCollection([$this->jsonResultToLocation($json, true)]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function lookupQuery(LookupQuery $query): Collection
+    {
+        $url = $this->rootUrl
+            .'/lookup?'
+            .http_build_query([
+                'format' => 'json', // At the moment, open street map does not support jsonv2
+                'osm_ids' => $query->getId(),
+                'addressdetails' => 1,
+            ]);
+
+        $content = $this->executeQuery($url, $query->getLocale());
+
+        $json = json_decode($content);
+        if (is_null($json) || !is_array($json)) {
+            throw InvalidServerResponse::create($url);
+        }
+
+        if (empty($json)) {
+            return new AddressCollection([]);
+        }
+
+        $results = [];
+        foreach ($json as $place) {
+            // Lookup responds with some missing attributes, we need to init them
+            $place->boundingbox = [null, null, null, null];
+            $place->category = $place->class;
+
+            $results[] = $this->jsonResultToLocation($place, false);
+        }
+
+        return new AddressCollection($results);
     }
 
     /**

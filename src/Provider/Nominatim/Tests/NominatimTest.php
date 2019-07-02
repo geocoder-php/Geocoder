@@ -16,6 +16,7 @@ use Geocoder\Collection;
 use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Location;
 use Geocoder\Query\GeocodeQuery;
+use Geocoder\Query\LookupQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\Nominatim\Nominatim;
 
@@ -125,6 +126,35 @@ class NominatimTest extends BaseTestCase
         foreach ($results as $result) {
             $this->assertEquals('BE', $result->getCountry()->getCode());
         }
+    }
+
+    public function testLookupWithRealOSMId()
+    {
+        $id = 'W220754533';
+        $provider = Nominatim::withOpenStreetMapServer($this->getHttpClient(), 'Geocoder PHP/Nominatim Provider/Nominatim Test');
+        $results = $provider->lookupQuery(new LookupQuery($id));
+
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertCount(1, $results);
+
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results->first();
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(50.896344, $result->getCoordinates()->getLatitude(), '', 0.00001);
+        $this->assertEquals(4.3605984, $result->getCoordinates()->getLongitude(), '', 0.00001);
+        $this->assertEquals('35', $result->getStreetNumber());
+        $this->assertEquals('Avenue Jean de Bologne - Jean de Bolognelaan', $result->getStreetName());
+        $this->assertEquals('1020', $result->getPostalCode());
+        $this->assertEquals('Ville de Bruxelles - Stad Brussel', $result->getLocality());
+        $this->assertEquals('Heysel - Heizel', $result->getSubLocality());
+        $this->assertEquals('BE', $result->getCountry()->getCode());
+
+        $this->assertEquals('Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright', $result->getAttribution());
+        $this->assertEquals('building', $result->getCategory());
+        $this->assertEquals('35, Avenue Jean de Bologne - Jean de Bolognelaan, Heysel - Heizel, Laeken / Laken, Ville de Bruxelles - Stad Brussel, Brussel-Hoofdstad - Bruxelles-Capitale, Région de Bruxelles-Capitale - Brussels Hoofdstedelijk Gewest, 1020, België / Belgique / Belgien', $result->getDisplayName());
+        $this->assertEquals(220754533, $result->getOSMId());
+        $this->assertEquals('way', $result->getOSMType());
+        $this->assertEquals('yes', $result->getType());
     }
 
     public function testGeocodeWithViewbox()
