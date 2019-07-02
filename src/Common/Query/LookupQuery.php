@@ -66,7 +66,7 @@ class LookupQuery implements Query
 
     /**
      * @param string $name
-     * @param mixed $value
+     * @param mixed  $value
      *
      * @return Query
      */
