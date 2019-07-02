@@ -48,7 +48,7 @@ trait GeocoderTrait
     /**
      * {@inheritdoc}
      */
-    public function lookup($id) : Collection
+    public function lookup($id): Collection
     {
         return $this->lookupQuery(new LookupQuery($id));
     }

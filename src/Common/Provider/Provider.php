@@ -53,7 +53,7 @@ interface Provider
      *
      * @throws \Geocoder\Exception\Exception
      */
-    public function lookupQuery(LookupQuery $query) : Collection;
+    public function lookupQuery(LookupQuery $query): Collection;
 
     /**
      * Returns the provider's name.

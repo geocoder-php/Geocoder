@@ -1,8 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Geocoder package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license    MIT License
+ */
 
 namespace Geocoder\Query;
-
 
 use Geocoder\Exception\InvalidArgument;
 
@@ -10,7 +16,7 @@ class LookupQuery implements Query
 {
 
     /**
-     * @var mixed $id
+     * @var mixed
      */
     protected $id;
 
@@ -30,7 +36,8 @@ class LookupQuery implements Query
     /**
      * @return mixed
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -85,14 +92,14 @@ class LookupQuery implements Query
     }
 
     /**
-     * @param string $name
+     * @param string     $name
      * @param mixed|null $default
      *
      * @return mixed
      */
     public function getData(string $name, $default = null)
     {
-        return $name === 'id' ? $this->id : $default;
+        return 'id' === $name ? $this->id : $default;
     }
 
     /**

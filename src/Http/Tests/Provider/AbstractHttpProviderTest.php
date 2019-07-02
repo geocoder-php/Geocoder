@@ -14,7 +14,6 @@ namespace Geocoder\Http\Provider\Tests;
 
 use Geocoder\Collection;
 use Geocoder\Http\Provider\AbstractHttpProvider;
-use Geocoder\Location;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\LookupQuery;

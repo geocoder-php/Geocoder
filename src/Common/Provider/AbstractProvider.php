@@ -40,7 +40,7 @@ abstract class AbstractProvider implements Provider
     /**
      * {@inheritdoc}
      */
-    public function lookupQuery(LookupQuery $query) : Collection
+    public function lookupQuery(LookupQuery $query): Collection
     {
         return new AddressCollection([]);
     }

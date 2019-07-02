@@ -148,6 +148,7 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
     public function lookupQuery(LookupQuery $query): Collection
     {
         $url = sprintf(self::LOOKUP_ENDPOINT_URL_SSL, $query->getId());
+
         return $this->fetchUrl($url, null, 1);
     }
 

@@ -13,7 +13,6 @@ declare(strict_types=1);
 namespace Geocoder;
 
 use Geocoder\Provider\Provider;
-use Geocoder\Query\LookupQuery;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -64,5 +63,5 @@ interface Geocoder extends Provider
      *
      * @throws \Geocoder\Exception\Exception
      */
-    public function lookup($id) : Collection;
+    public function lookup($id): Collection;
 }
