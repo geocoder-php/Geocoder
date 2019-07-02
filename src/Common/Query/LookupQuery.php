@@ -14,7 +14,6 @@ use Geocoder\Exception\InvalidArgument;
 
 class LookupQuery implements Query
 {
-
     /**
      * @var mixed
      */
