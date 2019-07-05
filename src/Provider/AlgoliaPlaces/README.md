@@ -17,11 +17,36 @@ This is the Algolia Places provider from the PHP Geocoder. This is a **READ ONLY
 composer require geocoder-php/algolia-places-provider
 ```
 
+## Usage
+
+The Algolia Places API allows up to 1000 free requests per day (per IP) without authentication.
+
+By [signing up for an account](https://www.algolia.com/users/sign_up/places) you can make 100,000 requests per month (~3000 a day).
+
+See: https://community.algolia.com/places/pricing.html
+
+### Locales
+
+You should set a locale on the query. If it is missing, results may not be as complete for non english speaking countries.
+
+```php
+
+use Geocoder\Query\GeocodeQuery;
+use Geocoder\Query\ReverseQuery;
+
+$httpClient = new \Http\Adapter\Guzzle6\Client();
+
+// Unauthenticated
+$provider = new \Geocoder\Provider\AlgoliaPlaces\AlgoliaPlaces($httpClient);
+// Authenticated 
+$provider = new \Geocoder\Provider\AlgoliaPlaces\AlgoliaPlaces($httpClient, '<your-app-id>', '<your-key>');
+
+$geocoder = new \Geocoder\StatefulGeocoder($provider, 'en');
+
+$result = $geocoder->geocodeQuery(GeocodeQuery::create('Paris')->withLocale('fr-FR));
+```
+
 ## Contribute
 
 Contributions are very welcome! Send a pull request to the [main repository](https://github.com/geocoder-php/Geocoder) or 
 report any issues you find on the [issue tracker](https://github.com/geocoder-php/Geocoder/issues).
-
-## Note
-
-A valid `ApiKey` and `AppId` is required for Algolia Places for Business. 
