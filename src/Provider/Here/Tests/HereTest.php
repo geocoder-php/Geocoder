@@ -78,7 +78,10 @@ class HereTest extends BaseTestCase
         $this->assertEquals('FRA', $result->getCountry()->getCode());
     }
 
-    public function testGeocodeWithAdminLevel()
+    /**
+     * @throws \Geocoder\Exception\Exception
+     */
+    public function testGeocodeWithDefaultAdditionalData()
     {
         if (!isset($_SERVER['HERE_APP_ID']) || !isset($_SERVER['HERE_APP_CODE'])) {
             $this->markTestSkipped('You need to configure the HERE_APP_ID and HERE_APP_CODE value in phpunit.xml');
@@ -108,14 +111,66 @@ class HereTest extends BaseTestCase
         $this->assertEquals('Espanya', $result->getCountry()->getName());
         $this->assertEquals('ESP', $result->getCountry()->getCode());
 
-        $this->assertEquals('Espanya', $result->getAdminLevels()->get(1)->getName());
-        $this->assertEquals('CountryName', $result->getAdminLevels()->get(1)->getCode());
-        $this->assertEquals('Catalunya', $result->getAdminLevels()->get(2)->getName());
-        $this->assertEquals('StateName', $result->getAdminLevels()->get(2)->getCode());
-        $this->assertEquals('Barcelona', $result->getAdminLevels()->get(3)->getName());
-        $this->assertEquals('CountyName', $result->getAdminLevels()->get(3)->getCode());
+        $this->assertEquals('Espanya', $result->getAdditionalDataValue('CountryName'));
+        $this->assertEquals('Catalunya', $result->getAdditionalDataValue('StateName'));
+        $this->assertEquals('Barcelona', $result->getAdditionalDataValue('CountyName'));
     }
 
+    /**
+     * Validation of some AdditionalData filters.
+     * https://developer.here.com/documentation/geocoder/topics/resource-params-additional.html
+     *
+     * @throws \Geocoder\Exception\Exception
+     */
+    public function testGeocodeWithAdditionalData()
+    {
+        if (!isset($_SERVER['HERE_APP_ID']) || !isset($_SERVER['HERE_APP_CODE'])) {
+            $this->markTestSkipped('You need to configure the HERE_APP_ID and HERE_APP_CODE value in phpunit.xml');
+        }
+
+        $provider = new Here($this->getHttpClient($_SERVER['HERE_APP_ID'], $_SERVER['HERE_APP_CODE']), $_SERVER['HERE_APP_ID'], $_SERVER['HERE_APP_CODE']);
+        $results = $provider->geocodeQuery(GeocodeQuery::create('Sant Roc, Santa Coloma de Cervelló, Espanya')
+            ->withData('Country2','true')
+            ->withData('IncludeShapeLevel','country')
+            ->withData('IncludeRoutingInformation','true')
+            ->withLocale('ca'));
+
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertCount(1, $results);
+
+        /** @var Location $result */
+        $result = $results->first();
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(41.37854, $result->getCoordinates()->getLatitude(), '', 0.01);
+        $this->assertEquals(2.01196, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertNotNull($result->getBounds());
+        $this->assertEquals(41.36505, $result->getBounds()->getSouth(), '', 0.01);
+        $this->assertEquals(1.99398, $result->getBounds()->getWest(), '', 0.01);
+        $this->assertEquals(41.39203, $result->getBounds()->getNorth(), '', 0.01);
+        $this->assertEquals(2.02994, $result->getBounds()->getEast(), '', 0.01);
+
+        $this->assertEquals('08690', $result->getPostalCode());
+        $this->assertEquals('Sant Roc', $result->getSubLocality());
+        $this->assertEquals('Santa Coloma de Cervelló', $result->getLocality());
+        $this->assertEquals('Espanya', $result->getCountry()->getName());
+        $this->assertEquals('ESP', $result->getCountry()->getCode());
+
+        $this->assertEquals('ES', $result->getAdditionalDataValue('Country2'));
+        $this->assertEquals('Espanya', $result->getAdditionalDataValue('CountryName'));
+        $this->assertEquals('Catalunya', $result->getAdditionalDataValue('StateName'));
+        $this->assertEquals('Barcelona', $result->getAdditionalDataValue('CountyName'));
+        $this->assertEquals('district', $result->getAdditionalDataValue('routing_address_matchLevel'));
+        $this->assertEquals('NT_TzyupfxmTFN0Rh1TXEMqSA', $result->getAdditionalDataValue('routing_locationId'));
+        $this->assertEquals('address', $result->getAdditionalDataValue('routing_result_type'));
+        $this->assertEquals('WKTShapeType', $result->getShapeValue('_type'));
+        $this->assertRegexp('/^MULTIPOLYGON/', $result->getShapeValue('Value'));
+    }
+
+    /**
+     * Search for a specific city in a different country.
+     *
+     * @throws \Geocoder\Exception\Exception
+     */
     public function testGeocodeWithExtraFilterCountry()
     {
         if (!isset($_SERVER['HERE_APP_ID']) || !isset($_SERVER['HERE_APP_CODE'])) {
@@ -146,6 +201,11 @@ class HereTest extends BaseTestCase
         $this->assertEquals('VEN', $resultVenezuela->getCountry()->getCode());
     }
 
+    /**
+     * Search for a specific street in different towns in the same country.
+     *
+     * @throws \Geocoder\Exception\Exception
+     */
     public function testGeocodeWithExtraFilterCity()
     {
         if (!isset($_SERVER['HERE_APP_ID']) || !isset($_SERVER['HERE_APP_CODE'])) {
@@ -206,10 +266,10 @@ class HereTest extends BaseTestCase
 
         $this->assertEquals('Cabanes', $resultRegion1->getLocality());
         $this->assertEquals('Cabanes', $resultRegion2->getLocality());
-        $this->assertEquals('Girona', $resultRegion1->getAdminLevels()->get(3)->getName());
-        $this->assertEquals('Castelló', $resultRegion2->getAdminLevels()->get(3)->getName());
-        $this->assertEquals('Catalunya', $resultRegion1->getAdminLevels()->get(2)->getName());
-        $this->assertEquals('Comunitat Valenciana', $resultRegion2->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('Girona', $resultRegion1->getAdditionalDataValue('CountyName'));
+        $this->assertEquals('Castelló', $resultRegion2->getAdditionalDataValue('CountyName'));
+        $this->assertEquals('Catalunya', $resultRegion1->getAdditionalDataValue('StateName'));
+        $this->assertEquals('Comunitat Valenciana', $resultRegion2->getAdditionalDataValue('StateName'));
         $this->assertEquals('Espanya', $resultRegion1->getCountry()->getName());
         $this->assertEquals('Espanya', $resultRegion2->getCountry()->getName());
         $this->assertEquals('ESP', $resultRegion1->getCountry()->getCode());
