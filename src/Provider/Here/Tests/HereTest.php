@@ -130,9 +130,9 @@ class HereTest extends BaseTestCase
 
         $provider = new Here($this->getHttpClient($_SERVER['HERE_APP_ID'], $_SERVER['HERE_APP_CODE']), $_SERVER['HERE_APP_ID'], $_SERVER['HERE_APP_CODE']);
         $results = $provider->geocodeQuery(GeocodeQuery::create('Sant Roc, Santa Coloma de Cervelló, Espanya')
-            ->withData('Country2','true')
-            ->withData('IncludeShapeLevel','country')
-            ->withData('IncludeRoutingInformation','true')
+            ->withData('Country2', 'true')
+            ->withData('IncludeShapeLevel', 'country')
+            ->withData('IncludeRoutingInformation', 'true')
             ->withLocale('ca'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
