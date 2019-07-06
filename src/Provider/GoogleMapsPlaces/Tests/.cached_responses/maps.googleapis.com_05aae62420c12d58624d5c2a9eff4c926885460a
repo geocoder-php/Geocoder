@@ -1,0 +1,51 @@
+s:1713:"{
+   "candidates" : [
+      {
+         "formatted_address" : "140 George St, The Rocks NSW 2000, Australia",
+         "geometry" : {
+            "location" : {
+               "lat" : -33.8599358,
+               "lng" : 151.2090295
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : -33.85821262010728,
+                  "lng" : 151.2102470798928
+               },
+               "southwest" : {
+                  "lat" : -33.86091227989272,
+                  "lng" : 151.2075474201073
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/museum-71.png",
+         "name" : "Museum of Contemporary Art Australia",
+         "photos" : [
+            {
+               "height" : 2736,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/108440264878062594882/photos\"\u003eKun-Lin Tsou\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRaAAAAOH3RzZ1Au4UeO-Fkxf4d6zlOy59TtzxOsC6JA03DfIH83QMRKAwMRvGSpNd-BZn3uiFFwdcDC7VGHVK4IUCGDqqfEcVCz9E7Jn1Nm58t76L5CF_4slO-HDrV9NjSgKLvEhC5ikSFBY4o_EG_bSxnNh2dGhQfeZsHyAJ0DzMGEa3ZRVujDG5Y2Q",
+               "width" : 3648
+            }
+         ],
+         "place_id" : "ChIJ68aBlEKuEmsRHUA9oME5Zh0",
+         "plus_code" : {
+            "compound_code" : "46R5+2J The Rocks, New South Wales, Australia",
+            "global_code" : "4RRH46R5+2J"
+         },
+         "types" : [
+            "art_gallery",
+            "museum",
+            "cafe",
+            "food",
+            "store",
+            "point_of_interest",
+            "establishment"
+         ]
+      }
+   ],
+   "status" : "OK"
+}
+";

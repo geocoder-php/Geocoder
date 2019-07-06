@@ -1,0 +1,904 @@
+s:35199:"{
+   "html_attributions" : [],
+   "next_page_token" : "CqQCHAEAAHdE3RZ3dlknjDDlgvIkv2iZPGmel-l9LcVVaK2MaCYbEXRM8t7URAN2GBe3bhXS4W38SoW9WaWUYHIt_YfvL4ATXheTFuur_Dpx3iGkCGYQvQLFhIhyjtLzkjM_a1LBQI8yLL8QI8fhTvHdF3Bo-xKAYMaQzzYF4_Ro0-zy-C0eMWPIqBHlZPNqhbWcTnKsFPMbc38ARibkwFDCDxqDYktzIxbblIP8pXbNL3V7FqHQHpbdnMciAcHoRXqFviQPqXCMUGLT9IJlsY-Leg2LU4uvnHgkarnZmGztxcDAyPBLhgeDwzoYt6022vp1fChzdUFiXkAjUKU4kVUBFgRPesAXWUzvdjAvP8_gp_s2LIb52BwTh6per0YvGglVMOD6kxIQq6xKgdtxQy2yv45ia3MLgBoU5qoacuwrXag7HAnwWy7-t_dvi0s",
+   "results" : [
+      {
+         "formatted_address" : "102 Hunter St, Newcastle NSW 2300, Australia",
+         "geometry" : {
+            "location" : {
+               "lat" : -32.927352,
+               "lng" : 151.783073
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : -32.92608437010728,
+                  "lng" : 151.7843925798927
+               },
+               "southwest" : {
+                  "lat" : -32.92878402989273,
+                  "lng" : 151.7816929201073
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/bar-71.png",
+         "id" : "7af16cea0ed4c2553db22c13b31839250ea72131",
+         "name" : "Reserve",
+         "opening_hours" : {
+            "open_now" : false
+         },
+         "photos" : [
+            {
+               "height" : 1836,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/107168292589393588552/photos\"\u003eHENTHORNE\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRaAAAAXauOhIJLjdP8RWlZswXS7V6upkr6-t7Y50MMdMv3tvNTaK67s_F8mTKJQ6Q2vLECdNgvoEZWyx-6zdxtl-__tv3pTXlYVNCZ9xKtLW2n8rDgtxiyfAdnx6dYypC8sHUFEhAWZr3iYVWKvTeFiKpYDuWcGhSilH5i5gA4iT4sBIuIdSmQb-INgA",
+               "width" : 3264
+            }
+         ],
+         "place_id" : "ChIJ5_ZqMHsUc2sRHgfnw5D1FlY",
+         "plus_code" : {
+            "compound_code" : "3QFM+36 Newcastle, New South Wales, Australia",
+            "global_code" : "4RVH3QFM+36"
+         },
+         "price_level" : 2,
+         "rating" : 4.6,
+         "reference" : "ChIJ5_ZqMHsUc2sRHgfnw5D1FlY",
+         "types" : [ "bar", "restaurant", "food", "point_of_interest", "establishment" ],
+         "user_ratings_total" : 98
+      },
+      {
+         "formatted_address" : "150 Wharf Rd, Newcastle NSW 2300, Australia",
+         "geometry" : {
+            "location" : {
+               "lat" : -32.9257381,
+               "lng" : 151.781718
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : -32.92450247010728,
+                  "lng" : 151.7830515798927
+               },
+               "southwest" : {
+                  "lat" : -32.92720212989272,
+                  "lng" : 151.7803519201073
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/bar-71.png",
+         "id" : "e58e35725905a8307443ddcf560eb79d7527b759",
+         "name" : "Queens Wharf Hotel",
+         "opening_hours" : {
+            "open_now" : true
+         },
+         "photos" : [
+            {
+               "height" : 2340,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/105558097116687953260/photos\"\u003eMark Kesby\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRaAAAApjzEfS8xZqCD8q1NnjbOlU14VW91CF8U2-7DxqQMUInmkfzuUplqy-6DaVqgAL8vOUvqYXnz-5ScUNGbaey6z2YHpHc8K2e6UVgS5GgCiH2xXExfHjnryVyuKB5J3L-UEhAv1HTNpbinznol3PndCP4AGhT1w42v_84FX6k_NviqQQtrFPsmoQ",
+               "width" : 4160
+            }
+         ],
+         "place_id" : "ChIJZaEOvWQUc2sRQli-DSm5GUs",
+         "plus_code" : {
+            "compound_code" : "3QFJ+PM Newcastle, New South Wales, Australia",
+            "global_code" : "4RVH3QFJ+PM"
+         },
+         "price_level" : 2,
+         "rating" : 4.2,
+         "reference" : "ChIJZaEOvWQUc2sRQli-DSm5GUs",
+         "types" : [ "bar", "restaurant", "food", "point_of_interest", "establishment" ],
+         "user_ratings_total" : 1003
+      },
+      {
+         "formatted_address" : "64-66 Scott St, Newcastle East NSW 2300, Australia",
+         "geometry" : {
+            "location" : {
+               "lat" : -32.9274818,
+               "lng" : 151.7871512
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : -32.92621717010728,
+                  "lng" : 151.7884710798927
+               },
+               "southwest" : {
+                  "lat" : -32.92891682989273,
+                  "lng" : 151.7857714201072
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/bar-71.png",
+         "id" : "982f98d8db222cca809b88a142b1f45670ad8be6",
+         "name" : "Grain Store Newcastle",
+         "opening_hours" : {
+            "open_now" : true
+         },
+         "photos" : [
+            {
+               "height" : 3024,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/117355910879109145331/photos\"\u003emichael hughes\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRaAAAA40wHAWHu7uq2iOmcr1FvF5lD6QP1iaCO84OGVgSauEKIalYjai_jLbsZHhdOK1VIofFkkueAQdYAvIRE_j0hU0gY2pNsYuLYrcSlSYcDcXuZyUbLX4dowFfdJqZLWmfeEhBPvnXHvZ1ajzzjyadpYRmVGhSUVPh5mP_st0igZhcTiuFkuFC2Ug",
+               "width" : 4032
+            }
+         ],
+         "place_id" : "ChIJLSPJ6XsUc2sR2ZrLnFveLx0",
+         "plus_code" : {
+            "compound_code" : "3QFP+2V Newcastle East, New South Wales, Australia",
+            "global_code" : "4RVH3QFP+2V"
+         },
+         "price_level" : 2,
+         "rating" : 4.5,
+         "reference" : "ChIJLSPJ6XsUc2sR2ZrLnFveLx0",
+         "types" : [
+            "bar",
+            "liquor_store",
+            "restaurant",
+            "food",
+            "store",
+            "point_of_interest",
+            "establishment"
+         ],
+         "user_ratings_total" : 833
+      },
+      {
+         "formatted_address" : "5 King St, Newcastle NSW 2300, Australia",
+         "geometry" : {
+            "location" : {
+               "lat" : -32.9293605,
+               "lng" : 151.7848281
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : -32.92787197010728,
+                  "lng" : 151.7862129298927
+               },
+               "southwest" : {
+                  "lat" : -32.93057162989273,
+                  "lng" : 151.7835132701073
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
+         "id" : "97827aec9f2709029d7550fea5aa462285311d02",
+         "name" : "Bar Petite",
+         "opening_hours" : {
+            "open_now" : true
+         },
+         "photos" : [
+            {
+               "height" : 3051,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/114884309730411855277/photos\"\u003eAndrew Toogood Newcastle360\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRaAAAA-GouJ9lVsdsJuJS84plWyt0EPg3MtW03LVVYAWBjEtuLGFRS7KR_Mu6RHQnckyfSqSQneqwjdxGUVoTIWEADU-jW3V6jCUiImveOm9GOcG15pvA0y1i3diDgAUN0HezNEhD6KBbJSLAvI90pOENOie2RGhTyhDh9xux8rwF3DDekOXeGudQc4w",
+               "width" : 4606
+            }
+         ],
+         "place_id" : "ChIJTbFM73oUc2sRfr5Z9AyQS9U",
+         "plus_code" : {
+            "compound_code" : "3QCM+7W Newcastle, New South Wales, Australia",
+            "global_code" : "4RVH3QCM+7W"
+         },
+         "price_level" : 2,
+         "rating" : 4.4,
+         "reference" : "ChIJTbFM73oUc2sRfr5Z9AyQS9U",
+         "types" : [
+            "night_club",
+            "bar",
+            "restaurant",
+            "food",
+            "point_of_interest",
+            "establishment"
+         ],
+         "user_ratings_total" : 175
+      },
+      {
+         "formatted_address" : "Scott St, Newcastle NSW 2300, Australia",
+         "geometry" : {
+            "location" : {
+               "lat" : -32.9272204,
+               "lng" : 151.7847437
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : -32.92580007010728,
+                  "lng" : 151.7861183798927
+               },
+               "southwest" : {
+                  "lat" : -32.92849972989272,
+                  "lng" : 151.7834187201073
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/bar-71.png",
+         "id" : "57964058bdbaa00be09bca4c916832269e780c18",
+         "name" : "Eddie's Supper Club, Back Bar of Great Northern",
+         "opening_hours" : {
+            "open_now" : false
+         },
+         "place_id" : "ChIJV8wzDXsUc2sREg44Aumlkys",
+         "plus_code" : {
+            "compound_code" : "3QFM+4V Newcastle, New South Wales, Australia",
+            "global_code" : "4RVH3QFM+4V"
+         },
+         "rating" : 4.4,
+         "reference" : "ChIJV8wzDXsUc2sREg44Aumlkys",
+         "types" : [ "night_club", "bar", "point_of_interest", "establishment" ],
+         "user_ratings_total" : 5
+      },
+      {
+         "formatted_address" : "2/2 Market Street, Newcastle NSW 2300, Australia",
+         "geometry" : {
+            "location" : {
+               "lat" : -32.926608,
+               "lng" : 151.7810241
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : -32.92530577010729,
+                  "lng" : 151.7823577298927
+               },
+               "southwest" : {
+                  "lat" : -32.92800542989274,
+                  "lng" : 151.7796580701072
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/bar-71.png",
+         "id" : "bd2fc1fc1a3bfaae9c5c672e5664368c982f121c",
+         "name" : "Basement on Market St",
+         "opening_hours" : {
+            "open_now" : true
+         },
+         "photos" : [
+            {
+               "height" : 1836,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/113248474068466073560/photos\"\u003eA Google User\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRaAAAA9AODw0JCfoPfieElRUWEXtIiT6gwSi9lOkc1SpWuXMFkug03wOnTA55qDDGzV_69_BBIlGDQVlWd63VYtIwY1ZadeIGJ98elTUOlfeIkdf_rLJbbwlhcB2EsgM0fjwTTEhATfhWLo94OsH25khh37G8HGhQD7TGjMn6FFkY2Q6JeTjQ5WsNBOg",
+               "width" : 3264
+            }
+         ],
+         "place_id" : "ChIJzY7qwWQUc2sRu9QGKHTX5HY",
+         "plus_code" : {
+            "compound_code" : "3QFJ+9C Newcastle, New South Wales, Australia",
+            "global_code" : "4RVH3QFJ+9C"
+         },
+         "price_level" : 2,
+         "rating" : 4.3,
+         "reference" : "ChIJzY7qwWQUc2sRu9QGKHTX5HY",
+         "types" : [ "bar", "restaurant", "food", "point_of_interest", "establishment" ],
+         "user_ratings_total" : 146
+      },
+      {
+         "formatted_address" : "200 Wharf Rd, Newcastle NSW 2300, Australia",
+         "geometry" : {
+            "location" : {
+               "lat" : -32.9254997,
+               "lng" : 151.7792729
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : -32.92431092010728,
+                  "lng" : 151.7805930798927
+               },
+               "southwest" : {
+                  "lat" : -32.92701057989272,
+                  "lng" : 151.7778934201073
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/bar-71.png",
+         "id" : "576f66b20d928e8639a1b04cf937c25ed7bb9643",
+         "name" : "Battlesticks",
+         "opening_hours" : {
+            "open_now" : true
+         },
+         "photos" : [
+            {
+               "height" : 1277,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/104480390278771331804/photos\"\u003eA Google User\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRaAAAAet9LnVLZGf8oIpDPuAIkhc-Yg0aiPP0J66mSF2GjwUJdIqYupEnanWCjqK-BT1aNDc053BHQHsyI_06XcUu4Ge6pgV0WUH25v79cKo5RRRLlcSrCdI6dhC40haXNi3hwEhDgeBq_CJNNFeuhyasRaWpHGhSHlrrOwW4t7uv_IAEQm7L6QNEl_A",
+               "width" : 2048
+            }
+         ],
+         "place_id" : "ChIJczKJQmQUc2sR7ucDgtgPHSU",
+         "plus_code" : {
+            "compound_code" : "3QFH+RP Newcastle, New South Wales, Australia",
+            "global_code" : "4RVH3QFH+RP"
+         },
+         "price_level" : 2,
+         "rating" : 4.3,
+         "reference" : "ChIJczKJQmQUc2sR7ucDgtgPHSU",
+         "types" : [ "bar", "restaurant", "food", "point_of_interest", "establishment" ],
+         "user_ratings_total" : 92
+      },
+      {
+         "formatted_address" : "189 Hunter St, Newcastle NSW 2300, Australia",
+         "geometry" : {
+            "location" : {
+               "lat" : -32.92659769999999,
+               "lng" : 151.7788054
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : -32.92519602010727,
+                  "lng" : 151.7801632798927
+               },
+               "southwest" : {
+                  "lat" : -32.92789567989271,
+                  "lng" : 151.7774636201073
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/bar-71.png",
+         "id" : "088443c3d798ba2fc88d2fc5bae9c84bc7fccf6f",
+         "name" : "The Crown & Anchor Hotel",
+         "opening_hours" : {
+            "open_now" : true
+         },
+         "photos" : [
+            {
+               "height" : 1152,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/104965652437427356466/photos\"\u003eDave Sarks\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRaAAAAkFT2zxuuxyjB6kk-lNWefex6hsu_bJVpuOB0SY4TbjwhpMQtvk7y-HxROc4CQW7Wa-3HIj0H119jtZty941TTMqKQgn9nXv6nEWLc9oEV9YsChHkAIYXC7VjNILn9O8zEhANVdjbD4wbQWeUWJpGZ4j0GhTdZw_wL6eooD8CW_kAdKFki5mZwQ",
+               "width" : 2048
+            }
+         ],
+         "place_id" : "ChIJCdD6UWQUc2sR4QpdhE550EM",
+         "plus_code" : {
+            "compound_code" : "3QFH+9G Newcastle, New South Wales, Australia",
+            "global_code" : "4RVH3QFH+9G"
+         },
+         "rating" : 3.9,
+         "reference" : "ChIJCdD6UWQUc2sR4QpdhE550EM",
+         "types" : [
+            "bar",
+            "restaurant",
+            "food",
+            "lodging",
+            "point_of_interest",
+            "establishment"
+         ],
+         "user_ratings_total" : 306
+      },
+      {
+         "formatted_address" : "231 Hunter St, Newcastle NSW 2300, Australia",
+         "geometry" : {
+            "location" : {
+               "lat" : -32.9265425,
+               "lng" : 151.7774662
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : -32.92511897010728,
+                  "lng" : 151.7788020798927
+               },
+               "southwest" : {
+                  "lat" : -32.92781862989272,
+                  "lng" : 151.7761024201073
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/bar-71.png",
+         "id" : "c95d615a73acc6b7e4d65dbeaecac238b153a164",
+         "name" : "The Flying Tiger",
+         "opening_hours" : {
+            "open_now" : true
+         },
+         "photos" : [
+            {
+               "height" : 3036,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/117948910035025014015/photos\"\u003etheunicorntamer .\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRaAAAABWaitXIeQ-iu4gDvpcQYmJUfRRDInZmmB56wYLdrJMZiut_oajEejEEFUtXzsVv_-Rk32bV4KvNiy_S0FXd4vPIC4n24554kMAsdOn7fcErr4KdkbZ_CU4QVaXF6JWd0EhDqYkcF_EJ9PV428dCJdG3vGhShcuJxL6r_cAAJ2bgUkgtBMTl6fA",
+               "width" : 4048
+            }
+         ],
+         "place_id" : "ChIJBdCIxWUUc2sRjeC91knLW0c",
+         "plus_code" : {
+            "compound_code" : "3QFG+9X Newcastle, New South Wales, Australia",
+            "global_code" : "4RVH3QFG+9X"
+         },
+         "price_level" : 2,
+         "rating" : 4.3,
+         "reference" : "ChIJBdCIxWUUc2sRjeC91knLW0c",
+         "types" : [ "bar", "restaurant", "food", "point_of_interest", "establishment" ],
+         "user_ratings_total" : 144
+      },
+      {
+         "formatted_address" : "9 Darby St, Newcastle NSW 2300, Australia",
+         "geometry" : {
+            "location" : {
+               "lat" : -32.927124,
+               "lng" : 151.7748585
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : -32.92573922010728,
+                  "lng" : 151.7761095798927
+               },
+               "southwest" : {
+                  "lat" : -32.92843887989272,
+                  "lng" : 151.7734099201073
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/bar-71.png",
+         "id" : "518ed595882c96469c901e55dcab1ce329b62768",
+         "name" : "Mavericks Sports Bar",
+         "opening_hours" : {
+            "open_now" : true
+         },
+         "place_id" : "ChIJG21rQWYUc2sR9nKduN56KLY",
+         "plus_code" : {
+            "compound_code" : "3QFF+5W Newcastle, New South Wales, Australia",
+            "global_code" : "4RVH3QFF+5W"
+         },
+         "rating" : 2.3,
+         "reference" : "ChIJG21rQWYUc2sR9nKduN56KLY",
+         "types" : [ "bar", "point_of_interest", "establishment" ],
+         "user_ratings_total" : 8
+      },
+      {
+         "formatted_address" : "237 Hunter St, Newcastle NSW 2300, Australia",
+         "geometry" : {
+            "location" : {
+               "lat" : -32.9266079,
+               "lng" : 151.7771037
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : -32.92529892010728,
+                  "lng" : 151.7783360798927
+               },
+               "southwest" : {
+                  "lat" : -32.92799857989272,
+                  "lng" : 151.7756364201072
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/bar-71.png",
+         "id" : "c0e99e3f81bff674c642e2ce517e9cb5d27f422b",
+         "name" : "The Lucky Hotel",
+         "opening_hours" : {
+            "open_now" : true
+         },
+         "photos" : [
+            {
+               "height" : 1440,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/118385860181848684760/photos\"\u003eA Google User\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRaAAAAlXeO4g8vWemWhwZC1mKbCV4c2-PNxLbkVnJDwAQtCcncHah7lcgv1AonSCf3L2a3_fUiVmS6N7kaAq09VP8qKolUvNH3vmz_C63TlPTXe5r7HAMnvAtXHoi-Gtly2VndEhBXbSX3YppEZW9ki6X9fKNaGhQO1ZggfcWRAZlAPr9XPfVmVnkx3A",
+               "width" : 2560
+            }
+         ],
+         "place_id" : "ChIJgWbPLGQUc2sRVGApDnrWR6g",
+         "plus_code" : {
+            "compound_code" : "3QFG+9R Newcastle, New South Wales, Australia",
+            "global_code" : "4RVH3QFG+9R"
+         },
+         "rating" : 4.3,
+         "reference" : "ChIJgWbPLGQUc2sRVGApDnrWR6g",
+         "types" : [
+            "bar",
+            "restaurant",
+            "food",
+            "lodging",
+            "point_of_interest",
+            "establishment"
+         ],
+         "user_ratings_total" : 974
+      },
+      {
+         "formatted_address" : "145 King St, Newcastle NSW 2300, Australia",
+         "geometry" : {
+            "location" : {
+               "lat" : -32.9274407,
+               "lng" : 151.7779717
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : -32.92603517010728,
+                  "lng" : 151.7793415298927
+               },
+               "southwest" : {
+                  "lat" : -32.92873482989272,
+                  "lng" : 151.7766418701073
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/bar-71.png",
+         "id" : "aecc41e07686633fb4a172488eb06420e68adf56",
+         "name" : "Babylon Newcastle",
+         "opening_hours" : {
+            "open_now" : true
+         },
+         "photos" : [
+            {
+               "height" : 3024,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/111867816396384807681/photos\"\u003eemmanuel delaney\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRaAAAAiwpfCi5YvzStw2Bvxv4cGoAnvuIlvzedh04wsZR9ZKnupXk6YoevgmoSnXa5BPdJJIBUE0Jjr4n205dUaQ99kU4jN9MOYXKWUNOb4Gj8kMPgetJ7bSCOQmkl65tV2f0BEhDFRUhnyhwitOiYqWb69P4hGhSpzsXvS3VP21_Q9UsEj07yIUV-BA",
+               "width" : 4032
+            }
+         ],
+         "place_id" : "ChIJWaHc-i4Vc2sRNtd1ySbWj1s",
+         "plus_code" : {
+            "compound_code" : "3QFH+25 Newcastle, New South Wales, Australia",
+            "global_code" : "4RVH3QFH+25"
+         },
+         "rating" : 4.5,
+         "reference" : "ChIJWaHc-i4Vc2sRNtd1ySbWj1s",
+         "types" : [
+            "bar",
+            "cafe",
+            "restaurant",
+            "food",
+            "point_of_interest",
+            "establishment"
+         ],
+         "user_ratings_total" : 113
+      },
+      {
+         "formatted_address" : "150 Wharf Rd, Newcastle NSW 2300, Australia",
+         "geometry" : {
+            "location" : {
+               "lat" : -32.9257612,
+               "lng" : 151.7808846
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : -32.92450267010727,
+                  "lng" : 151.7822320798927
+               },
+               "southwest" : {
+                  "lat" : -32.92720232989272,
+                  "lng" : 151.7795324201072
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
+         "id" : "400c44d71a5be6a956d105f0a9951bf60fe0f418",
+         "name" : "Six Degrees",
+         "opening_hours" : {
+            "open_now" : true
+         },
+         "photos" : [
+            {
+               "height" : 3036,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/113610891890774395703/photos\"\u003eBriggs Soria\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRaAAAAMZ-ZeG2i5mRcT2ZPNGr4sxbgglLTO914hTTZZHIV_tTqkYmDMcU8qa7XFQZ5aJikrB8FrANYZ1w-ublinu7loT102b1Vdg79FLgtdBpWuFbwLs4pA_cnzmxWUftqWrLZEhBxfDNW7z8evToVySLzpgUBGhSYISE3hBqAA7GTvsQeT6Vl4pTe-g",
+               "width" : 4048
+            }
+         ],
+         "place_id" : "ChIJ4-Q7vWQUc2sRZmJat1CtFys",
+         "plus_code" : {
+            "compound_code" : "3QFJ+M9 Newcastle, New South Wales, Australia",
+            "global_code" : "4RVH3QFJ+M9"
+         },
+         "price_level" : 2,
+         "rating" : 4.1,
+         "reference" : "ChIJ4-Q7vWQUc2sRZmJat1CtFys",
+         "types" : [ "restaurant", "bar", "food", "point_of_interest", "establishment" ],
+         "user_ratings_total" : 362
+      },
+      {
+         "formatted_address" : "1 Honeysuckle Dr, Newcastle NSW 2300, Australia",
+         "geometry" : {
+            "location" : {
+               "lat" : -32.9250344,
+               "lng" : 151.7723753
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : -32.92386252010728,
+                  "lng" : 151.7731587798927
+               },
+               "southwest" : {
+                  "lat" : -32.92656217989272,
+                  "lng" : 151.7704591201073
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/bar-71.png",
+         "id" : "739cf8a39c9931e3c4d4907c2e5da2e6fcc35aae",
+         "name" : "The Landing Bar & Kitchen",
+         "opening_hours" : {
+            "open_now" : true
+         },
+         "photos" : [
+            {
+               "height" : 3456,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/109744103434765405003/photos\"\u003eThe Landing Bar &amp; Kitchen\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRaAAAAu6WDIhiLoD06uR_UQYphlf6tuCCpAiZ_OYRKtV9f6LsTMQGb4zdSjNIdlZMidloLXr6DhpG_4JALDIQskDzhuunv2u7l1UOWyulpAIk50Be6XHH1RrslJM-b0i0u5HqVEhA1Bed9LqmfrPkvOyWPFbliGhQhL_kb_gzFV_lyXMK2A5O4_VAiEQ",
+               "width" : 5184
+            }
+         ],
+         "place_id" : "ChIJXybnnWcUc2sR1XXKafUJ4K4",
+         "plus_code" : {
+            "compound_code" : "3QFC+XX Newcastle, New South Wales, Australia",
+            "global_code" : "4RVH3QFC+XX"
+         },
+         "price_level" : 2,
+         "rating" : 3.6,
+         "reference" : "ChIJXybnnWcUc2sR1XXKafUJ4K4",
+         "types" : [ "bar", "restaurant", "food", "point_of_interest", "establishment" ],
+         "user_ratings_total" : 126
+      },
+      {
+         "formatted_address" : "380/382 Hunter St, Newcastle NSW 2300, Australia",
+         "geometry" : {
+            "location" : {
+               "lat" : -32.9266803,
+               "lng" : 151.7739026
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : -32.92539307010728,
+                  "lng" : 151.7752626298927
+               },
+               "southwest" : {
+                  "lat" : -32.92809272989273,
+                  "lng" : 151.7725629701073
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/bar-71.png",
+         "id" : "fcaea6a2a9a0717524b78838084b741c6e953bbb",
+         "name" : "Coal & Cedar",
+         "opening_hours" : {
+            "open_now" : false
+         },
+         "photos" : [
+            {
+               "height" : 3024,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/115960929469484703619/photos\"\u003eBen Old\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRaAAAACr_QxqNPSnC3wyoYR8yYwPRLx45pSORFeT2Zh_Ow-uc8U15vTIaG7KmZ_kXIUUxa6eK-ELLJjPRbqArWtZ42RUNBWl8C6VtvxJ4px7y5dQklbtFL--NPokh88qBMZGMLEhBNBgZ3EujnST1E8MflJ_xTGhRGAM-QFVDwu6gnKhaqFX8ItsNNdg",
+               "width" : 4032
+            }
+         ],
+         "place_id" : "ChIJEQSPTWYUc2sR37D2z_hGb8A",
+         "plus_code" : {
+            "compound_code" : "3QFF+8H Newcastle, New South Wales, Australia",
+            "global_code" : "4RVH3QFF+8H"
+         },
+         "price_level" : 3,
+         "rating" : 4.8,
+         "reference" : "ChIJEQSPTWYUc2sR37D2z_hGb8A",
+         "types" : [ "bar", "point_of_interest", "establishment" ],
+         "user_ratings_total" : 256
+      },
+      {
+         "formatted_address" : "555 Hunter St, Newcastle West NSW 2300, Australia",
+         "geometry" : {
+            "location" : {
+               "lat" : -32.9274474,
+               "lng" : 151.7666119
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : -32.92602832010728,
+                  "lng" : 151.7679823798927
+               },
+               "southwest" : {
+                  "lat" : -32.92872797989272,
+                  "lng" : 151.7652827201073
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/bar-71.png",
+         "id" : "c9d79c10fc69427c594d99b807524874fa0f44a6",
+         "name" : "The Koutetsu",
+         "opening_hours" : {
+            "open_now" : false
+         },
+         "photos" : [
+            {
+               "height" : 480,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/113719639442868633401/photos\"\u003eAshley Hughes\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRaAAAAbsDgIiEnpnRA2jbetoYnt3qZqKjm3Yhhu_fzoKvE4XFCS_d7Mza3HaWKtgLtpnphF-jCHFXAMJk1UtHBWcbaqcagj-2-LwvGgtOmpM9bunNyDnKL46MQvOhtEeKClhtSEhAi6BV6otgWDnwAhBaPjF19GhRb0rbM0FBU85IC_PdpGj4NLmFdvg",
+               "width" : 720
+            }
+         ],
+         "place_id" : "ChIJc0jhf2YUc2sRdm4X0iwveto",
+         "plus_code" : {
+            "compound_code" : "3QF8+2J Newcastle West, New South Wales, Australia",
+            "global_code" : "4RVH3QF8+2J"
+         },
+         "rating" : 4.6,
+         "reference" : "ChIJc0jhf2YUc2sRdm4X0iwveto",
+         "types" : [ "bar", "point_of_interest", "establishment" ],
+         "user_ratings_total" : 83
+      },
+      {
+         "formatted_address" : "48 Watt St, Newcastle NSW 2300, Australia",
+         "geometry" : {
+            "location" : {
+               "lat" : -32.92951,
+               "lng" : 151.7834994
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : -32.92818802010728,
+                  "lng" : 151.7849589298927
+               },
+               "southwest" : {
+                  "lat" : -32.93088767989273,
+                  "lng" : 151.7822592701073
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/bar-71.png",
+         "id" : "792daf6810fe188cb14b856c5f4aa48d38ef808e",
+         "name" : "The Atrium Bar",
+         "place_id" : "ChIJa24MMFEVc2sR4g5JgwkrtOM",
+         "plus_code" : {
+            "compound_code" : "3QCM+59 Newcastle, New South Wales, Australia",
+            "global_code" : "4RVH3QCM+59"
+         },
+         "rating" : 5,
+         "reference" : "ChIJa24MMFEVc2sR4g5JgwkrtOM",
+         "types" : [ "bar", "point_of_interest", "establishment" ],
+         "user_ratings_total" : 1
+      },
+      {
+         "formatted_address" : "7 Darby St, Newcastle NSW 2300, Australia",
+         "geometry" : {
+            "location" : {
+               "lat" : -32.927148,
+               "lng" : 151.775059
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : -32.92573127010727,
+                  "lng" : 151.7762198798927
+               },
+               "southwest" : {
+                  "lat" : -32.92843092989272,
+                  "lng" : 151.7735202201073
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
+         "id" : "d27d7865da766a4109167596a0c3942132c35886",
+         "name" : "Mavericks on Darby",
+         "opening_hours" : {
+            "open_now" : true
+         },
+         "photos" : [
+            {
+               "height" : 3024,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/103673607074886747154/photos\"\u003eLauren Houlder\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRaAAAAcMhQbqIaLa0KDbIX13giXyVsdZkyXtNMWwwunVkp9qowc-B_C8IrKavQahMfqmD0sszSPso8Yp5mlzNHCn2N_R6wlc1kDSAbLRrIyfWvCXKRFRD9Oe1vLsVXtW7x64hFEhDabqbnfEGxST6y6eb5Ny-XGhRLYhgKpJiq8XnbGQLvnAU0-RD4Tg",
+               "width" : 4032
+            }
+         ],
+         "place_id" : "ChIJNazvQWYUc2sR3lcTxgPb1Ac",
+         "plus_code" : {
+            "compound_code" : "3QFG+42 Newcastle, New South Wales, Australia",
+            "global_code" : "4RVH3QFG+42"
+         },
+         "price_level" : 2,
+         "rating" : 3.8,
+         "reference" : "ChIJNazvQWYUc2sR3lcTxgPb1Ac",
+         "types" : [ "restaurant", "bar", "food", "point_of_interest", "establishment" ],
+         "user_ratings_total" : 67
+      },
+      {
+         "formatted_address" : "102 Darby St, Cooks Hill NSW 2300, Australia",
+         "geometry" : {
+            "location" : {
+               "lat" : -32.9307116,
+               "lng" : 151.7722185
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : -32.92939497010727,
+                  "lng" : 151.7736190298927
+               },
+               "southwest" : {
+                  "lat" : -32.93209462989272,
+                  "lng" : 151.7709193701072
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
+         "id" : "68ab9c6d44c30bfbc3db355368ff55640c50234f",
+         "name" : "Wil & Sons",
+         "opening_hours" : {
+            "open_now" : true
+         },
+         "photos" : [
+            {
+               "height" : 2597,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/115366627064592642097/photos\"\u003eThe Hop Factory\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRaAAAAOmt3sNqFE2DXm-2IHta8seqSNSsJErrUAyS-LiIlf1pse_oHC5NPZrcDuatXEM4OudDzZWH8O_Gp8mslbAHcgO4ywHVUiXBKQWJ26I0N0cV8ClGB_1fIhCUdYkm40FcwEhArPjH-yLq68QClZdsrMCG4GhTF7hyAsgkFH03837E8g6M5hydTsA",
+               "width" : 3895
+            }
+         ],
+         "place_id" : "ChIJofS5ymkUc2sR7vXiJl-T2Z8",
+         "plus_code" : {
+            "compound_code" : "3Q9C+PV Cooks Hill, New South Wales, Australia",
+            "global_code" : "4RVH3Q9C+PV"
+         },
+         "price_level" : 2,
+         "rating" : 4.5,
+         "reference" : "ChIJofS5ymkUc2sR7vXiJl-T2Z8",
+         "types" : [ "restaurant", "bar", "food", "point_of_interest", "establishment" ],
+         "user_ratings_total" : 263
+      },
+      {
+         "formatted_address" : "529 Hunter St, Newcastle West NSW 2302, Australia",
+         "geometry" : {
+            "location" : {
+               "lat" : -32.9275754,
+               "lng" : 151.7675327
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : -32.92615272010728,
+                  "lng" : 151.7688773298927
+               },
+               "southwest" : {
+                  "lat" : -32.92885237989272,
+                  "lng" : 151.7661776701073
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/bar-71.png",
+         "id" : "bef02ad0f06b6704e0173a39a3261e23679bb49a",
+         "name" : "529 The Terrace",
+         "opening_hours" : {
+            "open_now" : true
+         },
+         "photos" : [
+            {
+               "height" : 819,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/111049567909147510437/photos\"\u003e529 The Terrace\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRaAAAAHKZYkelkdN3WwQ-LldasbIk27e_6qHFb57Kr4lYwhfddAB3ceFwGPJu_RIfwzEp2d3gcaJ2f6UoiU85DiyD5U5uQh3x-g4Y0D_ds06nNaztwrCn60K6OC8nG2-tkwQrZEhAKgLjdQgDu5Ogs7hqfAawEGhQKVyCJZUzKDwWmsevFOuTLkZsIUw",
+               "width" : 1241
+            }
+         ],
+         "place_id" : "ChIJHyEYJkMUc2sRGdG_unibu38",
+         "plus_code" : {
+            "compound_code" : "3QC9+X2 Newcastle West, New South Wales, Australia",
+            "global_code" : "4RVH3QC9+X2"
+         },
+         "price_level" : 2,
+         "rating" : 3.9,
+         "reference" : "ChIJHyEYJkMUc2sRGdG_unibu38",
+         "types" : [ "bar", "restaurant", "food", "point_of_interest", "establishment" ],
+         "user_ratings_total" : 46
+      }
+   ],
+   "status" : "OK"
+}
+";
