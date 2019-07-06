@@ -21,6 +21,7 @@ class PlusCode
      * @var string
      */
     private $globalCode;
+
     /**
      * @var string
      */

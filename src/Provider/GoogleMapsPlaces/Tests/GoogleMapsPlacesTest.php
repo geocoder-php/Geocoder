@@ -61,7 +61,6 @@ class GoogleMapsPlacesTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
-
     public function testGeocodeWithRealIp()
     {
         $this->expectException(UnsupportedOperation::class);
@@ -106,7 +105,6 @@ class GoogleMapsPlacesTest extends BaseTestCase
             'point_of_interest',
             'establishment',
         ], $result->getResultType());
-
     }
 
     public function testGeocodePlaceSearchMode()

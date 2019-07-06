@@ -101,11 +101,11 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
             throw new UnsupportedOperation('The GoogleMapsPlaces provider does not support IP addresses');
         }
 
-        if ($query->getData('mode', self::DEFAULT_GEOCODE_MODE) === self::GEOCODE_MODE_FIND) {
+        if (self::GEOCODE_MODE_FIND === $query->getData('mode', self::DEFAULT_GEOCODE_MODE)) {
             return $this->fetchUrl(self::FIND_ENDPOINT_URL_SSL, $this->buildFindPlaceQuery($query));
         }
 
-        if ($query->getData('mode', self::DEFAULT_GEOCODE_MODE) === self::GEOCODE_MODE_SEARCH) {
+        if (self::GEOCODE_MODE_SEARCH === $query->getData('mode', self::DEFAULT_GEOCODE_MODE)) {
             return $this->fetchUrl(self::SEARCH_ENDPOINT_URL_SSL, $this->buildPlaceSearchQuery($query));
         }
 
@@ -131,7 +131,6 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
     {
         return 'google_maps_places';
     }
-
 
     /**
      * Build query for the find place API
@@ -196,8 +195,8 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
         ]);
 
         if (null !== $geocodeQuery->getData('location') && null !== $geocodeQuery->getData('radius')) {
-            $query['location'] = (string)$geocodeQuery->getData('location');
-            $query['radius'] = (int)$geocodeQuery->getData('radius');
+            $query['location'] = (string) $geocodeQuery->getData('location');
+            $query['radius'] = (int) $geocodeQuery->getData('radius');
         }
 
         return $query;
@@ -235,11 +234,11 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
             'opennow',
         ]);
 
-        $hasRequiredParameter = count(array_filter(array_keys($query), function (string $key) {
-                return in_array($key, ['keyword', 'type', 'name'], true);
-            })) === 1;
+        $requiredParameters = array_filter(array_keys($query), function (string $key) {
+            return in_array($key, ['keyword', 'type', 'name'], true);
+        });
 
-        if (!$hasRequiredParameter) {
+        if (1 !== count($requiredParameters)) {
             throw new InvalidArgument('One of `type`, `keyword`, `name` is required to be set in the Query data for Reverse Geocoding');
         }
 
@@ -333,7 +332,7 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
             }
 
             if (isset($result->rating)) {
-                $address = $address->withRating((float)$result->rating);
+                $address = $address->withRating((float) $result->rating);
             }
 
             if (isset($result->permanently_closed)) {
