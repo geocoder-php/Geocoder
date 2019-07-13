@@ -1,10 +1,16 @@
 {
-    "name": "geocoder-php/graphhopper-provider",
+    "name": "geocoder-php/geocode-earth-provider",
     "type": "library",
-    "description": "Geocoder GraphHopper adapter",
+    "description": "Geocoder Geocode Earth adapter",
     "keywords": [],
     "homepage": "http://geocoder-php.org/Geocoder/",
     "license": "MIT",
+    "authors": [
+        {
+            "name": "William Durand",
+            "email": "william.durand1@gmail.com"
+        }
+    ],
     "require": {
         "php": "^7.0",
         "geocoder-php/common-http": "^4.0",
@@ -20,7 +26,7 @@
         "geocoder-php/provider-implementation": "1.0"
     },
     "autoload": {
-        "psr-4": { "Geocoder\\Provider\\GraphHopper\\": "" },
+        "psr-4": { "Geocoder\\Provider\\GeocodeEarth\\": "" },
         "exclude-from-classmap": [
             "/Tests/"
         ]
@@ -33,7 +39,7 @@
     "prefer-stable": true,
     "extra": {
         "branch-alias": {
-            "dev-master": "1.0-dev"
+            "dev-master": "4.0-dev"
         }
     }
 }

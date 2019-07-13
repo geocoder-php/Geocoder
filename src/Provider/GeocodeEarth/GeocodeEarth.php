@@ -10,7 +10,7 @@ declare(strict_types=1);
  * @license    MIT License
  */
 
-namespace Geocoder\Provider\Mapzen;
+namespace Geocoder\Provider\GeocodeEarth;
 
 use Geocoder\Collection;
 use Geocoder\Exception\InvalidCredentials;
@@ -24,22 +24,17 @@ use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Provider\Provider;
 use Http\Client\HttpClient;
 
-/**
- * Mapzen has shut down as their APIs as of February 1, 2018.
- *
- * @deprecated https://github.com/geocoder-php/Geocoder/issues/808
- */
-final class Mapzen extends AbstractHttpProvider implements Provider
+final class GeocodeEarth extends AbstractHttpProvider implements Provider
 {
     /**
      * @var string
      */
-    const GEOCODE_ENDPOINT_URL = 'https://search.mapzen.com/v1/search?text=%s&api_key=%s&size=%d';
+    const GEOCODE_ENDPOINT_URL = 'https://api.geocode.earth/v1/search?text=%s&api_key=%s&size=%d';
 
     /**
      * @var string
      */
-    const REVERSE_ENDPOINT_URL = 'https://search.mapzen.com/v1/reverse?point.lat=%f&point.lon=%f&api_key=%s&size=%d';
+    const REVERSE_ENDPOINT_URL = 'https://api.geocode.earth/v1/reverse?point.lat=%f&point.lon=%f&api_key=%s&size=%d';
 
     /**
      * @var string
@@ -47,10 +42,6 @@ final class Mapzen extends AbstractHttpProvider implements Provider
     private $apiKey;
 
     /**
-     * Mapzen has shut down as their APIs as of February 1, 2018.
-     *
-     * @deprecated https://github.com/geocoder-php/Geocoder/issues/808
-     *
      * @param HttpClient $client an HTTP adapter
      * @param string     $apiKey an API key
      */
@@ -73,7 +64,7 @@ final class Mapzen extends AbstractHttpProvider implements Provider
 
         // This API doesn't handle IPs
         if (filter_var($address, FILTER_VALIDATE_IP)) {
-            throw new UnsupportedOperation('The Mapzen provider does not support IP addresses, only street addresses.');
+            throw new UnsupportedOperation('The GeocodeEarth provider does not support IP addresses, only street addresses.');
         }
 
         $url = sprintf(self::GEOCODE_ENDPOINT_URL, urlencode($address), $this->apiKey, $query->getLimit());
@@ -99,7 +90,7 @@ final class Mapzen extends AbstractHttpProvider implements Provider
      */
     public function getName(): string
     {
-        return 'mapzen';
+        return 'geocode_earth';
     }
 
     /**
@@ -112,7 +103,6 @@ final class Mapzen extends AbstractHttpProvider implements Provider
         $content = $this->getUrlContents($url);
         $json = json_decode($content, true);
 
-        // See https://mapzen.com/documentation/search/api-keys-rate-limits/
         if (isset($json['meta'])) {
             switch ($json['meta']['status_code']) {
                 case 403:
