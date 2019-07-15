@@ -30,7 +30,8 @@ use Http\Client\HttpClient;
  * @author Andrea Cristaudo <andrea.cristaudo@gmail.com>
  * @author Arthur Bodera <abodera@thinkscape.pro>
  *
- * @see http://www.geoips.com/en/developer/api-guide
+ * @deprecated The GeoIPs provider has shut down
+ * @see https://github.com/geocoder-php/Geocoder/issues/965
  */
 final class GeoIPs extends AbstractHttpProvider implements Provider
 {
@@ -59,6 +60,8 @@ final class GeoIPs extends AbstractHttpProvider implements Provider
     private $apiKey;
 
     /**
+     * @deprecated The GeoIPs provider has shut down
+     *
      * @param HttpClient $client An HTTP adapter
      * @param string     $apiKey An API key
      */
