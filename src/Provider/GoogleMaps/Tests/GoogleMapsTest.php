@@ -521,23 +521,6 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertEquals(false, $result->isPartialMatch());
     }
 
-    public function testGeocodeWithWardComponent()
-    {
-        $this->markTestSkipped('This address no longer has a ward.');
-
-        $provider = $this->getGoogleMapsProvider();
-        $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(35.03937, 135.729243));
-
-        $this->assertInstanceOf(AddressCollection::class, $results);
-        $this->assertCount(5, $results);
-
-        /** @var GoogleAddress $result */
-        $result = $results->first();
-        $this->assertInstanceOf(Address::class, $result);
-        $this->assertEquals('Kita-ku', $result->getWard());
-        $this->assertEquals(false, $result->isPartialMatch());
-    }
-
     public function testReverseWithSubLocalityLevels()
     {
         $provider = $this->getGoogleMapsProvider();
