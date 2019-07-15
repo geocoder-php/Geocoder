@@ -7,21 +7,14 @@
 [![Quality Score](https://img.shields.io/scrutinizer/g/geocoder-php/geoips-provider.svg?style=flat-square)](https://scrutinizer-ci.com/g/geocoder-php/geoips-provider)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 
-# Abandoned
-GeoIPs has shut down as their APIs. 
-This package is abandoned.
+**GeoIPs has shut down as their APIs. 
+This package is abandoned.**
 
 ## Alternatives
+
 https://github.com/geocoder-php/Geocoder#ip
 
-
-### Install
-
-```bash
-composer require geocoder-php/geoips-provider
-```
-
-### Contribute
+## Contribute
 
 Contributions are very welcome! Send a pull request to the [main repository](https://github.com/geocoder-php/Geocoder) or 
 report any issues you find on the [issue tracker](https://github.com/geocoder-php/Geocoder/issues).
