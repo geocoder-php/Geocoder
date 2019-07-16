@@ -1,10 +1,10 @@
-s:1533:"{
+s:1491:"{
    "results" : [
       {
          "address_components" : [
             {
-               "long_name" : "Durmitor National Park",
-               "short_name" : "Durmitor National Park",
+               "long_name" : "Durmitor",
+               "short_name" : "Durmitor",
                "types" : [ "establishment", "natural_feature", "park", "point_of_interest" ]
             },
             {
@@ -18,7 +18,7 @@ s:1533:"{
                "types" : [ "country", "political" ]
             }
          ],
-         "formatted_address" : "Durmitor National Park, Žabljak, Montenegro",
+         "formatted_address" : "Durmitor, Žabljak, Montenegro",
          "geometry" : {
             "location" : {
                "lat" : 43.149618,
