@@ -29,29 +29,32 @@ final class GeocodeEarth extends AbstractHttpProvider implements Provider
     /**
      * @var string
      */
-    const GEOCODE_ENDPOINT_URL = 'https://api.geocode.earth/v1/search?text=%s&api_key=%s&size=%d';
-
-    /**
-     * @var string
-     */
-    const REVERSE_ENDPOINT_URL = 'https://api.geocode.earth/v1/reverse?point.lat=%f&point.lon=%f&api_key=%s&size=%d';
-
-    /**
-     * @var string
-     */
     private $apiKey;
+
+    /**
+     * @var string
+     */
+    private $root;
+
+    /**
+     * @var int
+     */
+    private $version;
 
     /**
      * @param HttpClient $client an HTTP adapter
      * @param string     $apiKey an API key
      */
-    public function __construct(HttpClient $client, string $apiKey)
+    public function __construct(HttpClient $client, string $apiKey, string $root = 'https://api.geocode.earth/', int $version = 1)
     {
         if (empty($apiKey)) {
             throw new InvalidCredentials('No API key provided.');
         }
 
         $this->apiKey = $apiKey;
+        $this->root = rtrim($root, '/');
+        $this->version = $version;
+
         parent::__construct($client);
     }
 
@@ -67,7 +70,11 @@ final class GeocodeEarth extends AbstractHttpProvider implements Provider
             throw new UnsupportedOperation('The GeocodeEarth provider does not support IP addresses, only street addresses.');
         }
 
-        $url = sprintf(self::GEOCODE_ENDPOINT_URL, urlencode($address), $this->apiKey, $query->getLimit());
+        $url = $this->root . '/v' . $this->version . '/search' . '?' . http_build_query([
+            'text' => $address,
+            'api_key' => $this->apiKey,
+            'size' => $query->getLimit(),
+        ]);
 
         return $this->executeQuery($url);
     }
@@ -80,7 +87,13 @@ final class GeocodeEarth extends AbstractHttpProvider implements Provider
         $coordinates = $query->getCoordinates();
         $longitude = $coordinates->getLongitude();
         $latitude = $coordinates->getLatitude();
-        $url = sprintf(self::REVERSE_ENDPOINT_URL, $latitude, $longitude, $this->apiKey, $query->getLimit());
+
+        $url = $this->root . '/v' . $this->version . '/reverse' . '?' . http_build_query([
+            'point.lat' => $latitude,
+            'point.lon' => $longitude,
+            'api_key' => $this->apiKey,
+            'size' => $query->getLimit(),
+        ]);
 
         return $this->executeQuery($url);
     }
@@ -105,6 +118,7 @@ final class GeocodeEarth extends AbstractHttpProvider implements Provider
 
         if (isset($json['meta'])) {
             switch ($json['meta']['status_code']) {
+                case 401:
                 case 403:
                     throw new InvalidCredentials('Invalid or missing api key.');
                 case 429:
