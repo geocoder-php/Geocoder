@@ -19,6 +19,7 @@ use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\Provider;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
+use Psr\Log\LogLevel;
 
 /**
  * @author Markus Bachmann <markus.bachmann@bachi.biz>
@@ -26,6 +27,16 @@ use Psr\Log\LoggerAwareTrait;
 final class Chain implements Provider, LoggerAwareInterface
 {
     use LoggerAwareTrait;
+
+    /**
+     * @var string
+     */
+    private $geocodeQueryLogLevel = LogLevel::ALERT;
+
+    /**
+     * @var string
+     */
+    private $reverseQueryLogLevel = LogLevel::ALERT;
 
     /**
      * @var Provider[]
@@ -38,6 +49,16 @@ final class Chain implements Provider, LoggerAwareInterface
     public function __construct(array $providers = [])
     {
         $this->providers = $providers;
+    }
+
+    public function setGeocodeQueryLogLevel(string $level)
+    {
+        $this->geocodeQueryLogLevel = $level;
+    }
+
+    public function setReverseQueryLogLevel(string $level)
+    {
+        $this->reverseQueryLogLevel = $level;
     }
 
     /**
@@ -54,7 +75,7 @@ final class Chain implements Provider, LoggerAwareInterface
                 }
             } catch (\Throwable $e) {
                 $this->log(
-                    'alert',
+                    $this->geocodeQueryLogLevel,
                     'Provider "{providerName}" could not geocode address: "{address}".',
                     [
                         'exception' => $e,
@@ -83,7 +104,7 @@ final class Chain implements Provider, LoggerAwareInterface
             } catch (\Throwable $e) {
                 $coordinates = $query->getCoordinates();
                 $this->log(
-                    'alert',
+                    $this->reverseQueryLogLevel,
                     sprintf('Provider "%s" could reverse coordinates: %f, %f.', $provider->getName(), $coordinates->getLatitude(), $coordinates->getLongitude()),
                     ['exception' => $e]
                 );
