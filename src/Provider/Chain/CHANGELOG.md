@@ -2,6 +2,12 @@
 
 The change log describes what is "Added", "Removed", "Changed" or "Fixed" between each release.
 
+## 4.1.1
+
+### Fixed
+
+- Fix (and improve) error message when provider can not **reverse** geocode
+
 ## 4.1.0
 
 ### Added
