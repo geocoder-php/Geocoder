@@ -103,10 +103,16 @@ final class Chain implements Provider, LoggerAwareInterface
                 }
             } catch (\Throwable $e) {
                 $coordinates = $query->getCoordinates();
+
                 $this->log(
                     $this->reverseQueryLogLevel,
-                    sprintf('Provider "%s" could reverse coordinates: %f, %f.', $provider->getName(), $coordinates->getLatitude(), $coordinates->getLongitude()),
-                    ['exception' => $e]
+                    'Provider "{providerName}" could not reverse geocode coordinates: {latitude}, {longitude}".',
+                    [
+                        'exception' => $e,
+                        'providerName' => $provider->getName(),
+                        'latitude' => $coordinates->getLatitude(),
+                        'longitude' => $coordinates->getLongitude(),
+                    ]
                 );
             }
         }
