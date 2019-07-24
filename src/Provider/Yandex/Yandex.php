@@ -106,7 +106,6 @@ final class Yandex extends AbstractHttpProvider implements Provider
     /**
      * @param string $url
      * @param int    $limit
-     *
      * @param string $locale
      *
      * @return AddressCollection
