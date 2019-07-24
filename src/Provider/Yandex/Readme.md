@@ -16,6 +16,18 @@ This is the Yandex provider from the PHP Geocoder. This is a **READ ONLY** repos
 composer require geocoder-php/yandex-provider
 ```
 
+## Usage
+
+The API now requires an API key. [See here for more information](https://yandex.ru/blog/mapsapi/novye-pravila-dostupa-k-api-kart?from=tech_pp).
+
+```php
+$httpClient = new \Http\Adapter\Guzzle6\Client();
+$provider = new \Geocoder\Provider\Yandex\Yandex($httpClient, null, '<your-api-key>);
+
+$result = $geocoder->geocodeQuery(GeocodeQuery::create('ул.Ленина, 19, Минск 220030, Республика Беларусь'));
+$result = $geocoder->reverseQuery(ReverseQuery::fromCoordinates(...));
+```
+
 ### Note
 
 The default language-locale is `ru-RU`, you can choose between `uk-UA`, `be-BY`,
