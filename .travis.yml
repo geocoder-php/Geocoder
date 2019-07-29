@@ -15,16 +15,21 @@ env:
     global:
         - MIN_PHP=7.0
 
+cache:
+    directories:
+        - $HOME/.composer/cache/files
+
 matrix:
     fast_finish: true
     include:
-        - php: 7.2
+        - php: 7.3
           env: deps="low"
-        - php: 7.2
+        - php: 7.3
           env: deps="high"
         - php: 7.0
         - php: 7.1
         - php: 7.2
+        - php: 7.3
 
 before_install:
     - |
@@ -37,7 +42,8 @@ before_install:
       export COMPOSER_UP='composer update --no-progress --no-suggest --ansi --prefer-dist'
 
       # If "geoip-1.1.1" exits in a provider's .travis.yml, then install the dependency.
-      export GEOIP_EXT='(grep -Fq "geoip-1.1.1" .travis.yml && sleep 30 && pecl install geoip-1.1.1 && echo "Installed php-geoip") || echo "Did not install php-geoip"'
+      export GEOIP_EXT_INSTALL='(grep -Fq "geoip-1.1.1" .travis.yml && sleep 30 && pecl install geoip-1.1.1 && echo "Installed php-geoip") || echo "Did not install php-geoip"'
+      export GEOIP_EXT_REMOVE='(grep -Fq "geoip-1.1.1" .travis.yml && sleep 30 && pecl uninstall geoip-1.1.1 && echo "Removed php-geoip") || echo "php-geoip not installed"'
 
       # tfold is a helper to create folded reports
       tfold () {
@@ -66,9 +72,9 @@ install:
         if [[ $skip ]]; then
             echo -e "\\n\\e[1;34mIntermediate PHP version $PHP is skipped for pull requests.\\e[0m"
         elif [[ $deps = high ]]; then
-            echo "$COMPONENTS" | parallel --gnu -j10% "tfold {} 'cd {} && $GEOIP_EXT && $COMPOSER_UP && $PHPUNIT_X$LEGACY'"
+            echo "$COMPONENTS" | parallel --gnu -j10% "tfold {} 'cd {} && $GEOIP_EXT_INSTALL && $COMPOSER_UP && $PHPUNIT_X$LEGACY && $GEOIP_EXT_REMOVE'"
         elif [[ $deps = low ]]; then
-            echo "$COMPONENTS" | parallel --gnu -j10% "tfold {} 'cd {} && $GEOIP_EXT && $COMPOSER_UP --prefer-lowest --prefer-stable && $PHPUNIT_X'"
+            echo "$COMPONENTS" | parallel --gnu -j10% "tfold {} 'cd {} && $GEOIP_EXT_INSTALL && $COMPOSER_UP --prefer-lowest --prefer-stable && $PHPUNIT_X && $GEOIP_EXT_REMOVE'"
         else
             echo "$COMPONENTS" | parallel --gnu "tfold {} $PHPUNIT_X {}"
             tfold tty-group $PHPUNIT --group tty

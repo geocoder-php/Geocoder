@@ -1,31 +1,11 @@
-s:2417:"{
+s:1649:"{
    "results" : [
       {
          "address_components" : [
             {
-               "long_name" : "Columbia University",
-               "short_name" : "Columbia University",
-               "types" : [ "establishment" ]
-            },
-            {
-               "long_name" : "116th St",
-               "short_name" : "116th St",
-               "types" : [ "route" ]
-            },
-            {
-               "long_name" : "Manhattan",
-               "short_name" : "Manhattan",
-               "types" : [ "sublocality_level_1", "sublocality", "political" ]
-            },
-            {
                "long_name" : "New York",
-               "short_name" : "NY",
+               "short_name" : "New York",
                "types" : [ "locality", "political" ]
-            },
-            {
-               "long_name" : "New York County",
-               "short_name" : "New York County",
-               "types" : [ "administrative_area_level_2", "political" ]
             },
             {
                "long_name" : "New York",
@@ -43,35 +23,30 @@ s:2417:"{
                "types" : [ "postal_code" ]
             }
          ],
-         "formatted_address" : "Columbia University, 116th St, New York, NY 10027, USA",
+         "formatted_address" : "116th St & Broadway, New York, NY 10027, United States",
          "geometry" : {
-            "bounds" : {
-               "northeast" : {
-                  "lat" : 40.8124448,
-                  "lng" : -73.95711899999999
-               },
-               "southwest" : {
-                  "lat" : 40.80348290000001,
-                  "lng" : -73.9689102
-               }
-            },
             "location" : {
                "lat" : 40.8075355,
                "lng" : -73.9625727
             },
-            "location_type" : "APPROXIMATE",
+            "location_type" : "GEOMETRIC_CENTER",
             "viewport" : {
                "northeast" : {
-                  "lat" : 40.8124448,
-                  "lng" : -73.95711899999999
+                  "lat" : 40.8088844802915,
+                  "lng" : -73.96122371970849
                },
                "southwest" : {
-                  "lat" : 40.80348290000001,
-                  "lng" : -73.9689102
+                  "lat" : 40.8061865197085,
+                  "lng" : -73.96392168029151
                }
             }
          },
-         "types" : [ "university", "establishment" ]
+         "place_id" : "ChIJyQ3Tlj72wokRUCflR_kzeVc",
+         "plus_code" : {
+            "compound_code" : "R25P+2X New York, United States",
+            "global_code" : "87G8R25P+2X"
+         },
+         "types" : [ "establishment", "point_of_interest", "political", "university" ]
       }
    ],
    "status" : "OK"

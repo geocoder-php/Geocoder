@@ -2,6 +2,12 @@
 
 The change log describes what is "Added", "Removed", "Changed" or "Fixed" between each release.
 
+## 4.2.0
+
+### Added
+
+- Yandex now requires an API key
+
 ## 4.1.0
 
 ### Added

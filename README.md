@@ -21,7 +21,7 @@ providing a powerful abstraction layer for geocoding manipulations.
 * [Cookbook](#cookbook)
 * [Usage](#usage)
 * [Providers](#providers)
-* [Special Geocoders and Providers](#special-geocoders-and-providers) 
+* [Special Geocoders and Providers](#special-geocoders-and-providers)
 * [Dumpers](#dumpers)
 * [Formatters](#formatters)
 * [Versioning](#versioning)
@@ -30,14 +30,14 @@ providing a powerful abstraction layer for geocoding manipulations.
 Installation
 ------------
 
-To install a Geocoder there are two things you need to know: 
+To install a Geocoder there are two things you need to know:
 
 1) What [Geocoder provider](https://packagist.org/providers/geocoder-php/provider-implementation) you want to use
-2) What [HTTP client/adapter](https://packagist.org/providers/php-http/client-implementation) you want to use. 
+2) What [HTTP client/adapter](https://packagist.org/providers/php-http/client-implementation) you want to use.
 
 ### Geocoder providers
 
-Since 4.0 we do not include providers by default. You need to select a *geocoder provider*. You will see a list of 
+Since 4.0 we do not include providers by default. You need to select a *geocoder provider*. You will see a list of
 providers [at Packagist](https://packagist.org/providers/geocoder-php/provider-implementation)
 
 ### HTTP Clients
@@ -53,7 +53,7 @@ Read more about HTTPlug in [their docs](http://docs.php-http.org/en/latest/httpl
 
 ### Summary (Just give me the command)
 
-To install Google Maps geocoder with Guzzle 6 you may run the following command: 
+To install Google Maps geocoder with Guzzle 6 you may run the following command:
 
 ```
 $ composer require geocoder-php/google-maps-provider php-http/guzzle6-adapter php-http/message
@@ -62,7 +62,7 @@ $ composer require geocoder-php/google-maps-provider php-http/guzzle6-adapter ph
 ### Framework integration
 
 If you are using a framework then you may be interested in our excellent framework integrations. Check out our
-[Laravel Package](https://github.com/geocoder-php/GeocoderLaravel) and our [Symfony Bundle](https://github.com/geocoder-php/BazingaGeocoderBundle). 
+[Laravel Package](https://github.com/geocoder-php/GeocoderLaravel) and our [Symfony Bundle](https://github.com/geocoder-php/BazingaGeocoderBundle).
 
 
 Cookbook
@@ -76,7 +76,7 @@ We have a small cookbook where you can find examples on common use cases:
 Usage
 -----
 
-In the code snippet below we use GoogleMaps and Guzzle6. 
+In the code snippet below we use GoogleMaps and Guzzle6.
 
 ```php
 use Geocoder\Query\GeocodeQuery;
@@ -107,7 +107,7 @@ make migration from 3.x smoother.
 Providers
 ---------
 
-Providers perform the geocoding black magic for you (talking to the APIs, fetching results, dealing with errors, etc.) 
+Providers perform the geocoding black magic for you (talking to the APIs, fetching results, dealing with errors, etc.)
 and are highly configurable.
 
 ### Special providers
@@ -128,11 +128,11 @@ Provider       | Package | Features | Stats
 [Bing Maps](https://github.com/geocoder-php/bing-maps-provider) | `geocoder-php/bing-maps-provider` | address, reverse <br> [Website](http://msdn.microsoft.com/en-us/library/ff701713.aspx) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/bing-maps-provider/v/stable)](https://packagist.org/packages/geocoder-php/bing-maps-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/bing-maps-provider/downloads)](https://packagist.org/packages/geocoder-php/bing-maps-provider)
 [Geonames](https://github.com/geocoder-php/geonames-provider) | `geocoder-php/geonames-provider` | address, reverse <br> [Website](http://www.geonames.org/commercial-webservices.html) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/geonames-provider/v/stable)](https://packagist.org/packages/geocoder-php/geonames-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/geonames-provider/downloads)](https://packagist.org/packages/geocoder-php/geonames-provider)
 [Google Maps](https://github.com/geocoder-php/google-maps-provider) <br> Google Maps for business | `geocoder-php/google-maps-provider` | address, reverse <br> [Website](https://developers.google.com/maps/documentation/geocoding/) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/google-maps-provider/v/stable)](https://packagist.org/packages/geocoder-php/google-maps-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/google-maps-provider/downloads)](https://packagist.org/packages/geocoder-php/google-maps-provider)
+[GraphHopper](https://github.com/geocoder-php/graphhopper-provider) | `geocoder-php/graphhopper-provider` | address, reverse <br> [Website](https://docs.graphhopper.com/#tag/Geocoding-API) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/graphhopper-provider/v/stable)](https://packagist.org/packages/geocoder-php/graphhopper-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/graphhopper-provider/downloads)](https://packagist.org/packages/geocoder-php/graphhopper-provider)
 [Here](https://github.com/geocoder-php/here-provider) | `geocoder-php/here-provider` | address, reverse <br> [Website](https://developer.here.com/documentation/geocoder/topics/quick-start-geocode.html) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/here-provider/v/stable)](https://packagist.org/packages/geocoder-php/here-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/here-provider/downloads)](https://packagist.org/packages/geocoder-php/here-provider)
 [LocationIQ](https://github.com/geocoder-php/locationiq-provider) | `geocoder-php/locationiq-provider` | address, reverse <br> [Website](https://locationiq.org/) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/locationiq-provider/v/stable)](https://packagist.org/packages/geocoder-php/locationiq-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/locationiq-provider/downloads)](https://packagist.org/packages/geocoder-php/locationiq-provider)
 [Mapbox](https://github.com/geocoder-php/mapbox-provider) | `geocoder-php/mapbox-provider` | address, reverse <br> [Website](https://www.mapbox.com/geocoding/) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/mapbox-provider/v/stable)](https://packagist.org/packages/geocoder-php/mapbox-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/mapbox-provider/downloads)](https://packagist.org/packages/geocoder-php/mapbox-provider)
 [MapQuest](https://github.com/geocoder-php/mapquest-provider) | `geocoder-php/mapquest-provider` | address, reverse <br> [Website](http://developer.mapquest.com/web/products/dev-services/geocoding-ws) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/mapquest-provider/v/stable)](https://packagist.org/packages/geocoder-php/mapquest-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/mapquest-provider/downloads)](https://packagist.org/packages/geocoder-php/mapquest-provider)
-[Mapzen](https://github.com/geocoder-php/mapzen-provider) | `geocoder-php/mapzen-provider` | address, reverse <br> [Website](https://mapzen.com/documentation/search/) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/mapzen-provider/v/stable)](https://packagist.org/packages/geocoder-php/mapzen-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/mapzen-provider/downloads)](https://packagist.org/packages/geocoder-php/mapzen-provider)
 [Nominatim](https://github.com/geocoder-php/nominatim-provider) <br> (OpenStreetMap) | `geocoder-php/nominatim-provider` | address, reverse <br> [Website](http://wiki.openstreetmap.org/wiki/Nominatim) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/nominatim-provider/v/stable)](https://packagist.org/packages/geocoder-php/nominatim-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/nominatim-provider/downloads)](https://packagist.org/packages/geocoder-php/nominatim-provider)
 [OpenCage](https://github.com/geocoder-php/open-cage-provider) | `geocoder-php/open-cage-provider` | address, reverse <br> [Website](https://opencagedata.com/) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/open-cage-provider/v/stable)](https://packagist.org/packages/geocoder-php/open-cage-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/open-cage-provider/downloads)](https://packagist.org/packages/geocoder-php/open-cage-provider)
 [Photon](https://github.com/geocoder-php/photon-provider) | `geocoder-php/photon-provider` | address, reverse <br> [Website](https://photon.komoot.de/) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/photon-provider/v/stable)](https://packagist.org/packages/geocoder-php/photon-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/photon-provider/downloads)](https://packagist.org/packages/geocoder-php/photon-provider)
@@ -161,7 +161,6 @@ Provider       | Package | Features | Stats
 [FreeGeoIp](https://github.com/geocoder-php/free-geoip-provider) | `geocoder-php/free-geoip-provider` | IPv4, IPv6 <br> [Website](http://freegeoip.net/) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/free-geoip-provider/v/stable)](https://packagist.org/packages/geocoder-php/free-geoip-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/free-geoip-provider/downloads)](https://packagist.org/packages/geocoder-php/free-geoip-provider)
 [GeoIP](https://github.com/geocoder-php/geoip-provider) | `geocoder-php/geoip-provider` | IPv4, local <br> [Website](http://www.geoips.com/en/) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/geoip-provider/v/stable)](https://packagist.org/packages/geocoder-php/geoip-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/geoip-provider/downloads)](https://packagist.org/packages/geocoder-php/geoip-provider)
 [GeoIP2](https://github.com/geocoder-php/geoip2-provider) | `geocoder-php/geoip2-provider` | IPv4 <br> [Website](https://www.maxmind.com/en/geoip2-databases) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/geoip2-provider/v/stable)](https://packagist.org/packages/geocoder-php/geoip2-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/geoip2-provider/downloads)](https://packagist.org/packages/geocoder-php/geoip2-provider)
-[GeoIPs](https://github.com/geocoder-php/geoips-provider) | `geocoder-php/geoips-provider` | IPv4 <br>  | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/geoips-provider/v/stable)](https://packagist.org/packages/geocoder-php/geoips-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/geoips-provider/downloads)](https://packagist.org/packages/geocoder-php/geoips-provider)
 [GeoPlugin](https://github.com/geocoder-php/geo-plugin-provider) | `geocoder-php/geo-plugin-provider` | IPv4, IPv6 <br> [Website](http://www.geoplugin.com/) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/geo-plugin-provider/v/stable)](https://packagist.org/packages/geocoder-php/geo-plugin-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/geo-plugin-provider/downloads)](https://packagist.org/packages/geocoder-php/geo-plugin-provider)
 [HostIp](https://github.com/geocoder-php/host-ip-provider) | `geocoder-php/host-ip-provider` | IPv4 <br> [Website](http://www.hostip.info/use.html) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/host-ip-provider/v/stable)](https://packagist.org/packages/geocoder-php/host-ip-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/host-ip-provider/downloads)](https://packagist.org/packages/geocoder-php/host-ip-provider)
 [IpInfo](https://github.com/geocoder-php/ip-info-provider) | `geocoder-php/ip-info-provider` | IPv4, IPv6 <br> [Website](https://ipinfo.io/) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/ip-info-provider/v/stable)](https://packagist.org/packages/geocoder-php/ip-info-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/ip-info-provider/downloads)](https://packagist.org/packages/geocoder-php/ip-info-provider)
@@ -288,8 +287,8 @@ geocoder calls will appear in your timeline section in the Web Profiler.
 
 ### StatefulGeocoder
 
-The `StatefulGeocoder` class is great when you want your Geocoder to hold state. Say you want to configure locale, 
-limit or bounds in runtime. The `StatefulGeocoder` will append these values on each query. 
+The `StatefulGeocoder` class is great when you want your Geocoder to hold state. Say you want to configure locale,
+limit or bounds in runtime. The `StatefulGeocoder` will append these values on each query.
 
 ```php
 use Geocoder\Query\GeocodeQuery;
@@ -440,7 +439,7 @@ Version `4.x` is the current major stable version of Geocoder.
 
 ### Next version
 
-There is no new major version planned at this time. 
+There is no new major version planned at this time.
 
 Contributing
 ------------
