@@ -32,22 +32,22 @@ final class Here extends AbstractHttpProvider implements Provider
     /**
      * @var string
      */
-    const GEOCODE_ENDPOINT_URL = 'https://geocoder.api.here.com/6.2/geocode.json?app_id=%s&app_code=%s&searchtext=%s&gen=8';
+    const GEOCODE_ENDPOINT_URL = 'https://geocoder.api.here.com/6.2/geocode.json?app_id=%s&app_code=%s&searchtext=%s&gen=9';
 
     /**
      * @var string
      */
-    const REVERSE_ENDPOINT_URL = 'https://reverse.geocoder.api.here.com/6.2/reversegeocode.json?prox=%F,%F&250&app_id=%s&app_code=%s&mode=retrieveAddresses&gen=8&maxresults=%d';
+    const REVERSE_ENDPOINT_URL = 'https://reverse.geocoder.api.here.com/6.2/reversegeocode.json?prox=%F,%F,250&app_id=%s&app_code=%s&mode=retrieveAddresses&gen=9&maxresults=%d';
 
     /**
      * @var string
      */
-    const GEOCODE_CIT_ENDPOINT_URL = 'https://geocoder.cit.api.here.com/6.2/geocode.json?app_id=%s&app_code=%s&searchtext=%s&gen=8';
+    const GEOCODE_CIT_ENDPOINT_URL = 'https://geocoder.cit.api.here.com/6.2/geocode.json?app_id=%s&app_code=%s&searchtext=%s&gen=9';
 
     /**
      * @var string
      */
-    const REVERSE_CIT_ENDPOINT_URL = 'https://reverse.geocoder.cit.api.here.com/6.2/reversegeocode.json?prox=%F,%F&250&app_id=%s&app_code=%s&mode=retrieveAddresses&gen=8&maxresults=%d';
+    const REVERSE_CIT_ENDPOINT_URL = 'https://reverse.geocoder.cit.api.here.com/6.2/reversegeocode.json?prox=%F,%F,250&app_id=%s&app_code=%s&mode=retrieveAddresses&gen=9&maxresults=%d';
 
     /**
      * @var string
