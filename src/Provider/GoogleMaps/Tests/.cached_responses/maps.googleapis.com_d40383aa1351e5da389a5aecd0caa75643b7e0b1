@@ -1,4 +1,4 @@
-s:2055:"{
+s:2091:"{
    "results" : [
       {
          "address_components" : [
@@ -18,8 +18,8 @@ s:2055:"{
                "types" : [ "locality", "political" ]
             },
             {
-               "long_name" : "Paris",
-               "short_name" : "Paris",
+               "long_name" : "Arrondissement de Paris",
+               "short_name" : "Arrondissement de Paris",
                "types" : [ "administrative_area_level_2", "political" ]
             },
             {

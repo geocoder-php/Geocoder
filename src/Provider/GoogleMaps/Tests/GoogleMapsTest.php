@@ -111,7 +111,7 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertEquals('Avenue Gambetta', $result->getStreetName());
         $this->assertEquals(75020, $result->getPostalCode());
         $this->assertEquals('Paris', $result->getLocality());
-        $this->assertEquals('Paris', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('Arrondissement de Paris', $result->getAdminLevels()->get(2)->getName());
         $this->assertEquals('Île-de-France', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('France', $result->getCountry()->getName());
         $this->assertEquals('FR', $result->getCountry()->getCode());
@@ -167,7 +167,31 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertEquals(75020, $result->getPostalCode());
         $this->assertEquals('Paris', $result->getLocality());
         $this->assertCount(2, $result->getAdminLevels());
-        $this->assertEquals('Paris', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('Arrondissement de Paris', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('Île-de-France', $result->getAdminLevels()->get(1)->getName());
+        $this->assertEquals('France', $result->getCountry()->getName());
+        $this->assertEquals('FR', $result->getCountry()->getCode());
+        $this->assertEquals('ChIJ9aLL3vJt5kcR61GCze3v6fg', $result->getId());
+        $this->assertEquals(false, $result->isPartialMatch());
+    }
+
+    public function testReverseWithRealCoordinatesAndLocale()
+    {
+        $provider = $this->getGoogleMapsProvider();
+        $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(48.8631507, 2.388911)->withLocale('fr-FR'));
+
+        $this->assertInstanceOf(AddressCollection::class, $results);
+        $this->assertCount(5, $results);
+
+        /** @var Location $result */
+        $result = $results->first();
+        $this->assertInstanceOf(Address::class, $result);
+        $this->assertEquals(12, $result->getStreetNumber());
+        $this->assertEquals('Avenue Gambetta', $result->getStreetName());
+        $this->assertEquals(75020, $result->getPostalCode());
+        $this->assertEquals('Paris', $result->getLocality());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('Arrondissement de Paris', $result->getAdminLevels()->get(2)->getName());
         $this->assertEquals('Île-de-France', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('France', $result->getCountry()->getName());
         $this->assertEquals('FR', $result->getCountry()->getCode());
@@ -214,9 +238,7 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertNotNull($result->getCoordinates()->getLatitude());
         $this->assertNotNull($result->getCoordinates()->getLongitude());
         $this->assertEquals('New York', $result->getLocality());
-        $this->assertEquals('Manhattan', $result->getSubLocality());
-        $this->assertCount(2, $result->getAdminLevels());
-        $this->assertEquals('New York', $result->getAdminLevels()->get(1)->getName());
+        $this->assertCount(1, $result->getAdminLevels());
         $this->assertEquals(false, $result->isPartialMatch());
     }
 
@@ -441,9 +463,9 @@ class GoogleMapsTest extends BaseTestCase
         /** @var GoogleAddress $result */
         $result = $results->first();
         $this->assertInstanceOf(Address::class, $result);
-        $this->assertEquals('Durmitor National Park', $result->getNaturalFeature());
-        $this->assertEquals('Durmitor National Park', $result->getPark());
-        $this->assertEquals('Durmitor National Park', $result->getPointOfInterest());
+        $this->assertEquals('Durmitor', $result->getNaturalFeature());
+        $this->assertEquals('Durmitor', $result->getPark());
+        $this->assertEquals('Durmitor', $result->getPointOfInterest());
         $this->assertEquals('Montenegro', $result->getPolitical());
         $this->assertEquals('Montenegro', $result->getCountry());
         $this->assertEquals(false, $result->isPartialMatch());
@@ -480,7 +502,7 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertEquals('1125 17th Street', $result->getPremise());
         $this->assertEquals('Denver', $result->getLocality());
         $this->assertEquals('United States', $result->getCountry());
-        $this->assertEquals('Central', $result->getNeighborhood());
+        $this->assertEquals('Central Business District', $result->getNeighborhood());
         $this->assertEquals(false, $result->isPartialMatch());
     }
 
@@ -490,27 +512,12 @@ class GoogleMapsTest extends BaseTestCase
         $results = $provider->geocodeQuery(GeocodeQuery::create('darwin'));
 
         $this->assertInstanceOf(AddressCollection::class, $results);
-        $this->assertCount(3, $results);
+        $this->assertCount(1, $results);
 
         /** @var GoogleAddress $result */
         $result = $results->first();
         $this->assertInstanceOf(Address::class, $result);
         $this->assertEquals('Darwin', $result->getColloquialArea());
-        $this->assertEquals(false, $result->isPartialMatch());
-    }
-
-    public function testGeocodeWithWardComponent()
-    {
-        $provider = $this->getGoogleMapsProvider();
-        $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(35.03937, 135.729243));
-
-        $this->assertInstanceOf(AddressCollection::class, $results);
-        $this->assertCount(5, $results);
-
-        /** @var GoogleAddress $result */
-        $result = $results->first();
-        $this->assertInstanceOf(Address::class, $result);
-        $this->assertEquals('Kita-ku', $result->getWard());
         $this->assertEquals(false, $result->isPartialMatch());
     }
 
@@ -526,9 +533,7 @@ class GoogleMapsTest extends BaseTestCase
         $result = $results->first();
         $this->assertInstanceOf(Address::class, $result);
         $this->assertInstanceOf('\Geocoder\Model\AdminLevelCollection', $result->getSubLocalityLevels());
-        $this->assertEquals('58', $result->getSubLocalityLevels()->get(4)->getName());
-        $this->assertEquals(1, $result->getSubLocalityLevels()->get(1)->getLevel());
-        $this->assertEquals(4, $result->getSubLocalityLevels()->get(4)->getLevel());
+        $this->assertEquals('Iijima', $result->getSubLocalityLevels()->get(2)->getName());
         $this->assertEquals(false, $result->isPartialMatch());
     }
 

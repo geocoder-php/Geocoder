@@ -1,4 +1,4 @@
-s:20056:"{
+s:20258:"{
    "plus_code" : {
       "compound_code" : "V97Q+7H Paris, France",
       "global_code" : "8FW4V97Q+7H"
@@ -266,8 +266,8 @@ s:20056:"{
                "types" : [ "locality", "political" ]
             },
             {
-               "long_name" : "Paris",
-               "short_name" : "Paris",
+               "long_name" : "Arrondissement de Paris",
+               "short_name" : "Arrondissement de Paris",
                "types" : [ "administrative_area_level_2", "political" ]
             },
             {
@@ -320,8 +320,8 @@ s:20056:"{
       {
          "address_components" : [
             {
-               "long_name" : "20th arrondissement of Paris",
-               "short_name" : "20th arrondissement of Paris",
+               "long_name" : "20e Arrondissement de Paris",
+               "short_name" : "20e Arrondissement de Paris",
                "types" : [ "political", "sublocality", "sublocality_level_1" ]
             },
             {
@@ -330,8 +330,8 @@ s:20056:"{
                "types" : [ "locality", "political" ]
             },
             {
-               "long_name" : "Paris",
-               "short_name" : "Paris",
+               "long_name" : "Arrondissement de Paris",
+               "short_name" : "Arrondissement de Paris",
                "types" : [ "administrative_area_level_2", "political" ]
             },
             {
@@ -350,7 +350,7 @@ s:20056:"{
                "types" : [ "postal_code" ]
             }
          ],
-         "formatted_address" : "20th arrondissement of Paris, 75020 Paris, France",
+         "formatted_address" : "20e Arrondissement de Paris, 75020 Paris, France",
          "geometry" : {
             "bounds" : {
                "northeast" : {
@@ -394,8 +394,8 @@ s:20056:"{
                "types" : [ "locality", "political" ]
             },
             {
-               "long_name" : "Paris",
-               "short_name" : "Paris",
+               "long_name" : "Arrondissement de Paris",
+               "short_name" : "Arrondissement de Paris",
                "types" : [ "administrative_area_level_2", "political" ]
             },
             {
@@ -443,8 +443,8 @@ s:20056:"{
       {
          "address_components" : [
             {
-               "long_name" : "Paris",
-               "short_name" : "Paris",
+               "long_name" : "Arrondissement de Paris",
+               "short_name" : "Arrondissement de Paris",
                "types" : [ "administrative_area_level_2", "political" ]
             },
             {
@@ -463,7 +463,7 @@ s:20056:"{
                "types" : [ "country", "political" ]
             }
          ],
-         "formatted_address" : "Paris, France",
+         "formatted_address" : "Arrondissement de Paris, Paris, France",
          "geometry" : {
             "bounds" : {
                "northeast" : {
@@ -502,8 +502,8 @@ s:20056:"{
                "types" : [ "locality", "political" ]
             },
             {
-               "long_name" : "Paris",
-               "short_name" : "Paris",
+               "long_name" : "Arrondissement de Paris",
+               "short_name" : "Arrondissement de Paris",
                "types" : [ "administrative_area_level_2", "political" ]
             },
             {

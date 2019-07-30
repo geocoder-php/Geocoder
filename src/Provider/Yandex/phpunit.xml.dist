@@ -8,6 +8,7 @@
 >
     <php>
         <server name="USE_CACHED_RESPONSES" value="true" />
+        <server name="YANDEX_API_KEY" value="YOUR_API_KEY" />
     </php>
 
     <testsuites>

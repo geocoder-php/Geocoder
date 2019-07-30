@@ -23,6 +23,7 @@ class IntegrationTest extends ProviderIntegrationTest
 {
     protected $skippedTests = [
         'testGeocodeQuery' => 'Wrong cords',
+        'testReverseQueryWithNoResults' => 'Has Result',
     ];
 
     protected $testAddress = true;
