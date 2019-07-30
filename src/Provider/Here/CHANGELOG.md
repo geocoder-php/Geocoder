@@ -2,6 +2,16 @@
 
 The change log describes what is "Added", "Removed", "Changed" or "Fixed" between each release.
 
+## 0.2.1
+
+### Fixed
+
+- `prox` parameter in reverse geocoding query
+
+### Changed
+
+- Upgrade API to generation 9 (see [documentation](https://developer.here.com/documentation/geocoder/topics/backwards-compatibility.html#backwards-compatibility__api-different-generations))
+
 ## 0.2.0
 
 ### Added
