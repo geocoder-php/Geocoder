@@ -52,7 +52,7 @@ class HereTest extends BaseTestCase
         }
 
         $provider = new Here($this->getHttpClient($_SERVER['HERE_APP_ID'], $_SERVER['HERE_APP_CODE']), $_SERVER['HERE_APP_ID'], $_SERVER['HERE_APP_CODE']);
-        $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(45.84136,1.24614));
+        $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(45.84136, 1.24614));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(5, $results);
