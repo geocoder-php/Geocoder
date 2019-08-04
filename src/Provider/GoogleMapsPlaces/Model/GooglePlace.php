@@ -32,7 +32,7 @@ final class GooglePlace extends Address
     /**
      * @var array
      */
-    private $resultType = [];
+    private $type = [];
 
     /**
      * @var string|null
@@ -116,20 +116,20 @@ final class GooglePlace extends Address
     /**
      * @return array
      */
-    public function getResultType(): array
+    public function getType(): array
     {
-        return $this->resultType;
+        return $this->type;
     }
 
     /**
-     * @param array $resultType
+     * @param array $type
      *
      * @return GooglePlace
      */
-    public function withResultType(array $resultType)
+    public function withType(array $type)
     {
         $new = clone $this;
-        $new->resultType = $resultType;
+        $new->type = $type;
 
         return $new;
     }

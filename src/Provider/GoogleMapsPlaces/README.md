@@ -16,6 +16,9 @@ This is the Google Maps Places provider from the PHP Geocoder. This is a **READ 
 composer require geocoder-php/google-maps-places-provider
 ```
 
+## API Documentation
+https://developers.google.com/places/web-service
+
 ## Usage
 This provider often requires extra data when making queries, due to requirements of the underlying places API.
 

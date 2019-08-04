@@ -309,7 +309,7 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
             }
 
             if (isset($result->types)) {
-                $address = $address->withResultType($result->types);
+                $address = $address->withType($result->types);
             }
 
             if (isset($result->icon)) {
