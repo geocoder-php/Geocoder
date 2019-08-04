@@ -13,7 +13,9 @@ declare(strict_types=1);
 namespace Geocoder\Provider\Here;
 
 use Geocoder\Collection;
+use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\InvalidCredentials;
+use Geocoder\Exception\QuotaExceeded;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Model\AddressBuilder;
 use Geocoder\Model\AddressCollection;
@@ -94,8 +96,95 @@ final class Here extends AbstractHttpProvider implements Provider
 
         $url = sprintf($this->useCIT ? self::GEOCODE_CIT_ENDPOINT_URL : self::GEOCODE_ENDPOINT_URL, $this->appId, $this->appCode, rawurlencode($query->getText()));
 
+        if (null !== $query->getData('country')) {
+            $url = sprintf('%s&country=%s', $url, rawurlencode($query->getData('country')));
+        }
+
+        if (null !== $query->getData('state')) {
+            $url = sprintf('%s&state=%s', $url, rawurlencode($query->getData('state')));
+        }
+
+        if (null !== $query->getData('county')) {
+            $url = sprintf('%s&county=%s', $url, rawurlencode($query->getData('county')));
+        }
+
+        if (null !== $query->getData('city')) {
+            $url = sprintf('%s&city=%s', $url, rawurlencode($query->getData('city')));
+        }
+
         if (null !== $query->getLocale()) {
             $url = sprintf('%s&language=%s', $url, $query->getLocale());
+        }
+
+        $additionalDataParam = [];
+        if (null !== $query->getData('CrossingStreets')) {
+            $additionalDataParam['CrossingStreets'] = $query->getData('CrossingStreets');
+        }
+
+        if (null !== $query->getData('PreserveUnitDesignators')) {
+            $additionalDataParam['PreserveUnitDesignators'] = $query->getData('PreserveUnitDesignators');
+        }
+
+        if (null !== $query->getData('Country2')) {
+            $additionalDataParam['Country2'] = $query->getData('Country2');
+        }
+
+        if (null !== $query->getData('IncludeChildPOIs')) {
+            $additionalDataParam['IncludeChildPOIs'] = $query->getData('IncludeChildPOIs');
+        }
+
+        if (null !== $query->getData('IncludeRoutingInformation')) {
+            $additionalDataParam['IncludeRoutingInformation'] = $query->getData('IncludeRoutingInformation');
+        }
+
+        if (null !== $query->getData('AdditionalAddressProvider')) {
+            $additionalDataParam['AdditionalAddressProvider'] = $query->getData('AdditionalAddressProvider');
+        }
+
+        if (null !== $query->getData('HouseNumberMode')) {
+            $additionalDataParam['HouseNumberMode'] = $query->getData('HouseNumberMode');
+        }
+
+        if (null !== $query->getData('FlexibleAdminValues')) {
+            $additionalDataParam['FlexibleAdminValues'] = $query->getData('FlexibleAdminValues');
+        }
+
+        if (null !== $query->getData('IntersectionSnapTolerance')) {
+            $additionalDataParam['IntersectionSnapTolerance'] = $query->getData('IntersectionSnapTolerance');
+        }
+
+        if (null !== $query->getData('AddressRangeSqueezeOffset')) {
+            $additionalDataParam['AddressRangeSqueezeOffset'] = $query->getData('AddressRangeSqueezeOffset');
+        }
+
+        if (null !== $query->getData('AddressRangeSqueezeFactor')) {
+            $additionalDataParam['AddressRangeSqueezeFactor'] = $query->getData('AddressRangeSqueezeFactor');
+        }
+
+        if (null !== $query->getData('IncludeShapeLevel')) {
+            $additionalDataParam['IncludeShapeLevel'] = $query->getData('IncludeShapeLevel');
+        }
+
+        if (null !== $query->getData('RestrictLevel')) {
+            $additionalDataParam['RestrictLevel'] = $query->getData('RestrictLevel');
+        }
+
+        if (null !== $query->getData('SuppressStreetType')) {
+            $additionalDataParam['SuppressStreetType'] = $query->getData('SuppressStreetType');
+        }
+
+        if (null !== $query->getData('NormalizeNames')) {
+            $additionalDataParam['NormalizeNames'] = $query->getData('NormalizeNames');
+        }
+
+        if (null !== $query->getData('IncludeMicroPointAddresses')) {
+            $additionalDataParam['IncludeMicroPointAddresses'] = $query->getData('IncludeMicroPointAddresses');
+        }
+
+        $additionalDataParam['IncludeShapeLevel'] = 'country';
+
+        if (!empty($additionalDataParam)) {
+            $url = sprintf('%s&additionaldata=%s', $url, $this->serializeComponents($additionalDataParam));
         }
 
         return $this->executeQuery($url, $query->getLimit());
@@ -116,7 +205,7 @@ final class Here extends AbstractHttpProvider implements Provider
      * @param string $url
      * @param int    $limit
      *
-     * @return \Geocoder\Collection
+     * @return Collection
      */
     private function executeQuery(string $url, int $limit): Collection
     {
@@ -157,12 +246,23 @@ final class Here extends AbstractHttpProvider implements Provider
             $builder->setPostalCode($location['Address']['PostalCode'] ?? null);
             $builder->setLocality($location['Address']['City'] ?? null);
             $builder->setSubLocality($location['Address']['District'] ?? null);
-            $builder->setCountry($location['Address']['AdditionalData'][0]['value'] ?? null);
             $builder->setCountryCode($location['Address']['Country'] ?? null);
 
+            // The name of the country can be found in the AdditionalData.
+            $additionalData = $location['Address']['AdditionalData'] ?? null;
+            if (!empty($additionalData)) {
+                $builder->setCountry($additionalData[array_search('CountryName', array_column($additionalData, 'key'))]['value'] ?? null);
+            }
+
+            // There may be a second AdditionalData. For example if "IncludeRoutingInformation" parameter is added
+            $extraAdditionalData = $loc['AdditionalData'] ?? [];
+
+            /** @var HereAddress $address */
             $address = $builder->build(HereAddress::class);
             $address = $address->withLocationId($location['LocationId']);
             $address = $address->withLocationType($location['LocationType']);
+            $address = $address->withAdditionalData(array_merge($additionalData, $extraAdditionalData));
+            $address = $address->withShape($location['Shape'] ?? null);
             $results[] = $address;
 
             if (count($results) >= $limit) {
@@ -179,5 +279,19 @@ final class Here extends AbstractHttpProvider implements Provider
     public function getName(): string
     {
         return 'Here';
+    }
+
+    /**
+     * Serialize the component query parameter.
+     *
+     * @param array $components
+     *
+     * @return string
+     */
+    private function serializeComponents(array $components): string
+    {
+        return implode(';', array_map(function ($name, $value) {
+            return sprintf('%s,%s', $name, $value);
+        }, array_keys($components), $components));
     }
 }
