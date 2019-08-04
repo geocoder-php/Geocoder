@@ -18,6 +18,7 @@ use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Provider\GoogleMapsPlaces\GoogleMapsPlaces;
 use Geocoder\Provider\GoogleMapsPlaces\Model\GooglePlace;
+use Geocoder\Provider\GoogleMapsPlaces\Model\OpeningHours;
 use Geocoder\Provider\GoogleMapsPlaces\Model\Photo;
 use Geocoder\Provider\GoogleMapsPlaces\Model\PlusCode;
 use Geocoder\Query\GeocodeQuery;
@@ -117,12 +118,39 @@ class GoogleMapsPlacesTest extends BaseTestCase
         $results = $provider->geocodeQuery($query);
         $this->assertCount(20, $results);
 
+        /** @var GooglePlace $resultOne */
         $resultOne = $results->first();
 
         $this->assertInstanceOf(GooglePlace::class, $resultOne);
         $this->assertSame('ChIJ3SS9Lj-uEmsRrVS7u1OEV_0', $resultOne->getId());
         $this->assertSame('Papa Gede\'s Bar', $resultOne->getName());
         $this->assertSame('348 Kent St, Sydney NSW 2000, Australia', $resultOne->getFormattedAddress());
+
+        $this->assertSame([
+            'bar',
+            'restaurant',
+            'food',
+            'point_of_interest',
+            'establishment',
+        ], $resultOne->getType());
+
+        $this->assertSame('https://maps.gstatic.com/mapfiles/place_api/icons/bar-71.png', $resultOne->getIcon());
+
+        $this->assertInstanceOf(PlusCode::class, $resultOne->getPlusCode());
+        $this->assertSame('4RRH46J3+3X', $resultOne->getPlusCode()->getGlobalCode());
+
+        $this->assertContainsOnlyInstancesOf(Photo::class, $resultOne->getPhotos());
+
+        $this->assertSame(2, $resultOne->getPriceLevel());
+        $this->assertSame(4.7, $resultOne->getRating());
+
+        $this->assertNull($resultOne->getFormattedPhoneNumber());
+        $this->assertNull($resultOne->getInternationalPhoneNumber());
+        $this->assertNull($resultOne->getWebsite());
+
+        $this->assertInstanceOf(OpeningHours::class, $resultOne->getOpeningHours());
+
+        $this->assertFalse($resultOne->isPermanentlyClosed());
     }
 
     public function testGeocodePlaceSearchAroundLocation()
@@ -137,6 +165,7 @@ class GoogleMapsPlacesTest extends BaseTestCase
         $results = $provider->geocodeQuery($query);
         $this->assertCount(20, $results);
 
+        /** @var GooglePlace $resultOne */
         $resultOne = $results->first();
 
         $this->assertInstanceOf(GooglePlace::class, $resultOne);
@@ -165,6 +194,7 @@ class GoogleMapsPlacesTest extends BaseTestCase
         $results = $provider->reverseQuery($query);
         $this->assertCount(20, $results);
 
+        /** @var GooglePlace $resultOne */
         $resultOne = $results->first();
 
         $this->assertInstanceOf(GooglePlace::class, $resultOne);

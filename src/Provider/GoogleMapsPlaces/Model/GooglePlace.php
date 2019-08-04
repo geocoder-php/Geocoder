@@ -266,7 +266,7 @@ final class GooglePlace extends Address
     /**
      * @return string|null
      */
-    public function getFormattedPhoneNumber(): string
+    public function getFormattedPhoneNumber()
     {
         return $this->formattedPhoneNumber;
     }
@@ -282,7 +282,7 @@ final class GooglePlace extends Address
     /**
      * @return string|null
      */
-    public function getInternationalPhoneNumber(): string
+    public function getInternationalPhoneNumber()
     {
         return $this->internationalPhoneNumber;
     }
@@ -298,7 +298,7 @@ final class GooglePlace extends Address
     /**
      * @return string|null
      */
-    public function getWebsite(): string
+    public function getWebsite()
     {
         return $this->website;
     }
@@ -314,7 +314,7 @@ final class GooglePlace extends Address
     /**
      * @return OpeningHours
      */
-    public function getOpeningHours(): OpeningHours
+    public function getOpeningHours()
     {
         return $this->openingHours;
     }

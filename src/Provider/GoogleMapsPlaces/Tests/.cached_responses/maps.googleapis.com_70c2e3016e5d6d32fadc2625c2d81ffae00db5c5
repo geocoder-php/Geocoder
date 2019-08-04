@@ -1,0 +1,50 @@
+s:1690:"{
+   "candidates" : [
+      {
+         "formatted_address" : "37 York Ln, Sydney NSW 2000, Australia",
+         "geometry" : {
+            "location" : {
+               "lat" : -33.8664756,
+               "lng" : 151.2053615
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : -33.86512822010728,
+                  "lng" : 151.2066787798927
+               },
+               "southwest" : {
+                  "lat" : -33.86782787989272,
+                  "lng" : 151.2039791201073
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
+         "name" : "Made In Italy Sydney CBD",
+         "photos" : [
+            {
+               "height" : 672,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/115667411032050556250/photos\"\u003eMade In Italy Sydney CBD\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRaAAAAisOHS4WyXPsX3ke3HgbZFPLzHF4ICzwg8YHAC4VwT6cpiQkdGYAAwbzySxgh9I6_KVEojQ3k87MTJOMqv_7JDhkgiT-ZnTVZdKWmmCsbK55RLLERiB0TQsJqZhsNUOiKEhCjTFyaiYDcH-w5yNzVo-DMGhRqb9Z1ldhVtRQ-xQRwmUJ9LdcQmg",
+               "width" : 1200
+            }
+         ],
+         "place_id" : "ChIJU1_axkCuEmsR5i01W5z69nI",
+         "plus_code" : {
+            "compound_code" : "46M4+C4 Sydney, New South Wales",
+            "global_code" : "4RRH46M4+C4"
+         },
+         "types" : [
+            "meal_delivery",
+            "meal_takeaway",
+            "restaurant",
+            "food",
+            "point_of_interest",
+            "establishment"
+         ]
+      }
+   ],
+   "status" : "OK"
+}
+";
