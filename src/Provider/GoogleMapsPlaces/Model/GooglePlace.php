@@ -65,6 +65,26 @@ final class GooglePlace extends Address
     private $rating;
 
     /**
+     * @var string|null
+     */
+    private $formattedPhoneNumber;
+
+    /**
+     * @var string|null
+     */
+    private $internationalPhoneNumber;
+
+    /**
+     * @var string|null
+     */
+    private $website;
+
+    /**
+     * @var OpeningHours
+     */
+    private $openingHours;
+
+    /**
      * @var bool
      */
     private $permanentlyClosed = false;
@@ -239,6 +259,70 @@ final class GooglePlace extends Address
     {
         $new = clone $this;
         $new->rating = $rating;
+
+        return $new;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getFormattedPhoneNumber(): string
+    {
+        return $this->formattedPhoneNumber;
+    }
+
+    public function withFormattedPhoneNumber(string $phone)
+    {
+        $new = clone $this;
+        $new->formattedPhoneNumber = $phone;
+
+        return $new;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getInternationalPhoneNumber(): string
+    {
+        return $this->internationalPhoneNumber;
+    }
+
+    public function withInternationalPhoneNumber(string $phone)
+    {
+        $new = clone $this;
+        $new->internationalPhoneNumber = $phone;
+
+        return $new;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getWebsite(): string
+    {
+        return $this->website;
+    }
+
+    public function withWebsite(string $website)
+    {
+        $new = clone $this;
+        $new->website = $website;
+
+        return $new;
+    }
+
+    /**
+     * @return OpeningHours
+     */
+    public function getOpeningHours(): OpeningHours
+    {
+        return $this->openingHours;
+    }
+
+    public function withOpeningHours(OpeningHours $openingHours)
+    {
+        $new = clone $this;
+        $new->openingHours = $openingHours;
 
         return $new;
     }

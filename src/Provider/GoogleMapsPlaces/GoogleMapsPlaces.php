@@ -22,6 +22,7 @@ use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Model\AddressBuilder;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Provider\GoogleMapsPlaces\Model\GooglePlace;
+use Geocoder\Provider\GoogleMapsPlaces\Model\OpeningHours;
 use Geocoder\Provider\GoogleMapsPlaces\Model\Photo;
 use Geocoder\Provider\GoogleMapsPlaces\Model\PlusCode;
 use Geocoder\Provider\Provider;
@@ -333,6 +334,22 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
 
             if (isset($result->rating)) {
                 $address = $address->withRating((float) $result->rating);
+            }
+
+            if (isset($result->formatted_phone_number)) {
+                $address = $address->withFormattedPhoneNumber($result->formatted_phone_number);
+            }
+
+            if (isset($result->international_phone_number)) {
+                $address = $address->withInternationalPhoneNumber($result->international_phone_number);
+            }
+
+            if (isset($result->website)) {
+                $address = $address->withWebsite($result->website);
+            }
+
+            if (isset($result->opening_hours)) {
+                $address = $address->withOpeningHours(OpeningHours::fromResult($result->opening_hours));
             }
 
             if (isset($result->permanently_closed)) {

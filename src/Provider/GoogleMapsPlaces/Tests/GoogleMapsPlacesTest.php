@@ -104,7 +104,7 @@ class GoogleMapsPlacesTest extends BaseTestCase
             'store',
             'point_of_interest',
             'establishment',
-        ], $result->getResultType());
+        ], $result->getType());
     }
 
     public function testGeocodePlaceSearchMode()
