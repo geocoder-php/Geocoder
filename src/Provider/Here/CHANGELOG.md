@@ -2,6 +2,12 @@
 
 The change log describes what is "Added", "Removed", "Changed" or "Fixed" between each release.
 
+## 0.3.0
+
+### Added
+
+- Compatibility with `AdditionalData` field (see [documentation](https://developer.here.com/documentation/geocoder/topics/resource-type-response-geocode.html#resource-type-response-geocode__address))
+
 ## 0.2.1
 
 ### Fixed
