@@ -16,6 +16,33 @@ This is the a cache provider from the PHP Geocoder. This is a **READ ONLY** repo
 composer require geocoder-php/cache-provider
 ```
 
+### Usage
+The `ProviderCache` allows you to use any [PSR-6](https://www.php-fig.org/psr/psr-6/) compatible cache driver.
+You can find compatible drivers on [packagist](https://packagist.org/providers/psr/cache-implementation).
+
+By default, the result is cached forever. 
+You can  set a cache expiry by passing an integer representing the number of seconds as the third parameter.
+
+```php
+$httpClient = new \Http\Adapter\Guzzle6\Client();
+$provider = new \Geocoder\Provider\GoogleMaps\GoogleMaps($httpClient);
+
+$psr6Cache = new ArrayCachePool(); // Requires `cache/array-adapter` package
+
+$cachedProvider = new \Geocoder\Provider\Cache\ProviderCache(
+    $provider, // Provider to cache
+    $psr6Cache, // PSR-6 compatible cache
+    600 // Cache expiry, in seconds
+);
+
+$geocoder = new \Geocoder\StatefulGeocoder($cachedProvider, 'en');
+
+// Will come from Google Maps API
+$result1 = $geocoder->geocodeQuery(GeocodeQuery::create('Buckingham Palace, London'));
+// Will come from the cache
+$result2 = $geocoder->geocodeQuery(GeocodeQuery::create('Buckingham Palace, London'));
+```
+
 ### Contribute
 
 Contributions are very welcome! Send a pull request to the [main repository](https://github.com/geocoder-php/Geocoder) or 

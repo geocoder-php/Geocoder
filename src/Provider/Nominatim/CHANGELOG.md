@@ -2,6 +2,12 @@
 
 The change log describes what is "Added", "Removed", "Changed" or "Fixed" between each release.
 
+## 5.1.1
+
+### Fixed
+
+- Fixed issue with result without `osm_id` or `osm_type`
+
 ## 5.1.0
 
 ### Added

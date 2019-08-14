@@ -159,4 +159,25 @@ class NominatimTest extends BaseTestCase
         $this->assertEquals('way', $result->getOSMType());
         $this->assertEquals('yes', $result->getType());
     }
+
+    public function testGeocodeNoOSMId()
+    {
+        $provider = Nominatim::withOpenStreetMapServer($this->getHttpClient(), 'Geocoder PHP/Nominatim Provider/Nominatim Test');
+        $results = $provider->geocodeQuery(GeocodeQuery::create('90210,United States'));
+
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertCount(1, $results);
+
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results->first();
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals('90210', $result->getPostalCode());
+        $this->assertEquals('US', $result->getCountry()->getCode());
+
+        $this->assertEquals('Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright', $result->getAttribution());
+        $this->assertEquals('place', $result->getCategory());
+        $this->assertEquals('postcode', $result->getType());
+        $this->assertEquals(null, $result->getOSMId());
+        $this->assertEquals(null, $result->getOSMType());
+    }
 }

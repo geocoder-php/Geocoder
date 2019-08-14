@@ -14,13 +14,13 @@ namespace Geocoder\Provider\Yandex;
 
 use Geocoder\Collection;
 use Geocoder\Exception\UnsupportedOperation;
-use Geocoder\Model\AddressCollection;
+use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Model\AddressBuilder;
+use Geocoder\Model\AddressCollection;
+use Geocoder\Provider\Provider;
 use Geocoder\Provider\Yandex\Model\YandexAddress;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Http\Provider\AbstractHttpProvider;
-use Geocoder\Provider\Provider;
 use Http\Client\HttpClient;
 
 /**
@@ -44,14 +44,21 @@ final class Yandex extends AbstractHttpProvider implements Provider
     private $toponym;
 
     /**
-     * @param HttpClient $client  an HTTP adapter
-     * @param string     $toponym toponym biasing only for reverse geocoding (optional)
+     * @var string|null
      */
-    public function __construct(HttpClient $client, string $toponym = null)
+    private $apiKey;
+
+    /**
+     * @param HttpClient  $client  an HTTP adapter
+     * @param string      $toponym toponym biasing only for reverse geocoding (optional)
+     * @param string|null $apiKey  API Key
+     */
+    public function __construct(HttpClient $client, string $toponym = null, string $apiKey = null)
     {
         parent::__construct($client);
 
         $this->toponym = $toponym;
+        $this->apiKey = $apiKey;
     }
 
     /**
@@ -60,6 +67,7 @@ final class Yandex extends AbstractHttpProvider implements Provider
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
         $address = $query->getText();
+
         // This API doesn't handle IPs
         if (filter_var($address, FILTER_VALIDATE_IP)) {
             throw new UnsupportedOperation('The Yandex provider does not support IP addresses, only street addresses.');
@@ -67,7 +75,7 @@ final class Yandex extends AbstractHttpProvider implements Provider
 
         $url = sprintf(self::GEOCODE_ENDPOINT_URL, urlencode($address));
 
-        return $this->executeQuery($url, $query->getLocale(), $query->getLimit());
+        return $this->executeQuery($url, $query->getLimit(), $query->getLocale());
     }
 
     /**
@@ -84,7 +92,7 @@ final class Yandex extends AbstractHttpProvider implements Provider
             $url = sprintf('%s&kind=%s', $url, $toponym);
         }
 
-        return $this->executeQuery($url, $query->getLocale(), $query->getLimit());
+        return $this->executeQuery($url, $query->getLimit(), $query->getLocale());
     }
 
     /**
@@ -96,16 +104,20 @@ final class Yandex extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * @param string      $url
-     * @param string|null $locale
-     * @param int         $limit
+     * @param string $url
+     * @param int    $limit
+     * @param string $locale
      *
      * @return AddressCollection
      */
-    private function executeQuery(string $url, string $locale = null, int $limit): AddressCollection
+    private function executeQuery(string $url, int $limit, string $locale = null): AddressCollection
     {
         if (null !== $locale) {
             $url = sprintf('%s&lang=%s', $url, str_replace('_', '-', $locale));
+        }
+
+        if (null !== $this->apiKey) {
+            $url = sprintf('%s&apikey=%s', $url, $this->apiKey);
         }
 
         $url = sprintf('%s&results=%d', $url, $limit);
