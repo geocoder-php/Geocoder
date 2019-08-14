@@ -233,10 +233,10 @@ final class Nominatim extends AbstractHttpProvider implements Provider
         $location = $location->withDisplayName($place->display_name);
 
         if (isset($place->osm_id)) {
-        $location = $location->withOSMId(intval($place->osm_id));
+            $location = $location->withOSMId(intval($place->osm_id));
         }
         if (isset($place->osm_type)) {
-        $location = $location->withOSMType($place->osm_type);
+            $location = $location->withOSMType($place->osm_type);
         }
 
         if (false === $reverse) {
