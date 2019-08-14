@@ -40,8 +40,10 @@ abstract class AbstractHttpProvider extends AbstractProvider
     /**
      * @param HttpClient          $client
      * @param MessageFactory|null $factory
+     * @param string     $userAgent Value of the User-Agent header
+     * @param string     $referer   Value of the Referer header
      */
-    public function __construct(HttpClient $client, MessageFactory $factory = null)
+    public function __construct(HttpClient $client, MessageFactory $factory = null, string $userAgent = '', string $referer = '')
     {
         $this->client = $client;
         $this->messageFactory = $factory ?: MessageFactoryDiscovery::find();
