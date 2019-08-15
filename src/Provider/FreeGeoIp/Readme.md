@@ -10,6 +10,24 @@
 This is the Free GeoIp provider from the PHP Geocoder. This is a **READ ONLY** repository. See the
 [main repo](https://github.com/geocoder-php/Geocoder) for information and documentation. 
 
+# Freegeoip Shutdown
+As per the [freegeoip.net](http://freegeoip.net/shutdown) website, the provider has been purchased by [IpStack](https://ipstack.com/).
+As a result, this provider no longer works with the default configuration. It will still work if you use the 
+[self hosted variant](https://github.com/apilayer/freegeoip/) and supply a host when constructing the provider.
+
+## Usage
+```php
+$httpClient = new \Http\Adapter\Guzzle6\Client();
+
+// This will no longer work
+$provider = new Geocoder\Provider\FreeGeoIp\FreeGeoIp($httpClient);
+// You must provide the endpoint of your instance 
+$provider = new Geocoder\Provider\FreeGeoIp\FreeGeoIp($httpClient, 'http://my.internal.geocoder/json/%s');
+```
+
+## Alternatives
+https://github.com/geocoder-php/Geocoder#ip
+
 ### Install
 
 ```bash

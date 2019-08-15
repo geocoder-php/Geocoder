@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Geocoder\Provider\FreeGeoIp;
 
 use Geocoder\Collection;
+use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Model\AddressBuilder;
 use Geocoder\Model\AddressCollection;
@@ -28,7 +29,7 @@ use Http\Client\HttpClient;
 final class FreeGeoIp extends AbstractHttpProvider implements Provider
 {
     /**
-     * @var string
+     * @var string|null
      */
     private $baseUrl;
 
@@ -36,7 +37,7 @@ final class FreeGeoIp extends AbstractHttpProvider implements Provider
      * @param HttpClient $client
      * @param string     $baseUrl
      */
-    public function __construct(HttpClient $client, string $baseUrl = 'https://freegeoip.net/json/%s')
+    public function __construct(HttpClient $client, string $baseUrl = null)
     {
         parent::__construct($client);
 
@@ -48,6 +49,14 @@ final class FreeGeoIp extends AbstractHttpProvider implements Provider
      */
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
+        if (null === $this->baseUrl) {
+            throw new InvalidArgument(sprintf(
+                'The FreeGeoIp.net service no longer operates. See %s and %s for more information.',
+                'http://freegeoip.net/shutdown',
+                'https://github.com/geocoder-php/free-geoip-provider'
+            ));
+        }
+
         $address = $query->getText();
         if (!filter_var($address, FILTER_VALIDATE_IP)) {
             throw new UnsupportedOperation('The FreeGeoIp provider does not support street addresses.');
