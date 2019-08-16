@@ -23,11 +23,21 @@ class IntegrationTest extends ProviderIntegrationTest
 {
     protected $testAddress = false;
 
+    /**
+     * @var bool Web service no longer operating
+     */
+    protected $testIpv4 = false;
+
+    /**
+     * @var bool Web service no longer operating
+     */
+    protected $testIpv6 = false;
+
     protected $testReverse = false;
 
     protected function createProvider(HttpClient $httpClient)
     {
-        return new FreeGeoIp($httpClient);
+        return new FreeGeoIp($httpClient, 'https://internal.geocoder/json/%s');
     }
 
     protected function getCacheDir()
