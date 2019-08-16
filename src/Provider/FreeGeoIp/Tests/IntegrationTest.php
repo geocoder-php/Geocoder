@@ -27,6 +27,7 @@ class IntegrationTest extends ProviderIntegrationTest
      * @var bool Web service no longer operating
      */
     protected $testIpv4 = false;
+
     /**
      * @var bool Web service no longer operating
      */

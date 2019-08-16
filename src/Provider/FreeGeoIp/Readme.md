@@ -10,7 +10,7 @@
 This is the Free GeoIp provider from the PHP Geocoder. This is a **READ ONLY** repository. See the
 [main repo](https://github.com/geocoder-php/Geocoder) for information and documentation. 
 
-# Freegeoip Shutdown
+## Freegeoip Shutdown
 As per the [freegeoip.net](http://freegeoip.net/shutdown) website, the provider has been purchased by [IpStack](https://ipstack.com/).
 As a result, this provider no longer works with the default configuration. It will still work if you use the 
 [self hosted variant](https://github.com/apilayer/freegeoip/) and supply a host when constructing the provider.
@@ -26,15 +26,18 @@ $provider = new Geocoder\Provider\FreeGeoIp\FreeGeoIp($httpClient, 'http://my.in
 ```
 
 ## Alternatives
+We offer an [IpStack provider](https://github.com/geocoder-php/ipstack-provider) which you can use if you wish to continue with the new service owner.
+
+### Full IP Provider List
 https://github.com/geocoder-php/Geocoder#ip
 
-### Install
+## Install
 
 ```bash
 composer require geocoder-php/free-geoip-provider
 ```
 
-### Contribute
+## Contribute
 
 Contributions are very welcome! Send a pull request to the [main repository](https://github.com/geocoder-php/Geocoder) or 
 report any issues you find on the [issue tracker](https://github.com/geocoder-php/Geocoder/issues).
