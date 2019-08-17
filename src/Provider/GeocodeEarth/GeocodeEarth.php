@@ -70,7 +70,7 @@ final class GeocodeEarth extends AbstractHttpProvider implements Provider
             throw new UnsupportedOperation('The GeocodeEarth provider does not support IP addresses, only street addresses.');
         }
 
-        $url = $this->root . '/v' . $this->version . '/search' . '?' . http_build_query([
+        $url = $this->root.'/v'.$this->version.'/search'.'?'.http_build_query([
             'text' => $address,
             'api_key' => $this->apiKey,
             'size' => $query->getLimit(),
@@ -88,7 +88,7 @@ final class GeocodeEarth extends AbstractHttpProvider implements Provider
         $longitude = $coordinates->getLongitude();
         $latitude = $coordinates->getLatitude();
 
-        $url = $this->root . '/v' . $this->version . '/reverse' . '?' . http_build_query([
+        $url = $this->root.'/v'.$this->version.'/reverse'.'?'.http_build_query([
             'point.lat' => $latitude,
             'point.lon' => $longitude,
             'api_key' => $this->apiKey,
