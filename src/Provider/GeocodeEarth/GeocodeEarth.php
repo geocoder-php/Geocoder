@@ -14,10 +14,6 @@ namespace Geocoder\Provider\GeocodeEarth;
 
 use Geocoder\Collection;
 use Geocoder\Exception\InvalidCredentials;
-use Geocoder\Exception\QuotaExceeded;
-use Geocoder\Exception\UnsupportedOperation;
-use Geocoder\Model\Address;
-use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\Pelias\Pelias;
