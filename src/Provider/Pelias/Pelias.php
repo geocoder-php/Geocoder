@@ -24,7 +24,7 @@ use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Provider\Provider;
 use Http\Client\HttpClient;
 
-abstract class Pelias extends AbstractHttpProvider implements Provider
+class Pelias extends AbstractHttpProvider implements Provider
 {
     /**
      * @var string
@@ -77,7 +77,10 @@ abstract class Pelias extends AbstractHttpProvider implements Provider
     /**
      * {@inheritdoc}
      */
-    abstract public function geocodeQuery(GeocodeQuery $query): Collection;
+    public function geocodeQuery(GeocodeQuery $query): Collection
+    {
+        return $this->executeQuery($this->getGeocodeQueryUrl($query));
+    }
 
     /**
      * @param ReverseQuery $query
@@ -105,12 +108,18 @@ abstract class Pelias extends AbstractHttpProvider implements Provider
     /**
      * {@inheritdoc}
      */
-    abstract public function reverseQuery(ReverseQuery $query): Collection;
+    public function reverseQuery(ReverseQuery $query): Collection
+    {
+        return $this->executeQuery($this->getReverseQueryUrl($query));
+    }
 
     /**
      * {@inheritdoc}
      */
-    abstract public function getName(): string;
+    public function getName(): string
+    {
+        return 'pelias';
+    }
 
     /**
      * @param $url
