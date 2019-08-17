@@ -14,6 +14,7 @@
     "require": {
         "php": "^7.0",
         "geocoder-php/common-http": "^4.0",
+        "geocoder-php/pelias-provider": "^1.0",
         "willdurand/geocoder": "^4.0"
     },
     "require-dev": {
@@ -26,7 +27,9 @@
         "geocoder-php/provider-implementation": "1.0"
     },
     "autoload": {
-        "psr-4": { "Geocoder\\Provider\\GeocodeEarth\\": "" },
+        "psr-4": {
+            "Geocoder\\Provider\\GeocodeEarth\\": ""
+        },
         "exclude-from-classmap": [
             "/Tests/"
         ]
