@@ -22,9 +22,9 @@ use Http\Client\HttpClient;
 class IntegrationTest extends ProviderIntegrationTest
 {
     protected $skippedTests = [
-        'testGeocodeQuery'              => 'No Pelias "default" instance.',
+        'testGeocodeQuery' => 'No Pelias "default" instance.',
         'testGeocodeQueryWithNoResults' => 'No Pelias "default" instance.',
-        'testReverseQuery'              => 'No Pelias "default" instance.',
+        'testReverseQuery' => 'No Pelias "default" instance.',
         'testReverseQueryWithNoResults' => 'No Pelias "default" instance.',
     ];
 
@@ -39,7 +39,7 @@ class IntegrationTest extends ProviderIntegrationTest
 
     protected function getCacheDir()
     {
-        return __DIR__ . '/.cached_responses';
+        return __DIR__.'/.cached_responses';
     }
 
     protected function getApiKey()
