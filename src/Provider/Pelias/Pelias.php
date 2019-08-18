@@ -146,7 +146,12 @@ class Pelias extends AbstractHttpProvider implements Provider
             }
         }
 
-        if (!isset($json['type']) || 'FeatureCollection' !== $json['type'] || !isset($json['features']) || 0 === count($json['features'])) {
+        if (
+            !isset($json['type'])
+            || 'FeatureCollection' !== $json['type']
+            || !isset($json['features'])
+            || 0 === count($json['features'])
+        ) {
             return new AddressCollection([]);
         }
 
