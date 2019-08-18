@@ -23,6 +23,7 @@ use Http\Client\HttpClient;
 final class GeocodeEarth extends Pelias implements Provider
 {
     const API_URL = 'https://api.geocode.earth/';
+
     const API_VERSION = 1;
 
     /**
