@@ -63,7 +63,12 @@ class Pelias extends AbstractHttpProvider implements Provider
 
         // This API doesn't handle IPs
         if (filter_var($address, FILTER_VALIDATE_IP)) {
-            throw new UnsupportedOperation('The Pelias provider does not support IP addresses, only street addresses.');
+            throw new UnsupportedOperation(
+                sprintf(
+                    'The %s provider does not support IP addresses, only street addresses.',
+                    $this->getName()
+                )
+            );
         }
 
         $data = [
