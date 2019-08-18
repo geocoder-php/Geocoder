@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Geocoder\Provider\Pelias\Tests;
 
 use Geocoder\Collection;
+use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Provider\Pelias\Pelias;
 use Geocoder\Query\GeocodeQuery;
@@ -49,94 +50,38 @@ class PeliasTest extends BaseTestCase
         $this->assertEquals(0, $result->count());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\QuotaExceeded
-     * @expectedExceptionMessage Valid request but quota exceeded.
-     */
-    public function testGeocodeQuotaExceeded()
-    {
-        $provider = new Pelias(
-            $this->getMockedHttpClient(
-                '{
-                    "meta": {
-                        "version": 1,
-                        "status_code": 429
-                    },
-                    "results": {
-                        "error": {
-                            "type": "QpsExceededError",
-                            "message": "Queries per second exceeded: Queries exceeded (6 allowed)."
-                        }
-                    }
-                }'
-            ),
-            'http://localhost/'
-        );
-        $provider->geocodeQuery(GeocodeQuery::create('New York'));
-    }
-
-    /**
-     * @expectedException \Geocoder\Exception\InvalidCredentials
-     * @expectedExceptionMessage Invalid or missing api key.
-     */
-    public function testGeocodeInvalidApiKey()
-    {
-        $provider = new Pelias(
-            $this->getMockedHttpClient(
-                '{
-                    "meta": {
-                        "version": 1,
-                        "status_code": 403
-                    },
-                    "results": {
-                        "error": {
-                            "type": "KeyError",
-                            "message": "No api_key specified."
-                        }
-                    }
-                }'
-            ),
-            'http://localhost/'
-        );
-        $provider->geocodeQuery(GeocodeQuery::create('New York'));
-    }
-
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The Pelias provider does not support IP addresses, only street addresses.
-     */
     public function testGeocodeWithLocalhostIPv4()
     {
+        $this->expectException(UnsupportedOperation::class);
+        $this->expectExceptionMessage('The pelias provider does not support IP addresses, only street addresses.');
+
         $provider = new Pelias($this->getMockedHttpClient(), 'http://localhost/');
         $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The Pelias provider does not support IP addresses, only street addresses.
-     */
     public function testGeocodeWithLocalhostIPv6()
     {
+        $this->expectException(UnsupportedOperation::class);
+        $this->expectExceptionMessage('The pelias provider does not support IP addresses, only street addresses.');
+
         $provider = new Pelias($this->getMockedHttpClient(), 'http://localhost/');
         $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The Pelias provider does not support IP addresses, only street addresses.
-     */
     public function testGeocodeWithRealIPv4()
     {
+        $this->expectException(UnsupportedOperation::class);
+        $this->expectExceptionMessage('The pelias provider does not support IP addresses, only street addresses.');
+
         $provider = new Pelias($this->getMockedHttpClient(), 'http://localhost/');
         $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The Pelias provider does not support IP addresses, only street addresses.
-     */
     public function testGeocodeWithRealIPv6()
     {
+        $this->expectException(UnsupportedOperation::class);
+        $this->expectExceptionMessage('The pelias provider does not support IP addresses, only street addresses.');
+
         $provider = new Pelias($this->getMockedHttpClient(), 'http://localhost/');
         $provider->geocodeQuery(GeocodeQuery::create('::ffff:74.200.247.59'));
     }
