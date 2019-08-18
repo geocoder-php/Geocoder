@@ -158,12 +158,6 @@ class Pelias extends AbstractHttpProvider implements Provider
 
         $results = [];
         foreach ($locations as $location) {
-            $bounds = [
-                'south' => null,
-                'west' => null,
-                'north' => null,
-                'east' => null,
-            ];
             if (isset($location['bbox'])) {
                 $bounds = [
                     'south' => $location['bbox'][3],
@@ -171,6 +165,8 @@ class Pelias extends AbstractHttpProvider implements Provider
                     'north' => $location['bbox'][1],
                     'east' => $location['bbox'][0],
                 ];
+            } else {
+                $bounds = null;
             }
 
             $props = $location['properties'];
