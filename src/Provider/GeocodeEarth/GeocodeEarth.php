@@ -22,6 +22,9 @@ use Http\Client\HttpClient;
 
 final class GeocodeEarth extends Pelias implements Provider
 {
+    const API_URL = 'https://api.geocode.earth/';
+    const API_VERSION = 1;
+
     /**
      * @var string
      */
@@ -38,7 +41,7 @@ final class GeocodeEarth extends Pelias implements Provider
         }
 
         $this->apiKey = $apiKey;
-        parent::__construct($client, 'https://api.geocode.earth/', 1);
+        parent::__construct($client, self::API_URL, self::API_VERSION);
     }
 
     /**
