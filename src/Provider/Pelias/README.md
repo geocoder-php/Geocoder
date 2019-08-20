@@ -15,7 +15,8 @@ This is the Pelias provider from the PHP Geocoder. This is a **READ ONLY** repos
 
 Pelias is an open-source geocoder. You can find its [documentation here](https://github.com/pelias/documentation).
 
-Pelias does not provide an API per se but other API (and providers) are based on Pelias and extend this provider.
+Pelias does not provide an API per se but other API (and providers) are based on Pelias and extend this provider.  
+You can run your own Pelias instance on your server, see [documentation](https://github.com/pelias/documentation/blob/master/getting_started_install.md) to install it.
 
 For instance:
 
