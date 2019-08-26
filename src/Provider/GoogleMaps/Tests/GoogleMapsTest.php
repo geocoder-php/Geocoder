@@ -120,6 +120,7 @@ class GoogleMapsTest extends BaseTestCase
 
         // not provided
         $this->assertNull($result->getTimezone());
+        $this->assertNull($result->getPostalCodeSuffix());
     }
 
     public function testGeocodeBoundsWithRealAddressForNonRooftopLocation()
@@ -534,6 +535,22 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertInstanceOf(Address::class, $result);
         $this->assertInstanceOf('\Geocoder\Model\AdminLevelCollection', $result->getSubLocalityLevels());
         $this->assertEquals('Iijima', $result->getSubLocalityLevels()->get(2)->getName());
+        $this->assertEquals(false, $result->isPartialMatch());
+    }
+
+    public function testGeocodeWithPostalCodeSuffixComponent()
+    {
+        $provider = $this->getGoogleMapsProvider();
+        $results = $provider->geocodeQuery(GeocodeQuery::create('900 S Oak Park Ave, Oak Park, IL 60304'));
+
+        $this->assertInstanceOf(AddressCollection::class, $results);
+        $this->assertCount(1, $results);
+
+        /** @var GoogleAddress $result */
+        $result = $results->first();
+        $this->assertInstanceOf(Address::class, $result);
+        $this->assertEquals('900 S Oak Park Ave, Oak Park, IL 60304, USA', $result->getFormattedAddress());
+        $this->assertEquals('1936', $result->getPostalCodeSuffix());
         $this->assertEquals(false, $result->isPartialMatch());
     }
 

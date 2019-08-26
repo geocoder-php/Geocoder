@@ -1,0 +1,79 @@
+s:2474:"{
+   "results" : [
+      {
+         "address_components" : [
+            {
+               "long_name" : "900",
+               "short_name" : "900",
+               "types" : [ "street_number" ]
+            },
+            {
+               "long_name" : "South Oak Park Avenue",
+               "short_name" : "S Oak Park Ave",
+               "types" : [ "route" ]
+            },
+            {
+               "long_name" : "Oak Park",
+               "short_name" : "Oak Park",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "Oak Park Township",
+               "short_name" : "Oak Park Township",
+               "types" : [ "administrative_area_level_3", "political" ]
+            },
+            {
+               "long_name" : "Cook County",
+               "short_name" : "Cook County",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "Illinois",
+               "short_name" : "IL",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "United States",
+               "short_name" : "US",
+               "types" : [ "country", "political" ]
+            },
+            {
+               "long_name" : "60304",
+               "short_name" : "60304",
+               "types" : [ "postal_code" ]
+            },
+            {
+               "long_name" : "1936",
+               "short_name" : "1936",
+               "types" : [ "postal_code_suffix" ]
+            }
+         ],
+         "formatted_address" : "900 S Oak Park Ave, Oak Park, IL 60304, USA",
+         "geometry" : {
+            "location" : {
+               "lat" : 41.8718539,
+               "lng" : -87.79375659999999
+            },
+            "location_type" : "ROOFTOP",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 41.87320288029149,
+                  "lng" : -87.7924076197085
+               },
+               "southwest" : {
+                  "lat" : 41.87050491970849,
+                  "lng" : -87.79510558029151
+               }
+            }
+         },
+         "place_id" : "ChIJK6OxB5M0DogRla1PTqvu7gk",
+         "plus_code" : {
+            "compound_code" : "V6C4+PF Oak Park, Oak Park Township, IL, United States",
+            "global_code" : "86HJV6C4+PF"
+         },
+         "types" : [ "street_address" ]
+      }
+   ],
+   "status" : "OK"
+}
+";
