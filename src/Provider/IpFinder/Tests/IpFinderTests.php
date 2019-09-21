@@ -15,12 +15,11 @@ namespace Geocoder\Provider\IpFinder\Tests;
 use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Provider\IpFinder\IpFinder;
 use Geocoder\Query\GeocodeQuery;
-use Geocoder\Query\ReverseQuery;
 
 /**
  * @author Jonas Gielen <gielenjonas@gmail.com>
  */
-class IpstackTest extends BaseTestCase
+class IpFinderTests extends BaseTestCase
 {
     protected function getCacheDir()
     {
@@ -43,7 +42,7 @@ class IpstackTest extends BaseTestCase
 
     public function testGeocodeKey()
     {
-        $provider = new IpFinder($this->getMockedHttpClient(),"TOKEN");
+        $provider = new IpFinder($this->getMockedHttpClient(),'TOKEN');
         $this->assertEquals('TOKEN', $provider->apiKey);
     }
     /**

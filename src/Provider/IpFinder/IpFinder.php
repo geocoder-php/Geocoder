@@ -35,7 +35,7 @@ final class IpFinder extends AbstractHttpProvider implements Provider
     /**
      *  @var string
      */
-    const DEFAULT_API_TOKEN = "free";
+    const DEFAULT_API_TOKEN = 'free';
 
     /**
      * @var string
