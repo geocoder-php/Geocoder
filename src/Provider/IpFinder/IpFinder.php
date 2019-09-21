@@ -100,6 +100,7 @@ final class IpFinder extends AbstractHttpProvider implements Provider
     {
         $content = $this->getUrlContents($url);
         $data = json_decode($content, true);
+
         return new AddressCollection([$data]);
     }
 }
