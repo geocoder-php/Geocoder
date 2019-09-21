@@ -1,0 +1,13 @@
+s:358:"{
+    "status": "ok",
+    "status_message": "Query was successful",
+    "ip": "2001:0db8:0000:0042:0000:8a2e:0370:7334",
+    "type": "IPV6",
+    "continent_code": "OC",
+    "continent_name": "Oceania",
+    "country_code": "AU",
+    "country_name": "Australia",
+    "country_native_name": "Australia",
+    "region_name": "Queensland",
+    "city": "Brisbane"
+}";

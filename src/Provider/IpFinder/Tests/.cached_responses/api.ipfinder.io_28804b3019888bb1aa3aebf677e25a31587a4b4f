@@ -1,0 +1,13 @@
+s:325:"{
+    "status": "ok",
+    "status_message": "Query was successful",
+    "ip": "83.227.123.8",
+    "type": "IPV4",
+    "continent_code": "EU",
+    "continent_name": "Europe",
+    "country_code": "SE",
+    "country_name": "Sweden",
+    "country_native_name": "Sverige",
+    "region_name": "Stockholm",
+    "city": "Stockholm"
+}";
