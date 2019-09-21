@@ -45,7 +45,6 @@ final class IpFinder extends AbstractHttpProvider implements Provider
      * @param HttpClient  $client an HTTP adapter
      * @param string|null $apiKey an API key
      */
-
     public function __construct(HttpClient $client, string $apiKey = null)
     {
         if (isset($apiKey)) {
