@@ -43,9 +43,10 @@ final class IpFinder extends AbstractHttpProvider implements Provider
     public $apiKey;
 
     /**
-     * @param HttpClient $client an HTTP adapter
-     * @param string     $apiKey an API key
+     * @param HttpClient  $client an HTTP adapter
+     * @param string|null $apiKey an API key
      */
+
     public function __construct(HttpClient $client, string $apiKey = null)
     {
         if (isset($apiKey)) {
@@ -100,14 +101,6 @@ final class IpFinder extends AbstractHttpProvider implements Provider
     {
         $content = $this->getUrlContents($url);
         $data = json_decode($content, true);
-
-        return new AddressCollection([
-            Address::createFromArray([
-                'providedBy' => $this->getName(),
-                'locality' => $data['city'] ?: null,
-                'countryCode' => $data['country_code'] ?: null,
-                'country' => $data['country_name'] ?: null,
-            ]),
-        ]);
+        return new AddressCollection([$data]);
     }
 }
