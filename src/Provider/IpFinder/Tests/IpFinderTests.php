@@ -42,9 +42,10 @@ class IpFinderTests extends BaseTestCase
 
     public function testGeocodeKey()
     {
-        $provider = new IpFinder($this->getMockedHttpClient(),'TOKEN');
+        $provider = new IpFinder($this->getMockedHttpClient(), 'TOKEN');
         $this->assertEquals('TOKEN', $provider->apiKey);
     }
+
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
      * @expectedExceptionMessage The IpFinder provider support only IP addresses.
