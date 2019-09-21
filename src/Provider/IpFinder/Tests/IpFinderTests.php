@@ -32,13 +32,11 @@ class IpFinderTests extends BaseTestCase
         $this->assertEquals('ipfinder', $provider->getName());
     }
 
-
     public function testGeocodeWithNoKey()
     {
         $provider = new IpFinder($this->getMockedHttpClient());
         $this->assertEquals('free', $provider::DEFAULT_API_TOKEN);
     }
-
 
     public function testGeocodeKey()
     {
