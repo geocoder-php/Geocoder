@@ -39,11 +39,11 @@ $httpClient = new \Http\Adapter\Guzzle6\Client();
 // Unauthenticated
 $provider = new \Geocoder\Provider\AlgoliaPlaces\AlgoliaPlaces($httpClient);
 // Authenticated 
-$provider = new \Geocoder\Provider\AlgoliaPlaces\AlgoliaPlaces($httpClient, '<your-app-id>', '<your-key>');
+$provider = new \Geocoder\Provider\AlgoliaPlaces\AlgoliaPlaces($httpClient, '<your-key>', '<your-app-id>');
 
 $geocoder = new \Geocoder\StatefulGeocoder($provider, 'en');
 
-$result = $geocoder->geocodeQuery(GeocodeQuery::create('Paris')->withLocale('fr-FR));
+$result = $geocoder->geocodeQuery(GeocodeQuery::create('Paris')->withLocale('fr-FR'));
 ```
 
 ## Contribute
