@@ -14,6 +14,7 @@ namespace Geocoder\Provider\IpFinder;
 
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Collection;
+use Geocoder\Model\Address;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
@@ -100,6 +101,13 @@ final class IpFinder extends AbstractHttpProvider implements Provider
         $content = $this->getUrlContents($url);
         $data = json_decode($content, true);
 
-        return new AddressCollection([$data]);
+        return new AddressCollection([
+            Address::createFromArray([
+                'providedBy' => $this->getName(),
+                'locality' => $data['city'] ?: null,
+                'countryCode' => $data['country_code'] ?: null,
+                'country' => $data['country_name'] ?: null,
+            ]),
+        ]);
     }
 }
