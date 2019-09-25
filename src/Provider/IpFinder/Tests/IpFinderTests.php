@@ -120,12 +120,12 @@ JSON;
         $this->assertCount(1, $results);
 
         /** @var Location $result */
-         $result = $results->first();
-         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-         $this->assertEquals('South Brisbane', $result->getLocality());
-         $this->assertEquals('Australia', $result->getCountry()->getName());
-         $this->assertEquals('AU', $result->getCountry()->getCode());
-         $this->assertNull($result->getTimezone());
+        $result = $results->first();
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals('South Brisbane', $result->getLocality());
+        $this->assertEquals('Australia', $result->getCountry()->getName());
+        $this->assertEquals('AU', $result->getCountry()->getCode());
+        $this->assertNull($result->getTimezone());
     }
 
     public function testGeocodeWithIPv6()
@@ -136,11 +136,11 @@ JSON;
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
 
         /** @var Location $result */
-         $result = $results->first();
-         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-         $this->assertEquals('Nairobi', $result->getLocality());
-         $this->assertEquals('Kenya', $result->getCountry()->getName());
-         $this->assertEquals('KE', $result->getCountry()->getCode());
-         $this->assertNull($result->getTimezone());
+        $result = $results->first();
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals('Nairobi', $result->getLocality());
+        $this->assertEquals('Kenya', $result->getCountry()->getName());
+        $this->assertEquals('KE', $result->getCountry()->getCode());
+        $this->assertNull($result->getTimezone());
     }
 }
