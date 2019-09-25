@@ -1,4 +1,4 @@
-s:358:"{
+s:1638:"{
     "status": "ok",
     "status_message": "Query was successful",
     "ip": "2001:0db8:0000:0042:0000:8a2e:0370:7334",
@@ -9,5 +9,53 @@ s:358:"{
     "country_name": "Australia",
     "country_native_name": "Australia",
     "region_name": "Queensland",
-    "city": "Brisbane"
+    "city": "Brisbane",
+    "latitude": "-27.4698",
+    "longitude": "153.025",
+    "location": {
+        "capital": "Canberra",
+        "country_flag": "https:\/\/ipfinder.io\/flag\/aus.svg",
+        "flag_png": "https:\/\/ipfinder.io\/flag\/aus.png",
+        "country_flag_emoji": "\ud83c\udde6\ud83c\uddfa",
+        "country_flag_emoji_unicode": "U+1F1E6 U+1F1FA",
+        "calling_code": "61",
+        "toplevel_domain": ".au",
+        "alpha3_code": "AUS",
+        "population": "23868800",
+        "is_eu": false,
+        "is_ar": false
+    },
+    "time_zone": {
+        "id": "Australia\/Lord_Howe",
+        "UTC": "UTC+05:00",
+        "gmt_offset": 37800,
+        "current_time": "2019-09-25 21:55:54"
+    },
+    "currency": {
+        "name": "Australian dollar",
+        "symbol": "AUD",
+        "symbol_native": "$"
+    },
+    "languages": {
+        "code": "en",
+        "name": "English",
+        "name_native": "English"
+    },
+    "connection": {
+        "asn": "0",
+        "organization": "",
+        "domain": "",
+        "type": ""
+    },
+    "security": {
+        "is_proxy": false,
+        "proxy_type": null,
+        "is_tor": false,
+        "is_spam": false,
+        "threat_level": "Low"
+    },
+    "header": {
+        "total_user_agent": 0,
+        "list_user_agent": null
+    }
 }";

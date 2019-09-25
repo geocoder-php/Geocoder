@@ -1,4 +1,4 @@
-s:325:"{
+s:1630:"{
     "status": "ok",
     "status_message": "Query was successful",
     "ip": "83.227.123.8",
@@ -9,5 +9,53 @@ s:325:"{
     "country_name": "Sweden",
     "country_native_name": "Sverige",
     "region_name": "Stockholm",
-    "city": "Stockholm"
+    "city": "Stockholm",
+    "latitude": "59.3289",
+    "longitude": "18.0649",
+    "location": {
+        "capital": "Stockholm",
+        "country_flag": "https:\/\/ipfinder.io\/flag\/swe.svg",
+        "flag_png": "https:\/\/ipfinder.io\/flag\/swe.png",
+        "country_flag_emoji": "\ud83c\uddf8\ud83c\uddea",
+        "country_flag_emoji_unicode": "U+1F1F8 U+1F1EA",
+        "calling_code": "46",
+        "toplevel_domain": ".se",
+        "alpha3_code": "SWE",
+        "population": "9793172",
+        "is_eu": true,
+        "is_ar": false
+    },
+    "time_zone": {
+        "id": "Europe\/Stockholm",
+        "UTC": "UTC+01:00",
+        "gmt_offset": 7200,
+        "current_time": "2019-09-25 13:25:53"
+    },
+    "currency": {
+        "name": "Swedish krona",
+        "symbol": "SEK",
+        "symbol_native": "kr"
+    },
+    "languages": {
+        "code": "sv",
+        "name": "Swedish",
+        "name_native": "svenska"
+    },
+    "connection": {
+        "asn": "2119",
+        "organization": "Telenor Norge AS",
+        "domain": "telenor.com",
+        "type": "isp"
+    },
+    "security": {
+        "is_proxy": false,
+        "proxy_type": false,
+        "is_tor": false,
+        "is_spam": false,
+        "threat_level": "Low"
+    },
+    "header": {
+        "total_user_agent": 0,
+        "list_user_agent": null
+    }
 }";
