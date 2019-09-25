@@ -1,0 +1,13 @@
+s:332:"{
+    "status": "ok",
+    "status_message": "Query was successful",
+    "ip": "1.0.0.0",
+    "type": "IPV4",
+    "continent_code": "OC",
+    "continent_name": "Oceania",
+    "country_code": "AU",
+    "country_name": "Australia",
+    "country_native_name": "Australia",
+    "region_name": "Queensland",
+    "city": "South Brisbane"
+}";

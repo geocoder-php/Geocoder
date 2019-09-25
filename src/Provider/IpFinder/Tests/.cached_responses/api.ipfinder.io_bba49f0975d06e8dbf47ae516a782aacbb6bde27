@@ -1,0 +1,13 @@
+s:327:"{
+    "status": "ok",
+    "status_message": "Query was successful",
+    "ip": "2c0f:fb50:4003::",
+    "type": "IPV6",
+    "continent_code": "AF",
+    "continent_name": "Africa",
+    "country_code": "KE",
+    "country_name": "Kenya",
+    "country_native_name": "Kenya",
+    "region_name": "Nairobi Area",
+    "city": "Nairobi"
+}";

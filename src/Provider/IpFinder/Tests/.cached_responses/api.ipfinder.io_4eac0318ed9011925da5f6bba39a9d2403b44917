@@ -1,0 +1,13 @@
+s:351:"{
+    "status": "ok",
+    "status_message": "Query was successful",
+    "ip": "74.125.45.100",
+    "type": "IPV4",
+    "continent_code": "NA",
+    "continent_name": "North America",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_native_name": "United States",
+    "region_name": "North Carolina",
+    "city": "Morganton"
+}";

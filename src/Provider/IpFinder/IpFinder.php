@@ -12,6 +12,9 @@ declare(strict_types=1);
 
 namespace Geocoder\Provider\IpFinder;
 
+use Geocoder\Exception\InvalidArgument;
+use Geocoder\Exception\InvalidCredentials;
+use Geocoder\Exception\QuotaExceeded;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Collection;
 use Geocoder\Model\Address;
@@ -100,6 +103,35 @@ final class IpFinder extends AbstractHttpProvider implements Provider
     {
         $content = $this->getUrlContents($url);
         $data = json_decode($content, true);
+
+        if (isset($data['errors'])) {
+            switch ($data['errors'][0]['code']) {
+                case 104:
+                    throw new InvalidArgument(
+                        'You have reached your usage limit. Upgrade your plan if necessary.'
+                    );
+                case 401:
+                    throw new InvalidArgument(
+                        'No API Key was specified, invalid API Key.'
+                    );
+                case 404:
+                    throw new InvalidCredentials(
+                        'The requested resource does not exist.'
+                    );
+                case 402:
+                    throw new QuotaExceeded(
+                        'expired paymant please Upgrade your plan.'
+                    );
+                case 105:
+                    throw new InvalidCredentials(
+                        'non paymant Please Login to your dashbord and make order.'
+                    );
+                case 405:
+                    throw new InvalidCredentials(
+                        'Method Not Allowed.'
+                    );
+            }
+        }
 
         return new AddressCollection([
             Address::createFromArray([
