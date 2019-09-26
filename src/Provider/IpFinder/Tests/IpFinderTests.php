@@ -15,9 +15,14 @@ namespace Geocoder\Provider\IpFinder\Tests;
 use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Provider\IpFinder\IpFinder;
 use Geocoder\Query\GeocodeQuery;
+use Geocoder\Query\ReverseQuery;
+use Geocoder\Exception\InvalidArgument;
+use Geocoder\Exception\InvalidCredentials;
+use Geocoder\Exception\QuotaExceeded;
+use Geocoder\Exception\UnsupportedOperation;
 
 /**
- * @author Jonas Gielen <gielenjonas@gmail.com>
+ * @author William Durand <william.durand1@gmail.com>
  */
 class IpFinderTests extends BaseTestCase
 {
@@ -44,70 +49,38 @@ class IpFinderTests extends BaseTestCase
         $this->assertEquals('TOKEN', $provider->apiKey);
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The IpFinder provider support only IP addresses.
-     */
     public function testGeocodeWithAddress()
     {
         $provider = new IpFinder($this->getMockedHttpClient());
+        $this->expectException(UnsupportedOperation::class);
+        $this->expectExceptionMessage('The IpFinder provider support only IP addresses.');
         $provider->geocodeQuery(GeocodeQuery::create('Egypt, France'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\InvalidArgument
-     * @expectedExceptionMessage No API Key was specified, invalid API Key.
-     */
     public function testGeocodeWith401Code()
     {
-        $json = <<<'JSON'
-{
-   "errors": [
-      {
-         "code": 401
-      }
-   ]
-}
-JSON;
+        $json = json_encode(array ( 'errors' => array ( 0 => array ( 'code' => 401 ))));
         $provider = new IpFinder($this->getMockedHttpClient($json), 'asdsad');
+        $this->expectException(InvalidArgument::class);
+        $this->expectExceptionMessage('No API Key was specified, invalid API Key.');
         $result = $provider->geocodeQuery(GeocodeQuery::create('1.0.0.0'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\InvalidCredentials
-     * @expectedExceptionMessage The requested resource does not exist.
-     */
     public function testGeocodeWith404Code()
     {
-        $json = <<<'JSON'
-{
-   "errors": [
-      {
-         "code": 404
-      }
-   ]
-}
-JSON;
+        $json = json_encode(array ( 'errors' => array ( 0 => array ( 'code' => 404 ))));
         $provider = new IpFinder($this->getMockedHttpClient($json), 'asdsad');
+        $this->expectException(InvalidCredentials::class);
+        $this->expectExceptionMessage('The requested resource does not exist.');
         $result = $provider->geocodeQuery(GeocodeQuery::create('1.0.0.0'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\InvalidCredentials
-     * @expectedExceptionMessage Method Not Allowed.
-     */
-    public function testGeocodeWith405Code()
+    public function testGeocodeWith104Code()
     {
-        $json = <<<'JSON'
-{
-   "errors": [
-      {
-         "code": 405
-      }
-   ]
-}
-JSON;
+        $json = json_encode(array ( 'errors' => array ( 0 => array ( 'code' => 104 ))));
         $provider = new IpFinder($this->getMockedHttpClient($json), 'asdsad');
+        $this->expectException(QuotaExceeded::class);
+        $this->expectExceptionMessage('You have reached your usage limit. Upgrade your plan if necessary.');
         $result = $provider->geocodeQuery(GeocodeQuery::create('1.0.0.0'));
     }
 
@@ -142,5 +115,43 @@ JSON;
         $this->assertEquals('Kenya', $result->getCountry()->getName());
         $this->assertEquals('KE', $result->getCountry()->getCode());
         $this->assertNull($result->getTimezone());
+    }
+
+    public function testGeocodeWithLocalhostIPv4()
+    {
+        $provider = new IpFinder($this->getMockedHttpClient());
+        $results = $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
+
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertCount(1, $results);
+
+        /** @var Location $result */
+        $result = $results->first();
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals('localhost', $result->getLocality());
+        $this->assertEquals('localhost', $result->getCountry()->getName());
+    }
+
+    public function testGeocodeWithLocalhostIPv6()
+    {
+        $provider = new IpFinder($this->getMockedHttpClient());
+        $results = $provider->geocodeQuery(GeocodeQuery::create('::1'));
+
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertCount(1, $results);
+
+        /** @var Location $result */
+        $result = $results->first();
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals('localhost', $result->getLocality());
+        $this->assertEquals('localhost', $result->getCountry()->getName());
+    }
+
+    public function testReverse()
+    {
+        $provider = new IpFinder($this->getMockedHttpClient());
+        $this->expectException(UnsupportedOperation::class);
+        $this->expectExceptionMessage('The IpFinder provider is not able to do reverse geocoding.');
+        $provider->reverseQuery(ReverseQuery::fromCoordinates(0, 0));
     }
 }

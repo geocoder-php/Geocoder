@@ -17,7 +17,7 @@ use Geocoder\Provider\IpFinder\IpFinder;
 use Http\Client\HttpClient;
 
 /**
- * @author Jonas Gielen <gielenjonas@gmail.com>
+ * @author William Durand <william.durand1@gmail.com>
  */
 class IntegrationTest extends ProviderIntegrationTest
 {

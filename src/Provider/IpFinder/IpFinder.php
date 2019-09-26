@@ -26,7 +26,7 @@ use Geocoder\Provider\Provider;
 use Http\Client\HttpClient;
 
 /**
- * @author Roro Neutron <imprec@gmail.com>
+ * @author William Durand <william.durand1@gmail.com>
  */
 final class IpFinder extends AbstractHttpProvider implements Provider
 {
@@ -107,7 +107,7 @@ final class IpFinder extends AbstractHttpProvider implements Provider
         if (isset($data['errors'])) {
             switch ($data['errors'][0]['code']) {
                 case 104:
-                    throw new InvalidArgument(
+                    throw new QuotaExceeded(
                         'You have reached your usage limit. Upgrade your plan if necessary.'
                     );
                 case 401:
@@ -120,15 +120,11 @@ final class IpFinder extends AbstractHttpProvider implements Provider
                     );
                 case 402:
                     throw new QuotaExceeded(
-                        'expired paymant please Upgrade your plan.'
+                        'Expired payment method, please upgrade your plan.'
                     );
                 case 105:
                     throw new InvalidCredentials(
-                        'non paymant Please Login to your dashbord and make order.'
-                    );
-                case 405:
-                    throw new InvalidCredentials(
-                        'Method Not Allowed.'
+                        'Non payment: Please login to your dashboard and pay the invoice.'
                     );
             }
         }

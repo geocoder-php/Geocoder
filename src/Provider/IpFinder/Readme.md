@@ -6,7 +6,7 @@ This is the IpFinder provider from the PHP Geocoder. This is a **READ ONLY** rep
 ### Install
 
 ```bash
-composer require geocoder-php/ip-ipfinder-provider
+composer require geocoder-php/ipfinder-provider
 ```
 
 ### Contribute

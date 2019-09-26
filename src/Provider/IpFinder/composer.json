@@ -1,5 +1,5 @@
 {
-    "name": "geocoder-php/ip-ipfinder-provider",
+    "name": "geocoder-php/ipfinder-provider",
     "type": "library",
     "description": "Geocoder IpFinder adapter",
     "keywords": [],
