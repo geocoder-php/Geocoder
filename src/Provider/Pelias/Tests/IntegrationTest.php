@@ -10,10 +10,10 @@ declare(strict_types=1);
  * @license    MIT License
  */
 
-namespace Geocoder\Provider\FreeGeoIp\Tests;
+namespace Geocoder\Provider\Pelias\Tests;
 
 use Geocoder\IntegrationTest\ProviderIntegrationTest;
-use Geocoder\Provider\FreeGeoIp\FreeGeoIp;
+use Geocoder\Provider\Pelias\Pelias;
 use Http\Client\HttpClient;
 
 /**
@@ -21,13 +21,20 @@ use Http\Client\HttpClient;
  */
 class IntegrationTest extends ProviderIntegrationTest
 {
-    protected $testAddress = false;
+    protected $skippedTests = [
+        'testGeocodeQuery' => 'No Pelias "default" instance.',
+        'testGeocodeQueryWithNoResults' => 'No Pelias "default" instance.',
+        'testReverseQuery' => 'No Pelias "default" instance.',
+        'testReverseQueryWithNoResults' => 'No Pelias "default" instance.',
+    ];
 
-    protected $testReverse = false;
+    protected $testIpv4 = false;
+
+    protected $testIpv6 = false;
 
     protected function createProvider(HttpClient $httpClient)
     {
-        return new FreeGeoIp($httpClient);
+        return new Pelias($httpClient, 'http://localhost/');
     }
 
     protected function getCacheDir()

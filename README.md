@@ -1,7 +1,7 @@
 Geocoder
 ========
 
-[![Build Status](https://travis-ci.org/geocoder-php/Geocoder.svg?branch=master)](http://travis-ci.org/geocoder-php/Geocoder)
+[![Build Status](https://travis-ci.org/geocoder-php/Geocoder.svg?branch=master)](https://img.shields.io/travis/geocoder-php/Geocoder?style=flat-square)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 
 > **Important:** You are browsing the documentation of Geocoder **4.x**.
@@ -491,7 +491,7 @@ You're done.
 Credits
 -------
 
-* William Durand <william.durand1@gmail.com>
+* William Durand <will+git@drnd.me>
 * Tobias Nyholm <tobias.nyholm@gmail.com>
 * [All contributors](https://github.com/geocoder-php/Geocoder/contributors)
 

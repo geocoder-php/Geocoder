@@ -54,6 +54,11 @@ final class GoogleAddress extends Address
     /**
      * @var string|null
      */
+    private $postalCodeSuffix;
+
+    /**
+     * @var string|null
+     */
     private $political;
 
     /**
@@ -261,6 +266,27 @@ final class GoogleAddress extends Address
     {
         $new = clone $this;
         $new->intersection = $intersection;
+
+        return $new;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getPostalCodeSuffix()
+    {
+        return $this->postalCodeSuffix;
+    }
+
+    /**
+     * @param string|null $postalCodeSuffix
+     *
+     * @return GoogleAddress
+     */
+    public function withPostalCodeSuffix(string $postalCodeSuffix = null)
+    {
+        $new = clone $this;
+        $new->postalCodeSuffix = $postalCodeSuffix;
 
         return $new;
     }
