@@ -59,7 +59,7 @@ class IpFinderTests extends BaseTestCase
 
     public function testGeocodeWith401Code()
     {
-        $json = json_encode(array ( 'errors' => array ( 0 => array ( 'code' => 401 ))));
+        $json = json_encode(['errors' => [0 => ['code' => 401]]]);
         $provider = new IpFinder($this->getMockedHttpClient($json), 'asdsad');
         $this->expectException(InvalidArgument::class);
         $this->expectExceptionMessage('No API Key was specified, invalid API Key.');
@@ -68,7 +68,7 @@ class IpFinderTests extends BaseTestCase
 
     public function testGeocodeWith404Code()
     {
-        $json = json_encode(array ( 'errors' => array ( 0 => array ( 'code' => 404 ))));
+        $json = json_encode(['errors' => [0 => ['code' => 404]]]);
         $provider = new IpFinder($this->getMockedHttpClient($json), 'asdsad');
         $this->expectException(InvalidCredentials::class);
         $this->expectExceptionMessage('The requested resource does not exist.');
@@ -77,7 +77,7 @@ class IpFinderTests extends BaseTestCase
 
     public function testGeocodeWith104Code()
     {
-        $json = json_encode(array ( 'errors' => array ( 0 => array ( 'code' => 104 ))));
+        $json = json_encode(['errors' => [0 => ['code' => 104]]]);
         $provider = new IpFinder($this->getMockedHttpClient($json), 'asdsad');
         $this->expectException(QuotaExceeded::class);
         $this->expectExceptionMessage('You have reached your usage limit. Upgrade your plan if necessary.');
