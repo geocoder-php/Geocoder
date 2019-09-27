@@ -247,7 +247,7 @@ class GeocodeEarthTest extends BaseTestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The GeocodeEarth provider does not support IP addresses, only street addresses.
+     * @expectedExceptionMessage The geocode_earth provider does not support IP addresses, only street addresses.
      */
     public function testGeocodeWithLocalhostIPv4()
     {
@@ -257,7 +257,7 @@ class GeocodeEarthTest extends BaseTestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The GeocodeEarth provider does not support IP addresses, only street addresses.
+     * @expectedExceptionMessage The geocode_earth provider does not support IP addresses, only street addresses.
      */
     public function testGeocodeWithLocalhostIPv6()
     {
@@ -267,7 +267,7 @@ class GeocodeEarthTest extends BaseTestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The GeocodeEarth provider does not support IP addresses, only street addresses.
+     * @expectedExceptionMessage The geocode_earth provider does not support IP addresses, only street addresses.
      */
     public function testGeocodeWithRealIPv4()
     {
@@ -277,7 +277,7 @@ class GeocodeEarthTest extends BaseTestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The GeocodeEarth provider does not support IP addresses, only street addresses.
+     * @expectedExceptionMessage The geocode_earth provider does not support IP addresses, only street addresses.
      */
     public function testGeocodeWithRealIPv6()
     {
