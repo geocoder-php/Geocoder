@@ -145,7 +145,7 @@ class ProviderAggregator implements Geocoder
     public function using(string $name): self
     {
         if (!isset($this->providers[$name])) {
-            throw ProviderNotRegistered::create($name ?? '', $this->providers);
+            throw ProviderNotRegistered::create($name, array_keys($this->providers));
         }
 
         $this->provider = $this->providers[$name];
