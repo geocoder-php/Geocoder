@@ -56,7 +56,13 @@ Read more about HTTPlug in [their docs](http://docs.php-http.org/en/latest/httpl
 To install Google Maps geocoder with Guzzle 6 you may run the following command:
 
 ```
-$ composer require geocoder-php/google-maps-provider php-http/guzzle6-adapter php-http/message
+$ composer require geocoder-php/google-maps-provider php-http/guzzle6-adapter
+```
+
+Or using the curl client (you'll need to provide a PSR7 implementation such as `nyholm/psr7` if not using guzzle)
+
+```
+$ composer geocoder-php/google-maps-provider php-http/curl-client nyholm/psr7
 ```
 
 ### Framework integration
