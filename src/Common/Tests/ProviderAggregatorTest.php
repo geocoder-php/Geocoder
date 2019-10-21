@@ -85,9 +85,12 @@ class ProviderAggregatorTest extends TestCase
 
     /**
      * @expectedException \Geocoder\Exception\ProviderNotRegistered
+     * @expectedExceptionMessage Provider "non_existant" is not registered, so you cannot use it. Did you forget to register it or made a typo? Registered providers are: test1.
      */
     public function testUsingNonExistantProviderShouldThrowAnException()
     {
+        $this->geocoder->registerProvider(new MockProvider('test1'));
+
         $this->geocoder->using('non_existant');
     }
 
