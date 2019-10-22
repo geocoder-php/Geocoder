@@ -22,7 +22,7 @@ use Http\Client\HttpClient;
 
 final class OpenRouteService extends Pelias implements Provider
 {
-    const API_URL = 'https://api.openrouteservice.org/geocode/';
+    const API_URL = 'https://api.openrouteservice.org/geocode';
 
     const API_VERSION = 1;
 
@@ -43,6 +43,7 @@ final class OpenRouteService extends Pelias implements Provider
 
         $this->apiKey = $apiKey;
         parent::__construct($client, self::API_URL, self::API_VERSION);
+        $this->root = self::API_URL;
     }
 
     /**
@@ -53,8 +54,6 @@ final class OpenRouteService extends Pelias implements Provider
         $url = $this->getGeocodeQueryUrl($query, [
             'api_key' => $this->apiKey,
         ]);
-
-        $url = str_replace('/v1/', '/', $url);
 
         return $this->executeQuery($url);
     }
@@ -67,8 +66,6 @@ final class OpenRouteService extends Pelias implements Provider
         $url = $this->getReverseQueryUrl($query, [
             'api_key' => $this->apiKey,
         ]);
-
-        $url = str_replace('/v1/', '/', $url);
 
         return $this->executeQuery($url);
     }
