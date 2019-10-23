@@ -43,7 +43,16 @@ final class OpenRouteService extends Pelias implements Provider
 
         $this->apiKey = $apiKey;
         parent::__construct($client, self::API_URL, self::API_VERSION);
-        $this->root = self::API_URL;
+
+        /**
+         * Openrouteservice does not use /v1 in first version, but plan to add
+         *  /v2 in next version.
+         *
+         * @see https://ask.openrouteservice.org/t/pelias-version-in-api-url/1021
+         * */
+        if (self::API_VERSION == 1) {
+            $this->root = self::API_URL;
+        }
     }
 
     /**
