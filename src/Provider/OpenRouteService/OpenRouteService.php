@@ -50,7 +50,7 @@ final class OpenRouteService extends Pelias implements Provider
          *
          * @see https://ask.openrouteservice.org/t/pelias-version-in-api-url/1021
          */
-        if (self::API_VERSION == 1) {
+        if (self::API_VERSION === 1) {
             $this->root = self::API_URL;
         }
     }
