@@ -28,7 +28,7 @@ class IntegrationTest extends ProviderIntegrationTest
 
     protected $testReverse = false;
 
-	protected $testIpv6 = false;
+    protected $testIpv6 = false;
 
     protected $testHttpProvider = false;
 
@@ -43,7 +43,7 @@ class IntegrationTest extends ProviderIntegrationTest
 
     protected function createProvider(HttpClient $httpClient)
     {
-		return new IP2LocationBinary(__DIR__.'/fixtures/IP2LOCATION-LITE-DB9.IPV6.BIN', \IP2Location\Database::FILE_IO);
+        return new IP2LocationBinary(__DIR__.'/fixtures/IP2LOCATION-LITE-DB9.IPV6.BIN', \IP2Location\Database::FILE_IO);
     }
 
     protected function getCacheDir()

@@ -12,7 +12,6 @@ declare(strict_types=1);
 
 namespace Geocoder\Provider\IP2LocationBinary\Tests;
 
-use Geocoder\Collection;
 use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Location;
 use Geocoder\Query\GeocodeQuery;
@@ -113,9 +112,9 @@ class IP2LocationBinaryTest extends BaseTestCase
         $this->assertNull($result->getTimezone());
     }
 
-	public function testGeocodeWithRealIPv6()
+    public function testGeocodeWithRealIPv6()
     {
-		$provider = new IP2LocationBinary($this->binaryFile);
+        $provider = new IP2LocationBinary($this->binaryFile);
         $results = $provider->geocodeQuery(GeocodeQuery::create('2001:4860:4860::8888'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);

@@ -12,7 +12,6 @@ declare(strict_types=1);
 
 namespace Geocoder\Provider\IP2Location;
 
-use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Collection;
@@ -45,10 +44,8 @@ final class IP2Location extends AbstractHttpProvider implements Provider
     private $endpointUrl;
 
     /**
-     * @param HttpClient $client    an HTTP adapter
-     * @param string     $apiKey    an API key
-     *
-     * @throws \Geocoder\Exception\InvalidArgument
+     * @param HttpClient $client an HTTP adapter
+     * @param string     $apiKey an API key
      */
     public function __construct(HttpClient $client, string $apiKey)
     {
@@ -111,9 +108,9 @@ final class IP2Location extends AbstractHttpProvider implements Provider
             return new AddressCollection([]);
         }
 
-		if (isset($data['response'])) {
-			throw new InvalidCredentials($data['response']);
-		}
+        if (isset($data['response'])) {
+            throw new InvalidCredentials($data['response']);
+        }
 
         return new AddressCollection([
             Address::createFromArray([

@@ -101,7 +101,7 @@ class IP2LocationTest extends BaseTestCase
         }
 
         $provider = new IP2Location($this->getHttpClient($_SERVER['IP2LOCATION_API_KEY']), $_SERVER['IP2LOCATION_API_KEY']);
-		$results = $provider->geocodeQuery(GeocodeQuery::create('::ffff:74.125.45.100'));
+        $results = $provider->geocodeQuery(GeocodeQuery::create('::ffff:74.125.45.100'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
