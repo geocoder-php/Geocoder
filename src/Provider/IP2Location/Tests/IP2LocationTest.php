@@ -52,21 +52,23 @@ class IP2LocationTest extends BaseTestCase
     }
 
     /**
-     * @expectedException \Geocoder\Exception\InvalidServerResponse
+     * @expectedException \Geocoder\Exception\InvalidCredentials
+     * @expectedExceptionMessage API Key provided is not valid.
      */
-    public function testGeocodeWithRealIPv4GetsNullContent()
+    public function testGeocodeWithInvalidKey()
     {
-        $provider = new IP2Location($this->getMockedHttpClient(), 'api_key');
-        $provider->geocodeQuery(GeocodeQuery::create('74.125.45.100'));
+        $provider = new IP2Location($this->getHttpClient('invalid_key'), 'api_key');
+        $results = $provider->geocodeQuery(GeocodeQuery::create('74.125.45.100'));
     }
 
     /**
-     * @expectedException \Geocoder\Exception\InvalidServerResponse
+     * @expectedException \Geocoder\Exception\UnsupportedOperation
+     * @expectedExceptionMessage The IP2Location provider does not support street addresses, only IP addresses.
      */
-    public function testGeocodeWithRealIPv4GetsEmptyContent()
+    public function testGeocodeWithInvalidIPAddress()
     {
         $provider = new IP2Location($this->getMockedHttpClient(), 'api_key');
-        $provider->geocodeQuery(GeocodeQuery::create('74.125.45.100'));
+        $provider->geocodeQuery(GeocodeQuery::create('300.23.255.5'));
     }
 
     public function testGeocodeWithRealIPv4()

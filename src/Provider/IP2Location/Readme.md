@@ -16,6 +16,10 @@ This is the IP2Location provider from the PHP Geocoder. This is a **READ ONLY** 
 composer require geocoder-php/ip2location-provider
 ```
 
+### Note
+
+This provider requires IP2Location™ [IP Geolocation Web Service](https://www.ip2location.com/web-service/ip2location) subscription. It is a paid solution with high accuracy. For free solution, please use our free [IpInfoDB](https://github.com/geocoder-php/Geocoder#ip) project.
+
 ### Contribute
 
 Contributions are very welcome! Send a pull request to the [main repository](https://github.com/geocoder-php/Geocoder) or 

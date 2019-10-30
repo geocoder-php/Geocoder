@@ -18,7 +18,9 @@ composer require geocoder-php/ip2location-binary-provider
 
 ### Note
 
-This provider requires a data file.
+This provider requires a BIN database file. You can download the free database from [IP2Location LITE](https://lite.ip2location.com/) website or the commercial database from [IP2Location](https://www.ip2location.com/).
+
+For testing, download the BIN database from [here](https://lite.ip2location.com/database/ip-country-region-city-latitude-longitude-zipcode), decompress and upload the .BIN file into `.\Tests\fixtures`.
 
 ### Contribute
 

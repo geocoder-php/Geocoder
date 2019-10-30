@@ -24,6 +24,7 @@ class IP2LocationBinaryTest extends BaseTestCase
 
     public function setUp()
     {
+        // Download this BIN database from https://lite.ip2location.com/database/ip-country-region-city-latitude-longitude-zipcode
         $this->binaryFile = __DIR__.'/fixtures/IP2LOCATION-LITE-DB9.IPV6.BIN';
     }
 

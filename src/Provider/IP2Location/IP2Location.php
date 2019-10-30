@@ -61,8 +61,9 @@ final class IP2Location extends AbstractHttpProvider implements Provider
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
         $address = $query->getText();
-        if (null === $this->apiKey) {
-            throw new InvalidCredentials('No API Key provided.');
+
+        if (empty($this->apiKey)) {
+            throw new InvalidCredentials('No API key provided.');
         }
 
         if (!filter_var($address, FILTER_VALIDATE_IP)) {
@@ -109,7 +110,24 @@ final class IP2Location extends AbstractHttpProvider implements Provider
         }
 
         if (isset($data['response'])) {
-            throw new InvalidCredentials($data['response']);
+            if (preg_match('/suspended|denied|invalid account/i', $data['response'])) {
+                throw new InvalidCredentials('API Key provided is not valid.');
+            } elseif (preg_match('/insufficient/i', $data['response'])) {
+                throw new InvalidCredentials('Insufficient credits to use IP2Location service.');
+            } elseif (preg_match('/invalid ip address/i', $data['response'])) {
+                throw new UnsupportedOperation('Invalid IP address.');
+            } else {
+                throw new UnsupportedOperation('Unexpected error.');
+            }
+        }
+
+        if (isset($data['region_name'])) {
+            $adminLevels = [[
+                'name' => $data['region_name'],
+                'level' => 1,
+            ]];
+        } else {
+            $adminLevels = [];
         }
 
         return new AddressCollection([
@@ -119,7 +137,7 @@ final class IP2Location extends AbstractHttpProvider implements Provider
                 'longitude' => $data['longitude'] ?? null,
                 'locality' => $data['city_name'] ?? null,
                 'postalCode' => $data['zip_code'] ?? null,
-                'adminLevels' => isset($data['region_name']) ? [['name' => $data['region_name'], 'level' => 1]] : [],
+                'adminLevels' => $adminLevels,
                 'country' => $data['country_name'] ?? null,
                 'countryCode' => $data['country_code'] ?? null,
             ]),
