@@ -44,7 +44,7 @@ final class IP2Location extends AbstractHttpProvider implements Provider
     private $endpointUrl;
 
     /**
-     * @param HttpClient $client an HTTP adapter
+     * @param HttpClient $client a HTTP adapter
      * @param string     $apiKey an API key
      */
     public function __construct(HttpClient $client, string $apiKey)
