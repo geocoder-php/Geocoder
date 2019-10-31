@@ -47,12 +47,12 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
     private $region;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $apiKey;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $clientId;
 
@@ -107,10 +107,6 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
 
         $this->region = $region;
         $this->apiKey = $apiKey;
-
-        if (null === $this->apiKey) {
-            throw new InvalidCredentials('You must provide an API key. Keyless access was removed in June, 2016');
-        }
     }
 
     public function geocodeQuery(GeocodeQuery $query): Collection
@@ -172,6 +168,10 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
      */
     private function buildQuery(string $url, string $locale = null, string $region = null): string
     {
+        if (null === $this->apiKey && null === $this->clientId) {
+            throw new InvalidCredentials('You must provide an API key. Keyless access was removed in June, 2016');
+        }
+
         if (null !== $locale) {
             $url = sprintf('%s&language=%s', $url, $locale);
         }

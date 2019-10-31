@@ -274,7 +274,9 @@ class GoogleMapsTest extends BaseTestCase
                 function (RequestInterface $request) use (&$uri) {
                     $uri = (string) $request->getUri();
                 }
-            )
+            ),
+            null,
+            'test-api-key'
         );
 
         $query = GeocodeQuery::create('address')->withData('components', [
@@ -291,7 +293,7 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertEquals(
             'https://maps.googleapis.com/maps/api/geocode/json'.
             '?address=address'.
-            '&components=country%3ASE%7Cpostal_code%3A22762%7Clocality%3ALund',
+            '&components=country%3ASE%7Cpostal_code%3A22762%7Clocality%3ALund&key=test-api-key',
             $uri
         );
     }
@@ -305,7 +307,9 @@ class GoogleMapsTest extends BaseTestCase
                 function (RequestInterface $request) use (&$uri) {
                     $uri = (string) $request->getUri();
                 }
-            )
+            ),
+            null,
+            'test-api-key'
         );
 
         $query = GeocodeQuery::create('address')
@@ -319,7 +323,7 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertEquals(
             'https://maps.googleapis.com/maps/api/geocode/json'.
             '?address=address'.
-            '&components=country%3ASE%7Cpostal_code%3A22762%7Clocality%3ALund',
+            '&components=country%3ASE%7Cpostal_code%3A22762%7Clocality%3ALund&key=test-api-key',
             $uri
         );
     }

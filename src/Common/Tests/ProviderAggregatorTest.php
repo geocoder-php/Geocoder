@@ -13,7 +13,6 @@ declare(strict_types=1);
 namespace Geocoder\Tests;
 
 use Geocoder\Collection;
-use Geocoder\Geocoder;
 use Geocoder\Model\Address;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
