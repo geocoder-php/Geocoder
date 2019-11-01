@@ -41,7 +41,7 @@ class GoogleMapsTest extends BaseTestCase
 
     public function testGetName()
     {
-        $provider = new GoogleMaps($this->getMockedHttpClient());
+        $provider = new GoogleMaps($this->getMockedHttpClient(), null, 'mock-api-key');
         $this->assertEquals('google_maps', $provider->getName());
     }
 
@@ -50,7 +50,7 @@ class GoogleMapsTest extends BaseTestCase
      */
     public function testGeocodeWithLocalhostIPv4()
     {
-        $provider = new GoogleMaps($this->getMockedHttpClient());
+        $provider = new GoogleMaps($this->getMockedHttpClient(), null, 'mock-api-key');
         $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
     }
 
@@ -60,7 +60,7 @@ class GoogleMapsTest extends BaseTestCase
      */
     public function testGeocodeWithLocalhostIPv6()
     {
-        $provider = new GoogleMaps($this->getMockedHttpClient());
+        $provider = new GoogleMaps($this->getMockedHttpClient(), null, 'mock-api-key');
         $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
@@ -80,7 +80,7 @@ class GoogleMapsTest extends BaseTestCase
      */
     public function testGeocodeWithQuotaExceeded()
     {
-        $provider = new GoogleMaps($this->getMockedHttpClient('{"status":"OVER_QUERY_LIMIT"}'));
+        $provider = new GoogleMaps($this->getMockedHttpClient('{"status":"OVER_QUERY_LIMIT"}'), null, 'mock-api-key');
         $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
     }
 
@@ -148,7 +148,7 @@ class GoogleMapsTest extends BaseTestCase
      */
     public function testReverse()
     {
-        $provider = new GoogleMaps($this->getMockedHttpClient());
+        $provider = new GoogleMaps($this->getMockedHttpClient(), null, 'mock-api-key');
         $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
     }
 
@@ -221,7 +221,7 @@ class GoogleMapsTest extends BaseTestCase
      */
     public function testGeocodeWithInvalidApiKey()
     {
-        $provider = new GoogleMaps($this->getMockedHttpClient('{"error_message":"The provided API key is invalid.", "status":"REQUEST_DENIED"}'));
+        $provider = new GoogleMaps($this->getMockedHttpClient('{"error_message":"The provided API key is invalid.", "status":"REQUEST_DENIED"}'), null, 'mock-api-key');
         $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
     }
 
@@ -274,7 +274,9 @@ class GoogleMapsTest extends BaseTestCase
                 function (RequestInterface $request) use (&$uri) {
                     $uri = (string) $request->getUri();
                 }
-            )
+            ),
+            null,
+            'test-api-key'
         );
 
         $query = GeocodeQuery::create('address')->withData('components', [
@@ -291,7 +293,7 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertEquals(
             'https://maps.googleapis.com/maps/api/geocode/json'.
             '?address=address'.
-            '&components=country%3ASE%7Cpostal_code%3A22762%7Clocality%3ALund',
+            '&components=country%3ASE%7Cpostal_code%3A22762%7Clocality%3ALund&key=test-api-key',
             $uri
         );
     }
@@ -305,7 +307,9 @@ class GoogleMapsTest extends BaseTestCase
                 function (RequestInterface $request) use (&$uri) {
                     $uri = (string) $request->getUri();
                 }
-            )
+            ),
+            null,
+            'test-api-key'
         );
 
         $query = GeocodeQuery::create('address')
@@ -319,7 +323,7 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertEquals(
             'https://maps.googleapis.com/maps/api/geocode/json'.
             '?address=address'.
-            '&components=country%3ASE%7Cpostal_code%3A22762%7Clocality%3ALund',
+            '&components=country%3ASE%7Cpostal_code%3A22762%7Clocality%3ALund&key=test-api-key',
             $uri
         );
     }

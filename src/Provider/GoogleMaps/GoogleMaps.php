@@ -52,7 +52,7 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
     private $apiKey;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $clientId;
 
@@ -68,7 +68,8 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
 
     /**
      * Google Maps for Business
-     * https://developers.google.com/maps/documentation/business/.
+     * https://developers.google.com/maps/documentation/business/
+     * Maps for Business is no longer accepting new signups
      *
      * @param HttpClient $client     An HTTP adapter
      * @param string     $clientId   Your Client ID
@@ -167,6 +168,10 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
      */
     private function buildQuery(string $url, string $locale = null, string $region = null): string
     {
+        if (null === $this->apiKey && null === $this->clientId) {
+            throw new InvalidCredentials('You must provide an API key. Keyless access was removed in June, 2016');
+        }
+
         if (null !== $locale) {
             $url = sprintf('%s&language=%s', $url, $locale);
         }
