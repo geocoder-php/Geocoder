@@ -18,7 +18,7 @@ composer require geocoder-php/ip2location-provider
 
 ### Note
 
-This provider requires IP2Location™ [IP Geolocation Web Service](https://www.ip2location.com/web-service/ip2location) subscription. It is a paid solution with high accuracy. For free solution, please use our free [IpInfoDB](https://github.com/geocoder-php/Geocoder#ip) project.
+This provider requires IP2Location™ [IP Geolocation Web Service](https://www.ip2location.com/web-service/ip2location) subscription. It is a paid solution with high accuracy. For free solution, please use our free [IpInfoDB](https://github.com/geocoder-php/Geocoder#ip) project. Ipinfodb is using [IP2Location LITE](https://lite.ip2location.com/) database which has less accuracy at city level.
 
 ### Contribute
 
