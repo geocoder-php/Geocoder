@@ -84,6 +84,6 @@ final class OpenRouteService extends Pelias implements Provider
      */
     public function getName(): string
     {
-        return 'open_route_service';
+        return 'openrouteservice';
     }
 }

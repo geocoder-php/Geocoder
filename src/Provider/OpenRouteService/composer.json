@@ -1,5 +1,5 @@
 {
-    "name": "geocoder-php/open-route-service-provider",
+    "name": "geocoder-php/openrouteservice-provider",
     "type": "library",
     "description": "Geocoder OpenRouteService adapter",
     "keywords": [],

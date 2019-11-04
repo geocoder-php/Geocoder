@@ -1,10 +1,10 @@
 # OpenRouteService Geocoder provider
-[![Build Status](https://travis-ci.org/geocoder-php/open-route-service-provider.svg?branch=master)](http://travis-ci.org/geocoder-php/open-route-service-provider)
-[![Latest Stable Version](https://poser.pugx.org/geocoder-php/open-route-service-provider/v/stable)](https://packagist.org/packages/geocoder-php/open-route-service-provider)
-[![Total Downloads](https://poser.pugx.org/geocoder-php/open-route-service-provider/downloads)](https://packagist.org/packages/geocoder-php/open-route-service-provider)
-[![Monthly Downloads](https://poser.pugx.org/geocoder-php/open-route-service-provider/d/monthly.png)](https://packagist.org/packages/geocoder-php/open-route-service-provider)
-[![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/geocoder-php/open-route-service-provider.svg?style=flat-square)](https://scrutinizer-ci.com/g/geocoder-php/open-route-service-provider)
-[![Quality Score](https://img.shields.io/scrutinizer/g/geocoder-php/open-route-service-provider.svg?style=flat-square)](https://scrutinizer-ci.com/g/geocoder-php/open-route-service-provider)
+[![Build Status](https://travis-ci.org/geocoder-php/openrouteservice-provider.svg?branch=master)](http://travis-ci.org/geocoder-php/openrouteservice-provider)
+[![Latest Stable Version](https://poser.pugx.org/geocoder-php/openrouteservice-provider/v/stable)](https://packagist.org/packages/geocoder-php/openrouteservice-provider)
+[![Total Downloads](https://poser.pugx.org/geocoder-php/openrouteservice-provider/downloads)](https://packagist.org/packages/geocoder-php/openrouteservice-provider)
+[![Monthly Downloads](https://poser.pugx.org/geocoder-php/openrouteservice-provider/d/monthly.png)](https://packagist.org/packages/geocoder-php/openrouteservice-provider)
+[![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/geocoder-php/openrouteservice-provider.svg?style=flat-square)](https://scrutinizer-ci.com/g/geocoder-php/openrouteservice-provider)
+[![Quality Score](https://img.shields.io/scrutinizer/g/geocoder-php/openrouteservice-provider.svg?style=flat-square)](https://scrutinizer-ci.com/g/geocoder-php/openrouteservice-provider)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 
 This is the OpenRouteService provider from the PHP Geocoder. This is a **READ ONLY** repository. See the
@@ -13,7 +13,7 @@ This is the OpenRouteService provider from the PHP Geocoder. This is a **READ ON
 ### Install
 
 ```bash
-composer require geocoder-php/open-route-service-provider
+composer require geocoder-php/openrouteservice-provider
 ```
 
 ### API Documentation

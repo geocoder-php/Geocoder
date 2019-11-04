@@ -28,7 +28,7 @@ class OpenRouteServiceTest extends BaseTestCase
     public function testGetName()
     {
         $provider = new OpenRouteService($this->getMockedHttpClient(), 'api_key');
-        $this->assertEquals('open_route_service', $provider->getName());
+        $this->assertEquals('openrouteservice', $provider->getName());
     }
 
     public function testGeocode()
@@ -247,7 +247,7 @@ class OpenRouteServiceTest extends BaseTestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The open_route_service provider does not support IP addresses, only street addresses.
+     * @expectedExceptionMessage The openrouteservice provider does not support IP addresses, only street addresses.
      */
     public function testGeocodeWithLocalhostIPv4()
     {
@@ -257,7 +257,7 @@ class OpenRouteServiceTest extends BaseTestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The open_route_service provider does not support IP addresses, only street addresses.
+     * @expectedExceptionMessage The openrouteservice provider does not support IP addresses, only street addresses.
      */
     public function testGeocodeWithLocalhostIPv6()
     {
@@ -267,7 +267,7 @@ class OpenRouteServiceTest extends BaseTestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The open_route_service provider does not support IP addresses, only street addresses.
+     * @expectedExceptionMessage The openrouteservice provider does not support IP addresses, only street addresses.
      */
     public function testGeocodeWithRealIPv4()
     {
@@ -277,7 +277,7 @@ class OpenRouteServiceTest extends BaseTestCase
 
     /**
      * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The open_route_service provider does not support IP addresses, only street addresses.
+     * @expectedExceptionMessage The openrouteservice provider does not support IP addresses, only street addresses.
      */
     public function testGeocodeWithRealIPv6()
     {
