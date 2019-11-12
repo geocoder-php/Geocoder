@@ -1,0 +1,43 @@
+{
+    "name": "geocoder-php/ip2location-binary-provider",
+    "type": "library",
+    "description": "Geocoder IP2LocationBinary adapter",
+    "keywords": [],
+    "homepage": "http://geocoder-php.org/Geocoder/",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "IP2Location",
+            "email": "support@ip2location.com"
+        }
+    ],
+    "require": {
+        "php": "^7.0",
+        "ip2location/ip2location-php": "^8.1.1",
+        "willdurand/geocoder": "^4.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.5",
+        "geocoder-php/provider-integration-tests": "^1.0.1"
+    },
+    "provide": {
+        "geocoder-php/provider-implementation": "1.0"
+    },
+    "autoload": {
+        "psr-4": { "Geocoder\\Provider\\IP2LocationBinary\\": "" },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-ci": "vendor/bin/phpunit --coverage-text --coverage-clover=build/coverage.xml"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}
