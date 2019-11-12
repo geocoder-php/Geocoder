@@ -137,14 +137,7 @@ final class GeoIPs extends AbstractHttpProvider implements Provider
                 case static::CODE_LIMIT_EXCEEDED:
                     throw new QuotaExceeded('The service you have requested is over capacity.');
                 default:
-                    throw new InvalidServerResponse(sprintf(
-                        'GeoIPs error %s%s%s%s - query: %s',
-                        $json['error']['code'],
-                        isset($json['error']['status']) ? ', '.$json['error']['status'] : '',
-                        isset($json['error']['message']) ? ', '.$json['error']['message'] : '',
-                        isset($json['error']['notes']) ? ', '.$json['error']['notes'] : '',
-                        $url
-                    ));
+                    throw new InvalidServerResponse(sprintf('GeoIPs error %s%s%s%s - query: %s', $json['error']['code'], isset($json['error']['status']) ? ', '.$json['error']['status'] : '', isset($json['error']['message']) ? ', '.$json['error']['message'] : '', isset($json['error']['notes']) ? ', '.$json['error']['notes'] : '', $url));
             }
         }
 
@@ -162,11 +155,7 @@ final class GeoIPs extends AbstractHttpProvider implements Provider
             case static::CODE_NOT_FOUND:
                 return new AddressCollection([]);
             default:
-                throw new InvalidServerResponse(sprintf(
-                    'The GeoIPs API returned unknown result code "%s" for query: "%s".',
-                    $response['code'],
-                    $url
-                ));
+                throw new InvalidServerResponse(sprintf('The GeoIPs API returned unknown result code "%s" for query: "%s".', $response['code'], $url));
         }
 
         // Make sure that we do have proper result array

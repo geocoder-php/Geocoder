@@ -45,17 +45,11 @@ final class MaxMindBinary extends AbstractProvider implements Provider
     public function __construct(string $datFile, int $openFlag = null)
     {
         if (false === function_exists('geoip_open')) {
-            throw new FunctionNotFound(
-                'geoip_open',
-                'The MaxMindBinary requires maxmind\'s lib to be installed and loaded. Have you included geoip.inc file?'
-            );
+            throw new FunctionNotFound('geoip_open', 'The MaxMindBinary requires maxmind\'s lib to be installed and loaded. Have you included geoip.inc file?');
         }
 
         if (false === function_exists('GeoIP_record_by_addr')) {
-            throw new FunctionNotFound(
-                'GeoIP_record_by_addr',
-                'The MaxMindBinary requires maxmind\'s lib to be installed and loaded. Have you included geoipcity.inc file?'
-            );
+            throw new FunctionNotFound('GeoIP_record_by_addr', 'The MaxMindBinary requires maxmind\'s lib to be installed and loaded. Have you included geoipcity.inc file?');
         }
 
         if (false === is_file($datFile)) {

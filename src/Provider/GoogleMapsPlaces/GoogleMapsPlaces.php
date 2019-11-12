@@ -392,9 +392,7 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
         }
 
         if ('REQUEST_DENIED' === $json->status) {
-            throw new InvalidServerResponse(
-                sprintf('API access denied. Request: %s - Message: %s', $url, $json->error_messages)
-            );
+            throw new InvalidServerResponse(sprintf('API access denied. Request: %s - Message: %s', $url, $json->error_messages));
         }
 
         if ('OVER_QUERY_LIMIT' === $json->status) {

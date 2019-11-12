@@ -47,9 +47,7 @@ class GeoIP2Adapter
         $this->geoIp2Provider = $geoIpProvider;
 
         if (false === $this->isSupportedGeoIP2Model($geoIP2Model)) {
-            throw new UnsupportedOperation(
-                sprintf('Model "%s" is not available.', $geoIP2Model)
-            );
+            throw new UnsupportedOperation(sprintf('Model "%s" is not available.', $geoIP2Model));
         }
 
         $this->geoIP2Model = $geoIP2Model;
@@ -65,9 +63,7 @@ class GeoIP2Adapter
     public function getContent(string $url): string
     {
         if (false === filter_var($url, FILTER_VALIDATE_URL)) {
-            throw new InvalidArgument(
-                sprintf('"%s" must be called with a valid url. Got "%s" instead.', __METHOD__, $url)
-            );
+            throw new InvalidArgument(sprintf('"%s" must be called with a valid url. Got "%s" instead.', __METHOD__, $url));
         }
 
         $ipAddress = parse_url($url, PHP_URL_QUERY);
