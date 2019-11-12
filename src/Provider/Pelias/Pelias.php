@@ -29,7 +29,7 @@ class Pelias extends AbstractHttpProvider implements Provider
     /**
      * @var string
      */
-    private $root;
+    protected $root;
 
     /**
      * @var int

@@ -21,6 +21,7 @@ You can run your own Pelias instance on your server, see [documentation](https:/
 For instance:
 
 - Geocode Earth ([Website](https://geocode.earth/) & [Provider](https://github.com/geocoder-php/geocode-earth-provider))
+- OpenRouteService ([Website](https://openrouteservice.org/) & [Provider](https://github.com/geocoder-php/openrouteservice-provider))
 
 ## Install
 
