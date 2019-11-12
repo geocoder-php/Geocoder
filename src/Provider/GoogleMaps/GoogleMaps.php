@@ -437,9 +437,7 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
         }
 
         if ('REQUEST_DENIED' === $json->status) {
-            throw new InvalidServerResponse(
-                sprintf('API access denied. Request: %s - Message: %s', $url, $json->error_message)
-            );
+            throw new InvalidServerResponse(sprintf('API access denied. Request: %s - Message: %s', $url, $json->error_message));
         }
 
         // you are over your quota

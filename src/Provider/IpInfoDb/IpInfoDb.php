@@ -73,10 +73,7 @@ final class IpInfoDb extends AbstractHttpProvider implements Provider
                 break;
 
             default:
-                throw new InvalidArgument(sprintf(
-                    'Invalid precision value "%s" (allowed values: "city", "country").',
-                    $precision
-                ));
+                throw new InvalidArgument(sprintf('Invalid precision value "%s" (allowed values: "city", "country").', $precision));
         }
     }
 

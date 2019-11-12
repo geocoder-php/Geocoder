@@ -83,21 +83,13 @@ final class Ipstack extends AbstractHttpProvider implements Provider
         if (isset($data['error'])) {
             switch ($data['error']['code']) {
                 case 301:
-                    throw new InvalidArgument(
-                        'Invalid request (a required parameter is missing).'
-                    );
+                    throw new InvalidArgument('Invalid request (a required parameter is missing).');
                 case 303:
-                    throw new InvalidArgument(
-                        'Bulk requests are not supported on your plan. Please upgrade your subscription.'
-                    );
+                    throw new InvalidArgument('Bulk requests are not supported on your plan. Please upgrade your subscription.');
                 case 104:
-                    throw new QuotaExceeded(
-                        'The maximum allowed amount of monthly API requests has been reached.'
-                    );
+                    throw new QuotaExceeded('The maximum allowed amount of monthly API requests has been reached.');
                 case 101:
-                    throw new InvalidCredentials(
-                        'No API Key was specified or an invalid API Key was specified.'
-                    );
+                    throw new InvalidCredentials('No API Key was specified or an invalid API Key was specified.');
             }
         }
 

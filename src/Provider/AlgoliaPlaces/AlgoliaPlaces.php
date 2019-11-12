@@ -143,9 +143,7 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
         $type = $query->getData('type', '');
 
         if (!empty($type) && !in_array($type, $this->getTypes())) {
-            throw new InvalidArgument(
-                sprintf('The type provided to AlgoliaPlace provider must be in `%s`', implode(', ', $this->getTypes()))
-            );
+            throw new InvalidArgument(sprintf('The type provided to AlgoliaPlace provider must be in `%s`', implode(', ', $this->getTypes())));
         }
 
         return $type;
