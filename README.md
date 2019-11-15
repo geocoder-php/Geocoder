@@ -69,10 +69,10 @@ $ composer require geocoder-php/google-maps-provider php-http/curl-client nyholm
 
 If you are using a framework then you may be interested in our excellent framework integrations.
 
-Framework       | Package  | Stats
+Framework      | Package   | Stats
 :------------- |:--------- |:-------
-Laravel | [geocoder-php/GeocoderLaravel](https://github.com/geocoder-php/GeocoderLaravel) | [![GitHub release](https://poser.pugx.org/toin0u/geocoder-laravel/v/stable)](https://github.com/geocoder-php/GeocoderLaravel/releases) [![Packagist](https://poser.pugx.org/toin0u/geocoder-laravel/downloads)](https://packagist.org/packages/toin0u/geocoder-laravel)
-Symfony | [geocoder-php/BazingaGeocoderBundle](https://github.com/geocoder-php/BazingaGeocoderBundle) | [![Latest Stable Version](https://poser.pugx.org/willdurand/geocoder-bundle/v/stable)](https://packagist.org/packages/willdurand/geocoder-bundle) [![Total Downloads](https://poser.pugx.org/willdurand/geocoder-bundle/downloads)](https://packagist.org/packages/willdurand/geocoder-bundle)
+[Laravel](https://github.com/geocoder-php/GeocoderLaravel) | `geocoder-php/GeocoderLaravel` | [![GitHub release](https://poser.pugx.org/toin0u/geocoder-laravel/v/stable)](https://packagist.org/packages/toin0u/geocoder-laravel) [![Packagist](https://poser.pugx.org/toin0u/geocoder-laravel/downloads)](https://packagist.org/packages/toin0u/geocoder-laravel)
+[Symfony](https://github.com/geocoder-php/BazingaGeocoderBundle) | `geocoder-php/BazingaGeocoderBundle` | [![Latest Stable Version](https://poser.pugx.org/willdurand/geocoder-bundle/v/stable)](https://packagist.org/packages/willdurand/geocoder-bundle) [![Total Downloads](https://poser.pugx.org/willdurand/geocoder-bundle/downloads)](https://packagist.org/packages/willdurand/geocoder-bundle)
 
 Cookbook
 --------
