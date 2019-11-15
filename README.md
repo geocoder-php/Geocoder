@@ -67,9 +67,12 @@ $ composer require geocoder-php/google-maps-provider php-http/curl-client nyholm
 
 ### Framework integration
 
-If you are using a framework then you may be interested in our excellent framework integrations. Check out our
-[Laravel Package](https://github.com/geocoder-php/GeocoderLaravel) and our [Symfony Bundle](https://github.com/geocoder-php/BazingaGeocoderBundle).
+If you are using a framework then you may be interested in our excellent framework integrations.
 
+Framework       | Package  | Stats
+:------------- |:--------- |:-------
+Laravel | [geocoder-php/GeocoderLaravel](https://github.com/geocoder-php/GeocoderLaravel) | [![GitHub release](https://img.shields.io/packagist/v/toin0u/geocoder-laravel.svg)](https://github.com/geocoder-php/GeocoderLaravel/releases) [![Packagist](https://img.shields.io/packagist/dt/toin0u/geocoder-laravel.svg)](https://packagist.org/packages/toin0u/geocoder-laravel)
+Symfony | [geocoder-php/BazingaGeocoderBundle](https://github.com/geocoder-php/BazingaGeocoderBundle) | [![Latest Stable Version](https://img.shields.io/packagist/v/willdurand/geocoder-bundle)](https://packagist.org/packages/willdurand/geocoder-bundle) [![Total Downloads](https://img.shields.io/packagist/dt/willdurand/geocoder-bundle)](https://packagist.org/packages/willdurand/geocoder-bundle)
 
 Cookbook
 --------
