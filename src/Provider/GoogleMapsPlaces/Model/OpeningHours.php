@@ -20,7 +20,7 @@ use stdClass;
 class OpeningHours
 {
     /**
-     * @var bool
+     * @var bool|null
      */
     private $openNow;
 
@@ -35,11 +35,11 @@ class OpeningHours
     private $weekdayText;
 
     /**
-     * @param bool     $openNow
-     * @param array[]  $periods
-     * @param string[] $weekdayText
+     * @param bool|null $openNow
+     * @param array[]   $periods
+     * @param string[]  $weekdayText
      */
-    public function __construct(bool $openNow, array $periods, array $weekdayText)
+    public function __construct($openNow, array $periods, array $weekdayText)
     {
         $this->openNow = $openNow;
         $this->periods = $periods;
@@ -47,9 +47,9 @@ class OpeningHours
     }
 
     /**
-     * @return bool
+     * @return bool|null
      */
-    public function isOpenNow(): bool
+    public function isOpenNow()
     {
         return $this->openNow;
     }
@@ -70,10 +70,10 @@ class OpeningHours
         return $this->weekdayText;
     }
 
-    public static function fromResult(Stdclass $openingHours): self
+    public static function fromResult(stdClass $openingHours): self
     {
         return new self(
-            $openingHours->open_now,
+            $openingHours->open_now ?? null,
             $openingHours->periods ?? [],
             $openingHours->weekday_text ?? []
         );
