@@ -203,6 +203,24 @@ class GoogleMapsPlacesTest extends BaseTestCase
         $this->assertSame('7 Cope St, Redfern NSW 2016', $resultOne->getFormattedAddress());
     }
 
+    public function testReverseGeocodePlaceWithEmptyOpeningHours()
+    {
+        $provider = $this->getGoogleMapsProvider();
+
+        $query = ReverseQuery::fromCoordinates(51.0572773, 13.7763207)->withData('type', 'transit_station');
+
+        $results = $provider->reverseQuery($query);
+        $this->assertCount(20, $results);
+
+        /** @var GooglePlace $resultOne */
+        $resultOne = $results->get(13);
+        $this->assertNull($resultOne->getOpeningHours()->isOpenNow());
+
+        /** @var GooglePlace $resultTwo */
+        $resultTwo = $results->first();
+        $this->assertNull($resultTwo->getOpeningHours());
+    }
+
     private function getGoogleMapsProvider(): GoogleMapsPlaces
     {
         if (!isset($_SERVER['GOOGLE_GEOCODING_KEY'])) {
