@@ -19,7 +19,7 @@ composer require geocoder-php/openrouteservice-provider
 ### API Documentation
 
 OpenRouteService uses the Pelias Geocoder under the hood. You can view it's [documentation here](https://github.com/pelias/documentation).    
-The base API endpoint is https://api.openrouteservice.org/geocode.
+The base API endpoint is <https://api.openrouteservice.org/geocode>.
 
 ### Contribute
 
