@@ -135,8 +135,12 @@ final class LocationIQ extends AbstractHttpProvider implements Provider
         $builder->setLocality($this->getNodeValue($addressNode->getElementsByTagName('city')));
         $builder->setSubLocality($this->getNodeValue($addressNode->getElementsByTagName('suburb')));
         $builder->setCountry($this->getNodeValue($addressNode->getElementsByTagName('country')));
-        $builder->setCountryCode(strtoupper($this->getNodeValue($addressNode->getElementsByTagName('country_code'))));
         $builder->setCoordinates($resultNode->getAttribute('lat'), $resultNode->getAttribute('lon'));
+
+        $countryCode = $this->getNodeValue($addressNode->getElementsByTagName('country_code'));
+        if (!is_null($countryCode)) {
+            $builder->setCountryCode(strtoupper($countryCode));
+        }
 
         $boundsAttr = $resultNode->getAttribute('boundingbox');
         if ($boundsAttr) {
@@ -173,12 +177,12 @@ final class LocationIQ extends AbstractHttpProvider implements Provider
 
     private function getGeocodeEndpointUrl(): string
     {
-        return self::BASE_API_URL.'/search.php?q=%s&format=xml&addressdetails=1&limit=%d&key='.$this->apiKey;
+        return self::BASE_API_URL.'/search.php?q=%s&format=xmlv1.1&addressdetails=1&normalizecity=1&limit=%d&key='.$this->apiKey;
     }
 
     private function getReverseEndpointUrl(): string
     {
-        return self::BASE_API_URL.'/reverse.php?format=xml&lat=%F&lon=%F&addressdetails=1&zoom=%d&key='.$this->apiKey;
+        return self::BASE_API_URL.'/reverse.php?format=xmlv1.1&lat=%F&lon=%F&addressdetails=1&normalizecity=1&zoom=%d&key='.$this->apiKey;
     }
 
     private function getNodeValue(\DOMNodeList $element)
