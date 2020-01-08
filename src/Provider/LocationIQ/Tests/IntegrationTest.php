@@ -19,6 +19,13 @@ use Http\Client\HttpClient;
  */
 class IntegrationTest extends ProviderIntegrationTest
 {
+    protected $skippedTests = [
+        'testReverseQueryWithNoResults' => 'We weirdly find stuff here...',
+    ];
+
+    protected $testIpv4 = false;
+    protected $testIpv6 = false;
+
     protected function createProvider(HttpClient $httpClient)
     {
         return new LocationIQ($httpClient, $this->getApiKey());
@@ -26,7 +33,7 @@ class IntegrationTest extends ProviderIntegrationTest
 
     protected function getCacheDir()
     {
-        return __DIR__.'/.cached_responses';
+        return __DIR__ . '/.cached_responses';
     }
 
     protected function getApiKey()
