@@ -135,8 +135,12 @@ final class LocationIQ extends AbstractHttpProvider implements Provider
         $builder->setLocality($this->getNodeValue($addressNode->getElementsByTagName('city')));
         $builder->setSubLocality($this->getNodeValue($addressNode->getElementsByTagName('suburb')));
         $builder->setCountry($this->getNodeValue($addressNode->getElementsByTagName('country')));
-        $builder->setCountryCode(strtoupper($this->getNodeValue($addressNode->getElementsByTagName('country_code'))));
         $builder->setCoordinates($resultNode->getAttribute('lat'), $resultNode->getAttribute('lon'));
+
+        $countryCode = $this->getNodeValue($addressNode->getElementsByTagName('country_code'));
+        if (!is_null($countryCode)) {
+            $builder->setCountryCode(strtoupper($countryCode));
+        }
 
         $boundsAttr = $resultNode->getAttribute('boundingbox');
         if ($boundsAttr) {
