@@ -177,12 +177,12 @@ final class LocationIQ extends AbstractHttpProvider implements Provider
 
     private function getGeocodeEndpointUrl(): string
     {
-        return self::BASE_API_URL . '/search.php?q=%s&format=xmlv1.1&addressdetails=1&normalizecity=1&limit=%d&key=' . $this->apiKey;
+        return self::BASE_API_URL.'/search.php?q=%s&format=xmlv1.1&addressdetails=1&normalizecity=1&limit=%d&key='.$this->apiKey;
     }
 
     private function getReverseEndpointUrl(): string
     {
-        return self::BASE_API_URL . '/reverse.php?format=xmlv1.1&lat=%F&lon=%F&addressdetails=1&normalizecity=1&zoom=%d&key=' . $this->apiKey;
+        return self::BASE_API_URL.'/reverse.php?format=xmlv1.1&lat=%F&lon=%F&addressdetails=1&normalizecity=1&zoom=%d&key='.$this->apiKey;
     }
 
     private function getNodeValue(\DOMNodeList $element)
