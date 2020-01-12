@@ -81,6 +81,7 @@ We have a small cookbook where you can find examples on common use cases:
 
 * [Caching responses](/docs/cookbook/cache.md)
 * [Configuring the HTTP client](/docs/cookbook/http-client.md)
+* [Rate limiting API requests](/docs/cookbook/rate-limiting.md)
 
 Usage
 -----
