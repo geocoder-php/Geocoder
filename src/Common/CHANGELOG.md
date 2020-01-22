@@ -2,11 +2,21 @@
 
 The change log describes what is "Added", "Removed", "Changed" or "Fixed" between each release.
 
-## Unreleased
+## 4.2.2
+
+### Changed
+
+- GeoJson dumper implements Dumper
+- Excpetion interface extends Throwable
+
+### Fixed
+
+- Fix building ProviderNotRegistered exception message 
 
 ## 4.2.1
 
 ### Fixed
+
 - Bug in `AddressBuilder` where same expression is compare twice
 
 ## 4.2.0
