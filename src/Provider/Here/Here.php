@@ -65,7 +65,7 @@ final class Here extends AbstractHttpProvider implements Provider
     /**
      * @var string
      */
-    const REVERSE_CIT_ENDPOINT_URL_API_KEY  = 'https://reverse.geocoder.sit.ls.hereapi.com/6.2/reversegeocode.json';
+    const REVERSE_CIT_ENDPOINT_URL_API_KEY = 'https://reverse.geocoder.sit.ls.hereapi.com/6.2/reversegeocode.json';
 
     /**
      * @var string
@@ -121,10 +121,8 @@ final class Here extends AbstractHttpProvider implements Provider
      * @param string     $appCode an App code
      * @param bool       $useCIT  use Customer Integration Testing environment (CIT) instead of production
      */
-    public function __construct(HttpClient $client, string $appId = null , string $appCode = null, bool $useCIT = false)
+    public function __construct(HttpClient $client, string $appId = null, string $appCode = null, bool $useCIT = false)
     {
-
-
         $this->appId = $appId;
         $this->appCode = $appCode;
         $this->useCIT = $useCIT;
@@ -153,7 +151,7 @@ final class Here extends AbstractHttpProvider implements Provider
         $queryParams = $this->withApiCredentials([
             'searchtext' => $query->getText(),
             'gen' => 9,
-            'additionaldata' => $this->getAdditionalDataParam($query)
+            'additionaldata' => $this->getAdditionalDataParam($query),
         ]);
 
         if (null !== $query->getData('country')) {
@@ -175,7 +173,6 @@ final class Here extends AbstractHttpProvider implements Provider
         if (null !== $query->getLocale()) {
             $queryParams['language'] = $query->getLocale();
         }
-
 
         return $this->executeQuery(sprintf('%s?%s', $this->getBaseUrl($query), http_build_query($queryParams)), $query->getLimit());
     }
@@ -290,7 +287,7 @@ final class Here extends AbstractHttpProvider implements Provider
     private function getAdditionalDataParam(GeocodeQuery $query): string
     {
         $additionalDataParams = [
-            'IncludeShapeLevel' => 'country'
+            'IncludeShapeLevel' => 'country',
         ];
 
         foreach (self::GEOCODE_ADDITIONAL_DATA_PARAMS as $paramKey) {
@@ -318,7 +315,7 @@ final class Here extends AbstractHttpProvider implements Provider
             throw new InvalidCredentials('Invalid or missing api key.');
         }
 
-        if ($this->apiKey !== null) {
+        if (null !== $this->apiKey) {
             $queryParams['apiKey'] = $this->apiKey;
         } else {
             $queryParams['app_id'] = $this->appId;
@@ -330,7 +327,7 @@ final class Here extends AbstractHttpProvider implements Provider
 
     public function getBaseUrl(Query $query): string
     {
-        $usingApiKey = $this->apiKey !== null;
+        $usingApiKey = null !== $this->apiKey;
 
         if ($query instanceof ReverseQuery) {
             if ($this->useCIT) {
