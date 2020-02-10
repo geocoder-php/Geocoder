@@ -166,7 +166,12 @@ class Pelias extends AbstractHttpProvider implements Provider
                     'east' => $location['bbox'][0],
                 ];
             } else {
-                $bounds = null;
+                $bounds = [
+                    'south' => null,
+                    'west' => null,
+                    'north' => null,
+                    'east' => null,
+                ];
             }
 
             $props = $location['properties'];
