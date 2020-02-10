@@ -59,6 +59,8 @@ class ProviderCache implements Provider
     {
         $cacheKey = $this->getCacheKey($query);
         if (null !== $result = $this->cache->get($cacheKey)) {
+            $result->setFromCache(true);
+
             return $result;
         }
 
