@@ -221,8 +221,8 @@ final class Nominatim extends AbstractHttpProvider implements Provider
         $builder->setStreetName($place->address->road ?? $place->address->pedestrian ?? null);
         $builder->setStreetNumber($place->address->house_number ?? null);
         $builder->setSubLocality($place->address->suburb ?? null);
-        $builder->setCountry($place->address->country);
-        $builder->setCountryCode(strtoupper($place->address->country_code));
+        $builder->setCountry($place->address->country ?? null);
+        $builder->setCountryCode(isset($place->address->country_code) ? strtoupper($place->address->country_code) : null);
 
         $builder->setCoordinates(floatval($place->lat), floatval($place->lon));
 
