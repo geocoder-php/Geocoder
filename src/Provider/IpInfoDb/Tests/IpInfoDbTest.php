@@ -173,7 +173,7 @@ class IpInfoDbTest extends BaseTestCase
         $this->assertNull($result->getLocality());
         $this->assertEmpty($result->getAdminLevels());
         $this->assertEquals('United States', $result->getCountry()->getName());
-        $this->assertEquals('United States', $result->getCountry()->getCode());
+        $this->assertEquals('US', $result->getCountry()->getCode());
         $this->assertNull($result->getTimezone());
     }
 
