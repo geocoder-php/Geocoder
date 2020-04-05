@@ -300,6 +300,7 @@ class PsrCache implements DataBaseInterface
         $rawKeys = $this->getServiceKey($this->dbConfig->getKeyForDumpKeys());
         if ($rawKeys) {
             $this->actualKeys = json_decode($rawKeys, true);
+
             return true;
         }
 

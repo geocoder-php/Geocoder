@@ -198,6 +198,7 @@ class StorageLocation implements Provider
                 $c = !$c;
             }
         }
+
         return $c;
     }
 

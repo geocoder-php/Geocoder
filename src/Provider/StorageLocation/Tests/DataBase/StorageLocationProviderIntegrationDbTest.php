@@ -80,7 +80,7 @@ abstract class StorageLocationProviderIntegrationDbTest extends TestCase
 
         $result = $this->dataBase->getAllPlaces();
 
-        $this->assertIsArray($result);
+        $this->assertTrue(is_array($result));
         $this->assertGreaterThan(0, count($result));
         foreach ($result as $place) {
             $this->assertEquals(Place::class, get_class($place));
@@ -97,7 +97,7 @@ abstract class StorageLocationProviderIntegrationDbTest extends TestCase
 
         $result = $this->dataBase->getAdminLevels();
 
-        $this->assertIsArray($result);
+        $this->assertTrue(is_array($result));
         $this->assertGreaterThan(0, count($result));
         foreach ($result as $level) {
             $this->assertTrue(is_int($level));
