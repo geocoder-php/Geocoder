@@ -56,7 +56,7 @@ class PsrCache implements DataBaseInterface
     public function __construct($cacheProvider, DBConfig $dbConfig)
     {
         if (!($cacheProvider instanceof CacheItemPoolInterface)) {
-            throw new InvalidArgumentException('Cache provider should be instance of ' . CacheItemPoolInterface::class);
+            throw new InvalidArgumentException('Cache provider should be instance of '.CacheItemPoolInterface::class);
         }
 
         $this->cacheProvider = $cacheProvider;
@@ -67,7 +67,7 @@ class PsrCache implements DataBaseInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @throws \Psr\Cache\InvalidArgumentException
      */
@@ -90,7 +90,7 @@ class PsrCache implements DataBaseInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @throws \Psr\Cache\InvalidArgumentException
      */
@@ -114,7 +114,7 @@ class PsrCache implements DataBaseInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @throws \Psr\Cache\InvalidArgumentException
      */
@@ -138,7 +138,7 @@ class PsrCache implements DataBaseInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @throws \Psr\Cache\InvalidArgumentException
      */
@@ -191,7 +191,7 @@ class PsrCache implements DataBaseInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @throws \Psr\Cache\InvalidArgumentException
      */
@@ -222,6 +222,7 @@ class PsrCache implements DataBaseInterface
      * @param bool  $useAddress
      *
      * @return string
+     *
      * @example 'geocoder.storage-provider.level-0-ukraine-ua.level-1-kyiv-.ua.01000.kyiv.nezalezhnosti sq.3'
      *              ^           ^                                                       - content of @see DBConfig::GLOBAL_PREFIX array
      *                                           ^                                      - max level for that Place object
@@ -239,11 +240,13 @@ class PsrCache implements DataBaseInterface
         bool $useAddress = true
     ): string {
         return implode(
-            $this->dbConfig->getGlueForSections(), array_merge(
-            $usePrefix ? $this->dbConfig->getGlobalPrefix() : [],
-            $useLevels ? $this->compileLevelsForKey($place) : [],
-            $useAddress ? $this->compileAddressForKey($place) : []
-        ));
+            $this->dbConfig->getGlueForSections(),
+            array_merge(
+                $usePrefix ? $this->dbConfig->getGlobalPrefix() : [],
+                $useLevels ? $this->compileLevelsForKey($place) : [],
+                $useAddress ? $this->compileAddressForKey($place) : []
+            )
+        );
     }
 
     private function compileLevelsForKey(Place $place): array
@@ -256,7 +259,7 @@ class PsrCache implements DataBaseInterface
                 $this->dbConfig->getPrefixLevel(),
                 $level->getLevel(),
                 $this->normalizeStringForKeyName($level->getName()),
-                $this->normalizeStringForKeyName((string) $level->getCode())
+                $this->normalizeStringForKeyName((string) $level->getCode()),
             ]);
 
             if (!isset($this->existAdminLevels[$level->getLevel()])) {

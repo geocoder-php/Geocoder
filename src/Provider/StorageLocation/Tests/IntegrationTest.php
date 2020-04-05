@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Geocoder\Provider\StorageLocation\Tests;
 
+use Cache\Adapter\PHPArray\ArrayCachePool;
 use Geocoder\IntegrationTest\ProviderIntegrationTest;
 use Geocoder\Model\AdminLevel;
 use Geocoder\Model\AdminLevelCollection;
@@ -24,7 +25,6 @@ use Geocoder\Provider\StorageLocation\Model\Place;
 use Geocoder\Provider\StorageLocation\Model\Polygon;
 use Geocoder\Provider\StorageLocation\StorageLocation;
 use Http\Client\HttpClient;
-use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
 /**
  * @author Borys Yermokhin <borys_ermokhin@yahoo.com>
@@ -42,7 +42,7 @@ class IntegrationTest extends ProviderIntegrationTest
      */
     protected function createProvider(HttpClient $httpClient)
     {
-        $dataBase = new PsrCache(new FilesystemAdapter(), new DBConfig());
+        $dataBase = new PsrCache(new ArrayCachePool(), new DBConfig());
         $provider = new StorageLocation($dataBase);
 
         $rawData = file_get_contents(implode(DIRECTORY_SEPARATOR, [__DIR__, 'json-coordinates', 'london.json']));

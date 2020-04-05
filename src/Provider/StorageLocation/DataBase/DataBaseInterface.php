@@ -14,7 +14,6 @@ namespace Geocoder\Provider\StorageLocation\DataBase;
 
 use Geocoder\Provider\StorageLocation\Model\DBConfig;
 use Geocoder\Provider\StorageLocation\Model\Place;
-use Psr\Cache\CacheItemPoolInterface;
 
 /**
  * @author Borys Yermokhin <borys_ermokhin@yahoo.com>

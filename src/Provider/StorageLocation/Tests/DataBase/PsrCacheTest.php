@@ -12,9 +12,9 @@ declare(strict_types=1);
 
 namespace Geocoder\Provider\StorageLocation\Tests\DataBase;
 
+use Cache\Adapter\PHPArray\ArrayCachePool;
 use Geocoder\Provider\StorageLocation\DataBase\PsrCache;
 use Geocoder\Provider\StorageLocation\Model\DBConfig;
-use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
 /**
  * @author Borys Yermokhin <borys_ermokhin@yahoo.com>
@@ -24,6 +24,6 @@ class PsrCacheTest extends StorageLocationProviderIntegrationDbTest
     public function __construct($name = null, array $data = [], $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
-        $this->dataBase = new PsrCache(new FilesystemAdapter(), new DBConfig());
+        $this->dataBase = new PsrCache(new ArrayCachePool(), new DBConfig());
     }
 }

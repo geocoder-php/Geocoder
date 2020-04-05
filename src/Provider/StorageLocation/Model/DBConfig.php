@@ -17,21 +17,21 @@ namespace Geocoder\Provider\StorageLocation\Model;
  */
 final class DBConfig
 {
-    const GLOBAL_PREFIX                 = ['geocoder', 'storage-provider'];
+    const GLOBAL_PREFIX = ['geocoder', 'storage-provider'];
 
-    const KEY_FOR_DUMP_KEYS             = 'dump-keys';
+    const KEY_FOR_DUMP_KEYS = 'dump-keys';
 
-    const PREFIX_LEVEL                  = 'level';
+    const PREFIX_LEVEL = 'level';
 
-    const KEY_FOR_ADMIN_LEVELS          = 'exist-admin-levels';
+    const KEY_FOR_ADMIN_LEVELS = 'exist-admin-levels';
 
-    const GLUE_FOR_SECTIONS             = '.';
+    const GLUE_FOR_SECTIONS = '.';
 
-    const GLUE_FOR_LEVEL                = '-';
+    const GLUE_FOR_LEVEL = '-';
 
-    const TTL_FOR_RECORD                = 'P365D';
+    const TTL_FOR_RECORD = 'P365D';
 
-    const MAX_PLACES_IN_ONE_RESPONSE    = 100;
+    const MAX_PLACES_IN_ONE_RESPONSE = 100;
 
     /**
      * That prefix will be use before all keys what will store database driver

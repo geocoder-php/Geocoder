@@ -63,7 +63,7 @@ class StorageLocation implements Provider
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
@@ -76,7 +76,7 @@ class StorageLocation implements Provider
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function reverseQuery(ReverseQuery $query): Collection
     {
