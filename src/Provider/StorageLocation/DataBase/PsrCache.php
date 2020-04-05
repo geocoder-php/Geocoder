@@ -237,6 +237,7 @@ class PsrCache implements DataBaseInterface
      *                                     ^    ^    ^              ^     ^     - compiled Place's fields
      * @example 'ua.01000.kyiv.nezalezhnosti sq.3'
      *            ^    ^     ^              ^   ^                               - compiled Place's fields
+     *
      * @throws \Psr\Cache\InvalidArgumentException
      */
     public function compileKey(
@@ -261,6 +262,7 @@ class PsrCache implements DataBaseInterface
      * @param Place $place
      *
      * @return string[]
+     *
      * @throws \Psr\Cache\InvalidArgumentException
      */
     private function compileLevelsForKey(Place $place): array
@@ -323,6 +325,7 @@ class PsrCache implements DataBaseInterface
 
     /**
      * @return bool
+     *
      * @throws \Psr\Cache\InvalidArgumentException
      */
     private function getActualKeys(): bool
@@ -339,6 +342,7 @@ class PsrCache implements DataBaseInterface
 
     /**
      * @return bool
+     *
      * @throws \Psr\Cache\InvalidArgumentException
      */
     private function updateActualKeys(): bool
@@ -350,6 +354,7 @@ class PsrCache implements DataBaseInterface
 
     /**
      * @return bool
+     *
      * @throws \Psr\Cache\InvalidArgumentException
      */
     private function getExistAdminLevels(): bool
@@ -366,6 +371,7 @@ class PsrCache implements DataBaseInterface
 
     /**
      * @return bool
+     *
      * @throws \Psr\Cache\InvalidArgumentException
      */
     private function updateExistAdminLevels(): bool
@@ -379,6 +385,7 @@ class PsrCache implements DataBaseInterface
      * @param string $key
      *
      * @return bool|mixed
+     *
      * @throws \Psr\Cache\InvalidArgumentException
      */
     private function getServiceKey(string $key)
@@ -399,6 +406,7 @@ class PsrCache implements DataBaseInterface
      * @param string $data
      *
      * @return bool
+     *
      * @throws \Psr\Cache\InvalidArgumentException
      */
     private function updateServiceKey(string $key, string $data): bool
