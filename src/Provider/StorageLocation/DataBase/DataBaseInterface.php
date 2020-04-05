@@ -20,7 +20,7 @@ use Geocoder\Provider\StorageLocation\Model\Place;
  */
 interface DataBaseInterface
 {
-    public function __construct($cacheProvider, DBConfig $dbConfig);
+    public function __construct($databaseProvider, DBConfig $dbConfig);
 
     /**
      * @param Place $place

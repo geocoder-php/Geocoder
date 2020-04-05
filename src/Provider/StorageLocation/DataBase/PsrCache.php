@@ -45,21 +45,21 @@ class PsrCache implements DataBaseInterface
     /**
      * @var CacheItemPoolInterface
      */
-    private $cacheProvider;
+    private $databaseProvider;
 
     /**
      * PsrCache constructor.
      *
-     * @param CacheItemPoolInterface $cacheProvider
+     * @param CacheItemPoolInterface $databaseProvider
      * @param DBConfig               $dbConfig
      */
-    public function __construct($cacheProvider, DBConfig $dbConfig)
+    public function __construct($databaseProvider, DBConfig $dbConfig)
     {
-        if (!($cacheProvider instanceof CacheItemPoolInterface)) {
+        if (!($databaseProvider instanceof CacheItemPoolInterface)) {
             throw new InvalidArgumentException('Cache provider should be instance of '.CacheItemPoolInterface::class);
         }
 
-        $this->cacheProvider = $cacheProvider;
+        $this->databaseProvider = $databaseProvider;
         $this->dbConfig = $dbConfig;
 
         $this->getActualKeys();
@@ -77,11 +77,11 @@ class PsrCache implements DataBaseInterface
 
         $itemName = $this->compileKey($place);
 
-        $item = $this->cacheProvider->getItem($itemName);
+        $item = $this->databaseProvider->getItem($itemName);
         $item->expiresAfter($this->dbConfig->getTtlForRecord());
         $item->set($rawData);
 
-        $this->cacheProvider->save($item);
+        $this->databaseProvider->save($item);
 
         $this->actualKeys[] = $itemName;
         $this->updateActualKeys();
@@ -100,7 +100,7 @@ class PsrCache implements DataBaseInterface
 
         $itemName = $this->compileKey($place);
 
-        $item = $this->cacheProvider->getItem($itemName);
+        $item = $this->databaseProvider->getItem($itemName);
         if (!$item->isHit()) {
             $this->actualKeys[] = $itemName;
             $this->updateActualKeys();
@@ -108,7 +108,7 @@ class PsrCache implements DataBaseInterface
         $item->expiresAfter($this->dbConfig->getTtlForRecord());
         $item->set($rawData);
 
-        $this->cacheProvider->save($item);
+        $this->databaseProvider->save($item);
 
         return true;
     }
@@ -127,7 +127,7 @@ class PsrCache implements DataBaseInterface
         $result = [];
 
         foreach ($this->makeSearch($searchKey, $page, $maxResults) as $key) {
-            $item = $this->cacheProvider->getItem($key);
+            $item = $this->databaseProvider->getItem($key);
             if ($item->isHit()) {
                 $rawData = json_decode($item->get(), true);
                 $result[$key] = (Place::createFromArray($rawData));
@@ -162,7 +162,7 @@ class PsrCache implements DataBaseInterface
 
         $counter = 0;
         foreach ($tempArray as $item) {
-            $item = $this->cacheProvider->getItem($item);
+            $item = $this->databaseProvider->getItem($item);
             if ($item->isHit()) {
                 $rawData = json_decode($item->get(), true);
                 $result[] = (Place::createFromArray($rawData))->setPolygonsFromArray($rawData['polygons']);
@@ -200,7 +200,7 @@ class PsrCache implements DataBaseInterface
         $rawData = json_encode($place->toArray());
 
         $itemName = $this->compileKey($place);
-        $item = $this->cacheProvider->getItem($itemName);
+        $item = $this->databaseProvider->getItem($itemName);
         $item->expiresAfter(new \DateInterval('PT0S'));
         $item->set($rawData);
 
@@ -335,7 +335,7 @@ class PsrCache implements DataBaseInterface
 
     private function getServiceKey(string $key)
     {
-        $item = $this->cacheProvider->getItem(implode(
+        $item = $this->databaseProvider->getItem(implode(
             $this->dbConfig->getGlueForSections(),
             array_merge($this->dbConfig->getGlobalPrefix(), [$key])
         ));
@@ -348,7 +348,7 @@ class PsrCache implements DataBaseInterface
 
     private function updateServiceKey(string $key, string $data): bool
     {
-        $item = $this->cacheProvider->getItem(implode(
+        $item = $this->databaseProvider->getItem(implode(
             $this->dbConfig->getGlueForSections(),
             array_merge($this->dbConfig->getGlobalPrefix(), [$key])
         ));
