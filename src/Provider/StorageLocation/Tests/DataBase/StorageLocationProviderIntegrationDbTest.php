@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Geocoder package.
  * For the full copyright and license information, please view the LICENSE
@@ -25,7 +27,7 @@ abstract class StorageLocationProviderIntegrationDbTest extends TestCase
     public function testAdd()
     {
         $origPlace = Place::createFromArray(json_decode(
-            file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'places' . DIRECTORY_SEPARATOR . 'add.place'),
+            file_get_contents(__DIR__.DIRECTORY_SEPARATOR.'places'.DIRECTORY_SEPARATOR.'add.place'),
             true
         ));
         $this->dataBase->add($origPlace);
@@ -38,7 +40,7 @@ abstract class StorageLocationProviderIntegrationDbTest extends TestCase
     public function testUpdate()
     {
         $origPlace = json_decode(
-            file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'places' . DIRECTORY_SEPARATOR . 'update.place'),
+            file_get_contents(__DIR__.DIRECTORY_SEPARATOR.'places'.DIRECTORY_SEPARATOR.'update.place'),
             true
         );
         $this->dataBase->add(Place::createFromArray($origPlace));
@@ -58,7 +60,7 @@ abstract class StorageLocationProviderIntegrationDbTest extends TestCase
     public function testDelete()
     {
         $origPlace = Place::createFromArray(json_decode(
-            file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'places' . DIRECTORY_SEPARATOR . 'delete.place'),
+            file_get_contents(__DIR__.DIRECTORY_SEPARATOR.'places'.DIRECTORY_SEPARATOR.'delete.place'),
             true
         ));
         $this->dataBase->add($origPlace);
@@ -71,7 +73,7 @@ abstract class StorageLocationProviderIntegrationDbTest extends TestCase
     public function testGetAllPlaces()
     {
         $origPlace = Place::createFromArray(json_decode(
-            file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'places' . DIRECTORY_SEPARATOR . 'add.place'),
+            file_get_contents(__DIR__.DIRECTORY_SEPARATOR.'places'.DIRECTORY_SEPARATOR.'add.place'),
             true
         ));
         $this->dataBase->add($origPlace);
@@ -88,7 +90,7 @@ abstract class StorageLocationProviderIntegrationDbTest extends TestCase
     public function testGetAdminLevels()
     {
         $origPlace = Place::createFromArray(json_decode(
-            file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'places' . DIRECTORY_SEPARATOR . 'add.place'),
+            file_get_contents(__DIR__.DIRECTORY_SEPARATOR.'places'.DIRECTORY_SEPARATOR.'add.place'),
             true
         ));
         $this->dataBase->add($origPlace);
@@ -114,7 +116,7 @@ abstract class StorageLocationProviderIntegrationDbTest extends TestCase
             foreach ($result as $place) {
                 $this->dataBase->delete($place);
             }
-            $page++;
+            ++$page;
 
             if (count($result) < $limit) {
                 break;

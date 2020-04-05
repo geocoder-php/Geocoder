@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /*
@@ -8,6 +9,7 @@ declare(strict_types=1);
  *
  * @license    MIT License
  */
+
 namespace Geocoder\Provider\StorageLocation\Model;
 
 /**
@@ -16,58 +18,73 @@ namespace Geocoder\Provider\StorageLocation\Model;
 final class DBConfig
 {
     const GLOBAL_PREFIX                 = ['geocoder', 'storage-provider'];
+
     const KEY_FOR_DUMP_KEYS             = 'dump-keys';
+
     const PREFIX_LEVEL                  = 'level';
+
     const KEY_FOR_ADMIN_LEVELS          = 'exist-admin-levels';
+
     const GLUE_FOR_SECTIONS             = '.';
+
     const GLUE_FOR_LEVEL                = '-';
+
     const TTL_FOR_RECORD                = 'P365D';
+
     const MAX_PLACES_IN_ONE_RESPONSE    = 100;
 
     /**
      * That prefix will be use before all keys what will store database driver
+     *
      * @var array
      */
     private $globalPrefix;
 
     /**
      * That key will be use for name key of record in db where will store all relevant records in database
+     *
      * @var string
      */
     private $keyForDumpKeys;
 
     /**
      * That prefix will be use for identify level section in record's key
+     *
      * @var string
      */
     private $prefixLevel;
 
     /**
      * That key will be use for name key of record in db where will store all relevant admin levels in database
+     *
      * @var string
      */
     private $keyForAdminLevels;
 
     /**
      * That string will be use for glue sections between each other for compile key for specific record
+     *
      * @var string
      */
     private $glueForSections;
 
     /**
      * That string will be use for glue inside level sections in key of record
+     *
      * @var string
      */
     private $glueForLevel;
 
     /**
      * Time interval for evaluate valid records in database
+     *
      * @var \DateInterval
      */
     private $ttlForRecord;
 
     /**
      * Maximum quantity of Places what can be responded from Db
+     *
      * @var int
      */
     private $maxPlacesInOneResponse;

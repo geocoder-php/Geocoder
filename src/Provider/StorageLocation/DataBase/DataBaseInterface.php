@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /*
@@ -8,6 +9,7 @@ declare(strict_types=1);
  *
  * @license    MIT License
  */
+
 namespace Geocoder\Provider\StorageLocation\DataBase;
 
 use Geocoder\Provider\StorageLocation\Model\DBConfig;
@@ -19,7 +21,7 @@ use Psr\Cache\CacheItemPoolInterface;
  */
 interface DataBaseInterface
 {
-    public function __construct(CacheItemPoolInterface $cacheProvider, DBConfig $dbConfig);
+    public function __construct($cacheProvider, DBConfig $dbConfig);
 
     /**
      * @param Place $place
@@ -75,8 +77,10 @@ interface DataBaseInterface
      *
      * @return string
      */
-    public function compileKey(Place $place,
+    public function compileKey(
+        Place $place,
         bool $useLevels = true,
         bool $usePrefix = true,
-        bool $useAddress = true): string;
+        bool $useAddress = true
+    ): string;
 }

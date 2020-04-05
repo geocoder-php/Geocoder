@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /*
@@ -8,12 +9,14 @@ declare(strict_types=1);
  *
  * @license    MIT License
  */
+
 namespace Geocoder\Provider\StorageLocation\DataBase;
 
 use Geocoder\Model\AdminLevel;
 use Geocoder\Provider\StorageLocation\Model\DBConfig;
 use Geocoder\Provider\StorageLocation\Model\Place;
 use Psr\Cache\CacheItemPoolInterface;
+use Psr\Log\InvalidArgumentException;
 
 /**
  * @author Borys Yermokhin <borys_ermokhin@yahoo.com>
@@ -29,6 +32,7 @@ class PsrCache implements DataBaseInterface
 
     /**
      * Sorted array of admin levels what used for stored data
+     *
      * @var array
      */
     private $existAdminLevels = [];
@@ -49,8 +53,12 @@ class PsrCache implements DataBaseInterface
      * @param CacheItemPoolInterface $cacheProvider
      * @param DBConfig               $dbConfig
      */
-    public function __construct(CacheItemPoolInterface $cacheProvider, DBConfig $dbConfig)
+    public function __construct($cacheProvider, DBConfig $dbConfig)
     {
+        if (!($cacheProvider instanceof CacheItemPoolInterface)) {
+            throw new InvalidArgumentException('Cache provider should be instance of ' . CacheItemPoolInterface::class);
+        }
+
         $this->cacheProvider = $cacheProvider;
         $this->dbConfig = $dbConfig;
 
@@ -60,6 +68,7 @@ class PsrCache implements DataBaseInterface
 
     /**
      * {@inheritDoc}
+     *
      * @throws \Psr\Cache\InvalidArgumentException
      */
     public function add(Place $place): bool
@@ -82,6 +91,7 @@ class PsrCache implements DataBaseInterface
 
     /**
      * {@inheritDoc}
+     *
      * @throws \Psr\Cache\InvalidArgumentException
      */
     public function update(Place $place): bool
@@ -105,6 +115,7 @@ class PsrCache implements DataBaseInterface
 
     /**
      * {@inheritDoc}
+     *
      * @throws \Psr\Cache\InvalidArgumentException
      */
     public function get(string $searchKey, int $page = 0, int $maxResults = 30): array
@@ -128,6 +139,7 @@ class PsrCache implements DataBaseInterface
 
     /**
      * {@inheritDoc}
+     *
      * @throws \Psr\Cache\InvalidArgumentException
      */
     public function getAllPlaces(int $offset = 0, int $limit = 50): array
@@ -144,7 +156,7 @@ class PsrCache implements DataBaseInterface
         $tempArray = $this->actualKeys;
 
         reset($tempArray);
-        for ($i = 0; $i < $offset; $i++) {
+        for ($i = 0; $i < $offset; ++$i) {
             next($tempArray);
         }
 
@@ -156,7 +168,7 @@ class PsrCache implements DataBaseInterface
                 $result[] = (Place::createFromArray($rawData))->setPolygonsFromArray($rawData['polygons']);
             }
 
-            $counter++;
+            ++$counter;
             if ($counter >= $limit) {
                 break;
             }
@@ -180,6 +192,7 @@ class PsrCache implements DataBaseInterface
 
     /**
      * {@inheritDoc}
+     *
      * @throws \Psr\Cache\InvalidArgumentException
      */
     public function delete(Place $place): bool
@@ -225,12 +238,12 @@ class PsrCache implements DataBaseInterface
         bool $usePrefix = true,
         bool $useAddress = true
     ): string {
-        return implode($this->dbConfig->getGlueForSections(), array_merge(
-                $usePrefix ? $this->dbConfig->getGlobalPrefix() : [],
-                $useLevels ? $this->compileLevelsForKey($place) : [],
-                $useAddress ? $this->compileAddressForKey($place) : []
-            )
-        );
+        return implode(
+            $this->dbConfig->getGlueForSections(), array_merge(
+            $usePrefix ? $this->dbConfig->getGlobalPrefix() : [],
+            $useLevels ? $this->compileLevelsForKey($place) : [],
+            $useAddress ? $this->compileAddressForKey($place) : []
+        ));
     }
 
     private function compileLevelsForKey(Place $place): array
@@ -243,7 +256,7 @@ class PsrCache implements DataBaseInterface
                 $this->dbConfig->getPrefixLevel(),
                 $level->getLevel(),
                 $this->normalizeStringForKeyName($level->getName()),
-                $this->normalizeStringForKeyName((string)$level->getCode())
+                $this->normalizeStringForKeyName((string) $level->getCode())
             ]);
 
             if (!isset($this->existAdminLevels[$level->getLevel()])) {
@@ -302,6 +315,7 @@ class PsrCache implements DataBaseInterface
         $rawLevels = $this->getServiceKey($this->dbConfig->getKeyForDumpKeys());
         if ($rawLevels) {
             $this->existAdminLevels = json_decode($rawLevels, true);
+
             return true;
         }
 
@@ -317,7 +331,8 @@ class PsrCache implements DataBaseInterface
 
     private function getServiceKey(string $key)
     {
-        $item = $this->cacheProvider->getItem(implode($this->dbConfig->getGlueForSections(),
+        $item = $this->cacheProvider->getItem(implode(
+            $this->dbConfig->getGlueForSections(),
             array_merge($this->dbConfig->getGlobalPrefix(), [$key])
         ));
         if ($item->isHit()) {
@@ -329,7 +344,8 @@ class PsrCache implements DataBaseInterface
 
     private function updateServiceKey(string $key, string $data): bool
     {
-        $item = $this->cacheProvider->getItem(implode($this->dbConfig->getGlueForSections(),
+        $item = $this->cacheProvider->getItem(implode(
+            $this->dbConfig->getGlueForSections(),
             array_merge($this->dbConfig->getGlobalPrefix(), [$key])
         ));
         $item->expiresAfter($this->dbConfig->getTtlForRecord());
@@ -375,7 +391,7 @@ class PsrCache implements DataBaseInterface
             $search = mb_strpos($original, $subPhrase);
 
             if (is_int($search)) {
-                $tempOriginal = mb_substr($original, 0, $search) . mb_substr($original, $search + mb_strlen($subPhrase));
+                $tempOriginal = mb_substr($original, 0, $search).mb_substr($original, $search + mb_strlen($subPhrase));
 
                 if (is_null($result)) {
                     $result = 0;

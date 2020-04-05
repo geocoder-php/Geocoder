@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /*
@@ -8,6 +9,7 @@ declare(strict_types=1);
  *
  * @license    MIT License
  */
+
 namespace Geocoder\Provider\StorageLocation\Model;
 
 use Geocoder\Model\Address;
@@ -114,6 +116,7 @@ class Place extends Address
                 $result[$key] = $polygon->toArray();
             }
         }
+
         return $result;
     }
 
@@ -129,7 +132,7 @@ class Place extends Address
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function toArray(): array
     {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Geocoder package.
  * For the full copyright and license information, please view the LICENSE
@@ -7,6 +9,7 @@
  *
  * @license    MIT License
  */
+
 namespace Geocoder\Provider\StorageLocation\Tests\DataBase;
 
 use Geocoder\Provider\StorageLocation\DataBase\PsrCache;

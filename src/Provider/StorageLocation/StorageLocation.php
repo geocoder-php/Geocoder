@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /*
@@ -62,7 +63,7 @@ class StorageLocation implements Provider
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
@@ -75,7 +76,7 @@ class StorageLocation implements Provider
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function reverseQuery(ReverseQuery $query): Collection
     {
@@ -130,7 +131,7 @@ class StorageLocation implements Provider
         foreach ($levels as $level) {
             $result ?
                 $tempPlace = $result :
-                $tempPlace = new Place (
+                $tempPlace = new Place(
                     $this->getName(),
                     new AdminLevelCollection([new AdminLevel($level, ',')])
                 );
@@ -141,6 +142,7 @@ class StorageLocation implements Provider
                 foreach ($place->getPolygons() as $polygon) {
                     if ($this->checkCoordInBundle($coordinates->getLatitude(), $coordinates->getLongitude(), $polygon)) {
                         $result = $place;
+
                         continue 3;
                     }
                 }
@@ -184,15 +186,17 @@ class StorageLocation implements Provider
      * @param $vertices_y
      * @param $longitude_x
      * @param $latitude_y
+     *
      * @return bool|int
      */
     private function isInPolygon($points_polygon, $vertices_x, $vertices_y, $longitude_x, $latitude_y)
     {
         $i = $j = $c = 0;
-        for ($i = 0, $j = $points_polygon ; $i < $points_polygon; $j = $i++) {
-            if ( (($vertices_y[$i]  >  $latitude_y != ($vertices_y[$j] > $latitude_y)) &&
-                ($longitude_x < ($vertices_x[$j] - $vertices_x[$i]) * ($latitude_y - $vertices_y[$i]) / ($vertices_y[$j] - $vertices_y[$i]) + $vertices_x[$i]) ) )
+        for ($i = 0, $j = $points_polygon; $i < $points_polygon; $j = $i++) {
+            if ((($vertices_y[$i] > $latitude_y != ($vertices_y[$j] > $latitude_y)) &&
+                ($longitude_x < ($vertices_x[$j] - $vertices_x[$i]) * ($latitude_y - $vertices_y[$i]) / ($vertices_y[$j] - $vertices_y[$i]) + $vertices_x[$i]))) {
                 $c = !$c;
+            }
         }
         return $c;
     }
@@ -205,7 +209,7 @@ class StorageLocation implements Provider
     private function getCentralCoordinate(array $coordinates): Coordinates
     {
         $total = count($coordinates);
-        if ($total === 1) {
+        if (1 === $total) {
             return current($coordinates);
         }
 
@@ -231,7 +235,7 @@ class StorageLocation implements Provider
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getName(): string
     {

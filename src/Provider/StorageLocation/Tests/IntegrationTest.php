@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Geocoder package.
  * For the full copyright and license information, please view the LICENSE
@@ -30,11 +32,13 @@ use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 class IntegrationTest extends ProviderIntegrationTest
 {
     protected $testIpv4 = false;
+
     protected $testIpv6 = false;
+
     protected $testHttpProvider = false;
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function createProvider(HttpClient $httpClient)
     {
@@ -51,7 +55,7 @@ class IntegrationTest extends ProviderIntegrationTest
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function getCacheDir()
     {
@@ -59,7 +63,7 @@ class IntegrationTest extends ProviderIntegrationTest
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function getApiKey()
     {
@@ -72,7 +76,7 @@ class IntegrationTest extends ProviderIntegrationTest
 
         $adminLevels = [];
         foreach ($root['properties']['geocoding']['admin'] as $adminLevel => $name) {
-            $level = (int)substr($adminLevel, 5);
+            $level = (int) substr($adminLevel, 5);
             if ($level > 5) {
                 $level = 5;
             } elseif ($level < 1) {

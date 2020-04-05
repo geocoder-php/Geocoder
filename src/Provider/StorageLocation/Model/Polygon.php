@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /*
@@ -8,6 +9,7 @@ declare(strict_types=1);
  *
  * @license    MIT License
  */
+
 namespace Geocoder\Provider\StorageLocation\Model;
 
 use Geocoder\Model\Coordinates;
@@ -65,6 +67,7 @@ class Polygon
         foreach ($this->coordinates as $key => $coordinate) {
             $result[$key] = $coordinate->toArray();
         }
+
         return $result;
     }
 }
