@@ -61,6 +61,11 @@ class Polygon
         return $this;
     }
 
+    /**
+     * Produce Polygon entity to array
+     *
+     * @return array
+     */
     public function toArray(): array
     {
         $result = [];

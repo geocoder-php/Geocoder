@@ -116,7 +116,7 @@ function mapRawDataToPlace(array $rawData): \Geocoder\Provider\StorageLocation\M
     }
 ```
 
-After add place above you will receive that place in `reverseQuery` for any coordinate what consisting in Place's polygons. If you will add place with highest admin level - you will receive that new place. That provider every time try to respond places with highest admin level (for `reversQuery` method).
+After add place above you will receive that place in `reverseQuery` for any coordinate what consisting in Place's polygons. If you will add place with highest admin level - you will receive that new place. That provider every time try to respond places with highest admin level (for `reverseQuery` method).
 
 ```php
 $address = $provider->reverseQuery(new \Geocoder\Query\ReverseQuery(new \Geocoder\Model\Coordinates(50.4422519, 30.5423135)));

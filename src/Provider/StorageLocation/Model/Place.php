@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Geocoder\Provider\StorageLocation\Model;
 
 use Geocoder\Model\Address;
+use Geocoder\Model\AdminLevel;
 use Geocoder\Model\AdminLevelCollection;
 use Geocoder\Model\Bounds;
 use Geocoder\Model\Coordinates;
@@ -74,6 +75,24 @@ class Place extends Address
     }
 
     /**
+     * Returning maximum admin level for entity
+     *
+     * @return int
+     */
+    public function getMaxAdminLevel(): int
+    {
+        $max = 0;
+        /** @var AdminLevel $level */
+        foreach ($this->getAdminLevels() as $level) {
+            if ($level->getLevel() > $max) {
+                $max = $level;
+            }
+        }
+
+        return $max;
+    }
+
+    /**
      * @param Polygon[] $polygons
      *
      * @return Place
@@ -85,6 +104,11 @@ class Place extends Address
         return $this;
     }
 
+    /**
+     * @param array $rawPolygons
+     *
+     * @return $this
+     */
     public function setPolygonsFromArray(array $rawPolygons): self
     {
         foreach ($rawPolygons as $rawPolygon) {
@@ -120,6 +144,11 @@ class Place extends Address
         return $result;
     }
 
+    /**
+     * @param array $data
+     *
+     * @return Place
+     */
     public static function createFromArray(array $data)
     {
         /** @var Place $result */

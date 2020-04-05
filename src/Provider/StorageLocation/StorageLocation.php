@@ -85,16 +85,23 @@ class StorageLocation implements Provider
         return new AddressCollection($result ? [$this->mapPlaceToAddress($result)] : []);
     }
 
+    /**
+     * @param Place $place
+     *
+     * @return Address
+     */
     private function mapPlaceToAddress(Place $place): Address
     {
         $tempResults = [];
-        foreach ($place->getPolygons() as $polygon) {
-            $tempResults[] = $this->getCentralCoordinate($polygon->getCoordinates());
-        }
-        $centralCoordinate = $this->getCentralCoordinate($tempResults);
-
         $builder = new AddressBuilder($this->getName());
-        $builder->setCoordinates($centralCoordinate->getLatitude(), $centralCoordinate->getLongitude());
+
+        if (!$place->getCoordinates()) {
+            foreach ($place->getPolygons() as $polygon) {
+                $tempResults[] = $this->getCentralCoordinate($polygon->getCoordinates());
+            }
+            $centralCoordinate = $this->getCentralCoordinate($tempResults);
+            $builder->setCoordinates($centralCoordinate->getLatitude(), $centralCoordinate->getLongitude());
+        }
 
         $builder->setAdminLevels($place->getAdminLevels()->all());
         $builder->setBounds(
@@ -139,6 +146,10 @@ class StorageLocation implements Provider
             $possiblePlaces = $this->dataBase->get($this->dataBase->compileKey($tempPlace, true, true, false));
 
             foreach ($possiblePlaces as $place) {
+                if ($result && $level <= $place->getMaxAdminLevel()) {
+                    continue;
+                }
+
                 foreach ($place->getPolygons() as $polygon) {
                     if ($this->checkCoordInBundle($coordinates->getLatitude(), $coordinates->getLongitude(), $polygon)) {
                         $result = $place;
@@ -203,6 +214,8 @@ class StorageLocation implements Provider
     }
 
     /**
+     * Calculate central coordinate
+     *
      * @param Coordinates[] $coordinates
      *
      * @return Coordinates

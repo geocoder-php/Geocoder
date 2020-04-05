@@ -51,6 +51,8 @@ interface DataBaseInterface
     public function delete(Place $place): bool;
 
     /**
+     * As findAll in repository
+     *
      * @param int $offset
      * @param int $limit
      *
@@ -59,16 +61,22 @@ interface DataBaseInterface
     public function getAllPlaces(int $offset = 0, int $limit = 50): array;
 
     /**
+     * All admin levels what contain database
+     *
      * @return int[]
      */
     public function getAdminLevels(): array;
 
     /**
+     * Current db configuration
+     *
      * @return DBConfig
      */
     public function getDbConfig(): DBConfig;
 
     /**
+     * Key, which should associate with Place what we pass as argument
+     *
      * @param Place $place
      * @param bool  $useLevels
      * @param bool  $usePrefix

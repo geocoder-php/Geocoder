@@ -52,6 +52,8 @@ class PsrCache implements DataBaseInterface
      *
      * @param CacheItemPoolInterface $databaseProvider
      * @param DBConfig               $dbConfig
+     *
+     * @throws \Psr\Cache\InvalidArgumentException
      */
     public function __construct($databaseProvider, DBConfig $dbConfig)
     {
@@ -185,6 +187,9 @@ class PsrCache implements DataBaseInterface
         return array_keys($this->existAdminLevels);
     }
 
+    /**
+     * @return DBConfig
+     */
     public function getDbConfig(): DBConfig
     {
         return $this->dbConfig;
@@ -232,6 +237,7 @@ class PsrCache implements DataBaseInterface
      *                                     ^    ^    ^              ^     ^     - compiled Place's fields
      * @example 'ua.01000.kyiv.nezalezhnosti sq.3'
      *            ^    ^     ^              ^   ^                               - compiled Place's fields
+     * @throws \Psr\Cache\InvalidArgumentException
      */
     public function compileKey(
         Place $place,
@@ -249,6 +255,14 @@ class PsrCache implements DataBaseInterface
         );
     }
 
+    /**
+     * Levels compiler for forming identifier for Place entity in @see compileKey
+     *
+     * @param Place $place
+     *
+     * @return string[]
+     * @throws \Psr\Cache\InvalidArgumentException
+     */
     private function compileLevelsForKey(Place $place): array
     {
         $levels = [];
@@ -274,6 +288,13 @@ class PsrCache implements DataBaseInterface
         return $levels;
     }
 
+    /**
+     * Address compiler for forming identifier for Place entity in @see compileKey
+     *
+     * @param Place $place
+     *
+     * @return string[]
+     */
     private function compileAddressForKey(Place $place): array
     {
         return [
@@ -286,6 +307,11 @@ class PsrCache implements DataBaseInterface
         ];
     }
 
+    /**
+     * @param string $rawString
+     *
+     * @return string
+     */
     public function normalizeStringForKeyName(string $rawString)
     {
         return rawurlencode(
@@ -295,6 +321,10 @@ class PsrCache implements DataBaseInterface
         );
     }
 
+    /**
+     * @return bool
+     * @throws \Psr\Cache\InvalidArgumentException
+     */
     private function getActualKeys(): bool
     {
         $rawKeys = $this->getServiceKey($this->dbConfig->getKeyForDumpKeys());
@@ -307,6 +337,10 @@ class PsrCache implements DataBaseInterface
         return false;
     }
 
+    /**
+     * @return bool
+     * @throws \Psr\Cache\InvalidArgumentException
+     */
     private function updateActualKeys(): bool
     {
         $this->updateServiceKey($this->dbConfig->getKeyForDumpKeys(), json_encode($this->actualKeys));
@@ -314,6 +348,10 @@ class PsrCache implements DataBaseInterface
         return true;
     }
 
+    /**
+     * @return bool
+     * @throws \Psr\Cache\InvalidArgumentException
+     */
     private function getExistAdminLevels(): bool
     {
         $rawLevels = $this->getServiceKey($this->dbConfig->getKeyForDumpKeys());
@@ -326,6 +364,10 @@ class PsrCache implements DataBaseInterface
         return false;
     }
 
+    /**
+     * @return bool
+     * @throws \Psr\Cache\InvalidArgumentException
+     */
     private function updateExistAdminLevels(): bool
     {
         $this->updateServiceKey($this->dbConfig->getKeyForAdminLevels(), json_encode($this->existAdminLevels));
@@ -333,6 +375,12 @@ class PsrCache implements DataBaseInterface
         return true;
     }
 
+    /**
+     * @param string $key
+     *
+     * @return bool|mixed
+     * @throws \Psr\Cache\InvalidArgumentException
+     */
     private function getServiceKey(string $key)
     {
         $item = $this->databaseProvider->getItem(implode(
@@ -346,6 +394,13 @@ class PsrCache implements DataBaseInterface
         return false;
     }
 
+    /**
+     * @param string $key
+     * @param string $data
+     *
+     * @return bool
+     * @throws \Psr\Cache\InvalidArgumentException
+     */
     private function updateServiceKey(string $key, string $data): bool
     {
         $item = $this->databaseProvider->getItem(implode(
@@ -358,6 +413,16 @@ class PsrCache implements DataBaseInterface
         return true;
     }
 
+    /**
+     * Search in each key, needed phrase @see get
+     * Returning all keys what fitable for phrase
+     *
+     * @param string $phrase
+     * @param int    $page
+     * @param int    $maxResults
+     *
+     * @return string[]
+     */
     private function makeSearch(string $phrase, int $page, int $maxResults): array
     {
         $result = [];
@@ -376,6 +441,14 @@ class PsrCache implements DataBaseInterface
         return array_keys($result);
     }
 
+    /**
+     * Evaluate original regarding to phrase. Less mark value is better. @see makeSearch
+     *
+     * @param string $phrase
+     * @param string $original
+     *
+     * @return int
+     */
     private function evaluateHitPhrase(string $phrase, string $original): int
     {
         $subPhrases = explode(',', rawurldecode($phrase));
