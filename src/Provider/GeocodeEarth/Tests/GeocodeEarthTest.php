@@ -193,6 +193,32 @@ class GeocodeEarthTest extends BaseTestCase
         $this->assertEquals('DEU', $result->getCountry()->getCode());
     }
 
+    public function testGeocodeNoBounds()
+    {
+        if (!isset($_SERVER['GEOCODE_EARTH_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the GEOCODE_EARTH_API_KEY value in phpunit.xml');
+        }
+
+        $provider = new GeocodeEarth($this->getHttpClient($_SERVER['GEOCODE_EARTH_API_KEY']), $_SERVER['GEOCODE_EARTH_API_KEY']);
+        $results = $provider->geocodeQuery(GeocodeQuery::create('dworzec centralny'));
+
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertCount(2, $results);
+
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results->first();
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals(52.230428, $result->getCoordinates()->getLatitude(), '', 0.01);
+        $this->assertEquals(21.004552, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertEquals('Warszawa', $result->getLocality());
+        $this->assertEquals('Polska', $result->getCountry()->getName());
+        $this->assertEquals('POL', $result->getCountry()->getCode());
+        $this->assertNull($result->getBounds()->getEast());
+        $this->assertNull($result->getBounds()->getNorth());
+        $this->assertNull($result->getBounds()->getSouth());
+        $this->assertNull($result->getBounds()->getWest());
+    }
+
     /**
      * @expectedException \Geocoder\Exception\QuotaExceeded
      * @expectedExceptionMessage Valid request but quota exceeded.
