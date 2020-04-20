@@ -44,12 +44,7 @@ class IntegrationTest extends ProviderIntegrationTest
     {
         $dataBase = new PsrCache(new ArrayCachePool(), new DBConfig());
         $provider = new StorageLocation($dataBase);
-
-        $rawData = file_get_contents(implode(DIRECTORY_SEPARATOR, [__DIR__, 'json-coordinates', 'london.json']));
-        $provider->addPlace($this->mapRawDataToPlace(json_decode($rawData, true)));
-
-        $rawData = file_get_contents(implode(DIRECTORY_SEPARATOR, [__DIR__, 'json-coordinates', 'white-house.json']));
-        $provider->addPlace($this->mapRawDataToPlace(json_decode($rawData, true)));
+        $this->loadJsonCoordinates($provider);
 
         return $provider;
     }
@@ -68,6 +63,22 @@ class IntegrationTest extends ProviderIntegrationTest
     protected function getApiKey()
     {
         return '';
+    }
+
+    private function loadJsonCoordinates(StorageLocation $provider): bool
+    {
+        $success = true;
+        $dirPath = __DIR__ . DIRECTORY_SEPARATOR . 'json-coordinates' . DIRECTORY_SEPARATOR;
+
+        foreach (scandir($dirPath) as $file) {
+            if (!is_file($dirPath.$file)) {
+                continue;
+            }
+            $rawData = json_decode(file_get_contents($dirPath.$file), true);
+            is_array($rawData) ? $provider->addPlace($this->mapRawDataToPlace($rawData)) : $success = false;
+        }
+
+        return $success;
     }
 
     private function mapRawDataToPlace(array $rawData): Place

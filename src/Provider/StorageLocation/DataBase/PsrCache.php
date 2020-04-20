@@ -437,11 +437,11 @@ class PsrCache implements DataBaseInterface
 
         foreach ($this->actualKeys as $actualKey) {
             $grade = $this->evaluateHitPhrase($phrase, $actualKey);
-            if ($grade > -1 && $grade < strlen($phrase)) {
+            if ($grade > 0) {
                 $result[$actualKey] = $grade;
             }
         }
-        asort($result);
+        arsort($result);
         if (count($result) > ($page * $maxResults)) {
             $result = array_slice($result, ($page * $maxResults), $maxResults);
         }
@@ -459,33 +459,22 @@ class PsrCache implements DataBaseInterface
      */
     private function evaluateHitPhrase(string $phrase, string $original): int
     {
-        $subPhrases = explode(',', rawurldecode($phrase));
+        $phrase = rawurldecode($phrase);
+        $original = substr($original, strlen(implode(
+            $this->dbConfig->getGlueForSections(),
+            $this->dbConfig->getGlobalPrefix()
+        )) + 1);
 
-        $finalSubPhrases = [];
-        foreach ($subPhrases as $subPhrase) {
-            $finalSubPhrases = array_merge($finalSubPhrases, explode(' ', $subPhrase));
-        }
-
-        $lengthOfOriginal = mb_strlen($original);
-
-        $result = null;
-        foreach ($finalSubPhrases as $subPhrase) {
-            if (mb_strlen($subPhrase) < 2) {
-                continue;
-            }
-            $search = mb_strpos($original, $subPhrase);
-
-            if (is_int($search)) {
-                $tempOriginal = mb_substr($original, 0, $search).mb_substr($original, $search + mb_strlen($subPhrase));
-
-                if (is_null($result)) {
-                    $result = 0;
+        $result = 0;
+        foreach ([',', ' ', '.'] as $delimiter) {
+            foreach (explode($delimiter, $phrase) as $symbols) {
+                if (empty($symbols)) {
+                    continue;
                 }
-
-                $result += mb_strlen($subPhrase) + mb_strlen($tempOriginal) - $lengthOfOriginal;
+                $result += substr_count($original, $symbols);
             }
         }
 
-        return is_null($result) ? mb_strlen($phrase) : $result;
+        return $result;
     }
 }
