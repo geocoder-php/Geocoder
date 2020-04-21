@@ -25,9 +25,9 @@
                     "country":"United States of America",
                     "country_code":"us",
                     "admin":{
-                        "level4":"Washington, D.C.",
-                        "level6":"Washington",
-                        "level2":"Washington D.C."
+                        "level1":"Washington, D.C.",
+                        "level2":"Washington",
+                        "level3":"Washington D.C."
                     }
                 }
             },

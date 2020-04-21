@@ -38,10 +38,12 @@ interface DataBaseInterface
 
     /**
      * @param string $searchKey
+     * @param int    $page
+     * @param int    $maxResults
      *
      * @return Place[]
      */
-    public function get(string $searchKey): array;
+    public function get(string $searchKey, int $page = 0, int $maxResults = 30): array;
 
     /**
      * @param Place $place

@@ -16,9 +16,9 @@
                     "osm_type": "relation",
                     "osm_id": 1901873,
                     "type": "postcode",
-                    "label": "Oberkassel, Stadtbezirk 4, Dusseldorf, Düsseldorf, North Rhine-Westphalia, 40545, Germany",
+                    "label": "Oberkassel, Dusseldorf, Düsseldorf, North Rhine-Westphalia, 40545, Germany",
                     "name": "40545",
-                    "housenumber":"4",
+                    "housenumber":"",
                     "country": "Germany",
                     "country_code":"de",
                     "postcode": "40545",
@@ -27,10 +27,9 @@
                     "city": "Dusseldorf",
                     "district": "Oberkassel",
                     "admin": {
-                        "level4": "North Rhine-Westphalia",
-                        "level6": "Düsseldorf",
-                        "level9": "Stadtbezirk 4",
-                        "level10": "Oberkassel"
+                        "level1": "North Rhine-Westphalia",
+                        "level2": "Düsseldorf",
+                        "level3": "Oberkassel"
                     }
                 }
             },

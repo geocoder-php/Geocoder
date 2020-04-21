@@ -68,7 +68,13 @@ class StorageLocation implements Provider
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
         $result = [];
-        foreach ($this->dataBase->get($this->dataBase->normalizeStringForKeyName($query->getText())) as $place) {
+        $places = $this->dataBase->get(
+            $this->dataBase->normalizeStringForKeyName($query->getText()),
+            0,
+            $query->getLimit()
+        );
+
+        foreach ($places as $place) {
             $result[] = $this->mapPlaceToAddress($place);
         }
 

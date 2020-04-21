@@ -85,7 +85,7 @@ class Place extends Address
         /** @var AdminLevel $level */
         foreach ($this->getAdminLevels() as $level) {
             if ($level->getLevel() > $max) {
-                $max = $level;
+                $max = $level->getLevel();
             }
         }
 

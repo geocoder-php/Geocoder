@@ -15,9 +15,10 @@
                     "osm_type": "relation",
                     "osm_id": 9521389,
                     "type": "footway",
-                    "label": "Belsenplatz, Oberkassel, Stadtbezirk 4, Dusseldorf, Düsseldorf, North Rhine-Westphalia, 40545, Germany",
+                    "label": "Belsenplatz, Oberkassel, Dusseldorf, Düsseldorf, North Rhine-Westphalia, 40545, Germany",
                     "name": "Belsenplatz",
-                    "housenumber":"4",
+                    "housenumber":"1",
+                    "street": "Belsenplatz",
                     "country": "Germany",
                     "country_code":"de",
                     "postcode": "40545",
@@ -26,10 +27,10 @@
                     "city": "Dusseldorf",
                     "district": "Oberkassel",
                     "admin": {
-                        "level4": "North Rhine-Westphalia",
-                        "level6": "Düsseldorf",
-                        "level9": "Stadtbezirk 4",
-                        "level10": "Oberkassel"
+                        "level1": "North Rhine-Westphalia",
+                        "level2": "Düsseldorf",
+                        "level4": "Stadtbezirk 4",
+                        "level3": "Oberkassel"
                     }
                 }
             },

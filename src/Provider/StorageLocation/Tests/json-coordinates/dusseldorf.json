@@ -25,8 +25,8 @@
                     "postcode":"",
                     "city":"Dusseldorf",
                     "admin": {
-                        "level4": "North Rhine-Westphalia",
-                        "level6": "Düsseldorf"
+                        "level1": "North Rhine-Westphalia",
+                        "level2": "Düsseldorf"
                     }
                 }
             },

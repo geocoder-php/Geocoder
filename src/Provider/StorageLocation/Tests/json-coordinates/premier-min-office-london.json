@@ -25,10 +25,10 @@
                     "country":"United Kingdom",
                     "country_code":"gb",
                     "admin":{
-                        "level4":"England",
-                        "level5":"Greater London",
-                        "level6":"London",
-                        "level8":"City of Westminster"
+                        "level1":"England",
+                        "level2":"Greater London",
+                        "level3":"London",
+                        "level4":"City of Westminster"
                     }
                 }
             },
