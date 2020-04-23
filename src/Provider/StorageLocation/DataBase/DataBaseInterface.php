@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Geocoder\Provider\StorageLocation\DataBase;
 
+use Geocoder\Model\Address;
 use Geocoder\Provider\StorageLocation\Model\DBConfig;
 use Geocoder\Provider\StorageLocation\Model\Place;
 
@@ -40,10 +41,11 @@ interface DataBaseInterface
      * @param string $searchKey
      * @param int    $page
      * @param int    $maxResults
+     * @param string $locale
      *
      * @return Place[]
      */
-    public function get(string $searchKey, int $page = 0, int $maxResults = 30): array;
+    public function get(string $searchKey, int $page = 0, int $maxResults = 30, string $locale= ''): array;
 
     /**
      * @param Place $place
@@ -77,17 +79,34 @@ interface DataBaseInterface
     public function getDbConfig(): DBConfig;
 
     /**
-     * Key, which should associate with Place what we pass as argument
+     * Compile keys for each Address entity in Place's collection
      *
      * @param Place $place
      * @param bool  $useLevels
      * @param bool  $usePrefix
      * @param bool  $useAddress
      *
+     * @return string[]
+     */
+    public function compileKeys(
+        Place $place,
+        bool $useLevels = true,
+        bool $usePrefix = true,
+        bool $useAddress = true
+    ): array;
+
+    /**
+     * Compile key for specific Address entity
+     *
+     * @param Address $address
+     * @param bool    $useLevels
+     * @param bool    $usePrefix
+     * @param bool    $useAddress
+     *
      * @return string
      */
     public function compileKey(
-        Place $place,
+        Address $address,
         bool $useLevels = true,
         bool $usePrefix = true,
         bool $useAddress = true

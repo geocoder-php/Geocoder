@@ -15,6 +15,8 @@ namespace Geocoder\Provider\StorageLocation\Tests;
 use Cache\Adapter\PHPArray\ArrayCachePool;
 use Geocoder\IntegrationTest\CachedResponseClient;
 use Geocoder\IntegrationTest\ProviderIntegrationTest;
+use Geocoder\Location;
+use Geocoder\Model\Address;
 use Geocoder\Model\AdminLevel;
 use Geocoder\Model\AdminLevelCollection;
 use Geocoder\Model\Bounds;
@@ -25,6 +27,7 @@ use Geocoder\Provider\StorageLocation\Model\DBConfig;
 use Geocoder\Provider\StorageLocation\Model\Place;
 use Geocoder\Provider\StorageLocation\Model\Polygon;
 use Geocoder\Provider\StorageLocation\StorageLocation;
+use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Http\Client\HttpClient;
 use Http\Discovery\HttpClientDiscovery;
@@ -35,12 +38,19 @@ use Http\Discovery\HttpClientDiscovery;
 class IntegrationTest extends ProviderIntegrationTest
 {
     const ELEM_LATITUDE = 'latitude';
+
     const ELEM_LONGITUDE = 'longitude';
+
     const ELEM_EXPECTED = 'expected';
+
     const ELEM_STREET_NUMBER = 'streetNumber';
+
     const ELEM_STREET_NAME = 'streetName';
+
     const ELEM_SUB_LOCALITY = 'subLocality';
+
     const ELEM_LOCALITY = 'locality';
+
     const ELEM_POSTAL_CODE = 'postalCode';
 
     protected $testIpv4 = false;
@@ -90,7 +100,7 @@ class IntegrationTest extends ProviderIntegrationTest
     }
 
     /**
-     * @covers StorageLocation::getAllPlaces
+     * @covers \Geocoder\Provider\StorageLocation\StorageLocation::getAllPlaces
      */
     public function testGetAllPlaces()
     {
@@ -110,7 +120,7 @@ class IntegrationTest extends ProviderIntegrationTest
     }
 
     /**
-     * @covers StorageLocation::deletePlace
+     * @covers \Geocoder\Provider\StorageLocation\StorageLocation::deletePlace
      */
     public function testDeletePlace()
     {
@@ -128,6 +138,32 @@ class IntegrationTest extends ProviderIntegrationTest
             ++$page;
         }
         $this->assertEquals($this->countCoordFiles - 1, $totalCount);
+    }
+
+    /**
+     * Additional geocodeQuery with specific locale
+     *
+     * @throws \Geocoder\Exception\Exception
+     */
+    public function testGeocodeQueryWithLocale()
+    {
+        $provider = $this->createProvider($this->getCachedHttpClient());
+        $query = GeocodeQuery::create('Oberkassel, Düsseldorf')->withLocale('de');
+        $result = $provider->geocodeQuery($query);
+
+        // Check Dusseldorf assets in german language
+        $this->checkDusseldorfAssetsInGermanLang($result->first());
+    }
+
+    public function testReverseQueryWithLocale()
+    {
+        $provider = $this->createProvider($this->getCachedHttpClient());
+
+        // Close to the white house
+        $result = $provider->reverseQuery(ReverseQuery::fromCoordinates(51.231426, 6.761729)->withLocale('de'));
+
+        // Check Dusseldorf assets in german language
+        $this->checkDusseldorfAssetsInGermanLang($result->first());
     }
 
     /**
@@ -150,7 +186,7 @@ class IntegrationTest extends ProviderIntegrationTest
                 self::ELEM_SUB_LOCALITY => 'Dusseldorf',
                 self::ELEM_LOCALITY => 'North Rhine-Westphalia',
                 self::ELEM_POSTAL_CODE => '',
-            ]
+            ],
         ];
 
         /* BestenPlatz, should be return third layer what nested inside other two layers */
@@ -163,7 +199,7 @@ class IntegrationTest extends ProviderIntegrationTest
                 self::ELEM_SUB_LOCALITY => 'Dusseldorf',
                 self::ELEM_LOCALITY => 'North Rhine-Westphalia',
                 self::ELEM_POSTAL_CODE => '40545',
-            ]
+            ],
         ];
 
         /* LuegPlatz, should be return second layer what nested inside first layer */
@@ -177,8 +213,17 @@ class IntegrationTest extends ProviderIntegrationTest
                 self::ELEM_SUB_LOCALITY => 'Dusseldorf',
                 self::ELEM_LOCALITY => 'North Rhine-Westphalia',
                 self::ELEM_POSTAL_CODE => '40545',
-            ]
+            ],
         ];
+    }
+
+    private function checkDusseldorfAssetsInGermanLang(Location $location)
+    {
+        $this->assertEquals(51.2343, $location->getCoordinates()->getLatitude(), 'Latitude should be in Dusseldorf', 0.1);
+        $this->assertEquals(6.73134, $location->getCoordinates()->getLongitude(), 'Longitude should be in Dusseldorf', 0.1);
+        $this->assertEquals('Düsseldorf', $location->getSubLocality());
+        $this->assertEquals('Nordrhein-Westfalen', $location->getLocality());
+        $this->assertEquals('Deutschland', $location->getCountry()->getName());
     }
 
     /**
@@ -221,7 +266,7 @@ class IntegrationTest extends ProviderIntegrationTest
     private function loadJsonCoordinates(StorageLocation $provider): bool
     {
         $success = true;
-        $dirPath = __DIR__ . DIRECTORY_SEPARATOR . 'json-coordinates' . DIRECTORY_SEPARATOR;
+        $dirPath = __DIR__.DIRECTORY_SEPARATOR.'json-coordinates'.DIRECTORY_SEPARATOR;
 
         foreach (scandir($dirPath) as $file) {
             if (!is_file($dirPath.$file)) {
@@ -243,8 +288,27 @@ class IntegrationTest extends ProviderIntegrationTest
     {
         $root = $rawData['features'][0];
 
+        $polygons = [];
+        foreach ($root['geometry']['coordinates'] as $rawPolygon) {
+            $tempPolygon = new Polygon();
+            foreach ($rawPolygon as $coordinates) {
+                $tempPolygon->addCoordinates(new Coordinates($coordinates[1], $coordinates[0]));
+            }
+            $polygons[] = $tempPolygon;
+        }
+
+        $addresses = [];
+        foreach ($root['properties'] as $locale => $rawAddress) {
+            $addresses[$locale] = $this->mapRawDataToAddress($rawAddress);
+        }
+
+        return new Place($addresses, $polygons);
+    }
+
+    private function mapRawDataToAddress(array $rawData): Address
+    {
         $adminLevels = [];
-        foreach ($root['properties']['geocoding']['admin'] as $adminLevel => $name) {
+        foreach ($rawData['geocoding']['admin'] as $adminLevel => $name) {
             $level = (int) substr($adminLevel, 5);
             if ($level > 5) {
                 $level = 5;
@@ -255,28 +319,18 @@ class IntegrationTest extends ProviderIntegrationTest
             $adminLevels[$level] = new AdminLevel($level, $name);
         }
 
-        $polygons = [];
-        foreach ($root['geometry']['coordinates'] as $rawPolygon) {
-            $tempPolygon = new Polygon();
-            foreach ($rawPolygon as $coordinates) {
-                $tempPolygon->addCoordinates(new Coordinates($coordinates[1], $coordinates[0]));
-            }
-            $polygons[] = $tempPolygon;
-        }
-
-        return new Place(
+        return new Address(
             $rawData['geocoding']['attribution'],
             new AdminLevelCollection($adminLevels),
-            null,
-            new Bounds($root['bbox'][0], $root['bbox'][1], $root['bbox'][2], $root['bbox'][3]),
-            $root['properties']['geocoding']['housenumber'] ?? '',
-            $root['properties']['geocoding']['street'] ?? '',
-            $root['properties']['geocoding']['postcode'] ?? '',
-            $root['properties']['geocoding']['state'] ?? '',
-            $root['properties']['geocoding']['city'] ?? '',
-            new Country($root['properties']['geocoding']['country'], $root['properties']['geocoding']['country_code']),
-            null,
-            $polygons
+            new Coordinates($rawData['coordinates'][1], $rawData['coordinates'][0]),
+            new Bounds($rawData['bbox'][0], $rawData['bbox'][1], $rawData['bbox'][2], $rawData['bbox'][3]),
+            $rawData['geocoding']['housenumber'] ?? '',
+            $rawData['geocoding']['street'] ?? '',
+            $rawData['geocoding']['postcode'] ?? '',
+            $rawData['geocoding']['state'] ?? '',
+            $rawData['geocoding']['city'] ?? '',
+            new Country($rawData['geocoding']['country'], $rawData['geocoding']['country_code']),
+            null
         );
     }
 }

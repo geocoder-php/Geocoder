@@ -10,32 +10,71 @@
         {
             "type": "Feature",
             "properties": {
-                "geocoding": {
-                    "place_id": 235355189,
-                    "osm_type": "relation",
-                    "osm_id": 62539,
-                    "type": "administrative",
-                    "label": "Düsseldorf, North Rhine-Westphalia, Germany",
-                    "name": "Dusseldorf",
-                    "county":"Düsseldorf",
-                    "country": "Germany",
-                    "country_code":"de",
-                    "state": "North Rhine-Westphalia",
-                    "housenumber":"",
-                    "postcode":"",
-                    "city":"Dusseldorf",
-                    "admin": {
-                        "level1": "North Rhine-Westphalia",
-                        "level2": "Düsseldorf"
-                    }
+                "en": {
+                    "geocoding": {
+                        "place_id": 235355189,
+                        "osm_type": "relation",
+                        "osm_id": 62539,
+                        "type": "administrative",
+                        "label": "Düsseldorf, North Rhine-Westphalia, Germany",
+                        "name": "Dusseldorf",
+                        "county":"Düsseldorf",
+                        "country": "Germany",
+                        "country_code":"de",
+                        "state": "North Rhine-Westphalia",
+                        "housenumber":"",
+                        "postcode":"",
+                        "city":"Dusseldorf",
+                        "attribution": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+                        "admin": {
+                            "level1": "North Rhine-Westphalia",
+                            "level2": "Düsseldorf"
+                        }
+                    },
+                    "coordinates": [
+                        6.6888145,
+                        51.2294954
+                    ],
+                    "bbox": [
+                        6.6888145,
+                        51.1243747,
+                        6.9398848,
+                        51.3525324
+                    ]
+                },
+                "de": {
+                    "geocoding": {
+                        "place_id": 235355189,
+                        "osm_type": "relation",
+                        "osm_id": 62539,
+                        "type": "administrative",
+                        "label": "Düsseldorf, Nordrhein-Westfalen, Deutschland",
+                        "name": "Düsseldorf",
+                        "county":"Düsseldorf",
+                        "country": "Deutschland",
+                        "country_code":"de",
+                        "state": "Nordrhein-Westfalen",
+                        "housenumber":"",
+                        "postcode":"",
+                        "city":"Dusseldorf",
+                        "attribution": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+                        "admin": {
+                            "level1": "North Rhine-Westphalia",
+                            "level2": "Düsseldorf"
+                        }
+                    },
+                    "coordinates": [
+                        6.6888145,
+                        51.2294954
+                    ],
+                    "bbox": [
+                        6.6888145,
+                        51.1243747,
+                        6.9398848,
+                        51.3525324
+                    ]
                 }
             },
-            "bbox": [
-                6.6888145,
-                51.1243747,
-                6.9398848,
-                51.3525324
-            ],
             "geometry": {
                 "type": "Polygon",
                 "coordinates": [

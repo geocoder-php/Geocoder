@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Geocoder\Provider\StorageLocation\Tests\DataBase;
 
+use Geocoder\Model\Address;
 use Geocoder\Provider\StorageLocation\DataBase\DataBaseInterface;
 use Geocoder\Provider\StorageLocation\Model\Place;
 use PHPUnit\Framework\TestCase;
@@ -30,9 +31,10 @@ abstract class StorageLocationProviderIntegrationDbTest extends TestCase
             file_get_contents(__DIR__.DIRECTORY_SEPARATOR.'places'.DIRECTORY_SEPARATOR.'add.place'),
             true
         ));
+
         $this->dataBase->add($origPlace);
 
-        $places = array_values($this->dataBase->get($this->dataBase->compileKey($origPlace)));
+        $places = array_values($this->dataBase->get($this->dataBase->compileKey($origPlace->getSelectedAddress())));
 
         $this->assertEquals([$origPlace], $places);
     }
@@ -43,17 +45,22 @@ abstract class StorageLocationProviderIntegrationDbTest extends TestCase
             file_get_contents(__DIR__.DIRECTORY_SEPARATOR.'places'.DIRECTORY_SEPARATOR.'update.place'),
             true
         );
-        $this->dataBase->add(Place::createFromArray($origPlace));
+        $placeObj = Place::createFromArray($origPlace);
+        $this->dataBase->add($placeObj);
+
         $this->assertEquals(
-            [Place::createFromArray($origPlace)],
-            array_values($this->dataBase->get($this->dataBase->compileKey(Place::createFromArray($origPlace))))
+            [$placeObj],
+            array_values($this->dataBase->get($this->dataBase->compileKey($placeObj->getSelectedAddress())))
         );
 
-        $origPlace['timezone'] = 'Control time zone';
-        $this->dataBase->update(Place::createFromArray($origPlace));
+        $placeObj->setSelectedAddress(Address::createFromArray(array_merge(
+            $origPlace['address']['en'],
+            ['timezone' => 'Control time zone'])
+        ));
+        $this->dataBase->update($placeObj);
         $this->assertEquals(
-            [Place::createFromArray($origPlace)],
-            array_values($this->dataBase->get($this->dataBase->compileKey(Place::createFromArray($origPlace))))
+            [$placeObj],
+            array_values($this->dataBase->get($this->dataBase->compileKey($placeObj->getSelectedAddress())))
         );
     }
 
@@ -64,10 +71,13 @@ abstract class StorageLocationProviderIntegrationDbTest extends TestCase
             true
         ));
         $this->dataBase->add($origPlace);
-        $this->assertEquals([$origPlace], array_values($this->dataBase->get($this->dataBase->compileKey($origPlace))));
+        $this->assertEquals(
+            [$origPlace],
+            array_values($this->dataBase->get($this->dataBase->compileKey($origPlace->getSelectedAddress())))
+        );
 
         $this->dataBase->delete($origPlace);
-        $this->assertEquals([], $this->dataBase->get($this->dataBase->compileKey($origPlace)));
+        $this->assertEquals([], $this->dataBase->get($this->dataBase->compileKey($origPlace->getSelectedAddress())));
     }
 
     public function testGetAllPlaces()

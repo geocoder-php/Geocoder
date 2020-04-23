@@ -71,11 +71,12 @@ class StorageLocation implements Provider
         $places = $this->dataBase->get(
             $this->dataBase->normalizeStringForKeyName($query->getText()),
             0,
-            $query->getLimit()
+            $query->getLimit(),
+            $query->getLocale() ? $query->getLocale() : ''
         );
 
         foreach ($places as $place) {
-            $result[] = $this->mapPlaceToAddress($place);
+            $result = array_merge($result, $place->getAvailableAddresses());
         }
 
         return new AddressCollection($result);
@@ -86,83 +87,51 @@ class StorageLocation implements Provider
      */
     public function reverseQuery(ReverseQuery $query): Collection
     {
-        $result = $this->findPlaceByCoordinates($query->getCoordinates());
+        $result = $this->findPlaceByCoordinates($query->getCoordinates(), $query->getLocale() ? $query->getLocale() : '');
 
-        return new AddressCollection($result ? [$this->mapPlaceToAddress($result)] : []);
-    }
-
-    /**
-     * @param Place $place
-     *
-     * @return Address
-     */
-    private function mapPlaceToAddress(Place $place): Address
-    {
-        $tempResults = [];
-        $builder = new AddressBuilder($this->getName());
-
-        if (!$place->getCoordinates()) {
-            foreach ($place->getPolygons() as $polygon) {
-                $tempResults[] = $this->getCentralCoordinate($polygon->getCoordinates());
-            }
-            $centralCoordinate = $this->getCentralCoordinate($tempResults);
-            $builder->setCoordinates($centralCoordinate->getLatitude(), $centralCoordinate->getLongitude());
-        }
-
-        $builder->setAdminLevels($place->getAdminLevels()->all());
-        $builder->setBounds(
-            $place->getBounds()->getSouth(),
-            $place->getBounds()->getWest(),
-            $place->getBounds()->getNorth(),
-            $place->getBounds()->getEast()
-        );
-        $builder->setStreetNumber($place->getStreetNumber());
-        $builder->setStreetName($place->getStreetName());
-        $builder->setPostalCode($place->getPostalCode());
-
-        $builder->setLocality($place->getLocality());
-        $builder->setSubLocality($place->getSubLocality());
-
-        $builder->setCountry($place->getCountry()->getName());
-        $builder->setCountryCode($place->getCountry()->getCode());
-        $builder->setTimezone($place->getTimezone());
-
-        return $builder->build();
+        return new AddressCollection($result ? $result->getAvailableAddresses() : []);
     }
 
     /**
      * @param Coordinates $coordinates
+     * @param string $locale
      *
      * @return Place|null
      */
-    private function findPlaceByCoordinates(Coordinates $coordinates)
+    private function findPlaceByCoordinates(Coordinates $coordinates, string $locale = '')
     {
         $levels = $this->dataBase->getAdminLevels();
+        asort($levels);
 
         /** @var Place|null $result */
         $result = null;
         foreach ($levels as $level) {
             $result ?
-                $tempPlace = $result :
-                $tempPlace = new Place(
-                    $this->getName(),
-                    new AdminLevelCollection([new AdminLevel($level, ',')])
-                );
+                $tempPlace = $result->getSelectedAddress() :
+                $tempPlace = new Address($this->getName(), new AdminLevelCollection([new AdminLevel($level, ',')]));
 
-            $possiblePlaces = $this->dataBase->get($this->dataBase->compileKey($tempPlace, true, true, false));
+            $page = 0;
+            while ($possiblePlaces = $this->dataBase->get(
+                $this->dataBase->compileKey($tempPlace, true, true, false),
+                $page,
+                $this->dataBase->getDbConfig()->getMaxPlacesInOneResponse(),
+                $locale
+            )) {
+                foreach ($possiblePlaces as $place) {
+                    if ($result && $level <= $place->getMaxAdminLevel()) {
+                        continue;
+                    }
 
-            foreach ($possiblePlaces as $place) {
-                if ($result && $level <= $place->getMaxAdminLevel()) {
-                    continue;
-                }
+                    foreach ($place->getPolygons() as $polygon) {
+                        if ($this->checkCoordInBundle($coordinates->getLatitude(), $coordinates->getLongitude(), $polygon)) {
+                            $result = $place;
 
-                foreach ($place->getPolygons() as $polygon) {
-                    if ($this->checkCoordInBundle($coordinates->getLatitude(), $coordinates->getLongitude(), $polygon)) {
-                        $result = $place;
-
-                        continue 3;
+                            break 3;
+                        }
                     }
                 }
+
+                ++$page;
             }
 
             break;

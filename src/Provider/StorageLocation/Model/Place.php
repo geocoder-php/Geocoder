@@ -14,64 +14,105 @@ namespace Geocoder\Provider\StorageLocation\Model;
 
 use Geocoder\Model\Address;
 use Geocoder\Model\AdminLevel;
-use Geocoder\Model\AdminLevelCollection;
-use Geocoder\Model\Bounds;
 use Geocoder\Model\Coordinates;
-use Geocoder\Model\Country;
 
 /**
  * @author Borys Yermokhin <borys_ermokhin@yahoo.com>
  */
-class Place extends Address
+class Place
 {
+    const DEFAULT_LOCALE = 'en';
+
     /**
      * @var Polygon[]|null
      */
     private $polygons;
 
     /**
-     * @param string               $providedBy
-     * @param AdminLevelCollection $adminLevels
-     * @param Coordinates|null     $coordinates
-     * @param Bounds|null          $bounds
-     * @param string|null          $streetNumber
-     * @param string|null          $streetName
-     * @param string|null          $postalCode
-     * @param string|null          $locality
-     * @param string|null          $subLocality
-     * @param Country|null         $country
-     * @param string|null          $timezone
+     * @var Address[]
+     */
+    private $addresses = [];
+
+    /**
+     * Current selected locale
+     *
+     * @var string
+     */
+    private $currentLocale;
+
+    /**
+     * Unique id of Place object
+     *
+     * @var string
+     */
+    private $objectHash;
+
+    /**
+     * @param Address|Address[]    $address
      * @param Polygon[]|null       $polygons
+     * @param string               $locale
      */
     public function __construct(
-        string $providedBy,
-        AdminLevelCollection $adminLevels,
-        $coordinates = null,
-        Bounds $bounds = null,
-        string $streetNumber = null,
-        string $streetName = null,
-        string $postalCode = null,
-        string $locality = null,
-        string $subLocality = null,
-        Country $country = null,
-        string $timezone = null,
-        array $polygons = null
+        $address,
+        array $polygons = null,
+        string $locale = self::DEFAULT_LOCALE
     ) {
-        parent::__construct(
-            $providedBy,
-            $adminLevels,
-            $coordinates,
-            $bounds,
-            $streetNumber,
-            $streetName,
-            $postalCode,
-            $locality,
-            $subLocality,
-            $country,
-            $timezone
-        );
+        if (is_array($address)) {
+            foreach ($address as $localeNode => $addressNode) {
+                $this->addresses[$localeNode] = $addressNode;
+            }
+        } else {
+            $this->addresses[$locale] = $address;
+        }
 
         $this->polygons = $polygons;
+        $this->currentLocale = $locale;
+    }
+
+    /**
+     * Return Address object in selected locale
+     *
+     * @return Address
+     */
+    public function getSelectedAddress(): Address
+    {
+        return $this->addresses[$this->currentLocale];
+    }
+
+    /**
+     * Set Address for selected locale
+     *
+     * @param Address $address
+     *
+     * @return bool
+     */
+    public function setSelectedAddress(Address $address): bool
+    {
+        $this->addresses[$this->currentLocale] = $address;
+
+        return true;
+    }
+
+    /**
+     * @param string $locale
+     *
+     * @return bool
+     */
+    public function selectLocale(string $locale): bool
+    {
+        $this->currentLocale = $locale;
+
+        return true;
+    }
+
+    /**
+     * Return associated array with available Address object and locales as keys
+     *
+     * @return Address[]
+     */
+    public function getAvailableAddresses(): array
+    {
+        return $this->addresses;
     }
 
     /**
@@ -81,9 +122,11 @@ class Place extends Address
      */
     public function getMaxAdminLevel(): int
     {
+        $address = $this->getSelectedAddress();
+
         $max = 0;
         /** @var AdminLevel $level */
-        foreach ($this->getAdminLevels() as $level) {
+        foreach ($address->getAdminLevels() as $level) {
             if ($level->getLevel() > $max) {
                 $max = $level->getLevel();
             }
@@ -146,18 +189,60 @@ class Place extends Address
 
     /**
      * @param array $data
+     * @param array $includeLocales
      *
      * @return Place
      */
-    public static function createFromArray(array $data)
+    public static function createFromArray(array $data, array $includeLocales = [])
     {
-        /** @var Place $result */
-        $result = parent::createFromArray($data);
-        if (isset($data['polygons'])) {
-            $result->setPolygonsFromArray($data['polygons']);
+        $addresses = [];
+        $firstLocale = '';
+        if (isset($data['address']) && is_array($data['address'])) {
+            count($includeLocales) > 0
+                ? $preparedData = array_intersect_key($data['address'], array_fill_keys($includeLocales, true))
+                : $preparedData = $data['address'];
+
+            foreach ($preparedData as $locale => $rawAddress) {
+                if ($firstLocale === '') {
+                    $firstLocale = $locale;
+                }
+
+                $addresses[$locale] = Address::createFromArray($rawAddress);
+            }
         }
 
-        return $result;
+
+        $place = new Place($addresses, null, $firstLocale);
+
+        if (isset($data['polygons'])) {
+            $place->setPolygonsFromArray($data['polygons']);
+        }
+
+        if (isset($data['hash'])) {
+            $place->setObjectHash($data['hash']);
+        }
+
+        return $place;
+    }
+
+    /**
+     * @return string
+     */
+    public function getObjectHash(): string
+    {
+        return $this->objectHash;
+    }
+
+    /**
+     * @param string $objectHash
+     *
+     * @return Place
+     */
+    public function setObjectHash(string $objectHash): self
+    {
+        $this->objectHash = $objectHash;
+
+        return $this;
     }
 
     /**
@@ -165,9 +250,14 @@ class Place extends Address
      */
     public function toArray(): array
     {
-        $parentResult = parent::toArray();
-        $parentResult['polygons'] = $this->getPolygonsAsArray();
+        $result = [];
+        foreach ($this->addresses as $locale => $address) {
+            $result['address'][$locale] = $address->toArray();
+        }
 
-        return $parentResult;
+        $result['polygons'] = $this->getPolygonsAsArray();
+        $result['hash'] = $this->objectHash;
+
+        return $result;
     }
 }

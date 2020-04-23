@@ -1,38 +1,42 @@
 {
-   "providedBy":"Data \u00a9 OpenStreetMap contributors, ODbL 1.0. https:\/\/osm.org\/copyright",
-   "latitude":null,
-   "longitude":null,
-   "bounds":{
-      "south":-77.0368542,
-      "west":38.8974898,
-      "north":-77.0362526,
-      "east":38.897911
+   "address":{
+    "en": {
+       "providedBy":"Data \u00a9 OpenStreetMap contributors, ODbL 1.0. https:\/\/osm.org\/copyright",
+       "latitude":null,
+       "longitude":null,
+       "bounds":{
+          "south":-77.0368542,
+          "west":38.8974898,
+          "north":-77.0362526,
+          "east":38.897911
+       },
+       "streetNumber":"1600",
+       "streetName":"",
+       "postalCode":"20500",
+       "locality":"Washington, D.C.",
+       "subLocality":"Washington D.C.",
+       "adminLevels":{
+          "2":{
+             "name":"Washington D.C.",
+             "code":null,
+             "level":2
+          },
+          "4":{
+             "name":"Washington, D.C.",
+             "code":null,
+             "level":4
+          },
+          "5":{
+             "name":"Washington",
+             "code":null,
+             "level":5
+          }
+       },
+       "country":"United States of America",
+       "countryCode":"us",
+       "timezone":null
+    }
    },
-   "streetNumber":"1600",
-   "streetName":"",
-   "postalCode":"20500",
-   "locality":"Washington, D.C.",
-   "subLocality":"Washington D.C.",
-   "adminLevels":{
-      "2":{
-         "name":"Washington D.C.",
-         "code":null,
-         "level":2
-      },
-      "4":{
-         "name":"Washington, D.C.",
-         "code":null,
-         "level":4
-      },
-      "5":{
-         "name":"Washington",
-         "code":null,
-         "level":5
-      }
-   },
-   "country":"United States of America",
-   "countryCode":"us",
-   "timezone":null,
    "polygons":[
       [
          [

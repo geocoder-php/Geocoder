@@ -10,34 +10,41 @@
         {
             "type":"Feature",
             "properties":{
-                "geocoding":{
-                    "place_id":235609307,
-                    "osm_type":"relation",
-                    "osm_id":1879842,
-                    "type":"attraction",
-                    "label":"Prime Minister’s Office, 10, Downing Street, St. James's, Covent Garden, City of Westminster, London, Greater London, England, SW1A 2AA, United Kingdom",
-                    "name":"Prime Minister’s Office",
-                    "housenumber":"10",
-                    "street":"Downing Street",
-                    "postcode":"SW1A 2AA",
-                    "city":"London",
-                    "state":"England",
-                    "country":"United Kingdom",
-                    "country_code":"gb",
-                    "admin":{
-                        "level1":"England",
-                        "level2":"Greater London",
-                        "level3":"London",
-                        "level4":"City of Westminster"
-                    }
+                "en": {
+                    "geocoding":{
+                        "place_id":235609307,
+                        "osm_type":"relation",
+                        "osm_id":1879842,
+                        "type":"attraction",
+                        "label":"Prime Minister’s Office, 10, Downing Street, St. James's, Covent Garden, City of Westminster, London, Greater London, England, SW1A 2AA, United Kingdom",
+                        "name":"Prime Minister’s Office",
+                        "housenumber":"10",
+                        "street":"Downing Street",
+                        "postcode":"SW1A 2AA",
+                        "city":"London",
+                        "state":"England",
+                        "country":"United Kingdom",
+                        "country_code":"gb",
+                        "attribution": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+                        "admin":{
+                            "level1":"England",
+                            "level2":"Greater London",
+                            "level3":"London",
+                            "level4":"City of Westminster"
+                        }
+                    },
+                    "coordinates": [
+                        -0.1278356,
+                        51.5034646
+                    ],
+                    "bbox":[
+                        -0.1278356,
+                        51.5032573,
+                        -0.1273038,
+                        51.5036483
+                    ]
                 }
             },
-            "bbox":[
-                -0.1278356,
-                51.5032573,
-                -0.1273038,
-                51.5036483
-            ],
             "geometry":{
                 "type":"Polygon",
                 "coordinates":[

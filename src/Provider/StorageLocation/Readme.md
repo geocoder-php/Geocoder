@@ -21,6 +21,7 @@ composer require geocoder-php/storage-location-provider
 * save requests to real provider
 * own-driven performance control
 * opportunity to build own locations, places
+* possible to use high precise value for coordinates (storing as float type)
 
 ### Usage
 
@@ -42,7 +43,7 @@ After that you can use Storage Location provider:
 $provider = new \Geocoder\Provider\StorageLocation\StorageLocation($database, $dbConfig);
 ```
 
-Please take attention what you need to take care for save data in database what you use. Also in first moment you need to add places what you want to find in feature. Each place in database it's usual Address entity extended by 1 additional property - `Polygons`.
+Please take attention what you need to take care for save data in database what you use. Also in first moment you need to add places what you want to find in feature. Each place in database it's specific Place entity what contain collection of Address entities and additional properties - `Polygons`, `currentLocale` and `objectHash`.
 
 ```php
 $headers = [
@@ -100,17 +101,19 @@ function mapRawDataToPlace(array $rawData): \Geocoder\Provider\StorageLocation\M
         }
 
         return new \Geocoder\Provider\StorageLocation\Model\Place(
-            $rawData['geocoding']['attribution'],
-            new \Geocoder\Model\AdminLevelCollection($adminLevels),
-            null,
-            new \Geocoder\Model\Bounds($root['bbox'][0], $root['bbox'][1], $root['bbox'][2], $root['bbox'][3]),
-            $root['properties']['geocoding']['housenumber'] ?? '',
-            $root['properties']['geocoding']['street'] ?? '',
-            $root['properties']['geocoding']['postcode'] ?? '',
-            $root['properties']['geocoding']['state'] ?? '',
-            $root['properties']['geocoding']['city'] ?? '',
-            new \Geocoder\Model\Country($root['properties']['geocoding']['country'], $root['properties']['geocoding']['country_code']),
-            null,
+            ['en' => new \Geocoder\Model\Address(
+                $rawData['geocoding']['attribution'],
+                new \Geocoder\Model\AdminLevelCollection($adminLevels),
+                new \Geocoder\Model\Coordinates($root['coordinates'][1], $root['coordinates'][0]),
+                new \Geocoder\Model\Bounds($root['bbox'][0], $root['bbox'][1], $root['bbox'][2], $root['bbox'][3]),
+                $root['properties']['geocoding']['housenumber'] ?? '',
+                $root['properties']['geocoding']['street'] ?? '',
+                $root['properties']['geocoding']['postcode'] ?? '',
+                $root['properties']['geocoding']['state'] ?? '',
+                $root['properties']['geocoding']['city'] ?? '',
+                new \Geocoder\Model\Country($root['properties']['geocoding']['country'], $root['properties']['geocoding']['country_code']),
+                null
+            )],
             $polygons
         );
     }
@@ -128,20 +131,20 @@ For `geocodeQuery` use it in usual way.
 $address = $provider->geocodeQuery(new \Geocoder\Query\GeocodeQuery('Kyiv, Ukraine'));
 ```
 
-Take attention what locale not working now. Probably in future versions it will be possible to have few locales.
-
 ### Working with Database
 
-That provider have database functionality in next methods:
-* `add` - add Place object, return boolean
-* `delete` - delete Place object, return boolean
+That provider have additional methods for realize database functionality:
+* `addPlace` - add Place object, return boolean
+* `deletePlace` - delete Place object, return boolean
 * `getAllPlaces` - get all existent places in db, return array of `\Geocoder\Provider\StorageLocation\Model\Place`
 
-Take attention what each Place object ident in database according:
+Take attention what each Place object identified in database according to `objectHash` property. Please use that property as read-only. If you will change that property, database provider will lose relation to that Place in database.
+
+Take attention what each Address object identified in database according:
 1. Admin level - admin level name
 2. Country code, postal code, locality, subLocality, streetName, streetNumber
 
-If you want to change some field what participate in forming in identity object, you should delete that Place and add new Place with already changed object. Also please take attention what each object in database have time to life value. By default it's 365 days (1 year), you can setup it through passing specific argument in creation `\Geocoder\Provider\StorageLocation\Model\DBConfig`.
+If you want to change Place entity you should delete that Place and add new Place with already changed object. Also please take attention what each object in database have time to life value. By default it's 365 days (1 year), you can setup it through passing specific argument in creation `\Geocoder\Provider\StorageLocation\Model\DBConfig`.
 
 ### Testing
 

@@ -10,33 +10,40 @@
         {
             "type":"Feature",
             "properties":{
-                "geocoding":{
-                    "place_id":145015996,
-                    "osm_type":"way",
-                    "osm_id":238241022,
-                    "type":"building",
-                    "label":"White House, 1600, Pennsylvania Avenue Northwest, Golden Triangle, Penn Quarter, Washington D.C., Washington, Washington, D.C., 20500, United States of America",
-                    "name":"White House",
-                    "housenumber":"1600",
-                    "postcode":"20500",
-                    "city":"Washington D.C.",
-                    "county":"Washington",
-                    "state":"Washington, D.C.",
-                    "country":"United States of America",
-                    "country_code":"us",
-                    "admin":{
-                        "level1":"Washington, D.C.",
-                        "level2":"Washington",
-                        "level3":"Washington D.C."
-                    }
+                "en": {
+                    "geocoding":{
+                        "place_id":145015996,
+                        "osm_type":"way",
+                        "osm_id":238241022,
+                        "type":"building",
+                        "label":"White House, 1600, Pennsylvania Avenue Northwest, Golden Triangle, Penn Quarter, Washington D.C., Washington, Washington, D.C., 20500, United States of America",
+                        "name":"White House",
+                        "housenumber":"1600",
+                        "postcode":"20500",
+                        "city":"Washington D.C.",
+                        "county":"Washington",
+                        "state":"Washington, D.C.",
+                        "country":"United States of America",
+                        "country_code":"us",
+                        "attribution": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+                        "admin":{
+                            "level1":"Washington, D.C.",
+                            "level2":"Washington",
+                            "level3":"Washington D.C."
+                        }
+                    },
+                    "coordinates": [
+                        -77.0368542,
+                        38.8977036
+                    ],
+                    "bbox":[
+                        -77.0368542,
+                        38.8974898,
+                        -77.0362526,
+                        38.897911
+                    ]
                 }
             },
-            "bbox":[
-                -77.0368542,
-                38.8974898,
-                -77.0362526,
-                38.897911
-            ],
             "geometry":{
                 "type":"Polygon",
                 "coordinates":[

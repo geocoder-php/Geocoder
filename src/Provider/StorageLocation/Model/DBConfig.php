@@ -21,6 +21,8 @@ final class DBConfig
 
     const KEY_FOR_DUMP_KEYS = 'dump-keys';
 
+    const KEY_FOR_HASH_KEYS = 'hash-keys';
+
     const PREFIX_LEVEL = 'level';
 
     const KEY_FOR_ADMIN_LEVELS = 'exist-admin-levels';
@@ -33,6 +35,8 @@ final class DBConfig
 
     const MAX_PLACES_IN_ONE_RESPONSE = 100;
 
+    const DEFAULT_LOCALE = 'en';
+
     /**
      * That prefix will be use before all keys what will store database driver
      *
@@ -41,11 +45,18 @@ final class DBConfig
     private $globalPrefix;
 
     /**
-     * That key will be use for name key of record in db where will store all relevant records in database
+     * That key will be use for name key of record in db where will store all references (hashes) to records in database
      *
      * @var string
      */
     private $keyForDumpKeys;
+
+    /**
+     * That key will be use for name key of record in db where will store all relevant records in database
+     *
+     * @var string
+     */
+    private $keyForHashKeys;
 
     /**
      * That prefix will be use for identify level section in record's key
@@ -89,24 +100,35 @@ final class DBConfig
      */
     private $maxPlacesInOneResponse;
 
+    /**
+     * Locale alias what will be default for queries
+     *
+     * @var string
+     */
+    private $defaultLocale;
+
     public function __construct(
         array $globalPrefix = self::GLOBAL_PREFIX,
         string $keyForDumpKeys = self::KEY_FOR_DUMP_KEYS,
+        string $keyForHashKeys = self::KEY_FOR_HASH_KEYS,
         string $prefixLevel = self::PREFIX_LEVEL,
         string $keyForAdminLevels = self::KEY_FOR_ADMIN_LEVELS,
         string $glueForSections = self::GLUE_FOR_SECTIONS,
         string $glueForLevel = self::GLUE_FOR_LEVEL,
         string $ttlForRecord = self::TTL_FOR_RECORD,
-        int $maxPlacesInOneResponse = self::MAX_PLACES_IN_ONE_RESPONSE
+        int $maxPlacesInOneResponse = self::MAX_PLACES_IN_ONE_RESPONSE,
+        string $defaultLocale = self::DEFAULT_LOCALE
     ) {
         $this->globalPrefix = $globalPrefix;
         $this->keyForDumpKeys = $keyForDumpKeys;
+        $this->keyForHashKeys = $keyForHashKeys;
         $this->prefixLevel = $prefixLevel;
         $this->keyForAdminLevels = $keyForAdminLevels;
         $this->glueForSections = $glueForSections;
         $this->glueForLevel = $glueForLevel;
         $this->ttlForRecord = new \DateInterval($ttlForRecord);
         $this->maxPlacesInOneResponse = $maxPlacesInOneResponse;
+        $this->defaultLocale = $defaultLocale;
     }
 
     /**
@@ -145,6 +167,26 @@ final class DBConfig
     public function setKeyForDumpKeys(string $keyForDumpKeys): self
     {
         $this->keyForDumpKeys = $keyForDumpKeys;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getKeyForHashKeys(): string
+    {
+        return $this->keyForHashKeys;
+    }
+
+    /**
+     * @param string $keyForHashKeys
+     *
+     * @return DBConfig
+     */
+    public function setKeyForHashKeys(string $keyForHashKeys): self
+    {
+        $this->keyForHashKeys = $keyForHashKeys;
 
         return $this;
     }
@@ -263,5 +305,25 @@ final class DBConfig
     public function setMaxPlacesInOneResponse(int $maxPlacesInOneResponse)
     {
         $this->maxPlacesInOneResponse = $maxPlacesInOneResponse;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultLocale(): string
+    {
+        return $this->defaultLocale;
+    }
+
+    /**
+     * @param string $defaultLocale
+     *
+     * @return DBConfig
+     */
+    public function setDefaultLocale(string $defaultLocale): self
+    {
+        $this->defaultLocale = $defaultLocale;
+
+        return $this;
     }
 }

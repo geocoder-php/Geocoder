@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Geocoder\Provider\StorageLocation\DataBase;
 
+use Geocoder\Model\Address;
 use Geocoder\Model\AdminLevel;
 use Geocoder\Provider\StorageLocation\Model\DBConfig;
 use Geocoder\Provider\StorageLocation\Model\Place;
@@ -24,11 +25,18 @@ use Psr\Log\InvalidArgumentException;
 class PsrCache implements DataBaseInterface
 {
     /**
-     * Buffer for actual keys
+     * By that keys we will store hashes (references) to fetch real object
+     *
+     * @var string[][]
+     */
+    private $actualKeys = [];
+
+    /**
+     * By that keys we will store real Place objects
      *
      * @var string[]
      */
-    private $actualKeys = [];
+    private $objectsHashes = [];
 
     /**
      * Sorted array of admin levels what used for stored data
@@ -75,17 +83,24 @@ class PsrCache implements DataBaseInterface
      */
     public function add(Place $place): bool
     {
+        $place->setObjectHash('');
+        $place->setObjectHash(spl_object_hash($place));
+
         $rawData = json_encode($place->toArray());
 
-        $itemName = $this->compileKey($place);
-
-        $item = $this->databaseProvider->getItem($itemName);
+        $item = $this->databaseProvider->getItem($place->getObjectHash());
         $item->expiresAfter($this->dbConfig->getTtlForRecord());
         $item->set($rawData);
 
         $this->databaseProvider->save($item);
 
-        $this->actualKeys[] = $itemName;
+        $this->objectsHashes[] = $place->getObjectHash();
+        $this->updateHashKeys();
+
+        foreach ($this->compileKeys($place) as $locale => $key) {
+            $this->actualKeys[$locale][$key] = $place->getObjectHash();
+        }
+
         $this->updateActualKeys();
 
         return true;
@@ -100,17 +115,27 @@ class PsrCache implements DataBaseInterface
     {
         $rawData = json_encode($place->toArray());
 
-        $itemName = $this->compileKey($place);
+        $item = $this->databaseProvider->getItem($place->getObjectHash());
 
-        $item = $this->databaseProvider->getItem($itemName);
-        if (!$item->isHit()) {
-            $this->actualKeys[] = $itemName;
-            $this->updateActualKeys();
-        }
         $item->expiresAfter($this->dbConfig->getTtlForRecord());
         $item->set($rawData);
 
         $this->databaseProvider->save($item);
+
+        $this->objectsHashes[] = $place->getObjectHash();
+        $this->updateHashKeys();
+
+        foreach ($this->compileKeys($place) as $locale => $key) {
+            $item = $this->databaseProvider->getItem($key);
+            $item->expiresAfter($this->dbConfig->getTtlForRecord());
+            $item->set($place->getObjectHash());
+
+            $this->databaseProvider->save($item);
+
+            $this->actualKeys[$locale][$key] = $place->getObjectHash();
+        }
+
+        $this->updateActualKeys();
 
         return true;
     }
@@ -120,19 +145,23 @@ class PsrCache implements DataBaseInterface
      *
      * @throws \Psr\Cache\InvalidArgumentException
      */
-    public function get(string $searchKey, int $page = 0, int $maxResults = 30): array
+    public function get(string $searchKey, int $page = 0, int $maxResults = 30, string $locale = ''): array
     {
         if ($maxResults > $this->dbConfig->getMaxPlacesInOneResponse()) {
             $maxResults = $this->dbConfig->getMaxPlacesInOneResponse();
         }
 
+        if ($locale === '') {
+            $locale = $this->dbConfig->getDefaultLocale();
+        }
+
         $result = [];
 
-        foreach ($this->makeSearch($searchKey, $page, $maxResults) as $key) {
-            $item = $this->databaseProvider->getItem($key);
+        foreach ($this->makeSearch($searchKey, $page, $maxResults, $locale) as $key) {
+            $item = $this->databaseProvider->getItem($this->actualKeys[$locale][$key]);
             if ($item->isHit()) {
                 $rawData = json_decode($item->get(), true);
-                $result[$key] = (Place::createFromArray($rawData));
+                is_array($rawData) ? $result[$key] = (Place::createFromArray($rawData, [$locale])) : $result[$key] = null;
             }
         }
 
@@ -155,7 +184,7 @@ class PsrCache implements DataBaseInterface
         }
 
         $result = [];
-        $tempArray = $this->actualKeys;
+        $tempArray = $this->objectsHashes;
 
         reset($tempArray);
         for ($i = 0; $i < $offset; ++$i) {
@@ -167,7 +196,7 @@ class PsrCache implements DataBaseInterface
             $item = $this->databaseProvider->getItem($item);
             if ($item->isHit()) {
                 $rawData = json_decode($item->get(), true);
-                $result[] = (Place::createFromArray($rawData))->setPolygonsFromArray($rawData['polygons']);
+                $result[] = Place::createFromArray($rawData);
             }
 
             ++$counter;
@@ -204,29 +233,63 @@ class PsrCache implements DataBaseInterface
     {
         $rawData = json_encode($place->toArray());
 
-        $itemName = $this->compileKey($place);
-        $item = $this->databaseProvider->getItem($itemName);
+        $item = $this->databaseProvider->getItem($place->getObjectHash());
         $item->expiresAfter(new \DateInterval('PT0S'));
         $item->set($rawData);
 
-        $searchResult = array_search($itemName, $this->actualKeys);
-        if (is_int($searchResult)) {
-            unset($this->actualKeys[$searchResult]);
-            $this->updateActualKeys();
+        $this->databaseProvider->save($item);
+
+        foreach ($this->actualKeys as $locale => $keys) {
+            $place->selectLocale($locale);
+            $keyForDelete = $this->compileKey($place->getSelectedAddress());
+            if (isset($keys[$keyForDelete])) {
+                unset($this->actualKeys[$locale][$keyForDelete]);
+                $this->updateActualKeys();
+            }
         }
+
+        unset($this->objectsHashes[$place->getObjectHash()]);
+        $this->updateHashKeys();
 
         return true;
     }
 
     /**
-     * Compile key name for Place entity
+     * Compile keys for all available Address objects in Place object
      *
      * @param Place $place
      * @param bool  $useLevels
      * @param bool  $usePrefix
      * @param bool  $useAddress
      *
+     * @return string[]
+     *
+     * @throws \Psr\Cache\InvalidArgumentException
+     */
+    public function compileKeys(
+        Place $place,
+        bool $useLevels = true,
+        bool $usePrefix = true,
+        bool $useAddress = true
+    ): array {
+        $result = [];
+        foreach ($place->getAvailableAddresses() as $locale => $address) {
+            $result[$locale] = $this->compileKey($address, $useLevels, $usePrefix, $useAddress);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Compile key name for Place entity
+     *
+     * @param Address $address
+     * @param bool  $useLevels
+     * @param bool  $usePrefix
+     * @param bool  $useAddress
+     *
      * @return string
+     * @throws \Psr\Cache\InvalidArgumentException
      *
      * @example 'geocoder.storage-provider.level-0-ukraine-ua.level-1-kyiv-.ua.01000.kyiv.nezalezhnosti sq.3'
      *              ^           ^                                                       - content of @see DBConfig::GLOBAL_PREFIX array
@@ -237,11 +300,9 @@ class PsrCache implements DataBaseInterface
      *                                     ^    ^    ^              ^     ^     - compiled Place's fields
      * @example 'ua.01000.kyiv.nezalezhnosti sq.3'
      *            ^    ^     ^              ^   ^                               - compiled Place's fields
-     *
-     * @throws \Psr\Cache\InvalidArgumentException
      */
     public function compileKey(
-        Place $place,
+        Address $address,
         bool $useLevels = true,
         bool $usePrefix = true,
         bool $useAddress = true
@@ -250,27 +311,25 @@ class PsrCache implements DataBaseInterface
             $this->dbConfig->getGlueForSections(),
             array_merge(
                 $usePrefix ? $this->dbConfig->getGlobalPrefix() : [],
-                $useLevels ? $this->compileLevelsForKey($place) : [],
-                $useAddress ? $this->compileAddressForKey($place) : []
+                $useLevels ? $this->compileLevelsForKey($address) : [],
+                $useAddress ? $this->compileAddressForKey($address) : []
             )
         );
     }
 
     /**
-     * Levels compiler for forming identifier for Place entity in @see compileKey
-     *
-     * @param Place $place
+     * Levels compiler for forming identifier for Address entity in @see compileKey
      *
      * @return string[]
      *
      * @throws \Psr\Cache\InvalidArgumentException
      */
-    private function compileLevelsForKey(Place $place): array
+    private function compileLevelsForKey(Address $address): array
     {
         $levels = [];
 
         /** @var AdminLevel $level */
-        foreach ($place->getAdminLevels() as $level) {
+        foreach ($address->getAdminLevels() as $level) {
             $levels[$level->getLevel()] = implode($this->dbConfig->getGlueForLevel(), [
                 $this->dbConfig->getPrefixLevel(),
                 $level->getLevel(),
@@ -291,21 +350,21 @@ class PsrCache implements DataBaseInterface
     }
 
     /**
-     * Address compiler for forming identifier for Place entity in @see compileKey
+     * Address compiler for forming identifier for Address entity in @see compileKey
      *
-     * @param Place $place
+     * @param Address $address
      *
      * @return string[]
      */
-    private function compileAddressForKey(Place $place): array
+    private function compileAddressForKey(Address $address): array
     {
         return [
-            $this->normalizeStringForKeyName($place->getCountry()->getCode()),
-            $this->normalizeStringForKeyName($place->getPostalCode()),
-            $this->normalizeStringForKeyName($place->getLocality()),
-            $this->normalizeStringForKeyName($place->getSubLocality()),
-            $this->normalizeStringForKeyName($place->getStreetName()),
-            $this->normalizeStringForKeyName($place->getStreetNumber()),
+            $this->normalizeStringForKeyName($address->getCountry()->getCode()),
+            $this->normalizeStringForKeyName($address->getPostalCode()),
+            $this->normalizeStringForKeyName($address->getLocality()),
+            $this->normalizeStringForKeyName($address->getSubLocality()),
+            $this->normalizeStringForKeyName($address->getStreetName()),
+            $this->normalizeStringForKeyName($address->getStreetNumber()),
         ];
     }
 
@@ -338,6 +397,18 @@ class PsrCache implements DataBaseInterface
         }
 
         return false;
+    }
+
+    /**
+     * @return bool
+     *
+     * @throws \Psr\Cache\InvalidArgumentException
+     */
+    private function updateHashKeys(): bool
+    {
+        $this->updateServiceKey($this->dbConfig->getKeyForHashKeys(), json_encode($this->objectsHashes));
+
+        return true;
     }
 
     /**
@@ -428,22 +499,26 @@ class PsrCache implements DataBaseInterface
      * @param string $phrase
      * @param int    $page
      * @param int    $maxResults
+     * @param string $locale
      *
      * @return string[]
      */
-    private function makeSearch(string $phrase, int $page, int $maxResults): array
+    private function makeSearch(string $phrase, int $page, int $maxResults, string $locale): array
     {
         $result = [];
 
-        foreach ($this->actualKeys as $actualKey) {
+        foreach ($this->actualKeys[$locale] as $actualKey => $objectHash) {
             $grade = $this->evaluateHitPhrase($phrase, $actualKey);
             if ($grade > 0) {
                 $result[$actualKey] = $grade;
             }
         }
         arsort($result);
+
         if (count($result) > ($page * $maxResults)) {
             $result = array_slice($result, ($page * $maxResults), $maxResults);
+        } else {
+            $result = [];
         }
 
         return array_keys($result);

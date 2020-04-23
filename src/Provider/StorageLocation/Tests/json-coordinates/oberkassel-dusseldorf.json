@@ -11,34 +11,75 @@
         {
             "type": "Feature",
             "properties": {
-                "geocoding": {
-                    "place_id": 235690139,
-                    "osm_type": "relation",
-                    "osm_id": 1901873,
-                    "type": "postcode",
-                    "label": "Oberkassel, Dusseldorf, Düsseldorf, North Rhine-Westphalia, 40545, Germany",
-                    "name": "40545",
-                    "housenumber":"",
-                    "country": "Germany",
-                    "country_code":"de",
-                    "postcode": "40545",
-                    "state": "North Rhine-Westphalia",
-                    "county": "Düsseldorf",
-                    "city": "Dusseldorf",
-                    "district": "Oberkassel",
-                    "admin": {
-                        "level1": "North Rhine-Westphalia",
-                        "level2": "Düsseldorf",
-                        "level3": "Oberkassel"
-                    }
+                "en": {
+                    "geocoding": {
+                        "place_id": 235690139,
+                        "osm_type": "relation",
+                        "osm_id": 1901873,
+                        "type": "postcode",
+                        "label": "Oberkassel, Dusseldorf, Düsseldorf, North Rhine-Westphalia, 40545, Germany",
+                        "name": "40545",
+                        "housenumber":"",
+                        "country": "Germany",
+                        "country_code":"de",
+                        "postcode": "40545",
+                        "state": "North Rhine-Westphalia",
+                        "county": "Düsseldorf",
+                        "city": "Dusseldorf",
+                        "district": "Oberkassel",
+                        "attribution": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+                        "admin": {
+                            "level1": "North Rhine-Westphalia",
+                            "level2": "Düsseldorf",
+                            "level3": "Oberkassel"
+                        }
+                    },
+                    "coordinates": [
+                        6.7313494,
+                        51.2343655
+                    ],
+                    "bbox": [
+                        6.7313494,
+                        51.2198095,
+                        6.7686593,
+                        51.236196
+                    ]
+                },
+                "de": {
+                    "geocoding": {
+                        "place_id": 235690139,
+                        "osm_type": "relation",
+                        "osm_id": 1901873,
+                        "type": "postcode",
+                        "label": "Oberkassel, Düsseldorf, Düsseldorf, North Rhine-Westphalia, 40545, Germany",
+                        "name": "40545",
+                        "housenumber":"",
+                        "country": "Deutschland",
+                        "country_code":"de",
+                        "postcode": "40545",
+                        "state": "Nordrhein-Westfalen",
+                        "county": "Düsseldorf",
+                        "city": "Düsseldorf",
+                        "district": "Oberkassel",
+                        "attribution": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+                        "admin": {
+                            "level1": "North Rhine-Westphalia",
+                            "level2": "Düsseldorf",
+                            "level3": "Oberkassel"
+                        }
+                    },
+                    "coordinates": [
+                        6.7313494,
+                        51.2343655
+                    ],
+                    "bbox": [
+                        6.7313494,
+                        51.2198095,
+                        6.7686593,
+                        51.236196
+                    ]
                 }
             },
-            "bbox": [
-                6.7313494,
-                51.2198095,
-                6.7686593,
-                51.236196
-            ],
             "geometry": {
                 "type": "Polygon",
                 "coordinates": [
