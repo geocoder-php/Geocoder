@@ -174,7 +174,7 @@ class IntegrationTest extends ProviderIntegrationTest
      *
      * @return iterable
      */
-    public function providerNestedPolygons(): iterable
+    public function providerNestedPolygons(): \Iterator
     {
         /* Altstadt, should be return first layer of coordinates, total Dusseldorf's Place */
         yield [
