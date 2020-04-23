@@ -14,7 +14,6 @@ namespace Geocoder\Provider\StorageLocation;
 
 use Geocoder\Collection;
 use Geocoder\Model\Address;
-use Geocoder\Model\AddressBuilder;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Model\AdminLevel;
 use Geocoder\Model\AdminLevelCollection;

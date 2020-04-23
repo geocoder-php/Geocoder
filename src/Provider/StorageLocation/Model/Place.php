@@ -211,7 +211,6 @@ class Place
             }
         }
 
-
         $place = new self($addresses, null, $firstLocale);
 
         if (isset($data['polygons'])) {
