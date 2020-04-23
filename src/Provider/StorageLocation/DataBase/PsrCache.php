@@ -86,22 +86,7 @@ class PsrCache implements DataBaseInterface
         $place->setObjectHash('');
         $place->setObjectHash(spl_object_hash($place));
 
-        $rawData = json_encode($place->toArray());
-
-        $item = $this->databaseProvider->getItem($place->getObjectHash());
-        $item->expiresAfter($this->dbConfig->getTtlForRecord());
-        $item->set($rawData);
-
-        $this->databaseProvider->save($item);
-
-        $this->objectsHashes[] = $place->getObjectHash();
-        $this->updateHashKeys();
-
-        foreach ($this->compileKeys($place) as $locale => $key) {
-            $this->actualKeys[$locale][$key] = $place->getObjectHash();
-        }
-
-        $this->updateActualKeys();
+        $this->savePlace($place);
 
         return true;
     }
@@ -113,29 +98,7 @@ class PsrCache implements DataBaseInterface
      */
     public function update(Place $place): bool
     {
-        $rawData = json_encode($place->toArray());
-
-        $item = $this->databaseProvider->getItem($place->getObjectHash());
-
-        $item->expiresAfter($this->dbConfig->getTtlForRecord());
-        $item->set($rawData);
-
-        $this->databaseProvider->save($item);
-
-        $this->objectsHashes[] = $place->getObjectHash();
-        $this->updateHashKeys();
-
-        foreach ($this->compileKeys($place) as $locale => $key) {
-            $item = $this->databaseProvider->getItem($key);
-            $item->expiresAfter($this->dbConfig->getTtlForRecord());
-            $item->set($place->getObjectHash());
-
-            $this->databaseProvider->save($item);
-
-            $this->actualKeys[$locale][$key] = $place->getObjectHash();
-        }
-
-        $this->updateActualKeys();
+        $this->savePlace($place);
 
         return true;
     }
@@ -160,7 +123,9 @@ class PsrCache implements DataBaseInterface
         foreach ($this->makeSearch($searchKey, $page, $maxResults, $locale) as $key) {
             $item = $this->databaseProvider->getItem($this->actualKeys[$locale][$key]);
             if ($item->isHit()) {
-                $rawData = json_decode($item->get(), true);
+                $this->dbConfig->isUseCompression() ?
+                    $rawData = json_decode(gzuncompress($item->get()), true) :
+                    $rawData = json_decode($item->get(), true);
                 is_array($rawData) ? $result[$key] = (Place::createFromArray($rawData, [$locale])) : $result[$key] = null;
             }
         }
@@ -195,7 +160,9 @@ class PsrCache implements DataBaseInterface
         foreach ($tempArray as $item) {
             $item = $this->databaseProvider->getItem($item);
             if ($item->isHit()) {
-                $rawData = json_decode($item->get(), true);
+                $this->dbConfig->isUseCompression() ?
+                    $rawData = json_decode(gzuncompress($item->get()), true) :
+                    $rawData = json_decode($item->get(), true);
                 $result[] = Place::createFromArray($rawData);
             }
 
@@ -489,6 +456,32 @@ class PsrCache implements DataBaseInterface
         ));
         $item->expiresAfter($this->dbConfig->getTtlForRecord());
         $item->set($data);
+
+        return true;
+    }
+
+    private function savePlace(Place $place): bool
+    {
+        $rawData = json_encode($place->toArray());
+
+        if ($this->dbConfig->isUseCompression()) {
+            $rawData = gzcompress($rawData, $this->dbConfig->getCompressionLevel());
+        }
+
+        $item = $this->databaseProvider->getItem($place->getObjectHash());
+
+        $item->expiresAfter($this->dbConfig->getTtlForRecord());
+        $item->set($rawData);
+
+        $this->databaseProvider->save($item);
+
+        $this->objectsHashes[] = $place->getObjectHash();
+        $this->updateHashKeys();
+
+        foreach ($this->compileKeys($place) as $locale => $key) {
+            $this->actualKeys[$locale][$key] = $place->getObjectHash();
+        }
+        $this->updateActualKeys();
 
         return true;
     }

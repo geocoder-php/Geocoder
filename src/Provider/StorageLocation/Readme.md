@@ -31,7 +31,7 @@ First of all you need to setup storage where you will save data about locations.
 $database = new \Symfony\Component\Cache\Adapter\FilesystemAdapter();
 ```
 
-After, you need to setup database configuration. If you don't want do it, you can use default configuration by creating class without any arguments.
+After, you need to setup database configuration. If you don't want do it, you can use default configuration by creating class without any arguments. Take attention to `useCompression` flag, it can help to save size of storage. If you will use compression, please be sure what your PSR cache provider able to save binary data.
 
 ```php
 $dbConfig = new \Geocoder\Provider\StorageLocation\Model\DBConfig();

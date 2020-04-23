@@ -37,6 +37,10 @@ final class DBConfig
 
     const DEFAULT_LOCALE = 'en';
 
+    const USE_COMPRESSION = false;
+
+    const COMPRESSION_LEVEL = 5;
+
     /**
      * That prefix will be use before all keys what will store database driver
      *
@@ -107,6 +111,20 @@ final class DBConfig
      */
     private $defaultLocale;
 
+    /**
+     * Use compression for store value. Using @see gzcompress(), gzuncompress() functionality
+     *
+     * @var bool
+     */
+    private $useCompression;
+
+    /**
+     * Compression level according to @see gzcompress()
+     *
+     * @var int
+     */
+    private $compressionLevel;
+
     public function __construct(
         array $globalPrefix = self::GLOBAL_PREFIX,
         string $keyForDumpKeys = self::KEY_FOR_DUMP_KEYS,
@@ -117,7 +135,9 @@ final class DBConfig
         string $glueForLevel = self::GLUE_FOR_LEVEL,
         string $ttlForRecord = self::TTL_FOR_RECORD,
         int $maxPlacesInOneResponse = self::MAX_PLACES_IN_ONE_RESPONSE,
-        string $defaultLocale = self::DEFAULT_LOCALE
+        string $defaultLocale = self::DEFAULT_LOCALE,
+        bool $useCompression = self::USE_COMPRESSION,
+        int $compressionLevel = self::COMPRESSION_LEVEL
     ) {
         $this->globalPrefix = $globalPrefix;
         $this->keyForDumpKeys = $keyForDumpKeys;
@@ -129,6 +149,8 @@ final class DBConfig
         $this->ttlForRecord = new \DateInterval($ttlForRecord);
         $this->maxPlacesInOneResponse = $maxPlacesInOneResponse;
         $this->defaultLocale = $defaultLocale;
+        $this->useCompression = $useCompression;
+        $this->compressionLevel = $compressionLevel;
     }
 
     /**
@@ -323,6 +345,46 @@ final class DBConfig
     public function setDefaultLocale(string $defaultLocale): self
     {
         $this->defaultLocale = $defaultLocale;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isUseCompression(): bool
+    {
+        return $this->useCompression;
+    }
+
+    /**
+     * @param bool $useCompression
+     *
+     * @return DBConfig
+     */
+    public function setUseCompression(bool $useCompression): self
+    {
+        $this->useCompression = $useCompression;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCompressionLevel(): int
+    {
+        return $this->compressionLevel;
+    }
+
+    /**
+     * @param int $compressionLevel
+     *
+     * @return DBConfig
+     */
+    public function setCompressionLevel(int $compressionLevel): self
+    {
+        $this->compressionLevel = $compressionLevel;
 
         return $this;
     }
