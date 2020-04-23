@@ -45,7 +45,7 @@ interface DataBaseInterface
      *
      * @return Place[]
      */
-    public function get(string $searchKey, int $page = 0, int $maxResults = 30, string $locale= ''): array;
+    public function get(string $searchKey, int $page = 0, int $maxResults = 30, string $locale = ''): array;
 
     /**
      * @param Place $place

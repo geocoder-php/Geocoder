@@ -151,7 +151,7 @@ class PsrCache implements DataBaseInterface
             $maxResults = $this->dbConfig->getMaxPlacesInOneResponse();
         }
 
-        if ($locale === '') {
+        if ('' === $locale) {
             $locale = $this->dbConfig->getDefaultLocale();
         }
 
@@ -284,11 +284,12 @@ class PsrCache implements DataBaseInterface
      * Compile key name for Place entity
      *
      * @param Address $address
-     * @param bool  $useLevels
-     * @param bool  $usePrefix
-     * @param bool  $useAddress
+     * @param bool    $useLevels
+     * @param bool    $usePrefix
+     * @param bool    $useAddress
      *
      * @return string
+     *
      * @throws \Psr\Cache\InvalidArgumentException
      *
      * @example 'geocoder.storage-provider.level-0-ukraine-ua.level-1-kyiv-.ua.01000.kyiv.nezalezhnosti sq.3'

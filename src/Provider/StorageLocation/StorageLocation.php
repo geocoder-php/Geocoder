@@ -94,7 +94,7 @@ class StorageLocation implements Provider
 
     /**
      * @param Coordinates $coordinates
-     * @param string $locale
+     * @param string      $locale
      *
      * @return Place|null
      */

@@ -48,9 +48,9 @@ class Place
     private $objectHash;
 
     /**
-     * @param Address|Address[]    $address
-     * @param Polygon[]|null       $polygons
-     * @param string               $locale
+     * @param Address|Address[] $address
+     * @param Polygon[]|null    $polygons
+     * @param string            $locale
      */
     public function __construct(
         $address,
@@ -203,7 +203,7 @@ class Place
                 : $preparedData = $data['address'];
 
             foreach ($preparedData as $locale => $rawAddress) {
-                if ($firstLocale === '') {
+                if ('' === $firstLocale) {
                     $firstLocale = $locale;
                 }
 
@@ -212,7 +212,7 @@ class Place
         }
 
 
-        $place = new Place($addresses, null, $firstLocale);
+        $place = new self($addresses, null, $firstLocale);
 
         if (isset($data['polygons'])) {
             $place->setPolygonsFromArray($data['polygons']);
@@ -245,9 +245,6 @@ class Place
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function toArray(): array
     {
         $result = [];

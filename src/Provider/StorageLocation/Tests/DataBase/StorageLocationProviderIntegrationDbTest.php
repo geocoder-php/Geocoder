@@ -55,8 +55,8 @@ abstract class StorageLocationProviderIntegrationDbTest extends TestCase
 
         $placeObj->setSelectedAddress(Address::createFromArray(array_merge(
             $origPlace['address']['en'],
-            ['timezone' => 'Control time zone'])
-        ));
+            ['timezone' => 'Control time zone']
+        )));
         $this->dataBase->update($placeObj);
         $this->assertEquals(
             [$placeObj],
