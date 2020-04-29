@@ -112,6 +112,5 @@ interface DataBaseInterface
         bool $useAddress = true
     ): string;
 
-
     public function updateExistAdminLevels(): bool;
 }

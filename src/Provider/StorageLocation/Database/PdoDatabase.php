@@ -561,6 +561,7 @@ class PdoDatabase extends AbstractDatabase implements DataBaseInterface
         $stmtPolygon->bindValue(':'.Constants::OBJECT_HASH, $objectHash);
 
         $this->databaseProvider->beginTransaction();
+
         try {
             $stmtAddress->execute();
             $stmtActualKeys->execute();
