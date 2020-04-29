@@ -41,6 +41,7 @@ class HelperLocator
      * @see PostgresqlHelper
      *
      * @return HelperInterface
+     *
      * @throws \Exception
      */
     public function getHelper(): HelperInterface

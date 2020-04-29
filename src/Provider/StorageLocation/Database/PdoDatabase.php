@@ -147,7 +147,7 @@ class PdoDatabase extends AbstractDatabase implements DataBaseInterface
         return $result;
     }
 
-    function updateExistAdminLevels(): bool
+    public function updateExistAdminLevels(): bool
     {
         return true;
     }
@@ -158,9 +158,12 @@ class PdoDatabase extends AbstractDatabase implements DataBaseInterface
         $stmtPlace->bindValue(':'.Constants::OBJECT_HASH, $place->getObjectHash());
 
         if ($this->dbConfig->isUseCompression()) {
-            $stmtPlace->bindValue(':compressed_data', gzcompress(
-                json_encode($place->toArray()),
-                $this->dbConfig->getCompressionLevel())
+            $stmtPlace->bindValue(
+                ':compressed_data',
+                gzcompress(
+                    json_encode($place->toArray()),
+                    $this->dbConfig->getCompressionLevel()
+                )
             );
         } else {
             $stmtPlace->bindValue(':compressed_data', null);
@@ -172,6 +175,7 @@ class PdoDatabase extends AbstractDatabase implements DataBaseInterface
         $stmtSearchKeyForAddress = $this->prepareSearchKeysForInsert($place);
 
         $this->databaseProvider->beginTransaction();
+
         try {
             $stmtPlace->execute();
 
@@ -201,7 +205,7 @@ class PdoDatabase extends AbstractDatabase implements DataBaseInterface
         } catch (\Exception $e) {
             $this->databaseProvider->rollBack();
 
-            throw new $e;
+            throw new $e();
         }
 
         return true;
@@ -329,6 +333,7 @@ class PdoDatabase extends AbstractDatabase implements DataBaseInterface
         switch ($class) {
             case Place::class:
                 $result = $this->getObjectValueThroughReflection($place, $propertyName);
+
                 break;
             case Address::class:
                 $oldLocale = $place->getSelectedLocale();
@@ -337,6 +342,7 @@ class PdoDatabase extends AbstractDatabase implements DataBaseInterface
                 $result = $this->getObjectValueThroughReflection($place->getSelectedAddress(), $propertyName);
 
                 $place->selectLocale($oldLocale);
+
                 break;
             case Coordinates::class:
                 $oldLocale = $place->getSelectedLocale();
@@ -348,6 +354,7 @@ class PdoDatabase extends AbstractDatabase implements DataBaseInterface
                 );
 
                 $place->selectLocale($oldLocale);
+
                 break;
             case Bounds::class:
                 $oldLocale = $place->getSelectedLocale();
@@ -359,6 +366,7 @@ class PdoDatabase extends AbstractDatabase implements DataBaseInterface
                 );
 
                 $place->selectLocale($oldLocale);
+
                 break;
             case Country::class:
                 $oldLocale = $place->getSelectedLocale();
@@ -370,6 +378,7 @@ class PdoDatabase extends AbstractDatabase implements DataBaseInterface
                 );
 
                 $place->selectLocale($oldLocale);
+
                 break;
             case AdminLevel::class:
                 $oldLocale = $place->getSelectedLocale();
@@ -381,9 +390,11 @@ class PdoDatabase extends AbstractDatabase implements DataBaseInterface
                 );
 
                 $place->selectLocale($oldLocale);
+
                 break;
             default:
                 $result = null;
+
                 break;
         }
 
@@ -395,6 +406,7 @@ class PdoDatabase extends AbstractDatabase implements DataBaseInterface
         $reflection = new \ReflectionObject($object);
         $p = $reflection->getProperty($propertyName);
         $p->setAccessible(true);
+
         return $p->getValue($object);
     }
 
@@ -414,7 +426,7 @@ class PdoDatabase extends AbstractDatabase implements DataBaseInterface
                 throw new \Exception('Try to load non existent Place with hash '.$objectHash);
             }
         } else {
-            $resultPlace = new Place (
+            $resultPlace = new Place(
                 $this->fetchAddressesForPlace($objectHash),
                 $this->fetchPolygonsForPlace($objectHash)
             );
@@ -440,9 +452,11 @@ class PdoDatabase extends AbstractDatabase implements DataBaseInterface
         foreach ($stmtAddress->fetchAll() as $rawAddress) {
             $resultAddresses[$rawAddress[Constants::LOCALE]] = new Address(
                 $rawAddress[Constants::PROVIDED_BY],
-                new AdminLevelCollection($this->fetchAdminLevelsForAddress(
-                    $objectHash,
-                    $rawAddress[Constants::LOCALE])
+                new AdminLevelCollection(
+                    $this->fetchAdminLevelsForAddress(
+                        $objectHash,
+                        $rawAddress[Constants::LOCALE]
+                    )
                 ),
                 new Coordinates(
                     $rawAddress[Constants::COORDINATE_LATITUDE],
@@ -558,7 +572,7 @@ class PdoDatabase extends AbstractDatabase implements DataBaseInterface
         } catch (\Exception $e) {
             $this->databaseProvider->rollBack();
 
-            throw new $e;
+            throw new $e();
         }
 
         return true;

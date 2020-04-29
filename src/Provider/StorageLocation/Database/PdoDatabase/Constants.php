@@ -98,7 +98,7 @@ final class Constants
         self::SUB_LOCALITY => Address::class.'::subLocality',
         self::COUNTRY_CODE => Country::class.'::code',
         self::COUNTY_NAME => Country::class.'::name',
-        self::TIMEZONE => Address::class.'::timezone'
+        self::TIMEZONE => Address::class.'::timezone',
     ];
 
     const FIELDS_FOR_ADMIN_LEVEL = [

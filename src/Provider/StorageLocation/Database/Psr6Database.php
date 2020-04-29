@@ -279,7 +279,7 @@ class Psr6Database extends AbstractDatabase implements DataBaseInterface
      *
      * @throws \Psr\Cache\InvalidArgumentException
      */
-    function updateExistAdminLevels(): bool
+    public function updateExistAdminLevels(): bool
     {
         $this->updateServiceKey($this->dbConfig->getKeyForAdminLevels(), json_encode($this->existAdminLevels));
 

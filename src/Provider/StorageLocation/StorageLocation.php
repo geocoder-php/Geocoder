@@ -166,11 +166,11 @@ class StorageLocation implements Provider
     /**
      * Check polygon for intersecting specific coordinates
      *
-     * @param int $points_polygon
+     * @param int     $points_polygon
      * @param float[] $vertices_x
      * @param float[] $vertices_y
-     * @param float $longitude_x
-     * @param float $latitude_y
+     * @param float   $longitude_x
+     * @param float   $latitude_y
      *
      * @return bool
      */
@@ -191,7 +191,7 @@ class StorageLocation implements Provider
             }
         }
 
-        return (bool)$c;
+        return (bool) $c;
     }
 
     /**

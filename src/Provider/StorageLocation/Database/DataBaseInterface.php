@@ -113,5 +113,5 @@ interface DataBaseInterface
     ): string;
 
 
-    function updateExistAdminLevels(): bool;
+    public function updateExistAdminLevels(): bool;
 }

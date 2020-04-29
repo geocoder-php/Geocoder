@@ -227,9 +227,9 @@ abstract class AbstractDatabase
     {
         $phrase = rawurldecode($phrase);
         $original = substr($original, strlen(implode(
-                $this->dbConfig->getGlueForSections(),
-                $this->dbConfig->getGlobalPrefix()
-            )) + 1);
+            $this->dbConfig->getGlueForSections(),
+            $this->dbConfig->getGlobalPrefix()
+        )) + 1);
 
         $result = 0;
         foreach ([',', ' ', '.'] as $delimiter) {
