@@ -17,7 +17,7 @@ namespace Geocoder\Provider\StorageLocation\Model;
  */
 final class DBConfig
 {
-    const GLOBAL_PREFIX = ['geocoder', 'storage-provider'];
+    const GLOBAL_PREFIX = ['geocoder', 'storageProvider'];
 
     const KEY_FOR_DUMP_KEYS = 'dump-keys';
 
@@ -27,7 +27,7 @@ final class DBConfig
 
     const KEY_FOR_ADMIN_LEVELS = 'exist-admin-levels';
 
-    const GLUE_FOR_SECTIONS = '.';
+    const GLUE_FOR_SECTIONS = '_';
 
     const GLUE_FOR_LEVEL = '-';
 

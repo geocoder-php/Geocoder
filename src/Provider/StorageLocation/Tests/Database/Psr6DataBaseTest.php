@@ -10,20 +10,20 @@ declare(strict_types=1);
  * @license    MIT License
  */
 
-namespace Geocoder\Provider\StorageLocation\Tests\DataBase;
+namespace Geocoder\Provider\StorageLocation\Tests\Database;
 
 use Cache\Adapter\PHPArray\ArrayCachePool;
-use Geocoder\Provider\StorageLocation\DataBase\PsrCache;
+use Geocoder\Provider\StorageLocation\Database\Psr6Database;
 use Geocoder\Provider\StorageLocation\Model\DBConfig;
 
 /**
  * @author Borys Yermokhin <borys_ermokhin@yahoo.com>
  */
-class PsrCacheTest extends StorageLocationProviderIntegrationDbTest
+class Psr6DataBaseTest extends StorageLocationProviderIntegrationDbTest
 {
     public function __construct($name = null, array $data = [], $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
-        $this->dataBase = new PsrCache(new ArrayCachePool(), new DBConfig());
+        $this->dataBase = new Psr6Database(new ArrayCachePool(), new DBConfig());
     }
 }

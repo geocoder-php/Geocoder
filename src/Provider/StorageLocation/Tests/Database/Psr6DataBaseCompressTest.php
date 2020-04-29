@@ -10,16 +10,16 @@ declare(strict_types=1);
  * @license    MIT License
  */
 
-namespace Geocoder\Provider\StorageLocation\Tests\DataBase;
+namespace Geocoder\Provider\StorageLocation\Tests\Database;
 
 use Cache\Adapter\PHPArray\ArrayCachePool;
-use Geocoder\Provider\StorageLocation\DataBase\PsrCache;
+use Geocoder\Provider\StorageLocation\Database\Psr6Database;
 use Geocoder\Provider\StorageLocation\Model\DBConfig;
 
 /**
  * @author Borys Yermokhin <borys_ermokhin@yahoo.com>
  */
-class PsrCacheCompressTest extends StorageLocationProviderIntegrationDbTest
+class Psr6DataBaseCompressTest extends StorageLocationProviderIntegrationDbTest
 {
     public function __construct($name = null, array $data = [], $dataName = '')
     {
@@ -29,6 +29,6 @@ class PsrCacheCompressTest extends StorageLocationProviderIntegrationDbTest
         $dbConfig->setUseCompression(true);
         $dbConfig->setCompressionLevel(1);
 
-        $this->dataBase = new PsrCache(new ArrayCachePool(), $dbConfig);
+        $this->dataBase = new Psr6Database(new ArrayCachePool(), $dbConfig);
     }
 }

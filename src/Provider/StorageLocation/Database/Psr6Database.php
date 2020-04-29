@@ -10,10 +10,8 @@ declare(strict_types=1);
  * @license    MIT License
  */
 
-namespace Geocoder\Provider\StorageLocation\DataBase;
+namespace Geocoder\Provider\StorageLocation\Database;
 
-use Geocoder\Model\Address;
-use Geocoder\Model\AdminLevel;
 use Geocoder\Provider\StorageLocation\Model\DBConfig;
 use Geocoder\Provider\StorageLocation\Model\Place;
 use Psr\Cache\CacheItemPoolInterface;
@@ -22,38 +20,38 @@ use Psr\Log\InvalidArgumentException;
 /**
  * @author Borys Yermokhin <borys_ermokhin@yahoo.com>
  */
-class PsrCache implements DataBaseInterface
+class Psr6Database extends AbstractDatabase implements DataBaseInterface
 {
     /**
      * By that keys we will store hashes (references) to fetch real object
      *
      * @var string[][]
      */
-    private $actualKeys = [];
+    protected $actualKeys = [];
 
     /**
      * By that keys we will store real Place objects
      *
-     * @var string[]
+     * @var bool[]
      */
-    private $objectsHashes = [];
+    protected $objectsHashes = [];
 
     /**
      * Sorted array of admin levels what used for stored data
      *
-     * @var array
+     * @var bool[]
      */
-    private $existAdminLevels = [];
+    protected $existAdminLevels = [];
 
     /**
      * @var DBConfig
      */
-    private $dbConfig;
+    protected $dbConfig;
 
     /**
      * @var CacheItemPoolInterface
      */
-    private $databaseProvider;
+    protected $databaseProvider;
 
     /**
      * PsrCache constructor.
@@ -69,11 +67,11 @@ class PsrCache implements DataBaseInterface
             throw new InvalidArgumentException('Cache provider should be instance of '.CacheItemPoolInterface::class);
         }
 
-        $this->databaseProvider = $databaseProvider;
-        $this->dbConfig = $dbConfig;
+        parent::__construct($databaseProvider, $dbConfig);
 
         $this->getActualKeys();
         $this->getExistAdminLevels();
+        $this->getExistHashKeys();
     }
 
     /**
@@ -149,7 +147,7 @@ class PsrCache implements DataBaseInterface
         }
 
         $result = [];
-        $tempArray = $this->objectsHashes;
+        $tempArray = array_keys($this->objectsHashes);
 
         reset($tempArray);
         for ($i = 0; $i < $offset; ++$i) {
@@ -173,22 +171,6 @@ class PsrCache implements DataBaseInterface
         }
 
         return $result;
-    }
-
-    /**
-     * @return int[]
-     */
-    public function getAdminLevels(): array
-    {
-        return array_keys($this->existAdminLevels);
-    }
-
-    /**
-     * @return DBConfig
-     */
-    public function getDbConfig(): DBConfig
-    {
-        return $this->dbConfig;
     }
 
     /**
@@ -219,135 +201,6 @@ class PsrCache implements DataBaseInterface
         $this->updateHashKeys();
 
         return true;
-    }
-
-    /**
-     * Compile keys for all available Address objects in Place object
-     *
-     * @param Place $place
-     * @param bool  $useLevels
-     * @param bool  $usePrefix
-     * @param bool  $useAddress
-     *
-     * @return string[]
-     *
-     * @throws \Psr\Cache\InvalidArgumentException
-     */
-    public function compileKeys(
-        Place $place,
-        bool $useLevels = true,
-        bool $usePrefix = true,
-        bool $useAddress = true
-    ): array {
-        $result = [];
-        foreach ($place->getAvailableAddresses() as $locale => $address) {
-            $result[$locale] = $this->compileKey($address, $useLevels, $usePrefix, $useAddress);
-        }
-
-        return $result;
-    }
-
-    /**
-     * Compile key name for Place entity
-     *
-     * @param Address $address
-     * @param bool    $useLevels
-     * @param bool    $usePrefix
-     * @param bool    $useAddress
-     *
-     * @return string
-     *
-     * @throws \Psr\Cache\InvalidArgumentException
-     *
-     * @example 'geocoder.storage-provider.level-0-ukraine-ua.level-1-kyiv-.ua.01000.kyiv.nezalezhnosti sq.3'
-     *              ^           ^                                                       - content of @see DBConfig::GLOBAL_PREFIX array
-     *                                           ^                                      - max level for that Place object
-     *                                              ^    ^    ^     ^              ^    - compiled Place's fields
-     * @example 'geocoder.storage-provider.ua.01000.kyiv.nezalezhnosti sq.3'
-     *              ^           ^                                               - content of @see DBConfig::GLOBAL_PREFIX array
-     *                                     ^    ^    ^              ^     ^     - compiled Place's fields
-     * @example 'ua.01000.kyiv.nezalezhnosti sq.3'
-     *            ^    ^     ^              ^   ^                               - compiled Place's fields
-     */
-    public function compileKey(
-        Address $address,
-        bool $useLevels = true,
-        bool $usePrefix = true,
-        bool $useAddress = true
-    ): string {
-        return implode(
-            $this->dbConfig->getGlueForSections(),
-            array_merge(
-                $usePrefix ? $this->dbConfig->getGlobalPrefix() : [],
-                $useLevels ? $this->compileLevelsForKey($address) : [],
-                $useAddress ? $this->compileAddressForKey($address) : []
-            )
-        );
-    }
-
-    /**
-     * Levels compiler for forming identifier for Address entity in @see compileKey
-     *
-     * @return string[]
-     *
-     * @throws \Psr\Cache\InvalidArgumentException
-     */
-    private function compileLevelsForKey(Address $address): array
-    {
-        $levels = [];
-
-        /** @var AdminLevel $level */
-        foreach ($address->getAdminLevels() as $level) {
-            $levels[$level->getLevel()] = implode($this->dbConfig->getGlueForLevel(), [
-                $this->dbConfig->getPrefixLevel(),
-                $level->getLevel(),
-                $this->normalizeStringForKeyName($level->getName()),
-                $this->normalizeStringForKeyName((string) $level->getCode()),
-            ]);
-
-            if (!isset($this->existAdminLevels[$level->getLevel()])) {
-                $this->existAdminLevels[$level->getLevel()] = true;
-                ksort($this->existAdminLevels);
-                $this->updateExistAdminLevels();
-            }
-        }
-
-        ksort($levels);
-
-        return $levels;
-    }
-
-    /**
-     * Address compiler for forming identifier for Address entity in @see compileKey
-     *
-     * @param Address $address
-     *
-     * @return string[]
-     */
-    private function compileAddressForKey(Address $address): array
-    {
-        return [
-            $this->normalizeStringForKeyName($address->getCountry()->getCode()),
-            $this->normalizeStringForKeyName($address->getPostalCode()),
-            $this->normalizeStringForKeyName($address->getLocality()),
-            $this->normalizeStringForKeyName($address->getSubLocality()),
-            $this->normalizeStringForKeyName($address->getStreetName()),
-            $this->normalizeStringForKeyName($address->getStreetNumber()),
-        ];
-    }
-
-    /**
-     * @param string $rawString
-     *
-     * @return string
-     */
-    public function normalizeStringForKeyName(string $rawString)
-    {
-        return rawurlencode(
-            mb_strtolower(
-                trim($rawString)
-            )
-        );
     }
 
     /**
@@ -391,6 +244,19 @@ class PsrCache implements DataBaseInterface
         return true;
     }
 
+    private function getExistHashKeys(): bool
+    {
+        $rawHashes = $this->getServiceKey($this->dbConfig->getKeyForHashKeys());
+
+        if ($rawHashes) {
+            $this->objectsHashes = json_decode($rawHashes, true);
+
+            return true;
+        }
+
+        return false;
+    }
+
     /**
      * @return bool
      *
@@ -413,7 +279,7 @@ class PsrCache implements DataBaseInterface
      *
      * @throws \Psr\Cache\InvalidArgumentException
      */
-    private function updateExistAdminLevels(): bool
+    function updateExistAdminLevels(): bool
     {
         $this->updateServiceKey($this->dbConfig->getKeyForAdminLevels(), json_encode($this->existAdminLevels));
 
@@ -434,7 +300,7 @@ class PsrCache implements DataBaseInterface
             array_merge($this->dbConfig->getGlobalPrefix(), [$key])
         ));
         if ($item->isHit()) {
-            return $item->get();
+            return $this->dbConfig->isUseCompression() ? gzuncompress($item->get()) : $item->get();
         }
 
         return false;
@@ -455,7 +321,11 @@ class PsrCache implements DataBaseInterface
             array_merge($this->dbConfig->getGlobalPrefix(), [$key])
         ));
         $item->expiresAfter($this->dbConfig->getTtlForRecord());
-        $item->set($data);
+
+        $this->dbConfig->isUseCompression() ?
+            $item->set(gzcompress($data, $this->dbConfig->getCompressionLevel())) : $item->set($data);
+
+        $this->databaseProvider->save($item);
 
         return true;
     }
@@ -475,7 +345,7 @@ class PsrCache implements DataBaseInterface
 
         $this->databaseProvider->save($item);
 
-        $this->objectsHashes[] = $place->getObjectHash();
+        $this->objectsHashes[$place->getObjectHash()] = true;
         $this->updateHashKeys();
 
         foreach ($this->compileKeys($place) as $locale => $key) {
@@ -484,66 +354,5 @@ class PsrCache implements DataBaseInterface
         $this->updateActualKeys();
 
         return true;
-    }
-
-    /**
-     * Search in each key, needed phrase @see get
-     * Returning all keys what fitable for phrase
-     *
-     * @param string $phrase
-     * @param int    $page
-     * @param int    $maxResults
-     * @param string $locale
-     *
-     * @return string[]
-     */
-    private function makeSearch(string $phrase, int $page, int $maxResults, string $locale): array
-    {
-        $result = [];
-
-        foreach ($this->actualKeys[$locale] as $actualKey => $objectHash) {
-            $grade = $this->evaluateHitPhrase($phrase, $actualKey);
-            if ($grade > 0) {
-                $result[$actualKey] = $grade;
-            }
-        }
-        arsort($result);
-
-        if (count($result) > ($page * $maxResults)) {
-            $result = array_slice($result, ($page * $maxResults), $maxResults);
-        } else {
-            $result = [];
-        }
-
-        return array_keys($result);
-    }
-
-    /**
-     * Evaluate original regarding to phrase. Less mark value is better. @see makeSearch
-     *
-     * @param string $phrase
-     * @param string $original
-     *
-     * @return int
-     */
-    private function evaluateHitPhrase(string $phrase, string $original): int
-    {
-        $phrase = rawurldecode($phrase);
-        $original = substr($original, strlen(implode(
-            $this->dbConfig->getGlueForSections(),
-            $this->dbConfig->getGlobalPrefix()
-        )) + 1);
-
-        $result = 0;
-        foreach ([',', ' ', '.'] as $delimiter) {
-            foreach (explode($delimiter, $phrase) as $symbols) {
-                if (empty($symbols)) {
-                    continue;
-                }
-                $result += substr_count($original, $symbols);
-            }
-        }
-
-        return $result;
     }
 }

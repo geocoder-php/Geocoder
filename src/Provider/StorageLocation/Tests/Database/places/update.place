@@ -2,8 +2,8 @@
    "address":{
     "en":{
        "providedBy":"Data \u00a9 OpenStreetMap contributors, ODbL 1.0. https:\/\/osm.org\/copyright",
-       "latitude":null,
-       "longitude":null,
+       "latitude":-0.1278356,
+       "longitude":51.5032573,
        "bounds":{
           "south":-0.1278356,
           "west":51.5032573,

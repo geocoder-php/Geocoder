@@ -19,7 +19,7 @@ use Geocoder\Model\AdminLevel;
 use Geocoder\Model\AdminLevelCollection;
 use Geocoder\Model\Coordinates;
 use Geocoder\Provider\Provider;
-use Geocoder\Provider\StorageLocation\DataBase\DataBaseInterface;
+use Geocoder\Provider\StorageLocation\Database\DataBaseInterface;
 use Geocoder\Provider\StorageLocation\Model\Place;
 use Geocoder\Provider\StorageLocation\Model\Polygon;
 use Geocoder\Query\GeocodeQuery;
@@ -164,62 +164,34 @@ class StorageLocation implements Provider
     }
 
     /**
-     * Check polygon for interesecting specific coordinates
+     * Check polygon for intersecting specific coordinates
      *
-     * @param $points_polygon
-     * @param $vertices_x
-     * @param $vertices_y
-     * @param $longitude_x
-     * @param $latitude_y
+     * @param int $points_polygon
+     * @param float[] $vertices_x
+     * @param float[] $vertices_y
+     * @param float $longitude_x
+     * @param float $latitude_y
      *
-     * @return bool|int
+     * @return bool
      */
-    private function isInPolygon($points_polygon, $vertices_x, $vertices_y, $longitude_x, $latitude_y)
-    {
-        $i = $j = $c = 0;
+    private function isInPolygon(
+        int $points_polygon,
+        array $vertices_x,
+        array $vertices_y,
+        float $longitude_x,
+        float $latitude_y
+    ) {
+        $c = 0;
         for ($i = 0, $j = $points_polygon; $i < $points_polygon; $j = $i++) {
-            if ((($vertices_y[$i] > $latitude_y != ($vertices_y[$j] > $latitude_y)) &&
-                ($longitude_x < ($vertices_x[$j] - $vertices_x[$i]) * ($latitude_y - $vertices_y[$i]) / ($vertices_y[$j] - $vertices_y[$i]) + $vertices_x[$i]))) {
+            if (($vertices_y[$i] > $latitude_y != ($vertices_y[$j] > $latitude_y)) &&
+                ($longitude_x < ($vertices_x[$j] - $vertices_x[$i]) *
+                    ($latitude_y - $vertices_y[$i]) / ($vertices_y[$j] - $vertices_y[$i]) + $vertices_x[$i])
+            ) {
                 $c = !$c;
             }
         }
 
-        return $c;
-    }
-
-    /**
-     * Calculate central coordinate
-     *
-     * @param Coordinates[] $coordinates
-     *
-     * @return Coordinates
-     */
-    private function getCentralCoordinate(array $coordinates): Coordinates
-    {
-        $total = count($coordinates);
-        if (1 === $total) {
-            return current($coordinates);
-        }
-
-        $x = $y = $z = 0;
-        foreach ($coordinates as $coordinate) {
-            $lat = deg2rad($coordinate->getLatitude());
-            $lon = deg2rad($coordinate->getLongitude());
-
-            $x += cos($lat) * cos($lon);
-            $y += cos($lat) * sin($lon);
-            $z += sin($lat);
-        }
-
-        $x = $x / $total;
-        $y = $y / $total;
-        $z = $z / $total;
-
-        $centralLongitude = atan2($y, $x);
-        $centralSquareRoot = sqrt(($x * $x) + ($y * $y));
-        $centralLatitude = atan2($z, $centralSquareRoot);
-
-        return new Coordinates(rad2deg($centralLatitude), rad2deg($centralLongitude));
+        return (bool)$c;
     }
 
     /**

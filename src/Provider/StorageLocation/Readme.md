@@ -25,7 +25,7 @@ composer require geocoder-php/storage-location-provider
 
 ### Usage
 
-First of all you need to setup storage where you will save data about locations. Currently available all database providers what match PSR-6.
+First of all you need to setup storage where you will save data about locations. Currently available all database providers what match PSR-6. For example, you can use FilesystemAdapter or ArrayCachePool.
 
 ```php
 $database = new \Symfony\Component\Cache\Adapter\FilesystemAdapter();
@@ -145,6 +145,28 @@ Take attention what each Address object identified in database according:
 2. Country code, postal code, locality, subLocality, streetName, streetNumber
 
 If you want to change Place entity you should delete that Place and add new Place with already changed object. Also please take attention what each object in database have time to life value. By default it's 365 days (1 year), you can setup it through passing specific argument in creation `\Geocoder\Provider\StorageLocation\Model\DBConfig`.
+
+### Database providers
+
+You can choose what database provider you want to use. Now available 2 providers:
+* `\Geocoder\Provider\StorageLocation\Database\PdoDatabase`
+* `\Geocoder\Provider\StorageLocation\Database\Psr6Database`
+
+Also please take attention to `\Geocoder\Provider\StorageLocation\Model\DBConfig`. You can find a lot config values what make possibility to fine tune.
+
+If you want to save storage space you can enable compressing data here `\Geocoder\Provider\StorageLocation\Model\DBConfig::$useCompression`. Please take attention what you can adjust compression level here `\Geocoder\Provider\StorageLocation\Model\DBConfig::$compressionLevel` (1-9 values, default - 5). Please take attention, what compression performing through commands [gzuncompress](https://www.php.net/manual/en/function.gzuncompress.php) and [gzcompress](https://www.php.net/manual/en/function.gzcompress.php). Please take care for migration data from/to compress state by self.
+
+If you don't want use data in databases, you should take care for deletion that by self.
+
+#### PdoDatabase
+
+You can use that provider if you have plan to store your places in sqlite, mysql or postgresql. For constructor, you need to pass `\PDO` object as first argument. Name of tables what will create on first provider call - `\Geocoder\Provider\StorageLocation\Database\PdoDatabase\HelperInterface::queryForCreateTables`.
+
+#### Psr6Database
+
+That provider is more simply and store data about place entity like a pile in cache. Please take care for data's TTL, because usually each cache (PSR-6) provider have standart TTL value. Also, you can adjust it by specify TTL value for `\Geocoder\Provider\StorageLocation\Model\DBConfig::$ttlForRecord`, default value is `\Geocoder\Provider\StorageLocation\Model\DBConfig::TTL_FOR_RECORD`.
+
+For constructor, you need to pass any object what implement `\Psr\Cache\CacheItemPoolInterface` as first argument.
 
 ### Testing
 

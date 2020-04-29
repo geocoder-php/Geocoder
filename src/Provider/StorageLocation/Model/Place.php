@@ -105,6 +105,11 @@ class Place
         return true;
     }
 
+    public function getSelectedLocale(): string
+    {
+        return $this->currentLocale;
+    }
+
     /**
      * Return associated array with available Address object and locales as keys
      *

@@ -10,7 +10,7 @@ declare(strict_types=1);
  * @license    MIT License
  */
 
-namespace Geocoder\Provider\StorageLocation\DataBase;
+namespace Geocoder\Provider\StorageLocation\Database;
 
 use Geocoder\Model\Address;
 use Geocoder\Provider\StorageLocation\Model\DBConfig;
@@ -111,4 +111,7 @@ interface DataBaseInterface
         bool $usePrefix = true,
         bool $useAddress = true
     ): string;
+
+
+    function updateExistAdminLevels(): bool;
 }

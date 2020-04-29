@@ -10,10 +10,10 @@ declare(strict_types=1);
  * @license    MIT License
  */
 
-namespace Geocoder\Provider\StorageLocation\Tests\DataBase;
+namespace Geocoder\Provider\StorageLocation\Tests\Database;
 
 use Geocoder\Model\Address;
-use Geocoder\Provider\StorageLocation\DataBase\DataBaseInterface;
+use Geocoder\Provider\StorageLocation\Database\DataBaseInterface;
 use Geocoder\Provider\StorageLocation\Model\Place;
 use PHPUnit\Framework\TestCase;
 
@@ -76,7 +76,7 @@ abstract class StorageLocationProviderIntegrationDbTest extends TestCase
             array_values($this->dataBase->get($this->dataBase->compileKey($origPlace->getSelectedAddress())))
         );
 
-        $this->dataBase->delete($origPlace);
+        $this->assertTrue($this->dataBase->delete($origPlace));
         $this->assertEquals([], $this->dataBase->get($this->dataBase->compileKey($origPlace->getSelectedAddress())));
     }
 

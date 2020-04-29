@@ -22,7 +22,7 @@ use Geocoder\Model\AdminLevelCollection;
 use Geocoder\Model\Bounds;
 use Geocoder\Model\Coordinates;
 use Geocoder\Model\Country;
-use Geocoder\Provider\StorageLocation\DataBase\PsrCache;
+use Geocoder\Provider\StorageLocation\Database\Psr6Database;
 use Geocoder\Provider\StorageLocation\Model\DBConfig;
 use Geocoder\Provider\StorageLocation\Model\Place;
 use Geocoder\Provider\StorageLocation\Model\Polygon;
@@ -66,7 +66,7 @@ class IntegrationTest extends ProviderIntegrationTest
      */
     protected function createProvider(HttpClient $httpClient)
     {
-        $dataBase = new PsrCache(new ArrayCachePool(), new DBConfig());
+        $dataBase = new Psr6Database(new ArrayCachePool(), new DBConfig());
         $provider = new StorageLocation($dataBase);
         $this->loadJsonCoordinates($provider);
 
