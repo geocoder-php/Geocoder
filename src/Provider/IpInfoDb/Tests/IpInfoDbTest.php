@@ -131,7 +131,7 @@ class IpInfoDbTest extends BaseTestCase
         $this->assertCount(1, $result->getAdminLevels());
         $this->assertEquals('Oklahoma', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('United States', $result->getCountry()->getName());
-        $this->assertEquals('United States', $result->getCountry()->getCode());
+        $this->assertEquals('US', $result->getCountry()->getCode());
         $this->assertEquals('America/New_York', $result->getTimezone());
     }
 
@@ -173,7 +173,7 @@ class IpInfoDbTest extends BaseTestCase
         $this->assertNull($result->getLocality());
         $this->assertEmpty($result->getAdminLevels());
         $this->assertEquals('United States', $result->getCountry()->getName());
-        $this->assertEquals('United States', $result->getCountry()->getCode());
+        $this->assertEquals('US', $result->getCountry()->getCode());
         $this->assertNull($result->getTimezone());
     }
 

@@ -149,7 +149,7 @@ final class IpInfoDb extends AbstractHttpProvider implements Provider
                 'postalCode' => $data['zipCode'] ?? null,
                 'adminLevels' => isset($data['regionName']) ? [['name' => $data['regionName'], 'level' => 1]] : [],
                 'country' => $data['countryName'] ?? null,
-                'countryCode' => $data['countryName'] ?? null,
+                'countryCode' => $data['countryCode'] ?? null,
                 'timezone' => $timezone,
             ]),
         ]);

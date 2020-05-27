@@ -41,7 +41,7 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
 
     const TYPE_AIRPORT = 'airport';
 
-    /** @var string */
+    /** @var string */
     const ENDPOINT_URL_SSL = 'https://places-dsn.algolia.net/1/places/query';
 
     /** @var string */
