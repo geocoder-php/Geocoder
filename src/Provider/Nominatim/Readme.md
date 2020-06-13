@@ -23,7 +23,7 @@ composer require geocoder-php/nominatim-provider
 If you want to use the "default" Nominatim instance (https://nominatim.openstreetmap.org/) :
 
 ```php
-$provider = \Geocoder\Provider\Nominatim::withOpenStreetMapServer($httpClient, $userAgent);
+$provider = \Geocoder\Provider\Nominatim\Nominatim::withOpenStreetMapServer($httpClient, $userAgent);
 ```
 
 If you want to specify yourself the server that will be used :
