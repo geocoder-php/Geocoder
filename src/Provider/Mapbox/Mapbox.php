@@ -347,7 +347,9 @@ final class Mapbox extends AbstractHttpProvider implements Provider
 
             case 'country':
                 $builder->setCountry($value['text']);
-                $builder->setCountryCode(strtoupper($value['short_code']));
+                if (!empty($value['short_code'])) {
+                    $builder->setCountryCode(strtoupper($value['short_code']));
+                }
 
                 break;
 
