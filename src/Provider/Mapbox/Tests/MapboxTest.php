@@ -83,7 +83,10 @@ class MapboxTest extends BaseTestCase
         $query = GeocodeQuery::create('princ'); // Principato di Monaco
         $query = $query->withLocale('it');
         $query = $query->withBounds(new Bounds(
-            35.82809688193029, -11.36323261153737, 59.05992036364424, 34.33947713277206
+            35.82809688193029,
+            -11.36323261153737,
+            59.05992036364424,
+            34.33947713277206
         ));
         $query = $query->withLimit(1);
         $query = $query->withData('location_type', [
