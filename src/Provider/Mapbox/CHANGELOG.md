@@ -2,6 +2,12 @@
 
 The change log describes what is "Added", "Removed", "Changed" or "Fixed" between each release.
 
+## 1.0.2
+
+### Fixed
+
+- Check if country `short_code` key is set before extracting it
+
 ## 1.0.1
 
 ### Fixed
