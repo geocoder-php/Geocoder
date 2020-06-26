@@ -16,6 +16,7 @@ use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Location;
 use Geocoder\Model\Address;
 use Geocoder\Model\AddressCollection;
+use Geocoder\Model\Bounds;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\Mapbox\Mapbox;
@@ -73,6 +74,49 @@ class MapboxTest extends BaseTestCase
     {
         $provider = new Mapbox($this->getMockedHttpClient('', 429), 'access_token');
         $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
+    }
+
+    public function testGeocodePlaceWithNoCountryShortCode()
+    {
+        $provider = new Mapbox($this->getHttpClient($_SERVER['MAPBOX_GEOCODING_KEY']), $_SERVER['MAPBOX_GEOCODING_KEY']);
+
+        $query = GeocodeQuery::create('princ'); // Principato di Monaco
+        $query = $query->withLocale('it');
+        $query = $query->withBounds(new Bounds(
+            35.82809688193029,
+            -11.36323261153737,
+            59.05992036364424,
+            34.33947713277206
+        ));
+        $query = $query->withLimit(1);
+        $query = $query->withData('location_type', [
+            Mapbox::TYPE_PLACE,
+            Mapbox::TYPE_LOCALITY,
+            Mapbox::TYPE_NEIGHBORHOOD,
+            Mapbox::TYPE_POI,
+            Mapbox::TYPE_POI_LANDMARK,
+        ]);
+
+        $results = $provider->geocodeQuery($query);
+
+        $this->assertInstanceOf(AddressCollection::class, $results);
+        $this->assertCount(1, $results);
+
+        /** @var Location $result */
+        $result = $results->first();
+        $this->assertInstanceOf(Address::class, $result);
+        $this->assertEquals(43.73125, $result->getCoordinates()->getLatitude(), '', 0.001);
+        $this->assertEquals(7.41974, $result->getCoordinates()->getLongitude(), '', 0.001);
+        $this->assertEquals('Principato di Monaco', $result->getStreetName());
+        $this->assertEquals('Principato di Monaco', $result->getCountry()->getName());
+        $this->assertEquals('place.4899176537126140', $result->getId());
+
+        // not provided
+        $this->assertNull($result->getCountry()->getCode());
+        $this->assertNull($result->getPostalCode());
+        $this->assertNull($result->getLocality());
+        $this->assertNull($result->getTimezone());
+        $this->assertNull($result->getStreetNumber());
     }
 
     public function testGeocodeWithRealAddress()
