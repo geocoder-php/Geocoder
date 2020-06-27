@@ -35,11 +35,11 @@
         "geocoder-php/provider-integration-tests": "^1.0",
         "geoip2/geoip2": "~2.0",
         "nyholm/nsa": "^1.1",
-        "nyholm/psr7": "^0.2.2",
+        "nyholm/psr7": "^1.0",
         "php-http/curl-client": "^1.7",
         "php-http/message": "^1.0",
         "php-http/mock-client": "^1.0",
-        "phpunit/phpunit": "^6.5 || ^7.5",
+        "phpunit/phpunit": "^7.5",
         "symfony/stopwatch": "~2.5"
     },
     "suggest": {
