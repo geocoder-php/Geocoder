@@ -8,8 +8,8 @@ addons:
         - libgeoip-dev
 
 install:
-  - pecl install geoip-1.1.1
-  - composer update --prefer-stable --prefer-dist
+    - pecl install geoip-1.1.1
+    - composer update --prefer-stable --prefer-dist
 
 script:
     - composer test-ci
@@ -17,4 +17,3 @@ script:
 after_success:
     - wget https://scrutinizer-ci.com/ocular.phar
     - php ocular.phar code-coverage:upload --format=php-clover build/coverage.xml
-
