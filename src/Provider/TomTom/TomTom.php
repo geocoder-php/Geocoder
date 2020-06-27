@@ -126,7 +126,7 @@ final class TomTom extends AbstractHttpProvider implements Provider
 
         $json = json_decode($content, true);
 
-        if (!isset($json['addresses']) || count($json['addresses']) === 0) {
+        if (!isset($json['addresses']) || 0 === count($json['addresses'])) {
             return new AddressCollection([]);
         }
 
