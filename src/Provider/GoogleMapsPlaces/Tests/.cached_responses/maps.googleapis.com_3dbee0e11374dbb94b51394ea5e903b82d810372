@@ -1,0 +1,803 @@
+s:31893:"{
+   "html_attributions" : [],
+   "next_page_token" : "CuQEUQIAAMbhe31pqU98CUoIs3F5cK7qqXrrtyYs3eL160ACRiD9GIn8bWFl0l5yU-xOhauJA63fTgILmu1E7afZxtT2vWX0QbvFvpX6M3u3odRUfTJyUjzErR2fBTz3nXcyilpPLXY6uorNLmfcBNrX_eShfAHP9goQ--1ZgE1nvJKfoMEDrhAINEpwzY8Rww9SE6wuxfPhu0ANYBY691NkybCNevfFGUoOrQ4rERCnaeisdRiVOiAINid7Jt3HkdRpe5w6xp4LkHK8oArLy0fmuD8ctW6tsvFKrJzRSbW3Jas2NLFBVlaY9Zk2XcLNjgDJT8omClMI6vUqu_wuW8OKEznVQJ5fAJAd3naoDy7beSGHM0JxaGPU1cNIbEXzD377PlVAl-hiweckoQTfuorGwm3WasdrtcablUOLeXyZVZvKWeq-rD383NMtUqy1TbCwy2l5KPOODoLMiq_94vrEJM6QWPNAtwc0ypHPfCh-4cp2ewALYbLYUhhlHGrRkOvnEB6hyD-pm4I4VcsP1gz0QBeR-GNcdzwKP_1zyOh0EvunNq3RrKjfHKPdwCWi68kd7nPAcc7Uek_bXwJzli3MCa1ID8HGiOzq-1NKiO5bVVZ543tc4cD9ZfMIKQKqnG-XBM4brcqRJo_hL5MM38VeWpbM3dUixRKiiy2G5nd4lwaIWe7ZKj83nW6573VOUU0VvnX2wgNGaPfzUxenAHC203i5viwhAypcZHIfxhxx5W1bfj8E8i7yxRM7AKP65gnfMccuvkbBuPO76Nwe24OKtb3nHAJPhjaF1vcCT88QHAr_5qXlEhDeOWUxZMhRWPgCjNjhT2qRGhQ5EMtDU1nR0BNiDRR5nbDynRwXyQ",
+   "results" : [
+      {
+         "business_status" : "OPERATIONAL",
+         "formatted_address" : "01307 Dresden",
+         "geometry" : {
+            "location" : {
+               "lat" : 51.0534093,
+               "lng" : 13.7818727
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 51.05470437989272,
+                  "lng" : 13.78323617989272
+               },
+               "southwest" : {
+                  "lat" : 51.05200472010728,
+                  "lng" : 13.78053652010728
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+         "id" : "2f56042979cdb4c5ab6c958ecc5077a399b1c761",
+         "name" : "Augsburger Straße",
+         "opening_hours" : {},
+         "photos" : [
+            {
+               "height" : 4032,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/106962065079347856740\"\u003eMahmuda Sultana\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRaAAAAWWnd8uJrK6OQCgx8hW0GreXZmB0VTFatu6JcIOxx3gULJswrHvz20OlbAGgFB7rz7_j7BFOfpEVKOg1DdSVWmm_P0EEulX5kxG-BoJ-IePj3ZAv_UXjdzS4XbdsTJrriEhCBFKEQpETR5DVhQCHTPcXHGhRH2-kAJTXqieSwslztJHowtT_k9A",
+               "width" : 3024
+            }
+         ],
+         "place_id" : "ChIJa2Mg2rbICUcR_ttdiTzzlf4",
+         "plus_code" : {
+            "compound_code" : "3Q3J+9P Dresden",
+            "global_code" : "9F3M3Q3J+9P"
+         },
+         "rating" : 3.5,
+         "reference" : "ChIJa2Mg2rbICUcR_ttdiTzzlf4",
+         "types" : [ "transit_station", "point_of_interest", "establishment" ],
+         "user_ratings_total" : 4
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "formatted_address" : "01307 Dresden",
+         "geometry" : {
+            "location" : {
+               "lat" : 51.0583576,
+               "lng" : 13.7774256
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 51.05970747989272,
+                  "lng" : 13.77878192989272
+               },
+               "southwest" : {
+                  "lat" : 51.05700782010728,
+                  "lng" : 13.77608227010728
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+         "id" : "da1f0331adbdd21e3666b28323a25afb6c13093d",
+         "name" : "Dresden Pfotenhauerstraße",
+         "opening_hours" : {},
+         "place_id" : "ChIJFVRBfsrICUcRCiBXsn7KfHA",
+         "plus_code" : {
+            "compound_code" : "3Q5G+8X Dresden",
+            "global_code" : "9F3M3Q5G+8X"
+         },
+         "rating" : 0,
+         "reference" : "ChIJFVRBfsrICUcRCiBXsn7KfHA",
+         "types" : [ "transit_station", "point_of_interest", "establishment" ],
+         "user_ratings_total" : 0
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "formatted_address" : "01307 Dresden",
+         "geometry" : {
+            "location" : {
+               "lat" : 51.0594416,
+               "lng" : 13.7839204
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 51.06079142989273,
+                  "lng" : 13.78527022989272
+               },
+               "southwest" : {
+                  "lat" : 51.05809177010729,
+                  "lng" : 13.78257057010728
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+         "id" : "f9efcaf12547679e66dd8b36565a79766e600b11",
+         "name" : "Dresden Johannstadt",
+         "opening_hours" : {},
+         "photos" : [
+            {
+               "height" : 3000,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/103206676321964167052\"\u003eRaziman T.V.\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRaAAAAjNgM6SSeOFxE-bN30yQMLu4wnE67qNfeiidBEujgzhSjIrh9X3ruTcCGfNgYHXFXl_Ahmb1MvI1FRte3FDkBe9MaqLRMUIMdVSYmjDmgCAxSMzY9pFULXtmGWi8IX_0GEhCubJs8wN1lOF_LIPykmFNYGhSxBBXicbzGr4FA1rWs1g8gHoh6BA",
+               "width" : 4000
+            }
+         ],
+         "place_id" : "ChIJlZsiu8nICUcRYdRoqjuZ0EM",
+         "plus_code" : {
+            "compound_code" : "3Q5M+QH Dresden",
+            "global_code" : "9F3M3Q5M+QH"
+         },
+         "rating" : 4.7,
+         "reference" : "ChIJlZsiu8nICUcRYdRoqjuZ0EM",
+         "types" : [ "transit_station", "point_of_interest", "establishment" ],
+         "user_ratings_total" : 3
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "formatted_address" : "01307 Dresden",
+         "geometry" : {
+            "location" : {
+               "lat" : 51.0530126,
+               "lng" : 13.7784646
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 51.05434337989272,
+                  "lng" : 13.77981912989272
+               },
+               "southwest" : {
+                  "lat" : 51.05164372010727,
+                  "lng" : 13.77711947010728
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+         "id" : "ceb692454ac5f964cad3854f10e3391d80bbbc2d",
+         "name" : "Blasewitzer /Fetscherstraße",
+         "opening_hours" : {},
+         "photos" : [
+            {
+               "height" : 4128,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/113795891265697423702\"\u003eA Google User\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRZAAAANTdtykkA4hbRcvPjw7MyMNd3yxVa0imphrI4oGZMywhAiYOU-2WISgcmL_I8TFH5H5CwgH0cI08pUyf-VWTBaZx3Y98T8zqy-qFHdEG4lMya3InzSRL4h_B3x0FtDGokEhAZl4jxuupIrJIbJdQqCATgGhSZXF5znrPJw2zA3MD8XGKyDErrmg",
+               "width" : 3096
+            }
+         ],
+         "place_id" : "ChIJhUkAALTICUcR_8A1KtUxvSI",
+         "plus_code" : {
+            "compound_code" : "3Q3H+69 Dresden",
+            "global_code" : "9F3M3Q3H+69"
+         },
+         "rating" : 3.8,
+         "reference" : "ChIJhUkAALTICUcR_8A1KtUxvSI",
+         "types" : [ "transit_station", "point_of_interest", "establishment" ],
+         "user_ratings_total" : 4
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "formatted_address" : "01307 Dresden",
+         "geometry" : {
+            "location" : {
+               "lat" : 51.0493736,
+               "lng" : 13.7743154
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 51.05074052989271,
+                  "lng" : 13.77562182989272
+               },
+               "southwest" : {
+                  "lat" : 51.04804087010727,
+                  "lng" : 13.77292217010728
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+         "id" : "9898d25acd18862b5cd7fa06b98c13be2544b16a",
+         "name" : "Gabelsbergerstraße",
+         "opening_hours" : {},
+         "photos" : [
+            {
+               "height" : 4032,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/106962065079347856740\"\u003eMahmuda Sultana\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRaAAAApI6tGWor0R8bI5xiAvAThlVYLaccntXoES_Q6azU3Vk8nJb2R6oTd2JeadB_DgvwYwfq2RYBaQkkIZP18k91n2mdD1CmMgzwwsCvlZh1bLf5Zja-GULJasFuSY1ziQoSEhBD6KEAGK9Qqbmdg1W7sNTlGhTXxeJPatTkaXrUOJ9FGe2sMvDTeg",
+               "width" : 3024
+            }
+         ],
+         "place_id" : "ChIJhfgnQLLICUcRgDHTYNnR2gU",
+         "plus_code" : {
+            "compound_code" : "2QXF+PP Dresden",
+            "global_code" : "9F3M2QXF+PP"
+         },
+         "rating" : 4.3,
+         "reference" : "ChIJhfgnQLLICUcRgDHTYNnR2gU",
+         "types" : [ "transit_station", "point_of_interest", "establishment" ],
+         "user_ratings_total" : 3
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "formatted_address" : "01099 Dresden",
+         "geometry" : {
+            "location" : {
+               "lat" : 51.06737930000001,
+               "lng" : 13.777749
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 51.06872912989273,
+                  "lng" : 13.77909882989272
+               },
+               "southwest" : {
+                  "lat" : 51.06602947010729,
+                  "lng" : 13.77639917010728
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+         "id" : "df55132df8d3341f7cace48855ba239937a52959",
+         "name" : "Dresden Waldschlößchen",
+         "opening_hours" : {},
+         "photos" : [
+            {
+               "height" : 4032,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/115846481338495498074\"\u003ecarmen ene\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRaAAAA3B60YKsFGozx-JAi4Xn-GXIaDdleCLHk9T2UtVECFU9YZJRLP45Ilrg0_PEsX2g6ibMbqgoHYEY97N3fSBbxTOPg7PLOQspfBYVlmpcEGTFKVdY1mHFQKgjKChGlN6x4EhBqurl2QZ76nf-UpnNsezDcGhSabXFZyQZDJe8NhHhAlbB-dO4Zfg",
+               "width" : 3024
+            }
+         ],
+         "place_id" : "ChIJPTVSyzLPCUcRK6fqg9O-QJ8",
+         "plus_code" : {
+            "compound_code" : "3Q8H+X3 Dresden",
+            "global_code" : "9F3M3Q8H+X3"
+         },
+         "rating" : 5,
+         "reference" : "ChIJPTVSyzLPCUcRK6fqg9O-QJ8",
+         "types" : [ "transit_station", "point_of_interest", "establishment" ],
+         "user_ratings_total" : 1
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "formatted_address" : "Borsbergstraße, 01309 Dresden",
+         "geometry" : {
+            "location" : {
+               "lat" : 51.043718,
+               "lng" : 13.7823262
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 51.04505917989271,
+                  "lng" : 13.78367052989272
+               },
+               "southwest" : {
+                  "lat" : 51.04235952010727,
+                  "lng" : 13.78097087010728
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+         "id" : "ed5c26d9b28f822abb58f5b612c6285619db800a",
+         "name" : "Spenerstraße",
+         "opening_hours" : {},
+         "photos" : [
+            {
+               "height" : 2833,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/113905434902781693921\"\u003eA Google User\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRZAAAAjeJ0Pw1IZDLMwePe6h9j1cB3nj9qpuEy7B3tzcjTlQAzzzWZ9dlsfSEWr0hU8hC-w1ERCehfr_QCT6KlipzhqLgn6pZyzSIjO-QypuQlZnBm4JKKWeWY7LRHY7L-0T94EhDRTH1RvD7h2jzX10w-LTogGhRnLP-X3AEhBVCmcotU6OkNBG9kmg",
+               "width" : 4265
+            }
+         ],
+         "place_id" : "ChIJQz6FmqXICUcRZPG9gYBFzdY",
+         "plus_code" : {
+            "compound_code" : "2QVJ+FW Dresden",
+            "global_code" : "9F3M2QVJ+FW"
+         },
+         "rating" : 3.5,
+         "reference" : "ChIJQz6FmqXICUcRZPG9gYBFzdY",
+         "types" : [ "transit_station", "point_of_interest", "establishment" ],
+         "user_ratings_total" : 2
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "formatted_address" : "01309 Dresden",
+         "geometry" : {
+            "location" : {
+               "lat" : 51.0538009,
+               "lng" : 13.7866963
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 51.05514237989272,
+                  "lng" : 13.78804897989272
+               },
+               "southwest" : {
+                  "lat" : 51.05244272010728,
+                  "lng" : 13.78534932010728
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+         "id" : "b67c9f97088664bfa3e6d1ce4dc88ad0ccf4ff8f",
+         "name" : "Dresden Königsheimplatz",
+         "opening_hours" : {},
+         "photos" : [
+            {
+               "height" : 3104,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/105376611379639672711\"\u003eA Google User\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRaAAAAQeWaBlEru82KSckweVrc_H1jU_6i9U1ACj7nXw800X_Flwq3Ro78j7znw9qsoomIz_J9_IC62DUUhW-4ufAo11QWUt29QmkbHFVmqtIcBSkseO5UHtPd8naK74LIvRvTEhDDc0nI9ll-39w1ZunZqHR-GhRkZ4_J2fMBTJzSHdewmqYad8HIIQ",
+               "width" : 3104
+            }
+         ],
+         "place_id" : "ChIJ1d5m2rnICUcRU91EIM4A8bQ",
+         "plus_code" : {
+            "compound_code" : "3Q3P+GM Dresden",
+            "global_code" : "9F3M3Q3P+GM"
+         },
+         "rating" : 3,
+         "reference" : "ChIJ1d5m2rnICUcRU91EIM4A8bQ",
+         "types" : [ "transit_station", "point_of_interest", "establishment" ],
+         "user_ratings_total" : 1
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "formatted_address" : "01307 Dresden",
+         "geometry" : {
+            "location" : {
+               "lat" : 51.05663550000001,
+               "lng" : 13.7675621
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 51.05796702989272,
+                  "lng" : 13.76892157989272
+               },
+               "southwest" : {
+                  "lat" : 51.05526737010727,
+                  "lng" : 13.76622192010728
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+         "id" : "851cbed23d609809694eeda7219054d39fa1b149",
+         "name" : "Dresden Pfeifferhannsstraße",
+         "place_id" : "ChIJLdziskvPCUcRqeupFTed4to",
+         "plus_code" : {
+            "compound_code" : "3Q49+M2 Dresden",
+            "global_code" : "9F3M3Q49+M2"
+         },
+         "rating" : 4,
+         "reference" : "ChIJLdziskvPCUcRqeupFTed4to",
+         "types" : [ "transit_station", "point_of_interest", "establishment" ],
+         "user_ratings_total" : 1
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "formatted_address" : "01099 Dresden",
+         "geometry" : {
+            "location" : {
+               "lat" : 51.066989,
+               "lng" : 13.7837219
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 51.06830042989272,
+                  "lng" : 13.78507032989272
+               },
+               "southwest" : {
+                  "lat" : 51.06560077010727,
+                  "lng" : 13.78237067010728
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+         "id" : "ee018fcff025a1ba270f39ee11fbb76e38ee85ac",
+         "name" : "Angelikastraße",
+         "opening_hours" : {},
+         "place_id" : "ChIJaXcw6s3ICUcRpEaPo30K1IE",
+         "plus_code" : {
+            "compound_code" : "3Q8M+QF Dresden",
+            "global_code" : "9F3M3Q8M+QF"
+         },
+         "rating" : 4.7,
+         "reference" : "ChIJaXcw6s3ICUcRpEaPo30K1IE",
+         "types" : [ "transit_station", "point_of_interest", "establishment" ],
+         "user_ratings_total" : 3
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "formatted_address" : "01307 Dresden",
+         "geometry" : {
+            "location" : {
+               "lat" : 51.05314019999999,
+               "lng" : 13.7626932
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 51.05449132989272,
+                  "lng" : 13.76404302989272
+               },
+               "southwest" : {
+                  "lat" : 51.05179167010728,
+                  "lng" : 13.76134337010728
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+         "id" : "1a0b2d69aa22a7fc91a1cdecee461a5be5100831",
+         "name" : "Dresden Permoserstraße",
+         "photos" : [
+            {
+               "height" : 3104,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/105376611379639672711\"\u003eA Google User\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRaAAAAF6LT7Dx_79ILtQotrNQyzC4NtMuUSgFpuQejQk764OBV4GcuWV-3KeHb5I0bzFel3kTd_iUzdxO672Mkz46Buhv1lCf8zcKLWuRadoIyVNybAr9AIaUXj3wWCjgBGSslEhBtkmePs4NzvCabxydKOK6kGhR_rL74zVKDB2P3vcS2jOy7gEifUw",
+               "width" : 3104
+            }
+         ],
+         "place_id" : "ChIJrdkLIUzPCUcRDx7gmYjBkxI",
+         "plus_code" : {
+            "compound_code" : "3Q37+73 Dresden",
+            "global_code" : "9F3M3Q37+73"
+         },
+         "rating" : 4,
+         "reference" : "ChIJrdkLIUzPCUcRDx7gmYjBkxI",
+         "types" : [ "transit_station", "point_of_interest", "establishment" ],
+         "user_ratings_total" : 1
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "formatted_address" : "01307 Dresden",
+         "geometry" : {
+            "location" : {
+               "lat" : 51.05625149999999,
+               "lng" : 13.7774974
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 51.05760072989272,
+                  "lng" : 13.77883367989272
+               },
+               "southwest" : {
+                  "lat" : 51.05490107010728,
+                  "lng" : 13.77613402010727
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+         "id" : "d5105da8bef0a4161c2e0ffdb58c056a7817685a",
+         "name" : "Dresden Tatzberg",
+         "place_id" : "ChIJYwibtbXICUcRPdh-RJ69LAY",
+         "plus_code" : {
+            "compound_code" : "3Q4G+GX Dresden",
+            "global_code" : "9F3M3Q4G+GX"
+         },
+         "rating" : 0,
+         "reference" : "ChIJYwibtbXICUcRPdh-RJ69LAY",
+         "types" : [ "transit_station", "point_of_interest", "establishment" ],
+         "user_ratings_total" : 0
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "formatted_address" : "01307 Dresden",
+         "geometry" : {
+            "location" : {
+               "lat" : 51.0571154,
+               "lng" : 13.7696192
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 51.05846997989272,
+                  "lng" : 13.77096637989272
+               },
+               "southwest" : {
+                  "lat" : 51.05577032010728,
+                  "lng" : 13.76826672010728
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+         "id" : "ec58a95e12cdb14c8e10a974a25a8fb0b510f063",
+         "name" : "Dresden Gutenbergstraße",
+         "opening_hours" : {},
+         "place_id" : "ChIJhcU3-krPCUcRES2pI3mDvzk",
+         "plus_code" : {
+            "compound_code" : "3Q49+RR Dresden",
+            "global_code" : "9F3M3Q49+RR"
+         },
+         "rating" : 4,
+         "reference" : "ChIJhcU3-krPCUcRES2pI3mDvzk",
+         "types" : [ "transit_station", "point_of_interest", "establishment" ],
+         "user_ratings_total" : 2
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "formatted_address" : "01307 Dresden",
+         "geometry" : {
+            "location" : {
+               "lat" : 51.0540437,
+               "lng" : 13.7813063
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 51.05539287989273,
+                  "lng" : 13.78264962989272
+               },
+               "southwest" : {
+                  "lat" : 51.05269322010728,
+                  "lng" : 13.77994997010728
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+         "id" : "491c1ee4896fab6ec0d89ef3f5719e72848a056e",
+         "name" : "Dresden Augsburger Straße",
+         "opening_hours" : {},
+         "photos" : [
+            {
+               "height" : 4000,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/101281525453698930397\"\u003eMichael K\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRaAAAA7YCifhk8DykDq76WIrki9gW7gu74UIQU4nOnJQ5tU1BDe958nSI3CTyJM4vqgAdtKp73iTkFxaiOnOe9ZwIOteyubqVQy_RhhogCfjvLPqGEU9S9xEEmiOqMNBnIlYlBEhDdBe5EJEz9s61j3NUoflYSGhQScjRagpqTO2CK_0UaiQsJ25xAlQ",
+               "width" : 6000
+            }
+         ],
+         "place_id" : "ChIJ68376LbICUcRFGtkgYWUQKM",
+         "plus_code" : {
+            "compound_code" : "3Q3J+JG Dresden",
+            "global_code" : "9F3M3Q3J+JG"
+         },
+         "rating" : 0,
+         "reference" : "ChIJ68376LbICUcRFGtkgYWUQKM",
+         "types" : [ "transit_station", "point_of_interest", "establishment" ],
+         "user_ratings_total" : 0
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "formatted_address" : "01099 Dresden",
+         "geometry" : {
+            "location" : {
+               "lat" : 51.0669553,
+               "lng" : 13.7850521
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 51.06826747989273,
+                  "lng" : 13.78639917989272
+               },
+               "southwest" : {
+                  "lat" : 51.06556782010728,
+                  "lng" : 13.78369952010728
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+         "id" : "950fb96eb0d1dbc3b726ebf91c58f5f91a6451da",
+         "name" : "Dresden Angelikastraße",
+         "photos" : [
+            {
+               "height" : 2988,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/118244830799952056855\"\u003eA Google User\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRaAAAASNuiPZEYtYpHPKAomwmvQ70t-j4kgSevbwKqiSsHLjrHYFQlE9DnwOnrMN_kzjPHzwAD2L01dcAf2ap1pWD2IYHiLD1vu-ryHmIdHS68JMHPFRrlYXxzM8dM9bMe_XxfEhCzEo5ha2_W1gqptqCUFLErGhR-8R9dg39-v1BhGxH_KlS-g9OF2Q",
+               "width" : 5312
+            }
+         ],
+         "place_id" : "ChIJN9Gm4c3ICUcRC39QkwsJOMM",
+         "plus_code" : {
+            "compound_code" : "3Q8P+Q2 Dresden",
+            "global_code" : "9F3M3Q8P+Q2"
+         },
+         "rating" : 4.5,
+         "reference" : "ChIJN9Gm4c3ICUcRC39QkwsJOMM",
+         "types" : [ "transit_station", "point_of_interest", "establishment" ],
+         "user_ratings_total" : 2
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "formatted_address" : "01309 Dresden",
+         "geometry" : {
+            "location" : {
+               "lat" : 51.0449121,
+               "lng" : 13.7773178
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 51.04625667989272,
+                  "lng" : 13.77866427989272
+               },
+               "southwest" : {
+                  "lat" : 51.04355702010727,
+                  "lng" : 13.77596462010728
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+         "id" : "d9b88021ffec7df69269e94e75dd246376af7557",
+         "name" : "Dresden Mosenstraße",
+         "opening_hours" : {},
+         "place_id" : "ChIJufY9_67ICUcR8kkYfMKQX1A",
+         "plus_code" : {
+            "compound_code" : "2QVG+XW Dresden",
+            "global_code" : "9F3M2QVG+XW"
+         },
+         "rating" : 2,
+         "reference" : "ChIJufY9_67ICUcR8kkYfMKQX1A",
+         "types" : [ "transit_station", "point_of_interest", "establishment" ],
+         "user_ratings_total" : 1
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "formatted_address" : "01069 Dresden",
+         "geometry" : {
+            "location" : {
+               "lat" : 51.047071,
+               "lng" : 13.7374366
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 51.04837757989273,
+                  "lng" : 13.73879802989272
+               },
+               "southwest" : {
+                  "lat" : 51.04567792010729,
+                  "lng" : 13.73609837010728
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+         "id" : "d732e60e5a773d1427f1d4ce978b8e61e6bbf071",
+         "name" : "Prager Straße",
+         "opening_hours" : {},
+         "photos" : [
+            {
+               "height" : 4000,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/108871099606785533864\"\u003eErich Broandt\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRaAAAAlcPVJtVuuEseO3-XP2hlTBsXdqgKtkkn3gKCNivyeaifpZ3vUPzJ_J6JLPMUPQkBwcV0z-Db84AU_5Hs9FoHW5Wy_8-g8tmSMi9TZA32yETB4Gb3vM7SneK-XzzM8EvrEhBe9PIL3JWXe0efbX9iZf3UGhT2tqJxjHS-Gkq3GuXQ1sT19BcrAQ",
+               "width" : 6000
+            }
+         ],
+         "place_id" : "ChIJsSSlVGfPCUcR2xb4Hn16pmo",
+         "plus_code" : {
+            "compound_code" : "2PWP+RX Dresden",
+            "global_code" : "9F3M2PWP+RX"
+         },
+         "rating" : 4.3,
+         "reference" : "ChIJsSSlVGfPCUcR2xb4Hn16pmo",
+         "types" : [ "transit_station", "point_of_interest", "establishment" ],
+         "user_ratings_total" : 20
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "formatted_address" : "01309 Dresden",
+         "geometry" : {
+            "location" : {
+               "lat" : 51.0432911,
+               "lng" : 13.7881066
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 51.04463142989272,
+                  "lng" : 13.78945592989272
+               },
+               "southwest" : {
+                  "lat" : 51.04193177010728,
+                  "lng" : 13.78675627010728
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+         "id" : "f6b49482571d82117ac9f3f39a88868184e80d88",
+         "name" : "Dresden Bergmannstraße",
+         "opening_hours" : {},
+         "photos" : [
+            {
+               "height" : 3024,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/106048252159271746773\"\u003ePhilipp Klöckner\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRaAAAA5KgBKgwDrxJZFLzhMIZtyCo0QdtolmJMoIxZI4vVAXMEK0hKY0WSgpGGSzeAw3dURpOppuWdT74SgmWo_tQJOqBggKnpN95l__8YxadtefoqgBlHa9C7HeuxERVaB58VEhB1BSh-pMIXDzpLGHuObt0iGhTn9fswwfsr8otZAUSHE_rPanAVcw",
+               "width" : 4032
+            }
+         ],
+         "place_id" : "ChIJxU0Uh6PICUcRv3hPE0vUSDU",
+         "plus_code" : {
+            "compound_code" : "2QVQ+86 Dresden",
+            "global_code" : "9F3M2QVQ+86"
+         },
+         "rating" : 0,
+         "reference" : "ChIJxU0Uh6PICUcRv3hPE0vUSDU",
+         "types" : [ "transit_station", "point_of_interest", "establishment" ],
+         "user_ratings_total" : 0
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "formatted_address" : "01307 Dresden",
+         "geometry" : {
+            "location" : {
+               "lat" : 51.0603168,
+               "lng" : 13.7772819
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 51.06166747989272,
+                  "lng" : 13.77865367989272
+               },
+               "southwest" : {
+                  "lat" : 51.05896782010728,
+                  "lng" : 13.77595402010728
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+         "id" : "447c02b1b327c23fbd2222537fbc5a0c5267114f",
+         "name" : "Dresden Käthe-Kollwitz-Ufer",
+         "photos" : [
+            {
+               "height" : 2268,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/102535964584899916646\"\u003eUdo Lukaw\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRaAAAAG5NNXL5WatHJAg5pSLNv2FKRp-KS0oDtyqCmnW1LyO_eTaKhTjMZEgMYcoxKX6C-xkWcvrPlx9N5h7LQQ09cx5NJ_NPerVOuorznigspSulbA99eGJs2iyLJ-XqFF-3_EhAWq2K_ZXIa-9NjGMXEmACuGhRoQFFkpku1Xfrz9jlw7vbJkYuoKg",
+               "width" : 4032
+            }
+         ],
+         "place_id" : "ChIJx2UK8MrICUcRNac_znevNf8",
+         "plus_code" : {
+            "compound_code" : "3Q6G+4W Dresden",
+            "global_code" : "9F3M3Q6G+4W"
+         },
+         "rating" : 5,
+         "reference" : "ChIJx2UK8MrICUcRNac_znevNf8",
+         "types" : [ "transit_station", "point_of_interest", "establishment" ],
+         "user_ratings_total" : 1
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "formatted_address" : "01309 Dresden",
+         "geometry" : {
+            "location" : {
+               "lat" : 51.0447653,
+               "lng" : 13.7780545
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 51.04610577989273,
+                  "lng" : 13.77939822989272
+               },
+               "southwest" : {
+                  "lat" : 51.04340612010728,
+                  "lng" : 13.77669857010728
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+         "id" : "fe0d307c477eae329b4977dd667ccad72020cf42",
+         "name" : "Dresden Mosenstraße",
+         "opening_hours" : {},
+         "photos" : [
+            {
+               "height" : 4032,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/106962065079347856740\"\u003eMahmuda Sultana\u003c/a\u003e"
+               ],
+               "photo_reference" : "CmRaAAAAzPlSq2MvFC6zN0EVh_rwtikN3h2_kwH-RRthtOBKF3_lPUTGrW7iCwvmSzI43SQE1kYCPMWlkYeQ0WoMr3-PhEbwdMshbyy_unWeakfj1myqL3KKVJulHl_vMuSTTXMeEhAxpf-P9iKkKJn0pSOnIjYHGhTDYV2ZimaEGk-gP4fn5ZYtF35qlA",
+               "width" : 3024
+            }
+         ],
+         "place_id" : "ChIJO3_9AK_ICUcRdX8ePzRzKEE",
+         "plus_code" : {
+            "compound_code" : "2QVH+W6 Dresden",
+            "global_code" : "9F3M2QVH+W6"
+         },
+         "rating" : 4,
+         "reference" : "ChIJO3_9AK_ICUcRdX8ePzRzKEE",
+         "types" : [ "transit_station", "point_of_interest", "establishment" ],
+         "user_ratings_total" : 1
+      }
+   ],
+   "status" : "OK"
+}
+";
