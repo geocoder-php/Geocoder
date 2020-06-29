@@ -133,6 +133,7 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
         } else {
             $url = self::NEARBY_ENDPOINT_URL_SSL;
         }
+
         return $this->fetchUrl($url, $this->buildNearbySearchQuery($query));
     }
 
