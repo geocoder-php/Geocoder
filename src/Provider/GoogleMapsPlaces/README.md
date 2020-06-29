@@ -58,17 +58,16 @@ $results = $provider->geocodeQuery(
 Three options available for reverse geocoding of latlon coordinates:
 
 - mode `search` + type (e.g.) `bar`: uses Google Place API [Text search](https://developers.google.com/places/web-service/search#TextSearchRequests), requires `type`
-    - is similar to: Search around location
+  - is similar to: Search around location (see previous section)
 - mode `nearby` + rankby `distance`: uses Google Place API [Nearby search](https://developers.google.com/places/web-service/search#PlaceSearchRequests), requires `type/keyword/name`
 - mode `nearby` + rankby `prominence`: uses Google Place API [Nearby search](https://developers.google.com/places/web-service/search#PlaceSearchRequests), requires `radius`
 
-Defaults: mode `search`, rankby `prominence` (for mode `nearby`).
-Mode `search` gives formatted_address, mode `nearby` gives vicinity instead.
+Default mode: `search` (because of backward compatibility). When using mode `nearby` default rankby: `prominence`.
+Mode `search` + type and mode `nearby` + type/keyword/name are very similar.
+Mode `search` gives formatted_address, mode `nearby` gives vicinity instead.  E.g.:
 
-`Search` and `Nearby` are similar but not the same:
-
-- `Search`: has "formatted_address": "7 Cope St, Redfern NSW 2016"
-- `Nearby`: has "vicinity" instead: "7 Cope St, Redfern"
+- `search`: has "formatted_address": "7 Cope St, Redfern NSW 2016"
+- `nearby`: has "vicinity" instead: "7 Cope St, Redfern"
 
 Examples
 
