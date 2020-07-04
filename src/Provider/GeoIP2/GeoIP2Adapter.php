@@ -42,7 +42,7 @@ class GeoIP2Adapter
      * @param \GeoIp2\ProviderInterface $geoIpProvider
      * @param string                    $geoIP2Model   (e.g. self::GEOIP2_MODEL_CITY)
      */
-    public function __construct(ProviderInterface $geoIpProvider, $geoIP2Model = self::GEOIP2_MODEL_CITY)
+    public function __construct(ProviderInterface $geoIpProvider, string $geoIP2Model = self::GEOIP2_MODEL_CITY)
     {
         $this->geoIp2Provider = $geoIpProvider;
 

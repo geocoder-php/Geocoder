@@ -207,7 +207,7 @@ class Pelias extends AbstractHttpProvider implements Provider
      *
      * @return null|string
      */
-    protected function guessLocality(array $components)
+    protected function guessLocality(array $components): ?string
     {
         $localityKeys = ['city', 'town', 'village', 'hamlet'];
 
@@ -219,7 +219,7 @@ class Pelias extends AbstractHttpProvider implements Provider
      *
      * @return null|string
      */
-    protected function guessStreetName(array $components)
+    protected function guessStreetName(array $components): ?string
     {
         $streetNameKeys = ['road', 'street', 'street_name', 'residential'];
 
@@ -231,7 +231,7 @@ class Pelias extends AbstractHttpProvider implements Provider
      *
      * @return null|string
      */
-    protected function guessSubLocality(array $components)
+    protected function guessSubLocality(array $components): ?string
     {
         $subLocalityKeys = ['neighbourhood', 'city_district'];
 
@@ -244,7 +244,7 @@ class Pelias extends AbstractHttpProvider implements Provider
      *
      * @return null|string
      */
-    protected function guessBestComponent(array $components, array $keys)
+    protected function guessBestComponent(array $components, array $keys): ?string
     {
         foreach ($keys as $key) {
             if (isset($components[$key]) && !empty($components[$key])) {

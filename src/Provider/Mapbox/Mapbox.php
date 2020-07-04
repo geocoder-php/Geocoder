@@ -152,7 +152,7 @@ final class Mapbox extends AbstractHttpProvider implements Provider
     public function __construct(
         HttpClient $client,
         string $accessToken,
-        string $country = null,
+        ?string $country = null,
         string $geocodingMode = self::GEOCODING_MODE_PLACES
     ) {
         parent::__construct($client);
@@ -196,7 +196,7 @@ final class Mapbox extends AbstractHttpProvider implements Provider
         }
 
         if ($urlParameters) {
-            $url .= '?'.http_build_query($urlParameters);
+            $url .= '?' . http_build_query($urlParameters);
         }
 
         return $this->fetchUrl($url, $query->getLimit(), $query->getLocale(), $query->getData('country', $this->country));
@@ -219,7 +219,7 @@ final class Mapbox extends AbstractHttpProvider implements Provider
         }
 
         if ($urlParameters) {
-            $url .= '?'.http_build_query($urlParameters);
+            $url .= '?' . http_build_query($urlParameters);
         }
 
         return $this->fetchUrl($url, $query->getLimit(), $query->getLocale(), $query->getData('country', $this->country));
@@ -241,7 +241,7 @@ final class Mapbox extends AbstractHttpProvider implements Provider
      *
      * @return string query with extra params
      */
-    private function buildQuery(string $url, int $limit, string $locale = null, string $country = null): string
+    private function buildQuery(string $url, int $limit, ?string $locale = null, ?string $country = null): string
     {
         $parameters = array_filter([
             'country' => $country,
@@ -252,7 +252,7 @@ final class Mapbox extends AbstractHttpProvider implements Provider
 
         $separator = parse_url($url, PHP_URL_QUERY) ? '&' : '?';
 
-        return $url.$separator.http_build_query($parameters);
+        return $url . $separator . http_build_query($parameters);
     }
 
     /**
@@ -263,7 +263,7 @@ final class Mapbox extends AbstractHttpProvider implements Provider
      *
      * @return AddressCollection
      */
-    private function fetchUrl(string $url, int $limit, string $locale = null, string $country = null): AddressCollection
+    private function fetchUrl(string $url, int $limit, ?string $locale = null, ?string $country = null): AddressCollection
     {
         $url = $this->buildQuery($url, $limit, $locale, $country);
         $content = $this->getUrlContents($url);
@@ -385,7 +385,7 @@ final class Mapbox extends AbstractHttpProvider implements Provider
      *
      * @return array
      */
-    private function validateResponse(string $url, $content): array
+    private function validateResponse(string $url, string $content): array
     {
         $json = json_decode($content, true);
 

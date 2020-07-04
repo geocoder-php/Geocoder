@@ -171,7 +171,7 @@ final class AddressBuilder
      *
      * @return AddressBuilder
      */
-    public function addAdminLevel(int $level, string $name, string $code = null): self
+    public function addAdminLevel(int $level, string $name, ?string $code = null): self
     {
         $this->adminLevels[] = new AdminLevel($level, $name, $code);
 
@@ -183,7 +183,7 @@ final class AddressBuilder
      *
      * @return AddressBuilder
      */
-    public function setStreetNumber($streetNumber): self
+    public function setStreetNumber(?string $streetNumber): self
     {
         $this->streetNumber = $streetNumber;
 
@@ -195,7 +195,7 @@ final class AddressBuilder
      *
      * @return AddressBuilder
      */
-    public function setStreetName($streetName): self
+    public function setStreetName(?string $streetName): self
     {
         $this->streetName = $streetName;
 
@@ -207,7 +207,7 @@ final class AddressBuilder
      *
      * @return AddressBuilder
      */
-    public function setLocality($locality): self
+    public function setLocality(?string $locality): self
     {
         $this->locality = $locality;
 
@@ -219,7 +219,7 @@ final class AddressBuilder
      *
      * @return AddressBuilder
      */
-    public function setPostalCode($postalCode): self
+    public function setPostalCode(?string $postalCode): self
     {
         $this->postalCode = $postalCode;
 
@@ -231,7 +231,7 @@ final class AddressBuilder
      *
      * @return AddressBuilder
      */
-    public function setSubLocality($subLocality): self
+    public function setSubLocality(?string $subLocality): self
     {
         $this->subLocality = $subLocality;
 
@@ -255,7 +255,7 @@ final class AddressBuilder
      *
      * @return AddressBuilder
      */
-    public function setCountry($country): self
+    public function setCountry(?string $country): self
     {
         $this->country = $country;
 
@@ -267,7 +267,7 @@ final class AddressBuilder
      *
      * @return AddressBuilder
      */
-    public function setCountryCode($countryCode): self
+    public function setCountryCode(?string $countryCode): self
     {
         $this->countryCode = $countryCode;
 
@@ -279,7 +279,7 @@ final class AddressBuilder
      *
      * @return AddressBuilder
      */
-    public function setTimezone($timezone): self
+    public function setTimezone(?string $timezone): self
     {
         $this->timezone = $timezone;
 

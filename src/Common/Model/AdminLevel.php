@@ -37,7 +37,7 @@ final class AdminLevel
      * @param string      $name
      * @param string|null $code
      */
-    public function __construct(int $level, string $name, string $code = null)
+    public function __construct(int $level, string $name, ?string $code = null)
     {
         $this->level = $level;
         $this->name = $name;
@@ -69,7 +69,7 @@ final class AdminLevel
      *
      * @return string|null
      */
-    public function getCode()
+    public function getCode(): ?string
     {
         return $this->code;
     }

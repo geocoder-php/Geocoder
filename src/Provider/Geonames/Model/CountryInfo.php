@@ -122,7 +122,7 @@ final class CountryInfo
     /**
      * @return null|string
      */
-    public function getContinent()
+    public function getContinent(): ?string
     {
         return $this->continent;
     }
@@ -132,7 +132,7 @@ final class CountryInfo
      *
      * @return CountryInfo
      */
-    public function withContinent(string $continent = null): self
+    public function withContinent(?string $continent = null): self
     {
         $new = clone $this;
         $new->continent = $continent;
@@ -143,7 +143,7 @@ final class CountryInfo
     /**
      * @return null|string
      */
-    public function getCapital()
+    public function getCapital(): ?string
     {
         return $this->capital;
     }
@@ -153,7 +153,7 @@ final class CountryInfo
      *
      * @return CountryInfo
      */
-    public function withCapital(string $capital = null): self
+    public function withCapital(?string $capital = null): self
     {
         $new = clone $this;
         $new->capital = $capital;
@@ -206,7 +206,7 @@ final class CountryInfo
     /**
      * @return null|string
      */
-    public function getIsoAlpha3()
+    public function getIsoAlpha3(): ?string
     {
         return $this->isoAlpha3;
     }
@@ -216,7 +216,7 @@ final class CountryInfo
      *
      * @return CountryInfo
      */
-    public function withIsoAlpha3(string $isoAlpha3 = null): self
+    public function withIsoAlpha3(?string $isoAlpha3 = null): self
     {
         $new = clone $this;
         $new->isoAlpha3 = $isoAlpha3;
@@ -227,7 +227,7 @@ final class CountryInfo
     /**
      * @return null|string
      */
-    public function getFipsCode()
+    public function getFipsCode(): ?string
     {
         return $this->fipsCode;
     }
@@ -237,7 +237,7 @@ final class CountryInfo
      *
      * @return CountryInfo
      */
-    public function withFipsCode(string $fipsCode = null): self
+    public function withFipsCode(?string $fipsCode = null): self
     {
         $new = clone $this;
         $new->fipsCode = $fipsCode;
@@ -269,7 +269,7 @@ final class CountryInfo
     /**
      * @return null|int
      */
-    public function getIsoNumeric()
+    public function getIsoNumeric(): ?int
     {
         return $this->isoNumeric;
     }
@@ -279,7 +279,7 @@ final class CountryInfo
      *
      * @return CountryInfo
      */
-    public function withIsoNumeric(string $isoNumeric = null): self
+    public function withIsoNumeric(?string $isoNumeric = null): self
     {
         $new = clone $this;
         $new->isoNumeric = null === $isoNumeric ? null : (int) $isoNumeric;
@@ -290,7 +290,7 @@ final class CountryInfo
     /**
      * @return null|float
      */
-    public function getAreaInSqKm()
+    public function getAreaInSqKm(): ?float
     {
         return $this->areaInSqKm;
     }
@@ -300,7 +300,7 @@ final class CountryInfo
      *
      * @return CountryInfo
      */
-    public function withAreaInSqKm(string $areaInSqKm = null): self
+    public function withAreaInSqKm(?string $areaInSqKm = null): self
     {
         $new = clone $this;
         $new->areaInSqKm = null === $areaInSqKm ? null : (float) $areaInSqKm;
@@ -311,7 +311,7 @@ final class CountryInfo
     /**
      * @return null|string
      */
-    public function getCountryCode()
+    public function getCountryCode(): ?string
     {
         return $this->countryCode;
     }
@@ -321,7 +321,7 @@ final class CountryInfo
      *
      * @return CountryInfo
      */
-    public function withCountryCode(string $countryCode = null): self
+    public function withCountryCode(?string $countryCode = null): self
     {
         $new = clone $this;
         $new->countryCode = $countryCode;
@@ -332,7 +332,7 @@ final class CountryInfo
     /**
      * @return null|string
      */
-    public function getCountryName()
+    public function getCountryName(): ?string
     {
         return $this->countryName;
     }
@@ -342,7 +342,7 @@ final class CountryInfo
      *
      * @return CountryInfo
      */
-    public function withCountryName(string $countryName = null): self
+    public function withCountryName(?string $countryName = null): self
     {
         $new = clone $this;
         $new->countryName = $countryName;
@@ -353,7 +353,7 @@ final class CountryInfo
     /**
      * @return null|string
      */
-    public function getContinentName()
+    public function getContinentName(): ?string
     {
         return $this->continentName;
     }
@@ -363,7 +363,7 @@ final class CountryInfo
      *
      * @return CountryInfo
      */
-    public function withContinentName(string $continentName = null): self
+    public function withContinentName(?string $continentName = null): self
     {
         $new = clone $this;
         $new->continentName = $continentName;
@@ -374,7 +374,7 @@ final class CountryInfo
     /**
      * @return null|string
      */
-    public function getCurrencyCode()
+    public function getCurrencyCode(): ?string
     {
         return $this->currencyCode;
     }
@@ -384,7 +384,7 @@ final class CountryInfo
      *
      * @return CountryInfo
      */
-    public function withCurrencyCode(string $currencyCode = null): self
+    public function withCurrencyCode(?string $currencyCode = null): self
     {
         $new = clone $this;
         $new->currencyCode = $currencyCode;

@@ -52,7 +52,7 @@ final class NominatimAddress extends Address
     /**
      * @return null|string
      */
-    public function getAttribution()
+    public function getAttribution(): ?string
     {
         return $this->attribution;
     }
@@ -62,7 +62,7 @@ final class NominatimAddress extends Address
      *
      * @return NominatimAddress
      */
-    public function withAttribution(string $attribution = null): self
+    public function withAttribution(?string $attribution = null): self
     {
         $new = clone $this;
         $new->attribution = $attribution;
@@ -75,7 +75,7 @@ final class NominatimAddress extends Address
      *
      * @return null|string
      */
-    public function getClass()
+    public function getClass(): ?string
     {
         return $this->getCategory();
     }
@@ -87,7 +87,7 @@ final class NominatimAddress extends Address
      *
      * @return NominatimAddress
      */
-    public function withClass(string $category = null): self
+    public function withClass(?string $category = null): self
     {
         return $this->withCategory($category);
     }
@@ -95,7 +95,7 @@ final class NominatimAddress extends Address
     /**
      * @return null|string
      */
-    public function getCategory()
+    public function getCategory(): ?string
     {
         return $this->category;
     }
@@ -105,7 +105,7 @@ final class NominatimAddress extends Address
      *
      * @return NominatimAddress
      */
-    public function withCategory(string $category = null): self
+    public function withCategory(?string $category = null): self
     {
         $new = clone $this;
         $new->category = $category;
@@ -116,7 +116,7 @@ final class NominatimAddress extends Address
     /**
      * @return null|string
      */
-    public function getDisplayName()
+    public function getDisplayName(): ?string
     {
         return $this->displayName;
     }
@@ -126,7 +126,7 @@ final class NominatimAddress extends Address
      *
      * @return NominatimAddress
      */
-    public function withDisplayName(string $displayName = null): self
+    public function withDisplayName(?string $displayName = null): self
     {
         $new = clone $this;
         $new->displayName = $displayName;
@@ -137,7 +137,7 @@ final class NominatimAddress extends Address
     /**
      * @return null|int
      */
-    public function getOSMId()
+    public function getOSMId(): ?int
     {
         return $this->osmId;
     }
@@ -147,7 +147,7 @@ final class NominatimAddress extends Address
      *
      * @return NominatimAddress
      */
-    public function withOSMId(int $osmId = null): self
+    public function withOSMId(?int $osmId = null): self
     {
         $new = clone $this;
         $new->osmId = $osmId;
@@ -158,7 +158,7 @@ final class NominatimAddress extends Address
     /**
      * @return null|string
      */
-    public function getOSMType()
+    public function getOSMType(): ?string
     {
         return $this->osmType;
     }
@@ -168,7 +168,7 @@ final class NominatimAddress extends Address
      *
      * @return NominatimAddress
      */
-    public function withOSMType(string $osmType = null): self
+    public function withOSMType(?string $osmType = null): self
     {
         $new = clone $this;
         $new->osmType = $osmType;
@@ -179,7 +179,7 @@ final class NominatimAddress extends Address
     /**
      * @return null|string
      */
-    public function getType()
+    public function getType(): ?string
     {
         return $this->type;
     }
@@ -189,7 +189,7 @@ final class NominatimAddress extends Address
      *
      * @return NominatimAddress
      */
-    public function withType(string $type = null): self
+    public function withType(?string $type = null): self
     {
         $new = clone $this;
         $new->type = $type;

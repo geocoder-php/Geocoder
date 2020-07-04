@@ -50,7 +50,7 @@ final class Photon extends AbstractHttpProvider implements Provider
      * @param HttpClient $client  an HTTP client
      * @param string     $rootUrl Root URL of the photon server
      */
-    public function __construct(HttpClient $client, $rootUrl)
+    public function __construct(HttpClient $client, string $rootUrl)
     {
         parent::__construct($client);
 
@@ -70,8 +70,8 @@ final class Photon extends AbstractHttpProvider implements Provider
         }
 
         $url = $this->rootUrl
-            .'/api?'
-            .http_build_query([
+            . '/api?'
+            . http_build_query([
                 'q' => $address,
                 'limit' => $query->getLimit(),
                 'lang' => $query->getLocale(),
@@ -102,8 +102,8 @@ final class Photon extends AbstractHttpProvider implements Provider
         $latitude = $coordinates->getLatitude();
 
         $url = $this->rootUrl
-            .'/reverse?'
-            .http_build_query([
+            . '/reverse?'
+            . http_build_query([
                 'lat' => $latitude,
                 'lon' => $longitude,
                 'lang' => $query->getLocale(),

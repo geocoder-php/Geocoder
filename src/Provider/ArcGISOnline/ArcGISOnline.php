@@ -48,7 +48,7 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
      * @param HttpClient $client        An HTTP adapter
      * @param string     $sourceCountry Country biasing (optional)
      */
-    public function __construct(HttpClient $client, string $sourceCountry = null)
+    public function __construct(HttpClient $client, ?string $sourceCountry = null)
     {
         parent::__construct($client);
 

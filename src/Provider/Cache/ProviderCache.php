@@ -45,7 +45,7 @@ class ProviderCache implements Provider
      * @param CacheInterface $cache
      * @param int            $lifetime
      */
-    final public function __construct(Provider $realProvider, CacheInterface $cache, int $lifetime = null)
+    final public function __construct(Provider $realProvider, CacheInterface $cache, ?int $lifetime = null)
     {
         $this->realProvider = $realProvider;
         $this->cache = $cache;
@@ -105,6 +105,6 @@ class ProviderCache implements Provider
     protected function getCacheKey($query): string
     {
         // Include the major version number of the geocoder to avoid issues unserializing.
-        return 'v4'.sha1((string) $query);
+        return 'v4' . sha1((string) $query);
     }
 }

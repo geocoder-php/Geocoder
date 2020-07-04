@@ -47,7 +47,7 @@ class CachePlugin implements Plugin
      * @param int|null       $lifetime
      * @param int|null       $precision
      */
-    public function __construct(CacheInterface $cache, int $lifetime = null, int $precision = null)
+    public function __construct(CacheInterface $cache, ?int $lifetime = null, ?int $precision = null)
     {
         $this->cache = $cache;
         $this->lifetime = $lifetime;
@@ -85,6 +85,6 @@ class CachePlugin implements Plugin
         }
 
         // Include the major version number of the geocoder to avoid issues unserializing.
-        return 'v4'.sha1((string) $query);
+        return 'v4' . sha1((string) $query);
     }
 }

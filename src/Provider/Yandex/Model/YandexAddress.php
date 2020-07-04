@@ -41,7 +41,7 @@ final class YandexAddress extends Address
     /**
      * @return null|string
      */
-    public function getPrecision()
+    public function getPrecision(): ?string
     {
         return $this->precision;
     }
@@ -51,7 +51,7 @@ final class YandexAddress extends Address
      *
      * @return YandexAddress
      */
-    public function withPrecision(string $precision = null): self
+    public function withPrecision(?string $precision = null): self
     {
         $new = clone $this;
         $new->precision = $precision;
@@ -62,7 +62,7 @@ final class YandexAddress extends Address
     /**
      * @return null|string
      */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -72,7 +72,7 @@ final class YandexAddress extends Address
      *
      * @return YandexAddress
      */
-    public function withName(string $name = null): self
+    public function withName(?string $name = null): self
     {
         $new = clone $this;
         $new->name = $name;
@@ -83,7 +83,7 @@ final class YandexAddress extends Address
     /**
      * @return string|null
      */
-    public function getKind(): string
+    public function getKind(): ?string
     {
         return $this->kind;
     }
@@ -93,7 +93,7 @@ final class YandexAddress extends Address
      *
      * @return YandexAddress
      */
-    public function withKind(string $kind = null): self
+    public function withKind(?string $kind = null): self
     {
         $new = clone $this;
         $new->kind = $kind;

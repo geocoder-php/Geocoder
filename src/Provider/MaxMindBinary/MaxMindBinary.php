@@ -42,7 +42,7 @@ final class MaxMindBinary extends AbstractProvider implements Provider
      * @throws FunctionNotFound if maxmind's lib not installed
      * @throws InvalidArgument  if dat file is not correct (optional)
      */
-    public function __construct(string $datFile, int $openFlag = null)
+    public function __construct(string $datFile, ?int $openFlag = null)
     {
         if (false === function_exists('geoip_open')) {
             throw new FunctionNotFound('geoip_open', 'The MaxMindBinary requires maxmind\'s lib to be installed and loaded. Have you included geoip.inc file?');

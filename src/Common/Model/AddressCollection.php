@@ -35,7 +35,7 @@ final class AddressCollection implements Collection
     /**
      * {@inheritdoc}
      */
-    public function getIterator()
+    public function getIterator(): \ArrayIterator
     {
         return new \ArrayIterator($this->all());
     }
@@ -43,7 +43,7 @@ final class AddressCollection implements Collection
     /**
      * {@inheritdoc}
      */
-    public function count()
+    public function count(): int
     {
         return count($this->locations);
     }
@@ -71,7 +71,7 @@ final class AddressCollection implements Collection
     /**
      * @return Location[]
      */
-    public function slice(int $offset, int $length = null)
+    public function slice(int $offset, int $length = null): array
     {
         return array_slice($this->locations, $offset, $length);
     }

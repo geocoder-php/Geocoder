@@ -61,7 +61,7 @@ final class GeonamesAddress extends Address
     /**
      * @return null|string
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -69,9 +69,9 @@ final class GeonamesAddress extends Address
     /**
      * @param null|string $name
      *
-     * @return self
+     * @return GeonamesAddress
      */
-    public function withName(string $name = null): self
+    public function withName(?string $name = null): self
     {
         $new = clone $this;
         $new->name = $name;
@@ -82,7 +82,7 @@ final class GeonamesAddress extends Address
     /**
      * @return null|string
      */
-    public function getFcode()
+    public function getFcode(): ?string
     {
         return $this->fcode;
     }
@@ -92,7 +92,7 @@ final class GeonamesAddress extends Address
      *
      * @return GeonamesAddress
      */
-    public function withFcode($fcode)
+    public function withFcode(?string $fcode): self
     {
         $new = clone $this;
         $new->fcode = $fcode;
@@ -103,7 +103,7 @@ final class GeonamesAddress extends Address
     /**
      * @return null|string
      */
-    public function getFclName()
+    public function getFclName(): ?string
     {
         return $this->fclName;
     }
@@ -113,7 +113,7 @@ final class GeonamesAddress extends Address
      *
      * @return GeonamesAddress
      */
-    public function withFclName($fclName)
+    public function withFclName(?string $fclName): self
     {
         $new = clone $this;
         $new->fclName = $fclName;
@@ -124,7 +124,7 @@ final class GeonamesAddress extends Address
     /**
      * @return int|null
      */
-    public function getPopulation()
+    public function getPopulation(): ?int
     {
         return $this->population;
     }
@@ -134,7 +134,7 @@ final class GeonamesAddress extends Address
      *
      * @return GeonamesAddress
      */
-    public function withPopulation($population)
+    public function withPopulation(?int $population): self
     {
         $new = clone $this;
         $new->population = $population;
@@ -145,7 +145,7 @@ final class GeonamesAddress extends Address
     /**
      * @return int|null
      */
-    public function getGeonameId()
+    public function getGeonameId(): ?int
     {
         return $this->geonameId;
     }
@@ -155,7 +155,7 @@ final class GeonamesAddress extends Address
      *
      * @return GeonamesAddress
      */
-    public function withGeonameId($geonameId)
+    public function withGeonameId(?int $geonameId): self
     {
         $new = clone $this;
         $new->geonameId = $geonameId;
@@ -176,7 +176,7 @@ final class GeonamesAddress extends Address
      *
      * @return GeonamesAddress
      */
-    public function withAlternateNames(array $alternateNames)
+    public function withAlternateNames(array $alternateNames): self
     {
         $new = clone $this;
         $new->alternateNames = $alternateNames;
@@ -187,7 +187,7 @@ final class GeonamesAddress extends Address
     /**
      * @return null|string
      */
-    public function getAsciiName()
+    public function getAsciiName(): ?string
     {
         return $this->asciiName;
     }
@@ -197,7 +197,7 @@ final class GeonamesAddress extends Address
      *
      * @return GeonamesAddress
      */
-    public function withAsciiName($asciiName)
+    public function withAsciiName(?string $asciiName): self
     {
         $new = clone $this;
         $new->asciiName = $asciiName;

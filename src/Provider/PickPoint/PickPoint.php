@@ -160,7 +160,7 @@ final class PickPoint extends AbstractHttpProvider implements Provider
      *
      * @return string
      */
-    private function executeQuery(string $url, string $locale = null): string
+    private function executeQuery(string $url, ?string $locale = null): string
     {
         if (null !== $locale) {
             $url = sprintf('%s&accept-language=%s', $url, $locale);
@@ -171,12 +171,12 @@ final class PickPoint extends AbstractHttpProvider implements Provider
 
     private function getGeocodeEndpointUrl(): string
     {
-        return self::BASE_API_URL.'/forward?q=%s&format=xml&addressdetails=1&limit=%d&key='.$this->apiKey;
+        return self::BASE_API_URL . '/forward?q=%s&format=xml&addressdetails=1&limit=%d&key=' . $this->apiKey;
     }
 
     private function getReverseEndpointUrl(): string
     {
-        return self::BASE_API_URL.'/reverse?format=xml&lat=%F&lon=%F&addressdetails=1&zoom=%d&key='.$this->apiKey;
+        return self::BASE_API_URL . '/reverse?format=xml&lat=%F&lon=%F&addressdetails=1&zoom=%d&key=' . $this->apiKey;
     }
 
     private function getNodeValue(\DOMNodeList $element)

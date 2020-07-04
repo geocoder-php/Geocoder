@@ -47,7 +47,7 @@ final class PhotonAddress extends Address
      *
      * @return PhotonAddress
      */
-    public function withOSMId(int $osmId = null): self
+    public function withOSMId(?int $osmId = null): self
     {
         $new = clone $this;
         $new->osmId = $osmId;
@@ -58,7 +58,7 @@ final class PhotonAddress extends Address
     /**
      * @return null|string
      */
-    public function getOSMType()
+    public function getOSMType(): ?string
     {
         return $this->osmType;
     }
@@ -68,7 +68,7 @@ final class PhotonAddress extends Address
      *
      * @return PhotonAddress
      */
-    public function withOSMType(string $osmType = null): self
+    public function withOSMType(?string $osmType = null): self
     {
         $new = clone $this;
         $new->osmType = $osmType;
@@ -90,7 +90,7 @@ final class PhotonAddress extends Address
      *
      * @return PhotonAddress
      */
-    public function withOSMTag(string $key = null, string $value = null): self
+    public function withOSMTag(?string $key = null, ?string $value = null): self
     {
         $new = clone $this;
 

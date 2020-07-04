@@ -147,7 +147,7 @@ final class GeocodeQuery implements Query
     /**
      * @return Bounds|null
      */
-    public function getBounds()
+    public function getBounds(): ?Bounds
     {
         return $this->bounds;
     }
@@ -155,7 +155,7 @@ final class GeocodeQuery implements Query
     /**
      * @return string|null
      */
-    public function getLocale()
+    public function getLocale(): ?string
     {
         return $this->locale;
     }

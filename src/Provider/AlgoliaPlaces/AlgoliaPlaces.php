@@ -181,7 +181,7 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
      *
      * @return AddressCollection
      */
-    private function buildResult(array $jsonResponse, string $locale = null): AddressCollection
+    private function buildResult(array $jsonResponse, ?string $locale = null): AddressCollection
     {
         $results = [];
 
@@ -230,7 +230,7 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
      *
      * @return string|int|float
      */
-    private function getResultAttribute(array $result, string $attribute, string $locale = null)
+    private function getResultAttribute(array $result, ?string $attribute, string $locale = null)
     {
         if (!is_array($result[$attribute])) {
             return $result[$attribute];

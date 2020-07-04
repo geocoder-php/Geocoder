@@ -35,7 +35,7 @@ final class Country
      * @param string $name
      * @param string $code
      */
-    public function __construct(string $name = null, string $code = null)
+    public function __construct(?string $name = null, ?string $code = null)
     {
         if (null === $name && null === $code) {
             throw new InvalidArgument('A country must have either a name or a code');
@@ -50,7 +50,7 @@ final class Country
      *
      * @return string|null
      */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -60,7 +60,7 @@ final class Country
      *
      * @return string|null
      */
-    public function getCode()
+    public function getCode(): ?string
     {
         return $this->code;
     }

@@ -53,7 +53,7 @@ final class ReverseQuery implements Query
      *
      * @return ReverseQuery
      */
-    public static function create(Coordinates $coordinates)
+    public static function create(Coordinates $coordinates): self
     {
         return new self($coordinates);
     }
@@ -64,7 +64,7 @@ final class ReverseQuery implements Query
      *
      * @return ReverseQuery
      */
-    public static function fromCoordinates($latitude, $longitude): self
+    public static function fromCoordinates(float $latitude, float $longitude): self
     {
         return new self(new Coordinates($latitude, $longitude));
     }
@@ -139,9 +139,9 @@ final class ReverseQuery implements Query
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getLocale()
+    public function getLocale(): ?string
     {
         return $this->locale;
     }

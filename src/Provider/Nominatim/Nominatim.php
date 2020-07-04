@@ -91,8 +91,8 @@ final class Nominatim extends AbstractHttpProvider implements Provider
         }
 
         $url = $this->rootUrl
-            .'/search?'
-            .http_build_query([
+            . '/search?'
+            . http_build_query([
                 'format' => 'jsonv2',
                 'q' => $address,
                 'addressdetails' => 1,
@@ -104,11 +104,11 @@ final class Nominatim extends AbstractHttpProvider implements Provider
             if (is_array($countrycodes)) {
                 $countrycodes = array_map('strtolower', $countrycodes);
 
-                $url .= '&'.http_build_query([
+                $url .= '&' . http_build_query([
                     'countrycodes' => implode(',', $countrycodes),
                 ]);
             } else {
-                $url .= '&'.http_build_query([
+                $url .= '&' . http_build_query([
                     'countrycodes' => strtolower($countrycodes),
                 ]);
             }
@@ -116,13 +116,13 @@ final class Nominatim extends AbstractHttpProvider implements Provider
 
         $viewbox = $query->getData('viewbox');
         if (!is_null($viewbox) && is_array($viewbox) && 4 === count($viewbox)) {
-            $url .= '&'.http_build_query([
+            $url .= '&' . http_build_query([
                 'viewbox' => implode(',', $viewbox),
             ]);
 
             $bounded = $query->getData('bounded');
             if (!is_null($bounded) && true === $bounded) {
-                $url .= '&'.http_build_query([
+                $url .= '&' . http_build_query([
                     'bounded' => 1,
                 ]);
             }
@@ -157,8 +157,8 @@ final class Nominatim extends AbstractHttpProvider implements Provider
         $latitude = $coordinates->getLatitude();
 
         $url = $this->rootUrl
-            .'/reverse?'
-            .http_build_query([
+            . '/reverse?'
+            . http_build_query([
                 'format' => 'jsonv2',
                 'lat' => $latitude,
                 'lon' => $longitude,
@@ -261,10 +261,10 @@ final class Nominatim extends AbstractHttpProvider implements Provider
      *
      * @return string
      */
-    private function executeQuery(string $url, string $locale = null): string
+    private function executeQuery(string $url, ?string $locale = null): string
     {
         if (null !== $locale) {
-            $url .= '&'.http_build_query([
+            $url .= '&' . http_build_query([
                 'accept-language' => $locale,
             ]);
         }

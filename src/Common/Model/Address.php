@@ -90,15 +90,15 @@ class Address implements Location
     public function __construct(
         string $providedBy,
         AdminLevelCollection $adminLevels,
-        Coordinates $coordinates = null,
-        Bounds $bounds = null,
-        string $streetNumber = null,
-        string $streetName = null,
-        string $postalCode = null,
-        string $locality = null,
-        string $subLocality = null,
-        Country $country = null,
-        string $timezone = null
+        ?Coordinates $coordinates = null,
+        ?Bounds $bounds = null,
+        ?string $streetNumber = null,
+        ?string $streetName = null,
+        ?string $postalCode = null,
+        ?string $locality = null,
+        ?string $subLocality = null,
+        ?Country $country = null,
+        ?string $timezone = null
     ) {
         $this->providedBy = $providedBy;
         $this->adminLevels = $adminLevels;
@@ -124,7 +124,7 @@ class Address implements Location
     /**
      * {@inheritdoc}
      */
-    public function getCoordinates()
+    public function getCoordinates(): ?Coordinates
     {
         return $this->coordinates;
     }
@@ -132,7 +132,7 @@ class Address implements Location
     /**
      * {@inheritdoc}
      */
-    public function getBounds()
+    public function getBounds(): ?Bounds
     {
         return $this->bounds;
     }
@@ -148,7 +148,7 @@ class Address implements Location
     /**
      * {@inheritdoc}
      */
-    public function getStreetName()
+    public function getStreetName(): ?string
     {
         return $this->streetName;
     }
@@ -156,7 +156,7 @@ class Address implements Location
     /**
      * {@inheritdoc}
      */
-    public function getLocality()
+    public function getLocality(): ?string
     {
         return $this->locality;
     }
@@ -164,7 +164,7 @@ class Address implements Location
     /**
      * {@inheritdoc}
      */
-    public function getPostalCode()
+    public function getPostalCode(): ?string
     {
         return $this->postalCode;
     }
@@ -172,7 +172,7 @@ class Address implements Location
     /**
      * {@inheritdoc}
      */
-    public function getSubLocality()
+    public function getSubLocality(): ?string
     {
         return $this->subLocality;
     }
@@ -188,7 +188,7 @@ class Address implements Location
     /**
      * {@inheritdoc}
      */
-    public function getCountry()
+    public function getCountry(): ?Country
     {
         return $this->country;
     }
@@ -196,7 +196,7 @@ class Address implements Location
     /**
      * {@inheritdoc}
      */
-    public function getTimezone()
+    public function getTimezone(): ?string
     {
         return $this->timezone;
     }
@@ -271,12 +271,12 @@ class Address implements Location
     }
 
     /**
-     * @param float $latitude
-     * @param float $longitude
+     * @param float|null $latitude
+     * @param float|null $longitude
      *
      * @return Coordinates|null
      */
-    private static function createCoordinates($latitude, $longitude)
+    private static function createCoordinates($latitude, $longitude): ?Coordinates
     {
         if (null === $latitude || null === $longitude) {
             return null;
@@ -291,7 +291,7 @@ class Address implements Location
      *
      * @return Country|null
      */
-    private static function createCountry($name, $code)
+    private static function createCountry(?string $name, ?string $code): ?Country
     {
         if (null === $name && null === $code) {
             return null;
@@ -301,13 +301,14 @@ class Address implements Location
     }
 
     /**
-     * @param float $south
-     * @param float $west
-     * @param float $north
+     * @param float|null $south
+     * @param float|null $west
+     * @param float|null $north
+     * @param float|null $east
      *
      * @return Bounds|null
      */
-    private static function createBounds($south, $west, $north, $east)
+    private static function createBounds(?float $south, ?float $west, ?float $north, ?float $east): ?Bounds
     {
         if (null === $south || null === $west || null === $north || null === $east) {
             return null;

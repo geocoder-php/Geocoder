@@ -17,5 +17,5 @@ interface GetAddressInterface
     /**
      * @return Location|null
      */
-    public function getAddress();
+    public function getAddress(): ?Location;
 }

@@ -38,7 +38,7 @@ interface Collection extends \IteratorAggregate, \Countable
     /**
      * @return Location[]
      */
-    public function slice(int $offset, int $length = null);
+    public function slice(int $offset, int $length = null): array;
 
     /**
      * @return bool
