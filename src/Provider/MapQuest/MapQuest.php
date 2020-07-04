@@ -206,12 +206,12 @@ final class MapQuest extends AbstractHttpProvider implements Provider
             $baseUrl = static::OPEN_BASE_URL;
         }
 
-        return $baseUrl . $endpoint;
+        return $baseUrl.$endpoint;
     }
 
     private function addGetQuery(string $url, array $params): string
     {
-        return $url . '?' . http_build_query($params, '', '&', PHP_QUERY_RFC3986);
+        return $url.'?'.http_build_query($params, '', '&', PHP_QUERY_RFC3986);
     }
 
     private function addOptionsForGetQuery(array $params, array $options): array
@@ -241,7 +241,7 @@ final class MapQuest extends AbstractHttpProvider implements Provider
 
         $appKey = $params[static::KEY_API_KEY];
         unset($params[static::KEY_API_KEY]);
-        $url .= '?key=' . $appKey;
+        $url .= '?key='.$appKey;
 
         $requestBody = json_encode($params);
         $request = $this->getMessageFactory()->createRequest('POST', $url, [], $requestBody);

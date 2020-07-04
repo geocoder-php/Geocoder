@@ -196,7 +196,7 @@ final class Mapbox extends AbstractHttpProvider implements Provider
         }
 
         if ($urlParameters) {
-            $url .= '?' . http_build_query($urlParameters);
+            $url .= '?'.http_build_query($urlParameters);
         }
 
         return $this->fetchUrl($url, $query->getLimit(), $query->getLocale(), $query->getData('country', $this->country));
@@ -219,7 +219,7 @@ final class Mapbox extends AbstractHttpProvider implements Provider
         }
 
         if ($urlParameters) {
-            $url .= '?' . http_build_query($urlParameters);
+            $url .= '?'.http_build_query($urlParameters);
         }
 
         return $this->fetchUrl($url, $query->getLimit(), $query->getLocale(), $query->getData('country', $this->country));
@@ -252,7 +252,7 @@ final class Mapbox extends AbstractHttpProvider implements Provider
 
         $separator = parse_url($url, PHP_URL_QUERY) ? '&' : '?';
 
-        return $url . $separator . http_build_query($parameters);
+        return $url.$separator.http_build_query($parameters);
     }
 
     /**

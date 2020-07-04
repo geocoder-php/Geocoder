@@ -205,8 +205,8 @@ final class Geonames extends AbstractHttpProvider implements Provider
             }
 
             for ($level = 1; $level <= AdminLevelCollection::MAX_LEVEL_DEPTH; ++$level) {
-                $adminNameProp = 'adminName' . $level;
-                $adminCodeProp = 'adminCode' . $level;
+                $adminNameProp = 'adminName'.$level;
+                $adminCodeProp = 'adminCode'.$level;
                 if (!empty($item->$adminNameProp)) {
                     $builder->addAdminLevel($level, $item->$adminNameProp, $item->$adminCodeProp ?? null);
                 }

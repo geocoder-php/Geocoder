@@ -105,6 +105,6 @@ class ProviderCache implements Provider
     protected function getCacheKey($query): string
     {
         // Include the major version number of the geocoder to avoid issues unserializing.
-        return 'v4' . sha1((string) $query);
+        return 'v4'.sha1((string) $query);
     }
 }

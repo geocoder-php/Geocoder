@@ -85,6 +85,6 @@ class CachePlugin implements Plugin
         }
 
         // Include the major version number of the geocoder to avoid issues unserializing.
-        return 'v4' . sha1((string) $query);
+        return 'v4'.sha1((string) $query);
     }
 }

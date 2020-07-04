@@ -171,12 +171,12 @@ final class PickPoint extends AbstractHttpProvider implements Provider
 
     private function getGeocodeEndpointUrl(): string
     {
-        return self::BASE_API_URL . '/forward?q=%s&format=xml&addressdetails=1&limit=%d&key=' . $this->apiKey;
+        return self::BASE_API_URL.'/forward?q=%s&format=xml&addressdetails=1&limit=%d&key='.$this->apiKey;
     }
 
     private function getReverseEndpointUrl(): string
     {
-        return self::BASE_API_URL . '/reverse?format=xml&lat=%F&lon=%F&addressdetails=1&zoom=%d&key=' . $this->apiKey;
+        return self::BASE_API_URL.'/reverse?format=xml&lat=%F&lon=%F&addressdetails=1&zoom=%d&key='.$this->apiKey;
     }
 
     private function getNodeValue(\DOMNodeList $element)
