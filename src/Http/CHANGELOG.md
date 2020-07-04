@@ -2,6 +2,14 @@
 
 The change log describes what is "Added", "Removed", "Changed" or "Fixed" between each release.
 
+## 4.3.0
+
+### Removed
+
+- Drop support for PHP < 7.2
+
+## 4.2.0
+
 ## 4.1.0
 
 ### Changed

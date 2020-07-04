@@ -2,6 +2,16 @@
 
 The change log describes what is "Added", "Removed", "Changed" or "Fixed" between each release.
 
+## 4.5.0
+
+### Added
+
+- Added `postal_code_suffix` field
+
+### Removed
+
+- Drop support for PHP < 7.2
+
 ## 4.4.0
 
 ### Added

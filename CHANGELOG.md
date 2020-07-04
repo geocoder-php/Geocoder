@@ -1,6 +1,13 @@
 CHANGELOG
 =========
 
+### 4.1.0 (2020-07-04)
+
+* Dropped support for PHP < 7.2
+* Added: `Coordinates::toArray`
+* Changed: Update namespaces
+* Changed: Make sure we never use a country with name AND code as null
+
 ### 4.0.0 (2017-08-01)
 
 * Dropped support for PHP < 7
