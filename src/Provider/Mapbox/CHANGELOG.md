@@ -2,6 +2,16 @@
 
 The change log describes what is "Added", "Removed", "Changed" or "Fixed" between each release.
 
+## 1.1.0
+
+### Fixed
+
+- Fix issue when country `short_code` is null
+
+### Removed
+
+- Drop support for PHP < 7.2
+
 ## 1.0.2
 
 ### Fixed
