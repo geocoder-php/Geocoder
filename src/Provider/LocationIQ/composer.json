@@ -2,7 +2,12 @@
     "name": "geocoder-php/locationiq-provider",
     "type": "library",
     "description": "Geocoder LocationIQ adapter",
-    "keywords": ["geocoder", "geocoding", "address", "locationiq"],
+    "keywords": [
+        "geocoder",
+        "geocoding",
+        "address",
+        "locationiq"
+    ],
     "homepage": "http://geocoder-php.org/Geocoder/",
     "license": "MIT",
     "authors": [
@@ -12,12 +17,12 @@
         }
     ],
     "require": {
-        "php": "^7.0",
+        "php": "^7.2",
         "geocoder-php/common-http": "^4.0",
         "willdurand/geocoder": "^4.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^6.5 || ^7.5",
+        "phpunit/phpunit": "^7.5",
         "geocoder-php/provider-integration-tests": "^1.0",
         "php-http/message": "^1.0",
         "php-http/curl-client": "^1.7"
@@ -26,7 +31,9 @@
         "geocoder-php/provider-implementation": "1.0"
     },
     "autoload": {
-        "psr-4": { "Geocoder\\Provider\\LocationIQ\\": "" },
+        "psr-4": {
+            "Geocoder\\Provider\\LocationIQ\\": ""
+        },
         "exclude-from-classmap": [
             "/Tests/"
         ]
