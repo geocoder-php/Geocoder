@@ -1,10 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Max Langerman
- * Date: 7/13/20
- * Time: 12:11 AM
- */
+
+declare(strict_types=1);
 
 namespace Geocoder\Provider\AzureMaps;
 
@@ -17,26 +13,26 @@ use Geocoder\Provider\Provider;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Http\Client\HttpClient;
-use Http\Message\MessageFactory;
+use stdClass;
 
 /**
  * @author Max Langerman <max@langerman.io>
- * */
+ */
 class AzureMaps extends AbstractHttpProvider implements Provider
 {
     /**
      * @var string
-     * */
+     */
     const GEOCODE_ENDPOINT_SSL = 'https://atlas.microsoft.com/search/address';
 
     /**
      * @var string
-     * */
+     */
     const REVERSE_ENDPOINT_URL = 'https://atlas.microsoft.com/search/address/reverse';
 
     /**
      * @var array
-     * */
+     */
     private $options = [
         'typeahead' => null,
         'limit' => 5,
@@ -54,11 +50,11 @@ class AzureMaps extends AbstractHttpProvider implements Provider
 
     /**
      * @var string
-     * */
+     */
     private $subscriptionKey;
     /**
      * @var string
-     * */
+     */
     private $format;
 
     /**
@@ -73,8 +69,7 @@ class AzureMaps extends AbstractHttpProvider implements Provider
         string $subscriptionKey,
         array $options = [],
         string $format = 'json'
-    )
-    {
+    ) {
         parent::__construct($client);
 
         $this->setSubscriptionKey($subscriptionKey);
@@ -91,7 +86,7 @@ class AzureMaps extends AbstractHttpProvider implements Provider
      */
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
-        $url = $this->buildGeocodeUrl(self::GEOCODE_ENDPOINT_SSL, $query->getText());
+        $url = $this->buildGeocodeUrl($query->getText());
 
         $content = $this->getUrlContents($url);
 
@@ -111,9 +106,8 @@ class AzureMaps extends AbstractHttpProvider implements Provider
     public function reverseQuery(ReverseQuery $query): Collection
     {
         $url = $this->buildReverseGeocodeUrl(
-            self::REVERSE_ENDPOINT_URL,
-            $query->getCoordinates()->getLatitude(),
-            $query->getCoordinates()->getLongitude()
+            (string) $query->getCoordinates()->getLatitude(),
+            (string) $query->getCoordinates()->getLongitude()
         );
 
         $content = $this->getUrlContents($url);
@@ -158,39 +152,54 @@ class AzureMaps extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * @param string $url
      * @param string $query
      * @return string
      */
-    private function buildGeocodeUrl(string $url, string $query): string
+    private function buildGeocodeUrl(string $query): string
     {
+        $url = self::GEOCODE_ENDPOINT_SSL;
         $format = $this->getFormat();
         $options = http_build_query($this->getOptions());
         $query = urlencode($query);
-        $subscriptionKey= $this->getSubscriptionKet();
+        $subscriptionKey= $this->getSubscriptionKey();
 
-        return "{$url}/$format?api-version=1.0&subscription-key={$subscriptionKey}&{$options}&query={$query}";
+        return sprintf(
+            '%s/%s?api-version=1.0&subscription-key=%s&%s&query=%s',
+            $url,
+            $format,
+            $subscriptionKey,
+            $options,
+            $query
+        );
     }
 
     /**
-     * @param string $url
      * @param string $latitude
      * @param string $longitude
      * @return string
      */
-    private function buildReverseGeocodeUrl(string $url, string $latitude, string $longitude): string
+    private function buildReverseGeocodeUrl(string $latitude, string $longitude): string
     {
+        $url = self::REVERSE_ENDPOINT_URL;
         $format = $this->getFormat();
         $options = http_build_query($this->getOptions());
-        $subscriptionKey= $this->getSubscriptionKet();
+        $subscriptionKey= $this->getSubscriptionKey();
 
-        return "{$url}/$format?api-version=1.0&subscription-key={$subscriptionKey}&{$options}&query={$latitude},{$longitude}";
+        return sprintf(
+            '%s/%s?api-version=1.0&subscription-key=%s&%s&query=%s,%s',
+            $url,
+            $format,
+            $subscriptionKey,
+            $options,
+            $latitude,
+            $longitude
+        );
     }
 
     /**
      * @return string
      */
-    private function getSubscriptionKet(): string
+    private function getSubscriptionKey(): string
     {
         return $this->subscriptionKey;
     }
@@ -219,7 +228,7 @@ class AzureMaps extends AbstractHttpProvider implements Provider
         return $this->format;
     }
 
-    private function validateResponse(string $content, string $url)
+    private function validateResponse(string $content, string $url): object
     {
         $response = json_decode($content);
 
@@ -231,6 +240,7 @@ class AzureMaps extends AbstractHttpProvider implements Provider
             throw new InvalidServerResponse($response->error->message);
         }
 
+        /** @var stdClass $response */
         return $response;
     }
 
@@ -238,7 +248,7 @@ class AzureMaps extends AbstractHttpProvider implements Provider
      * @param $response
      * @return array
      */
-    private function formatGeocodeResponse($response): array
+    private function formatGeocodeResponse(stdClass $response): array
     {
         return array_map(function ($result) {
             $builder = new AddressBuilder($this->getName());
@@ -270,7 +280,7 @@ class AzureMaps extends AbstractHttpProvider implements Provider
      * @param $response
      * @return array
      */
-    private function formatReverseGeocodeResponse($response): array
+    private function formatReverseGeocodeResponse(stdClass $response): array
     {
         return array_filter(array_map(function ($address) {
             if ($address->position === "0.000000,0.000000") {

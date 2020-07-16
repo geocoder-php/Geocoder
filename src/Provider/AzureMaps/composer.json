@@ -1,5 +1,5 @@
 {
-    "name": "max-langerman/azure-maps-provider",
+    "name": "geocoder-php/azure-maps-provider",
     "description": "Geocoder AzureMaps Provider",
     "type": "library",
     "license": "MIT",
