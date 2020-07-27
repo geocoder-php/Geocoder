@@ -138,9 +138,17 @@ class TomTomTest extends BaseTestCase
 
     public function testReverseError400()
     {
-        $error400 = <<<'XML'
-<errorResponse version="" description="" errorCode="400"/>
-XML;
+        $error400 = <<<'JSON'
+{
+  "errorText": "Error parsing 'language': Language tag 'en-ES' not supported",
+  "detailedError": {
+    "code": "BadRequest",
+    "message": "Error parsing 'language': Language tag 'en-ES' not supported",
+    "target": "language"
+  },
+  "httpStatusCode": 400
+}
+JSON;
 
         $provider = new TomTom($this->getMockedHttpClient($error400), 'api_key');
         $result = $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));

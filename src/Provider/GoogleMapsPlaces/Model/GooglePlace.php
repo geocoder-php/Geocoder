@@ -220,7 +220,7 @@ final class GooglePlace extends Address
     /**
      * @return PlusCode|null
      */
-    public function getPlusCode(): PlusCode
+    public function getPlusCode(): ?PlusCode
     {
         return $this->plusCode;
     }

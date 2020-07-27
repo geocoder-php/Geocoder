@@ -2,9 +2,17 @@
 
 The change log describes what is "Added", "Removed", "Changed" or "Fixed" between each release.
 
-## 4.1.0 (2018-03-16)
+## 4.2.0
 
-* Changed: `ProviderCache` is no longer final allowing `ProviderCache::getCacheKey` to be overridden
+### Removed
+
+- Drop support for PHP < 7.2
+
+## 4.1.0
+
+### Changed
+
+- `ProviderCache` is no longer final allowing `ProviderCache::getCacheKey` to be overridden
 
 ## 4.0.1
 

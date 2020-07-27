@@ -2,6 +2,16 @@
 
 The change log describes what is "Added", "Removed", "Changed" or "Fixed" between each release.
 
+## 5.2.0
+
+### Fixed
+
+- Fix issue when `country` property is not set
+
+### Removed
+
+- Drop support for PHP < 7.2
+
 ## 5.1.1
 
 ### Fixed
