@@ -2,7 +2,7 @@
 
 The change log describes what is "Added", "Removed", "Changed" or "Fixed" between each release.
 
-## 1.1.0
+## 1.2.0
 
 ### Added
 
@@ -11,6 +11,12 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 ### Fixed
 
 - reverse query w/ `Search` mode checked for `type/keyword/name`, but only `type` is allowed
+
+## 1.1.0
+
+### Removed
+
+- Drop support for PHP < 7.2
 
 ## 1.0.1
 
