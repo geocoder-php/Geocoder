@@ -29,28 +29,21 @@ class HereTest extends BaseTestCase
 {
     protected function getCacheDir()
     {
-        return __DIR__.'/.cached_responses';
-    }
-
-    /**
-     * Get a real HTTP client. If a cache dir is set to a path it will use cached responses.
-     *
-     * @return HttpClient
-     */
-    protected function getHttpClient($apiKey = null, $appCode = null)
-    {
-        if (null !== $cacheDir = $this->getCacheDir()) {
-            return new CachedResponseClient(new HttplugClient(), $cacheDir, $apiKey, $appCode);
+        if (isset($_SERVER['USE_CACHED_RESPONSES']) && true === $_SERVER['USE_CACHED_RESPONSES']) {
+            return __DIR__.'/.cached_responses';
         }
 
-        return new HttplugClient();
+        return null;
     }
-
-    // testGeocodeQuery()
 
     public function testGeocodeWithRealAddress()
     {
-        $provider = $this->getProvider();
+        if (!isset($_SERVER['HERE_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
+        }
+
+        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY']);
+
         $results = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France')->withLocale('fr-FR'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -80,7 +73,11 @@ class HereTest extends BaseTestCase
      */
     public function testGeocodeWithDefaultAdditionalData()
     {
-        $provider = $this->getProvider();
+        if (!isset($_SERVER['HERE_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
+        }
+
+        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY']);
 
         $results = $provider->geocodeQuery(GeocodeQuery::create('Sant Roc, Santa Coloma de Cervelló, Espanya')->withLocale('ca'));
 
@@ -118,7 +115,11 @@ class HereTest extends BaseTestCase
      */
     public function testGeocodeWithAdditionalData()
     {
-        $provider = $this->getProvider();
+        if (!isset($_SERVER['HERE_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
+        }
+
+        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY']);
 
         $results = $provider->geocodeQuery(GeocodeQuery::create('Sant Roc, Santa Coloma de Cervelló, Espanya')
             ->withData('Country2', 'true')
@@ -164,7 +165,11 @@ class HereTest extends BaseTestCase
      */
     public function testGeocodeWithExtraFilterCountry()
     {
-        $provider = $this->getProvider();
+        if (!isset($_SERVER['HERE_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
+        }
+
+        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY']);
 
         $queryBarcelonaFromSpain = GeocodeQuery::create('Barcelona')->withData('country', 'ES')->withLocale('ca');
         $queryBarcelonaFromVenezuela = GeocodeQuery::create('Barcelona')->withData('country', 'VE')->withLocale('ca');
@@ -195,7 +200,11 @@ class HereTest extends BaseTestCase
      */
     public function testGeocodeWithExtraFilterCity()
     {
-        $provider = $this->getProvider();
+        if (!isset($_SERVER['HERE_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
+        }
+
+        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY']);
 
         $queryStreetCity1 = GeocodeQuery::create('Carrer de Barcelona')->withData('city', 'Sant Vicenç dels Horts')->withLocale('ca')->withLimit(1);
         $queryStreetCity2 = GeocodeQuery::create('Carrer de Barcelona')->withData('city', 'Girona')->withLocale('ca')->withLimit(1);
@@ -229,7 +238,11 @@ class HereTest extends BaseTestCase
 
     public function testGeocodeWithExtraFilterCounty()
     {
-        $provider = $this->getProvider();
+        if (!isset($_SERVER['HERE_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
+        }
+
+        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY']);
 
         $queryCityRegion1 = GeocodeQuery::create('Cabanes')->withData('county', 'Girona')->withLocale('ca')->withLimit(1);
         $queryCityRegion2 = GeocodeQuery::create('Cabanes')->withData('county', 'Castelló')->withLocale('ca')->withLimit(1);
@@ -257,7 +270,12 @@ class HereTest extends BaseTestCase
 
     public function testReverseWithRealCoordinates()
     {
-        $provider = $this->getProvider();
+        if (!isset($_SERVER['HERE_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
+        }
+
+        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY']);
+
         $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(48.8632156, 2.3887722));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
