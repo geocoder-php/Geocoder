@@ -2,6 +2,14 @@
 
 declare(strict_types=1);
 
+/*
++ * This file is part of the Geocoder package.
++ * For the full copyright and license information, please view the LICENSE
++ * file that was distributed with this source code.
++ *
++ * @license    MIT License
++ */
+
 namespace Geocoder\Provider\AzureMaps;
 
 use Geocoder\Collection;
@@ -45,13 +53,13 @@ class AzureMaps extends AbstractHttpProvider implements Provider
         'btmRight' => null,
         'language' => 'en-US',
         'extendedPostalCodesFor' => null,
-        'view' => null
+        'view' => null,
     ];
 
     /**
      * @var string
      */
-    private $subscriptionKey;
+    protected $subscriptionKey;
     /**
      * @var string
      */
@@ -60,9 +68,9 @@ class AzureMaps extends AbstractHttpProvider implements Provider
     /**
      * AzureMaps constructor.
      * @param HttpClient $client
-     * @param string $subscriptionKey
-     * @param array $options
-     * @param string $format
+     * @param string     $subscriptionKey
+     * @param array      $options
+     * @param string     $format
      */
     public function __construct(
         HttpClient $client,
@@ -72,8 +80,8 @@ class AzureMaps extends AbstractHttpProvider implements Provider
     ) {
         parent::__construct($client);
 
-        $this->setSubscriptionKey($subscriptionKey);
-        $this->setFormat($format);
+        $this->subscriptionKey = $subscriptionKey;
+        $this->format = $format;
         $this->setOptions($options);
     }
 
@@ -130,9 +138,10 @@ class AzureMaps extends AbstractHttpProvider implements Provider
 
     /**
      * Returns an array of non null geocode /reverse-geocode options
+     *
      * @param array $options
      */
-    private function setOptions(array $options)
+    private function setOptions(array $options): void
     {
         $options = array_merge($this->options, $options);
 
@@ -153,15 +162,16 @@ class AzureMaps extends AbstractHttpProvider implements Provider
 
     /**
      * @param string $query
+     *
      * @return string
      */
     private function buildGeocodeUrl(string $query): string
     {
         $url = self::GEOCODE_ENDPOINT_SSL;
-        $format = $this->getFormat();
+        $format = $this->format;
+        $subscriptionKey = $this->subscriptionKey;
         $options = http_build_query($this->getOptions());
         $query = urlencode($query);
-        $subscriptionKey= $this->getSubscriptionKey();
 
         return sprintf(
             '%s/%s?api-version=1.0&subscription-key=%s&%s&query=%s',
@@ -176,14 +186,15 @@ class AzureMaps extends AbstractHttpProvider implements Provider
     /**
      * @param string $latitude
      * @param string $longitude
+     *
      * @return string
      */
     private function buildReverseGeocodeUrl(string $latitude, string $longitude): string
     {
         $url = self::REVERSE_ENDPOINT_URL;
-        $format = $this->getFormat();
+        $format = $this->format;
+        $subscriptionKey = $this->subscriptionKey;
         $options = http_build_query($this->getOptions());
-        $subscriptionKey= $this->getSubscriptionKey();
 
         return sprintf(
             '%s/%s?api-version=1.0&subscription-key=%s&%s&query=%s,%s',
@@ -196,39 +207,14 @@ class AzureMaps extends AbstractHttpProvider implements Provider
         );
     }
 
-    /**
-     * @return string
-     */
-    private function getSubscriptionKey(): string
-    {
-        return $this->subscriptionKey;
-    }
 
     /**
-     * @param string $subscriptionKey
+     * @param string $content
+     * @param string $url
+     *
+     * @return stdClass
      */
-    private function setSubscriptionKey(string $subscriptionKey)
-    {
-        $this->subscriptionKey = $subscriptionKey;
-    }
-
-    /**
-     * @param string $format
-     */
-    private function setFormat(string $format)
-    {
-        $this->format = $format;
-    }
-
-    /**
-     * @return string
-     */
-    private function getFormat(): string
-    {
-        return $this->format;
-    }
-
-    private function validateResponse(string $content, string $url): object
+    private function validateResponse(string $content, string $url): stdClass
     {
         $response = json_decode($content);
 
@@ -240,12 +226,13 @@ class AzureMaps extends AbstractHttpProvider implements Provider
             throw new InvalidServerResponse($response->error->message);
         }
 
-        /** @var stdClass $response */
+        /* @var stdClass $response */
         return $response;
     }
 
     /**
      * @param $response
+     *
      * @return array
      */
     private function formatGeocodeResponse(stdClass $response): array
@@ -283,7 +270,7 @@ class AzureMaps extends AbstractHttpProvider implements Provider
     private function formatReverseGeocodeResponse(stdClass $response): array
     {
         return array_filter(array_map(function ($address) {
-            if ($address->position === "0.000000,0.000000") {
+            if ('0.000000,0.000000' === $address->position) {
                 return null;
             }
 
@@ -315,6 +302,7 @@ class AzureMaps extends AbstractHttpProvider implements Provider
             $builder->setCountryCode($address->address->countryCode ?? null);
             $builder->setCountry($address->address->country ?? null);
             $builder->setPostalCode($address->address->extendedPostalCode ?? null);
+            $builder->setLocality($address->address->municipality ?? null);
 
             return $builder->build();
         }, $response->addresses));

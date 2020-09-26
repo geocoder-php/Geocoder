@@ -4,3 +4,4 @@ composer.phar
 phpunit.xml
 php-cs-fixer.phar
 .puli/
+.idea/
