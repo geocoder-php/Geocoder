@@ -104,11 +104,7 @@ final class Yandex extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * @param string $url
-     * @param int    $limit
      * @param string $locale
-     *
-     * @return AddressCollection
      */
     private function executeQuery(string $url, int $limit, string $locale = null): AddressCollection
     {

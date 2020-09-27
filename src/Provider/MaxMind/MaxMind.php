@@ -107,8 +107,6 @@ final class MaxMind extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * @param string $url
-     *
      * @return Collection
      */
     private function executeQuery(string $url): AddressCollection
@@ -173,8 +171,6 @@ final class MaxMind extends AbstractHttpProvider implements Provider
      *
      * @see http://dev.maxmind.com/geoip/web-services
      *
-     * @param string $service
-     *
      * @return string[]
      */
     private function fieldsForService(string $service): array
@@ -225,9 +221,6 @@ final class MaxMind extends AbstractHttpProvider implements Provider
         }
     }
 
-    /**
-     * @return array
-     */
     private function getCountryNames(): array
     {
         return [

@@ -79,8 +79,6 @@ interface Location
      * Returns the administrative levels.
      *
      * This method MUST NOT return null.
-     *
-     * @return AdminLevelCollection
      */
     public function getAdminLevels(): AdminLevelCollection;
 
@@ -102,15 +100,11 @@ interface Location
 
     /**
      * Returns an array with data indexed by name.
-     *
-     * @return array
      */
     public function toArray(): array;
 
     /**
      * The name of the provider that created this Location.
-     *
-     * @return string
      */
     public function getProvidedBy(): string;
 }

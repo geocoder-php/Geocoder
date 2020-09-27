@@ -98,11 +98,6 @@ final class Geonames extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * @param string|null $country
-     * @param string|null $locale
-     *
-     * @return array
-     *
      * @throws \Geocoder\Exception\Exception
      */
     public function getCountryInfo(string $country = null, string $locale = null): array
@@ -168,12 +163,6 @@ final class Geonames extends AbstractHttpProvider implements Provider
         return 'geonames';
     }
 
-    /**
-     * @param string      $url
-     * @param string|null $locale
-     *
-     * @return AddressCollection
-     */
     private function executeQuery(string $url, string $locale = null): AddressCollection
     {
         if (null !== $locale) {

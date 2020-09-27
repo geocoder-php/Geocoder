@@ -114,11 +114,6 @@ final class GeoIPs extends AbstractHttpProvider implements Provider
         return 'geo_ips';
     }
 
-    /**
-     * @param string $url
-     *
-     * @return AddressCollection
-     */
     private function executeQuery(string $url): AddressCollection
     {
         $content = $this->getUrlContents($url);

@@ -67,11 +67,6 @@ final class GeoPlugin extends AbstractHttpProvider implements Provider
         return 'geo_plugin';
     }
 
-    /**
-     * @param string $url
-     *
-     * @return AddressCollection
-     */
     private function executeQuery(string $url): AddressCollection
     {
         $content = $this->getUrlContents($url);

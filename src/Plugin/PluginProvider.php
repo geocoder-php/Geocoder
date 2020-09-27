@@ -47,9 +47,8 @@ class PluginProvider implements Provider
     private $options;
 
     /**
-     * @param Provider $provider
      * @param Plugin[] $plugins
-     * @param array    $options  {
+     * @param array    $options {
      *
      *     @var int      $max_restarts
      * }
@@ -103,10 +102,6 @@ class PluginProvider implements Provider
 
     /**
      * Configure the plugin provider.
-     *
-     * @param array $options
-     *
-     * @return array
      */
     private function configure(array $options = []): array
     {

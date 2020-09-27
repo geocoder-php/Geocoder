@@ -254,8 +254,6 @@ final class MapQuest extends AbstractHttpProvider implements Provider
 
     /**
      * @param string $url
-     *
-     * @return AddressCollection
      */
     private function executeGetQuery(string $endpoint, array $params): AddressCollection
     {

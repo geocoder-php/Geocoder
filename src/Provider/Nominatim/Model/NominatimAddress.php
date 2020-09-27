@@ -50,7 +50,7 @@ final class NominatimAddress extends Address
     private $type;
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getAttribution()
     {
@@ -58,8 +58,6 @@ final class NominatimAddress extends Address
     }
 
     /**
-     * @param null|string $attribution
-     *
      * @return NominatimAddress
      */
     public function withAttribution(string $attribution = null): self
@@ -73,7 +71,7 @@ final class NominatimAddress extends Address
     /**
      * @deprecated
      *
-     * @return null|string
+     * @return string|null
      */
     public function getClass()
     {
@@ -83,8 +81,6 @@ final class NominatimAddress extends Address
     /**
      * @deprecated
      *
-     * @param null|string $category
-     *
      * @return NominatimAddress
      */
     public function withClass(string $category = null): self
@@ -93,7 +89,7 @@ final class NominatimAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getCategory()
     {
@@ -101,8 +97,6 @@ final class NominatimAddress extends Address
     }
 
     /**
-     * @param null|string $category
-     *
      * @return NominatimAddress
      */
     public function withCategory(string $category = null): self
@@ -114,7 +108,7 @@ final class NominatimAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getDisplayName()
     {
@@ -122,8 +116,6 @@ final class NominatimAddress extends Address
     }
 
     /**
-     * @param null|string $displayName
-     *
      * @return NominatimAddress
      */
     public function withDisplayName(string $displayName = null): self
@@ -135,7 +127,7 @@ final class NominatimAddress extends Address
     }
 
     /**
-     * @return null|int
+     * @return int|null
      */
     public function getOSMId()
     {
@@ -143,8 +135,6 @@ final class NominatimAddress extends Address
     }
 
     /**
-     * @param null|int $osmId
-     *
      * @return NominatimAddress
      */
     public function withOSMId(int $osmId = null): self
@@ -156,7 +146,7 @@ final class NominatimAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getOSMType()
     {
@@ -164,8 +154,6 @@ final class NominatimAddress extends Address
     }
 
     /**
-     * @param null|string $osmType
-     *
      * @return NominatimAddress
      */
     public function withOSMType(string $osmType = null): self
@@ -177,7 +165,7 @@ final class NominatimAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getType()
     {
@@ -185,8 +173,6 @@ final class NominatimAddress extends Address
     }
 
     /**
-     * @param null|string $type
-     *
      * @return NominatimAddress
      */
     public function withType(string $type = null): self

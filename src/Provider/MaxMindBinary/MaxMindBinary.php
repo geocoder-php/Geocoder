@@ -36,9 +36,6 @@ final class MaxMindBinary extends AbstractProvider implements Provider
     private $openFlag;
 
     /**
-     * @param string   $datFile
-     * @param int|null $openFlag
-     *
      * @throws FunctionNotFound if maxmind's lib not installed
      * @throws InvalidArgument  if dat file is not correct (optional)
      */

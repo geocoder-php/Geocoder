@@ -160,12 +160,6 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
         return 'arcgis_online';
     }
 
-    /**
-     * @param string $query
-     * @param int    $limit
-     *
-     * @return string
-     */
     private function buildQuery(string $query, int $limit): string
     {
         if (null !== $this->sourceCountry) {
@@ -175,12 +169,6 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
         return sprintf('%s&maxLocations=%d&f=%s&outFields=*', $query, $limit, 'json');
     }
 
-    /**
-     * @param string $url
-     * @param int    $limit
-     *
-     * @return \stdClass
-     */
     private function executeQuery(string $url, int $limit): \stdClass
     {
         $url = $this->buildQuery($url, $limit);

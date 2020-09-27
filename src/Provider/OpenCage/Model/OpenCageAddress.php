@@ -50,8 +50,6 @@ final class OpenCageAddress extends Address
     private $formattedAddress;
 
     /**
-     * @param null|string $mgrs
-     *
      * @return OpenCageAddress
      */
     public function withMGRS(string $mgrs = null): self
@@ -63,7 +61,7 @@ final class OpenCageAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getMGRS()
     {
@@ -71,8 +69,6 @@ final class OpenCageAddress extends Address
     }
 
     /**
-     * @param null|string $maidenhead
-     *
      * @return OpenCageAddress
      */
     public function withMaidenhead(string $maidenhead = null): self
@@ -84,7 +80,7 @@ final class OpenCageAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getMaidenhead()
     {
@@ -92,8 +88,6 @@ final class OpenCageAddress extends Address
     }
 
     /**
-     * @param null|string $geohash
-     *
      * @return OpenCageAddress
      */
     public function withGeohash(string $geohash = null): self
@@ -105,7 +99,7 @@ final class OpenCageAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getGeohash()
     {
@@ -113,8 +107,6 @@ final class OpenCageAddress extends Address
     }
 
     /**
-     * @param null|string $what3words
-     *
      * @return OpenCageAddress
      */
     public function withWhat3words(string $what3words = null): self
@@ -126,7 +118,7 @@ final class OpenCageAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getWhat3words()
     {
@@ -134,8 +126,6 @@ final class OpenCageAddress extends Address
     }
 
     /**
-     * @param string|null $formattedAddress
-     *
      * @return OpenCageAddress
      */
     public function withFormattedAddress(string $formattedAddress = null): self
@@ -147,7 +137,7 @@ final class OpenCageAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getFormattedAddress()
     {

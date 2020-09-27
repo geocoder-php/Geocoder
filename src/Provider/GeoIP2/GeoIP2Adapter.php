@@ -39,8 +39,7 @@ class GeoIP2Adapter
     protected $geoIP2Model;
 
     /**
-     * @param \GeoIp2\ProviderInterface $geoIpProvider
-     * @param string                    $geoIP2Model   (e.g. self::GEOIP2_MODEL_CITY)
+     * @param string $geoIP2Model (e.g. self::GEOIP2_MODEL_CITY)
      */
     public function __construct(ProviderInterface $geoIpProvider, $geoIP2Model = self::GEOIP2_MODEL_CITY)
     {
@@ -57,8 +56,6 @@ class GeoIP2Adapter
      * Returns the content fetched from a given resource.
      *
      * @param string $url (e.g. file://database?127.0.0.1)
-     *
-     * @return string
      */
     public function getContent(string $url): string
     {
@@ -81,8 +78,6 @@ class GeoIP2Adapter
 
     /**
      * Returns the name of the Adapter.
-     *
-     * @return string
      */
     public function getName(): string
     {
@@ -91,10 +86,6 @@ class GeoIP2Adapter
 
     /**
      * Returns whether method is supported by GeoIP2.
-     *
-     * @param string $method
-     *
-     * @return bool
      */
     protected function isSupportedGeoIP2Model(string $method): bool
     {

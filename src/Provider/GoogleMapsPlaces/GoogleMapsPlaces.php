@@ -89,10 +89,6 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * @param GeocodeQuery $query
-     *
-     * @return Collection
-     *
      * @throws UnsupportedOperation
      * @throws InvalidArgument
      */
@@ -114,10 +110,6 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * @param ReverseQuery $query
-     *
-     * @return Collection
-     *
      * @throws InvalidArgument
      */
     public function reverseQuery(ReverseQuery $query): Collection
@@ -135,10 +127,6 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
 
     /**
      * Build query for the find place API
-     *
-     * @param GeocodeQuery $geocodeQuery
-     *
-     * @return array
      */
     private function buildFindPlaceQuery(GeocodeQuery $geocodeQuery): array
     {
@@ -172,10 +160,6 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
 
     /**
      * Build query for the place search API
-     *
-     * @param GeocodeQuery $geocodeQuery
-     *
-     * @return array
      */
     private function buildPlaceSearchQuery(GeocodeQuery $geocodeQuery): array
     {
@@ -205,10 +189,6 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
 
     /**
      * Build query for the nearby search api
-     *
-     * @param ReverseQuery $reverseQuery
-     *
-     * @return array
      */
     private function buildNearbySearchQuery(ReverseQuery $reverseQuery): array
     {
@@ -247,10 +227,6 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * @param Query $query
-     * @param array $request
-     * @param array $keys
-     *
      * @return array
      */
     private function applyDataFromQuery(Query $query, array $request, array $keys)
@@ -266,12 +242,6 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
         return $request;
     }
 
-    /**
-     * @param string $url
-     * @param array  $query
-     *
-     * @return AddressCollection
-     */
     private function fetchUrl(string $url, array $query): AddressCollection
     {
         $query['key'] = $this->apiKey;
@@ -365,10 +335,7 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
     /**
      * Decode the response content and validate it to make sure it does not have any errors.
      *
-     * @param string $url
      * @param string $content
-     *
-     * @return \StdClass
      *
      * @throws InvalidCredentials
      * @throws InvalidServerResponse
@@ -404,9 +371,6 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
 
     /**
      * Parse coordinates and bounds.
-     *
-     * @param AddressBuilder $builder
-     * @param StdClass       $result
      */
     private function parseCoordinates(AddressBuilder $builder, StdClass $result)
     {

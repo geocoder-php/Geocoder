@@ -144,10 +144,8 @@ final class Mapbox extends AbstractHttpProvider implements Provider
     private $geocodingMode;
 
     /**
-     * @param HttpClient  $client        An HTTP adapter
-     * @param string      $accessToken   Your Mapbox access token
-     * @param string|null $country
-     * @param string      $geocodingMode
+     * @param HttpClient $client      An HTTP adapter
+     * @param string     $accessToken Your Mapbox access token
      */
     public function __construct(
         HttpClient $client,
@@ -234,11 +232,6 @@ final class Mapbox extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * @param string      $url
-     * @param int         $limit
-     * @param string|null $locale
-     * @param string|null $country
-     *
      * @return string query with extra params
      */
     private function buildQuery(string $url, int $limit, string $locale = null, string $country = null): string
@@ -255,14 +248,6 @@ final class Mapbox extends AbstractHttpProvider implements Provider
         return $url.$separator.http_build_query($parameters);
     }
 
-    /**
-     * @param string      $url
-     * @param int         $limit
-     * @param string|null $locale
-     * @param string|null $country
-     *
-     * @return AddressCollection
-     */
     private function fetchUrl(string $url, int $limit, string $locale = null, string $country = null): AddressCollection
     {
         $url = $this->buildQuery($url, $limit, $locale, $country);
@@ -325,9 +310,8 @@ final class Mapbox extends AbstractHttpProvider implements Provider
     /**
      * Update current resultSet with given key/value.
      *
-     * @param AddressBuilder $builder
-     * @param string         $type    Component type
-     * @param array          $value   The component value
+     * @param string $type  Component type
+     * @param array  $value The component value
      */
     private function updateAddressComponent(AddressBuilder $builder, string $type, array $value)
     {
@@ -380,10 +364,7 @@ final class Mapbox extends AbstractHttpProvider implements Provider
     /**
      * Decode the response content and validate it to make sure it does not have any errors.
      *
-     * @param string $url
      * @param string $content
-     *
-     * @return array
      */
     private function validateResponse(string $url, $content): array
     {
@@ -399,9 +380,6 @@ final class Mapbox extends AbstractHttpProvider implements Provider
 
     /**
      * Parse coordinats and bounds.
-     *
-     * @param AddressBuilder $builder
-     * @param array          $result
      */
     private function parseCoordinates(AddressBuilder $builder, array $result)
     {

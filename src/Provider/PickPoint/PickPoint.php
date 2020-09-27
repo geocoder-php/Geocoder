@@ -106,12 +106,6 @@ final class PickPoint extends AbstractHttpProvider implements Provider
         return new AddressCollection([$this->xmlResultToArray($result, $addressParts)]);
     }
 
-    /**
-     * @param \DOMElement $resultNode
-     * @param \DOMElement $addressNode
-     *
-     * @return Location
-     */
     private function xmlResultToArray(\DOMElement $resultNode, \DOMElement $addressNode): Location
     {
         $builder = new AddressBuilder($this->getName());
@@ -154,12 +148,6 @@ final class PickPoint extends AbstractHttpProvider implements Provider
         return 'pickpoint';
     }
 
-    /**
-     * @param string      $url
-     * @param string|null $locale
-     *
-     * @return string
-     */
     private function executeQuery(string $url, string $locale = null): string
     {
         if (null !== $locale) {

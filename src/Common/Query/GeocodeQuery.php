@@ -48,9 +48,6 @@ final class GeocodeQuery implements Query
      */
     private $data = [];
 
-    /**
-     * @param string $text
-     */
     private function __construct(string $text)
     {
         if (empty($text)) {
@@ -61,8 +58,6 @@ final class GeocodeQuery implements Query
     }
 
     /**
-     * @param string $text
-     *
      * @return GeocodeQuery
      */
     public static function create(string $text): self
@@ -71,8 +66,6 @@ final class GeocodeQuery implements Query
     }
 
     /**
-     * @param string $text
-     *
      * @return GeocodeQuery
      */
     public function withText(string $text): self
@@ -84,8 +77,6 @@ final class GeocodeQuery implements Query
     }
 
     /**
-     * @param Bounds $bounds
-     *
      * @return GeocodeQuery
      */
     public function withBounds(Bounds $bounds): self
@@ -97,8 +88,6 @@ final class GeocodeQuery implements Query
     }
 
     /**
-     * @param string $locale
-     *
      * @return GeocodeQuery
      */
     public function withLocale(string $locale): self
@@ -110,8 +99,6 @@ final class GeocodeQuery implements Query
     }
 
     /**
-     * @param int $limit
-     *
      * @return GeocodeQuery
      */
     public function withLimit(int $limit): self
@@ -123,8 +110,7 @@ final class GeocodeQuery implements Query
     }
 
     /**
-     * @param string $name
-     * @param mixed  $value
+     * @param mixed $value
      *
      * @return GeocodeQuery
      */
@@ -136,9 +122,6 @@ final class GeocodeQuery implements Query
         return $new;
     }
 
-    /**
-     * @return string
-     */
     public function getText(): string
     {
         return $this->text;
@@ -160,16 +143,12 @@ final class GeocodeQuery implements Query
         return $this->locale;
     }
 
-    /**
-     * @return int
-     */
     public function getLimit(): int
     {
         return $this->limit;
     }
 
     /**
-     * @param string     $name
      * @param mixed|null $default
      *
      * @return mixed
@@ -183,9 +162,6 @@ final class GeocodeQuery implements Query
         return $this->data[$name];
     }
 
-    /**
-     * @return array
-     */
     public function getAllData(): array
     {
         return $this->data;

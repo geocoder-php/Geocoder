@@ -131,8 +131,6 @@ final class Chain implements Provider, LoggerAwareInterface
     /**
      * Adds a provider.
      *
-     * @param Provider $provider
-     *
      * @return Chain
      */
     public function add(Provider $provider): self
@@ -145,7 +143,6 @@ final class Chain implements Provider, LoggerAwareInterface
     /**
      * @param $level
      * @param $message
-     * @param array $context
      */
     private function log($level, $message, array $context = [])
     {

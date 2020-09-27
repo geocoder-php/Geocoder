@@ -105,9 +105,6 @@ final class GeoIP2 extends AbstractProvider implements Provider
         return 'geoip2';
     }
 
-    /**
-     * @param string $address
-     */
     private function executeQuery(string $address): string
     {
         $uri = sprintf('file://geoip?%s', $address);

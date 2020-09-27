@@ -43,7 +43,7 @@ class BoundsPluginTest extends TestCase
         $first = function (Query $query) {
             $this->fail('Plugin should not restart the chain');
         };
-        $next = function (Query $query) use ($bounds) {
+        $next = function (Query $query) {
             $this->assertTrue(true, 'We should not fail on ReverseQuery');
         };
 

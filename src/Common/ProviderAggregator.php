@@ -45,10 +45,6 @@ class ProviderAggregator implements Geocoder
      */
     private $decider;
 
-    /**
-     * @param callable|null $decider
-     * @param int           $limit
-     */
     public function __construct(callable $decider = null, int $limit = Geocoder::DEFAULT_RESULT_LIMIT)
     {
         $this->limit = $limit;
@@ -108,8 +104,6 @@ class ProviderAggregator implements Geocoder
     /**
      * Registers a new provider to the aggregator.
      *
-     * @param Provider $provider
-     *
      * @return ProviderAggregator
      */
     public function registerProvider(Provider $provider): self
@@ -137,8 +131,6 @@ class ProviderAggregator implements Geocoder
 
     /**
      * Sets the default provider to use.
-     *
-     * @param string $name
      *
      * @return ProviderAggregator
      */
@@ -169,8 +161,6 @@ class ProviderAggregator implements Geocoder
      * @param GeocodeQuery|ReverseQuery $query
      * @param Provider[]                $providers
      * @param Provider                  $currentProvider
-     *
-     * @return Provider
      *
      * @throws ProviderNotRegistered
      */

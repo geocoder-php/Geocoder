@@ -99,11 +99,6 @@ final class CountryInfo
     }
 
     /**
-     * @param float $south
-     * @param float $west
-     * @param float $north
-     * @param float $east
-     *
      * @return CountryInfo
      */
     public function setBounds(float $south, float $west, float $north, float $east): self
@@ -120,7 +115,7 @@ final class CountryInfo
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getContinent()
     {
@@ -128,8 +123,6 @@ final class CountryInfo
     }
 
     /**
-     * @param null|string $continent
-     *
      * @return CountryInfo
      */
     public function withContinent(string $continent = null): self
@@ -141,7 +134,7 @@ final class CountryInfo
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getCapital()
     {
@@ -149,8 +142,6 @@ final class CountryInfo
     }
 
     /**
-     * @param null|string $capital
-     *
      * @return CountryInfo
      */
     public function withCapital(string $capital = null): self
@@ -161,17 +152,12 @@ final class CountryInfo
         return $new;
     }
 
-    /**
-     * @return array
-     */
     public function getLanguages(): array
     {
         return $this->languages;
     }
 
     /**
-     * @param string $languages
-     *
      * @return CountryInfo
      */
     public function withLanguages(string $languages = ''): self
@@ -191,8 +177,6 @@ final class CountryInfo
     }
 
     /**
-     * @param int|null $geonameId
-     *
      * @return CountryInfo
      */
     public function withGeonameId(int $geonameId = null): self
@@ -204,7 +188,7 @@ final class CountryInfo
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getIsoAlpha3()
     {
@@ -212,8 +196,6 @@ final class CountryInfo
     }
 
     /**
-     * @param null|string $isoAlpha3
-     *
      * @return CountryInfo
      */
     public function withIsoAlpha3(string $isoAlpha3 = null): self
@@ -225,7 +207,7 @@ final class CountryInfo
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getFipsCode()
     {
@@ -233,8 +215,6 @@ final class CountryInfo
     }
 
     /**
-     * @param null|string $fipsCode
-     *
      * @return CountryInfo
      */
     public function withFipsCode(string $fipsCode = null): self
@@ -267,7 +247,7 @@ final class CountryInfo
     }
 
     /**
-     * @return null|int
+     * @return int|null
      */
     public function getIsoNumeric()
     {
@@ -275,8 +255,6 @@ final class CountryInfo
     }
 
     /**
-     * @param string|null $isoNumeric
-     *
      * @return CountryInfo
      */
     public function withIsoNumeric(string $isoNumeric = null): self
@@ -288,7 +266,7 @@ final class CountryInfo
     }
 
     /**
-     * @return null|float
+     * @return float|null
      */
     public function getAreaInSqKm()
     {
@@ -296,8 +274,6 @@ final class CountryInfo
     }
 
     /**
-     * @param string|null $areaInSqKm
-     *
      * @return CountryInfo
      */
     public function withAreaInSqKm(string $areaInSqKm = null): self
@@ -309,7 +285,7 @@ final class CountryInfo
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getCountryCode()
     {
@@ -317,8 +293,6 @@ final class CountryInfo
     }
 
     /**
-     * @param string|null $countryCode
-     *
      * @return CountryInfo
      */
     public function withCountryCode(string $countryCode = null): self
@@ -330,7 +304,7 @@ final class CountryInfo
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getCountryName()
     {
@@ -338,8 +312,6 @@ final class CountryInfo
     }
 
     /**
-     * @param string|null $countryName
-     *
      * @return CountryInfo
      */
     public function withCountryName(string $countryName = null): self
@@ -351,7 +323,7 @@ final class CountryInfo
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getContinentName()
     {
@@ -359,8 +331,6 @@ final class CountryInfo
     }
 
     /**
-     * @param null|string $continentName
-     *
      * @return CountryInfo
      */
     public function withContinentName(string $continentName = null): self
@@ -372,7 +342,7 @@ final class CountryInfo
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getCurrencyCode()
     {
@@ -380,8 +350,6 @@ final class CountryInfo
     }
 
     /**
-     * @param null|string $currencyCode
-     *
      * @return CountryInfo
      */
     public function withCurrencyCode(string $currencyCode = null): self

@@ -27,9 +27,6 @@ class LimitPlugin implements Plugin
      */
     private $limit;
 
-    /**
-     * @param int $limit
-     */
     public function __construct(int $limit)
     {
         $this->limit = $limit;

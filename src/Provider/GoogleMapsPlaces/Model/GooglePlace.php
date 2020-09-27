@@ -92,7 +92,7 @@ final class GooglePlace extends Address
     /**
      * @see https://developers.google.com/places/place-id
      *
-     * @return null|string
+     * @return string|null
      */
     public function getId()
     {
@@ -100,8 +100,6 @@ final class GooglePlace extends Address
     }
 
     /**
-     * @param null|string $id
-     *
      * @return GooglePlace
      */
     public function withId(string $id = null)
@@ -113,7 +111,7 @@ final class GooglePlace extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getName()
     {
@@ -121,8 +119,6 @@ final class GooglePlace extends Address
     }
 
     /**
-     * @param null|string $name
-     *
      * @return GooglePlace
      */
     public function withName(string $name = null)
@@ -133,17 +129,12 @@ final class GooglePlace extends Address
         return $new;
     }
 
-    /**
-     * @return array
-     */
     public function getType(): array
     {
         return $this->type;
     }
 
     /**
-     * @param array $type
-     *
      * @return GooglePlace
      */
     public function withType(array $type)
@@ -155,7 +146,7 @@ final class GooglePlace extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getFormattedAddress()
     {
@@ -163,8 +154,6 @@ final class GooglePlace extends Address
     }
 
     /**
-     * @param string|null $formattedAddress
-     *
      * @return GooglePlace
      */
     public function withFormattedAddress(string $formattedAddress = null)
@@ -191,9 +180,6 @@ final class GooglePlace extends Address
         return $new;
     }
 
-    /**
-     * @return PlusCode|null
-     */
     public function getPlusCode(): ?PlusCode
     {
         return $this->plusCode;
@@ -327,9 +313,6 @@ final class GooglePlace extends Address
         return $new;
     }
 
-    /**
-     * @return bool
-     */
     public function isPermanentlyClosed(): bool
     {
         return $this->permanentlyClosed;

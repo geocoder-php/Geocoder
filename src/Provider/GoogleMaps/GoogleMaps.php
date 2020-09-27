@@ -161,7 +161,6 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * @param string $url
      * @param string $locale
      *
      * @return string query with extra params
@@ -200,12 +199,8 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * @param string $url
      * @param string $locale
-     * @param int    $limit
      * @param string $region
-     *
-     * @return AddressCollection
      *
      * @throws InvalidServerResponse
      * @throws InvalidCredentials
@@ -280,9 +275,8 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
     /**
      * Update current resultSet with given key/value.
      *
-     * @param AddressBuilder $builder
-     * @param string         $type    Component type
-     * @param object         $values  The component values
+     * @param string $type   Component type
+     * @param object $values The component values
      */
     private function updateAddressComponent(AddressBuilder $builder, string $type, $values)
     {
@@ -394,10 +388,6 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
 
     /**
      * Serialize the component query parameter.
-     *
-     * @param array $components
-     *
-     * @return string
      */
     private function serializeComponents(array $components): string
     {
@@ -409,7 +399,6 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
     /**
      * Decode the response content and validate it to make sure it does not have any errors.
      *
-     * @param string $url
      * @param string $content
      *
      * @return \Stdclass result form json_decode()
@@ -451,8 +440,7 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
     /**
      * Parse coordinates and bounds.
      *
-     * @param AddressBuilder $builder
-     * @param \Stdclass      $result
+     * @param \Stdclass $result
      */
     private function parseCoordinates(AddressBuilder $builder, $result)
     {

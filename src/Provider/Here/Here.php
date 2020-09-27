@@ -201,12 +201,6 @@ final class Here extends AbstractHttpProvider implements Provider
         return $this->executeQuery($url, $query->getLimit());
     }
 
-    /**
-     * @param string $url
-     * @param int    $limit
-     *
-     * @return Collection
-     */
     private function executeQuery(string $url, int $limit): Collection
     {
         $content = $this->getUrlContents($url);
@@ -283,10 +277,6 @@ final class Here extends AbstractHttpProvider implements Provider
 
     /**
      * Serialize the component query parameter.
-     *
-     * @param array $components
-     *
-     * @return string
      */
     private function serializeComponents(array $components): string
     {

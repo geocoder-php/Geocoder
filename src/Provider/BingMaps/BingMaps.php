@@ -92,11 +92,7 @@ final class BingMaps extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * @param string $url
      * @param string $locale
-     * @param int    $limit
-     *
-     * @return \Geocoder\Collection
      */
     private function executeQuery(string $url, string $locale = null, int $limit): Collection
     {

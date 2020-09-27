@@ -122,8 +122,6 @@ final class GoogleAddress extends Address
     private $partialMatch;
 
     /**
-     * @param null|string $id
-     *
      * @return GoogleAddress
      */
     public function withId(string $id = null)
@@ -137,7 +135,7 @@ final class GoogleAddress extends Address
     /**
      * @see https://developers.google.com/places/place-id
      *
-     * @return null|string
+     * @return string|null
      */
     public function getId()
     {
@@ -145,8 +143,6 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @param null|string $locationType
-     *
      * @return GoogleAddress
      */
     public function withLocationType(string $locationType = null)
@@ -158,24 +154,19 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getLocationType()
     {
         return $this->locationType;
     }
 
-    /**
-     * @return array
-     */
     public function getResultType(): array
     {
         return $this->resultType;
     }
 
     /**
-     * @param array $resultType
-     *
      * @return GoogleAddress
      */
     public function withResultType(array $resultType)
@@ -187,7 +178,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getFormattedAddress()
     {
@@ -195,8 +186,6 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @param string|null $formattedAddress
-     *
      * @return GoogleAddress
      */
     public function withFormattedAddress(string $formattedAddress = null)
@@ -208,7 +197,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getAirport()
     {
@@ -216,8 +205,6 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @param string|null $airport
-     *
      * @return GoogleAddress
      */
     public function withAirport(string $airport = null)
@@ -229,7 +216,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getColloquialArea()
     {
@@ -237,8 +224,6 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @param string|null $colloquialArea
-     *
      * @return GoogleAddress
      */
     public function withColloquialArea(string $colloquialArea = null)
@@ -250,7 +235,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getIntersection()
     {
@@ -258,8 +243,6 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @param string|null $intersection
-     *
      * @return GoogleAddress
      */
     public function withIntersection(string $intersection = null)
@@ -271,7 +254,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getPostalCodeSuffix()
     {
@@ -279,8 +262,6 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @param string|null $postalCodeSuffix
-     *
      * @return GoogleAddress
      */
     public function withPostalCodeSuffix(string $postalCodeSuffix = null)
@@ -292,7 +273,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getNaturalFeature()
     {
@@ -300,8 +281,6 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @param string|null $naturalFeature
-     *
      * @return GoogleAddress
      */
     public function withNaturalFeature(string $naturalFeature = null)
@@ -313,7 +292,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getNeighborhood()
     {
@@ -321,8 +300,6 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @param string|null $neighborhood
-     *
      * @return GoogleAddress
      */
     public function withNeighborhood(string $neighborhood = null)
@@ -334,7 +311,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getPark()
     {
@@ -342,8 +319,6 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @param string|null $park
-     *
      * @return GoogleAddress
      */
     public function withPark(string $park = null)
@@ -355,7 +330,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getPointOfInterest()
     {
@@ -363,8 +338,6 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @param string|null $pointOfInterest
-     *
      * @return GoogleAddress
      */
     public function withPointOfInterest(string $pointOfInterest = null)
@@ -376,7 +349,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getPolitical()
     {
@@ -384,8 +357,6 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @param string|null $political
-     *
      * @return GoogleAddress
      */
     public function withPolitical(string $political = null)
@@ -397,7 +368,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getPremise()
     {
@@ -418,7 +389,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getStreetAddress()
     {
@@ -426,8 +397,6 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @param string|null $streetAddress
-     *
      * @return GoogleAddress
      */
     public function withStreetAddress(string $streetAddress = null)
@@ -439,7 +408,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getSubpremise()
     {
@@ -447,8 +416,6 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @param string|null $subpremise
-     *
      * @return GoogleAddress
      */
     public function withSubpremise(string $subpremise = null)
@@ -460,7 +427,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getWard()
     {
@@ -468,8 +435,6 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @param string|null $ward
-     *
      * @return GoogleAddress
      */
     public function withWard(string $ward = null)
@@ -481,7 +446,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getEstablishment()
     {
@@ -489,8 +454,6 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @param string|null $establishment
-     *
      * @return GoogleAddress
      */
     public function withEstablishment(string $establishment = null)
@@ -510,8 +473,6 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @param array $subLocalityLevel
-     *
      * @return $this
      */
     public function withSubLocalityLevels(array $subLocalityLevel)
@@ -547,8 +508,6 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @param bool $partialMatch
-     *
      * @return $this
      */
     public function withPartialMatch(bool $partialMatch)

@@ -36,9 +36,6 @@ final class IP2LocationBinary extends AbstractProvider implements Provider
     private $openFlag;
 
     /**
-     * @param string   $binFile
-     * @param int|null $openFlag
-     *
      * @throws FunctionNotFound if IP2Location's library not installed
      * @throws InvalidArgument  if dat file is not correct (optional)
      */

@@ -16,11 +16,6 @@ use Geocoder\Location;
 
 abstract class AbstractDumper
 {
-    /**
-     * @param Location $address
-     *
-     * @return string
-     */
     protected function formatName(Location $address): string
     {
         $name = [];

@@ -106,11 +106,6 @@ final class OpenCage extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * @param string      $url
-     * @param string|null $locale
-     *
-     * @return AddressCollection
-     *
      * @throws \Geocoder\Exception\Exception
      */
     private function executeQuery(string $url, string $locale = null): AddressCollection
@@ -175,10 +170,6 @@ final class OpenCage extends AbstractHttpProvider implements Provider
         return new AddressCollection($results);
     }
 
-    /**
-     * @param AddressBuilder $builder
-     * @param array          $location
-     */
     private function parseCoordinates(AddressBuilder $builder, array $location)
     {
         $builder->setCoordinates($location['geometry']['lat'], $location['geometry']['lng']);
@@ -207,10 +198,6 @@ final class OpenCage extends AbstractHttpProvider implements Provider
         );
     }
 
-    /**
-     * @param AddressBuilder $builder
-     * @param array          $components
-     */
     private function parseAdminsLevels(AddressBuilder $builder, array $components)
     {
         if (isset($components['state'])) {
@@ -223,10 +210,6 @@ final class OpenCage extends AbstractHttpProvider implements Provider
         }
     }
 
-    /**
-     * @param AddressBuilder $builder
-     * @param array          $components
-     */
     private function parseCountry(AddressBuilder $builder, array $components)
     {
         if (isset($components['country'])) {
@@ -239,9 +222,7 @@ final class OpenCage extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * @param array $components
-     *
-     * @return null|string
+     * @return string|null
      */
     protected function guessLocality(array $components)
     {
@@ -251,9 +232,7 @@ final class OpenCage extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * @param array $components
-     *
-     * @return null|string
+     * @return string|null
      */
     protected function guessStreetName(array $components)
     {
@@ -263,9 +242,7 @@ final class OpenCage extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * @param array $components
-     *
-     * @return null|string
+     * @return string|null
      */
     protected function guessSubLocality(array $components)
     {
@@ -275,10 +252,7 @@ final class OpenCage extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * @param array $components
-     * @param array $keys
-     *
-     * @return null|string
+     * @return string|null
      */
     protected function guessBestComponent(array $components, array $keys)
     {

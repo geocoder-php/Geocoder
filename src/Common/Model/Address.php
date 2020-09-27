@@ -74,19 +74,6 @@ class Address implements Location
      */
     private $providedBy;
 
-    /**
-     * @param string               $providedBy
-     * @param AdminLevelCollection $adminLevels
-     * @param Coordinates|null     $coordinates
-     * @param Bounds|null          $bounds
-     * @param string|null          $streetNumber
-     * @param string|null          $streetName
-     * @param string|null          $postalCode
-     * @param string|null          $locality
-     * @param string|null          $subLocality
-     * @param Country|null         $country
-     * @param string|null          $timezone
-     */
     public function __construct(
         string $providedBy,
         AdminLevelCollection $adminLevels,
@@ -113,9 +100,6 @@ class Address implements Location
         $this->timezone = $timezone;
     }
 
-    /**
-     * @return string
-     */
     public function getProvidedBy(): string
     {
         return $this->providedBy;
@@ -203,8 +187,6 @@ class Address implements Location
 
     /**
      * Create an Address with an array. Useful for testing.
-     *
-     * @param array $data
      *
      * @return static
      */

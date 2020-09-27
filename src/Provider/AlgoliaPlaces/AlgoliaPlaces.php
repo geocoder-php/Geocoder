@@ -160,9 +160,6 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
         }, $query->getData('countries') ?? []);
     }
 
-    /**
-     * @return array
-     */
     private function buildHeaders(): array
     {
         if (empty($this->appId) || empty($this->apiKey)) {
@@ -175,12 +172,6 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
         ];
     }
 
-    /**
-     * @param array       $jsonResponse
-     * @param string|null $locale
-     *
-     * @return AddressCollection
-     */
     private function buildResult(array $jsonResponse, string $locale = null): AddressCollection
     {
         $results = [];
@@ -223,10 +214,6 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
     /**
      * When no locale was set in the query, Algolia will return results for all locales.
      * In this case, we return the default locale value
-     *
-     * @param array       $result
-     * @param string      $attribute
-     * @param string|null $locale
      *
      * @return string|int|float
      */

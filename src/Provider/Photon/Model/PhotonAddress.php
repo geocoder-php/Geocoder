@@ -35,7 +35,7 @@ final class PhotonAddress extends Address
     private $osmTag;
 
     /**
-     * @return null|int
+     * @return int|null
      */
     public function getOSMId()
     {
@@ -43,8 +43,6 @@ final class PhotonAddress extends Address
     }
 
     /**
-     * @param null|int $osmId
-     *
      * @return PhotonAddress
      */
     public function withOSMId(int $osmId = null): self
@@ -56,7 +54,7 @@ final class PhotonAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getOSMType()
     {
@@ -64,8 +62,6 @@ final class PhotonAddress extends Address
     }
 
     /**
-     * @param null|string $osmType
-     *
      * @return PhotonAddress
      */
     public function withOSMType(string $osmType = null): self
@@ -77,7 +73,7 @@ final class PhotonAddress extends Address
     }
 
     /**
-     * @return null|object
+     * @return object|null
      */
     public function getOSMTag()
     {
@@ -85,9 +81,6 @@ final class PhotonAddress extends Address
     }
 
     /**
-     * @param null|string $key
-     * @param null|string $value
-     *
      * @return PhotonAddress
      */
     public function withOSMTag(string $key = null, string $value = null): self

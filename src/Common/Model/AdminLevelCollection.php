@@ -67,8 +67,6 @@ final class AdminLevelCollection implements \IteratorAggregate, \Countable
     }
 
     /**
-     * @return AdminLevel
-     *
      * @throws CollectionIsEmpty
      */
     public function first(): AdminLevel
@@ -81,9 +79,6 @@ final class AdminLevelCollection implements \IteratorAggregate, \Countable
     }
 
     /**
-     * @param int      $offset
-     * @param int|null $length
-     *
      * @return AdminLevel[]
      */
     public function slice(int $offset, int $length = null): array
@@ -91,17 +86,12 @@ final class AdminLevelCollection implements \IteratorAggregate, \Countable
         return array_slice($this->adminLevels, $offset, $length, true);
     }
 
-    /**
-     * @return bool
-     */
     public function has(int $level): bool
     {
         return isset($this->adminLevels[$level]);
     }
 
     /**
-     * @return AdminLevel
-     *
      * @throws \OutOfBoundsException
      * @throws InvalidArgument
      */
@@ -125,8 +115,6 @@ final class AdminLevelCollection implements \IteratorAggregate, \Countable
     }
 
     /**
-     * @param int $level
-     *
      * @throws \OutOfBoundsException
      */
     private function checkLevel(int $level)

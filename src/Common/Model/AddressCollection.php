@@ -76,9 +76,6 @@ final class AddressCollection implements Collection
         return array_slice($this->locations, $offset, $length);
     }
 
-    /**
-     * @return bool
-     */
     public function has(int $index): bool
     {
         return isset($this->locations[$index]);

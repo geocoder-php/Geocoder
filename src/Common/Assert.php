@@ -17,8 +17,7 @@ use Geocoder\Exception\InvalidArgument;
 class Assert
 {
     /**
-     * @param float  $value
-     * @param string $message
+     * @param float $value
      */
     public static function latitude($value, string $message = '')
     {
@@ -29,8 +28,7 @@ class Assert
     }
 
     /**
-     * @param float  $value
-     * @param string $message
+     * @param float $value
      */
     public static function longitude($value, string $message = '')
     {
@@ -41,8 +39,7 @@ class Assert
     }
 
     /**
-     * @param mixed  $value
-     * @param string $message
+     * @param mixed $value
      */
     public static function notNull($value, string $message = '')
     {

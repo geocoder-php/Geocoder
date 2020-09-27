@@ -72,8 +72,6 @@ final class HostIp extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * @param string $url
-     *
      * @return Collection
      */
     private function executeQuery(string $url): AddressCollection

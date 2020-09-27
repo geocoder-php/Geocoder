@@ -123,11 +123,6 @@ final class Photon extends AbstractHttpProvider implements Provider
         return new AddressCollection($results);
     }
 
-    /**
-     * @param \stdClass $feature
-     *
-     * @return Location
-     */
     private function featureToAddress(\stdClass $feature): Location
     {
         $builder = new AddressBuilder($this->getName());
@@ -166,11 +161,6 @@ final class Photon extends AbstractHttpProvider implements Provider
         return 'photon';
     }
 
-    /**
-     * @param string $url
-     *
-     * @return \stdClass
-     */
     private function executeQuery(string $url): \stdClass
     {
         $content = $this->getUrlContents($url);

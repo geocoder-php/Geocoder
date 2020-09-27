@@ -41,9 +41,7 @@ class ProviderCache implements Provider
     protected $lifetime;
 
     /**
-     * @param Provider       $realProvider
-     * @param CacheInterface $cache
-     * @param int            $lifetime
+     * @param int $lifetime
      */
     final public function __construct(Provider $realProvider, CacheInterface $cache, int $lifetime = null)
     {
@@ -99,8 +97,6 @@ class ProviderCache implements Provider
 
     /**
      * @param GeocodeQuery|ReverseQuery $query
-     *
-     * @return string
      */
     protected function getCacheKey($query): string
     {

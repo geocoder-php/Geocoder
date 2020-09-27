@@ -33,8 +33,7 @@ class QueryDataPlugin implements Plugin
     private $force;
 
     /**
-     * @param array $data
-     * @param bool  $force If true we overwrite existing values
+     * @param bool $force If true we overwrite existing values
      */
     public function __construct(array $data, $force = false)
     {

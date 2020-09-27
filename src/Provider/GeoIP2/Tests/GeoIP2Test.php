@@ -236,9 +236,6 @@ class GeoIP2Test extends BaseTestCase
 
     /**
      * @dataProvider provideDataForTestingExceptions
-     *
-     * @param \Exception $original
-     * @param string     $replacementClass
      */
     public function testExceptionConversion(\Exception $original, string $replacementClass)
     {

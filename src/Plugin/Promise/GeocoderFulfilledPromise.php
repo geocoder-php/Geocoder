@@ -25,9 +25,6 @@ final class GeocoderFulfilledPromise implements Promise
      */
     private $collection;
 
-    /**
-     * @param Collection $collection
-     */
     public function __construct(Collection $collection)
     {
         $this->collection = $collection;

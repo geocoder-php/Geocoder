@@ -89,19 +89,11 @@ final class AddressBuilder
      */
     private $data = [];
 
-    /**
-     * @param string $providedBy
-     */
     public function __construct(string $providedBy)
     {
         $this->providedBy = $providedBy;
     }
 
-    /**
-     * @param string $class
-     *
-     * @return Address
-     */
     public function build(string $class = Address::class): Address
     {
         if (!is_a($class, Address::class, true)) {
@@ -165,10 +157,6 @@ final class AddressBuilder
     }
 
     /**
-     * @param int         $level
-     * @param string      $name
-     * @param string|null $code
-     *
      * @return AddressBuilder
      */
     public function addAdminLevel(int $level, string $name, string $code = null): self
@@ -179,7 +167,7 @@ final class AddressBuilder
     }
 
     /**
-     * @param null|string $streetNumber
+     * @param string|null $streetNumber
      *
      * @return AddressBuilder
      */
@@ -191,7 +179,7 @@ final class AddressBuilder
     }
 
     /**
-     * @param null|string $streetName
+     * @param string|null $streetName
      *
      * @return AddressBuilder
      */
@@ -203,7 +191,7 @@ final class AddressBuilder
     }
 
     /**
-     * @param null|string $locality
+     * @param string|null $locality
      *
      * @return AddressBuilder
      */
@@ -215,7 +203,7 @@ final class AddressBuilder
     }
 
     /**
-     * @param null|string $postalCode
+     * @param string|null $postalCode
      *
      * @return AddressBuilder
      */
@@ -227,7 +215,7 @@ final class AddressBuilder
     }
 
     /**
-     * @param null|string $subLocality
+     * @param string|null $subLocality
      *
      * @return AddressBuilder
      */
@@ -251,7 +239,7 @@ final class AddressBuilder
     }
 
     /**
-     * @param null|string $country
+     * @param string|null $country
      *
      * @return AddressBuilder
      */
@@ -263,7 +251,7 @@ final class AddressBuilder
     }
 
     /**
-     * @param null|string $countryCode
+     * @param string|null $countryCode
      *
      * @return AddressBuilder
      */
@@ -275,7 +263,7 @@ final class AddressBuilder
     }
 
     /**
-     * @param null|string $timezone
+     * @param string|null $timezone
      *
      * @return AddressBuilder
      */
@@ -287,8 +275,7 @@ final class AddressBuilder
     }
 
     /**
-     * @param string $name
-     * @param mixed  $value
+     * @param mixed $value
      *
      * @return AddressBuilder
      */
@@ -300,7 +287,6 @@ final class AddressBuilder
     }
 
     /**
-     * @param string     $name
      * @param mixed|null $default
      *
      * @return mixed
@@ -314,11 +300,6 @@ final class AddressBuilder
         return $default;
     }
 
-    /**
-     * @param string $name
-     *
-     * @return bool
-     */
     public function hasValue(string $name): bool
     {
         return array_key_exists($name, $this->data);

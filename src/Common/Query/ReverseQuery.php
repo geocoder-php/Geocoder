@@ -40,17 +40,12 @@ final class ReverseQuery implements Query
      */
     private $data = [];
 
-    /**
-     * @param Coordinates $coordinates
-     */
     private function __construct(Coordinates $coordinates)
     {
         $this->coordinates = $coordinates;
     }
 
     /**
-     * @param Coordinates $coordinates
-     *
      * @return ReverseQuery
      */
     public static function create(Coordinates $coordinates)
@@ -70,8 +65,6 @@ final class ReverseQuery implements Query
     }
 
     /**
-     * @param Coordinates $coordinates
-     *
      * @return ReverseQuery
      */
     public function withCoordinates(Coordinates $coordinates): self
@@ -83,8 +76,6 @@ final class ReverseQuery implements Query
     }
 
     /**
-     * @param int $limit
-     *
      * @return ReverseQuery
      */
     public function withLimit(int $limit): self
@@ -96,8 +87,6 @@ final class ReverseQuery implements Query
     }
 
     /**
-     * @param string $locale
-     *
      * @return ReverseQuery
      */
     public function withLocale(string $locale): self
@@ -109,8 +98,7 @@ final class ReverseQuery implements Query
     }
 
     /**
-     * @param string $name
-     * @param mixed  $value
+     * @param mixed $value
      *
      * @return ReverseQuery
      */
@@ -122,17 +110,11 @@ final class ReverseQuery implements Query
         return $new;
     }
 
-    /**
-     * @return Coordinates
-     */
     public function getCoordinates(): Coordinates
     {
         return $this->coordinates;
     }
 
-    /**
-     * @return int
-     */
     public function getLimit(): int
     {
         return $this->limit;
@@ -147,7 +129,6 @@ final class ReverseQuery implements Query
     }
 
     /**
-     * @param string     $name
      * @param mixed|null $default
      *
      * @return mixed
@@ -161,9 +142,6 @@ final class ReverseQuery implements Query
         return $this->data[$name];
     }
 
-    /**
-     * @return array
-     */
     public function getAllData(): array
     {
         return $this->data;

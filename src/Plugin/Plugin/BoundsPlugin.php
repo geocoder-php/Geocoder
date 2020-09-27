@@ -29,9 +29,6 @@ class BoundsPlugin implements Plugin
      */
     private $bounds;
 
-    /**
-     * @param Bounds $bounds
-     */
     public function __construct(Bounds $bounds)
     {
         $this->bounds = $bounds;

@@ -20,9 +20,6 @@ namespace Geocoder\Exception;
 final class InvalidServerResponse extends \RuntimeException implements Exception
 {
     /**
-     * @param string $query
-     * @param int    $code
-     *
      * @return InvalidServerResponse
      */
     public static function create(string $query, int $code = 0): self
@@ -31,8 +28,6 @@ final class InvalidServerResponse extends \RuntimeException implements Exception
     }
 
     /**
-     * @param string $query
-     *
      * @return InvalidServerResponse
      */
     public static function emptyResponse(string $query): self

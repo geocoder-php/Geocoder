@@ -45,7 +45,7 @@ final class HereAddress extends Address
     private $shape;
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getLocationId()
     {
@@ -53,7 +53,7 @@ final class HereAddress extends Address
     }
 
     /**
-     * @param null|string $LocationId
+     * @param string|null $LocationId
      *
      * @return HereAddress
      */
@@ -66,7 +66,7 @@ final class HereAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getLocationType()
     {
@@ -74,7 +74,7 @@ final class HereAddress extends Address
     }
 
     /**
-     * @param null|string $LocationType
+     * @param string|null $LocationType
      *
      * @return HereAddress
      */
@@ -87,7 +87,7 @@ final class HereAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getLocationName()
     {
@@ -95,7 +95,7 @@ final class HereAddress extends Address
     }
 
     /**
-     * @param null|string $LocationName
+     * @param string|null $LocationName
      *
      * @return HereAddress
      */
@@ -108,7 +108,7 @@ final class HereAddress extends Address
     }
 
     /**
-     * @return null|array
+     * @return array|null
      */
     public function getAdditionalData()
     {
@@ -116,8 +116,6 @@ final class HereAddress extends Address
     }
 
     /**
-     * @param null|array $additionalData
-     *
      * @return HereAddress
      */
     public function withAdditionalData(array $additionalData = null): self
@@ -132,8 +130,7 @@ final class HereAddress extends Address
     }
 
     /**
-     * @param string     $name
-     * @param null|mixed $value
+     * @param mixed|null $value
      *
      * @return HereAddress
      */
@@ -146,8 +143,7 @@ final class HereAddress extends Address
     }
 
     /**
-     * @param string     $name
-     * @param null|mixed $default
+     * @param mixed|null $default
      *
      * @return mixed
      */
@@ -160,19 +156,12 @@ final class HereAddress extends Address
         return $default;
     }
 
-    /**
-     * @param string $name
-     *
-     * @return bool
-     */
     public function hasAdditionalDataValue(string $name): bool
     {
         return array_key_exists($name, $this->additionalData);
     }
 
     /**
-     * @param array|null $shape
-     *
      * @return HereAddress
      */
     public function withShape(array $shape = null): self
@@ -189,8 +178,7 @@ final class HereAddress extends Address
     }
 
     /**
-     * @param string     $name
-     * @param null|mixed $value
+     * @param mixed|null $value
      *
      * @return HereAddress
      */
@@ -211,11 +199,6 @@ final class HereAddress extends Address
         return $default;
     }
 
-    /**
-     * @param string $name
-     *
-     * @return bool
-     */
     public function hasShapeValue(string $name): bool
     {
         return array_key_exists($name, $this->shape);

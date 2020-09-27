@@ -180,12 +180,6 @@ final class Nominatim extends AbstractHttpProvider implements Provider
         return new AddressCollection([$this->jsonResultToLocation($json, true)]);
     }
 
-    /**
-     * @param \stdClass $place
-     * @param bool      $reverse
-     *
-     * @return Location
-     */
     private function jsonResultToLocation(\stdClass $place, bool $reverse): Location
     {
         $builder = new AddressBuilder($this->getName());
@@ -255,12 +249,6 @@ final class Nominatim extends AbstractHttpProvider implements Provider
         return 'nominatim';
     }
 
-    /**
-     * @param string      $url
-     * @param string|null $locale
-     *
-     * @return string
-     */
     private function executeQuery(string $url, string $locale = null): string
     {
         if (null !== $locale) {

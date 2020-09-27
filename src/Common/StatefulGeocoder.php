@@ -43,8 +43,7 @@ final class StatefulGeocoder implements Geocoder
     private $provider;
 
     /**
-     * @param Provider $provider
-     * @param string   $locale
+     * @param string $locale
      */
     public function __construct(Provider $provider, string $locale = null)
     {
@@ -119,8 +118,6 @@ final class StatefulGeocoder implements Geocoder
     }
 
     /**
-     * @param string $locale
-     *
      * @return StatefulGeocoder
      */
     public function setLocale(string $locale): self
@@ -131,8 +128,6 @@ final class StatefulGeocoder implements Geocoder
     }
 
     /**
-     * @param Bounds $bounds
-     *
      * @return StatefulGeocoder
      */
     public function setBounds(Bounds $bounds): self
@@ -143,8 +138,6 @@ final class StatefulGeocoder implements Geocoder
     }
 
     /**
-     * @param int $limit
-     *
      * @return StatefulGeocoder
      */
     public function setLimit(int $limit): self

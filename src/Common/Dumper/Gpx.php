@@ -20,11 +20,6 @@ use Geocoder\Location;
  */
 final class Gpx extends AbstractDumper implements Dumper
 {
-    /**
-     * @param Location $location
-     *
-     * @return string
-     */
     public function dump(Location $location): string
     {
         $gpx = sprintf(<<<'GPX'

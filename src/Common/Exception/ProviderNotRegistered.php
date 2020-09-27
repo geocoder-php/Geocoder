@@ -17,10 +17,6 @@ namespace Geocoder\Exception;
  */
 final class ProviderNotRegistered extends \RuntimeException implements Exception
 {
-    /**
-     * @param string $providerName
-     * @param array  $registeredProviders
-     */
     public static function create(string $providerName, array $registeredProviders = [])
     {
         return new self(sprintf(
