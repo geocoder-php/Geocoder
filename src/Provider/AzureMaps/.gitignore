@@ -1,5 +1,4 @@
 composer.phar
 /vendor/
-/Tests/.cached_responses
 .idea
 
