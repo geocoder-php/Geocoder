@@ -2,13 +2,6 @@
 
 use Geocoder\IntegrationTest\ProviderIntegrationTest;
 
-/**
- * Created by PhpStorm.
- * User: Max Langerman
- * Date: 7/15/20
- * Time: 10:36 PM
- */
-
 class IntegrationTest extends ProviderIntegrationTest
 {
 
