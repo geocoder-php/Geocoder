@@ -207,7 +207,6 @@ class AzureMaps extends AbstractHttpProvider implements Provider
         );
     }
 
-
     /**
      * @param string $content
      * @param string $url
@@ -226,12 +225,11 @@ class AzureMaps extends AbstractHttpProvider implements Provider
             throw new InvalidServerResponse($response->error->message);
         }
 
-        /* @var stdClass $response */
         return $response;
     }
 
     /**
-     * @param $response
+     * @param stdClass $response
      *
      * @return array
      */
@@ -264,7 +262,8 @@ class AzureMaps extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * @param $response
+     * @param stdClass $response
+     *
      * @return array
      */
     private function formatReverseGeocodeResponse(stdClass $response): array
