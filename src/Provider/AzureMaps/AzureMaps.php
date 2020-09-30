@@ -269,15 +269,14 @@ class AzureMaps extends AbstractHttpProvider implements Provider
     private function formatReverseGeocodeResponse(stdClass $response): array
     {
         return array_filter(array_map(function ($address) {
-            if ('0.000000,0.000000' === $address->position) {
-                return null;
-            }
-
-            $builder = new AddressBuilder($this->getName());
 
             $coordinates = explode(',', $address->position);
             $latitude = array_shift($coordinates);
             $longitude = array_shift($coordinates);
+
+            if ("0.000000" == $latitude && "0.000000" == $longitude) {
+                return null;
+            }
 
             $bounds = $address->address->boundingBox;
             $southWest = explode(',', $bounds->southWest);
@@ -288,6 +287,7 @@ class AzureMaps extends AbstractHttpProvider implements Provider
             $north = array_shift($northEast);
             $east = array_shift($northEast);
 
+            $builder = new AddressBuilder($this->getName());
             $builder->setCoordinates($latitude, $longitude);
             $builder->setBounds(
                 $south,
