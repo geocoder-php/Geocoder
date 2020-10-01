@@ -224,7 +224,6 @@ class AzureMaps extends AbstractHttpProvider implements Provider
     private function formatReverseGeocodeResponse(stdClass $response): array
     {
         return array_filter(array_map(function ($address) {
-
             $coordinates = explode(',', $address->position);
             $latitude = array_shift($coordinates);
             $longitude = array_shift($coordinates);
