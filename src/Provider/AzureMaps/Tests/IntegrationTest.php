@@ -1,14 +1,21 @@
 <?php
 
+/*
+ * This file is part of the Geocoder package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license    MIT License
+ */
+
 use Geocoder\IntegrationTest\ProviderIntegrationTest;
 
 class IntegrationTest extends ProviderIntegrationTest
 {
-
     /**
      * @return \Geocoder\Provider\Provider that is used in the tests.
      */
-    protected function createProvider(\Http\Client\HttpClient $httpClient)
+    protected function createProvider(Http\Client\HttpClient $httpClient)
     {
         return new \Geocoder\Provider\AzureMaps\AzureMaps($httpClient, $_SERVER['AZURE_MAPS_SUBSCRIPTION_KEY']);
     }

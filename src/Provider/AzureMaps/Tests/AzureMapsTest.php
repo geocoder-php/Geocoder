@@ -21,7 +21,6 @@ use Geocoder\Query\ReverseQuery;
 
 class AzureMapsTest extends BaseTestCase
 {
-
     /**
      * @return string|null the directory where cached responses are stored
      */

@@ -3,12 +3,12 @@
 declare(strict_types=1);
 
 /*
-+ * This file is part of the Geocoder package.
-+ * For the full copyright and license information, please view the LICENSE
-+ * file that was distributed with this source code.
-+ *
-+ * @license    MIT License
-+ */
+ * This file is part of the Geocoder package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license    MIT License
+ */
 
 namespace Geocoder\Provider\AzureMaps;
 
@@ -67,10 +67,6 @@ class AzureMaps extends AbstractHttpProvider implements Provider
 
     /**
      * AzureMaps constructor.
-     * @param HttpClient $client
-     * @param string     $subscriptionKey
-     * @param array      $options
-     * @param string     $format
      */
     public function __construct(
         HttpClient $client,
@@ -86,10 +82,6 @@ class AzureMaps extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * @param GeocodeQuery $query
-     *
-     * @return Collection
-     *
      * @throws \Geocoder\Exception\Exception
      */
     public function geocodeQuery(GeocodeQuery $query): Collection
@@ -105,10 +97,6 @@ class AzureMaps extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * @param ReverseQuery $query
-     *
-     * @return Collection
-     *
      * @throws \Geocoder\Exception\Exception
      */
     public function reverseQuery(ReverseQuery $query): Collection
@@ -128,8 +116,6 @@ class AzureMaps extends AbstractHttpProvider implements Provider
 
     /**
      * Returns the provider's name.
-     *
-     * @return string
      */
     public function getName(): string
     {
@@ -138,8 +124,6 @@ class AzureMaps extends AbstractHttpProvider implements Provider
 
     /**
      * Returns an array of non null geocode /reverse-geocode options
-     *
-     * @param array $options
      */
     private function setOptions(array $options): void
     {
@@ -152,19 +136,12 @@ class AzureMaps extends AbstractHttpProvider implements Provider
 
     /**
      * Returns an array of keys to replace
-     *
-     * @return array
      */
     public function getOptions(): array
     {
         return $this->options;
     }
 
-    /**
-     * @param string $query
-     *
-     * @return string
-     */
     private function buildGeocodeUrl(string $query): string
     {
         $url = self::GEOCODE_ENDPOINT_SSL;
@@ -183,12 +160,6 @@ class AzureMaps extends AbstractHttpProvider implements Provider
         );
     }
 
-    /**
-     * @param string $latitude
-     * @param string $longitude
-     *
-     * @return string
-     */
     private function buildReverseGeocodeUrl(string $latitude, string $longitude): string
     {
         $url = self::REVERSE_ENDPOINT_URL;
@@ -207,12 +178,6 @@ class AzureMaps extends AbstractHttpProvider implements Provider
         );
     }
 
-    /**
-     * @param string $content
-     * @param string $url
-     *
-     * @return stdClass
-     */
     private function validateResponse(string $content, string $url): stdClass
     {
         $response = json_decode($content);
@@ -228,11 +193,6 @@ class AzureMaps extends AbstractHttpProvider implements Provider
         return $response;
     }
 
-    /**
-     * @param stdClass $response
-     *
-     * @return array
-     */
     private function formatGeocodeResponse(stdClass $response): array
     {
         return array_map(function ($result) {
@@ -274,7 +234,7 @@ class AzureMaps extends AbstractHttpProvider implements Provider
             $latitude = array_shift($coordinates);
             $longitude = array_shift($coordinates);
 
-            if ("0.000000" == $latitude && "0.000000" == $longitude) {
+            if ('0.000000' == $latitude && '0.000000' == $longitude) {
                 return null;
             }
 
