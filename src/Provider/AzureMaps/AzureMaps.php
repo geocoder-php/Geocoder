@@ -221,11 +221,6 @@ class AzureMaps extends AbstractHttpProvider implements Provider
         }, $response->results);
     }
 
-    /**
-     * @param stdClass $response
-     *
-     * @return array
-     */
     private function formatReverseGeocodeResponse(stdClass $response): array
     {
         return array_filter(array_map(function ($address) {
