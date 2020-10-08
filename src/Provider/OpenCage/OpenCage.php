@@ -241,7 +241,7 @@ final class OpenCage extends AbstractHttpProvider implements Provider
     /**
      * @param array $components
      *
-     * @return null|string
+     * @return string|null
      */
     protected function guessLocality(array $components)
     {
@@ -253,7 +253,7 @@ final class OpenCage extends AbstractHttpProvider implements Provider
     /**
      * @param array $components
      *
-     * @return null|string
+     * @return string|null
      */
     protected function guessStreetName(array $components)
     {
@@ -265,7 +265,7 @@ final class OpenCage extends AbstractHttpProvider implements Provider
     /**
      * @param array $components
      *
-     * @return null|string
+     * @return string|null
      */
     protected function guessSubLocality(array $components)
     {
@@ -278,7 +278,7 @@ final class OpenCage extends AbstractHttpProvider implements Provider
      * @param array $components
      * @param array $keys
      *
-     * @return null|string
+     * @return string|null
      */
     protected function guessBestComponent(array $components, array $keys)
     {

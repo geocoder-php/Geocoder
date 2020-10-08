@@ -45,7 +45,7 @@ final class HereAddress extends Address
     private $shape;
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getLocationId()
     {
@@ -53,7 +53,7 @@ final class HereAddress extends Address
     }
 
     /**
-     * @param null|string $LocationId
+     * @param string|null $LocationId
      *
      * @return HereAddress
      */
@@ -66,7 +66,7 @@ final class HereAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getLocationType()
     {
@@ -74,7 +74,7 @@ final class HereAddress extends Address
     }
 
     /**
-     * @param null|string $LocationType
+     * @param string|null $LocationType
      *
      * @return HereAddress
      */
@@ -87,7 +87,7 @@ final class HereAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getLocationName()
     {
@@ -95,7 +95,7 @@ final class HereAddress extends Address
     }
 
     /**
-     * @param null|string $LocationName
+     * @param string|null $LocationName
      *
      * @return HereAddress
      */
@@ -108,7 +108,7 @@ final class HereAddress extends Address
     }
 
     /**
-     * @return null|array
+     * @return array|null
      */
     public function getAdditionalData()
     {
@@ -116,7 +116,7 @@ final class HereAddress extends Address
     }
 
     /**
-     * @param null|array $additionalData
+     * @param array|null $additionalData
      *
      * @return HereAddress
      */
@@ -133,7 +133,7 @@ final class HereAddress extends Address
 
     /**
      * @param string     $name
-     * @param null|mixed $value
+     * @param mixed|null $value
      *
      * @return HereAddress
      */
@@ -147,7 +147,7 @@ final class HereAddress extends Address
 
     /**
      * @param string     $name
-     * @param null|mixed $default
+     * @param mixed|null $default
      *
      * @return mixed
      */
@@ -190,7 +190,7 @@ final class HereAddress extends Address
 
     /**
      * @param string     $name
-     * @param null|mixed $value
+     * @param mixed|null $value
      *
      * @return HereAddress
      */

@@ -50,7 +50,7 @@ final class OpenCageAddress extends Address
     private $formattedAddress;
 
     /**
-     * @param null|string $mgrs
+     * @param string|null $mgrs
      *
      * @return OpenCageAddress
      */
@@ -63,7 +63,7 @@ final class OpenCageAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getMGRS()
     {
@@ -71,7 +71,7 @@ final class OpenCageAddress extends Address
     }
 
     /**
-     * @param null|string $maidenhead
+     * @param string|null $maidenhead
      *
      * @return OpenCageAddress
      */
@@ -84,7 +84,7 @@ final class OpenCageAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getMaidenhead()
     {
@@ -92,7 +92,7 @@ final class OpenCageAddress extends Address
     }
 
     /**
-     * @param null|string $geohash
+     * @param string|null $geohash
      *
      * @return OpenCageAddress
      */
@@ -105,7 +105,7 @@ final class OpenCageAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getGeohash()
     {
@@ -113,7 +113,7 @@ final class OpenCageAddress extends Address
     }
 
     /**
-     * @param null|string $what3words
+     * @param string|null $what3words
      *
      * @return OpenCageAddress
      */
@@ -126,7 +126,7 @@ final class OpenCageAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getWhat3words()
     {
@@ -147,7 +147,7 @@ final class OpenCageAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getFormattedAddress()
     {
