@@ -51,7 +51,7 @@ class Pelias extends AbstractHttpProvider implements Provider
 
     /**
      * @param GeocodeQuery $query
-     * @param array        $query_data Additional query data (API key for instance).
+     * @param array        $query_data additional query data (API key for instance)
      *
      * @return string
      *
@@ -84,7 +84,7 @@ class Pelias extends AbstractHttpProvider implements Provider
 
     /**
      * @param ReverseQuery $query
-     * @param array        $query_data Additional query data (API key for instance).
+     * @param array        $query_data additional query data (API key for instance)
      *
      * @return string
      *

@@ -18,7 +18,7 @@ use Geocoder\Query\Query;
 use Psr\Log\LoggerInterface;
 
 /**
- * Log all queries and the result/failure
+ * Log all queries and the result/failure.
  *
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
