@@ -75,7 +75,7 @@ class IntegrationTest extends ProviderIntegrationTest
     }
 
     /**
-     * @return string the Here AppCode or substring to be removed from cache.
+     * @return string the Here AppCode or substring to be removed from cache
      */
     protected function getAppCode()
     {

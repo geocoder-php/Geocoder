@@ -120,7 +120,7 @@ final class CountryInfo
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getContinent()
     {
@@ -128,7 +128,7 @@ final class CountryInfo
     }
 
     /**
-     * @param null|string $continent
+     * @param string|null $continent
      *
      * @return CountryInfo
      */
@@ -141,7 +141,7 @@ final class CountryInfo
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getCapital()
     {
@@ -149,7 +149,7 @@ final class CountryInfo
     }
 
     /**
-     * @param null|string $capital
+     * @param string|null $capital
      *
      * @return CountryInfo
      */
@@ -204,7 +204,7 @@ final class CountryInfo
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getIsoAlpha3()
     {
@@ -212,7 +212,7 @@ final class CountryInfo
     }
 
     /**
-     * @param null|string $isoAlpha3
+     * @param string|null $isoAlpha3
      *
      * @return CountryInfo
      */
@@ -225,7 +225,7 @@ final class CountryInfo
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getFipsCode()
     {
@@ -233,7 +233,7 @@ final class CountryInfo
     }
 
     /**
-     * @param null|string $fipsCode
+     * @param string|null $fipsCode
      *
      * @return CountryInfo
      */
@@ -267,7 +267,7 @@ final class CountryInfo
     }
 
     /**
-     * @return null|int
+     * @return int|null
      */
     public function getIsoNumeric()
     {
@@ -288,7 +288,7 @@ final class CountryInfo
     }
 
     /**
-     * @return null|float
+     * @return float|null
      */
     public function getAreaInSqKm()
     {
@@ -309,7 +309,7 @@ final class CountryInfo
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getCountryCode()
     {
@@ -330,7 +330,7 @@ final class CountryInfo
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getCountryName()
     {
@@ -351,7 +351,7 @@ final class CountryInfo
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getContinentName()
     {
@@ -359,7 +359,7 @@ final class CountryInfo
     }
 
     /**
-     * @param null|string $continentName
+     * @param string|null $continentName
      *
      * @return CountryInfo
      */
@@ -372,7 +372,7 @@ final class CountryInfo
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getCurrencyCode()
     {
@@ -380,7 +380,7 @@ final class CountryInfo
     }
 
     /**
-     * @param null|string $currencyCode
+     * @param string|null $currencyCode
      *
      * @return CountryInfo
      */

@@ -67,10 +67,10 @@ final class Here extends AbstractHttpProvider implements Provider
     private $useCIT;
 
     /**
-     * @param HttpClient $client  An HTTP adapter.
-     * @param string     $appId   An App ID.
-     * @param string     $appCode An App code.
-     * @param bool       $useCIT  Use Customer Integration Testing environment (CIT) instead of production.
+     * @param HttpClient $client  an HTTP adapter
+     * @param string     $appId   an App ID
+     * @param string     $appCode an App code
+     * @param bool       $useCIT  use Customer Integration Testing environment (CIT) instead of production
      */
     public function __construct(HttpClient $client, string $appId, string $appCode, bool $useCIT = false)
     {

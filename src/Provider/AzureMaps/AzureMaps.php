@@ -123,7 +123,7 @@ class AzureMaps extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * Returns an array of non null geocode /reverse-geocode options
+     * Returns an array of non null geocode /reverse-geocode options.
      */
     private function setOptions(array $options): void
     {
@@ -135,7 +135,7 @@ class AzureMaps extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * Returns an array of keys to replace
+     * Returns an array of keys to replace.
      */
     public function getOptions(): array
     {

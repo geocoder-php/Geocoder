@@ -92,7 +92,7 @@ final class GooglePlace extends Address
     /**
      * @see https://developers.google.com/places/place-id
      *
-     * @return null|string
+     * @return string|null
      */
     public function getId()
     {
@@ -100,7 +100,7 @@ final class GooglePlace extends Address
     }
 
     /**
-     * @param null|string $id
+     * @param string|null $id
      *
      * @return GooglePlace
      */
@@ -113,7 +113,7 @@ final class GooglePlace extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getName()
     {
@@ -121,7 +121,7 @@ final class GooglePlace extends Address
     }
 
     /**
-     * @param null|string $name
+     * @param string|null $name
      *
      * @return GooglePlace
      */
@@ -155,7 +155,7 @@ final class GooglePlace extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getFormattedAddress()
     {

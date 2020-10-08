@@ -69,7 +69,7 @@ final class Coordinates
     }
 
     /**
-     * Returns the coordinates as a tuple
+     * Returns the coordinates as a tuple.
      *
      * @return array
      */
