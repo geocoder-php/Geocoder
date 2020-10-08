@@ -10,7 +10,7 @@
 This is the Bing Maps provider from the PHP Geocoder. This is a **READ ONLY** repository. See the
 [main repo](https://github.com/geocoder-php/Geocoder) for information and documentation. 
 
-### Install
+## Install
 
 ```bash
 composer require geocoder-php/azure-maps-provider
@@ -27,7 +27,7 @@ $provider = new \Geocoder\Provider\AzureMaps\AzureMaps($httpClient, 'your-subscr
 $result = $geocoder->geocodeQuery(GeocodeQuery::create('Yehuda Hamaccabi 15, Tel aviv'));
 ```
 
-### Contribute
+## Contribute
 
 Contributions are very welcome! Send a pull request to the [main repository](https://github.com/geocoder-php/Geocoder) or 
 report any issues you find on the [issue tracker](https://github.com/geocoder-php/Geocoder/issues).
