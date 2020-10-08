@@ -222,7 +222,7 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
 
     /**
      * When no locale was set in the query, Algolia will return results for all locales.
-     * In this case, we return the default locale value
+     * In this case, we return the default locale value.
      *
      * @param array       $result
      * @param string      $attribute

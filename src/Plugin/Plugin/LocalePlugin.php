@@ -16,7 +16,7 @@ use Geocoder\Plugin\Plugin;
 use Geocoder\Query\Query;
 
 /**
- * Add locale on the query
+ * Add locale on the query.
  *
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */

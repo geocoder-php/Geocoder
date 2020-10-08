@@ -131,7 +131,7 @@ class HereTest extends BaseTestCase
 
     /**
      * Validation of some AdditionalData filters.
-     * https://developer.here.com/documentation/geocoder/topics/resource-params-additional.html
+     * https://developer.here.com/documentation/geocoder/topics/resource-params-additional.html.
      *
      * @throws \Geocoder\Exception\Exception
      */

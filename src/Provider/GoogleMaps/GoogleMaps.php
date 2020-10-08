@@ -69,7 +69,7 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
     /**
      * Google Maps for Business
      * https://developers.google.com/maps/documentation/business/
-     * Maps for Business is no longer accepting new signups
+     * Maps for Business is no longer accepting new signups.
      *
      * @param HttpClient $client     An HTTP adapter
      * @param string     $clientId   Your Client ID

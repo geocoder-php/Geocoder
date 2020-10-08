@@ -192,7 +192,7 @@ final class GeocodeQuery implements Query
     }
 
     /**
-     * String for logging. This is also a unique key for the query
+     * String for logging. This is also a unique key for the query.
      *
      * @return string
      */

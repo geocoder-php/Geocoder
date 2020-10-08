@@ -17,7 +17,7 @@ class IntegrationTest extends ProviderIntegrationTest
     ];
 
     /**
-     * @return \Geocoder\Provider\Provider that is used in the tests.
+     * @return \Geocoder\Provider\Provider that is used in the tests
      */
     protected function createProvider(Http\Client\HttpClient $httpClient)
     {
@@ -33,7 +33,7 @@ class IntegrationTest extends ProviderIntegrationTest
     }
 
     /**
-     * @return string the API key or substring to be removed from cache.
+     * @return string the API key or substring to be removed from cache
      */
     protected function getApiKey()
     {

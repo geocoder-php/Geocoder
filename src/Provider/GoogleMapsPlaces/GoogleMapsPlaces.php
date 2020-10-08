@@ -134,7 +134,7 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * Build query for the find place API
+     * Build query for the find place API.
      *
      * @param GeocodeQuery $geocodeQuery
      *
@@ -171,7 +171,7 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * Build query for the place search API
+     * Build query for the place search API.
      *
      * @param GeocodeQuery $geocodeQuery
      *
@@ -204,7 +204,7 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * Build query for the nearby search api
+     * Build query for the nearby search api.
      *
      * @param ReverseQuery $reverseQuery
      *

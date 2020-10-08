@@ -18,7 +18,7 @@ use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\Query;
 
 /**
- * Add bounds to each GeocoderQuery
+ * Add bounds to each GeocoderQuery.
  *
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
