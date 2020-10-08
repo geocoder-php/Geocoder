@@ -12,6 +12,10 @@ use Geocoder\IntegrationTest\ProviderIntegrationTest;
 
 class IntegrationTest extends ProviderIntegrationTest
 {
+    protected $skippedTests = [
+        'testReverseQueryWithNoResults' => 'AzureMaps API returns "position":"0.000000,0.000000" for reverse query at 0,0.',
+    ];
+
     /**
      * @return \Geocoder\Provider\Provider that is used in the tests.
      */

@@ -228,10 +228,6 @@ class AzureMaps extends AbstractHttpProvider implements Provider
             $latitude = array_shift($coordinates);
             $longitude = array_shift($coordinates);
 
-            if ('0.000000' == $latitude && '0.000000' == $longitude) {
-                return null;
-            }
-
             $bounds = $address->address->boundingBox;
             $southWest = explode(',', $bounds->southWest);
             $south = array_shift($southWest);
