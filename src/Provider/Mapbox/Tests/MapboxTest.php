@@ -227,4 +227,48 @@ class MapboxTest extends BaseTestCase
         $this->assertEquals('New York', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('NY', $result->getAdminLevels()->get(2)->getCode());
     }
+
+    public function testGeocodeWithFuzzyMatch()
+    {
+        if (!isset($_SERVER['MAPBOX_GEOCODING_KEY'])) {
+            $this->markTestSkipped('You need to configure the MAPBOX_GEOCODING_KEY value in phpunit.xml');
+        }
+
+        $provider = new Mapbox($this->getHttpClient($_SERVER['MAPBOX_GEOCODING_KEY']), $_SERVER['MAPBOX_GEOCODING_KEY']);
+
+        $query = GeocodeQuery::create('wahsington'); // Washington
+        $query = $query->withData('fuzzy_match', true);
+        $query = $query->withBounds(new Bounds(
+            45.54372254,
+            -124.83609163,
+            49.00243912,
+            -116.91742984
+        ));
+
+        $results = $provider->geocodeQuery($query);
+        $this->assertInstanceOf(AddressCollection::class, $results);
+        $this->assertCount(5, $results);
+    }
+
+    public function testGeocodeWithoutFuzzyMatch()
+    {
+        if (!isset($_SERVER['MAPBOX_GEOCODING_KEY'])) {
+            $this->markTestSkipped('You need to configure the MAPBOX_GEOCODING_KEY value in phpunit.xml');
+        }
+
+        $provider = new Mapbox($this->getHttpClient($_SERVER['MAPBOX_GEOCODING_KEY']), $_SERVER['MAPBOX_GEOCODING_KEY']);
+
+        $query = GeocodeQuery::create('wahsington'); // Washington
+        $query = $query->withData('fuzzy_match', false);
+        $query = $query->withBounds(new Bounds(
+            45.54372254,
+            -124.83609163,
+            49.00243912,
+            -116.91742984
+        ));
+
+        $results = $provider->geocodeQuery($query);
+        $this->assertInstanceOf(AddressCollection::class, $results);
+        $this->assertEmpty($results);
+    }
 }

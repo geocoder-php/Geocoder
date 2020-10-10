@@ -195,6 +195,10 @@ final class Mapbox extends AbstractHttpProvider implements Provider
             $urlParameters['types'] = self::DEFAULT_TYPE;
         }
 
+        if (null !== $fuzzyMatch = $query->getData('fuzzy_match')) {
+            $urlParameters['fuzzyMatch'] = $fuzzyMatch ? 'true' : 'false';
+        }
+
         if ($urlParameters) {
             $url .= '?'.http_build_query($urlParameters);
         }
