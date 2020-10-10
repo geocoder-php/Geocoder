@@ -65,6 +65,11 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
     /**
      * @var string
      */
+    const GEOCODE_MODE_NEARBY = 'nearby';
+
+    /**
+     * @var string
+     */
     const DEFAULT_GEOCODE_MODE = self::GEOCODE_MODE_FIND;
 
     /**
@@ -110,7 +115,7 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
             return $this->fetchUrl(self::SEARCH_ENDPOINT_URL_SSL, $this->buildPlaceSearchQuery($query));
         }
 
-        throw new InvalidArgument('Mode must be one of `%s, %s`', self::GEOCODE_MODE_FIND, self::GEOCODE_MODE_SEARCH);
+        throw new InvalidArgument(sprintf('Mode must be one of `%s, %s`', self::GEOCODE_MODE_FIND, self::GEOCODE_MODE_SEARCH));
     }
 
     /**
@@ -122,7 +127,14 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
      */
     public function reverseQuery(ReverseQuery $query): Collection
     {
-        return $this->fetchUrl(self::SEARCH_ENDPOINT_URL_SSL, $this->buildNearbySearchQuery($query));
+        // for backward compatibility: use SEARCH as default mode (includes formatted_address)
+        if (self::GEOCODE_MODE_SEARCH === $query->getData('mode', self::GEOCODE_MODE_SEARCH)) {
+            $url = self::SEARCH_ENDPOINT_URL_SSL;
+        } else {
+            $url = self::NEARBY_ENDPOINT_URL_SSL;
+        }
+
+        return $this->fetchUrl($url, $this->buildNearbySearchQuery($query));
     }
 
     /**
@@ -212,20 +224,23 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
      */
     private function buildNearbySearchQuery(ReverseQuery $reverseQuery): array
     {
+        // for backward compatibility: use SEARCH as default mode (includes formatted_address)
+        $mode = $reverseQuery->getData('mode', self::GEOCODE_MODE_SEARCH);
+
         $query = [
             'location' => sprintf(
                 '%s,%s',
                 $reverseQuery->getCoordinates()->getLatitude(),
                 $reverseQuery->getCoordinates()->getLongitude()
             ),
-            'rankby' => 'distance',
+            'rankby' => 'prominence',
         ];
 
         if (null !== $reverseQuery->getLocale()) {
             $query['language'] = $reverseQuery->getLocale();
         }
 
-        $query = $this->applyDataFromQuery($reverseQuery, $query, [
+        $validParameters = [
             'keyword',
             'type',
             'name',
@@ -233,14 +248,41 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
             'maxprice',
             'name',
             'opennow',
-        ]);
+            'radius',
+        ];
 
-        $requiredParameters = array_filter(array_keys($query), function (string $key) {
-            return in_array($key, ['keyword', 'type', 'name'], true);
-        });
+        if (self::GEOCODE_MODE_NEARBY === $mode) {
+            $validParameters[] = 'rankby';
+        }
 
-        if (1 !== count($requiredParameters)) {
-            throw new InvalidArgument('One of `type`, `keyword`, `name` is required to be set in the Query data for Reverse Geocoding');
+        $query = $this->applyDataFromQuery($reverseQuery, $query, $validParameters);
+
+        if (self::GEOCODE_MODE_NEARBY === $mode) {
+            // mode:nearby, rankby:prominence, parameter:radius
+            if ('prominence' === $query['rankby'] && !isset($query['radius'])) {
+                throw new InvalidArgument('`radius` is required to be set in the Query data for Reverse Geocoding when ranking by prominence');
+            }
+
+            // mode:nearby, rankby:distance, parameter:type/keyword/name
+            if ('distance' === $query['rankby']) {
+                if (isset($query['radius'])) {
+                    unset($query['radius']);
+                }
+
+                $requiredParameters = array_intersect(['keyword', 'type', 'name'], array_keys($query));
+
+                if (1 !== count($requiredParameters)) {
+                    throw new InvalidArgument('One of `type`, `keyword`, `name` is required to be set in the Query data for Reverse Geocoding when ranking by distance');
+                }
+            }
+        }
+
+        if (self::GEOCODE_MODE_SEARCH === $mode) {
+            // mode:search, parameter:type
+
+            if (!isset($query['type'])) {
+                throw new InvalidArgument('`type` is required to be set in the Query data for Reverse Geocoding when using search mode');
+            }
         }
 
         return $query;
@@ -307,6 +349,10 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
 
             if (isset($result->formatted_address)) {
                 $address = $address->withFormattedAddress($result->formatted_address);
+            }
+
+            if (isset($result->vicinity)) {
+                $address = $address->withVicinity($result->vicinity);
             }
 
             if (isset($result->types)) {

@@ -2,6 +2,16 @@
 
 The change log describes what is "Added", "Removed", "Changed" or "Fixed" between each release.
 
+## 1.2.0
+
+### Added
+
+- Adds support for reverse query `Nearby` mode (rankby `prominence` + `radius`, or `distance` + `type/keyword/name`)
+
+### Fixed
+
+- reverse query w/ `Search` mode checked for `type/keyword/name`, but only `type` is allowed
+
 ## 1.1.0
 
 ### Removed
@@ -16,4 +26,4 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 
 ## 1.0.0
 
-First release of this library. 
+First release of this library.

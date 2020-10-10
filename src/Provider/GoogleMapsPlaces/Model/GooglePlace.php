@@ -42,6 +42,11 @@ final class GooglePlace extends Address
     /**
      * @var string|null
      */
+    private $vicinity;
+
+    /**
+     * @var string|null
+     */
     private $icon;
 
     /**
@@ -171,6 +176,27 @@ final class GooglePlace extends Address
     {
         $new = clone $this;
         $new->formattedAddress = $formattedAddress;
+
+        return $new;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getVicinity()
+    {
+        return $this->vicinity;
+    }
+
+    /**
+     * @param string|null $vicinity
+     *
+     * @return GooglePlace
+     */
+    public function withVicinity(string $vicinity = null)
+    {
+        $new = clone $this;
+        $new->vicinity = $vicinity;
 
         return $new;
     }
