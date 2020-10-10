@@ -181,7 +181,7 @@ final class GooglePlace extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getVicinity()
     {
