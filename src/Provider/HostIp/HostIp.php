@@ -14,6 +14,7 @@ namespace Geocoder\Provider\HostIp;
 
 use Geocoder\Collection;
 use Geocoder\Model\AddressCollection;
+use function json_decode;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -41,7 +42,7 @@ final class HostIp extends AbstractHostIp
     protected function executeQuery(string $url): AddressCollection
     {
         $content = $this->getUrlContents($url);
-        $data = \json_decode($content, true);
+        $data = json_decode($content, true);
 
         if (!$data) {
             return new AddressCollection([]);

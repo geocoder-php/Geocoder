@@ -14,6 +14,7 @@ namespace Geocoder\Provider\HostIp;
 
 use Geocoder\Collection;
 use Geocoder\Model\AddressCollection;
+use function simplexml_load_string;
 
 /**
  * @author Oleg Andreyev <oleg@andreyev.lv>
@@ -41,7 +42,7 @@ final class HostIpXml extends AbstractHostIp
     protected function executeQuery(string $url): AddressCollection
     {
         $content = $this->getUrlContents($url);
-        $xml = \simplexml_load_string($content);
+        $xml = simplexml_load_string($content);
 
         $hostIp = $xml->xpath('/HostipLookupResultSet/gml:featureMember/Hostip');
         if (empty($hostIp[0])) {
