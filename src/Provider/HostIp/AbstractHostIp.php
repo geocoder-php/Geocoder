@@ -17,6 +17,7 @@ use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Model\Address;
 use Geocoder\Model\AddressCollection;
+use Geocoder\Provider\Provider;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 
@@ -24,7 +25,7 @@ use Geocoder\Query\ReverseQuery;
  * @author William Durand <william.durand1@gmail.com>
  * @author Oleg Andreyev <oleg@andreyev.lv>
  */
-abstract class AbstractHostIp extends AbstractHttpProvider implements \Geocoder\Provider\Provider
+abstract class AbstractHostIp extends AbstractHttpProvider implements Provider
 {
     abstract protected function executeQuery(string $url): AddressCollection;
 
