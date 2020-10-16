@@ -2,6 +2,12 @@
 
 The change log describes what is "Added", "Removed", "Changed" or "Fixed" between each release.
 
+## 4.2.0
+
+### Added
+
+- Add class `HostIpXml` alternative to class `HostIp` (JSON)
+
 ## 4.1.0
 
 ### Removed
