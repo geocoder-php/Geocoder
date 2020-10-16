@@ -13,8 +13,6 @@
     ],
     "require": {
         "php": "^7.2",
-        "ext-simplexml": "*",
-        "ext-json": "*",
         "geocoder-php/common-http": "^4.0",
         "willdurand/geocoder": "^4.0"
     },
