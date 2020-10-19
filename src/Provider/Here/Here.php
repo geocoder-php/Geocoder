@@ -31,26 +31,52 @@ use Http\Client\HttpClient;
  */
 final class Here extends AbstractHttpProvider implements Provider
 {
+    
     /**
      * @var string
      */
-    const GEOCODE_ENDPOINT_URL = 'https://geocoder.api.here.com/6.2/geocode.json?app_id=%s&app_code=%s&searchtext=%s&gen=9';
+    const GEOCODE_ENDPOINT_URL_LEGACY = 'https://geocoder.api.here.com/6.2/geocode.json?app_id=%s&app_code=%s&searchtext=%s&gen=9';
 
     /**
      * @var string
      */
-    const REVERSE_ENDPOINT_URL = 'https://reverse.geocoder.api.here.com/6.2/reversegeocode.json?prox=%F,%F,250&app_id=%s&app_code=%s&mode=retrieveAddresses&gen=9&maxresults=%d';
+    const REVERSE_ENDPOINT_URL_LEGACY = 'https://reverse.geocoder.api.here.com/6.2/reversegeocode.json?prox=%F,%F,250&app_id=%s&app_code=%s&mode=retrieveAddresses&gen=9&maxresults=%d';
 
     /**
      * @var string
      */
-    const GEOCODE_CIT_ENDPOINT_URL = 'https://geocoder.cit.api.here.com/6.2/geocode.json?app_id=%s&app_code=%s&searchtext=%s&gen=9';
+    const GEOCODE_CIT_ENDPOINT_URL_LEGACY = 'https://geocoder.cit.api.here.com/6.2/geocode.json?app_id=%s&app_code=%s&searchtext=%s&gen=9';
 
     /**
      * @var string
      */
-    const REVERSE_CIT_ENDPOINT_URL = 'https://reverse.geocoder.cit.api.here.com/6.2/reversegeocode.json?prox=%F,%F,250&app_id=%s&app_code=%s&mode=retrieveAddresses&gen=9&maxresults=%d';
+    const REVERSE_CIT_ENDPOINT_URL_LEGACY = 'https://reverse.geocoder.cit.api.here.com/6.2/reversegeocode.json?prox=%F,%F,250&app_id=%s&app_code=%s&mode=retrieveAddresses&gen=9&maxresults=%d';
+    
+    /**
+     * @var string
+     */
+    const GEOCODE_ENDPOINT_URL_APIKEY = 'https://geocoder.ls.hereapi.com/6.2/geocode.json?apiKey=%s&searchtext=%s&gen=9';
 
+    /**
+     * @var string
+     */
+    const REVERSE_ENDPOINT_URL_APIKEY = 'https://reverse.geocoder.ls.hereapi.com/6.2/reversegeocode.json?prox=%F,%F,250&apiKey=%s&mode=retrieveAddresses&gen=9&maxresults=%d';
+
+    /**
+     * @var string
+     */
+    const GEOCODE_CIT_ENDPOINT_URL_APIKEY = 'https://geocoder.ls.hereapi.com/6.2/geocode.json?apiKey=%s&searchtext=%s&gen=9';
+
+    /**
+     * @var string
+     */
+    const REVERSE_CIT_ENDPOINT_URL_APIKEY = 'https://reverse.geocoder.ls.hereapi.com/6.2/reversegeocode.json?prox=%F,%F,250&apiKey=%s&mode=retrieveAddresses&gen=9&maxresults=%d';
+
+    /**
+     * @var string
+     */
+    private $apiKey;
+    
     /**
      * @var string
      */
@@ -67,18 +93,30 @@ final class Here extends AbstractHttpProvider implements Provider
     private $useCIT;
 
     /**
-     * @param HttpClient $client  an HTTP adapter
-     * @param string     $appId   an App ID
-     * @param string     $appCode an App code
-     * @param bool       $useCIT  use Customer Integration Testing environment (CIT) instead of production
+     * @param HttpClient     $client         An HTTP adapter.
+     * @param string         $appId          An App ID.
+     * @param authentication $authentication Either a string containing an apiKey, or an array containing either a ['apiKey'=>'value'] or ['appId'=>'value', 'appCode'=>'value'], depending on the authentication method.
+     * @param bool           $useCIT         Use Customer Integration Testing environment (CIT) instead of production.
      */
-    public function __construct(HttpClient $client, string $appId, string $appCode, bool $useCIT = false)
+    public function __construct(HttpClient $client, $authentication, bool $useCIT = false)
     {
-        if (empty($appId) || empty($appCode)) {
-            throw new InvalidCredentials('Invalid or missing api key.');
+        if(is_string($authentication)){
+            $authentication = ['apiKey'=>$authentication];
+        } 
+        
+        if ( 
+            (!is_array($authentication)) || 
+            !( isset($authentication['apiKey']) || (isset($authentication['appId']) && isset($authentication['appCode'])) ) 
+        ) {  
+            throw new InvalidArgument("Invalid authentication method, use an array containing either ['apiKey'=>'value'] or ['appId'=>'value', 'appCode'=>'value']");
         }
-        $this->appId = $appId;
-        $this->appCode = $appCode;
+                
+        if(isset($authentication['apiKey'])){
+            $this->apiKey = $authentication['apiKey'];
+        }else{
+            $this->appId = $authentication['appId'];
+            $this->appCode = $authentication['appCode'];
+        }
         $this->useCIT = $useCIT;
 
         parent::__construct($client);
@@ -94,7 +132,11 @@ final class Here extends AbstractHttpProvider implements Provider
             throw new UnsupportedOperation('The Here provider does not support IP addresses, only street addresses.');
         }
 
-        $url = sprintf($this->useCIT ? self::GEOCODE_CIT_ENDPOINT_URL : self::GEOCODE_ENDPOINT_URL, $this->appId, $this->appCode, rawurlencode($query->getText()));
+        if(isset($this->apiKey)){
+            $url = sprintf($this->useCIT ? self::GEOCODE_CIT_ENDPOINT_URL_APIKEY : self::GEOCODE_ENDPOINT_URL_APIKEY, $this->apiKey, rawurlencode($query->getText()));
+        }else{
+            $url = sprintf($this->useCIT ? self::GEOCODE_CIT_ENDPOINT_URL_LEGACY : self::GEOCODE_ENDPOINT_URL_LEGACY, $this->appId, $this->appCode, rawurlencode($query->getText()));
+        } 
 
         if (null !== $query->getData('country')) {
             $url = sprintf('%s&country=%s', $url, rawurlencode($query->getData('country')));
@@ -196,7 +238,13 @@ final class Here extends AbstractHttpProvider implements Provider
     public function reverseQuery(ReverseQuery $query): Collection
     {
         $coordinates = $query->getCoordinates();
-        $url = sprintf($this->useCIT ? self::REVERSE_CIT_ENDPOINT_URL : self::REVERSE_ENDPOINT_URL, $coordinates->getLatitude(), $coordinates->getLongitude(), $this->appId, $this->appCode, $query->getLimit());
+        
+        if(isset($this->apiKey)){
+            $url = sprintf($this->useCIT ? self::REVERSE_CIT_ENDPOINT_URL_APIKEY : self::REVERSE_ENDPOINT_URL_APIKEY, $coordinates->getLatitude(), $coordinates->getLongitude(), $this->apiKey, $query->getLimit());
+        }else{
+            $url = sprintf($this->useCIT ? self::REVERSE_CIT_ENDPOINT_URL_LEGACY : self::REVERSE_ENDPOINT_URL_LEGACY, $coordinates->getLatitude(), $coordinates->getLongitude(), $this->appId, $this->appCode, $query->getLimit());
+        } 
+        
 
         return $this->executeQuery($url, $query->getLimit());
     }
