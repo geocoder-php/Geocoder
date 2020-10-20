@@ -278,7 +278,7 @@ final class Here extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * Get serialized additional data param
+     * Get serialized additional data param.
      *
      * @param GeocodeQuery $query
      *
@@ -300,7 +300,7 @@ final class Here extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * Add API credentials to query params
+     * Add API credentials to query params.
      *
      * @param array $queryParams
      *

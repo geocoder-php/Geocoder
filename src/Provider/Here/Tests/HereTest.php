@@ -17,13 +17,10 @@ declare(strict_types=1);
 namespace Geocoder\Provider\Here\Tests;
 
 use Geocoder\IntegrationTest\BaseTestCase;
-use Geocoder\IntegrationTest\CachedResponseClient;
 use Geocoder\Location;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\Here\Here;
-use Http\Client\Curl\Client as HttplugClient;
-use Http\Client\HttpClient;
 
 class HereTest extends BaseTestCase
 {
