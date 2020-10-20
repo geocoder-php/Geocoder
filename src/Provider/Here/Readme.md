@@ -21,7 +21,27 @@ composer require geocoder-php/here-provider
 
 ## Using
 
-TODO
+New applications on the Here platform use the `api_key` authentication method.
+
+```php
+$httpClient = new \Http\Adapter\Guzzle6\Client();
+
+// You must provide an API key
+$provider = \Geocoder\Provider\Here\Here::createUsingApiKey($httpClient, 'your-api-key');
+
+$result = $geocoder->geocodeQuery(GeocodeQuery::create('Buckingham Palace, London'));
+```
+
+If you're using the legacy `app_code` authentication method, use the constructor on the provider like so:
+
+```php
+$httpClient = new \Http\Adapter\Guzzle6\Client();
+
+// You must provide both the app_id and app_code
+$provider = new \Geocoder\Provider\Here\Here($httpClient, 'app-id', 'app-code');
+
+$result = $geocoder->geocodeQuery(GeocodeQuery::create('Buckingham Palace, London'));
+```
 
 ### Language parameter
 
