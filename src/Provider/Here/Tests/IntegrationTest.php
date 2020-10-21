@@ -35,7 +35,7 @@ class IntegrationTest extends ProviderIntegrationTest
 
     protected function createProvider(HttpClient $httpClient, bool $useCIT = false)
     {
-        return new Here($httpClient, $this->getAppId(), $this->getAppCode(), $useCIT);
+        return Here::createUsingApiKey($httpClient, $this->getApiKey(), $useCIT);
     }
 
     protected function getCacheDir()
@@ -61,7 +61,7 @@ class IntegrationTest extends ProviderIntegrationTest
                 ->willThrowException($e);
         }
 
-        return new CachedResponseClient($client, $this->getCacheDir(), $this->getAppId(), $this->getAppCode());
+        return new CachedResponseClient($client, $this->getCacheDir(), $this->getApiKey());
     }
 
     protected function getApiKey()

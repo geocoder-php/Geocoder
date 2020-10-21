@@ -26,6 +26,7 @@
         <server name="GRAPHHOPPER_API_KEY" value="YOUR_API_KEY" />
         <server name="HERE_APP_CODE" value="YOUR_APP_CODE" />
         <server name="HERE_APP_ID" value="YOUR_APP_ID" />
+        <server name="HERE_API_KEY" value="YOUR_API_KEY" />
         <server name="IPINFODB_API_KEY" value="YOUR_API_KEY" />
         <server name="IP2LOCATION_API_KEY" value="YOUR_API_KEY" />
         <server name="IPSTACK_API_KEY" value="YOUR_API_KEY" />
