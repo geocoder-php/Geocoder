@@ -59,7 +59,7 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
 
     /**
      * ArcGIS World Geocoding Service.
-     * https://developers.arcgis.com/rest/geocode/api-reference/overview-world-geocoding-service.htm
+     * https://developers.arcgis.com/rest/geocode/api-reference/overview-world-geocoding-service.htm.
      *
      * @param HttpClient $client        An HTTP adapter
      * @param string     $token         Your authentication token
