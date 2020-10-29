@@ -58,7 +58,7 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
     private $token;
 
     /**
-     * ArcGIS World Geocoding Service
+     * ArcGIS World Geocoding Service.
      * https://developers.arcgis.com/rest/geocode/api-reference/overview-world-geocoding-service.htm
      *
      * @param HttpClient $client        An HTTP adapter
@@ -81,7 +81,7 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
      * @param HttpClient $client        An HTTP adapter
      * @param string     $sourceCountry Country biasing (optional)
      * @param string     $token         ArcGIS World Geocoding Service token
-     *   Required for the geocodeAddresses endpoint.
+     *                                  Required for the geocodeAddresses endpoint
      */
     public function __construct(HttpClient $client, string $sourceCountry = null, string $token = null)
     {
@@ -107,10 +107,9 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
         }
 
         if (is_null($this->token)) {
-          $url = sprintf(self::ENDPOINT_URL, urlencode($address));
-        }
-        else {
-          $url = sprintf(self::TOKEN_ENDPOINT_URL, $this->token, urlencode($this->formatAddresses([$address])));
+            $url = sprintf(self::ENDPOINT_URL, urlencode($address));
+        } else {
+            $url = sprintf(self::TOKEN_ENDPOINT_URL, $this->token, urlencode($this->formatAddresses([$address])));
         }
         $json = $this->executeQuery($url, $query->getLimit());
 
@@ -244,27 +243,27 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
     /**
      * Formatter for 1..n addresses, for the geocodeAddresses endpoint.
      *
-     * @param Array $array  An array of SingleLine addresses.
+     * @param array $array an array of SingleLine addresses
      *
-     * @return string       An Array formatted as a JSON string.
+     * @return string an Array formatted as a JSON string
      */
-    private function formatAddresses(Array $array): string
+    private function formatAddresses(array $array): string
     {
-      // Just in case, get rid of any custom, non-numeric indices.
-      $array = array_values($array);
+        // Just in case, get rid of any custom, non-numeric indices.
+        $array = array_values($array);
 
-      $addresses = [
-        'records' => [],
-      ];
-      foreach ($array as $i => $address) {
-        $addresses['records'][] = [
-          'attributes' => [
-            'OBJECTID' => $i + 1,
-            'SingleLine' => $address,
-          ],
+        $addresses = [
+            'records' => [],
         ];
-      }
+        foreach ($array as $i => $address) {
+            $addresses['records'][] = [
+                'attributes' => [
+                    'OBJECTID' => $i + 1,
+                    'SingleLine' => $address,
+                ],
+            ];
+        }
 
-      return json_encode($addresses);
+        return json_encode($addresses);
     }
 }
