@@ -238,7 +238,7 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
             throw InvalidServerResponse::create($url);
         }
         if (property_exists($json, 'error') && property_exists($json->error, 'message')) {
-            if ($json->error->message == 'Invalid Token') {
+            if ('Invalid Token' == $json->error->message) {
                 throw new InvalidCredentials(sprintf('Invalid token %s', $this->token));
             }
         }
