@@ -165,7 +165,7 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
 
         // For some reason ArcGIS returns (0,0) as a sports center in Israel.
         // Return an empty set to avoid failure in ProviderIntegrationTest.php.
-        if ($longitude === 0 && $latitude === 0) {
+        if (0 === $longitude && 0 === $latitude) {
             return new AddressCollection([]);
         }
 
