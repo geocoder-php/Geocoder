@@ -14,6 +14,7 @@ namespace Geocoder\Provider\ArcGISOnline;
 
 use Geocoder\Collection;
 use Geocoder\Exception\InvalidArgument;
+use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Model\Address;
@@ -235,6 +236,11 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
         // API error
         if (!isset($json)) {
             throw InvalidServerResponse::create($url);
+        }
+        if (property_exists($json, 'error') && property_exists($json->error, 'message')) {
+            if ($json->error->message == 'Invalid Token') {
+                throw new InvalidCredentials(sprintf('Invalid token %s', $this->token));
+            }
         }
 
         return $json;
