@@ -84,7 +84,7 @@ class ArcGISOnlineTest extends BaseTestCase
 
     public function testGeocodeWithInvalidAddressWithSourceCountry()
     {
-        $provider = new ArcGISOnline($this->getHttpClient(), 'Denmark', true);
+        $provider = new ArcGISOnline($this->getHttpClient(), 'Denmark');
         $result = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
 
         $this->assertInstanceOf(Collection::class, $result);
@@ -105,7 +105,7 @@ class ArcGISOnlineTest extends BaseTestCase
         $this->assertEquals(48.863279997000461, $result->getCoordinates()->getLatitude(), '', 0.0001);
         $this->assertEquals(2.3890199980004354, $result->getCoordinates()->getLongitude(), '', 0.0001);
         $this->assertNull($result->getStreetNumber());
-        $this->assertEquals('3 Avenue Gambetta', $result->getStreetName());
+        $this->assertEquals('5 Avenue Gambetta', $result->getStreetName());
         $this->assertEquals(75020, $result->getPostalCode());
         $this->assertEquals('Paris', $result->getLocality());
         $this->assertEquals('FRA', $result->getCountry()->getCode());
@@ -128,7 +128,7 @@ class ArcGISOnlineTest extends BaseTestCase
         /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(52.370518568000477, $result->getCoordinates()->getLatitude(), '', 0.0001);
+        $this->assertEquals(52.37227000000007, $result->getCoordinates()->getLatitude(), '', 0.0001);
         $this->assertEquals(9.7332166860004463, $result->getCoordinates()->getLongitude(), '', 0.0001);
         $this->assertNull($result->getStreetNumber());
         $this->assertNull($result->getStreetName());
