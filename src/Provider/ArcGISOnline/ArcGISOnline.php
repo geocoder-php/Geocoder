@@ -163,12 +163,6 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
         $longitude = $coordinates->getLongitude();
         $latitude = $coordinates->getLatitude();
 
-        // For some reason ArcGIS returns (0,0) as a sports center in Israel.
-        // Return an empty set to avoid failure in ProviderIntegrationTest.php.
-        if (0 === $longitude && 0 === $latitude) {
-            return new AddressCollection([]);
-        }
-
         $url = sprintf(self::REVERSE_ENDPOINT_URL, $longitude, $latitude);
         $json = $this->executeQuery($url, $query->getLimit());
 

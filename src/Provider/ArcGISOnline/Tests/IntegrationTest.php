@@ -25,6 +25,10 @@ class IntegrationTest extends ProviderIntegrationTest
 
     protected $testIpv6 = false;
 
+    protected $skippedTests = [
+        'testReverseQueryWithNoResults' => 'ArcGIS REST API returns "אצטדיון כדורגל עירוני" for reverse query at 0,0.',
+    ];
+
     protected function createProvider(HttpClient $httpClient)
     {
         return new ArcGISOnline($httpClient);
