@@ -87,7 +87,7 @@ class ArcGISOnlineTest extends BaseTestCase
         if (!isset($_SERVER['ARCGIS_TOKEN'])) {
             $this->markTestSkipped('You need to configure the ARCGIS_TOKEN value in phpunit.xml');
         }
-        $provider = ArcGISOnline::token($this->getHttpClient(), $_SERVER['ARCGIS_TOKEN']);
+        $provider = ArcGISOnline::token($this->getHttpClient($_SERVER['ARCGIS_TOKEN']), $_SERVER['ARCGIS_TOKEN']);
         $results = $provider->geocodeQuery(GeocodeQuery::create('5754 WI-23, Spring Green, WI 53588, USA'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
