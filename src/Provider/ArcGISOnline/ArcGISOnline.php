@@ -14,6 +14,7 @@ namespace Geocoder\Provider\ArcGISOnline;
 
 use Geocoder\Collection;
 use Geocoder\Exception\InvalidArgument;
+use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Model\Address;
@@ -32,7 +33,12 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
     /**
      * @var string
      */
-    const ENDPOINT_URL = 'https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find?text=%s';
+    const ENDPOINT_URL = 'https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?SingleLine=%s';
+
+    /**
+     * @var string
+     */
+    const TOKEN_ENDPOINT_URL = 'https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/geocodeAddresses?token=%s&addresses=%s';
 
     /**
      * @var string
@@ -45,14 +51,45 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
     private $sourceCountry;
 
     /**
+     * @var string
+     *
+     * Currently valid ArcGIS World Geocoding Service token.
+     * https://developers.arcgis.com/rest/geocode/api-reference/geocoding-authenticate-a-request.htm
+     */
+    private $token;
+
+    /**
+     * ArcGIS World Geocoding Service.
+     * https://developers.arcgis.com/rest/geocode/api-reference/overview-world-geocoding-service.htm.
+     *
+     * @param HttpClient $client        An HTTP adapter
+     * @param string     $token         Your authentication token
+     * @param string     $sourceCountry Country biasing (optional)
+     *
+     * @return ArcGISOnline
+     */
+    public static function token(
+        HttpClient $client,
+        string $token,
+        string $sourceCountry = null
+    ) {
+        $provider = new self($client, $sourceCountry, $token);
+
+        return $provider;
+    }
+
+    /**
      * @param HttpClient $client        An HTTP adapter
      * @param string     $sourceCountry Country biasing (optional)
+     * @param string     $token         ArcGIS World Geocoding Service token
+     *                                  Required for the geocodeAddresses endpoint
      */
-    public function __construct(HttpClient $client, string $sourceCountry = null)
+    public function __construct(HttpClient $client, string $sourceCountry = null, string $token = null)
     {
         parent::__construct($client);
 
         $this->sourceCountry = $sourceCountry;
+        $this->token = $token;
     }
 
     /**
@@ -70,19 +107,25 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
             throw new InvalidArgument('Address cannot be empty.');
         }
 
-        $url = sprintf(self::ENDPOINT_URL, urlencode($address));
+        if (is_null($this->token)) {
+            $url = sprintf(self::ENDPOINT_URL, urlencode($address));
+        } else {
+            $url = sprintf(self::TOKEN_ENDPOINT_URL, $this->token, urlencode($this->formatAddresses([$address])));
+        }
         $json = $this->executeQuery($url, $query->getLimit());
 
+        $property = is_null($this->token) ? 'candidates' : 'locations';
+
         // no result
-        if (empty($json->locations)) {
+        if (!property_exists($json, $property) || empty($json->{$property})) {
             return new AddressCollection([]);
         }
 
         $results = [];
-        foreach ($json->locations as $location) {
-            $data = $location->feature->attributes;
+        foreach ($json->{$property} as $location) {
+            $data = $location->attributes;
 
-            $coordinates = (array) $location->feature->geometry;
+            $coordinates = (array) $location->location;
             $streetName = !empty($data->StAddr) ? $data->StAddr : null;
             $streetNumber = !empty($data->AddNum) ? $data->AddNum : null;
             $city = !empty($data->City) ? $data->City : null;
@@ -171,8 +214,11 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
         if (null !== $this->sourceCountry) {
             $query = sprintf('%s&sourceCountry=%s', $query, $this->sourceCountry);
         }
+        if (is_null($this->token)) {
+            $query = sprintf('%s&maxLocations=%d&outFields=*', $query, $limit);
+        }
 
-        return sprintf('%s&maxLocations=%d&f=%s&outFields=*', $query, $limit, 'json');
+        return sprintf('%s&f=%s', $query, 'json');
     }
 
     /**
@@ -191,7 +237,39 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
         if (!isset($json)) {
             throw InvalidServerResponse::create($url);
         }
+        if (property_exists($json, 'error') && property_exists($json->error, 'message')) {
+            if ('Invalid Token' == $json->error->message) {
+                throw new InvalidCredentials(sprintf('Invalid token %s', $this->token));
+            }
+        }
 
         return $json;
+    }
+
+    /**
+     * Formatter for 1..n addresses, for the geocodeAddresses endpoint.
+     *
+     * @param array $array an array of SingleLine addresses
+     *
+     * @return string an Array formatted as a JSON string
+     */
+    private function formatAddresses(array $array): string
+    {
+        // Just in case, get rid of any custom, non-numeric indices.
+        $array = array_values($array);
+
+        $addresses = [
+            'records' => [],
+        ];
+        foreach ($array as $i => $address) {
+            $addresses['records'][] = [
+                'attributes' => [
+                    'OBJECTID' => $i + 1,
+                    'SingleLine' => $address,
+                ],
+            ];
+        }
+
+        return json_encode($addresses);
     }
 }
