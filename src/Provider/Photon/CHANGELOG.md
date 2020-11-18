@@ -2,6 +2,12 @@
 
 The change log describes what is "Added", "Removed", "Changed" or "Fixed" between each release.
 
+## 0.2.1
+
+### Changed
+
+- Update Komoot TLD (`photon.komoot.io` instead of `photon.komoot.de`)
+
 ## 0.2.0
 
 ### Removed
