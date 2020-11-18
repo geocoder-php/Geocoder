@@ -57,7 +57,7 @@ class PhotonTest extends BaseTestCase
     public function testGeocodeQuery()
     {
         $provider = Photon::withKomootServer($this->getHttpClient());
-        $results = $provider->geocodeQuery(GeocodeQuery::create('35 avenue jean de bologne 1020 bruxelles'));
+        $results = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -65,18 +65,18 @@ class PhotonTest extends BaseTestCase
         /** @var \Geocoder\Model\Address $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(50.896344, $result->getCoordinates()->getLatitude(), '', 0.00001);
-        $this->assertEquals(4.3605984, $result->getCoordinates()->getLongitude(), '', 0.00001);
-        $this->assertEquals('35', $result->getStreetNumber());
-        $this->assertEquals('Avenue Jean de Bologne - Jean de Bolognelaan', $result->getStreetName());
-        $this->assertEquals('1020', $result->getPostalCode());
-        $this->assertEquals('Ville de Bruxelles - Stad Brussel', $result->getLocality());
-        $this->assertEquals('Belgium', $result->getCountry());
+        $this->assertEquals(48.8631927, $result->getCoordinates()->getLatitude(), '', 0.00001);
+        $this->assertEquals(2.3890894, $result->getCoordinates()->getLongitude(), '', 0.00001);
+        $this->assertEquals('10', $result->getStreetNumber());
+        $this->assertEquals('Avenue Gambetta', $result->getStreetName());
+        $this->assertEquals('75020', $result->getPostalCode());
+        $this->assertEquals('Paris', $result->getLocality());
+        $this->assertEquals('France', $result->getCountry());
 
-        $this->assertEquals(220754533, $result->getOSMId());
-        $this->assertEquals('W', $result->getOSMType());
-        $this->assertEquals('building', $result->getOSMTag()->key);
-        $this->assertEquals('yes', $result->getOSMTag()->value);
+        $this->assertEquals(1988097192, $result->getOSMId());
+        $this->assertEquals('N', $result->getOSMType());
+        $this->assertEquals('place', $result->getOSMTag()->key);
+        $this->assertEquals('house', $result->getOSMTag()->value);
     }
 
     public function testReverseQuery()
@@ -90,15 +90,15 @@ class PhotonTest extends BaseTestCase
         /** @var \Geocoder\Model\Address $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(52.004657, $result->getCoordinates()->getLatitude(), '', 0.00001);
-        $this->assertEquals(10.012148, $result->getCoordinates()->getLongitude(), '', 0.00001);
+        $this->assertEquals(51.9982968, $result->getCoordinates()->getLatitude(), '', 0.00001);
+        $this->assertEquals(9.998645, $result->getCoordinates()->getLongitude(), '', 0.00001);
         $this->assertEquals('31195', $result->getPostalCode());
         $this->assertEquals('Lamspringe', $result->getLocality());
-        $this->assertEquals('Germany', $result->getCountry());
+        $this->assertEquals('Deutschland', $result->getCountry());
 
-        $this->assertEquals(15219847, $result->getOSMId());
-        $this->assertEquals('W', $result->getOSMType());
-        $this->assertEquals('highway', $result->getOSMTag()->key);
-        $this->assertEquals('tertiary', $result->getOSMTag()->value);
+        $this->assertEquals(693697564, $result->getOSMId());
+        $this->assertEquals('N', $result->getOSMType());
+        $this->assertEquals('tourism', $result->getOSMTag()->key);
+        $this->assertEquals('information', $result->getOSMTag()->value);
     }
 }

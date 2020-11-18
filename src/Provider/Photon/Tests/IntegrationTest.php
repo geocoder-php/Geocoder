@@ -28,6 +28,7 @@ class IntegrationTest extends ProviderIntegrationTest
     protected $testIpv6 = false;
 
     protected $skippedTests = [
+        'testGeocodeQuery' => 'Photon API returns "Great George Street" for "10 Downing St, London, UK" query.',
         'testReverseQueryWithNoResults' => 'Photon API returns "Atlas Buoy 0.00E 0.00N" for reverse query at 0,0.',
     ];
 

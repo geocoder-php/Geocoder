@@ -43,7 +43,7 @@ final class Photon extends AbstractHttpProvider implements Provider
      */
     public static function withKomootServer(HttpClient $client): self
     {
-        return new self($client, 'https://photon.komoot.de');
+        return new self($client, 'https://photon.komoot.io');
     }
 
     /**
