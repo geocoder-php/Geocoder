@@ -113,7 +113,7 @@ final class AdminLevelCollection implements \IteratorAggregate, \Countable
             throw new InvalidArgument(sprintf('Administrative level %d is not set for this address', $level));
         }
 
-        return  $this->adminLevels[$level];
+        return $this->adminLevels[$level];
     }
 
     /**
