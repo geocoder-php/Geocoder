@@ -30,7 +30,7 @@ $reader = new \GeoIp2\Database\Reader('/path/to/geolite2.mmdb');
 $adapter = new \Geocoder\Provider\GeoIP2\GeoIP2Adapter($reader);
 $geocoder = new \Geocoder\Provider\GeoIP2\GeoIP2($adapter);
 
-$address = $geocoder->geocode('74.200.247.59')->first();
+$address = $geocoder->geocodeQuery(\Geocoder\Query\GeocodeQuery::create('74.200.247.59'))->first();
 ```
 
 ### Using the Precision Web Service (API)
@@ -43,7 +43,7 @@ $reader = new \GeoIp2\WebService\Client(<account_id>, '<licence_key>');
 $adapter = new \Geocoder\Provider\GeoIP2\GeoIP2Adapter($reader);
 $geocoder = new \Geocoder\Provider\GeoIP2\GeoIP2($adapter);
 
-$address = $geocoder->geocode('74.200.247.59')->first();
+$address = $geocoder->geocodeQuery(\Geocoder\Query\GeocodeQuery::create('74.200.247.59'))->first();
 ```
 
 ### Contribute
