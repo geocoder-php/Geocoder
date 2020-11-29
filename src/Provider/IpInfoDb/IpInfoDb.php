@@ -137,7 +137,7 @@ final class IpInfoDb extends AbstractHttpProvider implements Provider
 
         $timezone = null;
         if (isset($data['timeZone'])) {
-            $timezone = timezone_name_from_abbr('', (int) substr($data['timeZone'], 0, strpos($data['timeZone'], ':')) * 3600, 0);
+            $timezone = timezone_name_from_abbr('', (int) substr($data['timeZone'], 0, strpos($data['timeZone'], ':')) * 3600, 0) ?: null;
         }
 
         return new AddressCollection([
