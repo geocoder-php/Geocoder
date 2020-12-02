@@ -17,7 +17,7 @@
         }
     ],
     "require": {
-        "php": "^7.2",
+        "php": "^7.2|^8.0",
         "igorw/get-in": "^1.0",
         "php-http/client-implementation": "^1.0",
         "php-http/discovery": "^1.4",
