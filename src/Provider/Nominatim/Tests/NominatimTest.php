@@ -109,6 +109,17 @@ class NominatimTest extends BaseTestCase
         $this->assertEquals('yes', $result->getType());
     }
 
+    public function testGeocodeWithRealAddressThatReturnsOptionalQuarter()
+    {
+        $provider = Nominatim::withOpenStreetMapServer($this->getHttpClient(), 'Geocoder PHP/Nominatim Provider/Nominatim Test');
+        $results = $provider->geocodeQuery(GeocodeQuery::create('woronicza 17, warszawa, polska'));
+
+        $this->assertCount(1, $results);
+
+        /* @var \Geocoder\Provider\Nominatim\Model\NominatimAddress $result */
+        $this->assertEquals('Służewiec', $results->first()->getQuarter());
+    }
+
     public function testGeocodeWithCountrycodes()
     {
         $provider = Nominatim::withOpenStreetMapServer($this->getHttpClient(), 'Geocoder PHP/Nominatim Provider/Nominatim Test');

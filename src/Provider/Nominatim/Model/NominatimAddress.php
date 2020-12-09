@@ -37,6 +37,11 @@ final class NominatimAddress extends Address
     /**
      * @var string|null
      */
+    private $quarter;
+
+    /**
+     * @var string|null
+     */
     private $osmType;
 
     /**
@@ -193,6 +198,27 @@ final class NominatimAddress extends Address
     {
         $new = clone $this;
         $new->type = $type;
+
+        return $new;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getQuarter(): ?string
+    {
+        return $this->quarter;
+    }
+
+    /**
+     * @param string|null $quarter
+     *
+     * @return NominatimAddress
+     */
+    public function withQuarter(string $quarter = null): self
+    {
+        $new = clone $this;
+        $new->quarter = $quarter;
 
         return $new;
     }
