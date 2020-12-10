@@ -2,6 +2,12 @@
 
 The change log describes what is "Added", "Removed", "Changed" or "Fixed" between each release.
 
+## 5.3.0
+
+### Added
+
+- Added support for address `quarter` property
+
 ## 5.2.0
 
 ### Fixed
