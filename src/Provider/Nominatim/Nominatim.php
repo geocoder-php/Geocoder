@@ -228,9 +228,14 @@ final class Nominatim extends AbstractHttpProvider implements Provider
 
         $builder->setBounds($place->boundingbox[0], $place->boundingbox[2], $place->boundingbox[1], $place->boundingbox[3]);
 
+        /** @var NominatimAddress $location */
         $location = $builder->build(NominatimAddress::class);
         $location = $location->withAttribution($place->licence);
         $location = $location->withDisplayName($place->display_name);
+
+        if (isset($place->address->quarter)) {
+            $location = $location->withQuarter($place->address->quarter);
+        }
 
         if (isset($place->osm_id)) {
             $location = $location->withOSMId(intval($place->osm_id));
