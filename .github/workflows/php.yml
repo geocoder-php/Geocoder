@@ -12,6 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
+      fail-fast: false
       matrix:
         php-version: ['7.4']
         deps: ['low', 'high']
@@ -37,10 +38,10 @@ jobs:
 
     - name: Install dependencies
       if: ${{ matrix.deps == null }}
-      run: composer update --prefer-dist --no-progress
+      run: composer update --no-progress --prefer-dist
     - name: Install dependencies (low)
       if: ${{ matrix.deps == 'low' }}
-      run: composer update --prefer-lowest --prefer-stable
+      run: composer update --no-progress --prefer-lowest --prefer-stable
     - name: Install dependencies (high)
       if: ${{ matrix.deps == 'high' }}
       run: composer update --no-progress
