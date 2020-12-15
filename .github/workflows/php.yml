@@ -13,12 +13,13 @@ jobs:
 
     strategy:
       matrix:
-        php-version: ['7.2', '7.3', '7.4']
+        php-version: ['7.4']
+        deps: ['low', 'high']
         include:
-          - php-version: '7.4'
-            deps: low
-          - php-version: '7.4'
-            deps: high
+          - php-version: '7.2'
+            deps: null
+          - php-version: '7.3'
+            deps: null
 
     name: PHP ${{ matrix.php-version }} (${{ matrix.deps }})
 
