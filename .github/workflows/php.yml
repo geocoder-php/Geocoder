@@ -7,13 +7,20 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  test:
 
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
         php-version: ['7.2', '7.3', '7.4']
+        include:
+          - php-version: '7.4'
+            deps: low
+          - php-version: '7.4'
+            deps: high
+
+    name: PHP ${{ matrix.php-version }} (${{ matrix.deps }})
 
     steps:
     - uses: actions/checkout@v2
@@ -28,7 +35,14 @@ jobs:
       run: composer validate
 
     - name: Install dependencies
+      if: ${{ matrix.deps == null }}
       run: composer update --prefer-dist --no-progress
+    - name: Install dependencies (low)
+      if: ${{ matrix.deps == 'low' }}
+      run: composer update --prefer-lowest --prefer-stable
+    - name: Install dependencies (high)
+      if: ${{ matrix.deps == 'high' }}
+      run: composer update --no-progress
 
     - name: Run test suite
       run: composer run-script test
