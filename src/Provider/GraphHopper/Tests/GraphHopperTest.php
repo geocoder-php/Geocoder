@@ -48,8 +48,8 @@ class GraphHopperTest extends BaseTestCase
         /** @var \Geocoder\Model\Address $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(51.521124, $result->getCoordinates()->getLatitude(), '', 0.01);
-        $this->assertEquals(-0.20360200000000001, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertEqualsWithDelta(51.521124, $result->getCoordinates()->getLatitude(), 0.01);
+        $this->assertEqualsWithDelta(-0.20360200000000001, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('Acklam Road', $result->getStreetName());
         $this->assertEquals('London', $result->getLocality());
         $this->assertEquals('United Kingdom', $result->getCountry()->getName());
@@ -70,8 +70,8 @@ class GraphHopperTest extends BaseTestCase
         /** @var \Geocoder\Model\Address $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(51.521124, $result->getCoordinates()->getLatitude(), '', 0.01);
-        $this->assertEquals(-0.20360200000000001, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertEqualsWithDelta(51.521124, $result->getCoordinates()->getLatitude(), 0.01);
+        $this->assertEqualsWithDelta(-0.20360200000000001, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('Acklam Road', $result->getStreetName());
         $this->assertEquals('Londres', $result->getLocality());
         $this->assertEquals('Royaume-Uni', $result->getCountry()->getName());
@@ -92,8 +92,8 @@ class GraphHopperTest extends BaseTestCase
         /** @var \Geocoder\Model\Address $result */
         $result = $results->get(1);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(54.048411999999999, $result->getCoordinates()->getLatitude(), '', 0.001);
-        $this->assertEquals(-2.7989549999999999, $result->getCoordinates()->getLongitude(), '', 0.001);
+        $this->assertEqualsWithDelta(54.048411999999999, $result->getCoordinates()->getLatitude(), 0.001);
+        $this->assertEqualsWithDelta(-2.7989549999999999, $result->getCoordinates()->getLongitude(), 0.001);
         $this->assertEquals('1', $result->getStreetNumber());
         $this->assertEquals('Gage Street', $result->getStreetName());
         $this->assertEquals('LA1 1UH', $result->getPostalCode());
@@ -101,42 +101,38 @@ class GraphHopperTest extends BaseTestCase
         $this->assertEquals('United Kingdom', $result->getCountry()->getName());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The GraphHopper provider does not support IP addresses, only street addresses.
-     */
     public function testGeocodeWithLocalhostIPv4()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The GraphHopper provider does not support IP addresses, only street addresses.');
+
         $provider = new GraphHopper($this->getMockedHttpClient(), 'api_key');
         $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The GraphHopper provider does not support IP addresses, only street addresses.
-     */
     public function testGeocodeWithLocalhostIPv6()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The GraphHopper provider does not support IP addresses, only street addresses.');
+
         $provider = new GraphHopper($this->getMockedHttpClient(), 'api_key');
         $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The GraphHopper provider does not support IP addresses, only street addresses.
-     */
     public function testGeocodeWithRealIPv4()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The GraphHopper provider does not support IP addresses, only street addresses.');
+
         $provider = new GraphHopper($this->getMockedHttpClient(), 'api_key');
         $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The GraphHopper provider does not support IP addresses, only street addresses.
-     */
     public function testGeocodeWithRealIPv6()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The GraphHopper provider does not support IP addresses, only street addresses.');
+
         $provider = new GraphHopper($this->getMockedHttpClient(), 'api_key');
         $provider->geocodeQuery(GeocodeQuery::create('::ffff:74.200.247.59'));
     }

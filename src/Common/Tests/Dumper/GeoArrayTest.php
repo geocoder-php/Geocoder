@@ -26,7 +26,7 @@ class GeoArrayTest extends TestCase
      */
     private $dumper;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->dumper = new GeoArray();
     }
@@ -47,7 +47,7 @@ class GeoArrayTest extends TestCase
 
         $result = $this->dumper->dump($address);
 
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
         $this->assertEquals($expected, $result);
     }
 
@@ -71,7 +71,7 @@ class GeoArrayTest extends TestCase
 
         $result = $this->dumper->dump($address);
 
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
         $this->assertEquals($expected, $result);
     }
 
@@ -107,7 +107,7 @@ class GeoArrayTest extends TestCase
 
         $result = $this->dumper->dump($address);
 
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
         $this->assertEquals($expected, $result);
     }
 
@@ -147,7 +147,7 @@ class GeoArrayTest extends TestCase
 
         $result = $this->dumper->dump($address);
 
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
         $this->assertEquals($expected, $result);
     }
 }

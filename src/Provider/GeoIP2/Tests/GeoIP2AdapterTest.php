@@ -31,14 +31,14 @@ class GeoIP2AdapterTest extends TestCase
      *
      * @throws RuntimeException
      */
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         if (false === class_exists('\GeoIp2\Database\Reader')) {
             throw new RuntimeException("The maxmind's lib 'geoip2/geoip2' is required to run this test.");
         }
     }
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->adapter = new GeoIP2Adapter($this->getGeoIP2ProviderMock());
     }
@@ -49,22 +49,20 @@ class GeoIP2AdapterTest extends TestCase
         $this->assertEquals($expectedName, $this->adapter->getName());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\InvalidArgument
-     * @expectedExceptionMessage must be called with a valid url. Got "127.0.0.1" instead.
-     */
     public function testGetContentMustBeCalledWithUrl()
     {
+        $this->expectException(\Geocoder\Exception\InvalidArgument::class);
+        $this->expectExceptionMessage('must be called with a valid url. Got "127.0.0.1" instead.');
+
         $url = '127.0.0.1';
         $this->adapter->getContent($url);
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\InvalidArgument
-     * @expectedExceptionMessage URL must contain a valid query-string (an IP address, 127.0.0.1 for instance)
-     */
     public function testAddressPassedToReaderMustBeIpAddress()
     {
+        $this->expectException(\Geocoder\Exception\InvalidArgument::class);
+        $this->expectExceptionMessage('URL must contain a valid query-string (an IP address, 127.0.0.1 for instance)');
+
         $url = 'file://database?not-valid=1';
         $this->adapter->getContent($url);
     }
@@ -95,12 +93,11 @@ class GeoIP2AdapterTest extends TestCase
         $adapter->getContent('file://geoip?127.0.0.1');
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage Model "unsupported_model" is not available.
-     */
     public function testNotSupportedGeoIP2ModelLeadsToException()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('Model "unsupported_model" is not available.');
+
         new GeoIP2Adapter($this->getGeoIP2ProviderMock(), 'unsupported_model');
     }
 

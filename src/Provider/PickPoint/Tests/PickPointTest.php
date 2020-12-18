@@ -26,20 +26,18 @@ class PickPointTest extends BaseTestCase
         return __DIR__.'/.cached_responses';
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\InvalidServerResponse
-     */
     public function testGeocodeWithAddressGetsEmptyContent()
     {
+        $this->expectException(\Geocoder\Exception\InvalidServerResponse::class);
+
         $provider = new PickPoint($this->getMockedHttpClient('<foo></foo>'), 'API-KEY');
         $provider->geocodeQuery(GeocodeQuery::create('Läntinen Pitkäkatu 35, Turku'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\InvalidServerResponse
-     */
     public function testGeocodeWithAddressGetsEmptyXML()
     {
+        $this->expectException(\Geocoder\Exception\InvalidServerResponse::class);
+
         $emptyXML = <<<'XML'
 <?xml version="1.0" encoding="utf-8"?><searchresults_empty></searchresults_empty>
 XML;

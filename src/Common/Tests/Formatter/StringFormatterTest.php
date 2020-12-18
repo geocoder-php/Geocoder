@@ -26,7 +26,7 @@ class StringFormatterTest extends TestCase
      */
     private $formatter;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->formatter = new StringFormatter();
     }

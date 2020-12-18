@@ -26,10 +26,10 @@ class GeocodeQueryTest extends TestCase
         $query = $query->withData('name', 'value');
 
         $string = $query->__toString();
-        $this->assertContains('GeocodeQuery', $string);
-        $this->assertContains('"text":"foo"', $string);
-        $this->assertContains('"locale":"en"', $string);
-        $this->assertContains('"limit":3', $string);
-        $this->assertContains('"name":"value"', $string);
+        $this->assertStringContainsString('GeocodeQuery', $string);
+        $this->assertStringContainsString('"text":"foo"', $string);
+        $this->assertStringContainsString('"locale":"en"', $string);
+        $this->assertStringContainsString('"limit":3', $string);
+        $this->assertStringContainsString('"name":"value"', $string);
     }
 }

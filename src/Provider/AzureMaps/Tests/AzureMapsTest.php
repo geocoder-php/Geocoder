@@ -50,13 +50,13 @@ class AzureMapsTest extends BaseTestCase
         $result = $results->first();
 
         $this->assertInstanceOf(Address::class, $result);
-        $this->assertEquals(32.09388, $result->getCoordinates()->getLatitude(), '', 0.001);
-        $this->assertEquals(34.78596, $result->getCoordinates()->getLongitude(), '', 0.001);
+        $this->assertEqualsWithDelta(32.09388, $result->getCoordinates()->getLatitude(), 0.001);
+        $this->assertEqualsWithDelta(34.78596, $result->getCoordinates()->getLongitude(), 0.001);
         $this->assertNotNull($result->getBounds());
-        $this->assertEquals(32.09298, $result->getBounds()->getSouth(), '', 0.001);
-        $this->assertEquals(34.7849, $result->getBounds()->getWest(), '', 0.001);
-        $this->assertEquals(32.09478, $result->getBounds()->getNorth(), '', 0.001);
-        $this->assertEquals(34.78702, $result->getBounds()->getEast(), '', 0.001);
+        $this->assertEqualsWithDelta(32.09298, $result->getBounds()->getSouth(), 0.001);
+        $this->assertEqualsWithDelta(34.7849, $result->getBounds()->getWest(), 0.001);
+        $this->assertEqualsWithDelta(32.09478, $result->getBounds()->getNorth(), 0.001);
+        $this->assertEqualsWithDelta(34.78702, $result->getBounds()->getEast(), 0.001);
         $this->assertEquals(15, $result->getStreetNumber());
         $this->assertEquals('Yehuda Hamaccabi Street', $result->getStreetName());
         $this->assertEquals(6266924, $result->getPostalCode());
@@ -80,13 +80,13 @@ class AzureMapsTest extends BaseTestCase
         $result = $results->first();
 
         $this->assertInstanceOf(Address::class, $result);
-        $this->assertEquals(32.09388, $result->getCoordinates()->getLatitude(), '', 0.001);
-        $this->assertEquals(34.78596, $result->getCoordinates()->getLongitude(), '', 0.001);
+        $this->assertEqualsWithDelta(32.09388, $result->getCoordinates()->getLatitude(), 0.001);
+        $this->assertEqualsWithDelta(34.78596, $result->getCoordinates()->getLongitude(), 0.001);
         $this->assertNotNull($result->getBounds());
-        $this->assertEquals(32.09298, $result->getBounds()->getSouth(), '', 0.001);
-        $this->assertEquals(34.7849, $result->getBounds()->getWest(), '', 0.001);
-        $this->assertEquals(32.093772, $result->getBounds()->getNorth(), '', 0.001);
-        $this->assertEquals(34.78702, $result->getBounds()->getEast(), '', 0.001);
+        $this->assertEqualsWithDelta(32.09298, $result->getBounds()->getSouth(), 0.001);
+        $this->assertEqualsWithDelta(34.7849, $result->getBounds()->getWest(), 0.001);
+        $this->assertEqualsWithDelta(32.093772, $result->getBounds()->getNorth(), 0.001);
+        $this->assertEqualsWithDelta(34.78702, $result->getBounds()->getEast(), 0.001);
         $this->assertEquals(15, $result->getStreetNumber());
         $this->assertEquals('Yehuda Hamaccabi Street', $result->getStreetName());
         $this->assertEquals(6266924, $result->getPostalCode());

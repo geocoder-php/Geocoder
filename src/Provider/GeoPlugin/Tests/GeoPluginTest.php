@@ -30,12 +30,11 @@ class GeoPluginTest extends BaseTestCase
         $this->assertEquals('geo_plugin', $provider->getName());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The GeoPlugin provider does not support street addresses, only IP addresses.
-     */
     public function testGeocodeWithAddress()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The GeoPlugin provider does not support street addresses, only IP addresses.');
+
         $provider = new GeoPlugin($this->getMockedHttpClient());
         $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
     }
@@ -86,12 +85,11 @@ class GeoPluginTest extends BaseTestCase
         $this->assertEquals('US', $result->getCountry()->getCode());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The GeoPlugin provider is not able to do reverse geocoding.
-     */
     public function testReverse()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The GeoPlugin provider is not able to do reverse geocoding.');
+
         $provider = new GeoPlugin($this->getMockedHttpClient());
         $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
     }

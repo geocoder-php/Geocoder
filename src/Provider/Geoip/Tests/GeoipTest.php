@@ -20,7 +20,7 @@ use Geocoder\Provider\Geoip\Geoip;
 
 class GeoipTest extends BaseTestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         if (!function_exists('geoip_record_by_name')) {
             $this->markTestSkipped('You have to install GeoIP.');

@@ -38,40 +38,37 @@ class MapboxTest extends BaseTestCase
         $this->assertEquals('mapbox', $provider->getName());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     */
     public function testGeocodeWithLocalhostIPv4()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The Mapbox provider does not support IP addresses, only street addresses.');
+
         $provider = new Mapbox($this->getMockedHttpClient(), 'access_token');
         $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The Mapbox provider does not support IP addresses, only street addresses.
-     */
     public function testGeocodeWithLocalhostIPv6()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The Mapbox provider does not support IP addresses, only street addresses.');
+
         $provider = new Mapbox($this->getMockedHttpClient(), 'access_token');
         $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The Mapbox provider does not support IP addresses, only street addresses.
-     */
     public function testGeocodeWithRealIp()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The Mapbox provider does not support IP addresses, only street addresses.');
+
         $provider = new Mapbox($this->getHttpClient(), 'access_token');
         $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\QuotaExceeded
-     */
     public function testGeocodeWithQuotaExceeded()
     {
+        $this->expectException(\Geocoder\Exception\QuotaExceeded::class);
+
         $provider = new Mapbox($this->getMockedHttpClient('', 429), 'access_token');
         $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
     }
@@ -152,11 +149,10 @@ class MapboxTest extends BaseTestCase
         $this->assertNull($result->getTimezone());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\InvalidServerResponse
-     */
     public function testReverse()
     {
+        $this->expectException(\Geocoder\Exception\InvalidServerResponse::class);
+
         $provider = new Mapbox($this->getMockedHttpClient(), 'access_token');
         $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
     }
@@ -187,11 +183,10 @@ class MapboxTest extends BaseTestCase
         $this->assertEquals('address.1085979616', $result->getId());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\InvalidCredentials
-     */
     public function testGeocodeWithInvalidApiKey()
     {
+        $this->expectException(\Geocoder\Exception\InvalidCredentials::class);
+
         $provider = new Mapbox($this->getMockedHttpClient('', 403), 'api_key');
         $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
     }
