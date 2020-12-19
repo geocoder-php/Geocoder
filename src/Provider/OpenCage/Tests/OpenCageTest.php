@@ -61,8 +61,8 @@ class OpenCageTest extends BaseTestCase
         /** @var OpenCageAddress $result */
         $result = $results->first();
         $this->assertInstanceOf(OpenCageAddress::class, $result);
-        $this->assertEquals(48.866205, $result->getCoordinates()->getLatitude(), '', 0.01);
-        $this->assertEquals(2.389089, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertEqualsWithDelta(48.866205, $result->getCoordinates()->getLatitude(), 0.01);
+        $this->assertEqualsWithDelta(2.389089, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertNotNull($result->getBounds());
         $this->assertEquals(48.863142699999997, $result->getBounds()->getSouth());
         $this->assertEquals(2.3890394000000001, $result->getBounds()->getWest());
@@ -100,13 +100,13 @@ class OpenCageTest extends BaseTestCase
         /** @var OpenCageAddress $result */
         $result = $results->first();
         $this->assertInstanceOf(OpenCageAddress::class, $result);
-        $this->assertEquals(54.0484068, $result->getCoordinates()->getLatitude(), '', 0.001);
-        $this->assertEquals(-2.7990345, $result->getCoordinates()->getLongitude(), '', 0.001);
+        $this->assertEqualsWithDelta(54.0484068, $result->getCoordinates()->getLatitude(), 0.001);
+        $this->assertEqualsWithDelta(-2.7990345, $result->getCoordinates()->getLongitude(), 0.001);
         $this->assertNotNull($result->getBounds());
-        $this->assertEquals(54.0484068, $result->getBounds()->getSouth(), '', 0.001);
-        $this->assertEquals(-2.7998815, $result->getBounds()->getWest(), '', 0.001);
-        $this->assertEquals(54.049472, $result->getBounds()->getNorth(), '', 0.001);
-        $this->assertEquals(-2.7980925, $result->getBounds()->getEast(), '', 0.001);
+        $this->assertEqualsWithDelta(54.0484068, $result->getBounds()->getSouth(), 0.001);
+        $this->assertEqualsWithDelta(-2.7998815, $result->getBounds()->getWest(), 0.001);
+        $this->assertEqualsWithDelta(54.049472, $result->getBounds()->getNorth(), 0.001);
+        $this->assertEqualsWithDelta(-2.7980925, $result->getBounds()->getEast(), 0.001);
         $this->assertNull($result->getStreetNumber());
         $this->assertEquals('Lancaster Gate', $result->getStreetName());
         $this->assertEquals('LA1 1LZ', $result->getPostalCode());
@@ -157,8 +157,8 @@ class OpenCageTest extends BaseTestCase
         /** @var OpenCageAddress $result */
         $result = $results->first();
         $this->assertInstanceOf(OpenCageAddress::class, $result);
-        $this->assertEquals(52.374478, $result->getCoordinates()->getLatitude(), '', 0.01);
-        $this->assertEquals(9.738553, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertEqualsWithDelta(52.374478, $result->getCoordinates()->getLatitude(), 0.01);
+        $this->assertEqualsWithDelta(9.738553, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('Hanover', $result->getLocality());
         $this->assertCount(2, $result->getAdminLevels());
         $this->assertEquals('Region Hannover', $result->getAdminLevels()->get(2)->getName());
@@ -168,8 +168,8 @@ class OpenCageTest extends BaseTestCase
         /** @var OpenCageAddress $result */
         $result = $results->get(1);
         $this->assertInstanceOf(OpenCageAddress::class, $result);
-        $this->assertEquals(18.3840489, $result->getCoordinates()->getLatitude(), '', 0.01);
-        $this->assertEquals(-78.131485, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertEqualsWithDelta(18.3840489, $result->getCoordinates()->getLatitude(), 0.01);
+        $this->assertEqualsWithDelta(-78.131485, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertNull($result->getLocality());
         $this->assertTrue($result->getAdminLevels()->has(2));
         $this->assertEquals('Hanover', $result->getAdminLevels()->get(2)->getName());
@@ -178,8 +178,8 @@ class OpenCageTest extends BaseTestCase
         /** @var OpenCageAddress $result */
         $result = $results->get(2);
         $this->assertInstanceOf(OpenCageAddress::class, $result);
-        $this->assertEquals(43.7033073, $result->getCoordinates()->getLatitude(), '', 0.01);
-        $this->assertEquals(-72.2885663, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertEqualsWithDelta(43.7033073, $result->getCoordinates()->getLatitude(), 0.01);
+        $this->assertEqualsWithDelta(-72.2885663, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('Hanover', $result->getLocality());
         $this->assertCount(2, $result->getAdminLevels());
         $this->assertEquals('Grafton County', $result->getAdminLevels()->get(2)->getName());
@@ -202,8 +202,8 @@ class OpenCageTest extends BaseTestCase
         /** @var OpenCageAddress $result */
         $result = $results->first();
         $this->assertInstanceOf(OpenCageAddress::class, $result);
-        $this->assertEquals(50.189062, $result->getCoordinates()->getLatitude(), '', 0.01);
-        $this->assertEquals(8.636567, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertEqualsWithDelta(50.189062, $result->getCoordinates()->getLatitude(), 0.01);
+        $this->assertEqualsWithDelta(8.636567, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals(10, $result->getStreetNumber());
         $this->assertEquals('Kalbacher Hauptstraße', $result->getStreetName());
         $this->assertEquals(60437, $result->getPostalCode());
@@ -292,12 +292,11 @@ class OpenCageTest extends BaseTestCase
         $this->assertEquals('US', $result->getCountry()->getCode());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\QuotaExceeded
-     * @expectedExceptionMessage Valid request but quota exceeded.
-     */
     public function testGeocodeQuotaExceeded()
     {
+        $this->expectException(\Geocoder\Exception\QuotaExceeded::class);
+        $this->expectExceptionMessage('Valid request but quota exceeded.');
+
         $provider = new OpenCage(
             $this->getMockedHttpClient(
                 '{
@@ -312,12 +311,11 @@ class OpenCageTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('New York'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\InvalidCredentials
-     * @expectedExceptionMessage Invalid or missing api key.
-     */
     public function testGeocodeInvalidApiKey()
     {
+        $this->expectException(\Geocoder\Exception\InvalidCredentials::class);
+        $this->expectExceptionMessage('Invalid or missing api key.');
+
         $provider = new OpenCage(
             $this->getMockedHttpClient(
                 '{
@@ -332,42 +330,38 @@ class OpenCageTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('New York'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The OpenCage provider does not support IP addresses, only street addresses.
-     */
     public function testGeocodeWithLocalhostIPv4()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The OpenCage provider does not support IP addresses, only street addresses.');
+
         $provider = new OpenCage($this->getMockedHttpClient(), 'api_key');
         $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The OpenCage provider does not support IP addresses, only street addresses.
-     */
     public function testGeocodeWithLocalhostIPv6()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The OpenCage provider does not support IP addresses, only street addresses.');
+
         $provider = new OpenCage($this->getMockedHttpClient(), 'api_key');
         $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The OpenCage provider does not support IP addresses, only street addresses.
-     */
     public function testGeocodeWithRealIPv4()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The OpenCage provider does not support IP addresses, only street addresses.');
+
         $provider = new OpenCage($this->getHttpClient(), 'api_key');
         $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The OpenCage provider does not support IP addresses, only street addresses.
-     */
     public function testGeocodeWithRealIPv6()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The OpenCage provider does not support IP addresses, only street addresses.');
+
         $provider = new OpenCage($this->getHttpClient(), 'api_key');
         $provider->geocodeQuery(GeocodeQuery::create('::ffff:74.200.247.59'));
     }

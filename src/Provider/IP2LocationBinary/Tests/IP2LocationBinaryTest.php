@@ -22,7 +22,7 @@ class IP2LocationBinaryTest extends BaseTestCase
 {
     private $binaryFile;
 
-    public function setUp()
+    public function setUp(): void
     {
         // Download this BIN database from https://lite.ip2location.com/database/ip-country-region-city-latitude-longitude-zipcode
         $this->binaryFile = __DIR__.'/fixtures/IP2LOCATION-LITE-DB9.IPV6.BIN';
@@ -33,7 +33,7 @@ class IP2LocationBinaryTest extends BaseTestCase
         return __DIR__.'/.cached_responses';
     }
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         if (false == class_exists('\\IP2Location\\Database')) {
             self::markTestSkipped('The IP2Location\'s official library required to run these tests.');

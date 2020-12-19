@@ -32,7 +32,7 @@ class IntegrationTest extends ProviderIntegrationTest
 
     protected $testHttpProvider = false;
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         if (false == class_exists('\\IP2Location\\Database')) {
             self::markTestSkipped('The IP2Location\'s official library required to run these tests.');

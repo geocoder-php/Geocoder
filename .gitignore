@@ -2,5 +2,6 @@ vendor/
 composer.lock
 composer.phar
 phpunit.xml
+.phpunit.result.cache
 php-cs-fixer.phar
 .puli/

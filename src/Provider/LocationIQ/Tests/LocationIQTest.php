@@ -31,6 +31,8 @@ class LocationIQTest extends BaseTestCase
      */
     public function testGeocodeWithAddressGetsEmptyContent()
     {
+        $this->expectException(\Geocoder\Exception\InvalidServerResponse::class);
+
         $provider = new LocationIQ($this->getMockedHttpClient('<foo></foo>'), $_SERVER['LOCATIONIQ_API_KEY']);
         $provider->geocodeQuery(GeocodeQuery::create('Läntinen Pitkäkatu 35, Turku'));
     }
@@ -40,6 +42,8 @@ class LocationIQTest extends BaseTestCase
      */
     public function testGeocodeWithAddressGetsEmptyXML()
     {
+        $this->expectException(\Geocoder\Exception\InvalidServerResponse::class);
+
         $emptyXML = <<<'XML'
 <?xml version="1.0" encoding="utf-8"?><searchresults_empty></searchresults_empty>
 XML;

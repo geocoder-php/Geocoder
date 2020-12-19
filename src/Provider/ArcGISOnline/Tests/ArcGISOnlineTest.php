@@ -32,22 +32,20 @@ class ArcGISOnlineTest extends BaseTestCase
         $this->assertEquals('arcgis_online', $provider->getName());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The ArcGISOnline provider does not support IP addresses, only street addresses.
-     */
     public function testGeocodeWithLocalhostIPv4()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The ArcGISOnline provider does not support IP addresses, only street addresses.');
+
         $provider = new ArcGISOnline($this->getMockedHttpClient());
         $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The ArcGISOnline provider does not support IP addresses, only street addresses.
-     */
     public function testGeocodeWithLocalhostIPv6()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The ArcGISOnline provider does not support IP addresses, only street addresses.');
+
         $provider = new ArcGISOnline($this->getMockedHttpClient());
         $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
@@ -63,8 +61,8 @@ class ArcGISOnlineTest extends BaseTestCase
         /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(48.863279997000461, $result->getCoordinates()->getLatitude(), '', 0.0001);
-        $this->assertEquals(2.3890199980004354, $result->getCoordinates()->getLongitude(), '', 0.0001);
+        $this->assertEqualsWithDelta(48.863279997000461, $result->getCoordinates()->getLatitude(), 0.0001);
+        $this->assertEqualsWithDelta(2.3890199980004354, $result->getCoordinates()->getLongitude(), 0.0001);
         $this->assertEquals(10, $result->getStreetNumber());
         $this->assertEquals('10 Avenue Gambetta', $result->getStreetName());
         $this->assertEquals(75020, $result->getPostalCode());
@@ -95,8 +93,8 @@ class ArcGISOnlineTest extends BaseTestCase
         /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(43.093663, $result->getCoordinates()->getLatitude(), '', 0.0001);
-        $this->assertEquals(-90.131796, $result->getCoordinates()->getLongitude(), '', 0.0001);
+        $this->assertEqualsWithDelta(43.093663, $result->getCoordinates()->getLatitude(), 0.0001);
+        $this->assertEqualsWithDelta(-90.131796, $result->getCoordinates()->getLongitude(), 0.0001);
         $this->assertEquals(5754, $result->getStreetNumber());
         $this->assertEquals('5754 WI-23', $result->getStreetName());
         $this->assertEquals(53588, $result->getPostalCode());
@@ -134,8 +132,8 @@ class ArcGISOnlineTest extends BaseTestCase
         /** @var \Geocoder\Model\Address $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(48.863279997000461, $result->getCoordinates()->getLatitude(), '', 0.0001);
-        $this->assertEquals(2.3890199980004354, $result->getCoordinates()->getLongitude(), '', 0.0001);
+        $this->assertEqualsWithDelta(48.863279997000461, $result->getCoordinates()->getLatitude(), 0.0001);
+        $this->assertEqualsWithDelta(2.3890199980004354, $result->getCoordinates()->getLongitude(), 0.0001);
         $this->assertNull($result->getStreetNumber());
         $this->assertEquals('5 Avenue Gambetta', $result->getStreetName());
         $this->assertEquals(75020, $result->getPostalCode());
@@ -160,8 +158,8 @@ class ArcGISOnlineTest extends BaseTestCase
         /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(52.37227000000007, $result->getCoordinates()->getLatitude(), '', 0.0001);
-        $this->assertEquals(9.738150000000076, $result->getCoordinates()->getLongitude(), '', 0.0001);
+        $this->assertEqualsWithDelta(52.37227000000007, $result->getCoordinates()->getLatitude(), 0.0001);
+        $this->assertEqualsWithDelta(9.738150000000076, $result->getCoordinates()->getLongitude(), 0.0001);
         $this->assertNull($result->getStreetNumber());
         $this->assertNull($result->getStreetName());
         $this->assertNull($result->getPostalCode());
@@ -178,8 +176,8 @@ class ArcGISOnlineTest extends BaseTestCase
         /** @var Location $result */
         $result = $results->get(1);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(39.391768472000479, $result->getCoordinates()->getLatitude(), '', 0.0001);
-        $this->assertEquals(-77.440257128999633, $result->getCoordinates()->getLongitude(), '', 0.0001);
+        $this->assertEqualsWithDelta(39.391768472000479, $result->getCoordinates()->getLatitude(), 0.0001);
+        $this->assertEqualsWithDelta(-77.440257128999633, $result->getCoordinates()->getLongitude(), 0.0001);
         $this->assertNull($result->getStreetName());
         $this->assertEquals('Hannover', $result->getLocality());
         $this->assertCount(2, $result->getAdminLevels());
@@ -189,8 +187,8 @@ class ArcGISOnlineTest extends BaseTestCase
         /** @var Location $result */
         $result = $results->get(2);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(53.174198173, $result->getCoordinates()->getLatitude(), '', 0.0001);
-        $this->assertEquals(8.5069383810005, $result->getCoordinates()->getLongitude(), '', 0.0001);
+        $this->assertEqualsWithDelta(53.174198173, $result->getCoordinates()->getLatitude(), 0.0001);
+        $this->assertEqualsWithDelta(8.5069383810005, $result->getCoordinates()->getLongitude(), 0.0001);
         $this->assertNull($result->getStreetName());
         $this->assertEquals('Hannöver', $result->getLocality());
         $this->assertCount(1, $result->getAdminLevels());
@@ -200,8 +198,8 @@ class ArcGISOnlineTest extends BaseTestCase
         /** @var Location $result */
         $result = $results->get(3);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(47.111290000000054, $result->getCoordinates()->getLatitude(), '', 0.0001);
-        $this->assertEquals(-101.42142999999999, $result->getCoordinates()->getLongitude(), '', 0.0001);
+        $this->assertEqualsWithDelta(47.111290000000054, $result->getCoordinates()->getLatitude(), 0.0001);
+        $this->assertEqualsWithDelta(-101.42142999999999, $result->getCoordinates()->getLongitude(), 0.0001);
         $this->assertNull($result->getStreetName());
         $this->assertEquals('Hannover', $result->getLocality());
         $this->assertCount(2, $result->getAdminLevels());
@@ -211,8 +209,8 @@ class ArcGISOnlineTest extends BaseTestCase
         /** @var Location $result */
         $result = $results->get(4);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(32.518790000000024, $result->getCoordinates()->getLatitude(), '', 0.0001);
-        $this->assertEquals(-90.06298999999996, $result->getCoordinates()->getLongitude(), '', 0.0001);
+        $this->assertEqualsWithDelta(32.518790000000024, $result->getCoordinates()->getLatitude(), 0.0001);
+        $this->assertEqualsWithDelta(-90.06298999999996, $result->getCoordinates()->getLongitude(), 0.0001);
         $this->assertNull($result->getStreetName());
         $this->assertNull($result->getLocality());
         $this->assertCount(2, $result->getAdminLevels());
@@ -221,32 +219,29 @@ class ArcGISOnlineTest extends BaseTestCase
         $this->assertEquals('USA', $result->getCountry()->getCode());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The ArcGISOnline provider does not support IP addresses, only street addresses.
-     */
     public function testGeocodeWithRealIPv4()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The ArcGISOnline provider does not support IP addresses, only street addresses.');
+
         $provider = new ArcGISOnline($this->getHttpClient());
         $provider->geocodeQuery(GeocodeQuery::create('88.188.221.14'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The ArcGISOnline provider does not support IP addresses, only street addresses.
-     */
     public function testGeocodeWithRealIPv6()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The ArcGISOnline provider does not support IP addresses, only street addresses.');
+
         $provider = new ArcGISOnline($this->getHttpClient());
         $provider->geocodeQuery(GeocodeQuery::create('::ffff:88.188.221.14'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\InvalidCredentials
-     * @expectedExceptionMessage Invalid token invalid-token
-     */
     public function testGeocodeWithInvalidToken()
     {
+        $this->expectException(\Geocoder\Exception\InvalidCredentials::class);
+        $this->expectExceptionMessage('Invalid token invalid-token');
+
         $provider = ArcGISOnline::token($this->getHttpClient(), 'invalid-token');
         $results = $provider->geocodeQuery(GeocodeQuery::create('1313 Disneyland Dr, Anaheim, CA 92802, USA'));
     }

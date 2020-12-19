@@ -6,7 +6,7 @@
     "homepage": "http://geocoder-php.org/Geocoder/",
     "license": "MIT",
     "require": {
-        "php": "^7.2",
+        "php": "^7.3 || ^8.0",
         "geocoder-php/common-http": "^4.0",
         "willdurand/geocoder": "^4.0"
     },

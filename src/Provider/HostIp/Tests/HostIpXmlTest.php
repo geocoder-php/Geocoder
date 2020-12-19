@@ -31,12 +31,11 @@ class HostIpXmlTest extends BaseTestCase
         $this->assertEquals('host_ip_xml', $provider->getName());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The Geocoder\Provider\HostIp\HostIpXml provider does not support Street addresses.
-     */
     public function testGeocodeWithAddress()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The Geocoder\Provider\HostIp\HostIpXml provider does not support Street addresses.');
+
         $provider = new HostIpXml($this->getMockedHttpClient());
         $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
     }
@@ -62,12 +61,11 @@ class HostIpXmlTest extends BaseTestCase
         $this->assertEquals('localhost', $result->getCountry()->getName());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The HostIp provider does not support IPv6 addresses.
-     */
     public function testGeocodeWithLocalhostIPv6()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The HostIp provider does not support IPv6 addresses.');
+
         $provider = new HostIpXml($this->getMockedHttpClient());
         $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
@@ -92,22 +90,20 @@ class HostIpXmlTest extends BaseTestCase
         $this->assertEquals('LV', $result->getCountry()->getCode());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The HostIp provider does not support IPv6 addresses.
-     */
     public function testGeocodeWithRealIPv6()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The HostIp provider does not support IPv6 addresses.');
+
         $provider = new HostIpXml($this->getHttpClient());
         $provider->geocodeQuery(GeocodeQuery::create('::ffff:88.188.221.14'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The HostIp provider is not able to do reverse geocoding.
-     */
     public function testReverse()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The HostIp provider is not able to do reverse geocoding.');
+
         $provider = new HostIpXml($this->getMockedHttpClient());
         $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
     }

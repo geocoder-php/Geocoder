@@ -92,12 +92,12 @@ class IntegrationTest extends ProviderIntegrationTest
 
         // Check Downing Street
         $location = $result->first();
-        $this->assertEquals(51.5033, $location->getCoordinates()->getLatitude(), 'Latitude should be in London', 0.1);
-        $this->assertEquals(-0.1276, $location->getCoordinates()->getLongitude(), 'Longitude should be in London', 0.1);
-        $this->assertContains('Downing', $location->getStreetName(), 'Street name should contain "Downing St"');
+        $this->assertEqualsWithDelta(51.5033, $location->getCoordinates()->getLatitude(), 0.1, 'Latitude should be in London');
+        $this->assertEqualsWithDelta(-0.1276, $location->getCoordinates()->getLongitude(), 0.1, 'Longitude should be in London');
+        $this->assertStringContainsString('Downing', $location->getStreetName(), 'Street name should contain "Downing St"');
 
         if (null !== $streetNumber = $location->getStreetNumber()) {
-            $this->assertContains('10', $streetNumber, 'Street number should contain "10"');
+            $this->assertStringContainsString('10', $streetNumber, 'Street number should contain "10"');
         }
     }
 

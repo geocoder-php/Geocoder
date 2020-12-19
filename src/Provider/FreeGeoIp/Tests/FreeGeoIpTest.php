@@ -31,12 +31,11 @@ class FreeGeoIpTest extends BaseTestCase
         $this->assertEquals('free_geo_ip', $provider->getName());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The FreeGeoIp provider does not support street addresses.
-     */
     public function testGeocodeWithAddress()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The FreeGeoIp provider does not support street addresses.');
+
         $provider = $this->getProvider();
         $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
     }
@@ -205,21 +204,19 @@ class FreeGeoIpTest extends BaseTestCase
         $this->assertEquals('Russia', $results->first()->getCountry()->getName());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The FreeGeoIp provider is not able to do reverse geocoding.
-     */
     public function testReverse()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The FreeGeoIp provider is not able to do reverse geocoding.');
+
         $provider = $this->getProvider();
         $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\InvalidServerResponse
-     */
     public function testServerEmptyResponse()
     {
+        $this->expectException(\Geocoder\Exception\InvalidServerResponse::class);
+
         $provider = new FreeGeoIp($this->getMockedHttpClient());
         $provider->geocodeQuery(GeocodeQuery::create('87.227.124.53'));
     }

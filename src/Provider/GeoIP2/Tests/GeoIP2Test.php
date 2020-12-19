@@ -35,7 +35,7 @@ class GeoIP2Test extends BaseTestCase
      */
     protected $provider;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->provider = new GeoIP2($this->getGeoIP2AdapterMock());
     }
@@ -50,12 +50,11 @@ class GeoIP2Test extends BaseTestCase
         $this->assertEquals('geoip2', $this->provider->getName());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The GeoIP2 provider is not able to do reverse geocoding.
-     */
     public function testQueryingReverseLeadsToException()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The GeoIP2 provider is not able to do reverse geocoding.');
+
         $this->provider->reverseQuery(ReverseQuery::fromCoordinates(50, 9));
     }
 
@@ -73,12 +72,11 @@ class GeoIP2Test extends BaseTestCase
         $this->assertEquals('localhost', $result->getCountry()->getName());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The GeoIP2 provider does not support street addresses, only IP addresses.
-     */
     public function testOnlyIpAddressesCouldBeResolved()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The GeoIP2 provider does not support street addresses, only IP addresses.');
+
         $this->provider->geocodeQuery(GeocodeQuery::create('Street 123, Somewhere'));
     }
 

@@ -14,10 +14,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: ['7.4']
+        php-version: ['7.4', '8.0']
         deps: ['low', 'high']
         include:
-          - php-version: '7.2'
           - php-version: '7.3'
 
     name: PHP ${{ matrix.php-version }} (${{ matrix.deps }})

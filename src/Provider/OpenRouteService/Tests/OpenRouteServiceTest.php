@@ -55,8 +55,8 @@ class OpenRouteServiceTest extends BaseTestCase
         /** @var \Geocoder\Model\Address $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(51.521124, $result->getCoordinates()->getLatitude(), '', 0.01);
-        $this->assertEquals(-0.20360200000000001, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertEqualsWithDelta(51.521124, $result->getCoordinates()->getLatitude(), 0.01);
+        $this->assertEqualsWithDelta(-0.20360200000000001, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('Acklam Road', $result->getStreetName());
         $this->assertEquals('London', $result->getLocality());
         $this->assertCount(4, $result->getAdminLevels());
@@ -80,8 +80,8 @@ class OpenRouteServiceTest extends BaseTestCase
         /** @var \Geocoder\Model\Address $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(54.048411999999999, $result->getCoordinates()->getLatitude(), '', 0.001);
-        $this->assertEquals(-2.7989549999999999, $result->getCoordinates()->getLongitude(), '', 0.001);
+        $this->assertEqualsWithDelta(54.048411999999999, $result->getCoordinates()->getLatitude(), 0.001);
+        $this->assertEqualsWithDelta(-2.7989549999999999, $result->getCoordinates()->getLongitude(), 0.001);
         $this->assertEquals(1, $result->getStreetNumber());
         $this->assertEquals('Gage Street', $result->getStreetName());
         $this->assertEquals('LA1 1UH', $result->getPostalCode());
@@ -126,8 +126,8 @@ class OpenRouteServiceTest extends BaseTestCase
         /** @var \Geocoder\Model\Address $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(52.379952, $result->getCoordinates()->getLatitude(), '', 0.01);
-        $this->assertEquals(9.787455, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertEqualsWithDelta(52.379952, $result->getCoordinates()->getLatitude(), 0.01);
+        $this->assertEqualsWithDelta(9.787455, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('Hanover', $result->getLocality());
         $this->assertCount(4, $result->getAdminLevels());
         $this->assertEquals('Niedersachsen', $result->getAdminLevels()->get(1)->getName());
@@ -137,8 +137,8 @@ class OpenRouteServiceTest extends BaseTestCase
         /** @var \Geocoder\Model\Address $result */
         $result = $results->get(1);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(52.37362, $result->getCoordinates()->getLatitude(), '', 0.01);
-        $this->assertEquals(9.73711, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertEqualsWithDelta(52.37362, $result->getCoordinates()->getLatitude(), 0.01);
+        $this->assertEqualsWithDelta(9.73711, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertCount(3, $result->getAdminLevels());
         $this->assertEquals('Niedersachsen', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('Germany', $result->getCountry()->getName());
@@ -146,8 +146,8 @@ class OpenRouteServiceTest extends BaseTestCase
         /** @var \Geocoder\Model\Address $result */
         $result = $results->get(2);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(18.393428, $result->getCoordinates()->getLatitude(), '', 0.01);
-        $this->assertEquals(-78.107687, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertEqualsWithDelta(18.393428, $result->getCoordinates()->getLatitude(), 0.01);
+        $this->assertEqualsWithDelta(-78.107687, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertNull($result->getLocality());
         $this->assertCount(2, $result->getAdminLevels());
         $this->assertEquals('Hanover', $result->getAdminLevels()->get(1)->getName());
@@ -156,8 +156,8 @@ class OpenRouteServiceTest extends BaseTestCase
         /** @var \Geocoder\Model\Address $result */
         $result = $results->get(3);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(39.192889999999998, $result->getCoordinates()->getLatitude(), '', 0.01);
-        $this->assertEquals(-76.724140000000006, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertEqualsWithDelta(39.192889999999998, $result->getCoordinates()->getLatitude(), 0.01);
+        $this->assertEqualsWithDelta(-76.724140000000006, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('Hanover', $result->getLocality());
         $this->assertCount(4, $result->getAdminLevels());
         $this->assertEquals('Hanover', $result->getAdminLevels()->get(3)->getName());
@@ -179,8 +179,8 @@ class OpenRouteServiceTest extends BaseTestCase
         /** @var \Geocoder\Model\Address $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(50.189017, $result->getCoordinates()->getLatitude(), '', 0.01);
-        $this->assertEquals(8.6367809999999992, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertEqualsWithDelta(50.189017, $result->getCoordinates()->getLatitude(), 0.01);
+        $this->assertEqualsWithDelta(8.6367809999999992, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('10a', $result->getStreetNumber());
         $this->assertEquals('Kalbacher Hauptstraße', $result->getStreetName());
         $this->assertEquals(60437, $result->getPostalCode());
@@ -193,12 +193,11 @@ class OpenRouteServiceTest extends BaseTestCase
         $this->assertEquals('DEU', $result->getCountry()->getCode());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\QuotaExceeded
-     * @expectedExceptionMessage Valid request but quota exceeded.
-     */
     public function testGeocodeQuotaExceeded()
     {
+        $this->expectException(\Geocoder\Exception\QuotaExceeded::class);
+        $this->expectExceptionMessage('Valid request but quota exceeded.');
+
         $provider = new OpenRouteService(
             $this->getMockedHttpClient(
                 '{
@@ -219,12 +218,11 @@ class OpenRouteServiceTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('New York'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\InvalidCredentials
-     * @expectedExceptionMessage Invalid or missing api key.
-     */
     public function testGeocodeInvalidApiKey()
     {
+        $this->expectException(\Geocoder\Exception\InvalidCredentials::class);
+        $this->expectExceptionMessage('Invalid or missing api key.');
+
         $provider = new OpenRouteService(
             $this->getMockedHttpClient(
                 '{
@@ -245,42 +243,38 @@ class OpenRouteServiceTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('New York'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The openrouteservice provider does not support IP addresses, only street addresses.
-     */
     public function testGeocodeWithLocalhostIPv4()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The openrouteservice provider does not support IP addresses, only street addresses.');
+
         $provider = new OpenRouteService($this->getMockedHttpClient(), 'api_key');
         $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The openrouteservice provider does not support IP addresses, only street addresses.
-     */
     public function testGeocodeWithLocalhostIPv6()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The openrouteservice provider does not support IP addresses, only street addresses.');
+
         $provider = new OpenRouteService($this->getMockedHttpClient(), 'api_key');
         $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The openrouteservice provider does not support IP addresses, only street addresses.
-     */
     public function testGeocodeWithRealIPv4()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The openrouteservice provider does not support IP addresses, only street addresses.');
+
         $provider = new OpenRouteService($this->getMockedHttpClient(), 'api_key');
         $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The openrouteservice provider does not support IP addresses, only street addresses.
-     */
     public function testGeocodeWithRealIPv6()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The openrouteservice provider does not support IP addresses, only street addresses.');
+
         $provider = new OpenRouteService($this->getMockedHttpClient(), 'api_key');
         $provider->geocodeQuery(GeocodeQuery::create('::ffff:74.200.247.59'));
     }

@@ -35,31 +35,28 @@ class BingMapsTest extends BaseTestCase
         $this->assertEquals('bing_maps', $provider->getName());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\InvalidServerResponse
-     */
     public function testGeocodeWithInvalidData()
     {
+        $this->expectException(\Geocoder\Exception\InvalidServerResponse::class);
+
         $provider = new BingMaps($this->getMockedHttpClient(), 'api_key');
         $provider->geocodeQuery(GeocodeQuery::create('foobar'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The BingMaps provider does not support IP addresses, only street addresses.
-     */
     public function testGeocodeWithLocalhostIPv4()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The BingMaps provider does not support IP addresses, only street addresses.');
+
         $provider = new BingMaps($this->getMockedHttpClient(), 'api_key');
         $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The BingMaps provider does not support IP addresses, only street addresses.
-     */
     public function testGeocodeWithLocalhostIPv6()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The BingMaps provider does not support IP addresses, only street addresses.');
+
         $provider = new BingMaps($this->getMockedHttpClient(), 'api_key');
         $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
@@ -79,13 +76,13 @@ JSON;
         /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(48.86321675999999, $result->getCoordinates()->getLatitude(), '', 0.01);
-        $this->assertEquals(2.3887721299999995, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertEqualsWithDelta(48.86321675999999, $result->getCoordinates()->getLatitude(), 0.01);
+        $this->assertEqualsWithDelta(2.3887721299999995, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertNotNull($result->getBounds());
-        $this->assertEquals(48.859354042429, $result->getBounds()->getSouth(), '', 0.01);
-        $this->assertEquals(2.3809438666389, $result->getBounds()->getWest(), '', 0.01);
-        $this->assertEquals(48.867079477571, $result->getBounds()->getNorth(), '', 0.01);
-        $this->assertEquals(2.3966003933611, $result->getBounds()->getEast(), '', 0.01);
+        $this->assertEqualsWithDelta(48.859354042429, $result->getBounds()->getSouth(), 0.01);
+        $this->assertEqualsWithDelta(2.3809438666389, $result->getBounds()->getWest(), 0.01);
+        $this->assertEqualsWithDelta(48.867079477571, $result->getBounds()->getNorth(), 0.01);
+        $this->assertEqualsWithDelta(2.3966003933611, $result->getBounds()->getEast(), 0.01);
         $this->assertNull($result->getStreetNumber());
         $this->assertEquals('10 Avenue Gambetta', $result->getStreetName());
         $this->assertEquals(75020, $result->getPostalCode());
@@ -101,13 +98,13 @@ JSON;
         /** @var Location $result */
         $result = $results->get(1);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(48.81342781, $result->getCoordinates()->getLatitude(), '', 0.01);
-        $this->assertEquals(2.32503767, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertEqualsWithDelta(48.81342781, $result->getCoordinates()->getLatitude(), 0.01);
+        $this->assertEqualsWithDelta(2.32503767, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertNotNull($result->getBounds());
-        $this->assertEquals(48.809565092429, $result->getBounds()->getSouth(), '', 0.01);
-        $this->assertEquals(2.3172171827738, $result->getBounds()->getWest(), '', 0.01);
-        $this->assertEquals(48.817290527571, $result->getBounds()->getNorth(), '', 0.01);
-        $this->assertEquals(2.3328581572262, $result->getBounds()->getEast(), '', 0.01);
+        $this->assertEqualsWithDelta(48.809565092429, $result->getBounds()->getSouth(), 0.01);
+        $this->assertEqualsWithDelta(2.3172171827738, $result->getBounds()->getWest(), 0.01);
+        $this->assertEqualsWithDelta(48.817290527571, $result->getBounds()->getNorth(), 0.01);
+        $this->assertEqualsWithDelta(2.3328581572262, $result->getBounds()->getEast(), 0.01);
         $this->assertNull($result->getStreetNumber());
         $this->assertEquals('10 Avenue Léon Gambetta', $result->getStreetName());
         $this->assertEquals(92120, $result->getPostalCode());
@@ -121,13 +118,13 @@ JSON;
         /** @var Location $result */
         $result = $results->get(2);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(48.81014147, $result->getCoordinates()->getLatitude(), '', 0.01);
-        $this->assertEquals(2.43568048, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertEqualsWithDelta(48.81014147, $result->getCoordinates()->getLatitude(), 0.01);
+        $this->assertEqualsWithDelta(2.43568048, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertNotNull($result->getBounds());
-        $this->assertEquals(48.806278752429, $result->getBounds()->getSouth(), '', 0.01);
-        $this->assertEquals(2.4278605052897, $result->getBounds()->getWest(), '', 0.01);
-        $this->assertEquals(48.814004187571, $result->getBounds()->getNorth(), '', 0.01);
-        $this->assertEquals(2.4435004547103, $result->getBounds()->getEast(), '', 0.01);
+        $this->assertEqualsWithDelta(48.806278752429, $result->getBounds()->getSouth(), 0.01);
+        $this->assertEqualsWithDelta(2.4278605052897, $result->getBounds()->getWest(), 0.01);
+        $this->assertEqualsWithDelta(48.814004187571, $result->getBounds()->getNorth(), 0.01);
+        $this->assertEqualsWithDelta(2.4435004547103, $result->getBounds()->getEast(), 0.01);
         $this->assertNull($result->getStreetNumber());
         $this->assertEquals('10 Avenue Gambetta', $result->getStreetName());
         $this->assertEquals(94700, $result->getPostalCode());
@@ -154,13 +151,13 @@ JSON;
         /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(48.86321648955345, $result->getCoordinates()->getLatitude(), '', 0.0001);
-        $this->assertEquals(2.3887719959020615, $result->getCoordinates()->getLongitude(), '', 0.0001);
+        $this->assertEqualsWithDelta(48.86321648955345, $result->getCoordinates()->getLatitude(), 0.0001);
+        $this->assertEqualsWithDelta(2.3887719959020615, $result->getCoordinates()->getLongitude(), 0.0001);
         $this->assertNotNull($result->getBounds());
-        $this->assertEquals(48.859353771983, $result->getBounds()->getSouth(), '', 0.0001);
-        $this->assertEquals(2.3809437325833, $result->getBounds()->getWest(), '', 0.0001);
-        $this->assertEquals(48.867079207124, $result->getBounds()->getNorth(), '', 0.0001);
-        $this->assertEquals(2.3966002592208, $result->getBounds()->getEast(), '', 0.0001);
+        $this->assertEqualsWithDelta(48.859353771983, $result->getBounds()->getSouth(), 0.0001);
+        $this->assertEqualsWithDelta(2.3809437325833, $result->getBounds()->getWest(), 0.0001);
+        $this->assertEqualsWithDelta(48.867079207124, $result->getBounds()->getNorth(), 0.0001);
+        $this->assertEqualsWithDelta(2.3966002592208, $result->getBounds()->getEast(), 0.0001);
         $this->assertNull($result->getStreetNumber());
         $this->assertEquals('10 Avenue Gambetta', $result->getStreetName());
         $this->assertEquals(75020, $result->getPostalCode());
@@ -189,13 +186,13 @@ JSON;
         /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(48.86321675999999, $result->getCoordinates()->getLatitude(), '', 0.01);
-        $this->assertEquals(2.3887721299999995, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertEqualsWithDelta(48.86321675999999, $result->getCoordinates()->getLatitude(), 0.01);
+        $this->assertEqualsWithDelta(2.3887721299999995, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertNotNull($result->getBounds());
-        $this->assertEquals(48.859354042429, $result->getBounds()->getSouth(), '', 0.01);
-        $this->assertEquals(2.3967310, $result->getBounds()->getWest(), '', 0.01);
-        $this->assertEquals(48.867079477571, $result->getBounds()->getNorth(), '', 0.01);
-        $this->assertEquals(2.3966003933611, $result->getBounds()->getEast(), '', 0.01);
+        $this->assertEqualsWithDelta(48.859354042429, $result->getBounds()->getSouth(), 0.01);
+        $this->assertEqualsWithDelta(2.3967310, $result->getBounds()->getWest(), 0.01);
+        $this->assertEqualsWithDelta(48.867079477571, $result->getBounds()->getNorth(), 0.01);
+        $this->assertEqualsWithDelta(2.3966003933611, $result->getBounds()->getEast(), 0.01);
         $this->assertNull($result->getStreetNumber());
         $this->assertEquals('10 Avenue Gambetta', $result->getStreetName());
         $this->assertEquals(75020, $result->getPostalCode());
@@ -239,13 +236,13 @@ JSON;
         /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(48.86321648955345, $result->getCoordinates()->getLatitude(), '', 0.0001);
-        $this->assertEquals(2.3887719959020615, $result->getCoordinates()->getLongitude(), '', 0.0001);
+        $this->assertEqualsWithDelta(48.86321648955345, $result->getCoordinates()->getLatitude(), 0.0001);
+        $this->assertEqualsWithDelta(2.3887719959020615, $result->getCoordinates()->getLongitude(), 0.0001);
         $this->assertNotNull($result->getBounds());
-        $this->assertEquals(48.859353771983, $result->getBounds()->getSouth(), '', 0.0001);
-        $this->assertEquals(2.3809437325833, $result->getBounds()->getWest(), '', 0.0001);
-        $this->assertEquals(48.867079207124, $result->getBounds()->getNorth(), '', 0.0001);
-        $this->assertEquals(2.3966002592208, $result->getBounds()->getEast(), '', 0.0001);
+        $this->assertEqualsWithDelta(48.859353771983, $result->getBounds()->getSouth(), 0.0001);
+        $this->assertEqualsWithDelta(2.3809437325833, $result->getBounds()->getWest(), 0.0001);
+        $this->assertEqualsWithDelta(48.867079207124, $result->getBounds()->getNorth(), 0.0001);
+        $this->assertEqualsWithDelta(2.3966002592208, $result->getBounds()->getEast(), 0.0001);
         $this->assertNull($result->getStreetNumber());
         $this->assertEquals('3 Avenue Gambetta', $result->getStreetName());
         $this->assertEquals(75020, $result->getPostalCode());
@@ -259,12 +256,11 @@ JSON;
         $this->assertNull($result->getTimezone());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The BingMaps provider does not support IP addresses, only street addresses.
-     */
     public function testGeocodeWithRealIPv4()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The BingMaps provider does not support IP addresses, only street addresses.');
+
         if (!isset($_SERVER['BINGMAPS_API_KEY'])) {
             $this->markTestSkipped('You need to configure the BINGMAPS_API_KEY value in phpunit.xml');
         }
@@ -273,12 +269,11 @@ JSON;
         $provider->geocodeQuery(GeocodeQuery::create('88.188.221.14'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The BingMaps provider does not support IP addresses, only street addresses.
-     */
     public function testGeocodeWithRealIPv6()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The BingMaps provider does not support IP addresses, only street addresses.');
+
         if (!isset($_SERVER['BINGMAPS_API_KEY'])) {
             $this->markTestSkipped('You need to configure the BINGMAPS_API_KEY value in phpunit.xml');
         }
