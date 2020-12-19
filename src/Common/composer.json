@@ -21,7 +21,7 @@
     },
     "require-dev": {
         "nyholm/nsa": "^1.1",
-        "phpunit/phpunit": "^7.5",
+        "phpunit/phpunit": "^9.5",
         "symfony/stopwatch": "~2.5"
     },
     "suggest": {
