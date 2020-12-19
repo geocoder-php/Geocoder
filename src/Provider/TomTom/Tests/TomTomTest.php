@@ -32,11 +32,10 @@ class TomTomTest extends BaseTestCase
         $this->assertEquals('tomtom', $provider->getName());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\InvalidServerResponse
-     */
     public function testGeocodeWithAddress()
     {
+        $this->expectException(\Geocoder\Exception\InvalidServerResponse::class);
+
         $provider = new TomTom($this->getMockedHttpClient(), 'api_key');
         $provider->geocodeQuery(GeocodeQuery::create('Tagensvej 47, 2200 København N'));
     }
@@ -52,8 +51,8 @@ class TomTomTest extends BaseTestCase
         /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(55.70, $result->getCoordinates()->getLatitude(), '', 0.001);
-        $this->assertEquals(12.5529, $result->getCoordinates()->getLongitude(), '', 0.001);
+        $this->assertEqualsWithDelta(55.70, $result->getCoordinates()->getLatitude(), 0.001);
+        $this->assertEqualsWithDelta(12.5529, $result->getCoordinates()->getLongitude(), 0.001);
         $this->assertNull($result->getBounds());
         $this->assertEquals(47, $result->getStreetNumber());
         $this->assertEquals('Tagensvej', $result->getStreetName());
@@ -78,60 +77,54 @@ class TomTomTest extends BaseTestCase
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The TomTom provider does not support IP addresses, only street addresses.
-     */
     public function testGeocodeWithLocalhostIPv4()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The TomTom provider does not support IP addresses, only street addresses.');
+
         $provider = new TomTom($this->getMockedHttpClient(), 'api_key');
         $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The TomTom provider does not support IP addresses, only street addresses.
-     */
     public function testGeocodeWithLocalhostIPv6()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The TomTom provider does not support IP addresses, only street addresses.');
+
         $provider = new TomTom($this->getMockedHttpClient(), 'api_key');
         $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The TomTom provider does not support IP addresses, only street addresses.
-     */
     public function testGeocodeWithIPv4()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The TomTom provider does not support IP addresses, only street addresses.');
+
         $provider = new TomTom($this->getMockedHttpClient(), 'api_key');
         $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The TomTom provider does not support IP addresses, only street addresses.
-     */
     public function testGeocodeWithIPv6()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The TomTom provider does not support IP addresses, only street addresses.');
+
         $provider = new TomTom($this->getMockedHttpClient(), 'api_key');
         $provider->geocodeQuery(GeocodeQuery::create('::ffff:74.200.247.59'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\InvalidCredentials
-     * @expectedExceptionMessage No API key provided
-     */
     public function testWithoutApiKey()
     {
+        $this->expectException(\Geocoder\Exception\InvalidCredentials::class);
+        $this->expectExceptionMessage('No API key provided');
+
         new TomTom($this->getMockedHttpClient(), '');
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\InvalidServerResponse
-     */
     public function testReverse()
     {
+        $this->expectException(\Geocoder\Exception\InvalidServerResponse::class);
+
         $provider = new TomTom($this->getMockedHttpClient(), 'api_key');
         $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
     }
@@ -172,8 +165,8 @@ JSON;
         /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(48.86323, $result->getCoordinates()->getLatitude(), '', 0.001);
-        $this->assertEquals(2.38877, $result->getCoordinates()->getLongitude(), '', 0.001);
+        $this->assertEqualsWithDelta(48.86323, $result->getCoordinates()->getLatitude(), 0.001);
+        $this->assertEqualsWithDelta(2.38877, $result->getCoordinates()->getLongitude(), 0.001);
         $this->assertNull($result->getBounds());
         $this->assertEquals('Avenue Gambetta', $result->getStreetName());
         $this->assertNull($result->getPostalCode());
@@ -200,8 +193,8 @@ JSON;
         /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(56.52435, $result->getCoordinates()->getLatitude(), '', 0.001);
-        $this->assertEquals(10.06744, $result->getCoordinates()->getLongitude(), '', 0.001);
+        $this->assertEqualsWithDelta(56.52435, $result->getCoordinates()->getLatitude(), 0.001);
+        $this->assertEqualsWithDelta(10.06744, $result->getCoordinates()->getLongitude(), 0.001);
         $this->assertNull($result->getBounds());
         $this->assertEquals(16, $result->getStreetNumber());
         $this->assertEquals('Stabelsvej', $result->getStreetName());

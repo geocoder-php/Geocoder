@@ -21,13 +21,17 @@ cache:
 matrix:
     fast_finish: true
     include:
+        - php: 8.0
+          env: deps="low"
+        - php: 8.0
+          env: deps="high"
         - php: 7.4
           env: deps="low"
         - php: 7.4
           env: deps="high"
-        - php: 7.2
         - php: 7.3
         - php: 7.4
+        - php: 8.0
 
 before_install:
     - |

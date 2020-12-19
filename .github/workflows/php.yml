@@ -1,0 +1,47 @@
+name: PHP Composer
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  test:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version: ['7.4', '8.0']
+        deps: ['low', 'high']
+        include:
+          - php-version: '7.3'
+
+    name: PHP ${{ matrix.php-version }} (${{ matrix.deps }})
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Use PHP ${{ matrix.php-version }}
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php-version }}
+        extensions: curl
+
+    - name: Validate composer.json and composer.lock
+      run: composer validate
+
+    - name: Install dependencies
+      if: ${{ matrix.deps == null }}
+      run: composer update --no-progress --prefer-dist
+    - name: Install dependencies (low)
+      if: ${{ matrix.deps == 'low' }}
+      run: composer update --no-progress --prefer-lowest --prefer-stable
+    - name: Install dependencies (high)
+      if: ${{ matrix.deps == 'high' }}
+      run: composer update --no-progress
+
+    - name: Run test suite
+      run: composer run-script test

@@ -32,12 +32,11 @@ class GeoIPsTest extends BaseTestCase
         return __DIR__.'/.cached_responses';
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The GeoIPs provider does not support street addresses, only IPv4 addresses.
-     */
     public function testGeocodeWithAddress()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The GeoIPs provider does not support street addresses, only IPv4 addresses.');
+
         $provider = new GeoIPs($this->getMockedHttpClient(), 'api_key');
         $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
     }
@@ -57,30 +56,27 @@ class GeoIPsTest extends BaseTestCase
         $this->assertEquals('localhost', $result->getCountry()->getName());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The GeoIPs provider does not support IPv6 addresses, only IPv4 addresses.
-     */
     public function testGeocodeWithLocalhostIPv6()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The GeoIPs provider does not support IPv6 addresses, only IPv4 addresses.');
+
         $provider = new GeoIPs($this->getMockedHttpClient(), 'api_key');
         $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\InvalidServerResponse
-     */
     public function testGeocodeWithRealIPv4GetsNullContent()
     {
+        $this->expectException(\Geocoder\Exception\InvalidServerResponse::class);
+
         $provider = new GeoIPs($this->getMockedHttpClient(null), 'api_key');
         $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\InvalidServerResponse
-     */
     public function testGeocodeWithRealIPv4GetsEmptyContent()
     {
+        $this->expectException(\Geocoder\Exception\InvalidServerResponse::class);
+
         $provider = new GeoIPs($this->getMockedHttpClient(''), 'api_key');
         $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
@@ -178,12 +174,11 @@ class GeoIPsTest extends BaseTestCase
         $this->assertEquals('MST', $result->getTimezone());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\InvalidCredentials
-     * @expectedExceptionMessage The API key associated with your request was not recognized.
-     */
     public function testGeocodeWithRealIPv4AndInvalidApiKeyGetsFakeContent()
     {
+        $this->expectException(\Geocoder\Exception\InvalidCredentials::class);
+        $this->expectExceptionMessage('The API key associated with your request was not recognized.');
+
         $provider = new GeoIPs(
             $this->getMockedHttpClient(
                 '{
@@ -204,12 +199,11 @@ class GeoIPsTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\InvalidCredentials
-     * @expectedExceptionMessage The API key has not been approved or has been disabled.
-     */
     public function testGeocodeWithRealIPv4AndInvalidApiKeyGetsFakeContent2()
     {
+        $this->expectException(\Geocoder\Exception\InvalidCredentials::class);
+        $this->expectExceptionMessage('The API key has not been approved or has been disabled.');
+
         $provider = new GeoIPs(
             $this->getMockedHttpClient(
                 '{
@@ -230,12 +224,11 @@ class GeoIPsTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\QuotaExceeded
-     * @expectedExceptionMessage The service you have requested is over capacity.
-     */
     public function testGeocodeWithRealIPv4AndQuotaExceeded()
     {
+        $this->expectException(\Geocoder\Exception\QuotaExceeded::class);
+        $this->expectExceptionMessage('The service you have requested is over capacity.');
+
         $provider = new GeoIPs(
             $this->getMockedHttpClient(
                 '{
@@ -256,12 +249,11 @@ class GeoIPsTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\InvalidArgument
-     * @expectedExceptionMessage The API call should include a valid IP address.
-     */
     public function testGeocodeGetsFakeContentWithIpNotFound()
     {
+        $this->expectException(\Geocoder\Exception\InvalidArgument::class);
+        $this->expectExceptionMessage('The API call should include a valid IP address.');
+
         $provider = new GeoIPs(
             $this->getMockedHttpClient(
                 '{
@@ -282,12 +274,11 @@ class GeoIPsTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\InvalidCredentials
-     * @expectedExceptionMessage The API call should include a API key parameter.
-     */
     public function testGeocodeGetsFakeContentWithKeyNotFound()
     {
+        $this->expectException(\Geocoder\Exception\InvalidCredentials::class);
+        $this->expectExceptionMessage('The API call should include a API key parameter.');
+
         $provider = new GeoIPs(
             $this->getMockedHttpClient(
                 '{
@@ -350,12 +341,11 @@ class GeoIPsTest extends BaseTestCase
         $this->assertEquals(0, $result->count());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The GeoIPs provider is not able to do reverse geocoding.
-     */
     public function testReverse()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The GeoIPs provider is not able to do reverse geocoding.');
+
         $provider = new GeoIPs($this->getMockedHttpClient(), 'api_key');
         $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
     }

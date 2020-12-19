@@ -26,32 +26,29 @@ class NominatimTest extends BaseTestCase
         return __DIR__.'/.cached_responses';
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The Nominatim provider does not support IP addresses.
-     */
     public function testGeocodeWithLocalhostIPv4()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The Nominatim provider does not support IP addresses.');
+
         $provider = Nominatim::withOpenStreetMapServer($this->getMockedHttpClient(), 'Geocoder PHP/Nominatim Provider/Nominatim Test');
         $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The Nominatim provider does not support IP addresses.
-     */
     public function testGeocodeWithLocalhostIPv6()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The Nominatim provider does not support IP addresses.');
+
         $provider = Nominatim::withOpenStreetMapServer($this->getMockedHttpClient(), 'Geocoder PHP/Nominatim Provider/Nominatim Test');
         $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The Nominatim provider does not support IP addresses.
-     */
     public function testGeocodeWithRealIPv6()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The Nominatim provider does not support IP addresses.');
+
         $provider = Nominatim::withOpenStreetMapServer($this->getHttpClient(), 'Geocoder PHP/Nominatim Provider/Nominatim Test');
         $provider->geocodeQuery(GeocodeQuery::create('::ffff:88.188.221.14'));
     }
@@ -92,8 +89,8 @@ class NominatimTest extends BaseTestCase
         /** @var \Geocoder\Model\Address $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(50.896344, $result->getCoordinates()->getLatitude(), '', 0.00001);
-        $this->assertEquals(4.3605984, $result->getCoordinates()->getLongitude(), '', 0.00001);
+        $this->assertEqualsWithDelta(50.896344, $result->getCoordinates()->getLatitude(), 0.00001);
+        $this->assertEqualsWithDelta(4.3605984, $result->getCoordinates()->getLongitude(), 0.00001);
         $this->assertEquals('35', $result->getStreetNumber());
         $this->assertEquals('Avenue Jean de Bologne - Jean de Bolognelaan', $result->getStreetName());
         $this->assertEquals('1020', $result->getPostalCode());
@@ -154,8 +151,8 @@ class NominatimTest extends BaseTestCase
         /** @var \Geocoder\Model\Address $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(50.896344, $result->getCoordinates()->getLatitude(), '', 0.00001);
-        $this->assertEquals(4.3605984, $result->getCoordinates()->getLongitude(), '', 0.00001);
+        $this->assertEqualsWithDelta(50.896344, $result->getCoordinates()->getLatitude(), 0.00001);
+        $this->assertEqualsWithDelta(4.3605984, $result->getCoordinates()->getLongitude(), 0.00001);
         $this->assertEquals('35', $result->getStreetNumber());
         $this->assertEquals('Avenue Jean de Bologne - Jean de Bolognelaan', $result->getStreetName());
         $this->assertEquals('1020', $result->getPostalCode());

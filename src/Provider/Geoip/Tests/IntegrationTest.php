@@ -29,7 +29,7 @@ class IntegrationTest extends ProviderIntegrationTest
 
     protected $testHttpProvider = false;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         if (!function_exists('geoip_record_by_name')) {
             $this->markTestSkipped('You have to install GeoIP.');

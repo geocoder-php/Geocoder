@@ -32,7 +32,7 @@ class IntegrationTest extends ProviderIntegrationTest
 
     protected $testHttpProvider = false;
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         if (false == function_exists('geoip_open')) {
             self::markTestSkipped('The maxmind\'s official lib required to run these tests.');

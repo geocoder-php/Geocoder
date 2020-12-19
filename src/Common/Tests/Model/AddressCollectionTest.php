@@ -25,6 +25,8 @@ class AddressCollectionTest extends TestCase
      */
     public function testFirstOnEmpty()
     {
+        $this->expectException(\Geocoder\Exception\CollectionIsEmpty::class);
+
         $collection = new AddressCollection([]);
         $collection->first();
     }

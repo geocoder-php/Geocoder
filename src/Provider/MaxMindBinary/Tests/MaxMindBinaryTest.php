@@ -23,7 +23,7 @@ class MaxMindBinaryTest extends BaseTestCase
 {
     private $binaryFile;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->binaryFile = __DIR__.'/fixtures/GeoLiteCity.dat';
     }
@@ -33,7 +33,7 @@ class MaxMindBinaryTest extends BaseTestCase
         return __DIR__.'/.cached_responses';
     }
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         if (false == function_exists('geoip_open')) {
             self::markTestSkipped('The maxmind\'s official lib required to run these tests.');

@@ -49,13 +49,13 @@ class HereTest extends BaseTestCase
         /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(48.8653, $result->getCoordinates()->getLatitude(), '', 0.01);
-        $this->assertEquals(2.39844, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertEqualsWithDelta(48.8653, $result->getCoordinates()->getLatitude(), 0.01);
+        $this->assertEqualsWithDelta(2.39844, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertNotNull($result->getBounds());
-        $this->assertEquals(48.8664242, $result->getBounds()->getSouth(), '', 0.01);
-        $this->assertEquals(2.3967311, $result->getBounds()->getWest(), '', 0.01);
-        $this->assertEquals(48.8641758, $result->getBounds()->getNorth(), '', 0.01);
-        $this->assertEquals(2.4001489, $result->getBounds()->getEast(), '', 0.01);
+        $this->assertEqualsWithDelta(48.8664242, $result->getBounds()->getSouth(), 0.01);
+        $this->assertEqualsWithDelta(2.3967311, $result->getBounds()->getWest(), 0.01);
+        $this->assertEqualsWithDelta(48.8641758, $result->getBounds()->getNorth(), 0.01);
+        $this->assertEqualsWithDelta(2.4001489, $result->getBounds()->getEast(), 0.01);
         $this->assertEquals(10, $result->getStreetNumber());
 
         $this->assertEquals('Avenue Gambetta', $result->getStreetName());
@@ -85,13 +85,13 @@ class HereTest extends BaseTestCase
         $result = $results->first();
 
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(41.37854, $result->getCoordinates()->getLatitude(), '', 0.01);
-        $this->assertEquals(2.01196, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertEqualsWithDelta(41.37854, $result->getCoordinates()->getLatitude(), 0.01);
+        $this->assertEqualsWithDelta(2.01196, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertNotNull($result->getBounds());
-        $this->assertEquals(41.36505, $result->getBounds()->getSouth(), '', 0.01);
-        $this->assertEquals(1.99398, $result->getBounds()->getWest(), '', 0.01);
-        $this->assertEquals(41.39203, $result->getBounds()->getNorth(), '', 0.01);
-        $this->assertEquals(2.02994, $result->getBounds()->getEast(), '', 0.01);
+        $this->assertEqualsWithDelta(41.36505, $result->getBounds()->getSouth(), 0.01);
+        $this->assertEqualsWithDelta(1.99398, $result->getBounds()->getWest(), 0.01);
+        $this->assertEqualsWithDelta(41.39203, $result->getBounds()->getNorth(), 0.01);
+        $this->assertEqualsWithDelta(2.02994, $result->getBounds()->getEast(), 0.01);
 
         $this->assertEquals('08690', $result->getPostalCode());
         $this->assertEquals('Sant Roc', $result->getSubLocality());
@@ -130,13 +130,13 @@ class HereTest extends BaseTestCase
         /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(41.37854, $result->getCoordinates()->getLatitude(), '', 0.01);
-        $this->assertEquals(2.01196, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertEqualsWithDelta(41.37854, $result->getCoordinates()->getLatitude(), 0.01);
+        $this->assertEqualsWithDelta(2.01196, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertNotNull($result->getBounds());
-        $this->assertEquals(41.36505, $result->getBounds()->getSouth(), '', 0.01);
-        $this->assertEquals(1.99398, $result->getBounds()->getWest(), '', 0.01);
-        $this->assertEquals(41.39203, $result->getBounds()->getNorth(), '', 0.01);
-        $this->assertEquals(2.02994, $result->getBounds()->getEast(), '', 0.01);
+        $this->assertEqualsWithDelta(41.36505, $result->getBounds()->getSouth(), 0.01);
+        $this->assertEqualsWithDelta(1.99398, $result->getBounds()->getWest(), 0.01);
+        $this->assertEqualsWithDelta(41.39203, $result->getBounds()->getNorth(), 0.01);
+        $this->assertEqualsWithDelta(2.02994, $result->getBounds()->getEast(), 0.01);
 
         $this->assertEquals('08690', $result->getPostalCode());
         $this->assertEquals('Sant Roc', $result->getSubLocality());
@@ -152,7 +152,7 @@ class HereTest extends BaseTestCase
         $this->assertEquals('NT_TzyupfxmTFN0Rh1TXEMqSA', $result->getAdditionalDataValue('routing_locationId'));
         $this->assertEquals('address', $result->getAdditionalDataValue('routing_result_type'));
         $this->assertEquals('WKTShapeType', $result->getShapeValue('_type'));
-        $this->assertRegexp('/^MULTIPOLYGON/', $result->getShapeValue('Value'));
+        $this->assertMatchesRegularExpression('/^MULTIPOLYGON/', $result->getShapeValue('Value'));
     }
 
     /**
@@ -281,13 +281,13 @@ class HereTest extends BaseTestCase
         /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(48.8632147, $result->getCoordinates()->getLatitude(), '', 0.001);
-        $this->assertEquals(2.3887722, $result->getCoordinates()->getLongitude(), '', 0.001);
+        $this->assertEqualsWithDelta(48.8632147, $result->getCoordinates()->getLatitude(), 0.001);
+        $this->assertEqualsWithDelta(2.3887722, $result->getCoordinates()->getLongitude(), 0.001);
         $this->assertNotNull($result->getBounds());
-        $this->assertEquals(48.86315, $result->getBounds()->getSouth(), '', 0.001);
-        $this->assertEquals(2.38853, $result->getBounds()->getWest(), '', 0.001);
-        $this->assertEquals(48.8632147, $result->getBounds()->getNorth(), '', 0.001);
-        $this->assertEquals(2.38883, $result->getBounds()->getEast(), '', 0.001);
+        $this->assertEqualsWithDelta(48.86315, $result->getBounds()->getSouth(), 0.001);
+        $this->assertEqualsWithDelta(2.38853, $result->getBounds()->getWest(), 0.001);
+        $this->assertEqualsWithDelta(48.8632147, $result->getBounds()->getNorth(), 0.001);
+        $this->assertEqualsWithDelta(2.38883, $result->getBounds()->getEast(), 0.001);
         $this->assertEquals('Avenue Gambetta', $result->getStreetName());
         $this->assertEquals(75020, $result->getPostalCode());
         $this->assertEquals('Paris', $result->getLocality());
@@ -301,41 +301,37 @@ class HereTest extends BaseTestCase
         $this->assertEquals('Here', $provider->getName());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\InvalidServerResponse
-     */
     public function testGeocodeWithInvalidData()
     {
+        $this->expectException(\Geocoder\Exception\InvalidServerResponse::class);
+
         $provider = new Here($this->getMockedHttpClient(), 'appId', 'appCode');
         $provider->geocodeQuery(GeocodeQuery::create('foobar'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The Here provider does not support IP addresses, only street addresses.
-     */
     public function testGeocodeIpv4()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The Here provider does not support IP addresses, only street addresses.');
+
         $provider = $this->getProvider();
         $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The Here provider does not support IP addresses, only street addresses.
-     */
     public function testGeocodeWithLocalhostIPv6()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The Here provider does not support IP addresses, only street addresses.');
+
         $provider = $this->getProvider();
         $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\InvalidCredentials
-     * @expectedExceptionMessage Invalid or missing api key.
-     */
     public function testGeocodeInvalidApiKey()
     {
+        $this->expectException(\Geocoder\Exception\InvalidCredentials::class);
+        $this->expectExceptionMessage('Invalid or missing api key.');
+
         $provider = new Here(
             $this->getMockedHttpClient(
                 '{
@@ -350,12 +346,11 @@ class HereTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('New York'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The Here provider does not support IP addresses, only street addresses.
-     */
     public function testGeocodeWithRealIPv6()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The Here provider does not support IP addresses, only street addresses.');
+
         $provider = $this->getProvider();
         $provider->geocodeQuery(GeocodeQuery::create('::ffff:88.188.221.14'));
     }

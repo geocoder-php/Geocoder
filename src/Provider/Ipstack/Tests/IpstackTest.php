@@ -33,21 +33,19 @@ class IpstackTest extends BaseTestCase
         $this->assertEquals('ipstack', $provider->getName());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\InvalidCredentials
-     * @expectedExceptionMessage No API key provided.
-     */
     public function testGeocodeWithNoKey()
     {
+        $this->expectException(\Geocoder\Exception\InvalidCredentials::class);
+        $this->expectExceptionMessage('No API key provided.');
+
         $provider = new Ipstack($this->getMockedHttpClient(), '');
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The Ipstack provider does not support street addresses.
-     */
     public function testGeocodeWithAddress()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The Ipstack provider does not support street addresses.');
+
         $provider = new Ipstack($this->getMockedHttpClient(), 'api_key');
         $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
     }
@@ -116,22 +114,20 @@ class IpstackTest extends BaseTestCase
         $this->assertEquals('US', $result->getCountry()->getCode());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The Ipstack provider is not able to do reverse geocoding.
-     */
     public function testReverse()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The Ipstack provider is not able to do reverse geocoding.');
+
         $provider = new Ipstack($this->getMockedHttpClient(), 'api_key');
         $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\InvalidArgument
-     * @expectedExceptionMessage Invalid request (a required parameter is missing).
-     */
     public function testGeocodeWith301Code()
     {
+        $this->expectException(\Geocoder\Exception\InvalidArgument::class);
+        $this->expectExceptionMessage('Invalid request (a required parameter is missing).');
+
         $json = <<<'JSON'
 {"success":false,"error":{"code":301}}
 JSON;
@@ -139,12 +135,11 @@ JSON;
         $result = $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\InvalidArgument
-     * @expectedExceptionMessage Bulk requests are not supported on your plan. Please upgrade your subscription.
-     */
     public function testGeocodeWith303Code()
     {
+        $this->expectException(\Geocoder\Exception\InvalidArgument::class);
+        $this->expectExceptionMessage('Bulk requests are not supported on your plan. Please upgrade your subscription.');
+
         $json = <<<'JSON'
 {"success":false,"error":{"code":303,"type":"batch_not_supported_on_plan","info":"Bulk requests are not supported on your plan. Please upgrade your subscription."}}
 JSON;
@@ -152,12 +147,11 @@ JSON;
         $result = $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\QuotaExceeded
-     * @expectedExceptionMessage The maximum allowed amount of monthly API requests has been reached.
-     */
     public function testGeocodeWith104Code()
     {
+        $this->expectException(\Geocoder\Exception\QuotaExceeded::class);
+        $this->expectExceptionMessage('The maximum allowed amount of monthly API requests has been reached.');
+
         $json = <<<'JSON'
 {"success":false,"error":{"code":104}}
 JSON;
@@ -165,12 +159,11 @@ JSON;
         $result = $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\InvalidCredentials
-     * @expectedExceptionMessage No API Key was specified or an invalid API Key was specified.
-     */
     public function testGeocodeWith101Code()
     {
+        $this->expectException(\Geocoder\Exception\InvalidCredentials::class);
+        $this->expectExceptionMessage('No API Key was specified or an invalid API Key was specified.');
+
         $json = <<<'JSON'
 {"success":false,"error":{"code":101,"type":"invalid_access_key","info":"You have not supplied a valid API Access Key. [Technical Support: support@apilayer.com]"}}
 JSON;
