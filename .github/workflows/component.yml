@@ -19,7 +19,11 @@ jobs:
         component: [Common, Http, Plugin]
         include:
           - php-version: '7.3'
-            component: [Common, Http, Plugin]
+            component: Common
+          - php-version: '7.3'
+            component: Http
+          - php-version: '7.3'
+            component: Plugin
 
     name: ${{ matrix.component }} PHP ${{ matrix.php-version }} (${{ matrix.deps }})
 
