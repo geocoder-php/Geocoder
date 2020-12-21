@@ -2,6 +2,20 @@
 
 The change log describes what is "Added", "Removed", "Changed" or "Fixed" between each release.
 
+## 5.4.0
+
+### Added
+
+- Add support for PHP 8.0
+
+### Removed
+
+- Drop support for PHP 7.2
+
+### Changed
+
+- Upgrade PHPUnit to version 9
+
 ## 5.3.0
 
 ### Added
@@ -50,8 +64,8 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 
 ### Added
 
-- Added `NominatimAddress`. 
+- Added `NominatimAddress`.
 
 ## 4.0.0
 
-First release of this library. 
+First release of this library.
