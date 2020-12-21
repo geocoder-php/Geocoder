@@ -48,12 +48,11 @@ class IP2LocationBinaryTest extends BaseTestCase
         ];
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\InvalidArgument
-     * @expectedExceptionMessage Given IP2Location BIN file "NOT_EXIST.BIN" does not exist.
-     */
     public function testThrowIfNotExistBinaryFileGiven()
     {
+        $this->expectException(\Geocoder\Exception\InvalidArgument::class);
+        $this->expectExceptionMessage('Given IP2Location BIN file "NOT_EXIST.BIN" does not exist.');
+
         new IP2LocationBinary('NOT_EXIST.BIN');
     }
 
@@ -166,23 +165,21 @@ class IP2LocationBinaryTest extends BaseTestCase
         $this->assertEquals('ip2location_binary', $provider->getName());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The IP2LocationBinary provider does not support street addresses.
-     */
     public function testThrowIfInvalidIpAddressGiven()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The IP2LocationBinary provider does not support street addresses.');
+
         $provider = new IP2LocationBinary($this->binaryFile);
 
         $provider->geocodeQuery(GeocodeQuery::create('invalidIp'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The IP2LocationBinary is not able to do reverse geocoding.
-     */
     public function testThrowOnReverseMethodUsage()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The IP2LocationBinary is not able to do reverse geocoding.');
+
         $provider = new IP2LocationBinary($this->binaryFile);
 
         $provider->reverseQuery(ReverseQuery::fromCoordinates(0, 0));
