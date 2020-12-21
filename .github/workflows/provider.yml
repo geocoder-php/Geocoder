@@ -14,10 +14,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: ['7.4', '8.0']
-        deps: ['low', 'high']
-        include:
-          - php-version: '7.3'
+        php-version: ['7.3', '7.4', '8.0']
         provider:
           - AlgoliaPlaces
           - ArcGISOnline
@@ -66,24 +63,15 @@ jobs:
       uses: shivammathur/setup-php@v2
       with:
         php-version: ${{ matrix.php-version }}
-        extensions: curl
+        extensions: curl, geoip
 
     - name: Validate composer.json and composer.lock
       working-directory: ./src/Provider/${{ matrix.provider }}
       run: composer validate
 
     - name: Install dependencies
-      if: ${{ matrix.deps == null }}
       working-directory: ./src/Provider/${{ matrix.provider }}
-      run: composer update --no-progress --prefer-dist
-    - name: Install dependencies (low)
-      if: ${{ matrix.deps == 'low' }}
-      working-directory: ./src/Provider/${{ matrix.provider }}
-      run: composer update --no-progress --prefer-lowest --prefer-stable
-    - name: Install dependencies (high)
-      if: ${{ matrix.deps == 'high' }}
-      working-directory: ./src/Provider/${{ matrix.provider }}
-      run: composer update --no-progress
+      run: composer install --no-progress
 
     - name: Run test suite
       working-directory: ./src/Provider/${{ matrix.provider }}
