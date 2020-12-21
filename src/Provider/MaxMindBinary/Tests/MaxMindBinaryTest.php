@@ -52,12 +52,11 @@ class MaxMindBinaryTest extends BaseTestCase
         ];
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\InvalidArgument
-     * @expectedExceptionMessage Given MaxMind dat file "not_exist.dat" does not exist.
-     */
     public function testThrowIfNotExistBinaryFileGiven()
     {
+        $this->expectException(\Geocoder\Exception\InvalidArgument::class);
+        $this->expectExceptionMessage('Given MaxMind dat file "not_exist.dat" does not exist.');
+
         new MaxMindBinary('not_exist.dat');
     }
 
@@ -162,34 +161,31 @@ class MaxMindBinaryTest extends BaseTestCase
         $this->assertEquals(0, $result->count());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The MaxMindBinary provider does not support IPv6 addresses.
-     */
     public function testThrowIfIpAddressIsNotIpV4()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The MaxMindBinary provider does not support IPv6 addresses.');
+
         $provider = new MaxMindBinary($this->binaryFile);
 
         $provider->geocodeQuery(GeocodeQuery::create('2002:5018:1818:0:0:0:0:0'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The MaxMindBinary provider does not support street addresses.
-     */
     public function testThrowIfInvalidIpAddressGiven()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The MaxMindBinary provider does not support street addresses.');
+
         $provider = new MaxMindBinary($this->binaryFile);
 
         $provider->geocodeQuery(GeocodeQuery::create('invalidIp'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The MaxMindBinary is not able to do reverse geocoding.
-     */
     public function testThrowOnReverseMethodUsage()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The MaxMindBinary is not able to do reverse geocoding.');
+
         $provider = new MaxMindBinary($this->binaryFile);
 
         $provider->reverseQuery(ReverseQuery::fromCoordinates(0, 0));
