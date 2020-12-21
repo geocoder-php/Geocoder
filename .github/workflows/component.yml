@@ -14,18 +14,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: ['7.4', '8.0']
-        deps: [low, high]
+        php-version: ['7.3', '7.4', '8.0']
         component: [Common, Http, Plugin]
-        include:
-          - php-version: '7.3'
-            component: Common
-          - php-version: '7.3'
-            component: Http
-          - php-version: '7.3'
-            component: Plugin
 
-    name: PHP ${{ matrix.php-version }} (${{ matrix.deps }}) / ${{ matrix.component }}
+    name: PHP ${{ matrix.php-version }} / ${{ matrix.component }}
 
     steps:
     - uses: actions/checkout@v2
@@ -41,17 +33,8 @@ jobs:
       run: composer validate
 
     - name: Install dependencies
-      if: ${{ matrix.deps == null }}
       working-directory: ./src/${{ matrix.component }}
-      run: composer update --no-progress --prefer-dist
-    - name: Install dependencies (low)
-      if: ${{ matrix.deps == 'low' }}
-      working-directory: ./src/${{ matrix.component }}
-      run: composer update --no-progress --prefer-lowest --prefer-stable
-    - name: Install dependencies (high)
-      if: ${{ matrix.deps == 'high' }}
-      working-directory: ./src/${{ matrix.component }}
-      run: composer update --no-progress
+      run: composer install --no-progress
 
     - name: Run test suite
       working-directory: ./src/${{ matrix.component }}
