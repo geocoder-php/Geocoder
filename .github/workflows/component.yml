@@ -15,13 +15,11 @@ jobs:
       fail-fast: false
       matrix:
         php-version: ['7.4', '8.0']
-        deps: ['low', 'high']
+        deps: [low, high]
+        component: [Common, Http, Plugin]
         include:
           - php-version: '7.3'
-        component:
-          - Common
-          - Http
-          - Plugin
+            component: [Common, Http, Plugin]
 
     name: ${{ matrix.component }} PHP ${{ matrix.php-version }} (${{ matrix.deps }})
 
