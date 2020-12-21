@@ -54,7 +54,7 @@ jobs:
           - TomTom
           - Yandex
 
-    name: ${{ matrix.provider }} PHP ${{ matrix.php-version }} (${{ matrix.deps }})
+    name: PHP ${{ matrix.php-version }} / ${{ matrix.provider }}
 
     steps:
     - uses: actions/checkout@v2

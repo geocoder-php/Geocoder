@@ -25,7 +25,7 @@ jobs:
           - php-version: '7.3'
             component: Plugin
 
-    name: ${{ matrix.component }} PHP ${{ matrix.php-version }} (${{ matrix.deps }})
+    name: PHP ${{ matrix.php-version }} (${{ matrix.deps }}) / ${{ matrix.component }}
 
     steps:
     - uses: actions/checkout@v2
