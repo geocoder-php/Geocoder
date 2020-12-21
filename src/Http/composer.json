@@ -27,7 +27,7 @@
         "nyholm/psr7": "^1.0",
         "php-http/message": "^1.0",
         "php-http/mock-client": "^1.0",
-        "phpunit/phpunit": "^7.5",
+        "phpunit/phpunit": "^9.5",
         "symfony/stopwatch": "~2.5"
     },
     "extra": {
