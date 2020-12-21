@@ -1,6 +1,11 @@
 language: php
 
-php: 7.2
+matrix:
+    fast_finish: true
+    include:
+        - php: 7.3
+        - php: 7.4
+        - php: 8.0
 
 addons:
     apt_packages:

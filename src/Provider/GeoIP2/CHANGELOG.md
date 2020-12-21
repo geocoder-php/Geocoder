@@ -2,6 +2,20 @@
 
 The change log describes what is "Added", "Removed", "Changed" or "Fixed" between each release.
 
+## 4.2.0
+
+### Added
+
+- Add support for PHP 8.0
+
+### Removed
+
+- Drop support for PHP 7.2
+
+### Changed
+
+- Upgrade PHPUnit to version 9
+
 ## 4.1.0
 
 ### Removed
@@ -12,8 +26,8 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 
 ### Fixed
 
-- Do not create a Country object if both name and code is null 
+- Do not create a Country object if both name and code is null
 
 ## 4.0.0
 
-First release of this library. 
+First release of this library.

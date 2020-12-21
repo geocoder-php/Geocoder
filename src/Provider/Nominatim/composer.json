@@ -21,7 +21,7 @@
     },
     "require-dev": {
         "geocoder-php/provider-integration-tests": "^1.0",
-        "php-http/curl-client": "^1.7",
+        "php-http/curl-client": "^2.2",
         "php-http/message": "^1.0",
         "phpunit/phpunit": "^9.5"
     },
