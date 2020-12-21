@@ -20,7 +20,7 @@
         "geocoder-php/provider-implementation": "1.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^6.1"
+        "phpunit/phpunit": "^9.5"
     },
     "extra": {
         "branch-alias": {

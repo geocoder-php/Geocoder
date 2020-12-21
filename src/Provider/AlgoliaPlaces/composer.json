@@ -24,7 +24,7 @@
         "geocoder-php/provider-integration-tests": "^1.1",
         "php-http/curl-client": "^1.7",
         "php-http/message": "^1.0",
-        "phpunit/phpunit": "^7.5"
+        "phpunit/phpunit": "^9.5"
     },
     "extra": {
         "branch-alias": {
