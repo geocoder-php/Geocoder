@@ -76,6 +76,14 @@ class PhotonTest extends BaseTestCase
         $this->assertEquals('house', $result->getOSMTag()->value);
     }
 
+    public function testGeocodeQueryWithNamedResult()
+    {
+        $provider = Photon::withKomootServer($this->getHttpClient());
+        $namedResults = $provider->geocodeQuery(GeocodeQuery::create('Sherlock Holmes Museum, 221B Baker St, London, England'));
+        $namedResult = $namedResults->first();
+        $this->assertEquals('The Sherlock Holmes Museum and shop', $namedResult->getName());
+    }
+
     public function testReverseQuery()
     {
         $provider = Photon::withKomootServer($this->getHttpClient());
