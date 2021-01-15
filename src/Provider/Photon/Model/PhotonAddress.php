@@ -20,6 +20,11 @@ use Geocoder\Model\Address;
 final class PhotonAddress extends Address
 {
     /**
+     * @var string|null
+     */
+    private $name;
+
+    /**
      * @var int|null
      */
     private $osmId;
@@ -33,6 +38,27 @@ final class PhotonAddress extends Address
      * @var \stdclass|null
      */
     private $osmTag;
+
+    /**
+     * @return string|null
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string|null $name
+     *
+     * @return PhotonAddress
+     */
+    public function withName(string $name = null): self
+    {
+        $new = clone $this;
+        $new->name = $name;
+
+        return $new;
+    }
 
     /**
      * @return int|null
