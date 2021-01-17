@@ -168,6 +168,23 @@ class NominatimTest extends BaseTestCase
         $this->assertEquals('yes', $result->getType());
     }
 
+    public function testGeocodeWithStructuredRequest()
+    {
+        $provider = Nominatim::withOpenStreetMapServer($this->getHttpClient(), 'Geocoder PHP/Nominatim Provider/Nominatim Test');
+
+        $query = GeocodeQuery::create(' ')->withData('state', 'Nevada');
+
+        $results = $provider->geocodeQuery($query);
+
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertCount(1, $results);
+
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results->first();
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals('Nevada, United States', $result->getDisplayName());
+    }
+
     public function testGeocodeNoOSMId()
     {
         $provider = Nominatim::withOpenStreetMapServer($this->getHttpClient(), 'Geocoder PHP/Nominatim Provider/Nominatim Test');
