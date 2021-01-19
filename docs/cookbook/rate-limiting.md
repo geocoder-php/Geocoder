@@ -20,9 +20,8 @@ $stack = \GuzzleHttp\HandlerStack::create();
 $stack->push(\Spatie\GuzzleRateLimiterMiddleware\RateLimiterMiddleware::perSecond(1));
 
 $httpClient = new \GuzzleHttp\Client(['handler' => $stack, 'timeout' => 30.0]);
-$httpAdapter = new \Http\Adapter\Guzzle6\Client($httpClient);
 $psr6Cache = new \Cache\Adapter\PHPArray\ArrayCachePool();
-$provider = new \Geocoder\Provider\Nominatim\Nominatim($httpAdapter, 'https://nominatim.openstreetmap.org', 'Geocoder test');
+$provider = new \Geocoder\Provider\Nominatim\Nominatim($httpClient, 'https://nominatim.openstreetmap.org', 'Geocoder test');
 $cachedProvider = new \Geocoder\Provider\Cache\ProviderCache($provider, $psr6Cache);
 $geocoder = new \Geocoder\StatefulGeocoder($cachedProvider, 'en');
 

@@ -24,7 +24,7 @@ use Geocoder\Provider\GoogleMaps\Model\GoogleAddress;
 use Geocoder\Provider\Provider;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Http\Client\HttpClient;
+use Psr\Http\Client\ClientInterface;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -71,17 +71,17 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
      * https://developers.google.com/maps/documentation/business/
      * Maps for Business is no longer accepting new signups.
      *
-     * @param HttpClient $client     An HTTP adapter
-     * @param string     $clientId   Your Client ID
-     * @param string     $privateKey Your Private Key (optional)
-     * @param string     $region     Region biasing (optional)
-     * @param string     $apiKey     Google Geocoding API key (optional)
-     * @param string     $channel    Google Channel parameter (optional)
+     * @param ClientInterface $client     An HTTP adapter
+     * @param string          $clientId   Your Client ID
+     * @param string          $privateKey Your Private Key (optional)
+     * @param string          $region     Region biasing (optional)
+     * @param string          $apiKey     Google Geocoding API key (optional)
+     * @param string          $channel    Google Channel parameter (optional)
      *
      * @return GoogleMaps
      */
     public static function business(
-        HttpClient $client,
+        ClientInterface $client,
         string $clientId,
         string $privateKey = null,
         string $region = null,
@@ -97,11 +97,11 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * @param HttpClient $client An HTTP adapter
-     * @param string     $region Region biasing (optional)
-     * @param string     $apiKey Google Geocoding API key (optional)
+     * @param ClientInterface $client An HTTP adapter
+     * @param string          $region Region biasing (optional)
+     * @param string          $apiKey Google Geocoding API key (optional)
      */
-    public function __construct(HttpClient $client, string $region = null, string $apiKey = null)
+    public function __construct(ClientInterface $client, string $region = null, string $apiKey = null)
     {
         parent::__construct($client);
 

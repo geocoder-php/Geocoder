@@ -8,12 +8,12 @@
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 
 This is the Google Maps provider from the PHP Geocoder. This is a **READ ONLY** repository. See the
-[main repo](https://github.com/geocoder-php/Geocoder) for information and documentation. 
+[main repo](https://github.com/geocoder-php/Geocoder) for information and documentation.
 
 ## Usage
 
 ```php
-$httpClient = new \Http\Adapter\Guzzle6\Client();
+$httpClient = new \GuzzleHttp\Client();
 
 // You must provide an API key
 $provider = new \Geocoder\Provider\GoogleMaps\GoogleMaps($httpClient, null, 'your-api-key');
@@ -31,7 +31,7 @@ can use the static `business` method on the provider to create a client:
 
 ```php
 
-$httpClient = new \Http\Adapter\Guzzle6\Client();
+$httpClient = new \GuzzleHttp\Client();
 
 // Client ID is required. Private key is optional.
 $provider = \Geocoder\Provider\GoogleMaps\GoogleMaps::business($httpClient, 'your-client-id', 'your-private-key');
@@ -49,5 +49,5 @@ composer require geocoder-php/google-maps-provider
 
 ### Contribute
 
-Contributions are very welcome! Send a pull request to the [main repository](https://github.com/geocoder-php/Geocoder) or 
+Contributions are very welcome! Send a pull request to the [main repository](https://github.com/geocoder-php/Geocoder) or
 report any issues you find on the [issue tracker](https://github.com/geocoder-php/Geocoder/issues).

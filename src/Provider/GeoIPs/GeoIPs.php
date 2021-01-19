@@ -24,7 +24,7 @@ use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Provider\Provider;
-use Http\Client\HttpClient;
+use Psr\Http\Client\ClientInterface;
 
 /**
  * @author Andrea Cristaudo <andrea.cristaudo@gmail.com>
@@ -62,10 +62,10 @@ final class GeoIPs extends AbstractHttpProvider implements Provider
     /**
      * @deprecated The GeoIPs provider has shut down
      *
-     * @param HttpClient $client An HTTP adapter
-     * @param string     $apiKey An API key
+     * @param ClientInterface $client An HTTP adapter
+     * @param string          $apiKey An API key
      */
-    public function __construct(HttpClient $client, string $apiKey)
+    public function __construct(ClientInterface $client, string $apiKey)
     {
         if (empty($apiKey)) {
             throw new InvalidCredentials('No API key provided.');

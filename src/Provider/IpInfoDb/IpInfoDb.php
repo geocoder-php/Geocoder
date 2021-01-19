@@ -22,7 +22,7 @@ use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Provider\Provider;
-use Http\Client\HttpClient;
+use Psr\Http\Client\ClientInterface;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -50,13 +50,13 @@ final class IpInfoDb extends AbstractHttpProvider implements Provider
     private $endpointUrl;
 
     /**
-     * @param HttpClient $client    an HTTP adapter
-     * @param string     $apiKey    an API key
-     * @param string     $precision The endpoint precision. Either "city" or "country" (faster)
+     * @param ClientInterface $client    an HTTP adapter
+     * @param string          $apiKey    an API key
+     * @param string          $precision The endpoint precision. Either "city" or "country" (faster)
      *
      * @throws \Geocoder\Exception\InvalidArgument
      */
-    public function __construct(HttpClient $client, string $apiKey, string $precision = 'city')
+    public function __construct(ClientInterface $client, string $apiKey, string $precision = 'city')
     {
         parent::__construct($client);
 

@@ -28,7 +28,7 @@ use Geocoder\Model\Country;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\Provider;
-use Http\Client\HttpClient;
+use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -100,12 +100,12 @@ final class MapQuest extends AbstractHttpProvider implements Provider
     private $apiKey;
 
     /**
-     * @param HttpClient $client          an HTTP adapter
-     * @param string     $apiKey          an API key
-     * @param bool       $licensed        true to use MapQuest's licensed endpoints, default is false to use the open endpoints (optional)
-     * @param bool       $useRoadPosition true to use nearest point on a road for the entrance, false to use map display position
+     * @param ClientInterface $client          an HTTP adapter
+     * @param string          $apiKey          an API key
+     * @param bool            $licensed        true to use MapQuest's licensed endpoints, default is false to use the open endpoints (optional)
+     * @param bool            $useRoadPosition true to use nearest point on a road for the entrance, false to use map display position
      */
-    public function __construct(HttpClient $client, string $apiKey, bool $licensed = false, bool $useRoadPosition = false)
+    public function __construct(ClientInterface $client, string $apiKey, bool $licensed = false, bool $useRoadPosition = false)
     {
         if (empty($apiKey)) {
             throw new InvalidCredentials('No API key provided.');

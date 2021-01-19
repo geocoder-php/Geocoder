@@ -8,7 +8,7 @@
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 
 This is the Yandex provider from the PHP Geocoder. This is a **READ ONLY** repository. See the
-[main repo](https://github.com/geocoder-php/Geocoder) for information and documentation. 
+[main repo](https://github.com/geocoder-php/Geocoder) for information and documentation.
 
 ### Install
 
@@ -21,7 +21,7 @@ composer require geocoder-php/yandex-provider
 The API now requires an API key. [See here for more information](https://yandex.ru/blog/mapsapi/novye-pravila-dostupa-k-api-kart?from=tech_pp).
 
 ```php
-$httpClient = new \Http\Adapter\Guzzle6\Client();
+$httpClient = new \GuzzleHttp\Client();
 $provider = new \Geocoder\Provider\Yandex\Yandex($httpClient, null, '<your-api-key>);
 
 $result = $geocoder->geocodeQuery(GeocodeQuery::create('ул.Ленина, 19, Минск 220030, Республика Беларусь'));
@@ -31,12 +31,12 @@ $result = $geocoder->reverseQuery(ReverseQuery::fromCoordinates(...));
 ### Note
 
 The default language-locale is `ru-RU`, you can choose between `uk-UA`, `be-BY`,
-`en-US`, `en-BR` and `tr-TR`. 
+`en-US`, `en-BR` and `tr-TR`.
 
 It's possible to precise the toponym to get more accurate result for reverse geocoding:
 `house`, `street`, `metro`, `district` and `locality`.
 
 ### Contribute
 
-Contributions are very welcome! Send a pull request to the [main repository](https://github.com/geocoder-php/Geocoder) or 
+Contributions are very welcome! Send a pull request to the [main repository](https://github.com/geocoder-php/Geocoder) or
 report any issues you find on the [issue tracker](https://github.com/geocoder-php/Geocoder/issues).
