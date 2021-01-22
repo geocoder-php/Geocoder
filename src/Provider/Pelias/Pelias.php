@@ -23,6 +23,14 @@ use Geocoder\Query\ReverseQuery;
 use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Provider\Provider;
 use Http\Client\HttpClient;
+use function array_merge;
+use function count;
+use function filter_var;
+use function http_build_query;
+use function json_decode;
+use function rtrim;
+use function sprintf;
+use function strtoupper;
 
 class Pelias extends AbstractHttpProvider implements Provider
 {
@@ -125,11 +133,12 @@ class Pelias extends AbstractHttpProvider implements Provider
      * @param $url
      *
      * @return Collection
+     * @throws \JsonException
      */
     protected function executeQuery(string $url): AddressCollection
     {
         $content = $this->getUrlContents($url);
-        $json = json_decode($content, true);
+        $json = json_decode($content, true, 512, JSON_THROW_ON_ERROR);
 
         if (isset($json['meta'])) {
             switch ($json['meta']['status_code']) {
@@ -179,7 +188,11 @@ class Pelias extends AbstractHttpProvider implements Provider
             $adminLevels = [];
             foreach (['region', 'county', 'locality', 'macroregion', 'country'] as $i => $component) {
                 if (isset($props[$component])) {
-                    $adminLevels[] = ['name' => $props[$component], 'level' => $i + 1];
+                    $adminLevels[] = [
+                        'name' => $props[$component],
+                        'level' => $i + 1,
+                        'code' => $props[sprintf('%s_a', $component)] ?? null,
+                    ];
                 }
             }
 
