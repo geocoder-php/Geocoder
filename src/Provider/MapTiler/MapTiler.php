@@ -110,8 +110,7 @@ final class MapTiler extends AbstractHttpProvider implements Provider
     {
         $builder = new AddressBuilder($this->getName());
 
-        $properties = $feature->properties;
-        $coordinates = 'Point' === $feature->geometry->type ? $feature->geometry->coordinates : $properties->center;
+        $coordinates = 'Point' === $feature->geometry->type ? $feature->geometry->coordinates : $feature->center;
 
         $builder->setCoordinates(floatval($coordinates[1]), floatval($coordinates[0]));
 
