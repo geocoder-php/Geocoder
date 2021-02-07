@@ -64,7 +64,7 @@ final class MapTiler extends AbstractHttpProvider implements Provider
 
         $url = sprintf(self::ENDPOINT_URL, $address, $this->apiKey);
 
-        $json = $this->executeQuery($url, $query->getLocale());
+        $json = $this->executeQuery($url, $query->getLocale(), $query->getBounds());
 
         if (!isset($json->features) || empty($json->features)) {
             return new AddressCollection([]);
@@ -143,11 +143,12 @@ final class MapTiler extends AbstractHttpProvider implements Provider
      *
      * @return \stdClass
      */
-    private function executeQuery(string $url, string $locale = null): \stdClass
+    private function executeQuery(string $url, string $locale = null, Bounds $bounds = null): \stdClass
     {
-        if (!is_null($locale)) {
-            $url .= '&'.http_build_query(['language' => $locale]);
-        }
+        $url .= '&'.http_build_query([
+            'language' => $locale,
+            'bbox' => !is_null($bounds) ? implode(',', $bounds->toArray()) : null,
+        ]);
 
         $content = $this->getUrlContents($url);
 
