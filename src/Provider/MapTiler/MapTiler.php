@@ -111,7 +111,7 @@ final class MapTiler extends AbstractHttpProvider implements Provider
         $builder = new AddressBuilder($this->getName());
 
         $properties = $feature->properties;
-        $coordinates = $feature->geometry->type === 'Point' ? $feature->geometry->coordinates : $properties->center;
+        $coordinates = 'Point' === $feature->geometry->type ? $feature->geometry->coordinates : $properties->center;
 
         $builder->setCoordinates(floatval($coordinates[1]), floatval($coordinates[0]));
 
@@ -146,7 +146,7 @@ final class MapTiler extends AbstractHttpProvider implements Provider
     private function executeQuery(string $url, string $locale = null): \stdClass
     {
         if (!is_null($locale)) {
-            $url .= '&' . http_build_query([ 'language' => $locale ]);
+            $url .= '&'.http_build_query(['language' => $locale]);
         }
 
         $content = $this->getUrlContents($url);

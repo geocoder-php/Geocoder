@@ -36,7 +36,7 @@ class MapTilerTest extends BaseTestCase
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The MapTiler provider does not support IP addresses.');
 
-        $provider =  new MapTiler($this->getMockedHttpClient(), $_SERVER['MAPTILER_KEY']);
+        $provider = new MapTiler($this->getMockedHttpClient(), $_SERVER['MAPTILER_KEY']);
         $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
     }
 
@@ -49,7 +49,7 @@ class MapTilerTest extends BaseTestCase
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The MapTiler provider does not support IP addresses.');
 
-        $provider =  new MapTiler($this->getMockedHttpClient(), $_SERVER['MAPTILER_KEY']);
+        $provider = new MapTiler($this->getMockedHttpClient(), $_SERVER['MAPTILER_KEY']);
         $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
@@ -62,7 +62,7 @@ class MapTilerTest extends BaseTestCase
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The MapTiler provider does not support IP addresses.');
 
-        $provider =  new MapTiler($this->getMockedHttpClient(), $_SERVER['MAPTILER_KEY']);
+        $provider = new MapTiler($this->getMockedHttpClient(), $_SERVER['MAPTILER_KEY']);
         $provider->geocodeQuery(GeocodeQuery::create('::ffff:88.188.221.14'));
     }
 
@@ -72,7 +72,7 @@ class MapTilerTest extends BaseTestCase
             $this->markTestSkipped('You need to configure the MAPTILER_KEY value in phpunit.xml');
         }
 
-        $provider =  new MapTiler($this->getMockedHttpClient(), $_SERVER['MAPTILER_KEY']);
+        $provider = new MapTiler($this->getMockedHttpClient(), $_SERVER['MAPTILER_KEY']);
         $results = $provider->geocodeQuery(GeocodeQuery::create('Avenue Gambetta Paris France'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -100,7 +100,7 @@ class MapTilerTest extends BaseTestCase
             $this->markTestSkipped('You need to configure the MAPTILER_KEY value in phpunit.xml');
         }
 
-        $provider =  new MapTiler($this->getMockedHttpClient(), $_SERVER['MAPTILER_KEY']);
+        $provider = new MapTiler($this->getMockedHttpClient(), $_SERVER['MAPTILER_KEY']);
         $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(52, 10));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
