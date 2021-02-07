@@ -134,11 +134,17 @@ final class MapTiler extends AbstractHttpProvider implements Provider
 
     private function extractFromContext(AddressBuilder &$builder, array $context): AddressBuilder
     {
-        $cityContext = array_filter($context, function ($c) { return preg_match('/^city\.\d+$/', $c->id) === 1; });
-        if (count($cityContext) > 0) { $city = current($cityContext); $builder->setLocality($city->text); }
+        $cityContext = array_filter($context, function ($c) { return 1 === preg_match('/^city\.\d+$/', $c->id); });
+        if (count($cityContext) > 0) {
+            $city = current($cityContext);
+            $builder->setLocality($city->text);
+        }
 
-        $countryContext = array_filter($context, function ($c) { return preg_match('/^country\.\d+$/', $c->id) === 1; });
-        if (count($countryContext) > 0) { $country = current($countryContext); $builder->setCountry($country->text); }
+        $countryContext = array_filter($context, function ($c) { return 1 === preg_match('/^country\.\d+$/', $c->id); });
+        if (count($countryContext) > 0) {
+            $country = current($countryContext);
+            $builder->setCountry($country->text);
+        }
 
         return $builder;
     }
