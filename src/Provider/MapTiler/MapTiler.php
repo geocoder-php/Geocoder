@@ -127,7 +127,20 @@ final class MapTiler extends AbstractHttpProvider implements Provider
             $builder->setBounds($feature->bbox[0], $feature->bbox[2], $feature->bbox[1], $feature->bbox[3]);
         }
 
+        $this->extractFromContext($builder, $feature->context ?? []);
+
         return $builder->build();
+    }
+
+    private function extractFromContext(AddressBuilder &$builder, array $context): AddressBuilder
+    {
+        $cityContext = array_filter($context, function ($c) { return preg_match('/^city\.\d+$/', $c->id) === 1; });
+        if (count($cityContext) > 0) { $city = current($cityContext); $builder->setLocality($city->text); }
+
+        $countryContext = array_filter($context, function ($c) { return preg_match('/^country\.\d+$/', $c->id) === 1; });
+        if (count($countryContext) > 0) { $country = current($countryContext); $builder->setCountry($country->text); }
+
+        return $builder;
     }
 
     /**
