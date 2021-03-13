@@ -33,7 +33,7 @@ jobs:
           - Here
           - HostIp
           - IP2Location
-          - IP2LocationBinary
+          # - IP2LocationBinary
           - IpInfo
           - IpInfoDb
           - Ipstack
