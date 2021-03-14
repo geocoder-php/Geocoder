@@ -89,7 +89,7 @@ jobs:
       run: composer validate
     - name: Install dependencies
       working-directory: ./src/Provider/${{ matrix.provider }}
-      run: composer install --no-progress
+      run: composer update --no-progress
     - name: Run test suite
       working-directory: ./src/Provider/${{ matrix.provider }}
       run: composer run-script test
