@@ -188,7 +188,7 @@ class GeocodeEarthTest extends BaseTestCase
         $this->assertCount(4, $result->getAdminLevels());
         $this->assertEquals('Frankfurt', $result->getAdminLevels()->get(2)->getName());
         $this->assertEquals('Hessen', $result->getAdminLevels()->get(1)->getName());
-        $this->assertNull($result->getAdminLevels()->get(1)->getCode());
+        $this->assertEquals('HE', $result->getAdminLevels()->get(1)->getCode());
         $this->assertEquals('Germany', $result->getCountry()->getName());
         $this->assertEquals('DEU', $result->getCountry()->getCode());
     }
