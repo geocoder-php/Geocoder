@@ -77,6 +77,7 @@ class Pelias extends AbstractHttpProvider implements Provider
         $data = [
             'text' => $address,
             'size' => $query->getLimit(),
+            'lang' => $query->getLocale() ?? 'en',
         ];
 
         return sprintf('%s/search?%s', $this->root, http_build_query(array_merge($data, $query_data)));
@@ -108,6 +109,7 @@ class Pelias extends AbstractHttpProvider implements Provider
             'point.lat' => $latitude,
             'point.lon' => $longitude,
             'size' => $query->getLimit(),
+            'lang' => $query->getLocale() ?? 'en',
         ];
 
         return sprintf('%s/reverse?%s', $this->root, http_build_query(array_merge($data, $query_data)));
