@@ -198,20 +198,23 @@ class Pelias extends AbstractHttpProvider implements Provider
                 }
             }
 
-            $results[] = Address::createFromArray([
-                'providedBy' => $this->getName(),
-                'latitude' => $location['geometry']['coordinates'][1],
-                'longitude' => $location['geometry']['coordinates'][0],
-                'bounds' => $bounds,
-                'streetNumber' => isset($props['housenumber']) ? $props['housenumber'] : null,
-                'streetName' => isset($props['street']) ? $props['street'] : null,
-                'subLocality' => isset($props['neighbourhood']) ? $props['neighbourhood'] : null,
-                'locality' => isset($props['locality']) ? $props['locality'] : null,
-                'postalCode' => isset($props['postalcode']) ? $props['postalcode'] : null,
-                'adminLevels' => $adminLevels,
-                'country' => isset($props['country']) ? $props['country'] : null,
-                'countryCode' => isset($props['country_a']) ? strtoupper($props['country_a']) : null,
-            ]);
+            $results[] = PeliasAddress
+                ::createFromArray([
+                    'providedBy' => $this->getName(),
+                    'latitude' => $location['geometry']['coordinates'][1],
+                    'longitude' => $location['geometry']['coordinates'][0],
+                    'bounds' => $bounds,
+                    'streetNumber' => $props['housenumber'] ?? null,
+                    'streetName' => $props['street'] ?? null,
+                    'subLocality' => $props['neighbourhood'] ?? null,
+                    'locality' => $props['locality'] ?? null,
+                    'postalCode' => $props['postalcode'] ?? null,
+                    'adminLevels' => $adminLevels,
+                    'country' => $props['country'] ?? null,
+                    'countryCode' => isset($props['country_a']) ? strtoupper($props['country_a']) : null,
+                ])
+                ->withGID($props['gid'] ?? null)
+                ->withSource($props['source'] ?? null);
         }
 
         return new AddressCollection($results);
