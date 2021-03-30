@@ -101,7 +101,7 @@ class PeliasTest extends BaseTestCase
     public function testGeocodeWithInvalidLayer(): void
     {
         $this->expectException(LogicException::class);
-        $this->expectExceptionMessage('Invalid layers found. Valid layers are: ' . implode(', ', Pelias::VALID_LAYERS));
+        $this->expectExceptionMessage('Invalid layers found. Valid layers are: '.implode(', ', Pelias::VALID_LAYERS));
 
         $provider = new Pelias($this->getMockedHttpClient(), 'http://localhost/');
         $provider->geocodeQuery(GeocodeQuery::create('foobar')

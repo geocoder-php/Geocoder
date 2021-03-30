@@ -1,8 +1,6 @@
 <?php
 
-namespace Geocoder\Provider\Pelias;
-
-use Geocoder\Model\Address;
+declare(strict_types=1);
 
 /*
  * This file is part of the Geocoder package.
@@ -11,6 +9,10 @@ use Geocoder\Model\Address;
  *
  * @license    MIT License
  */
+
+namespace Geocoder\Provider\Pelias;
+
+use Geocoder\Model\Address;
 
 final class PeliasAddress extends Address
 {
