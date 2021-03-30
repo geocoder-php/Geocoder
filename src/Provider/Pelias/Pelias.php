@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Geocoder\Provider\Pelias;
 
 use Geocoder\Collection;
+use Geocoder\Exception\Exception;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\LogicException;
 use Geocoder\Exception\QuotaExceeded;
@@ -23,19 +24,18 @@ use Geocoder\Provider\Provider;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Http\Client\HttpClient;
+use JsonException;
 use function array_diff;
 use function array_merge;
 use function count;
 use function filter_var;
 use function http_build_query;
 use function implode;
-use function in_array;
 use function is_array;
 use function json_decode;
 use function rtrim;
 use function sprintf;
 use function strtoupper;
-use function var_dump;
 
 class Pelias extends AbstractHttpProvider implements Provider
 {
@@ -100,7 +100,7 @@ class Pelias extends AbstractHttpProvider implements Provider
      *
      * @return string
      *
-     * @throws \Geocoder\Exception\Exception
+     * @throws Exception
      */
     protected function getGeocodeQueryUrl(GeocodeQuery $query, array $query_data = []): string
     {
@@ -135,7 +135,7 @@ class Pelias extends AbstractHttpProvider implements Provider
      *
      * @return string
      *
-     * @throws \Geocoder\Exception\Exception
+     * @throws Exception
      */
     protected function getReverseQueryUrl(ReverseQuery $query, array $query_data = []): string
     {
@@ -173,7 +173,8 @@ class Pelias extends AbstractHttpProvider implements Provider
      * @param $url
      *
      * @return Collection
-     * @throws \JsonException
+     *
+     * @throws JsonException
      */
     protected function executeQuery(string $url): AddressCollection
     {
@@ -330,7 +331,7 @@ class Pelias extends AbstractHttpProvider implements Provider
 
         $invalidLayers = array_diff($layers, self::VALID_LAYERS);
         if (!empty($invalidLayers)) {
-            throw new LogicException('Invalid layers found. Valid layers are: ' . implode(', ', self::VALID_LAYERS));
+            throw new LogicException('Invalid layers found. Valid layers are: '.implode(', ', self::VALID_LAYERS));
         }
 
         return implode(',', $layers);

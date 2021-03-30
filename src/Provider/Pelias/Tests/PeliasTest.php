@@ -12,17 +12,14 @@ declare(strict_types=1);
 
 namespace Geocoder\Provider\Pelias\Tests;
 
-use Geocoder\Collection;
 use Geocoder\Exception\LogicException;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Provider\Pelias\Pelias;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use function http_build_query;
 use function implode;
 use function urlencode;
-use function var_dump;
 
 class PeliasTest extends BaseTestCase
 {

@@ -4,6 +4,14 @@ namespace Geocoder\Provider\Pelias;
 
 use Geocoder\Model\Address;
 
+/*
+ * This file is part of the Geocoder package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license    MIT License
+ */
+
 final class PeliasAddress extends Address
 {
     /**
@@ -26,6 +34,7 @@ final class PeliasAddress extends Address
 
     /**
      * @param string|null $gid
+     *
      * @return PeliasAddress
      */
     public function withGID(string $gid = null): PeliasAddress
@@ -46,6 +55,7 @@ final class PeliasAddress extends Address
 
     /**
      * @param string|null $source
+     *
      * @return PeliasAddress
      */
     public function withSource(string $source = null): PeliasAddress
