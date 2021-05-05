@@ -32,7 +32,7 @@ final class LocationIQ extends AbstractHttpProvider implements Provider
     /**
      * @var string
      */
-    const BASE_API_URL = 'https://locationiq.org/v1';
+    const BASE_API_URL = 'https://api.locationiq.com/v1';
 
     /**
      * @var string
@@ -59,14 +59,48 @@ final class LocationIQ extends AbstractHttpProvider implements Provider
      */
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
-        $address = $query->getText();
+        if ($query->getData('autocomplete') == true) {
+            return $this->autocompleteQuery($query);
+        } else {
+            return $this->searchQuery($query);
+        }
+    }
 
-        $url = sprintf($this->getGeocodeEndpointUrl(), urlencode($address), $query->getLimit());
+    /**
+     * {@inheritdoc}
+     */
+    private function autocompleteQuery(GeocodeQuery $query): Collection
+    {
+        $address = $query->getText();
+        $countrycodes = $query->getData('countrycodes');
+        $tag = $query->getData('tag');
+        $url = sprintf($this->getGeocodeAutocompleteEndpointUrl(), urlencode($address), $query->getLimit(), $countrycodes, $tag);
+
+        $content = $this->executeQuery($url, $query->getLocale());
+        $places = json_decode($content, true);
+
+        $results = [];
+        foreach ($places as $place) {
+            $results[] = $this->arrayResultToArray($place);
+        }
+
+        return new AddressCollection($results);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    private function searchQuery(GeocodeQuery $query): Collection
+    {
+        $address = $query->getText();
+        $countrycodes = $query->getData('countrycodes');
+        $tag = $query->getData('tag');
+        $url = sprintf($this->getGeocodeSearchEndpointUrl(), urlencode($address), $query->getLimit(), $countrycodes, $tag);
 
         $content = $this->executeQuery($url, $query->getLocale());
 
         $doc = new \DOMDocument();
-        if (!@$doc->loadXML($content) || null === $doc->getElementsByTagName('searchresults')->item(0)) {
+        if (!@$doc->loadXML($content) || null === $doc->getElementsByTagName('searchresults')-> item(0)) {
             throw InvalidServerResponse::create($url);
         }
 
@@ -106,6 +140,49 @@ final class LocationIQ extends AbstractHttpProvider implements Provider
         $result = $searchResult->getElementsByTagName('result')->item(0);
 
         return new AddressCollection([$this->xmlResultToArray($result, $addressParts)]);
+    }
+
+    /**
+     * @param array $arrayResult
+     * @return Location
+     */
+    private function arrayResultToArray(array $arrayResult): Location
+    {
+        $builder = new AddressBuilder($this->getName());
+
+        $builder->setPostalCode($arrayResult['address']['postcode'] ?? null);
+        $builder->setSubLocality($arrayResult['address']['suburb'] ?? null);
+        $builder->setCountry($arrayResult['address']['country'] ?? null);
+        $builder->setCoordinates($arrayResult['lat'], $arrayResult['lon']);
+
+        if ($arrayResult['osm_type'] == 'way') {
+            $builder->setStreetName($arrayResult['address']['name']);
+            $builder->setStreetNumber($arrayResult['address']['house_number'] ?? null);
+        }
+
+        if ($countryCode = $arrayResult['address']['country_code']) {
+            $builder->setCountryCode(strtoupper($countryCode));
+        }
+
+        if (!empty($arrayResult['boundingbox'])) {
+            $builder->setBounds($arrayResult['boundingbox'][0], $arrayResult['boundingbox'][1], $arrayResult['boundingbox'][2], $arrayResult['boundingbox'][3]);
+        }
+
+        if (in_array($arrayResult['type'], ['city', 'town', 'administrative'])) {
+            $builder->setLocality($arrayResult['address']['name']);
+            $builder->addAdminLevel(2, $arrayResult['address']['name']);
+        } else if (!empty($arrayResult['address']['city'])) {
+            $builder->setLocality($arrayResult['address']['city']);
+            $builder->addAdminLevel(2, $arrayResult['address']['city']);
+        }
+
+        if ($arrayResult['type'] == 'state') {
+            $builder->addAdminLevel(1, $arrayResult['address']['name']);
+        } else if(!empty($arrayResult['address']['state'])) {
+            $builder->addAdminLevel(1, $arrayResult['address']['state']);
+        }
+
+        return $builder->build();
     }
 
     /**
@@ -175,9 +252,14 @@ final class LocationIQ extends AbstractHttpProvider implements Provider
         return $this->getUrlContents($url);
     }
 
-    private function getGeocodeEndpointUrl(): string
+    private function getGeocodeSearchEndpointUrl(): string
     {
-        return self::BASE_API_URL.'/search.php?q=%s&format=xmlv1.1&addressdetails=1&normalizecity=1&limit=%d&key='.$this->apiKey;
+        return self::BASE_API_URL.'/search.php?q=%s&format=xmlv1.1&addressdetails=1&normalizecity=1&limit=%d&countrycodes=%s&tag=%s&key='.$this->apiKey;
+    }
+
+    private function getGeocodeAutocompleteEndpointUrl(): string
+    {
+        return self::BASE_API_URL.'/autocomplete.php?q=%s&addressdetails=1&normalizecity=1&limit=%d&countrycodes=%s&tag=%s&key='.$this->apiKey;
     }
 
     private function getReverseEndpointUrl(): string
