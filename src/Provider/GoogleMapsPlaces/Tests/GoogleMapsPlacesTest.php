@@ -18,9 +18,11 @@ use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Provider\GoogleMapsPlaces\GoogleMapsPlaces;
 use Geocoder\Provider\GoogleMapsPlaces\Model\GooglePlace;
+use Geocoder\Provider\GoogleMapsPlaces\Model\GooglePlaceAutocomplete;
 use Geocoder\Provider\GoogleMapsPlaces\Model\OpeningHours;
 use Geocoder\Provider\GoogleMapsPlaces\Model\Photo;
 use Geocoder\Provider\GoogleMapsPlaces\Model\PlusCode;
+use Geocoder\Provider\GoogleMapsPlaces\Model\StructuredFormatting;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 
@@ -172,6 +174,48 @@ class GoogleMapsPlacesTest extends BaseTestCase
         $this->assertSame('ChIJ5_ZqMHsUc2sRHgfnw5D1FlY', $resultOne->getId());
         $this->assertSame('Reserve', $resultOne->getName());
         $this->assertSame('102 Hunter St, Newcastle NSW 2300, Australia', $resultOne->getFormattedAddress());
+    }
+
+    public function testGeocodePlaceAutocompleteMode()
+    {
+        $provider = $this->getGoogleMapsProvider();
+        $query = GeocodeQuery::create('Paris')
+            ->withData('mode', GoogleMapsPlaces::GEOCODE_MODE_AUTOCOMPLETE)
+            ->withData('types', '(cities)')
+            ->withData('components', 'country:fr')
+            ->withData('language', 'fr')
+        ;
+
+        $results = $provider->geocodeQuery($query);
+        $this->assertCount(5, $results);
+        /**
+         * @var GooglePlaceAutocomplete $result
+         */
+        $result = $results->first();
+        $this->assertInstanceOf(GooglePlaceAutocomplete::class, $result);
+        $this->assertSame('ChIJD7fiBh9u5kcRYJSMaMOCCwQ', $result->getId());
+        $this->assertSame('Paris, France', $result->getDescription());
+        $this->assertInstanceOf(StructuredFormatting::class, $result->getStructuredFormatting());
+        $this->assertIsArray($result->getMatchedSubstrings());
+        $this->assertIsArray($result->getTerms());
+        $this->assertIsArray($result->getTypes());
+
+        $this->assertSame(
+            [['length' => 5, 'offset' => 0]],
+            $result->getMatchedSubstrings()
+        );
+        $this->assertSame(
+            [
+                ['offset' => 0, 'value' => 'Paris'],
+                ['offset' => 7, 'value' => 'France']
+            ],
+            $result->getTerms()
+        );
+        $this->assertSame([
+            'locality',
+            'political',
+            'geocode'
+        ], $result->getTypes());
     }
 
     public function testReverseGeocodePlaceSearchWithoutType()

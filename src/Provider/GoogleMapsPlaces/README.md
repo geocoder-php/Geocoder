@@ -54,6 +54,29 @@ $results = $provider->geocodeQuery(
 );
 ```
 
+#### Autocomplete mode
+This mode will perform an autocomplete search based on the input text. Very useful to search for places with a partial or
+limited textual entry. Or to return location proposals while a user is typing.
+
+Anyway, you can do this like this:
+```php
+$results = $provider->geocodeQuery(
+    GeocodeQuery::create('Par')
+        ->withData('mode', GoogleMapsPlaces::GEOCODE_MODE_AUTOCOMPLETE)
+        ->withData('types', '(cities)')
+        ->withData('components', 'country:fr')
+);
+```
+
+This query returns a list of French cities that contain 'Par' in their name (we can imagine that it returns 'Paris' first).
+To know all optional parameters you can set, see [Google Place Autocomplete documentation](https://developers.google.com/maps/documentation/places/web-service/autocomplete).
+
+We recommended to set `sessiontoken` parameters ([see doc](https://developers.google.com/maps/documentation/places/web-service/autocomplete#session_tokens)),
+If you need to retrieve the details of the autocompleted location.  
+
+This request return a list of `GooglePlaceAutocomplete` objects, corresponding to the Google Place API response. See this class
+or [Google Place API documentation](https://developers.google.com/maps/documentation/places/web-service/autocomplete#place_autocomplete_responses) for the returned values.
+
 ### Reverse Geocoding
 Three options available for reverse geocoding of latlon coordinates:
 

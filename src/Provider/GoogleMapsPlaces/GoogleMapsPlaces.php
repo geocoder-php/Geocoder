@@ -22,9 +22,11 @@ use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Model\AddressBuilder;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Provider\GoogleMapsPlaces\Model\GooglePlace;
+use Geocoder\Provider\GoogleMapsPlaces\Model\GooglePlaceAutocomplete;
 use Geocoder\Provider\GoogleMapsPlaces\Model\OpeningHours;
 use Geocoder\Provider\GoogleMapsPlaces\Model\Photo;
 use Geocoder\Provider\GoogleMapsPlaces\Model\PlusCode;
+use Geocoder\Provider\GoogleMapsPlaces\Model\StructuredFormatting;
 use Geocoder\Provider\Provider;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\Query;
@@ -55,6 +57,11 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
     /**
      * @var string
      */
+    const AUTOCOMPLETE_ENDPOINT_URL_SSL = 'https://maps.googleapis.com/maps/api/place/autocomplete/json';
+
+    /**
+     * @var string
+     */
     const GEOCODE_MODE_FIND = 'find';
 
     /**
@@ -70,10 +77,19 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
     /**
      * @var string
      */
+    const GEOCODE_MODE_AUTOCOMPLETE = 'autocomplete';
+
+    /**
+     * @var string
+     */
     const DEFAULT_GEOCODE_MODE = self::GEOCODE_MODE_FIND;
 
     /**
      * @var string
+     *
+     * Notice: The Places field permanently_closed is deprecated as of May 26, 2020, and will be turned off on May 26, 2021.
+     * Use the business_status field to return the operational status of businesses.
+     * @see: https://developers.google.com/maps/documentation/places/web-service/search
      */
     const DEFAULT_FIELDS = 'formatted_address,geometry,icon,name,permanently_closed,photos,place_id,plus_code,types';
 
@@ -113,6 +129,10 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
 
         if (self::GEOCODE_MODE_SEARCH === $query->getData('mode', self::DEFAULT_GEOCODE_MODE)) {
             return $this->fetchUrl(self::SEARCH_ENDPOINT_URL_SSL, $this->buildPlaceSearchQuery($query));
+        }
+
+        if (self::GEOCODE_MODE_AUTOCOMPLETE === $query->getData('mode', self::DEFAULT_GEOCODE_MODE)) {
+            return $this->fetchUrl(self::AUTOCOMPLETE_ENDPOINT_URL_SSL, $this->buildPlaceAutocompleteQuery($query));
         }
 
         throw new InvalidArgument(sprintf('Mode must be one of `%s, %s`', self::GEOCODE_MODE_FIND, self::GEOCODE_MODE_SEARCH));
@@ -289,6 +309,42 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
     }
 
     /**
+     * Build query for the place autocomplete API.
+     *
+     * @param GeocodeQuery $geocodeQuery
+     *
+     * @return array
+     * @author gdw96
+     */
+    private function buildPlaceAutocompleteQuery(GeocodeQuery $geocodeQuery): array
+    {
+        $query = [
+            'input' => $geocodeQuery->getText(),
+        ];
+
+        if (null !== $geocodeQuery->getLocale()) {
+            $query['language'] = $geocodeQuery->getLocale();
+        }
+
+        $query = $this->applyDataFromQuery($geocodeQuery, $query, [
+            'sessiontoken', // Uuid:v4  recommended
+            'offset',
+            'origin',
+            'language',
+            'types',
+            'components',
+            'strictbounds',
+        ]);
+
+        if (null !== $geocodeQuery->getData('location') && null !== $geocodeQuery->getData('radius')) {
+            $query['location'] = (string) $geocodeQuery->getData('location');
+            $query['radius'] = (int) $geocodeQuery->getData('radius');
+        }
+
+        return $query;
+    }
+
+    /**
      * @param Query $query
      * @param array $request
      * @param array $keys
@@ -322,86 +378,109 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
 
         $content = $this->getUrlContents($url);
         $json = $this->validateResponse($url, $content);
+        $isAutocomplete = isset($json->predictions);
 
-        if (empty($json->candidates) && empty($json->results) || 'OK' !== $json->status) {
+        if (empty($json->candidates) && empty($json->results) && empty($json->predictions) || 'OK' !== $json->status) {
             return new AddressCollection([]);
         }
 
         $results = [];
 
-        $apiResults = isset($json->results) ? $json->results : $json->candidates;
+        $apiResults = $json->predictions ?? ($json->results ?? $json->candidates);
 
         foreach ($apiResults as $result) {
             $builder = new AddressBuilder($this->getName());
-            $this->parseCoordinates($builder, $result);
 
             if (isset($result->place_id)) {
                 $builder->setValue('id', $result->place_id);
             }
 
-            /** @var GooglePlace $address */
-            $address = $builder->build(GooglePlace::class);
-            $address = $address->withId($builder->getValue('id'));
+            if (!$isAutocomplete) {
+                $this->parseCoordinates($builder, $result);
 
-            if (isset($result->name)) {
-                $address = $address->withName($result->name);
+                /** @var GooglePlace $address */
+                $address = $builder->build(GooglePlace::class);
+                $address = $address->withId($builder->getValue('id'));
+
+                if (isset($result->name)) {
+                    $address = $address->withName($result->name);
+                }
+
+                if (isset($result->formatted_address)) {
+                    $address = $address->withFormattedAddress($result->formatted_address);
+                }
+
+                if (isset($result->vicinity)) {
+                    $address = $address->withVicinity($result->vicinity);
+                }
+
+                if (isset($result->types)) {
+                    $address = $address->withType($result->types);
+                }
+
+                if (isset($result->icon)) {
+                    $address = $address->withIcon($result->icon);
+                }
+
+                if (isset($result->plus_code)) {
+                    $address = $address->withPlusCode(new PlusCode(
+                        $result->plus_code->global_code,
+                        $result->plus_code->compound_code
+                    ));
+                }
+
+                if (isset($result->photos)) {
+                    $address = $address->withPhotos(Photo::getPhotosFromResult($result->photos));
+                }
+
+                if (isset($result->price_level)) {
+                    $address = $address->withPriceLevel($result->price_level);
+                }
+
+                if (isset($result->rating)) {
+                    $address = $address->withRating((float)$result->rating);
+                }
+
+                if (isset($result->formatted_phone_number)) {
+                    $address = $address->withFormattedPhoneNumber($result->formatted_phone_number);
+                }
+
+                if (isset($result->international_phone_number)) {
+                    $address = $address->withInternationalPhoneNumber($result->international_phone_number);
+                }
+
+                if (isset($result->website)) {
+                    $address = $address->withWebsite($result->website);
+                }
+
+                if (isset($result->opening_hours)) {
+                    $address = $address->withOpeningHours(OpeningHours::fromResult($result->opening_hours));
+                }
+
+                if (isset($result->permanently_closed)) {
+                    $address = $address->setPermanentlyClosed();
+                }
+            } else {
+                /** @var GooglePlaceAutocomplete $address */
+                $address = $builder->build(GooglePlaceAutocomplete::class);
+                $address = $address->withId($builder->getValue('id'));
+
+                if (isset($result->description)) {
+                    $address = $address->withDescription($result->description);
+                }
+
+                if (isset($result->distance_meters)) {
+                    $address = $address->withDistanceMeters($result->distance_meters);
+                }
+
+                $address = $this->parseMatchedSubstrings($address, $result);
+                $address = $this->parseStructuredFormatting($address, $result);
+                $address = $this->parseTerms($address, $result);
+
+                if (isset($result->types)) {
+                    $address = $address->withTypes($result->types);
+                }
             }
-
-            if (isset($result->formatted_address)) {
-                $address = $address->withFormattedAddress($result->formatted_address);
-            }
-
-            if (isset($result->vicinity)) {
-                $address = $address->withVicinity($result->vicinity);
-            }
-
-            if (isset($result->types)) {
-                $address = $address->withType($result->types);
-            }
-
-            if (isset($result->icon)) {
-                $address = $address->withIcon($result->icon);
-            }
-
-            if (isset($result->plus_code)) {
-                $address = $address->withPlusCode(new PlusCode(
-                    $result->plus_code->global_code,
-                    $result->plus_code->compound_code
-                ));
-            }
-
-            if (isset($result->photos)) {
-                $address = $address->withPhotos(Photo::getPhotosFromResult($result->photos));
-            }
-
-            if (isset($result->price_level)) {
-                $address = $address->withPriceLevel($result->price_level);
-            }
-
-            if (isset($result->rating)) {
-                $address = $address->withRating((float) $result->rating);
-            }
-
-            if (isset($result->formatted_phone_number)) {
-                $address = $address->withFormattedPhoneNumber($result->formatted_phone_number);
-            }
-
-            if (isset($result->international_phone_number)) {
-                $address = $address->withInternationalPhoneNumber($result->international_phone_number);
-            }
-
-            if (isset($result->website)) {
-                $address = $address->withWebsite($result->website);
-            }
-
-            if (isset($result->opening_hours)) {
-                $address = $address->withOpeningHours(OpeningHours::fromResult($result->opening_hours));
-            }
-
-            if (isset($result->permanently_closed)) {
-                $address = $address->setPermanentlyClosed();
-            }
-
             $results[] = $address;
         }
 
@@ -467,5 +546,81 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
                 $result->geometry->viewport->northeast->lng
             );
         }
+    }
+
+    /**
+     * Used to parse the Google Place Autocomplete field `matched_substrings` to an array and set the result in `$address`.
+     * @param GooglePlaceAutocomplete $address
+     * @param StdClass $result
+     * @return GooglePlaceAutocomplete
+     * @author gdw96
+     */
+    private function parseMatchedSubstrings(GooglePlaceAutocomplete $address, StdClass $result): GooglePlaceAutocomplete
+    {
+        if (isset($result->matched_substrings)) {
+            $matched_substrings = [];
+            foreach ($result->matched_substrings as $match) {
+                $matched_substrings[] = [
+                    'length' => $match->length,
+                    'offset' => $match->offset
+                ];
+            }
+            $address = $address->withMatchedSubstrings($matched_substrings);
+            unset($match, $matched_substrings);
+        }
+        return $address;
+    }
+
+    /**
+     * Used to parse the Google Place Autocomplete field `structured_formatting` to `StructuredFormatting` class and set
+     * the result in `$address`.
+     * @param GooglePlaceAutocomplete $address
+     * @param StdClass $result
+     * @return GooglePlaceAutocomplete
+     * @author gdw96
+     */
+    private function parseStructuredFormatting(GooglePlaceAutocomplete $address, StdClass $result): GooglePlaceAutocomplete
+    {
+        if (isset($result->structured_formatting)) {
+            $mainText                  = $result->structured_formatting->main_text ?? null;
+            $secondaryText             = $result->structured_formatting->secondary_text ?? null;
+            $mainTextMatchedSubstrings = null;
+
+            if (isset($result->structured_formatting->main_text_matched_substrings)) {
+                $mainTextMatchedSubstrings = [];
+                foreach ($result->structured_formatting->main_text_matched_substrings as $matchSubstring) {
+                    $mainTextMatchedSubstrings[] = [
+                        'length' => $matchSubstring->length,
+                        'offset' => $matchSubstring->offset
+                    ];
+                }
+            }
+            $address = $address->withStructuredFormatting(new StructuredFormatting($mainText, $secondaryText, $mainTextMatchedSubstrings));
+            unset($matchSubstring, $mainText, $secondaryText, $mainTextMatchedSubstrings);
+        }
+        return $address;
+    }
+
+    /**
+     * Used to parse the Google Place Autocomplete field `terms` to an array and set the result in `$address`.
+     * @param GooglePlaceAutocomplete $address
+     * @param \stdClass $result
+     * @return GooglePlaceAutocomplete
+     * @author gdw96
+     */
+    private function parseTerms(GooglePlaceAutocomplete $address, StdClass $result): GooglePlaceAutocomplete
+    {
+        if (isset($result->terms)) {
+            $terms = [];
+            foreach ($result->terms as $term) {
+                $terms[] = [
+                    'offset' => $term->offset,
+                    'value'  => $term->value
+                ];
+            }
+            $address = $address->withTerms($terms);
+            unset($term, $terms);
+        }
+        return $address;
     }
 }

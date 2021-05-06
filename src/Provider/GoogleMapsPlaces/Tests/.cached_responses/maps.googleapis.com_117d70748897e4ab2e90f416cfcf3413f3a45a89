@@ -1,0 +1,166 @@
+s:4414:"{
+   "predictions" : [
+      {
+         "description" : "Paris, France",
+         "matched_substrings" : [
+            {
+               "length" : 5,
+               "offset" : 0
+            }
+         ],
+         "place_id" : "ChIJD7fiBh9u5kcRYJSMaMOCCwQ",
+         "reference" : "ChIJD7fiBh9u5kcRYJSMaMOCCwQ",
+         "structured_formatting" : {
+            "main_text" : "Paris",
+            "main_text_matched_substrings" : [
+               {
+                  "length" : 5,
+                  "offset" : 0
+               }
+            ],
+            "secondary_text" : "France"
+         },
+         "terms" : [
+            {
+               "offset" : 0,
+               "value" : "Paris"
+            },
+            {
+               "offset" : 7,
+               "value" : "France"
+            }
+         ],
+         "types" : [ "locality", "political", "geocode" ]
+      },
+      {
+         "description" : "Parisot, France",
+         "matched_substrings" : [
+            {
+               "length" : 5,
+               "offset" : 0
+            }
+         ],
+         "place_id" : "ChIJPbgDXcoqrBIRf74-UUHi4z4",
+         "reference" : "ChIJPbgDXcoqrBIRf74-UUHi4z4",
+         "structured_formatting" : {
+            "main_text" : "Parisot",
+            "main_text_matched_substrings" : [
+               {
+                  "length" : 5,
+                  "offset" : 0
+               }
+            ],
+            "secondary_text" : "France"
+         },
+         "terms" : [
+            {
+               "offset" : 0,
+               "value" : "Parisot"
+            },
+            {
+               "offset" : 9,
+               "value" : "France"
+            }
+         ],
+         "types" : [ "locality", "political", "geocode" ]
+      },
+      {
+         "description" : "Paris-l'Hôpital, France",
+         "matched_substrings" : [
+            {
+               "length" : 5,
+               "offset" : 0
+            }
+         ],
+         "place_id" : "ChIJPb3wuJFZ8kcREOAOszTOCQQ",
+         "reference" : "ChIJPb3wuJFZ8kcREOAOszTOCQQ",
+         "structured_formatting" : {
+            "main_text" : "Paris-l'Hôpital",
+            "main_text_matched_substrings" : [
+               {
+                  "length" : 5,
+                  "offset" : 0
+               }
+            ],
+            "secondary_text" : "France"
+         },
+         "terms" : [
+            {
+               "offset" : 0,
+               "value" : "Paris-l'Hôpital"
+            },
+            {
+               "offset" : 17,
+               "value" : "France"
+            }
+         ],
+         "types" : [ "locality", "political", "geocode" ]
+      },
+      {
+         "description" : "Saint-Denis, France",
+         "matched_substrings" : [
+            {
+               "length" : 11,
+               "offset" : 0
+            }
+         ],
+         "place_id" : "ChIJYW0056pu5kcRDeko-brr78c",
+         "reference" : "ChIJYW0056pu5kcRDeko-brr78c",
+         "structured_formatting" : {
+            "main_text" : "Saint-Denis",
+            "main_text_matched_substrings" : [
+               {
+                  "length" : 11,
+                  "offset" : 0
+               }
+            ],
+            "secondary_text" : "France"
+         },
+         "terms" : [
+            {
+               "offset" : 0,
+               "value" : "Saint-Denis"
+            },
+            {
+               "offset" : 13,
+               "value" : "France"
+            }
+         ],
+         "types" : [ "locality", "political", "geocode" ]
+      },
+      {
+         "description" : "Neuilly-sur-Seine, France",
+         "matched_substrings" : [
+            {
+               "length" : 17,
+               "offset" : 0
+            }
+         ],
+         "place_id" : "ChIJtZbjc2Nl5kcRl7My9Zx1Odw",
+         "reference" : "ChIJtZbjc2Nl5kcRl7My9Zx1Odw",
+         "structured_formatting" : {
+            "main_text" : "Neuilly-sur-Seine",
+            "main_text_matched_substrings" : [
+               {
+                  "length" : 17,
+                  "offset" : 0
+               }
+            ],
+            "secondary_text" : "France"
+         },
+         "terms" : [
+            {
+               "offset" : 0,
+               "value" : "Neuilly-sur-Seine"
+            },
+            {
+               "offset" : 19,
+               "value" : "France"
+            }
+         ],
+         "types" : [ "locality", "political", "geocode" ]
+      }
+   ],
+   "status" : "OK"
+}
+";
