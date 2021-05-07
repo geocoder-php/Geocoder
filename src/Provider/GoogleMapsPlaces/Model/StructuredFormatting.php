@@ -49,7 +49,8 @@ class StructuredFormatting
      * @param string|null $secondaryText
      * @param array|null  $mainTextMatchedSubstrings
      */
-    public function __construct(?string $mainText, ?string $secondaryText = null, ?array $mainTextMatchedSubstrings = null) {
+    public function __construct(?string $mainText, ?string $secondaryText = null, ?array $mainTextMatchedSubstrings = null)
+    {
         $this->mainText = $mainText;
         $this->secondaryText = $secondaryText;
         $this->mainTextMatchedSubstrings = $mainTextMatchedSubstrings;
@@ -71,6 +72,7 @@ class StructuredFormatting
     public function setMainText(?string $mainText = null): StructuredFormatting
     {
         $this->mainText = $mainText;
+
         return $this;
     }
 
@@ -90,6 +92,7 @@ class StructuredFormatting
     public function setSecondaryText(?string $secondaryText = null): StructuredFormatting
     {
         $this->secondaryText = $secondaryText;
+
         return $this;
     }
 

@@ -15,7 +15,7 @@ namespace Geocoder\Provider\GoogleMapsPlaces\Model;
 use Geocoder\Model\Address;
 
 /**
- * Class GooglePlaceAutocomplete
+ * Class GooglePlaceAutocomplete.
  *
  * @author gdw96 <gael.de_weerdt@mailoo.org>
  */

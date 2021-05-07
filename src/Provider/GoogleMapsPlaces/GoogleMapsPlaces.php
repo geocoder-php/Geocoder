@@ -568,6 +568,7 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
             $address = $address->withMatchedSubstrings($matched_substrings);
             unset($match, $matched_substrings);
         }
+
         return $address;
     }
 
@@ -599,6 +600,7 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
             $address = $address->withStructuredFormatting(new StructuredFormatting($mainText, $secondaryText, $mainTextMatchedSubstrings));
             unset($matchSubstring, $mainText, $secondaryText, $mainTextMatchedSubstrings);
         }
+
         return $address;
     }
 
@@ -617,12 +619,13 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
             foreach ($result->terms as $term) {
                 $terms[] = [
                     'offset' => (int) $term->offset,
-                    'value'  => $term->value,
+                    'value' => $term->value,
                 ];
             }
             $address = $address->withTerms($terms);
             unset($term, $terms);
         }
+
         return $address;
     }
 }
