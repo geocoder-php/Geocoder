@@ -14,21 +14,25 @@ namespace Geocoder\Provider\GoogleMapsPlaces\Model;
 
 /**
  * Class StructuredFormatting.
- * @package Geocoder\Provider\GoogleMapsPlaces\Model
+ *
  * @author gdw96 <gael.de_weerdt@mailoo.org>
+ *
  * @see GooglePlaceAutocomplete
  */
-class StructuredFormatting {
+class StructuredFormatting
+{
     /**
-     * @var string|null $mainText
+     * @var string|null
      */
     private $mainText;
     /**
-     * @var string|null $secondaryText
+     * @var string|null
      */
     private $secondaryText;
     /**
-     * @var array|null $mainTextMatchedSubstrings - Represents substrings of `mainText` field that match with input search query.
+     * @var array|null
+     *
+     * Represents substrings of `mainText` field that match with input search query.
      * It should look like:
      * ```
      * [
@@ -40,9 +44,10 @@ class StructuredFormatting {
 
     /**
      * StructuredFormatting constructor.
+     *
      * @param string|null $mainText
      * @param string|null $secondaryText
-     * @param array|null $mainTextMatchedSubstrings
+     * @param array|null  $mainTextMatchedSubstrings
      */
     public function __construct(?string $mainText, ?string $secondaryText = null, ?array $mainTextMatchedSubstrings = null) {
         $this->mainText = $mainText;
@@ -60,6 +65,7 @@ class StructuredFormatting {
 
     /**
      * @param string|null $mainText
+     *
      * @return StructuredFormatting
      */
     public function setMainText(?string $mainText = null): StructuredFormatting
@@ -78,6 +84,7 @@ class StructuredFormatting {
 
     /**
      * @param string|null $secondaryText
+     *
      * @return StructuredFormatting
      */
     public function setSecondaryText(?string $secondaryText = null): StructuredFormatting
@@ -92,7 +99,8 @@ class StructuredFormatting {
      * [
      *     [ 'length' => 5, 'offset' => 0],
      * ]
-     * ```
+     * ```.
+     *
      * @return array|null
      */
     public function getMainTextMatchedSubstrings(): ?array
@@ -106,13 +114,16 @@ class StructuredFormatting {
      * [
      *     [ 'length' => 5, 'offset' => 0],
      * ]
-     * ```
+     * ```.
+     *
      * @param array|null $mainTextMatchedSubstrings
+     *
      * @return StructuredFormatting
      */
     public function setMainTextMatchedSubstrings(?array $mainTextMatchedSubstrings = null): StructuredFormatting
     {
         $this->mainTextMatchedSubstrings = $mainTextMatchedSubstrings;
+
         return $this;
     }
 }

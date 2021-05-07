@@ -314,7 +314,6 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
      * @param GeocodeQuery $geocodeQuery
      *
      * @return array
-     * @author gdw96
      */
     private function buildPlaceAutocompleteQuery(GeocodeQuery $geocodeQuery): array
     {
@@ -438,7 +437,7 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
                 }
 
                 if (isset($result->rating)) {
-                    $address = $address->withRating((float)$result->rating);
+                    $address = $address->withRating((float) $result->rating);
                 }
 
                 if (isset($result->formatted_phone_number)) {
@@ -470,7 +469,7 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
                 }
 
                 if (isset($result->distance_meters)) {
-                    $address = $address->withDistanceMeters($result->distance_meters);
+                    $address = $address->withDistanceMeters((int) $result->distance_meters);
                 }
 
                 $address = $this->parseMatchedSubstrings($address, $result);
@@ -493,13 +492,13 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
      * @param string $url
      * @param string $content
      *
-     * @return \StdClass
+     * @return StdClass
      *
      * @throws InvalidCredentials
      * @throws InvalidServerResponse
      * @throws QuotaExceeded
      */
-    private function validateResponse(string $url, $content): StdClass
+    private function validateResponse(string $url, string $content): StdClass
     {
         $json = json_decode($content);
 
@@ -543,17 +542,18 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
                 $result->geometry->viewport->southwest->lat,
                 $result->geometry->viewport->southwest->lng,
                 $result->geometry->viewport->northeast->lat,
-                $result->geometry->viewport->northeast->lng
+                $result->geometry->viewport->northeast->lng,
             );
         }
     }
 
     /**
      * Used to parse the Google Place Autocomplete field `matched_substrings` to an array and set the result in `$address`.
+     *
      * @param GooglePlaceAutocomplete $address
-     * @param StdClass $result
+     * @param StdClass                $result
+     *
      * @return GooglePlaceAutocomplete
-     * @author gdw96
      */
     private function parseMatchedSubstrings(GooglePlaceAutocomplete $address, StdClass $result): GooglePlaceAutocomplete
     {
@@ -561,8 +561,8 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
             $matched_substrings = [];
             foreach ($result->matched_substrings as $match) {
                 $matched_substrings[] = [
-                    'length' => $match->length,
-                    'offset' => $match->offset
+                    'length' => (int) $match->length,
+                    'offset' => (int) $match->offset,
                 ];
             }
             $address = $address->withMatchedSubstrings($matched_substrings);
@@ -574,24 +574,25 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
     /**
      * Used to parse the Google Place Autocomplete field `structured_formatting` to `StructuredFormatting` class and set
      * the result in `$address`.
+     *
      * @param GooglePlaceAutocomplete $address
-     * @param StdClass $result
+     * @param StdClass                $result
+     *
      * @return GooglePlaceAutocomplete
-     * @author gdw96
      */
     private function parseStructuredFormatting(GooglePlaceAutocomplete $address, StdClass $result): GooglePlaceAutocomplete
     {
         if (isset($result->structured_formatting)) {
-            $mainText                  = $result->structured_formatting->main_text ?? null;
-            $secondaryText             = $result->structured_formatting->secondary_text ?? null;
+            $mainText = $result->structured_formatting->main_text ?? null;
+            $secondaryText = $result->structured_formatting->secondary_text ?? null;
             $mainTextMatchedSubstrings = null;
 
             if (isset($result->structured_formatting->main_text_matched_substrings)) {
                 $mainTextMatchedSubstrings = [];
                 foreach ($result->structured_formatting->main_text_matched_substrings as $matchSubstring) {
                     $mainTextMatchedSubstrings[] = [
-                        'length' => $matchSubstring->length,
-                        'offset' => $matchSubstring->offset
+                        'length' => (int) $matchSubstring->length,
+                        'offset' => (int) $matchSubstring->offset,
                     ];
                 }
             }
@@ -603,10 +604,11 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
 
     /**
      * Used to parse the Google Place Autocomplete field `terms` to an array and set the result in `$address`.
+     *
      * @param GooglePlaceAutocomplete $address
-     * @param \stdClass $result
+     * @param StdClass                $result
+     *
      * @return GooglePlaceAutocomplete
-     * @author gdw96
      */
     private function parseTerms(GooglePlaceAutocomplete $address, StdClass $result): GooglePlaceAutocomplete
     {
@@ -614,8 +616,8 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
             $terms = [];
             foreach ($result->terms as $term) {
                 $terms[] = [
-                    'offset' => $term->offset,
-                    'value'  => $term->value
+                    'offset' => (int) $term->offset,
+                    'value'  => $term->value,
                 ];
             }
             $address = $address->withTerms($terms);

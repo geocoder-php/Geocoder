@@ -16,17 +16,17 @@ use Geocoder\Model\Address;
 
 /**
  * Class GooglePlaceAutocomplete
- * @package Geocoder\Provider\GoogleMapsPlaces\Model
+ *
  * @author gdw96 <gael.de_weerdt@mailoo.org>
  */
 final class GooglePlaceAutocomplete extends Address
 {
     /**
-     * @var string|null $id
+     * @var string|null
      */
     private $id;
     /**
-     * @var string|null $description
+     * @var string|null
      */
     private $description;
     /**
@@ -34,11 +34,13 @@ final class GooglePlaceAutocomplete extends Address
      */
     private $distance_meters;
     /**
-     * @var array|null $matchedSubstrings
+     * @var array|null
      */
     private $matchedSubstrings;
     /**
-     * @var array|null $terms - Represents parts of `description` field (example : 'Paris, France').
+     * @var array|null
+     *
+     * Represents parts of `description` field (example : 'Paris, France').
      * So, this array should look like:
      * ```
      * [
@@ -69,6 +71,7 @@ final class GooglePlaceAutocomplete extends Address
 
     /**
      * @param string|null $id
+     *
      * @return GooglePlaceAutocomplete
      */
     public function withId(?string $id = null): GooglePlaceAutocomplete
@@ -89,6 +92,7 @@ final class GooglePlaceAutocomplete extends Address
 
     /**
      * @param string|null $description
+     *
      * @return GooglePlaceAutocomplete
      */
     public function withDescription(?string $description = null): GooglePlaceAutocomplete
@@ -109,6 +113,7 @@ final class GooglePlaceAutocomplete extends Address
 
     /**
      * @param int|null $distance_meters
+     *
      * @return GooglePlaceAutocomplete
      */
     public function withDistanceMeters(?int $distance_meters = null): GooglePlaceAutocomplete
@@ -129,6 +134,7 @@ final class GooglePlaceAutocomplete extends Address
 
     /**
      * @param array|null $matchedSubstrings
+     *
      * @return GooglePlaceAutocomplete
      */
     public function withMatchedSubstrings(?array $matchedSubstrings = null): GooglePlaceAutocomplete
@@ -149,6 +155,7 @@ final class GooglePlaceAutocomplete extends Address
 
     /**
      * @param array|null $terms
+     *
      * @return GooglePlaceAutocomplete
      */
     public function withTerms(?array $terms = null): GooglePlaceAutocomplete
@@ -169,6 +176,7 @@ final class GooglePlaceAutocomplete extends Address
 
     /**
      * @param StructuredFormatting|null $structuredFormatting
+     *
      * @return GooglePlaceAutocomplete
      */
     public function withStructuredFormatting(?StructuredFormatting $structuredFormatting = null): GooglePlaceAutocomplete
@@ -189,6 +197,7 @@ final class GooglePlaceAutocomplete extends Address
 
     /**
      * @param array $types
+     *
      * @return GooglePlaceAutocomplete
      */
     public function withTypes(array $types): GooglePlaceAutocomplete

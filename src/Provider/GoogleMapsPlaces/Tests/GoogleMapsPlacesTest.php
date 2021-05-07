@@ -207,14 +207,14 @@ class GoogleMapsPlacesTest extends BaseTestCase
         $this->assertSame(
             [
                 ['offset' => 0, 'value' => 'Paris'],
-                ['offset' => 7, 'value' => 'France']
+                ['offset' => 7, 'value' => 'France'],
             ],
             $result->getTerms()
         );
         $this->assertSame([
             'locality',
             'political',
-            'geocode'
+            'geocode',
         ], $result->getTypes());
     }
 
