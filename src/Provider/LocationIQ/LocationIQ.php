@@ -120,7 +120,12 @@ final class LocationIQ extends AbstractHttpProvider implements Provider
 
         foreach (['state', 'county'] as $i => $tagName) {
             if (null !== ($adminLevel = $this->getNodeValue($addressNode->getElementsByTagName($tagName)))) {
-                $builder->addAdminLevel($i + 1, $adminLevel, '');
+                $adminCode = '';
+                if($tagName === 'state') {
+                    $adminCode = $this->getNodeValue($addressNode->getElementsByTagName('state_code'));
+                }
+
+                $builder->addAdminLevel($i + 1, $adminLevel, $adminCode);
             }
         }
 
@@ -177,7 +182,7 @@ final class LocationIQ extends AbstractHttpProvider implements Provider
 
     private function getGeocodeEndpointUrl(): string
     {
-        return self::BASE_API_URL.'/search.php?q=%s&format=xmlv1.1&addressdetails=1&normalizecity=1&limit=%d&key='.$this->apiKey;
+        return self::BASE_API_URL.'/search.php?q=%s&format=xmlv1.1&addressdetails=1&normalizecity=1&limit=%d&statecode=1&key='.$this->apiKey;
     }
 
     private function getReverseEndpointUrl(): string
