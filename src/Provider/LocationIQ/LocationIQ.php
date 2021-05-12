@@ -121,7 +121,7 @@ final class LocationIQ extends AbstractHttpProvider implements Provider
         foreach (['state', 'county'] as $i => $tagName) {
             if (null !== ($adminLevel = $this->getNodeValue($addressNode->getElementsByTagName($tagName)))) {
                 $adminCode = '';
-                if('state' === $tagName) {
+                if ('state' === $tagName) {
                     $adminCode = $this->getNodeValue($addressNode->getElementsByTagName('state_code'));
                 }
 
