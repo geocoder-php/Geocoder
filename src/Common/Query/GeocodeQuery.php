@@ -53,7 +53,7 @@ final class GeocodeQuery implements Query
      */
     private function __construct(string $text)
     {
-        if (strlen($text) === 0) {
+        if (0 === strlen($text)) {
             throw new InvalidArgument('Geocode query cannot be empty');
         }
 

@@ -235,12 +235,12 @@ class Address implements Location
 
         $adminLevels = [];
         foreach ($data['adminLevels'] as $adminLevel) {
-            if (null === $adminLevel['level'] || $adminLevel['level'] === 0) {
+            if (null === $adminLevel['level'] || 0 === $adminLevel['level']) {
                 continue;
             }
 
             $name = $adminLevel['name'] ?? $adminLevel['code'] ?? null;
-            if (null === $name || strlen($name) === 0) {
+            if (null === $name || 0 === strlen($name)) {
                 continue;
             }
 

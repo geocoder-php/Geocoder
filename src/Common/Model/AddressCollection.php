@@ -53,7 +53,7 @@ final class AddressCollection implements Collection
      */
     public function first(): Location
     {
-        if (count($this->locations) === 0) {
+        if (0 === count($this->locations)) {
             throw new CollectionIsEmpty();
         }
 
@@ -65,7 +65,7 @@ final class AddressCollection implements Collection
      */
     public function isEmpty(): bool
     {
-        return count($this->locations) === 0;
+        return 0 === count($this->locations);
     }
 
     /**
