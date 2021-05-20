@@ -40,7 +40,8 @@ class LimitPlugin implements Plugin
      */
     public function handleQuery(Query $query, callable $next, callable $first)
     {
-        if (empty($query->getLocale())) {
+        $limit = $query->getLimit();
+        if (null !== $limit && $limit > 0) {
             $query = $query->withLimit($this->limit);
         }
 

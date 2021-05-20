@@ -109,7 +109,7 @@ final class AddressBuilder
         }
 
         $country = null;
-        if (!empty($this->country) || !empty($this->countryCode)) {
+        if ((null !== $this->country && strlen($this->country) > 0) || (null !== $this->countryCode && strlen($this->countryCode) > 0)) {
             $country = new Country($this->country, $this->countryCode);
         }
 
