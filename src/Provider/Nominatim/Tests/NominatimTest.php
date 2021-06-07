@@ -124,11 +124,9 @@ class NominatimTest extends BaseTestCase
     {
         $provider = Nominatim::withOpenStreetMapServer($this->getHttpClient(), 'Geocoder PHP/Nominatim Provider/Nominatim Test');
 
-
         $results = $provider->geocodeQuery(GeocodeQuery::create('Elbphilharmonie, Platz der deutschen Einheit 1, Hamburg'));
         $this->assertCount(1, $results);
         $this->assertEmpty($results->first()->getTags());
-
 
         $results = $provider->geocodeQuery(GeocodeQuery::create('Elbphilharmonie, Platz der deutschen Einheit 1, Hamburg')->withData('extratags', true));
 
