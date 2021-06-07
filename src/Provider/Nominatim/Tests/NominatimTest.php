@@ -97,6 +97,9 @@ class NominatimTest extends BaseTestCase
         $this->assertEquals('Ville de Bruxelles - Stad Brussel', $result->getLocality());
         $this->assertEquals('Heysel - Heizel', $result->getSubLocality());
         $this->assertEquals('BE', $result->getCountry()->getCode());
+        $this->assertCount(1, $result->getAddressData());
+        $this->assertArrayHasKey('city_district', $result->getAddressData());
+        $this->assertEquals('Laeken / Laken', $result->getAddressData()['city_district']);
 
         $this->assertEquals('Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright', $result->getAttribution());
         $this->assertEquals('building', $result->getCategory());
@@ -117,37 +120,23 @@ class NominatimTest extends BaseTestCase
         $this->assertEquals('Służewiec', $results->first()->getQuarter());
     }
 
-    public function testGeocodeWithRealAddressThatReturnsOptionalTourism()
+    public function testGeocodeWithRealAddressAndExtraTags()
     {
         $provider = Nominatim::withOpenStreetMapServer($this->getHttpClient(), 'Geocoder PHP/Nominatim Provider/Nominatim Test');
-        $results = $provider->geocodeQuery(GeocodeQuery::create('Brandenburger Tor Berlin'));
 
-        $this->assertCount(2, $results);
 
-        /* @var \Geocoder\Provider\Nominatim\Model\NominatimAddress $result */
-        $this->assertEquals('Brandenburger Tor', $results->first()->getTourism());
-    }
+        $results = $provider->geocodeQuery(GeocodeQuery::create('Elbphilharmonie, Platz der deutschen Einheit 1, Hamburg'));
+        $this->assertCount(1, $results);
+        $this->assertEmpty($results->first()->getTags());
 
-    public function testGeocodeWithRealAddressThatReturnsOptionalShop()
-    {
-        $provider = Nominatim::withOpenStreetMapServer($this->getHttpClient(), 'Geocoder PHP/Nominatim Provider/Nominatim Test');
-        $results = $provider->geocodeQuery(GeocodeQuery::create('Kiez-Markt Schillerstraße Berlin'));
+
+        $results = $provider->geocodeQuery(GeocodeQuery::create('Elbphilharmonie, Platz der deutschen Einheit 1, Hamburg')->withData('extratags', true));
 
         $this->assertCount(1, $results);
-
-        /* @var \Geocoder\Provider\Nominatim\Model\NominatimAddress $result */
-        $this->assertEquals('Kiez-Markt', $results->first()->getShop());
-    }
-
-    public function testGeocodeWithRealAddressThatReturnsOptionalAmenity()
-    {
-        $provider = Nominatim::withOpenStreetMapServer($this->getHttpClient(), 'Geocoder PHP/Nominatim Provider/Nominatim Test');
-        $results = $provider->geocodeQuery(GeocodeQuery::create('Post, Hindenburgdamm, Lichterfelde, Steglitz-Zehlendorf, Berlin, 12203, Deutschland'));
-
-        $this->assertCount(1, $results);
-
-        /* @var \Geocoder\Provider\Nominatim\Model\NominatimAddress $result */
-        $this->assertEquals('Post', $results->first()->getAmenity());
+        $result = $results->first();
+        $this->assertIsArray($result->getTags());
+        $this->assertArrayHasKey('height', $result->getTags());
+        $this->assertEquals('110 m', $result->getTags()['height']);
     }
 
     public function testGeocodeWithCountrycodes()

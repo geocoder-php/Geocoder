@@ -55,19 +55,14 @@ final class NominatimAddress extends Address
     private $type;
 
     /**
-     * @var string|null
+     * @var array|null
      */
-    private $tourism;
+    private $addressData;
 
     /**
-     * @var string|null
+     * @var array|null
      */
-    private $shop;
-
-    /**
-     * @var string|null
-     */
-    private $amenity;
+    private $tags;
 
     /**
      * @return string|null
@@ -239,58 +234,39 @@ final class NominatimAddress extends Address
     }
 
     /**
-     * @return string|null
+     * @return array|null
      */
-    public function getTourism(): ?string
+    public function getAddressData(): ?array
     {
-        return $this->tourism;
+        return $this->addressData;
     }
 
     /**
-     * @param string|null $tourism
+     * @param array|null $addressData
      */
-    public function withTourism(string $tourism = null): self
+    public function withAddressData(array $addressData = null): self
     {
         $new = clone $this;
-        $new->tourism = $tourism;
+        $new->addressData = $addressData;
 
         return $new;
     }
 
     /**
-     * @return string|null
+     * @return array|null
      */
-    public function getShop(): ?string
+    public function getTags(): ?array
     {
-        return $this->shop;
+        return $this->tags;
     }
 
     /**
-     * @param string|null $shop
+     * @param array|null $tags
      */
-    public function withShop(string $shop = null): self
+    public function withTags(array $tags = null): self
     {
         $new = clone $this;
-        $new->shop = $shop;
-
-        return $new;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getAmenity(): ?string
-    {
-        return $this->amenity;
-    }
-
-    /**
-     * @param string|null $amenity
-     */
-    public function withAmenity(string $amenity = null): self
-    {
-        $new = clone $this;
-        $new->amenity = $amenity;
+        $new->tags = $tags;
 
         return $new;
     }

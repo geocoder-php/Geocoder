@@ -128,6 +128,10 @@ final class Nominatim extends AbstractHttpProvider implements Provider
             }
         }
 
+        if ((bool) $query->getData('extratags')) {
+            $url .= '&extratags=1';
+        }
+
         $content = $this->executeQuery($url, $query->getLocale());
 
         $json = json_decode($content);
@@ -233,22 +237,16 @@ final class Nominatim extends AbstractHttpProvider implements Provider
         $location = $location->withAttribution($place->licence);
         $location = $location->withDisplayName($place->display_name);
 
+        $includedAddressKeys = ['city', 'town', 'village', 'state', 'county', 'hamlet', 'postcode', 'road', 'pedestrian', 'house_number', 'suburb', 'country', 'country_code', 'quarter'];
+
+        $location = $location->withAddressData(array_diff_key((array) $place->address, array_flip($includedAddressKeys)));
+
+        if (isset($place->extratags)) {
+            $location = $location->withTags((array) $place->extratags);
+        }
         if (isset($place->address->quarter)) {
             $location = $location->withQuarter($place->address->quarter);
         }
-
-        if (isset($place->address->tourism)) {
-            $location = $location->withTourism($place->address->tourism);
-        }
-
-        if (isset($place->address->shop)) {
-            $location = $location->withShop($place->address->shop);
-        }
-
-        if (isset($place->address->amenity)) {
-            $location = $location->withAmenity($place->address->amenity);
-        }
-
         if (isset($place->osm_id)) {
             $location = $location->withOSMId(intval($place->osm_id));
         }
