@@ -55,6 +55,21 @@ final class NominatimAddress extends Address
     private $type;
 
     /**
+     * @var string|null
+     */
+    private $tourism;
+
+    /**
+     * @var string|null
+     */
+    private $shop;
+
+    /**
+     * @var string|null
+     */
+    private $amenity;
+
+    /**
      * @return string|null
      */
     public function getAttribution()
@@ -219,6 +234,63 @@ final class NominatimAddress extends Address
     {
         $new = clone $this;
         $new->quarter = $quarter;
+
+        return $new;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getTourism(): ?string
+    {
+        return $this->tourism;
+    }
+
+    /**
+     * @param string|null $tourism
+     */
+    public function withTourism(string $tourism = null): self
+    {
+        $new = clone $this;
+        $new->tourism = $tourism;
+
+        return $new;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getShop(): ?string
+    {
+        return $this->shop;
+    }
+
+    /**
+     * @param string|null $shop
+     */
+    public function withShop(string $shop = null): self
+    {
+        $new = clone $this;
+        $new->shop = $shop;
+
+        return $new;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getAmenity(): ?string
+    {
+        return $this->amenity;
+    }
+
+    /**
+     * @param string|null $amenity
+     */
+    public function withAmenity(string $amenity = null): self
+    {
+        $new = clone $this;
+        $new->amenity = $amenity;
 
         return $new;
     }

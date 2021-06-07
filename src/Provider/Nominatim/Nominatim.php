@@ -237,6 +237,18 @@ final class Nominatim extends AbstractHttpProvider implements Provider
             $location = $location->withQuarter($place->address->quarter);
         }
 
+        if (isset($place->address->tourism)) {
+            $location = $location->withTourism($place->address->tourism);
+        }
+
+        if (isset($place->address->shop)) {
+            $location = $location->withShop($place->address->shop);
+        }
+
+        if (isset($place->address->amenity)) {
+            $location = $location->withAmenity($place->address->amenity);
+        }
+
         if (isset($place->osm_id)) {
             $location = $location->withOSMId(intval($place->osm_id));
         }

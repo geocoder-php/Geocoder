@@ -117,6 +117,39 @@ class NominatimTest extends BaseTestCase
         $this->assertEquals('Służewiec', $results->first()->getQuarter());
     }
 
+    public function testGeocodeWithRealAddressThatReturnsOptionalTourism()
+    {
+        $provider = Nominatim::withOpenStreetMapServer($this->getHttpClient(), 'Geocoder PHP/Nominatim Provider/Nominatim Test');
+        $results = $provider->geocodeQuery(GeocodeQuery::create('Brandenburger Tor Berlin'));
+
+        $this->assertCount(2, $results);
+
+        /* @var \Geocoder\Provider\Nominatim\Model\NominatimAddress $result */
+        $this->assertEquals('Brandenburger Tor', $results->first()->getTourism());
+    }
+
+    public function testGeocodeWithRealAddressThatReturnsOptionalShop()
+    {
+        $provider = Nominatim::withOpenStreetMapServer($this->getHttpClient(), 'Geocoder PHP/Nominatim Provider/Nominatim Test');
+        $results = $provider->geocodeQuery(GeocodeQuery::create('Kiez-Markt Schillerstraße Berlin'));
+
+        $this->assertCount(1, $results);
+
+        /* @var \Geocoder\Provider\Nominatim\Model\NominatimAddress $result */
+        $this->assertEquals('Kiez-Markt', $results->first()->getShop());
+    }
+
+    public function testGeocodeWithRealAddressThatReturnsOptionalAmenity()
+    {
+        $provider = Nominatim::withOpenStreetMapServer($this->getHttpClient(), 'Geocoder PHP/Nominatim Provider/Nominatim Test');
+        $results = $provider->geocodeQuery(GeocodeQuery::create('Post, Hindenburgdamm, Lichterfelde, Steglitz-Zehlendorf, Berlin, 12203, Deutschland'));
+
+        $this->assertCount(1, $results);
+
+        /* @var \Geocoder\Provider\Nominatim\Model\NominatimAddress $result */
+        $this->assertEquals('Post', $results->first()->getAmenity());
+    }
+
     public function testGeocodeWithCountrycodes()
     {
         $provider = Nominatim::withOpenStreetMapServer($this->getHttpClient(), 'Geocoder PHP/Nominatim Provider/Nominatim Test');
