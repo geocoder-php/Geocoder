@@ -55,6 +55,16 @@ final class NominatimAddress extends Address
     private $type;
 
     /**
+     * @var array|null
+     */
+    private $details;
+
+    /**
+     * @var array|null
+     */
+    private $tags;
+
+    /**
      * @return string|null
      */
     public function getAttribution()
@@ -219,6 +229,44 @@ final class NominatimAddress extends Address
     {
         $new = clone $this;
         $new->quarter = $quarter;
+
+        return $new;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getDetails(): ?array
+    {
+        return $this->details;
+    }
+
+    /**
+     * @param array|null $details
+     */
+    public function withDetails(array $details = null): self
+    {
+        $new = clone $this;
+        $new->details = $details;
+
+        return $new;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getTags(): ?array
+    {
+        return $this->tags;
+    }
+
+    /**
+     * @param array|null $tags
+     */
+    public function withTags(array $tags = null): self
+    {
+        $new = clone $this;
+        $new->tags = $tags;
 
         return $new;
     }

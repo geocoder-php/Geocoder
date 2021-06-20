@@ -96,6 +96,7 @@ final class Nominatim extends AbstractHttpProvider implements Provider
                 'format' => 'jsonv2',
                 'q' => $address,
                 'addressdetails' => 1,
+                'extratags' => 1,
                 'limit' => $query->getLimit(),
             ]);
 
@@ -233,10 +234,16 @@ final class Nominatim extends AbstractHttpProvider implements Provider
         $location = $location->withAttribution($place->licence);
         $location = $location->withDisplayName($place->display_name);
 
+        $includedAddressKeys = ['city', 'town', 'village', 'state', 'county', 'hamlet', 'postcode', 'road', 'pedestrian', 'house_number', 'suburb', 'country', 'country_code', 'quarter'];
+
+        $location = $location->withDetails(array_diff_key((array) $place->address, array_flip($includedAddressKeys)));
+
+        if (isset($place->extratags)) {
+            $location = $location->withTags((array) $place->extratags);
+        }
         if (isset($place->address->quarter)) {
             $location = $location->withQuarter($place->address->quarter);
         }
-
         if (isset($place->osm_id)) {
             $location = $location->withOSMId(intval($place->osm_id));
         }

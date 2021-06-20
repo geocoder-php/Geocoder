@@ -81,29 +81,37 @@ class NominatimTest extends BaseTestCase
     public function testGeocodeWithRealAddress()
     {
         $provider = Nominatim::withOpenStreetMapServer($this->getHttpClient(), 'Geocoder PHP/Nominatim Provider/Nominatim Test');
-        $results = $provider->geocodeQuery(GeocodeQuery::create('35 avenue jean de bologne 1020 bruxelles'));
+        $results = $provider->geocodeQuery(GeocodeQuery::create('1 Place des Palais 1000 bruxelles'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
-        $this->assertCount(1, $results);
+        $this->assertCount(5, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var \Geocoder\Provider\Nominatim\Model\NominatimAddress $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEqualsWithDelta(50.896344, $result->getCoordinates()->getLatitude(), 0.00001);
-        $this->assertEqualsWithDelta(4.3605984, $result->getCoordinates()->getLongitude(), 0.00001);
-        $this->assertEquals('35', $result->getStreetNumber());
-        $this->assertEquals('Avenue Jean de Bologne - Jean de Bolognelaan', $result->getStreetName());
-        $this->assertEquals('1020', $result->getPostalCode());
+        $this->assertEqualsWithDelta(50.8419916, $result->getCoordinates()->getLatitude(), 0.00001);
+        $this->assertEqualsWithDelta(4.361988, $result->getCoordinates()->getLongitude(), 0.00001);
+        $this->assertEquals('1', $result->getStreetNumber());
+        $this->assertEquals('Place des Palais - Paleizenplein', $result->getStreetName());
+        $this->assertEquals('1000', $result->getPostalCode());
         $this->assertEquals('Ville de Bruxelles - Stad Brussel', $result->getLocality());
-        $this->assertEquals('Heysel - Heizel', $result->getSubLocality());
+        $this->assertEquals('Pentagone - Vijfhoek', $result->getSubLocality());
         $this->assertEquals('BE', $result->getCountry()->getCode());
 
+        $details = $result->getDetails();
+        $this->assertCount(4, $details);
+        $this->assertArrayHasKey('city_district', $details);
+        $this->assertEquals('Région de Bruxelles-Capitale - Brussels Hoofdstedelijk Gewest', $details['region']);
+        $this->assertEquals('Bruxelles / Brussel', $details['city_district']);
+        $this->assertEquals('Quartier Royal - Koninklijke Wijk', $details['neighbourhood']);
+        $this->assertEquals('Palais Royal - Koninklijk Paleis', $details['tourism']);
+
         $this->assertEquals('Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright', $result->getAttribution());
-        $this->assertEquals('building', $result->getCategory());
-        $this->assertEquals('35, Avenue Jean de Bologne - Jean de Bolognelaan, Heysel - Heizel, Laeken / Laken, Ville de Bruxelles - Stad Brussel, Brussel-Hoofdstad - Bruxelles-Capitale, Région de Bruxelles-Capitale - Brussels Hoofdstedelijk Gewest, 1020, België / Belgique / Belgien', $result->getDisplayName());
-        $this->assertEquals(220754533, $result->getOSMId());
-        $this->assertEquals('way', $result->getOSMType());
-        $this->assertEquals('yes', $result->getType());
+        $this->assertEquals('tourism', $result->getCategory());
+        $this->assertEquals('Palais Royal - Koninklijk Paleis, 1, Place des Palais - Paleizenplein, Quartier Royal - Koninklijke Wijk, Pentagone - Vijfhoek, Bruxelles / Brussel, Ville de Bruxelles - Stad Brussel, Brussel-Hoofdstad - Bruxelles-Capitale, Région de Bruxelles-Capitale - Brussels Hoofdstedelijk Gewest, 1000, België / Belgique / Belgien', $result->getDisplayName());
+        $this->assertEquals(3299902, $result->getOSMId());
+        $this->assertEquals('relation', $result->getOSMType());
+        $this->assertEquals('attraction', $result->getType());
     }
 
     public function testGeocodeWithRealAddressThatReturnsOptionalQuarter()
@@ -113,8 +121,25 @@ class NominatimTest extends BaseTestCase
 
         $this->assertCount(1, $results);
 
-        /* @var \Geocoder\Provider\Nominatim\Model\NominatimAddress $result */
-        $this->assertEquals('Służewiec', $results->first()->getQuarter());
+        $this->assertEquals('Ksawerów', $results->first()->getQuarter());
+    }
+
+    public function testGeocodeWithRealAddressAndExtraTags()
+    {
+        $provider = Nominatim::withOpenStreetMapServer($this->getHttpClient(), 'Geocoder PHP/Nominatim Provider/Nominatim Test');
+
+        $results = $provider->geocodeQuery(GeocodeQuery::create('Elbphilharmonie, Platz der deutschen Einheit 1, Hamburg'));
+        $this->assertCount(1, $results);
+
+        $results = $provider->geocodeQuery(GeocodeQuery::create('Elbphilharmonie, Platz der deutschen Einheit 1, Hamburg'));
+
+        $this->assertCount(1, $results);
+
+        /** @var \Geocoder\Provider\Nominatim\Model\NominatimAddress $result */
+        $result = $results->first();
+        $this->assertIsArray($result->getTags());
+        $this->assertArrayHasKey('height', $result->getTags());
+        $this->assertEquals('110 m', $result->getTags()['height']);
     }
 
     public function testGeocodeWithCountrycodes()
@@ -139,33 +164,33 @@ class NominatimTest extends BaseTestCase
     {
         $provider = Nominatim::withOpenStreetMapServer($this->getHttpClient(), 'Geocoder PHP/Nominatim Provider/Nominatim Test');
 
-        $query = GeocodeQuery::create('35 avenue jean de bologne 1020 bruxelles')
-            ->withData('viewbox', [4.3539793798, 50.8934444743, 4.3638069937, 50.9000218934])
+        $query = GeocodeQuery::create('1 Place des Palais 1000 bruxelles')
+            ->withData('viewbox', [4.3574204633, 50.8390856095, 4.3680849263, 50.8443022723])
             ->withData('bounded', true);
 
         $results = $provider->geocodeQuery($query);
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
-        $this->assertCount(1, $results);
+        $this->assertCount(5, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var \Geocoder\Provider\Nominatim\Model\NominatimAddress $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEqualsWithDelta(50.896344, $result->getCoordinates()->getLatitude(), 0.00001);
-        $this->assertEqualsWithDelta(4.3605984, $result->getCoordinates()->getLongitude(), 0.00001);
-        $this->assertEquals('35', $result->getStreetNumber());
-        $this->assertEquals('Avenue Jean de Bologne - Jean de Bolognelaan', $result->getStreetName());
-        $this->assertEquals('1020', $result->getPostalCode());
+        $this->assertEqualsWithDelta(50.8419916, $result->getCoordinates()->getLatitude(), 0.00001);
+        $this->assertEqualsWithDelta(4.361988, $result->getCoordinates()->getLongitude(), 0.00001);
+        $this->assertEquals('1', $result->getStreetNumber());
+        $this->assertEquals('Place des Palais - Paleizenplein', $result->getStreetName());
+        $this->assertEquals('1000', $result->getPostalCode());
         $this->assertEquals('Ville de Bruxelles - Stad Brussel', $result->getLocality());
-        $this->assertEquals('Heysel - Heizel', $result->getSubLocality());
+        $this->assertEquals('Pentagone - Vijfhoek', $result->getSubLocality());
         $this->assertEquals('BE', $result->getCountry()->getCode());
 
         $this->assertEquals('Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright', $result->getAttribution());
-        $this->assertEquals('building', $result->getCategory());
-        $this->assertEquals('35, Avenue Jean de Bologne - Jean de Bolognelaan, Heysel - Heizel, Laeken / Laken, Ville de Bruxelles - Stad Brussel, Brussel-Hoofdstad - Bruxelles-Capitale, Région de Bruxelles-Capitale - Brussels Hoofdstedelijk Gewest, 1020, België / Belgique / Belgien', $result->getDisplayName());
-        $this->assertEquals(220754533, $result->getOSMId());
-        $this->assertEquals('way', $result->getOSMType());
-        $this->assertEquals('yes', $result->getType());
+        $this->assertEquals('tourism', $result->getCategory());
+        $this->assertEquals('Palais Royal - Koninklijk Paleis, 1, Place des Palais - Paleizenplein, Quartier Royal - Koninklijke Wijk, Pentagone - Vijfhoek, Bruxelles / Brussel, Ville de Bruxelles - Stad Brussel, Brussel-Hoofdstad - Bruxelles-Capitale, Région de Bruxelles-Capitale - Brussels Hoofdstedelijk Gewest, 1000, België / Belgique / Belgien', $result->getDisplayName());
+        $this->assertEquals(3299902, $result->getOSMId());
+        $this->assertEquals('relation', $result->getOSMType());
+        $this->assertEquals('attraction', $result->getType());
     }
 
     public function testGeocodeNoOSMId()
@@ -176,7 +201,7 @@ class NominatimTest extends BaseTestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var \Geocoder\Provider\Nominatim\Model\NominatimAddress $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals('90210', $result->getPostalCode());
@@ -192,12 +217,16 @@ class NominatimTest extends BaseTestCase
     public function testGeocodeNoCountry()
     {
         $provider = Nominatim::withOpenStreetMapServer($this->getHttpClient(), 'Geocoder PHP/Nominatim Provider/Nominatim Test');
-        $results = $provider->geocodeQuery(GeocodeQuery::create('Italia'));
+        $query = GeocodeQuery::create('Italia')
+            ->withData('viewbox', [-58.541836, -62.181561, -58.41618, -62.141319])
+            ->withData('bounded', true);
+        $results = $provider->geocodeQuery($query);
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
-        $this->assertCount(5, $results);
+        $this->assertCount(1, $results);
 
-        $result = $results->get(1);
+        /** @var \Geocoder\Provider\Nominatim\Model\NominatimAddress $result */
+        $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals('Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright', $result->getAttribution());
 
