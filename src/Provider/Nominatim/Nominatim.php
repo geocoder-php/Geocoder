@@ -236,7 +236,7 @@ final class Nominatim extends AbstractHttpProvider implements Provider
 
         $includedAddressKeys = ['city', 'town', 'village', 'state', 'county', 'hamlet', 'postcode', 'road', 'pedestrian', 'house_number', 'suburb', 'country', 'country_code', 'quarter'];
 
-        $location = $location->withAddressData(array_diff_key((array) $place->address, array_flip($includedAddressKeys)));
+        $location = $location->withDetails(array_diff_key((array) $place->address, array_flip($includedAddressKeys)));
 
         if (isset($place->extratags)) {
             $location = $location->withTags((array) $place->extratags);

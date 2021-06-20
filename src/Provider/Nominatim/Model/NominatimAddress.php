@@ -57,7 +57,7 @@ final class NominatimAddress extends Address
     /**
      * @var array|null
      */
-    private $addressData;
+    private $details;
 
     /**
      * @var array|null
@@ -236,18 +236,18 @@ final class NominatimAddress extends Address
     /**
      * @return array|null
      */
-    public function getAddressData(): ?array
+    public function getDetails(): ?array
     {
-        return $this->addressData;
+        return $this->details;
     }
 
     /**
-     * @param array|null $addressData
+     * @param array|null $details
      */
-    public function withAddressData(array $addressData = null): self
+    public function withDetails(array $details = null): self
     {
         $new = clone $this;
-        $new->addressData = $addressData;
+        $new->details = $details;
 
         return $new;
     }
