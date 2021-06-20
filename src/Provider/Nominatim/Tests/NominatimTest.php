@@ -218,7 +218,7 @@ class NominatimTest extends BaseTestCase
     {
         $provider = Nominatim::withOpenStreetMapServer($this->getHttpClient(), 'Geocoder PHP/Nominatim Provider/Nominatim Test');
         $query = GeocodeQuery::create('Italia')
-            ->withData('viewbox', [-58.541836,-62.181561,-58.41618,-62.141319])
+            ->withData('viewbox', [-58.541836, -62.181561, -58.41618, -62.141319])
             ->withData('bounded', true);
         $results = $provider->geocodeQuery($query);
 
