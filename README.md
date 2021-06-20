@@ -1,7 +1,7 @@
 Geocoder
 ========
 
-[![Build Status](https://travis-ci.org/geocoder-php/Geocoder.svg?branch=master)](https://img.shields.io/travis/geocoder-php/Geocoder?style=flat-square)
+[![Geocoder](https://github.com/geocoder-php/Geocoder/actions/workflows/php.yml/badge.svg)](https://github.com/geocoder-php/Geocoder/actions/workflows/php.yml)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 
 > **Important:** You are browsing the documentation of Geocoder **4.x**.
