@@ -96,6 +96,7 @@ final class Nominatim extends AbstractHttpProvider implements Provider
                 'format' => 'jsonv2',
                 'q' => $address,
                 'addressdetails' => 1,
+                'extratags' => 1,
                 'limit' => $query->getLimit(),
             ]);
 
@@ -126,10 +127,6 @@ final class Nominatim extends AbstractHttpProvider implements Provider
                     'bounded' => 1,
                 ]);
             }
-        }
-
-        if ((bool) $query->getData('extratags')) {
-            $url .= '&extratags=1';
         }
 
         $content = $this->executeQuery($url, $query->getLocale());
