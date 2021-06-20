@@ -1,0 +1,95 @@
+name: Provider
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  test:
+    name: PHP ${{ matrix.php-version }} / ${{ matrix.provider }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version: ['7.3', '7.4', '8.0']
+        provider:
+          - AlgoliaPlaces
+          - ArcGISOnline
+          - AzureMaps
+          - BingMaps
+          - Cache
+          - Chain
+          - FreeGeoIp
+          - GeoIP2
+          # - GeoIPs
+          - GeoPlugin
+          - GeocodeEarth
+          - Geonames
+          - GoogleMaps
+          - GoogleMapsPlaces
+          - GraphHopper
+          - Here
+          - HostIp
+          - IP2Location
+          # - IP2LocationBinary
+          - IpInfo
+          - IpInfoDb
+          - Ipstack
+          - LocationIQ
+          - MapQuest
+          - Mapbox
+          # - Mapzen
+          - MaxMind
+          - MaxMindBinary
+          - Nominatim
+          - OpenCage
+          - OpenRouteService
+          - Pelias
+          - Photon
+          - PickPoint
+          - TomTom
+          - Yandex
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use PHP ${{ matrix.php-version }}
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php-version }}
+        extensions: curl
+    - name: Validate composer.json and composer.lock
+      working-directory: ./src/Provider/${{ matrix.provider }}
+      run: composer validate
+    - name: Install dependencies
+      working-directory: ./src/Provider/${{ matrix.provider }}
+      run: composer update --no-progress
+    - name: Run test suite
+      working-directory: ./src/Provider/${{ matrix.provider }}
+      run: composer run-script test
+
+  test-ext-geoip:
+    name: PHP ${{ matrix.php-version }} (geoip) / ${{ matrix.provider }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version: ['7.3', '7.4']
+        provider:
+          - Geoip
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use PHP ${{ matrix.php-version }}
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php-version }}
+        extensions: curl, geoip
+    - name: Validate composer.json and composer.lock
+      working-directory: ./src/Provider/${{ matrix.provider }}
+      run: composer validate
+    - name: Install dependencies
+      working-directory: ./src/Provider/${{ matrix.provider }}
+      run: composer update --no-progress
+    - name: Run test suite
+      working-directory: ./src/Provider/${{ matrix.provider }}
+      run: composer run-script test
