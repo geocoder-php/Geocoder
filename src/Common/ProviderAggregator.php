@@ -180,7 +180,7 @@ class ProviderAggregator implements Geocoder
             return $currentProvider;
         }
 
-        if (0 === count($providers)) {
+        if ([] === $providers) {
             throw ProviderNotRegistered::noProviderRegistered();
         }
 
