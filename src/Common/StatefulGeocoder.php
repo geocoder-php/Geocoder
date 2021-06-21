@@ -61,7 +61,7 @@ final class StatefulGeocoder implements Geocoder
         $query = GeocodeQuery::create($value)
             ->withLimit($this->limit);
 
-        if (null !== $this->locale && strlen($this->locale) > 0) {
+        if (null !== $this->locale && '' !== $this->locale) {
             $query = $query->withLocale($this->locale);
         }
 
@@ -80,7 +80,7 @@ final class StatefulGeocoder implements Geocoder
         $query = ReverseQuery::fromCoordinates($latitude, $longitude)
             ->withLimit($this->limit);
 
-        if (null !== $this->locale && strlen($this->locale) > 0) {
+        if (null !== $this->locale && '' !== $this->locale) {
             $query = $query->withLocale($this->locale);
         }
 

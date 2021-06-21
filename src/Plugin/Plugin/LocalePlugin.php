@@ -41,7 +41,7 @@ class LocalePlugin implements Plugin
     public function handleQuery(Query $query, callable $next, callable $first)
     {
         $locale = $query->getLocale();
-        if (null !== $locale && strlen($locale) > 0) {
+        if (null !== $locale && '' !== $locale) {
             $query = $query->withLocale($this->locale);
         }
 
