@@ -93,7 +93,7 @@ final class StatefulGeocoder implements Geocoder
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
         $locale = $query->getLocale();
-        if ((null === $locale || 0 === strlen($locale)) && null !== $this->locale) {
+        if ((null === $locale || '' === $locale) && null !== $this->locale) {
             $query = $query->withLocale($this->locale);
         }
 
@@ -111,7 +111,7 @@ final class StatefulGeocoder implements Geocoder
     public function reverseQuery(ReverseQuery $query): Collection
     {
         $locale = $query->getLocale();
-        if ((null === $locale || 0 === strlen($locale)) && null !== $this->locale) {
+        if ((null === $locale || '' === $locale) && null !== $this->locale) {
             $query = $query->withLocale($this->locale);
         }
 

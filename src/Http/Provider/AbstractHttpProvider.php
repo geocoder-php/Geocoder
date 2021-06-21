@@ -96,7 +96,7 @@ abstract class AbstractHttpProvider extends AbstractProvider
         }
 
         $body = (string) $response->getBody();
-        if (0 === strlen($body)) {
+        if ('' === $body) {
             throw InvalidServerResponse::emptyResponse((string) $request->getUri());
         }
 

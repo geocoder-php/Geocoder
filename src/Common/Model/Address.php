@@ -240,7 +240,7 @@ class Address implements Location
             }
 
             $name = $adminLevel['name'] ?? $adminLevel['code'] ?? null;
-            if (null === $name || 0 === strlen($name)) {
+            if (null === $name || '' === $name) {
                 continue;
             }
 
