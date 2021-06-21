@@ -73,7 +73,7 @@ final class AdminLevelCollection implements \IteratorAggregate, \Countable
      */
     public function first(): AdminLevel
     {
-        if (empty($this->adminLevels)) {
+        if ([] === $this->adminLevels) {
             throw new CollectionIsEmpty();
         }
 

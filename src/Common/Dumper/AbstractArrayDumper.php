@@ -36,7 +36,7 @@ abstract class AbstractArrayDumper
             $properties['bounds']
         );
 
-        if (0 === count($properties)) {
+        if ([] === $properties) {
             $properties = null;
         }
 
