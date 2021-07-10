@@ -190,6 +190,10 @@ final class Geonames extends AbstractHttpProvider implements Provider
             return new AddressCollection([]);
         }
 
+        if (!isset($json->geonames)) {
+            return new AddressCollection([]);
+        }
+
         $data = $json->geonames;
 
         if (empty($data)) {
