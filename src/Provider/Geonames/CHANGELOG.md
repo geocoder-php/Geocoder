@@ -2,6 +2,12 @@
 
 The change log describes what is "Added", "Removed", "Changed" or "Fixed" between each release.
 
+## 4.3.1
+
+### Fixed
+
+- Check if response key exists to avoid notice.
+
 ## 4.3.0
 
 ### Added
