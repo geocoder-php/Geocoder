@@ -24,6 +24,9 @@ By default, the result is cached forever.
 You can  set a cache expiry by passing an integer representing the number of seconds as the third parameter.
 
 ```php
+use Cache\Adapter\PHPArray\ArrayCachePool;
+
+
 $httpClient = new \Http\Adapter\Guzzle6\Client();
 $provider = new \Geocoder\Provider\GoogleMaps\GoogleMaps($httpClient);
 
