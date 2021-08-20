@@ -102,13 +102,13 @@ class NominatimTest extends BaseTestCase
         $this->assertCount(4, $details);
         $this->assertArrayHasKey('city_district', $details);
         $this->assertEquals('Région de Bruxelles-Capitale - Brussels Hoofdstedelijk Gewest', $details['region']);
-        $this->assertEquals('Bruxelles / Brussel', $details['city_district']);
+        $this->assertEquals('Bruxelles - Brussel', $details['city_district']);
         $this->assertEquals('Quartier Royal - Koninklijke Wijk', $details['neighbourhood']);
         $this->assertEquals('Palais Royal - Koninklijk Paleis', $details['tourism']);
 
         $this->assertEquals('Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright', $result->getAttribution());
         $this->assertEquals('tourism', $result->getCategory());
-        $this->assertEquals('Palais Royal - Koninklijk Paleis, 1, Place des Palais - Paleizenplein, Quartier Royal - Koninklijke Wijk, Pentagone - Vijfhoek, Bruxelles / Brussel, Ville de Bruxelles - Stad Brussel, Brussel-Hoofdstad - Bruxelles-Capitale, Région de Bruxelles-Capitale - Brussels Hoofdstedelijk Gewest, 1000, België / Belgique / Belgien', $result->getDisplayName());
+        $this->assertEquals('Palais Royal - Koninklijk Paleis, 1, Place des Palais - Paleizenplein, Quartier Royal - Koninklijke Wijk, Pentagone - Vijfhoek, Bruxelles - Brussel, Ville de Bruxelles - Stad Brussel, Brussel-Hoofdstad - Bruxelles-Capitale, Région de Bruxelles-Capitale - Brussels Hoofdstedelijk Gewest, 1000, België / Belgique / Belgien', $result->getDisplayName());
         $this->assertEquals(3299902, $result->getOSMId());
         $this->assertEquals('relation', $result->getOSMType());
         $this->assertEquals('attraction', $result->getType());
@@ -187,7 +187,7 @@ class NominatimTest extends BaseTestCase
 
         $this->assertEquals('Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright', $result->getAttribution());
         $this->assertEquals('tourism', $result->getCategory());
-        $this->assertEquals('Palais Royal - Koninklijk Paleis, 1, Place des Palais - Paleizenplein, Quartier Royal - Koninklijke Wijk, Pentagone - Vijfhoek, Bruxelles / Brussel, Ville de Bruxelles - Stad Brussel, Brussel-Hoofdstad - Bruxelles-Capitale, Région de Bruxelles-Capitale - Brussels Hoofdstedelijk Gewest, 1000, België / Belgique / Belgien', $result->getDisplayName());
+        $this->assertEquals('Palais Royal - Koninklijk Paleis, 1, Place des Palais - Paleizenplein, Quartier Royal - Koninklijke Wijk, Pentagone - Vijfhoek, Bruxelles - Brussel, Ville de Bruxelles - Stad Brussel, Brussel-Hoofdstad - Bruxelles-Capitale, Région de Bruxelles-Capitale - Brussels Hoofdstedelijk Gewest, 1000, België / Belgique / Belgien', $result->getDisplayName());
         $this->assertEquals(3299902, $result->getOSMId());
         $this->assertEquals('relation', $result->getOSMType());
         $this->assertEquals('attraction', $result->getType());
