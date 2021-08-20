@@ -199,6 +199,11 @@ final class Mapbox extends AbstractHttpProvider implements Provider
             $urlParameters['fuzzyMatch'] = $fuzzyMatch ? 'true' : 'false';
         }
 
+        // Format is "Lon,Lat"
+        if (null !== $proximity = $query->getData('proximity')) {
+            $urlParameters['proximity'] = $proximity;
+        }
+
         if ($urlParameters) {
             $url .= '?'.http_build_query($urlParameters);
         }
