@@ -2,17 +2,11 @@
 
 The change log describes what is "Added", "Removed", "Changed" or "Fixed" between each release.
 
-## 5.5.0
+## 5.5.1
 
-### Added
+### Changed
 
-- Add support for address details
-- Add support for extra tags
-- Add GitHub Actions workflow
-
-### Removed
-
-- Remove Travis CI workflow
+- Force query argument separator and encoding type
 
 ## 5.4.0
 
