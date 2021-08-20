@@ -98,7 +98,7 @@ final class Nominatim extends AbstractHttpProvider implements Provider
                 'addressdetails' => 1,
                 'extratags' => 1,
                 'limit' => $query->getLimit(),
-            ]);
+            ], '', '&', PHP_QUERY_RFC3986);
 
         $countrycodes = $query->getData('countrycodes');
         if (!is_null($countrycodes)) {
@@ -107,11 +107,11 @@ final class Nominatim extends AbstractHttpProvider implements Provider
 
                 $url .= '&'.http_build_query([
                     'countrycodes' => implode(',', $countrycodes),
-                ]);
+                ], '', '&', PHP_QUERY_RFC3986);
             } else {
                 $url .= '&'.http_build_query([
                     'countrycodes' => strtolower($countrycodes),
-                ]);
+                ], '', '&', PHP_QUERY_RFC3986);
             }
         }
 
@@ -119,13 +119,13 @@ final class Nominatim extends AbstractHttpProvider implements Provider
         if (!is_null($viewbox) && is_array($viewbox) && 4 === count($viewbox)) {
             $url .= '&'.http_build_query([
                 'viewbox' => implode(',', $viewbox),
-            ]);
+            ], '', '&', PHP_QUERY_RFC3986);
 
             $bounded = $query->getData('bounded');
             if (!is_null($bounded) && true === $bounded) {
                 $url .= '&'.http_build_query([
                     'bounded' => 1,
-                ]);
+                ], '', '&', PHP_QUERY_RFC3986);
             }
         }
 
@@ -165,7 +165,7 @@ final class Nominatim extends AbstractHttpProvider implements Provider
                 'lon' => $longitude,
                 'addressdetails' => 1,
                 'zoom' => $query->getData('zoom', 18),
-            ]);
+            ], '', '&', PHP_QUERY_RFC3986);
 
         $content = $this->executeQuery($url, $query->getLocale());
 
@@ -278,7 +278,7 @@ final class Nominatim extends AbstractHttpProvider implements Provider
         if (null !== $locale) {
             $url .= '&'.http_build_query([
                 'accept-language' => $locale,
-            ]);
+            ], '', '&', PHP_QUERY_RFC3986);
         }
 
         $request = $this->getRequest($url);
