@@ -347,6 +347,10 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
                 $address = $address->withName($result->name);
             }
 
+            if (isset($result->business_status)) {
+                $address = $address->withBusinessStatus($result->business_status);
+            }
+
             if (isset($result->formatted_address)) {
                 $address = $address->withFormattedAddress($result->formatted_address);
             }
@@ -361,6 +365,14 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
 
             if (isset($result->icon)) {
                 $address = $address->withIcon($result->icon);
+            }
+
+            if (isset($result->icon_background_color)) {
+                $address = $address->withIconBackgroundColor($result->icon_background_color);
+            }
+
+            if (isset($result->icon_mask_base_uri)) {
+                $address = $address->withIconMaskBaseUri($result->icon_mask_base_uri);
             }
 
             if (isset($result->plus_code)) {
@@ -380,6 +392,14 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
 
             if (isset($result->rating)) {
                 $address = $address->withRating((float) $result->rating);
+            }
+
+            if (isset($result->user_ratings_total)) {
+                $address = $address->withUserRatingsTotal((float) $result->user_ratings_total);
+            }
+
+            if (isset($result->reference)) {
+                $address = $address->withReference($result->reference);
             }
 
             if (isset($result->formatted_phone_number)) {

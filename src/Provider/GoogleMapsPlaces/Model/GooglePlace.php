@@ -37,6 +37,11 @@ final class GooglePlace extends Address
     /**
      * @var string|null
      */
+    private $businessStatus;
+
+    /**
+     * @var string|null
+     */
     private $formattedAddress;
 
     /**
@@ -48,6 +53,16 @@ final class GooglePlace extends Address
      * @var string|null
      */
     private $icon;
+
+    /**
+     * @var string|null
+     */
+    private $iconBackgroundColor;
+
+    /**
+     * @var string|null
+     */
+    private $iconMaskBaseUri;
 
     /**
      * @var PlusCode|null
@@ -68,6 +83,16 @@ final class GooglePlace extends Address
      * @var float|null
      */
     private $rating;
+
+    /**
+     * @var string|null
+     */
+    private $reference;
+
+    /**
+     * @var float|null
+     */
+    private $userRatingsTotal;
 
     /**
      * @var string|null
@@ -162,6 +187,27 @@ final class GooglePlace extends Address
     /**
      * @return string|null
      */
+    public function getBusinessStatus()
+    {
+        return $this->businessStatus;
+    }
+
+    /**
+     * @param string|null $businessStatus
+     *
+     * @return GooglePlace
+     */
+    public function withBusinessStatus(string $businessStatus = null)
+    {
+        $new = clone $this;
+        $new->businessStatus = $businessStatus;
+
+        return $new;
+    }
+
+    /**
+     * @return string|null
+     */
     public function getFormattedAddress()
     {
         return $this->formattedAddress;
@@ -213,6 +259,38 @@ final class GooglePlace extends Address
     {
         $new = clone $this;
         $new->icon = $icon;
+
+        return $new;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getIconBackgroundColor(): string
+    {
+        return $this->iconBackgroundColor;
+    }
+
+    public function withIconBackgroundColor(string $iconBackgroundColor = null)
+    {
+        $new = clone $this;
+        $new->iconBackgroundColor = $iconBackgroundColor;
+
+        return $new;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getIconMaskBaseUri(): string
+    {
+        return $this->iconMaskBaseUri;
+    }
+
+    public function withIconMaskBaseUri(string $iconMaskBaseUri = null)
+    {
+        $new = clone $this;
+        $new->iconMaskBaseUri = $iconMaskBaseUri;
 
         return $new;
     }
@@ -285,6 +363,38 @@ final class GooglePlace extends Address
     {
         $new = clone $this;
         $new->rating = $rating;
+
+        return $new;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getUserRatingsTotal()
+    {
+        return $this->userRatingsTotal;
+    }
+
+    public function withUserRatingsTotal(float $userRatingsTotal = null)
+    {
+        $new = clone $this;
+        $new->userRatingsTotal = $userRatingsTotal;
+
+        return $new;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getReference()
+    {
+        return $this->reference;
+    }
+
+    public function withReference(string $reference)
+    {
+        $new = clone $this;
+        $new->reference = $reference;
 
         return $new;
     }
