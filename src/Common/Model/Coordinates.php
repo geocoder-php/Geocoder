@@ -30,8 +30,8 @@ final class Coordinates
     private $longitude;
 
     /**
-     * @param  float|null  $latitude
-     * @param  float|null  $longitude
+     * @param float|null  $latitude
+     * @param float|null  $longitude
      */
     public function __construct(?float $latitude = null, ?float $longitude = null)
     {

@@ -271,8 +271,8 @@ class Address implements Location
     }
 
     /**
-     * @param  float|null  $latitude
-     * @param  float|null  $longitude
+     * @param float|null  $latitude
+     * @param float|null  $longitude
      *
      * @return Coordinates
      */
