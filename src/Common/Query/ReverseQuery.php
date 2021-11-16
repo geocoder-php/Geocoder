@@ -59,8 +59,8 @@ final class ReverseQuery implements Query
     }
 
     /**
-     * @param float|null  $latitude
-     * @param float|null  $longitude
+     * @param float|null $latitude
+     * @param float|null $longitude
      *
      * @return ReverseQuery
      */

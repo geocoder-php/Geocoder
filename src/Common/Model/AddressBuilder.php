@@ -148,8 +148,8 @@ final class AddressBuilder
     }
 
     /**
-     * @param float|null  $latitude
-     * @param float|null  $longitude
+     * @param float|null $latitude
+     * @param float|null $longitude
      *
      * @return AddressBuilder
      */
