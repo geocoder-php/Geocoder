@@ -45,12 +45,12 @@ interface Geocoder extends Provider
     /**
      * Reverses geocode given latitude and longitude values.
      *
-     * @param float $latitude
-     * @param float $longitude
+     * @param  float|null  $latitude
+     * @param  float|null  $longitude
      *
      * @return Collection
      *
-     * @throws \Geocoder\Exception\Exception
+     * @throws Exception\Exception
      */
-    public function reverse(float $latitude, float $longitude): Collection;
+    public function reverse(?float $latitude = null, ?float $longitude = null): Collection;
 }

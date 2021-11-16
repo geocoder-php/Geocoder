@@ -37,7 +37,7 @@ trait GeocoderTrait
     /**
      * {@inheritdoc}
      */
-    public function reverse(float $latitude, float $longitude): Collection
+    public function reverse(?float $latitude = null, ?float $longitude = null): Collection
     {
         return $this->reverseQuery(ReverseQuery::fromCoordinates($latitude, $longitude));
     }

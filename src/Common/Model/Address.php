@@ -271,17 +271,13 @@ class Address implements Location
     }
 
     /**
-     * @param float $latitude
-     * @param float $longitude
+     * @param  float|null  $latitude
+     * @param  float|null  $longitude
      *
-     * @return Coordinates|null
+     * @return Coordinates
      */
-    private static function createCoordinates($latitude, $longitude)
+    private static function createCoordinates(?float $latitude = null, ?float $longitude = null): Coordinates
     {
-        if (null === $latitude || null === $longitude) {
-            return null;
-        }
-
         return new Coordinates($latitude, $longitude);
     }
 

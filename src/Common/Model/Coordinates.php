@@ -30,22 +30,24 @@ final class Coordinates
     private $longitude;
 
     /**
-     * @param float $latitude
-     * @param float $longitude
+     * @param  float|null  $latitude
+     * @param  float|null  $longitude
      */
-    public function __construct($latitude, $longitude)
+    public function __construct(?float $latitude = null, ?float $longitude = null)
     {
-        Assert::notNull($latitude);
-        Assert::notNull($longitude);
-
-        $latitude = (float) $latitude;
-        $longitude = (float) $longitude;
-
         Assert::latitude($latitude);
         Assert::longitude($longitude);
 
         $this->latitude = $latitude;
         $this->longitude = $longitude;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasLatitude(): bool
+    {
+        return !is_null($this->latitude);
     }
 
     /**
@@ -55,7 +57,19 @@ final class Coordinates
      */
     public function getLatitude(): float
     {
+        if (is_null($this->latitude)) {
+            throw new \LogicException('Latitude is not set');
+        }
+
         return $this->latitude;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasLongitude(): bool
+    {
+        return !is_null($this->longitude);
     }
 
     /**
@@ -65,6 +79,10 @@ final class Coordinates
      */
     public function getLongitude(): float
     {
+        if (is_null($this->longitude)) {
+            throw new \LogicException('Longitude is not set');
+        }
+
         return $this->longitude;
     }
 

@@ -59,7 +59,7 @@ final class StatefulGeocoder implements Geocoder
     public function geocode(string $value): Collection
     {
         $query = GeocodeQuery::create($value)
-            ->withLimit($this->limit);
+                             ->withLimit($this->limit);
 
         if (null !== $this->locale && '' !== $this->locale) {
             $query = $query->withLocale($this->locale);
@@ -75,10 +75,10 @@ final class StatefulGeocoder implements Geocoder
     /**
      * {@inheritdoc}
      */
-    public function reverse(float $latitude, float $longitude): Collection
+    public function reverse(?float $latitude = null, ?float $longitude = null): Collection
     {
         $query = ReverseQuery::fromCoordinates($latitude, $longitude)
-            ->withLimit($this->limit);
+                             ->withLimit($this->limit);
 
         if (null !== $this->locale && '' !== $this->locale) {
             $query = $query->withLocale($this->locale);
