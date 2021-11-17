@@ -38,7 +38,7 @@ interface Geocoder extends Provider
      *
      * @return Collection
      *
-     * @throws \Geocoder\Exception\Exception
+     * @throws Exception\Exception
      */
     public function geocode(string $value): Collection;
 

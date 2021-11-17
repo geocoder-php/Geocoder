@@ -64,7 +64,7 @@ final class ReverseQuery implements Query
      *
      * @return ReverseQuery
      */
-    public static function fromCoordinates(?float $latitude = null, ?float $longitude = null): self
+    public static function fromCoordinates($latitude = null, $longitude = null): self
     {
         return new self(new Coordinates($latitude, $longitude));
     }

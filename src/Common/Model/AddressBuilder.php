@@ -153,7 +153,7 @@ final class AddressBuilder
      *
      * @return AddressBuilder
      */
-    public function setCoordinates(?float $latitude = null, ?float $longitude = null): self
+    public function setCoordinates($latitude = null, $longitude = null): self
     {
         try {
             $this->coordinates = new Coordinates($latitude, $longitude);

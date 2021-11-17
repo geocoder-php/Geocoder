@@ -274,10 +274,14 @@ class Address implements Location
      * @param float|null $latitude
      * @param float|null $longitude
      *
-     * @return Coordinates
+     * @return Coordinates|null
      */
-    private static function createCoordinates(?float $latitude = null, ?float $longitude = null): Coordinates
+    private static function createCoordinates($latitude = null, $longitude = null)
     {
+        if (null === $latitude || null === $longitude) {
+            return null;
+        }
+
         return new Coordinates($latitude, $longitude);
     }
 

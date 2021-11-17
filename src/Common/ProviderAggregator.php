@@ -93,7 +93,7 @@ class ProviderAggregator implements Geocoder
     public function geocode(string $value): Collection
     {
         return $this->geocodeQuery(GeocodeQuery::create($value)
-                                               ->withLimit($this->limit));
+           ->withLimit($this->limit));
     }
 
     /**
@@ -102,7 +102,7 @@ class ProviderAggregator implements Geocoder
     public function reverse(float $latitude, float $longitude): Collection
     {
         return $this->reverseQuery(ReverseQuery::create(new Coordinates($latitude, $longitude))
-                                               ->withLimit($this->limit));
+           ->withLimit($this->limit));
     }
 
     /**

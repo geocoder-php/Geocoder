@@ -13,6 +13,8 @@ declare(strict_types=1);
 namespace Geocoder\Model;
 
 use Geocoder\Assert;
+use InvalidArgumentException;
+use LogicException;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -20,23 +22,28 @@ use Geocoder\Assert;
 final class Coordinates
 {
     /**
-     * @var float
+     * @var float|null
      */
-    private $latitude;
+    private ?float $latitude;
 
     /**
-     * @var float
+     * @var float|null
      */
-    private $longitude;
+    private ?float $longitude;
 
     /**
      * @param float|null $latitude
      * @param float|null $longitude
      */
-    public function __construct(?float $latitude = null, ?float $longitude = null)
+    public function __construct($latitude = null, $longitude = null)
     {
-        Assert::latitude($latitude);
-        Assert::longitude($longitude);
+        if (!is_null($latitude)) {
+            $latitude = floatval($latitude);
+        }
+
+        if (!is_null($longitude)) {
+            $longitude = floatval($longitude);
+        }
 
         $this->latitude = $latitude;
         $this->longitude = $longitude;
@@ -47,6 +54,12 @@ final class Coordinates
      */
     public function hasLatitude(): bool
     {
+        try {
+            Assert::latitude($this->latitude);
+        } catch (InvalidArgumentException $e) {
+            return false;
+        }
+
         return !is_null($this->latitude);
     }
 
@@ -57,8 +70,10 @@ final class Coordinates
      */
     public function getLatitude(): float
     {
+        Assert::latitude($this->latitude);
+
         if (is_null($this->latitude)) {
-            throw new \LogicException('Latitude is not set');
+            throw new LogicException('Latitude is not set');
         }
 
         return $this->latitude;
@@ -69,6 +84,12 @@ final class Coordinates
      */
     public function hasLongitude(): bool
     {
+        try {
+            Assert::longitude($this->longitude);
+        } catch (InvalidArgumentException $e) {
+            return false;
+        }
+
         return !is_null($this->longitude);
     }
 
@@ -79,8 +100,10 @@ final class Coordinates
      */
     public function getLongitude(): float
     {
+        Assert::longitude($this->longitude);
+
         if (is_null($this->longitude)) {
-            throw new \LogicException('Longitude is not set');
+            throw new LogicException('Longitude is not set');
         }
 
         return $this->longitude;
