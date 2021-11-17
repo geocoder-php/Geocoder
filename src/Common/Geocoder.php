@@ -38,7 +38,7 @@ interface Geocoder extends Provider
      *
      * @return Collection
      *
-     * @throws Exception\Exception
+     * @throws \Geocoder\Exception\Exception
      */
     public function geocode(string $value): Collection;
 
@@ -50,7 +50,7 @@ interface Geocoder extends Provider
      *
      * @return Collection
      *
-     * @throws Exception\Exception
+     * @throws \Geocoder\Exception\Exception
      */
     public function reverse(float $latitude, float $longitude): Collection;
 }
