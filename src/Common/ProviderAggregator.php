@@ -99,7 +99,7 @@ class ProviderAggregator implements Geocoder
     /**
      * {@inheritdoc}
      */
-    public function reverse(?float $latitude = null, ?float $longitude = null): Collection
+    public function reverse(float $latitude, float $longitude): Collection
     {
         return $this->reverseQuery(ReverseQuery::create(new Coordinates($latitude, $longitude))
                                                ->withLimit($this->limit));
