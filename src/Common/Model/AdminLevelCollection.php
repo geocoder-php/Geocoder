@@ -15,6 +15,7 @@ namespace Geocoder\Model;
 use Geocoder\Exception\CollectionIsEmpty;
 use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\OutOfBounds;
+use Traversable;
 
 /**
  * @author Giorgio Premi <giosh94mhz@gmail.com>
@@ -53,7 +54,7 @@ final class AdminLevelCollection implements \IteratorAggregate, \Countable
     /**
      * {@inheritdoc}
      */
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         return new \ArrayIterator($this->all());
     }
@@ -61,7 +62,7 @@ final class AdminLevelCollection implements \IteratorAggregate, \Countable
     /**
      * {@inheritdoc}
      */
-    public function count()
+    public function count(): int
     {
         return count($this->adminLevels);
     }
