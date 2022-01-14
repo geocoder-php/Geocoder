@@ -12,7 +12,7 @@ namespace Geocoder\Provider\IP2Location\Tests;
 
 use Geocoder\IntegrationTest\ProviderIntegrationTest;
 use Geocoder\Provider\IP2Location\IP2Location;
-use Http\Client\HttpClient;
+use Psr\Http\Client\ClientInterface;
 
 /**
  * @author IP2Location <support@ip2location.com>
@@ -23,7 +23,7 @@ class IntegrationTest extends ProviderIntegrationTest
 
     protected $testReverse = false;
 
-    protected function createProvider(HttpClient $httpClient)
+    protected function createProvider(ClientInterface $httpClient)
     {
         return new IP2Location($httpClient, $this->getApiKey());
     }

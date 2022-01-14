@@ -14,7 +14,7 @@ namespace Geocoder\Provider\MaxMindBinary\Tests;
 
 use Geocoder\IntegrationTest\ProviderIntegrationTest;
 use Geocoder\Provider\MaxMindBinary\MaxMindBinary;
-use Http\Client\HttpClient;
+use Psr\Http\Client\ClientInterface;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
@@ -45,7 +45,7 @@ class IntegrationTest extends ProviderIntegrationTest
         parent::setUpBeforeClass();
     }
 
-    protected function createProvider(HttpClient $httpClient)
+    protected function createProvider(ClientInterface $httpClient)
     {
         return new MaxMindBinary(__DIR__.'/fixtures/GeoLiteCity.dat');
     }

@@ -12,7 +12,7 @@ namespace Geocoder\Provider\MaxMind\Tests;
 
 use Geocoder\IntegrationTest\ProviderIntegrationTest;
 use Geocoder\Provider\MaxMind\MaxMind;
-use Http\Client\HttpClient;
+use Psr\Http\Client\ClientInterface;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
@@ -23,7 +23,7 @@ class IntegrationTest extends ProviderIntegrationTest
 
     protected $testReverse = false;
 
-    protected function createProvider(HttpClient $httpClient)
+    protected function createProvider(ClientInterface $httpClient)
     {
         return new MaxMind($httpClient, $this->getApiKey());
     }
