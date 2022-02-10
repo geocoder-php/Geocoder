@@ -36,6 +36,11 @@ final class GraphHopper extends AbstractHttpProvider implements Provider
     /**
      * @var string
      */
+    const GEOCODE_BOUNDS_PARAMS = '&bbox=%f,%f,%f,%f';
+
+    /**
+     * @var string
+     */
     const REVERSE_ENDPOINT_URL = 'https://graphhopper.com/api/1/geocode?reverse=true&point=%f,%f&key=%s&locale=%s&limit=%d';
 
     /**
@@ -70,6 +75,11 @@ final class GraphHopper extends AbstractHttpProvider implements Provider
         }
 
         $url = sprintf(self::GEOCODE_ENDPOINT_URL, urlencode($address), $this->apiKey, $query->getLocale(), $query->getLimit());
+
+        $bounds = $query->getBounds();
+        if ($bounds) {
+            $url .= sprintf(self::GEOCODE_BOUNDS_PARAMS, $bounds->getWest(), $bounds->getSouth(), $bounds->getEast(), $bounds->getNorth());
+        }
 
         return $this->executeQuery($url);
     }
