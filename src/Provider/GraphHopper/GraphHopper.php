@@ -17,6 +17,7 @@ use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Model\Address;
 use Geocoder\Model\AddressCollection;
+use Geocoder\Model\Bounds;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Http\Provider\AbstractHttpProvider;
@@ -70,6 +71,11 @@ final class GraphHopper extends AbstractHttpProvider implements Provider
         }
 
         $url = sprintf(self::GEOCODE_ENDPOINT_URL, urlencode($address), $this->apiKey, $query->getLocale(), $query->getLimit());
+
+        $bounds = $query->getBounds();
+        if ($bounds instanceof Bounds) {
+            $url .= sprintf('&bbox=%f,%f,%f,%f', $bounds->getWest(), $bounds->getSouth(), $bounds->getEast(), $bounds->getNorth());
+        }
 
         return $this->executeQuery($url);
     }

@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Geocoder\Provider\GraphHopper\Tests;
 
 use Geocoder\IntegrationTest\BaseTestCase;
+use Geocoder\Model\Bounds;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\GraphHopper\GraphHopper;
@@ -75,6 +76,47 @@ class GraphHopperTest extends BaseTestCase
         $this->assertEquals('Acklam Road', $result->getStreetName());
         $this->assertEquals('Londres', $result->getLocality());
         $this->assertEquals('Royaume-Uni', $result->getCountry()->getName());
+    }
+
+    public function testGeocodeInsideBounds()
+    {
+        if (!isset($_SERVER['GRAPHHOPPER_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the GRAPHHOPPER_API_KEY value in phpunit.xml.');
+        }
+
+        $provider = new GraphHopper($this->getHttpClient($_SERVER['GRAPHHOPPER_API_KEY']), $_SERVER['GRAPHHOPPER_API_KEY']);
+        $results = $provider->geocodeQuery(
+            GeocodeQuery::create('242 Acklam Road, London, United Kingdom')
+                ->withLocale('fr')
+                ->withBounds(new Bounds(50, -10, 55, 10))
+        );
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertCount(1, $results);
+
+        /** @var \Geocoder\Model\Address $result */
+        $result = $results->first();
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEqualsWithDelta(51.521124, $result->getCoordinates()->getLatitude(), 0.01);
+        $this->assertEqualsWithDelta(-0.20360200000000001, $result->getCoordinates()->getLongitude(), 0.01);
+        $this->assertEquals('Acklam Road', $result->getStreetName());
+        $this->assertEquals('Londres', $result->getLocality());
+        $this->assertEquals('Royaume-Uni', $result->getCountry()->getName());
+    }
+
+    public function testGeocodeOutsideBounds()
+    {
+        if (!isset($_SERVER['GRAPHHOPPER_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the GRAPHHOPPER_API_KEY value in phpunit.xml.');
+        }
+
+        $provider = new GraphHopper($this->getHttpClient($_SERVER['GRAPHHOPPER_API_KEY']), $_SERVER['GRAPHHOPPER_API_KEY']);
+        $results = $provider->geocodeQuery(
+            GeocodeQuery::create('242 Acklam Road, London, United Kingdom')
+                ->withLocale('fr')
+                ->withBounds(new Bounds(20, 10, 30, 20))
+        );
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertCount(0, $results);
     }
 
     public function testReverseWithRealCoordinates()
