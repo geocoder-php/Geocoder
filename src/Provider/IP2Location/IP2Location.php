@@ -110,14 +110,14 @@ final class IP2Location extends AbstractHttpProvider implements Provider
         }
 
         if (isset($data['response'])) {
-            if (preg_match('/suspended|denied|invalid account/i', $data['response'])) {
+            if (preg_match('/suspended|denied|invalid/i', $data['response'])) {
                 throw new InvalidCredentials('API Key provided is not valid.');
             } elseif (preg_match('/insufficient/i', $data['response'])) {
                 throw new InvalidCredentials('Insufficient credits to use IP2Location service.');
             } elseif (preg_match('/invalid ip address/i', $data['response'])) {
                 throw new UnsupportedOperation('Invalid IP address.');
             } else {
-                throw new UnsupportedOperation('Unexpected error.');
+                throw new UnsupportedOperation(sprintf('Unexpected error: %s.', $data['response']));
             }
         }
 
