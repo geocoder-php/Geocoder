@@ -103,13 +103,14 @@ class GraphHopperTest extends BaseTestCase
         $this->assertEquals('Royaume-Uni', $result->getCountry()->getName());
     }
 
-    public function testGeocodeOutsideBounds() {
+    public function testGeocodeOutsideBounds()
+    {
         if (!isset($_SERVER['GRAPHHOPPER_API_KEY'])) {
             $this->markTestSkipped('You need to configure the GRAPHHOPPER_API_KEY value in phpunit.xml.');
         }
 
         $provider = new GraphHopper($this->getHttpClient($_SERVER['GRAPHHOPPER_API_KEY']), $_SERVER['GRAPHHOPPER_API_KEY']);
-        $results  = $provider->geocodeQuery(
+        $results = $provider->geocodeQuery(
             GeocodeQuery::create('242 Acklam Road, London, United Kingdom')
                 ->withLocale('fr')
                 ->withBounds(new Bounds(20, 10, 30, 20))
