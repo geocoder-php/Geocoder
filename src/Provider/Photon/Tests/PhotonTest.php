@@ -59,7 +59,7 @@ class PhotonTest extends BaseTestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var \Geocoder\Provider\Photon\Model\PhotonAddress $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(48.8631927, $result->getCoordinates()->getLatitude(), '', 0.00001);
@@ -85,7 +85,7 @@ class PhotonTest extends BaseTestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var \Geocoder\Provider\Photon\Model\PhotonAddress $result */
         $result = $results->first();
 
         $this->assertEquals('The Sherlock Holmes Museum and shop', $result->getName());
@@ -99,7 +99,7 @@ class PhotonTest extends BaseTestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var \Geocoder\Provider\Photon\Model\PhotonAddress $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(51.9982968, $result->getCoordinates()->getLatitude(), '', 0.00001);
