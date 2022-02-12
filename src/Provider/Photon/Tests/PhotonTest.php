@@ -68,7 +68,8 @@ class PhotonTest extends BaseTestCase
         $this->assertEquals('Avenue Gambetta', $result->getStreetName());
         $this->assertEquals('75020', $result->getPostalCode());
         $this->assertEquals('Paris', $result->getLocality());
-        $this->assertEquals('France', $result->getCountry());
+        $this->assertEquals('France', $result->getCountry()->getName());
+        $this->assertEquals('FR', $result->getCountry()->getCode());
 
         $this->assertEquals(1988097192, $result->getOSMId());
         $this->assertEquals('N', $result->getOSMType());
@@ -105,7 +106,8 @@ class PhotonTest extends BaseTestCase
         $this->assertEquals(9.998645, $result->getCoordinates()->getLongitude(), '', 0.00001);
         $this->assertEquals('31195', $result->getPostalCode());
         $this->assertEquals('Lamspringe', $result->getLocality());
-        $this->assertEquals('Deutschland', $result->getCountry());
+        $this->assertEquals('Deutschland', $result->getCountry()->getName());
+        $this->assertEquals('DE', $result->getCountry()->getCode());
 
         $this->assertEquals(693697564, $result->getOSMId());
         $this->assertEquals('N', $result->getOSMType());
