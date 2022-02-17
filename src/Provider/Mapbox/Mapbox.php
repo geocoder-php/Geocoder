@@ -195,6 +195,10 @@ final class Mapbox extends AbstractHttpProvider implements Provider
             $urlParameters['types'] = self::DEFAULT_TYPE;
         }
 
+        if (null !== $fuzzyMatch = $query->getData('fuzzy_match')) {
+            $urlParameters['fuzzyMatch'] = $fuzzyMatch ? 'true' : 'false';
+        }
+
         if ($urlParameters) {
             $url .= '?'.http_build_query($urlParameters);
         }
@@ -347,7 +351,9 @@ final class Mapbox extends AbstractHttpProvider implements Provider
 
             case 'country':
                 $builder->setCountry($value['text']);
-                $builder->setCountryCode(strtoupper($value['short_code']));
+                if (isset($value['short_code'])) {
+                    $builder->setCountryCode(strtoupper($value['short_code']));
+                }
 
                 break;
 

@@ -63,9 +63,7 @@ class Assert
     private static function float($value, string $message)
     {
         if (!is_float($value)) {
-            throw new InvalidArgument(
-                sprintf($message ?: 'Expected a float. Got: %s', self::typeToString($value))
-            );
+            throw new InvalidArgument(sprintf($message ?: 'Expected a float. Got: %s', self::typeToString($value)));
         }
     }
 }

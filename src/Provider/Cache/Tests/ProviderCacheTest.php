@@ -36,7 +36,7 @@ class ProviderCacheTest extends TestCase
      */
     private $cacheMock;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

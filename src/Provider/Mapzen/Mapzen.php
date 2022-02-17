@@ -25,7 +25,9 @@ use Geocoder\Provider\Provider;
 use Http\Client\HttpClient;
 
 /**
- * @author Gary Gale <gary@vicchi.org>
+ * Mapzen has shut down as their APIs as of February 1, 2018.
+ *
+ * @deprecated https://github.com/geocoder-php/Geocoder/issues/808
  */
 final class Mapzen extends AbstractHttpProvider implements Provider
 {
@@ -45,6 +47,10 @@ final class Mapzen extends AbstractHttpProvider implements Provider
     private $apiKey;
 
     /**
+     * Mapzen has shut down as their APIs as of February 1, 2018.
+     *
+     * @deprecated https://github.com/geocoder-php/Geocoder/issues/808
+     *
      * @param HttpClient $client an HTTP adapter
      * @param string     $apiKey an API key
      */
@@ -174,7 +180,7 @@ final class Mapzen extends AbstractHttpProvider implements Provider
     /**
      * @param array $components
      *
-     * @return null|string
+     * @return string|null
      */
     protected function guessLocality(array $components)
     {
@@ -186,7 +192,7 @@ final class Mapzen extends AbstractHttpProvider implements Provider
     /**
      * @param array $components
      *
-     * @return null|string
+     * @return string|null
      */
     protected function guessStreetName(array $components)
     {
@@ -198,7 +204,7 @@ final class Mapzen extends AbstractHttpProvider implements Provider
     /**
      * @param array $components
      *
-     * @return null|string
+     * @return string|null
      */
     protected function guessSubLocality(array $components)
     {
@@ -211,7 +217,7 @@ final class Mapzen extends AbstractHttpProvider implements Provider
      * @param array $components
      * @param array $keys
      *
-     * @return null|string
+     * @return string|null
      */
     protected function guessBestComponent(array $components, array $keys)
     {

@@ -59,7 +59,7 @@ final class GeonamesAddress extends Address
     private $asciiName;
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getName(): string
     {
@@ -67,7 +67,7 @@ final class GeonamesAddress extends Address
     }
 
     /**
-     * @param null|string $name
+     * @param string|null $name
      *
      * @return self
      */
@@ -80,7 +80,7 @@ final class GeonamesAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getFcode()
     {
@@ -88,7 +88,7 @@ final class GeonamesAddress extends Address
     }
 
     /**
-     * @param null|string $fcode
+     * @param string|null $fcode
      *
      * @return GeonamesAddress
      */
@@ -101,7 +101,7 @@ final class GeonamesAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getFclName()
     {
@@ -109,7 +109,7 @@ final class GeonamesAddress extends Address
     }
 
     /**
-     * @param null|string $fclName
+     * @param string|null $fclName
      *
      * @return GeonamesAddress
      */
@@ -185,7 +185,7 @@ final class GeonamesAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getAsciiName()
     {
@@ -193,7 +193,7 @@ final class GeonamesAddress extends Address
     }
 
     /**
-     * @param null|string $asciiName
+     * @param string|null $asciiName
      *
      * @return GeonamesAddress
      */

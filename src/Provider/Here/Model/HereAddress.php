@@ -35,7 +35,17 @@ final class HereAddress extends Address
     private $locationName;
 
     /**
-     * @return null|string
+     * @var array|null
+     */
+    private $additionalData;
+
+    /**
+     * @var array|null
+     */
+    private $shape;
+
+    /**
+     * @return string|null
      */
     public function getLocationId()
     {
@@ -43,7 +53,7 @@ final class HereAddress extends Address
     }
 
     /**
-     * @param null|string $LocationId
+     * @param string|null $LocationId
      *
      * @return HereAddress
      */
@@ -56,7 +66,7 @@ final class HereAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getLocationType()
     {
@@ -64,7 +74,7 @@ final class HereAddress extends Address
     }
 
     /**
-     * @param null|string $LocationType
+     * @param string|null $LocationType
      *
      * @return HereAddress
      */
@@ -77,7 +87,7 @@ final class HereAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getLocationName()
     {
@@ -85,7 +95,7 @@ final class HereAddress extends Address
     }
 
     /**
-     * @param null|string $LocationName
+     * @param string|null $LocationName
      *
      * @return HereAddress
      */
@@ -95,5 +105,119 @@ final class HereAddress extends Address
         $new->locationName = $locationName;
 
         return $new;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getAdditionalData()
+    {
+        return $this->additionalData;
+    }
+
+    /**
+     * @param array|null $additionalData
+     *
+     * @return HereAddress
+     */
+    public function withAdditionalData(array $additionalData = null): self
+    {
+        $new = clone $this;
+
+        foreach ($additionalData as $data) {
+            $new = $new->addAdditionalData($data['key'], $data['value']);
+        }
+
+        return $new;
+    }
+
+    /**
+     * @param string     $name
+     * @param mixed|null $value
+     *
+     * @return HereAddress
+     */
+    public function addAdditionalData(string $name, $value = null): self
+    {
+        $new = clone $this;
+        $new->additionalData[$name] = $value;
+
+        return $new;
+    }
+
+    /**
+     * @param string     $name
+     * @param mixed|null $default
+     *
+     * @return mixed
+     */
+    public function getAdditionalDataValue(string $name, $default = null)
+    {
+        if ($this->hasAdditionalDataValue($name)) {
+            return $this->additionalData[$name];
+        }
+
+        return $default;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return bool
+     */
+    public function hasAdditionalDataValue(string $name): bool
+    {
+        return array_key_exists($name, $this->additionalData);
+    }
+
+    /**
+     * @param array|null $shape
+     *
+     * @return HereAddress
+     */
+    public function withShape(array $shape = null): self
+    {
+        $new = clone $this;
+
+        if (!empty($shape)) {
+            foreach ($shape as $key => $data) {
+                $new = $new->addShape($key, $data);
+            }
+        }
+
+        return $new;
+    }
+
+    /**
+     * @param string     $name
+     * @param mixed|null $value
+     *
+     * @return HereAddress
+     */
+    public function addShape(string $name, $value = null): self
+    {
+        $new = clone $this;
+        $new->shape[$name] = $value;
+
+        return $new;
+    }
+
+    public function getShapeValue(string $name, $default = null)
+    {
+        if ($this->hasShapeValue($name)) {
+            return $this->shape[$name];
+        }
+
+        return $default;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return bool
+     */
+    public function hasShapeValue(string $name): bool
+    {
+        return array_key_exists($name, $this->shape);
     }
 }

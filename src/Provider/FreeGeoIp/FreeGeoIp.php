@@ -28,7 +28,7 @@ use Http\Client\HttpClient;
 final class FreeGeoIp extends AbstractHttpProvider implements Provider
 {
     /**
-     * @var string
+     * @var string|null
      */
     private $baseUrl;
 
@@ -36,7 +36,7 @@ final class FreeGeoIp extends AbstractHttpProvider implements Provider
      * @param HttpClient $client
      * @param string     $baseUrl
      */
-    public function __construct(HttpClient $client, string $baseUrl = 'https://freegeoip.net/json/%s')
+    public function __construct(HttpClient $client, string $baseUrl = 'https://freegeoip.app/json/%s')
     {
         parent::__construct($client);
 
@@ -49,6 +49,7 @@ final class FreeGeoIp extends AbstractHttpProvider implements Provider
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
         $address = $query->getText();
+
         if (!filter_var($address, FILTER_VALIDATE_IP)) {
             throw new UnsupportedOperation('The FreeGeoIp provider does not support street addresses.');
         }

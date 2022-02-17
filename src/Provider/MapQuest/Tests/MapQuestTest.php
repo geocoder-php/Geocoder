@@ -73,8 +73,8 @@ class MapQuestTest extends BaseTestCase
         /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(48.866205, $result->getCoordinates()->getLatitude(), '', 0.01);
-        $this->assertEquals(2.389089, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertEqualsWithDelta(48.866205, $result->getCoordinates()->getLatitude(), 0.01);
+        $this->assertEqualsWithDelta(2.389089, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('10 Avenue Gambetta', $result->getStreetName());
         $this->assertEquals(75020, $result->getPostalCode());
         $this->assertEquals('Paris', $result->getLocality());
@@ -91,8 +91,8 @@ class MapQuestTest extends BaseTestCase
 
         $result = $results->get(1);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(48.810071, $result->getCoordinates()->getLatitude(), '', 0.01);
-        $this->assertEquals(2.435937, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertEqualsWithDelta(48.810071, $result->getCoordinates()->getLatitude(), 0.01);
+        $this->assertEqualsWithDelta(2.435937, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('10 Avenue Gambetta', $result->getStreetName());
         $this->assertEquals(94700, $result->getPostalCode());
         $this->assertEquals('Maisons-Alfort', $result->getLocality());
@@ -140,8 +140,8 @@ class MapQuestTest extends BaseTestCase
         /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(36.062933, $result->getCoordinates()->getLatitude(), '', 0.01);
-        $this->assertEquals(-86.672811, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertEqualsWithDelta(36.062933, $result->getCoordinates()->getLatitude(), 0.01);
+        $this->assertEqualsWithDelta(-86.672811, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('Payne Road', $result->getStreetName());
         $this->assertEquals('37013', $result->getPostalCode());
         $this->assertEquals('Nashville', $result->getLocality());
@@ -172,8 +172,8 @@ class MapQuestTest extends BaseTestCase
         /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(54.0484068, $result->getCoordinates()->getLatitude(), '', 0.001);
-        $this->assertEquals(-2.7990345, $result->getCoordinates()->getLongitude(), '', 0.001);
+        $this->assertEqualsWithDelta(54.0484068, $result->getCoordinates()->getLatitude(), 0.001);
+        $this->assertEqualsWithDelta(-2.7990345, $result->getCoordinates()->getLongitude(), 0.001);
         $this->assertEquals('Collegian W.M.C.', $result->getStreetName());
         $this->assertEquals('LA1 1NP', $result->getPostalCode());
         $this->assertEquals('Lancaster', $result->getLocality());
@@ -205,8 +205,8 @@ class MapQuestTest extends BaseTestCase
         /** @var Location $result */
         $result = reset($resultsArray);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(52.374478, $result->getCoordinates()->getLatitude(), '', 0.01);
-        $this->assertEquals(9.738553, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertEqualsWithDelta(52.374478, $result->getCoordinates()->getLatitude(), 0.01);
+        $this->assertEqualsWithDelta(9.738553, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('Hanover', $result->getLocality());
         $this->assertCount(2, $result->getAdminLevels());
         $this->assertEquals('Region Hannover', $result->getAdminLevels()->get(2)->getName());
@@ -217,8 +217,8 @@ class MapQuestTest extends BaseTestCase
         /** @var Location $result */
         $result = next($resultsArray);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(18.384049, $result->getCoordinates()->getLatitude(), '', 0.01);
-        $this->assertEquals(-78.131485, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertEqualsWithDelta(18.384049, $result->getCoordinates()->getLatitude(), 0.01);
+        $this->assertEqualsWithDelta(-78.131485, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('', $result->getLocality());
         $this->assertCount(1, $result->getAdminLevels());
         $this->assertEquals('Hanover', $result->getAdminLevels()->get(2)->getName());
@@ -228,8 +228,8 @@ class MapQuestTest extends BaseTestCase
         /** @var Location $result */
         $result = next($resultsArray);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(43.703622, $result->getCoordinates()->getLatitude(), '', 0.01);
-        $this->assertEquals(-72.288666, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertEqualsWithDelta(43.703622, $result->getCoordinates()->getLatitude(), 0.01);
+        $this->assertEqualsWithDelta(-72.288666, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('Hanover', $result->getLocality());
         $this->assertCount(2, $result->getAdminLevels());
         $this->assertEquals('Grafton County', $result->getAdminLevels()->get(2)->getName());
@@ -240,8 +240,8 @@ class MapQuestTest extends BaseTestCase
         /** @var Location $result */
         $result = next($resultsArray);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(39.806325, $result->getCoordinates()->getLatitude(), '', 0.01);
-        $this->assertEquals(-76.984273, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertEqualsWithDelta(39.806325, $result->getCoordinates()->getLatitude(), 0.01);
+        $this->assertEqualsWithDelta(-76.984273, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('Hanover', $result->getLocality());
         $this->assertCount(2, $result->getAdminLevels());
         $this->assertEquals('York County', $result->getAdminLevels()->get(2)->getName());
@@ -252,8 +252,8 @@ class MapQuestTest extends BaseTestCase
         /** @var Location $result */
         $result = next($resultsArray);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(37.744783, $result->getCoordinates()->getLatitude(), '', 0.01);
-        $this->assertEquals(-77.446416, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertEqualsWithDelta(37.744783, $result->getCoordinates()->getLatitude(), 0.01);
+        $this->assertEqualsWithDelta(-77.446416, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('', $result->getLocality());
         $this->assertCount(2, $result->getAdminLevels());
         $this->assertEquals('Hanover County', $result->getAdminLevels()->get(2)->getName());
@@ -286,8 +286,8 @@ class MapQuestTest extends BaseTestCase
         /** @var Location $result */
         $result = reset($resultsArray);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(52.374478, $result->getCoordinates()->getLatitude(), '', 0.01);
-        $this->assertEquals(9.738553, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertEqualsWithDelta(52.374478, $result->getCoordinates()->getLatitude(), 0.01);
+        $this->assertEqualsWithDelta(9.738553, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('Hanover', $result->getLocality());
         $this->assertCount(2, $result->getAdminLevels());
         $this->assertEquals('Region Hannover', $result->getAdminLevels()->get(2)->getName());
@@ -298,8 +298,8 @@ class MapQuestTest extends BaseTestCase
         /** @var Location $result */
         $result = next($resultsArray);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(43.703622, $result->getCoordinates()->getLatitude(), '', 0.01);
-        $this->assertEquals(-72.288666, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertEqualsWithDelta(43.703622, $result->getCoordinates()->getLatitude(), 0.01);
+        $this->assertEqualsWithDelta(-72.288666, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('Hanover', $result->getLocality());
         $this->assertCount(2, $result->getAdminLevels());
         $this->assertEquals('Grafton County', $result->getAdminLevels()->get(2)->getName());
@@ -310,8 +310,8 @@ class MapQuestTest extends BaseTestCase
         /** @var Location $result */
         $result = next($resultsArray);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(39.806325, $result->getCoordinates()->getLatitude(), '', 0.01);
-        $this->assertEquals(-76.984273, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertEqualsWithDelta(39.806325, $result->getCoordinates()->getLatitude(), 0.01);
+        $this->assertEqualsWithDelta(-76.984273, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('Hanover', $result->getLocality());
         $this->assertCount(2, $result->getAdminLevels());
         $this->assertEquals('York County', $result->getAdminLevels()->get(2)->getName());
@@ -322,8 +322,8 @@ class MapQuestTest extends BaseTestCase
         /** @var Location $result */
         $result = next($resultsArray);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(40.661764, $result->getCoordinates()->getLatitude(), '', 0.01);
-        $this->assertEquals(-75.412404, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertEqualsWithDelta(40.661764, $result->getCoordinates()->getLatitude(), 0.01);
+        $this->assertEqualsWithDelta(-75.412404, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('Hanover', $result->getLocality());
         $this->assertCount(2, $result->getAdminLevels());
         $this->assertEquals('Northampton County', $result->getAdminLevels()->get(2)->getName());
@@ -334,8 +334,8 @@ class MapQuestTest extends BaseTestCase
         /** @var Location $result */
         $result = next($resultsArray);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(40.651401, $result->getCoordinates()->getLatitude(), '', 0.01);
-        $this->assertEquals(-75.440663, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertEqualsWithDelta(40.651401, $result->getCoordinates()->getLatitude(), 0.01);
+        $this->assertEqualsWithDelta(-75.440663, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('Hanover', $result->getLocality());
         $this->assertCount(2, $result->getAdminLevels());
         $this->assertEquals('Lehigh County', $result->getAdminLevels()->get(2)->getName());
@@ -370,8 +370,8 @@ class MapQuestTest extends BaseTestCase
         $result = reset($resultsArray);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals('17331', $result->getPostalCode());
-        $this->assertEquals(39.806325, $result->getCoordinates()->getLatitude(), '', 0.01);
-        $this->assertEquals(-76.984273, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertEqualsWithDelta(39.806325, $result->getCoordinates()->getLatitude(), 0.01);
+        $this->assertEqualsWithDelta(-76.984273, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('Hanover', $result->getLocality());
         $this->assertCount(2, $result->getAdminLevels());
         $this->assertEquals('York County', $result->getAdminLevels()->get(2)->getName());
@@ -382,8 +382,8 @@ class MapQuestTest extends BaseTestCase
         /** @var Location $result */
         $result = next($resultsArray);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(40.661764, $result->getCoordinates()->getLatitude(), '', 0.01);
-        $this->assertEquals(-75.412404, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertEqualsWithDelta(40.661764, $result->getCoordinates()->getLatitude(), 0.01);
+        $this->assertEqualsWithDelta(-75.412404, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('Hanover', $result->getLocality());
         $this->assertCount(2, $result->getAdminLevels());
         $this->assertEquals('Northampton County', $result->getAdminLevels()->get(2)->getName());
@@ -394,8 +394,8 @@ class MapQuestTest extends BaseTestCase
         /** @var Location $result */
         $result = next($resultsArray);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(40.651401, $result->getCoordinates()->getLatitude(), '', 0.01);
-        $this->assertEquals(-75.440663, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertEqualsWithDelta(40.651401, $result->getCoordinates()->getLatitude(), 0.01);
+        $this->assertEqualsWithDelta(-75.440663, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('Hanover', $result->getLocality());
         $this->assertCount(2, $result->getAdminLevels());
         $this->assertEquals('Lehigh County', $result->getAdminLevels()->get(2)->getName());
@@ -407,8 +407,8 @@ class MapQuestTest extends BaseTestCase
         $result = next($resultsArray);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals('20794:21076', $result->getPostalCode());
-        $this->assertEquals(39.192885, $result->getCoordinates()->getLatitude(), '', 0.01);
-        $this->assertEquals(-76.724137, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertEqualsWithDelta(39.192885, $result->getCoordinates()->getLatitude(), 0.01);
+        $this->assertEqualsWithDelta(-76.724137, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('Hanover', $result->getLocality());
         $this->assertCount(2, $result->getAdminLevels());
         $this->assertEquals('Howard County', $result->getAdminLevels()->get(2)->getName());
@@ -419,8 +419,8 @@ class MapQuestTest extends BaseTestCase
         /** @var Location $result */
         $result = next($resultsArray);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(52.374478, $result->getCoordinates()->getLatitude(), '', 0.01);
-        $this->assertEquals(9.738553, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertEqualsWithDelta(52.374478, $result->getCoordinates()->getLatitude(), 0.01);
+        $this->assertEqualsWithDelta(9.738553, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('Hanover', $result->getLocality());
         $this->assertCount(2, $result->getAdminLevels());
         $this->assertEquals('Region Hannover', $result->getAdminLevels()->get(2)->getName());
@@ -444,8 +444,8 @@ class MapQuestTest extends BaseTestCase
         /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(50.189062, $result->getCoordinates()->getLatitude(), '', 0.01);
-        $this->assertEquals(8.636567, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertEqualsWithDelta(50.189062, $result->getCoordinates()->getLatitude(), 0.01);
+        $this->assertEqualsWithDelta(8.636567, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('Kalbacher Hauptstraße 10', $result->getStreetName());
         $this->assertEquals(60437, $result->getPostalCode());
         $this->assertEquals('Frankfurt', $result->getLocality());
@@ -461,42 +461,38 @@ class MapQuestTest extends BaseTestCase
         $this->assertNull($result->getTimezone());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The MapQuest provider does not support IP addresses, only street addresses.
-     */
     public function testGeocodeWithLocalhostIPv4()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The MapQuest provider does not support IP addresses, only street addresses.');
+
         $provider = new MapQuest($this->getMockedHttpClient(), 'api_key');
         $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The MapQuest provider does not support IP addresses, only street addresses.
-     */
     public function testGeocodeWithLocalhostIPv6()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The MapQuest provider does not support IP addresses, only street addresses.');
+
         $provider = new MapQuest($this->getMockedHttpClient(), 'api_key');
         $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The MapQuest provider does not support IP addresses, only street addresses.
-     */
     public function testGeocodeWithRealIPv4()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The MapQuest provider does not support IP addresses, only street addresses.');
+
         $provider = new MapQuest($this->getMockedHttpClient(), 'api_key');
         $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The MapQuest provider does not support IP addresses, only street addresses.
-     */
     public function testGeocodeWithRealIPv6()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The MapQuest provider does not support IP addresses, only street addresses.');
+
         $provider = new MapQuest($this->getMockedHttpClient(), 'api_key');
         $provider->geocodeQuery(GeocodeQuery::create('::ffff:74.200.247.59'));
     }

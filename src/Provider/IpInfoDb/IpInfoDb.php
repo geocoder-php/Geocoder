@@ -73,10 +73,7 @@ final class IpInfoDb extends AbstractHttpProvider implements Provider
                 break;
 
             default:
-                throw new InvalidArgument(sprintf(
-                    'Invalid precision value "%s" (allowed values: "city", "country").',
-                    $precision
-                ));
+                throw new InvalidArgument(sprintf('Invalid precision value "%s" (allowed values: "city", "country").', $precision));
         }
     }
 
@@ -152,7 +149,7 @@ final class IpInfoDb extends AbstractHttpProvider implements Provider
                 'postalCode' => $data['zipCode'] ?? null,
                 'adminLevels' => isset($data['regionName']) ? [['name' => $data['regionName'], 'level' => 1]] : [],
                 'country' => $data['countryName'] ?? null,
-                'countryCode' => $data['countryName'] ?? null,
+                'countryCode' => $data['countryCode'] ?? null,
                 'timezone' => $timezone,
             ]),
         ]);

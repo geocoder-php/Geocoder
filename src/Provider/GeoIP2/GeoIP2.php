@@ -117,17 +117,9 @@ final class GeoIP2 extends AbstractProvider implements Provider
         } catch (AddressNotFoundException $e) {
             return '';
         } catch (AuthenticationException $e) {
-            throw new InvalidCredentials(
-                $e->getMessage(),
-                $e->getCode(),
-                $e
-            );
+            throw new InvalidCredentials($e->getMessage(), $e->getCode(), $e);
         } catch (OutOfQueriesException $e) {
-            throw new QuotaExceeded(
-                $e->getMessage(),
-                $e->getCode(),
-                $e
-            );
+            throw new QuotaExceeded($e->getMessage(), $e->getCode(), $e);
         }
 
         return $result;

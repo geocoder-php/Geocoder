@@ -2,6 +2,28 @@
 
 The change log describes what is "Added", "Removed", "Changed" or "Fixed" between each release.
 
+## 4.4.0
+
+### Added
+
+- Add support for PHP 8.0
+
+### Removed
+
+- Drop support for PHP 7.2
+
+### Changed
+
+- Upgrade PHPUnit to version 9
+
+## 4.3.0
+
+### Removed
+
+- Drop support for PHP < 7.2
+
+## 4.2.0
+
 ## 4.1.0
 
 ### Changed
@@ -11,14 +33,14 @@ got `AbstractHttpProvider::getUrlContents`, `AbstractHttpProvider::getRequest` a
 
 ## 4.0.0
 
-No changes since beta 2. 
+No changes since beta 2.
 
 ## 4.0.0-beta2
 
 - Removed `AbstractHttpProvider::setMessageFactory`.
 - Removed `AbstractHttpProvider::getHttpClient`.
-- Make sure we have a `MessageFactory` in the constructor of `AbstractHttpProvider`. 
+- Make sure we have a `MessageFactory` in the constructor of `AbstractHttpProvider`.
 
 ## 4.0.0-beta1
 
-First release of this library. 
+First release of this library.

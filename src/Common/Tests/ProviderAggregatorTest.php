@@ -13,7 +13,6 @@ declare(strict_types=1);
 namespace Geocoder\Tests;
 
 use Geocoder\Collection;
-use Geocoder\Geocoder;
 use Geocoder\Model\Address;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
@@ -33,7 +32,7 @@ class ProviderAggregatorTest extends TestCase
      */
     protected $geocoder;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->geocoder = new ProviderAggregator();
     }
@@ -83,19 +82,20 @@ class ProviderAggregatorTest extends TestCase
         $this->assertSame(['test' => $provider], NSA::getProperty($this->geocoder, 'providers'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ProviderNotRegistered
-     */
     public function testUsingNonExistantProviderShouldThrowAnException()
     {
+        $this->expectException(\Geocoder\Exception\ProviderNotRegistered::class);
+        $this->expectExceptionMessage('Provider "non_existant" is not registered, so you cannot use it. Did you forget to register it or made a typo? Registered providers are: test1.');
+
+        $this->geocoder->registerProvider(new MockProvider('test1'));
+
         $this->geocoder->using('non_existant');
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\ProviderNotRegistered
-     */
     public function testUsingAnEmptyProviderNameShouldThrowAnException()
     {
+        $this->expectException(\Geocoder\Exception\ProviderNotRegistered::class);
+
         $this->geocoder->using('');
     }
 
@@ -117,11 +117,10 @@ class ProviderAggregatorTest extends TestCase
         $this->assertArrayHasKey('test2', $result);
     }
 
-    /**
-     * @expectedException \RuntimeException
-     */
     public function testGetProvider()
     {
+        $this->expectException(\RuntimeException::class);
+
         NSA::invokeMethod($this->geocoder, 'getProvider', GeocodeQuery::create('foo'), [], null);
         $this->fail('getProvider() should throw an exception');
     }

@@ -1,0 +1,47 @@
+{
+    "name": "geocoder-php/openrouteservice-provider",
+    "type": "library",
+    "description": "Geocoder OpenRouteService adapter",
+    "keywords": [],
+    "homepage": "http://geocoder-php.org/Geocoder/",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Gaël Gosset"
+        }
+    ],
+    "require": {
+        "php": "^7.3 || ^8.0",
+        "geocoder-php/common-http": "^4.0",
+        "geocoder-php/pelias-provider": "^1.0",
+        "willdurand/geocoder": "^4.0"
+    },
+    "provide": {
+        "geocoder-php/provider-implementation": "1.0"
+    },
+    "require-dev": {
+        "geocoder-php/provider-integration-tests": "^1.0",
+        "php-http/curl-client": "^2.2",
+        "php-http/message": "^1.0",
+        "phpunit/phpunit": "^9.5"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Geocoder\\Provider\\OpenRouteService\\": ""
+        },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-ci": "vendor/bin/phpunit --coverage-text --coverage-clover=build/coverage.xml"
+    }
+}

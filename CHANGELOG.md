@@ -1,6 +1,19 @@
 CHANGELOG
 =========
 
+### 4.2.0 (2020-12-22)
+
+* Added support for PHP 8.0
+* Dropped support for PHP 7.2
+* Changed: Upgrade to PHPUnit 9
+
+### 4.1.0 (2020-07-04)
+
+* Dropped support for PHP < 7.2
+* Added: `Coordinates::toArray`
+* Changed: Update namespaces
+* Changed: Make sure we never use a country with name AND code as null
+
 ### 4.0.0 (2017-08-01)
 
 * Dropped support for PHP < 7

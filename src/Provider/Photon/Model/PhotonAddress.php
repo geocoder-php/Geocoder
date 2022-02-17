@@ -20,6 +20,11 @@ use Geocoder\Model\Address;
 final class PhotonAddress extends Address
 {
     /**
+     * @var string|null
+     */
+    private $name;
+
+    /**
      * @var int|null
      */
     private $osmId;
@@ -35,7 +40,28 @@ final class PhotonAddress extends Address
     private $osmTag;
 
     /**
-     * @return null|int
+     * @return string|null
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string|null $name
+     *
+     * @return PhotonAddress
+     */
+    public function withName(string $name = null): self
+    {
+        $new = clone $this;
+        $new->name = $name;
+
+        return $new;
+    }
+
+    /**
+     * @return int|null
      */
     public function getOSMId()
     {
@@ -43,7 +69,7 @@ final class PhotonAddress extends Address
     }
 
     /**
-     * @param null|int $osmId
+     * @param int|null $osmId
      *
      * @return PhotonAddress
      */
@@ -56,7 +82,7 @@ final class PhotonAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getOSMType()
     {
@@ -64,7 +90,7 @@ final class PhotonAddress extends Address
     }
 
     /**
-     * @param null|string $osmType
+     * @param string|null $osmType
      *
      * @return PhotonAddress
      */
@@ -77,7 +103,7 @@ final class PhotonAddress extends Address
     }
 
     /**
-     * @return null|object
+     * @return object|null
      */
     public function getOSMTag()
     {
@@ -85,8 +111,8 @@ final class PhotonAddress extends Address
     }
 
     /**
-     * @param null|string $key
-     * @param null|string $value
+     * @param string|null $key
+     * @param string|null $value
      *
      * @return PhotonAddress
      */

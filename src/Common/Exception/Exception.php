@@ -15,6 +15,6 @@ namespace Geocoder\Exception;
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-interface Exception
+interface Exception extends \Throwable
 {
 }

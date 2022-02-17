@@ -27,7 +27,7 @@ class GeoJsonTest extends TestCase
      */
     private $dumper;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->dumper = new GeoJson();
     }

@@ -10,15 +10,42 @@
 This is the Google Maps provider from the PHP Geocoder. This is a **READ ONLY** repository. See the
 [main repo](https://github.com/geocoder-php/Geocoder) for information and documentation. 
 
+## Usage
+
+```php
+$httpClient = new \Http\Adapter\Guzzle6\Client();
+
+// You must provide an API key
+$provider = new \Geocoder\Provider\GoogleMaps\GoogleMaps($httpClient, null, 'your-api-key');
+
+$result = $geocoder->geocodeQuery(GeocodeQuery::create('Buckingham Palace, London'));
+```
+
+All requests require a valid API key, however google does have a [free tier](https://cloud.google.com/maps-platform/pricing/) available.
+Please see [this page for information on getting an API key](https://developers.google.com/maps/documentation/geocoding/get-api-key).
+
+### Google Maps for Business
+
+Previously, google offered a "Business" version of their APIs. The service has been deprecated, however existing clients
+can use the static `business` method on the provider to create a client:
+
+```php
+
+$httpClient = new \Http\Adapter\Guzzle6\Client();
+
+// Client ID is required. Private key is optional.
+$provider = \Geocoder\Provider\GoogleMaps\GoogleMaps::business($httpClient, 'your-client-id', 'your-private-key');
+
+$result = $geocoder->geocodeQuery(GeocodeQuery::create('Buckingham Palace, London'));
+```
+
 ### Install
 
 ```bash
 composer require geocoder-php/google-maps-provider
 ```
 
-### Note
 
-A valid `Client ID` is required for GoogleMaps for Business. The private key is optional. 
 
 ### Contribute
 

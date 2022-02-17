@@ -17,13 +17,13 @@ use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\QuotaExceeded;
 use Geocoder\Exception\UnsupportedOperation;
-use Geocoder\Model\AddressCollection;
-use Geocoder\Model\AddressBuilder;
-use Geocoder\Query\GeocodeQuery;
-use Geocoder\Query\ReverseQuery;
 use Geocoder\Http\Provider\AbstractHttpProvider;
+use Geocoder\Model\AddressBuilder;
+use Geocoder\Model\AddressCollection;
 use Geocoder\Provider\GoogleMaps\Model\GoogleAddress;
 use Geocoder\Provider\Provider;
+use Geocoder\Query\GeocodeQuery;
+use Geocoder\Query\ReverseQuery;
 use Http\Client\HttpClient;
 
 /**
@@ -52,7 +52,7 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
     private $apiKey;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $clientId;
 
@@ -68,7 +68,8 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
 
     /**
      * Google Maps for Business
-     * https://developers.google.com/maps/documentation/business/.
+     * https://developers.google.com/maps/documentation/business/
+     * Maps for Business is no longer accepting new signups.
      *
      * @param HttpClient $client     An HTTP adapter
      * @param string     $clientId   Your Client ID
@@ -79,8 +80,14 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
      *
      * @return GoogleMaps
      */
-    public static function business(HttpClient $client, string $clientId, string $privateKey = null, string $region = null, string $apiKey = null, string $channel = null)
-    {
+    public static function business(
+        HttpClient $client,
+        string $clientId,
+        string $privateKey = null,
+        string $region = null,
+        string $apiKey = null,
+        string $channel = null
+    ) {
         $provider = new self($client, $region, $apiKey);
         $provider->clientId = $clientId;
         $provider->privateKey = $privateKey;
@@ -112,7 +119,13 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
 
         $url = sprintf(self::GEOCODE_ENDPOINT_URL_SSL, rawurlencode($query->getText()));
         if (null !== $bounds = $query->getBounds()) {
-            $url .= sprintf('&bounds=%s,%s|%s,%s', $bounds->getSouth(), $bounds->getWest(), $bounds->getNorth(), $bounds->getEast());
+            $url .= sprintf(
+                '&bounds=%s,%s|%s,%s',
+                $bounds->getSouth(),
+                $bounds->getWest(),
+                $bounds->getNorth(),
+                $bounds->getEast()
+            );
         }
 
         if (null !== $components = $query->getData('components')) {
@@ -155,6 +168,10 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
      */
     private function buildQuery(string $url, string $locale = null, string $region = null): string
     {
+        if (null === $this->apiKey && null === $this->clientId) {
+            throw new InvalidCredentials('You must provide an API key. Keyless access was removed in June, 2016');
+        }
+
         if (null !== $locale) {
             $url = sprintf('%s&language=%s', $url, $locale);
         }
@@ -233,22 +250,24 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
             if (isset($result->formatted_address)) {
                 $address = $address->withFormattedAddress($result->formatted_address);
             }
-            $address = $address->withStreetAddress($builder->getValue('street_address'));
-            $address = $address->withIntersection($builder->getValue('intersection'));
-            $address = $address->withPolitical($builder->getValue('political'));
-            $address = $address->withColloquialArea($builder->getValue('colloquial_area'));
-            $address = $address->withWard($builder->getValue('ward'));
-            $address = $address->withNeighborhood($builder->getValue('neighborhood'));
-            $address = $address->withPremise($builder->getValue('premise'));
-            $address = $address->withSubpremise($builder->getValue('subpremise'));
-            $address = $address->withNaturalFeature($builder->getValue('natural_feature'));
-            $address = $address->withAirport($builder->getValue('airport'));
-            $address = $address->withPark($builder->getValue('park'));
-            $address = $address->withPointOfInterest($builder->getValue('point_of_interest'));
-            $address = $address->withEstablishment($builder->getValue('establishment'));
-            $address = $address->withSubLocalityLevels($builder->getValue('subLocalityLevel', []));
-            $address = $address->withPartialMatch($result->partial_match ?? false);
-            $results[] = $address;
+
+            $results[] = $address
+                ->withStreetAddress($builder->getValue('street_address'))
+                ->withIntersection($builder->getValue('intersection'))
+                ->withPolitical($builder->getValue('political'))
+                ->withColloquialArea($builder->getValue('colloquial_area'))
+                ->withWard($builder->getValue('ward'))
+                ->withNeighborhood($builder->getValue('neighborhood'))
+                ->withPremise($builder->getValue('premise'))
+                ->withSubpremise($builder->getValue('subpremise'))
+                ->withNaturalFeature($builder->getValue('natural_feature'))
+                ->withAirport($builder->getValue('airport'))
+                ->withPark($builder->getValue('park'))
+                ->withPointOfInterest($builder->getValue('point_of_interest'))
+                ->withEstablishment($builder->getValue('establishment'))
+                ->withSubLocalityLevels($builder->getValue('subLocalityLevel', []))
+                ->withPostalCodeSuffix($builder->getValue('postal_code_suffix'))
+                ->withPartialMatch($result->partial_match ?? false);
 
             if (count($results) >= $limit) {
                 break;
@@ -337,6 +356,7 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
             case 'park':
             case 'point_of_interest':
             case 'establishment':
+            case 'postal_code_suffix':
                 $builder->setValue($type, $values->long_name);
 
                 break;
@@ -392,7 +412,7 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
      * @param string $url
      * @param string $content
      *
-     * @return mixed result form json_decode()
+     * @return \Stdclass result form json_decode()
      *
      * @throws InvalidCredentials
      * @throws InvalidServerResponse
@@ -417,9 +437,7 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
         }
 
         if ('REQUEST_DENIED' === $json->status) {
-            throw new InvalidServerResponse(
-                sprintf('API access denied. Request: %s - Message: %s', $url, $json->error_message)
-            );
+            throw new InvalidServerResponse(sprintf('API access denied. Request: %s - Message: %s', $url, $json->error_message));
         }
 
         // you are over your quota
@@ -431,10 +449,10 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * Parse coordinats and bounds.
+     * Parse coordinates and bounds.
      *
      * @param AddressBuilder $builder
-     * @param $result
+     * @param \Stdclass      $result
      */
     private function parseCoordinates(AddressBuilder $builder, $result)
     {

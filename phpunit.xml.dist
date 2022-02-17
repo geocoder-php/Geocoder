@@ -1,63 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit backupGlobals="false"
-    backupStaticAttributes="false"
-    colors="true"
-    convertErrorsToExceptions="true"
-    convertNoticesToExceptions="true"
-    convertWarningsToExceptions="true"
-    processIsolation="false"
-    stopOnFailure="false"
-    syntaxCheck="false"
-    bootstrap="vendor/autoload.php"
-    >
-    <php>
-        <!--
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
+  backupGlobals="false"
+  backupStaticAttributes="false"
+  colors="true"
+  convertErrorsToExceptions="true"
+  convertNoticesToExceptions="true"
+  convertWarningsToExceptions="true"
+  processIsolation="false"
+  stopOnFailure="false"
+  bootstrap="vendor/autoload.php"
+  >
+  <coverage>
+    <include>
+      <directory>./src/</directory>
+    </include>
+    <exclude>
+      <directory>./src/Common/Tests</directory>
+      <directory>./src/Http/Tests</directory>
+      <directory>./src/Provider/*/Tests</directory>
+      <directory>./src/Common/vendor</directory>
+      <directory>./src/Http/vendor</directory>
+      <directory>./src/Provider/*/vendor</directory>
+    </exclude>
+  </coverage>
+  <php>
+    <!--
         Turn this parameter to 'false' or comment it to bypass
         the caching layer. See the `CachedResponseAdapter` class.
         -->
-        <server name="USE_CACHED_RESPONSES" value="true" />
-
-        <!-- API Keys -->
-        <server name="BINGMAPS_API_KEY" value="YOUR_API_KEY" />
-        <server name="GEOIPS_API_KEY" value="YOUR_API_KEY" />
-        <server name="MAPQUEST_API_KEY" value="YOUR_API_KEY" />
-        <server name="GEONAMES_USERNAME" value="YOUR_USERNAME" />
-        <server name="TOMTOM_MAP_KEY" value="YOUR_MAP_KEY" />
-        <server name="GOOGLE_GEOCODING_KEY" value="YOUR_GEOCODING_KEY" />
-        <server name="OPENCAGE_API_KEY" value="YOUR_GEOCODING_KEY" />
-        <server name="MAPZEN_API_KEY" value="YOUR_MAPZEN_API_KEY" />
-        <server name="IPINFODB_API_KEY" value="YOUR_API_KEY" />
-        <server name="PICKPOINT_API_KEY" value="YOUR_API_KEY" />
-        <server name="LOCATIONIQ_API_KEY" value="YOUR_API_KEY" />
-        <server name="HERE_APP_ID" value="YOUR_APP_ID" />
-        <server name="HERE_APP_CODE" value="YOUR_APP_CODE" />
-        <server name="ALGOLIA_APP_ID" value="YOUR_APP_ID" />
-        <server name="ALGOLIA_API_KEY" value="YOUR_API_KEY" />
-        <server name="MAPBOX_GEOCODING_KEY" value="YOUR_GEOCODING_KEY" />
-        <server name="IPSTACK_API_KEY" value="YOUR_API_KEY" />
-        <!--<server name="MAXMIND_API_KEY" value="YOUR_API_KEY" />-->
-    </php>
-
-    <testsuites>
-        <testsuite name="Geocoder Test Suite">
-            <directory>./tests/</directory>
-            <directory>./src/Common/Tests/</directory>
-            <directory>./src/Http/Tests/</directory>
-            <directory>./src/Provider/*/Tests/</directory>
-        </testsuite>
-    </testsuites>
-
-    <filter>
-        <whitelist>
-            <directory>./src/</directory>
-            <exclude>
-                <directory>./src/Common/Tests</directory>
-                <directory>./src/Http/Tests</directory>
-                <directory>./src/Provider/*/Tests</directory>
-                <directory>./src/Common/vendor</directory>
-                <directory>./src/Http/vendor</directory>
-                <directory>./src/Provider/*/vendor</directory>
-            </exclude>
-        </whitelist>
-    </filter>
+    <server name="USE_CACHED_RESPONSES" value="true"/>
+    <!-- API Keys -->
+    <server name="ALGOLIA_API_KEY" value="YOUR_API_KEY"/>
+    <server name="ALGOLIA_APP_ID" value="YOUR_APP_ID"/>
+    <server name="BINGMAPS_API_KEY" value="YOUR_API_KEY"/>
+    <server name="GEOIPS_API_KEY" value="YOUR_API_KEY"/>
+    <server name="GEONAMES_USERNAME" value="YOUR_USERNAME"/>
+    <server name="GOOGLE_GEOCODING_KEY" value="YOUR_GEOCODING_KEY"/>
+    <server name="GRAPHHOPPER_API_KEY" value="YOUR_API_KEY"/>
+    <server name="HERE_APP_CODE" value="YOUR_APP_CODE"/>
+    <server name="HERE_APP_ID" value="YOUR_APP_ID"/>
+    <server name="HERE_API_KEY" value="YOUR_API_KEY"/>
+    <server name="IPINFODB_API_KEY" value="YOUR_API_KEY"/>
+    <server name="IP2LOCATION_API_KEY" value="YOUR_API_KEY"/>
+    <server name="IPSTACK_API_KEY" value="YOUR_API_KEY"/>
+    <server name="LOCATIONIQ_API_KEY" value="YOUR_API_KEY"/>
+    <server name="MAPBOX_GEOCODING_KEY" value="YOUR_GEOCODING_KEY"/>
+    <server name="MAPQUEST_API_KEY" value="YOUR_API_KEY"/>
+    <server name="MAPZEN_API_KEY" value="YOUR_MAPZEN_API_KEY"/>
+    <server name="OPENCAGE_API_KEY" value="YOUR_GEOCODING_KEY"/>
+    <server name="PICKPOINT_API_KEY" value="YOUR_API_KEY"/>
+    <server name="TOMTOM_MAP_KEY" value="YOUR_MAP_KEY"/>
+    <server name="GEOCODE_EARTH_API_KEY" value="YOUR_GEOCODE_EARTH_API_KEY"/>
+    <server name="OPEN_ROUTE_SERVICE_API_KEY" value="YOUR_OPEN_ROUTE_SERVICE_API_KEY"/>
+    <server name="AZURE_MAPS_SUBSCRIPTION_KEY" value="YOUR_AZURE_MAPS_SUBSCRIPTION_KEY"/>
+    <server name="MAPTILER_KEY" value="YOUR_MAPTILER_KEY"/>
+    <!--<server name="MAXMIND_API_KEY" value="YOUR_API_KEY" />-->
+  </php>
+  <testsuites>
+    <testsuite name="Geocoder Test Suite">
+      <directory>./src/Common/Tests/</directory>
+      <directory>./src/Http/Tests/</directory>
+      <directory>./src/Provider/*/Tests/</directory>
+    </testsuite>
+  </testsuites>
 </phpunit>

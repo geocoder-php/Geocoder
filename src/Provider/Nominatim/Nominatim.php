@@ -96,8 +96,9 @@ final class Nominatim extends AbstractHttpProvider implements Provider
                 'format' => 'jsonv2',
                 'q' => $address,
                 'addressdetails' => 1,
+                'extratags' => 1,
                 'limit' => $query->getLimit(),
-            ]);
+            ], '', '&', PHP_QUERY_RFC3986);
 
         $countrycodes = $query->getData('countrycodes');
         if (!is_null($countrycodes)) {
@@ -106,11 +107,11 @@ final class Nominatim extends AbstractHttpProvider implements Provider
 
                 $url .= '&'.http_build_query([
                     'countrycodes' => implode(',', $countrycodes),
-                ]);
+                ], '', '&', PHP_QUERY_RFC3986);
             } else {
                 $url .= '&'.http_build_query([
                     'countrycodes' => strtolower($countrycodes),
-                ]);
+                ], '', '&', PHP_QUERY_RFC3986);
             }
         }
 
@@ -118,13 +119,13 @@ final class Nominatim extends AbstractHttpProvider implements Provider
         if (!is_null($viewbox) && is_array($viewbox) && 4 === count($viewbox)) {
             $url .= '&'.http_build_query([
                 'viewbox' => implode(',', $viewbox),
-            ]);
+            ], '', '&', PHP_QUERY_RFC3986);
 
             $bounded = $query->getData('bounded');
             if (!is_null($bounded) && true === $bounded) {
                 $url .= '&'.http_build_query([
                     'bounded' => 1,
-                ]);
+                ], '', '&', PHP_QUERY_RFC3986);
             }
         }
 
@@ -164,7 +165,7 @@ final class Nominatim extends AbstractHttpProvider implements Provider
                 'lon' => $longitude,
                 'addressdetails' => 1,
                 'zoom' => $query->getData('zoom', 18),
-            ]);
+            ], '', '&', PHP_QUERY_RFC3986);
 
         $content = $this->executeQuery($url, $query->getLocale());
 
@@ -221,18 +222,34 @@ final class Nominatim extends AbstractHttpProvider implements Provider
         $builder->setStreetName($place->address->road ?? $place->address->pedestrian ?? null);
         $builder->setStreetNumber($place->address->house_number ?? null);
         $builder->setSubLocality($place->address->suburb ?? null);
-        $builder->setCountry($place->address->country);
-        $builder->setCountryCode(strtoupper($place->address->country_code));
+        $builder->setCountry($place->address->country ?? null);
+        $builder->setCountryCode(isset($place->address->country_code) ? strtoupper($place->address->country_code) : null);
 
         $builder->setCoordinates(floatval($place->lat), floatval($place->lon));
 
         $builder->setBounds($place->boundingbox[0], $place->boundingbox[2], $place->boundingbox[1], $place->boundingbox[3]);
 
+        /** @var NominatimAddress $location */
         $location = $builder->build(NominatimAddress::class);
         $location = $location->withAttribution($place->licence);
-        $location = $location->withOSMId(intval($place->osm_id));
-        $location = $location->withOSMType($place->osm_type);
         $location = $location->withDisplayName($place->display_name);
+
+        $includedAddressKeys = ['city', 'town', 'village', 'state', 'county', 'hamlet', 'postcode', 'road', 'pedestrian', 'house_number', 'suburb', 'country', 'country_code', 'quarter'];
+
+        $location = $location->withDetails(array_diff_key((array) $place->address, array_flip($includedAddressKeys)));
+
+        if (isset($place->extratags)) {
+            $location = $location->withTags((array) $place->extratags);
+        }
+        if (isset($place->address->quarter)) {
+            $location = $location->withQuarter($place->address->quarter);
+        }
+        if (isset($place->osm_id)) {
+            $location = $location->withOSMId(intval($place->osm_id));
+        }
+        if (isset($place->osm_type)) {
+            $location = $location->withOSMType($place->osm_type);
+        }
 
         if (false === $reverse) {
             $location = $location->withCategory($place->category);
@@ -261,7 +278,7 @@ final class Nominatim extends AbstractHttpProvider implements Provider
         if (null !== $locale) {
             $url .= '&'.http_build_query([
                 'accept-language' => $locale,
-            ]);
+            ], '', '&', PHP_QUERY_RFC3986);
         }
 
         $request = $this->getRequest($url);

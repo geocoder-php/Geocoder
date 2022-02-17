@@ -39,7 +39,7 @@ final class YandexAddress extends Address
     private $kind;
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getPrecision()
     {
@@ -47,7 +47,7 @@ final class YandexAddress extends Address
     }
 
     /**
-     * @param null|string $precision
+     * @param string|null $precision
      *
      * @return YandexAddress
      */
@@ -60,7 +60,7 @@ final class YandexAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getName()
     {
@@ -68,7 +68,7 @@ final class YandexAddress extends Address
     }
 
     /**
-     * @param null|string $name
+     * @param string|null $name
      *
      * @return YandexAddress
      */

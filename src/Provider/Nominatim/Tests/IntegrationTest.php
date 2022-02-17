@@ -19,6 +19,10 @@ use Http\Client\HttpClient;
  */
 class IntegrationTest extends ProviderIntegrationTest
 {
+    protected $skippedTests = [
+        'testReverseQueryWithNoResults' => 'There is "Soul Buoy"',
+    ];
+
     protected $testAddress = true;
 
     protected $testReverse = true;

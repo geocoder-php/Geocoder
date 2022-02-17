@@ -31,22 +31,20 @@ class IpInfoTest extends BaseTestCase
         $this->assertEquals('ip_info', $provider->getName());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The IpInfo provider does not support street addresses, only IP addresses.
-     */
     public function testGeocodeWithRandomString()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The IpInfo provider does not support street addresses, only IP addresses.');
+
         $provider = new IpInfo($this->getMockedHttpClient());
         $provider->geocodeQuery(GeocodeQuery::create('foobar'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The IpInfo provider does not support street addresses, only IP addresses.
-     */
     public function testGeocodeWithAddress()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The IpInfo provider does not support street addresses, only IP addresses.');
+
         $provider = new IpInfo($this->getMockedHttpClient());
         $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
     }
@@ -79,11 +77,10 @@ class IpInfoTest extends BaseTestCase
         yield ['::1'];
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\InvalidServerResponse
-     */
     public function testGeocodeWithRealIPv4GetsNullContent()
     {
+        $this->expectException(\Geocoder\Exception\InvalidServerResponse::class);
+
         $provider = new IpInfo($this->getMockedHttpClient());
         $provider->geocodeQuery(GeocodeQuery::create('74.125.45.100'));
     }
@@ -130,12 +127,11 @@ class IpInfoTest extends BaseTestCase
         $this->assertNull($result->getTimezone());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The IpInfo provider is not able to do reverse geocoding.
-     */
     public function testReverse()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The IpInfo provider is not able to do reverse geocoding.');
+
         $provider = new IpInfo($this->getMockedHttpClient());
         $provider->reverseQuery(ReverseQuery::fromCoordinates(0, 0));
     }

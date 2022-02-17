@@ -14,9 +14,9 @@ namespace Geocoder\Provider\FreeGeoIp\Tests;
 
 use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Location;
+use Geocoder\Provider\FreeGeoIp\FreeGeoIp;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Provider\FreeGeoIp\FreeGeoIp;
 
 class FreeGeoIpTest extends BaseTestCase
 {
@@ -27,23 +27,22 @@ class FreeGeoIpTest extends BaseTestCase
 
     public function testGetName()
     {
-        $provider = new FreeGeoIp($this->getMockedHttpClient());
+        $provider = $this->getProvider();
         $this->assertEquals('free_geo_ip', $provider->getName());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The FreeGeoIp provider does not support street addresses.
-     */
     public function testGeocodeWithAddress()
     {
-        $provider = new FreeGeoIp($this->getMockedHttpClient());
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The FreeGeoIp provider does not support street addresses.');
+
+        $provider = $this->getProvider();
         $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
     }
 
     public function testGeocodeWithLocalhostIPv4()
     {
-        $provider = new FreeGeoIp($this->getMockedHttpClient());
+        $provider = $this->getProvider();
         $results = $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -58,7 +57,7 @@ class FreeGeoIpTest extends BaseTestCase
 
     public function testGeocodeWithLocalhostIPv6()
     {
-        $provider = new FreeGeoIp($this->getMockedHttpClient());
+        $provider = $this->getProvider();
         $results = $provider->geocodeQuery(GeocodeQuery::create('::1'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -73,7 +72,7 @@ class FreeGeoIpTest extends BaseTestCase
 
     public function testGeocodeWithRealIPv4()
     {
-        $provider = new FreeGeoIp($this->getHttpClient());
+        $provider = $this->getProvider();
         $results = $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -82,19 +81,15 @@ class FreeGeoIpTest extends BaseTestCase
         /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(33.0347, $result->getCoordinates()->getLatitude(), '', 0.01);
-        $this->assertEquals(-96.8134, $result->getCoordinates()->getLongitude(), '', 0.01);
-        $this->assertEquals(75093, $result->getPostalCode());
-        $this->assertEquals('Plano', $result->getLocality());
-        $this->assertCount(1, $result->getAdminLevels());
-        $this->assertEquals('Texas', $result->getAdminLevels()->get(1)->getName());
+        $this->assertEquals(37.751, $result->getCoordinates()->getLatitude(), '', 0.01);
+        $this->assertEquals(-97.822, $result->getCoordinates()->getLongitude(), '', 0.01);
         $this->assertEquals('United States', $result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
     }
 
     public function testGeocodeWithRealIPv6()
     {
-        $provider = new FreeGeoIp($this->getHttpClient());
+        $provider = $this->getProvider();
         $results = $provider->geocodeQuery(GeocodeQuery::create('::ffff:74.200.247.59'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -103,43 +98,55 @@ class FreeGeoIpTest extends BaseTestCase
         /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(33.0347, $result->getCoordinates()->getLatitude(), '', 0.01);
-        $this->assertEquals(-96.8134, $result->getCoordinates()->getLongitude(), '', 0.01);
-        $this->assertEquals(75093, $result->getPostalCode());
-        $this->assertEquals('Plano', $result->getLocality());
-        $this->assertCount(1, $result->getAdminLevels());
-        $this->assertEquals('Texas', $result->getAdminLevels()->get(1)->getName());
+
+        $this->assertEquals(37.751, $result->getCoordinates()->getLatitude(), '', 0.01);
+        $this->assertEquals(-97.822, $result->getCoordinates()->getLongitude(), '', 0.01);
         $this->assertEquals('United States', $result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
     }
 
     public function testGeocodeWithUSIPv4()
     {
-        $provider = new FreeGeoIp($this->getHttpClient());
-        $results = $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
+        $provider = $this->getProvider();
+        $results = $provider->geocodeQuery(GeocodeQuery::create('72.229.28.185'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        $this->assertCount(1, $results->first()->getAdminLevels());
-        $this->assertEquals('TX', $results->first()->getAdminLevels()->get(1)->getCode());
+        /** @var Location $result */
+        $result = $results->first();
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+
+        $this->assertEquals(40.7263, $result->getCoordinates()->getLatitude(), '', 0.01);
+        $this->assertEquals(-73.9819, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertCount(1, $result->getAdminLevels());
+        $this->assertEquals('New York', $result->getAdminLevels()->get(1)->getName());
+        $this->assertEquals('NY', $result->getAdminLevels()->get(1)->getCode());
+        $this->assertEquals('United States', $result->getCountry()->getName());
+        $this->assertEquals('US', $result->getCountry()->getCode());
+        $this->assertEquals('10009', $result->getPostalCode());
+        $this->assertEquals('America/New_York', $result->getTimezone());
     }
 
     public function testGeocodeWithUSIPv6()
     {
-        $provider = new FreeGeoIp($this->getHttpClient());
+        $provider = $this->getProvider();
         $results = $provider->geocodeQuery(GeocodeQuery::create('::ffff:74.200.247.59'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        $this->assertCount(1, $results->first()->getAdminLevels());
-        $this->assertEquals('TX', $results->first()->getAdminLevels()->get(1)->getCode());
+        /** @var Location $result */
+        $result = $results->first();
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+
+        $this->assertEquals('United States', $result->getCountry()->getName());
+        $this->assertEquals('US', $result->getCountry()->getCode());
     }
 
     public function testGeocodeWithUKIPv4()
     {
-        $provider = new FreeGeoIp($this->getHttpClient());
+        $provider = $this->getProvider();
         $results = $provider->geocodeQuery(GeocodeQuery::create('129.67.242.154'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -148,11 +155,12 @@ class FreeGeoIpTest extends BaseTestCase
 
         $this->assertCount(1, $results->first()->getAdminLevels());
         $this->assertEquals('ENG', $results->first()->getAdminLevels()->get(1)->getCode());
+        $this->assertEquals('Oxford', $results->first()->getLocality());
     }
 
     public function testGeocodeWithUKIPv6()
     {
-        $provider = new FreeGeoIp($this->getHttpClient());
+        $provider = $this->getProvider();
         $results = $provider->geocodeQuery(GeocodeQuery::create('::ffff:129.67.242.154'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -162,7 +170,7 @@ class FreeGeoIpTest extends BaseTestCase
 
     public function testGeocodeWithRuLocale()
     {
-        $provider = new FreeGeoIp($this->getHttpClient());
+        $provider = $this->getProvider();
         $results = $provider->geocodeQuery(GeocodeQuery::create('81.27.51.253')->withLocale('ru'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -174,7 +182,7 @@ class FreeGeoIpTest extends BaseTestCase
 
     public function testGeocodeWithFrLocale()
     {
-        $provider = new FreeGeoIp($this->getHttpClient());
+        $provider = $this->getProvider();
         $results = $provider->geocodeQuery(GeocodeQuery::create('81.27.51.252')->withLocale('fr'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -186,7 +194,7 @@ class FreeGeoIpTest extends BaseTestCase
 
     public function testGeocodeWithIncorrectLocale()
     {
-        $provider = new FreeGeoIp($this->getHttpClient());
+        $provider = $this->getProvider();
         $results = $provider->geocodeQuery(GeocodeQuery::create('81.27.51.251')->withLocale('wrong_locale'));
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
@@ -196,22 +204,25 @@ class FreeGeoIpTest extends BaseTestCase
         $this->assertEquals('Russia', $results->first()->getCountry()->getName());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The FreeGeoIp provider is not able to do reverse geocoding.
-     */
     public function testReverse()
     {
-        $provider = new FreeGeoIp($this->getMockedHttpClient());
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The FreeGeoIp provider is not able to do reverse geocoding.');
+
+        $provider = $this->getProvider();
         $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\InvalidServerResponse
-     */
     public function testServerEmptyResponse()
     {
+        $this->expectException(\Geocoder\Exception\InvalidServerResponse::class);
+
         $provider = new FreeGeoIp($this->getMockedHttpClient());
         $provider->geocodeQuery(GeocodeQuery::create('87.227.124.53'));
+    }
+
+    private function getProvider(): FreeGeoIp
+    {
+        return new FreeGeoIp($this->getHttpClient('api_key'));
     }
 }

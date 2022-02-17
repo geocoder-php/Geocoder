@@ -54,6 +54,11 @@ final class GoogleAddress extends Address
     /**
      * @var string|null
      */
+    private $postalCodeSuffix;
+
+    /**
+     * @var string|null
+     */
     private $political;
 
     /**
@@ -117,7 +122,7 @@ final class GoogleAddress extends Address
     private $partialMatch;
 
     /**
-     * @param null|string $id
+     * @param string|null $id
      *
      * @return GoogleAddress
      */
@@ -132,7 +137,7 @@ final class GoogleAddress extends Address
     /**
      * @see https://developers.google.com/places/place-id
      *
-     * @return null|string
+     * @return string|null
      */
     public function getId()
     {
@@ -140,7 +145,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @param null|string $locationType
+     * @param string|null $locationType
      *
      * @return GoogleAddress
      */
@@ -153,7 +158,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getLocationType()
     {
@@ -182,7 +187,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getFormattedAddress()
     {
@@ -203,7 +208,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getAirport()
     {
@@ -224,7 +229,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getColloquialArea()
     {
@@ -245,7 +250,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getIntersection()
     {
@@ -266,7 +271,28 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
+     */
+    public function getPostalCodeSuffix()
+    {
+        return $this->postalCodeSuffix;
+    }
+
+    /**
+     * @param string|null $postalCodeSuffix
+     *
+     * @return GoogleAddress
+     */
+    public function withPostalCodeSuffix(string $postalCodeSuffix = null)
+    {
+        $new = clone $this;
+        $new->postalCodeSuffix = $postalCodeSuffix;
+
+        return $new;
+    }
+
+    /**
+     * @return string|null
      */
     public function getNaturalFeature()
     {
@@ -287,7 +313,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getNeighborhood()
     {
@@ -308,7 +334,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getPark()
     {
@@ -329,7 +355,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getPointOfInterest()
     {
@@ -350,7 +376,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getPolitical()
     {
@@ -371,7 +397,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getPremise()
     {
@@ -392,7 +418,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getStreetAddress()
     {
@@ -413,7 +439,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getSubpremise()
     {
@@ -434,7 +460,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getWard()
     {
@@ -455,7 +481,7 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getEstablishment()
     {

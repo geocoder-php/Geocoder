@@ -16,6 +16,7 @@ use Geocoder\Collection;
 use Geocoder\Exception\CollectionIsEmpty;
 use Geocoder\Exception\OutOfBounds;
 use Geocoder\Location;
+use Traversable;
 
 final class AddressCollection implements Collection
 {
@@ -35,7 +36,7 @@ final class AddressCollection implements Collection
     /**
      * {@inheritdoc}
      */
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         return new \ArrayIterator($this->all());
     }
@@ -43,7 +44,7 @@ final class AddressCollection implements Collection
     /**
      * {@inheritdoc}
      */
-    public function count()
+    public function count(): int
     {
         return count($this->locations);
     }
@@ -53,7 +54,7 @@ final class AddressCollection implements Collection
      */
     public function first(): Location
     {
-        if (empty($this->locations)) {
+        if ([] === $this->locations) {
             throw new CollectionIsEmpty();
         }
 
@@ -65,7 +66,7 @@ final class AddressCollection implements Collection
      */
     public function isEmpty(): bool
     {
-        return empty($this->locations);
+        return [] === $this->locations;
     }
 
     /**

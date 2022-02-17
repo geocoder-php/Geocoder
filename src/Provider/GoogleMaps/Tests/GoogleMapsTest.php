@@ -41,46 +41,43 @@ class GoogleMapsTest extends BaseTestCase
 
     public function testGetName()
     {
-        $provider = new GoogleMaps($this->getMockedHttpClient());
+        $provider = new GoogleMaps($this->getMockedHttpClient(), null, 'mock-api-key');
         $this->assertEquals('google_maps', $provider->getName());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     */
     public function testGeocodeWithLocalhostIPv4()
     {
-        $provider = new GoogleMaps($this->getMockedHttpClient());
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The GoogleMaps provider does not support IP addresses, only street addresses.');
+
+        $provider = new GoogleMaps($this->getMockedHttpClient(), null, 'mock-api-key');
         $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The GoogleMaps provider does not support IP addresses, only street addresses.
-     */
     public function testGeocodeWithLocalhostIPv6()
     {
-        $provider = new GoogleMaps($this->getMockedHttpClient());
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The GoogleMaps provider does not support IP addresses, only street addresses.');
+
+        $provider = new GoogleMaps($this->getMockedHttpClient(), null, 'mock-api-key');
         $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\UnsupportedOperation
-     * @expectedExceptionMessage The GoogleMaps provider does not support IP addresses, only street addresses.
-     */
     public function testGeocodeWithRealIp()
     {
+        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectExceptionMessage('The GoogleMaps provider does not support IP addresses, only street addresses.');
+
         $provider = $this->getGoogleMapsProvider();
         $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\QuotaExceeded
-     * @expectedExceptionMessage Daily quota exceeded https://maps.googleapis.com/maps/api/geocode/json?address=10%20avenue%20Gambetta%2C%20Paris%2C%20France
-     */
     public function testGeocodeWithQuotaExceeded()
     {
-        $provider = new GoogleMaps($this->getMockedHttpClient('{"status":"OVER_QUERY_LIMIT"}'));
+        $this->expectException(\Geocoder\Exception\QuotaExceeded::class);
+        $this->expectExceptionMessage('Daily quota exceeded https://maps.googleapis.com/maps/api/geocode/json?address=10%20avenue%20Gambetta%2C%20Paris%2C%20France');
+
+        $provider = new GoogleMaps($this->getMockedHttpClient('{"status":"OVER_QUERY_LIMIT"}'), null, 'mock-api-key');
         $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
     }
 
@@ -100,18 +97,18 @@ class GoogleMapsTest extends BaseTestCase
         /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf(Address::class, $result);
-        $this->assertEquals(48.8630462, $result->getCoordinates()->getLatitude(), '', 0.001);
-        $this->assertEquals(2.3882487, $result->getCoordinates()->getLongitude(), '', 0.001);
+        $this->assertEqualsWithDelta(48.8630462, $result->getCoordinates()->getLatitude(), 0.001);
+        $this->assertEqualsWithDelta(2.3882487, $result->getCoordinates()->getLongitude(), 0.001);
         $this->assertNotNull($result->getBounds());
-        $this->assertEquals(48.8617, $result->getBounds()->getSouth(), '', 0.001);
-        $this->assertEquals(2.3882487, $result->getBounds()->getWest(), '', 0.001);
-        $this->assertEquals(48.8644, $result->getBounds()->getNorth(), '', 0.001);
-        $this->assertEquals(2.3901, $result->getBounds()->getEast(), '', 0.001);
+        $this->assertEqualsWithDelta(48.8617, $result->getBounds()->getSouth(), 0.001);
+        $this->assertEqualsWithDelta(2.3882487, $result->getBounds()->getWest(), 0.001);
+        $this->assertEqualsWithDelta(48.8644, $result->getBounds()->getNorth(), 0.001);
+        $this->assertEqualsWithDelta(2.3901, $result->getBounds()->getEast(), 0.001);
         $this->assertEquals(10, $result->getStreetNumber());
         $this->assertEquals('Avenue Gambetta', $result->getStreetName());
         $this->assertEquals(75020, $result->getPostalCode());
         $this->assertEquals('Paris', $result->getLocality());
-        $this->assertEquals('Paris', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('Arrondissement de Paris', $result->getAdminLevels()->get(2)->getName());
         $this->assertEquals('Île-de-France', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('France', $result->getCountry()->getName());
         $this->assertEquals('FR', $result->getCountry()->getCode());
@@ -120,6 +117,7 @@ class GoogleMapsTest extends BaseTestCase
 
         // not provided
         $this->assertNull($result->getTimezone());
+        $this->assertNull($result->getPostalCodeSuffix());
     }
 
     public function testGeocodeBoundsWithRealAddressForNonRooftopLocation()
@@ -134,20 +132,19 @@ class GoogleMapsTest extends BaseTestCase
         $result = $results->first();
         $this->assertInstanceOf(Address::class, $result);
         $this->assertNotNull($result->getBounds());
-        $this->assertEquals(48.815573, $result->getBounds()->getSouth(), '', 0.0001);
-        $this->assertEquals(2.224199, $result->getBounds()->getWest(), '', 0.0001);
-        $this->assertEquals(48.902145, $result->getBounds()->getNorth(), '', 0.0001);
-        $this->assertEquals(2.4699209, $result->getBounds()->getEast(), '', 0.0001);
+        $this->assertEqualsWithDelta(48.815573, $result->getBounds()->getSouth(), 0.0001);
+        $this->assertEqualsWithDelta(2.224199, $result->getBounds()->getWest(), 0.0001);
+        $this->assertEqualsWithDelta(48.902145, $result->getBounds()->getNorth(), 0.0001);
+        $this->assertEqualsWithDelta(2.4699209, $result->getBounds()->getEast(), 0.0001);
         $this->assertEquals('ChIJD7fiBh9u5kcRYJSMaMOCCwQ', $result->getId());
         $this->assertEquals(false, $result->isPartialMatch());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\InvalidServerResponse
-     */
     public function testReverse()
     {
-        $provider = new GoogleMaps($this->getMockedHttpClient());
+        $this->expectException(\Geocoder\Exception\InvalidServerResponse::class);
+
+        $provider = new GoogleMaps($this->getMockedHttpClient(), null, 'mock-api-key');
         $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
     }
 
@@ -167,7 +164,31 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertEquals(75020, $result->getPostalCode());
         $this->assertEquals('Paris', $result->getLocality());
         $this->assertCount(2, $result->getAdminLevels());
-        $this->assertEquals('Paris', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('Arrondissement de Paris', $result->getAdminLevels()->get(2)->getName());
+        $this->assertEquals('Île-de-France', $result->getAdminLevels()->get(1)->getName());
+        $this->assertEquals('France', $result->getCountry()->getName());
+        $this->assertEquals('FR', $result->getCountry()->getCode());
+        $this->assertEquals('ChIJ9aLL3vJt5kcR61GCze3v6fg', $result->getId());
+        $this->assertEquals(false, $result->isPartialMatch());
+    }
+
+    public function testReverseWithRealCoordinatesAndLocale()
+    {
+        $provider = $this->getGoogleMapsProvider();
+        $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(48.8631507, 2.388911)->withLocale('fr-FR'));
+
+        $this->assertInstanceOf(AddressCollection::class, $results);
+        $this->assertCount(5, $results);
+
+        /** @var Location $result */
+        $result = $results->first();
+        $this->assertInstanceOf(Address::class, $result);
+        $this->assertEquals(12, $result->getStreetNumber());
+        $this->assertEquals('Avenue Gambetta', $result->getStreetName());
+        $this->assertEquals(75020, $result->getPostalCode());
+        $this->assertEquals('Paris', $result->getLocality());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('Arrondissement de Paris', $result->getAdminLevels()->get(2)->getName());
         $this->assertEquals('Île-de-France', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('France', $result->getCountry()->getName());
         $this->assertEquals('FR', $result->getCountry()->getCode());
@@ -190,13 +211,12 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertEquals(false, $result->isPartialMatch());
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\InvalidCredentials
-     * @expectedExceptionMessage API key is invalid https://maps.googleapis.com/maps/api/geocode/json?address=10%20avenue%20Gambetta%2C%20Paris%2C%20France
-     */
     public function testGeocodeWithInvalidApiKey()
     {
-        $provider = new GoogleMaps($this->getMockedHttpClient('{"error_message":"The provided API key is invalid.", "status":"REQUEST_DENIED"}'));
+        $this->expectException(\Geocoder\Exception\InvalidCredentials::class);
+        $this->expectExceptionMessage('API key is invalid https://maps.googleapis.com/maps/api/geocode/json?address=10%20avenue%20Gambetta%2C%20Paris%2C%20France');
+
+        $provider = new GoogleMaps($this->getMockedHttpClient('{"error_message":"The provided API key is invalid.", "status":"REQUEST_DENIED"}'), null, 'mock-api-key');
         $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
     }
 
@@ -214,9 +234,7 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertNotNull($result->getCoordinates()->getLatitude());
         $this->assertNotNull($result->getCoordinates()->getLongitude());
         $this->assertEquals('New York', $result->getLocality());
-        $this->assertEquals('Manhattan', $result->getSubLocality());
-        $this->assertCount(2, $result->getAdminLevels());
-        $this->assertEquals('New York', $result->getAdminLevels()->get(1)->getName());
+        $this->assertCount(1, $result->getAdminLevels());
         $this->assertEquals(false, $result->isPartialMatch());
     }
 
@@ -251,7 +269,9 @@ class GoogleMapsTest extends BaseTestCase
                 function (RequestInterface $request) use (&$uri) {
                     $uri = (string) $request->getUri();
                 }
-            )
+            ),
+            null,
+            'test-api-key'
         );
 
         $query = GeocodeQuery::create('address')->withData('components', [
@@ -268,7 +288,7 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertEquals(
             'https://maps.googleapis.com/maps/api/geocode/json'.
             '?address=address'.
-            '&components=country%3ASE%7Cpostal_code%3A22762%7Clocality%3ALund',
+            '&components=country%3ASE%7Cpostal_code%3A22762%7Clocality%3ALund&key=test-api-key',
             $uri
         );
     }
@@ -282,7 +302,9 @@ class GoogleMapsTest extends BaseTestCase
                 function (RequestInterface $request) use (&$uri) {
                     $uri = (string) $request->getUri();
                 }
-            )
+            ),
+            null,
+            'test-api-key'
         );
 
         $query = GeocodeQuery::create('address')
@@ -296,17 +318,16 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertEquals(
             'https://maps.googleapis.com/maps/api/geocode/json'.
             '?address=address'.
-            '&components=country%3ASE%7Cpostal_code%3A22762%7Clocality%3ALund',
+            '&components=country%3ASE%7Cpostal_code%3A22762%7Clocality%3ALund&key=test-api-key',
             $uri
         );
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\InvalidCredentials
-     * @expectedExceptionMessage API key is invalid https://maps.googleapis.com/maps/api/geocode/json?address=Columbia&key=fake_key
-     */
     public function testGeocodeWithRealInvalidApiKey()
     {
+        $this->expectException(\Geocoder\Exception\InvalidCredentials::class);
+        $this->expectExceptionMessage('API key is invalid https://maps.googleapis.com/maps/api/geocode/json?address=Columbia&key=fake_key');
+
         $provider = new GoogleMaps($this->getHttpClient($this->testAPIKey), null, $this->testAPIKey);
         $provider->geocodeQuery(GeocodeQuery::create('Columbia'));
     }
@@ -397,20 +418,18 @@ class GoogleMapsTest extends BaseTestCase
         );
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\InvalidCredentials
-     */
     public function testGeocodeWithInvalidClientIdAndKey()
     {
+        $this->expectException(\Geocoder\Exception\InvalidCredentials::class);
+
         $provider = GoogleMaps::business($this->getHttpClient(), 'foo', 'bogus');
         $provider->geocodeQuery(GeocodeQuery::create('Columbia University'));
     }
 
-    /**
-     * @expectedException \Geocoder\Exception\InvalidCredentials
-     */
     public function testGeocodeWithInvalidClientIdAndKeyNoSsl()
     {
+        $this->expectException(\Geocoder\Exception\InvalidCredentials::class);
+
         $provider = GoogleMaps::business($this->getHttpClient(), 'foo', 'bogus');
         $provider->geocodeQuery(GeocodeQuery::create('Columbia University'));
     }
@@ -441,9 +460,9 @@ class GoogleMapsTest extends BaseTestCase
         /** @var GoogleAddress $result */
         $result = $results->first();
         $this->assertInstanceOf(Address::class, $result);
-        $this->assertEquals('Durmitor National Park', $result->getNaturalFeature());
-        $this->assertEquals('Durmitor National Park', $result->getPark());
-        $this->assertEquals('Durmitor National Park', $result->getPointOfInterest());
+        $this->assertEquals('Durmitor', $result->getNaturalFeature());
+        $this->assertEquals('Durmitor', $result->getPark());
+        $this->assertEquals('Durmitor', $result->getPointOfInterest());
         $this->assertEquals('Montenegro', $result->getPolitical());
         $this->assertEquals('Montenegro', $result->getCountry());
         $this->assertEquals(false, $result->isPartialMatch());
@@ -480,7 +499,7 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertEquals('1125 17th Street', $result->getPremise());
         $this->assertEquals('Denver', $result->getLocality());
         $this->assertEquals('United States', $result->getCountry());
-        $this->assertEquals('Central', $result->getNeighborhood());
+        $this->assertEquals('Central Business District', $result->getNeighborhood());
         $this->assertEquals(false, $result->isPartialMatch());
     }
 
@@ -490,27 +509,12 @@ class GoogleMapsTest extends BaseTestCase
         $results = $provider->geocodeQuery(GeocodeQuery::create('darwin'));
 
         $this->assertInstanceOf(AddressCollection::class, $results);
-        $this->assertCount(3, $results);
+        $this->assertCount(1, $results);
 
         /** @var GoogleAddress $result */
         $result = $results->first();
         $this->assertInstanceOf(Address::class, $result);
         $this->assertEquals('Darwin', $result->getColloquialArea());
-        $this->assertEquals(false, $result->isPartialMatch());
-    }
-
-    public function testGeocodeWithWardComponent()
-    {
-        $provider = $this->getGoogleMapsProvider();
-        $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(35.03937, 135.729243));
-
-        $this->assertInstanceOf(AddressCollection::class, $results);
-        $this->assertCount(5, $results);
-
-        /** @var GoogleAddress $result */
-        $result = $results->first();
-        $this->assertInstanceOf(Address::class, $result);
-        $this->assertEquals('Kita-ku', $result->getWard());
         $this->assertEquals(false, $result->isPartialMatch());
     }
 
@@ -526,9 +530,23 @@ class GoogleMapsTest extends BaseTestCase
         $result = $results->first();
         $this->assertInstanceOf(Address::class, $result);
         $this->assertInstanceOf('\Geocoder\Model\AdminLevelCollection', $result->getSubLocalityLevels());
-        $this->assertEquals('58', $result->getSubLocalityLevels()->get(4)->getName());
-        $this->assertEquals(1, $result->getSubLocalityLevels()->get(1)->getLevel());
-        $this->assertEquals(4, $result->getSubLocalityLevels()->get(4)->getLevel());
+        $this->assertEquals('Iijima', $result->getSubLocalityLevels()->get(2)->getName());
+        $this->assertEquals(false, $result->isPartialMatch());
+    }
+
+    public function testGeocodeWithPostalCodeSuffixComponent()
+    {
+        $provider = $this->getGoogleMapsProvider();
+        $results = $provider->geocodeQuery(GeocodeQuery::create('900 S Oak Park Ave, Oak Park, IL 60304'));
+
+        $this->assertInstanceOf(AddressCollection::class, $results);
+        $this->assertCount(1, $results);
+
+        /** @var GoogleAddress $result */
+        $result = $results->first();
+        $this->assertInstanceOf(Address::class, $result);
+        $this->assertEquals('900 S Oak Park Ave, Oak Park, IL 60304, USA', $result->getFormattedAddress());
+        $this->assertEquals('1936', $result->getPostalCodeSuffix());
         $this->assertEquals(false, $result->isPartialMatch());
     }
 
@@ -544,10 +562,10 @@ class GoogleMapsTest extends BaseTestCase
         $result = $results->first();
         $this->assertInstanceOf(Address::class, $result);
         $this->assertNotNull($result->getBounds());
-        $this->assertEquals(50.8376, $result->getBounds()->getSouth(), '', 0.001);
-        $this->assertEquals(5.8113, $result->getBounds()->getWest(), '', 0.001);
-        $this->assertEquals(50.8517, $result->getBounds()->getNorth(), '', 0.001);
-        $this->assertEquals(5.8433, $result->getBounds()->getEast(), '', 0.001);
+        $this->assertEqualsWithDelta(50.8376, $result->getBounds()->getSouth(), 0.001);
+        $this->assertEqualsWithDelta(5.8113, $result->getBounds()->getWest(), 0.001);
+        $this->assertEqualsWithDelta(50.8517, $result->getBounds()->getNorth(), 0.001);
+        $this->assertEqualsWithDelta(5.8433, $result->getBounds()->getEast(), 0.001);
         $this->assertEquals(false, $result->isPartialMatch());
     }
 

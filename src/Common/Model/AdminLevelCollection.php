@@ -15,6 +15,7 @@ namespace Geocoder\Model;
 use Geocoder\Exception\CollectionIsEmpty;
 use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\OutOfBounds;
+use Traversable;
 
 /**
  * @author Giorgio Premi <giosh94mhz@gmail.com>
@@ -53,7 +54,7 @@ final class AdminLevelCollection implements \IteratorAggregate, \Countable
     /**
      * {@inheritdoc}
      */
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         return new \ArrayIterator($this->all());
     }
@@ -61,7 +62,7 @@ final class AdminLevelCollection implements \IteratorAggregate, \Countable
     /**
      * {@inheritdoc}
      */
-    public function count()
+    public function count(): int
     {
         return count($this->adminLevels);
     }
@@ -73,7 +74,7 @@ final class AdminLevelCollection implements \IteratorAggregate, \Countable
      */
     public function first(): AdminLevel
     {
-        if (empty($this->adminLevels)) {
+        if ([] === $this->adminLevels) {
             throw new CollectionIsEmpty();
         }
 
@@ -113,7 +114,7 @@ final class AdminLevelCollection implements \IteratorAggregate, \Countable
             throw new InvalidArgument(sprintf('Administrative level %d is not set for this address', $level));
         }
 
-        return  $this->adminLevels[$level];
+        return $this->adminLevels[$level];
     }
 
     /**
@@ -132,9 +133,7 @@ final class AdminLevelCollection implements \IteratorAggregate, \Countable
     private function checkLevel(int $level)
     {
         if ($level <= 0 || $level > self::MAX_LEVEL_DEPTH) {
-            throw new OutOfBounds(
-                sprintf('Administrative level should be an integer in [1,%d], %d given', self::MAX_LEVEL_DEPTH, $level)
-            );
+            throw new OutOfBounds(sprintf('Administrative level should be an integer in [1,%d], %d given', self::MAX_LEVEL_DEPTH, $level));
         }
     }
 }

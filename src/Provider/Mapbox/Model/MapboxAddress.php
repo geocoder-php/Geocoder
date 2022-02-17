@@ -47,7 +47,7 @@ final class MapboxAddress extends Address
     private $neighborhood;
 
     /**
-     * @param null|string $id
+     * @param string|null $id
      *
      * @return MapboxAddress
      */
@@ -62,7 +62,7 @@ final class MapboxAddress extends Address
     /**
      * @see https://www.mapbox.com/api-documentation/?language=cURL#response-object
      *
-     * @return null|string
+     * @return string|null
      */
     public function getId()
     {
@@ -70,7 +70,7 @@ final class MapboxAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getStreetName()
     {
@@ -133,7 +133,7 @@ final class MapboxAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getFormattedAddress()
     {
@@ -154,7 +154,7 @@ final class MapboxAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getNeighborhood()
     {

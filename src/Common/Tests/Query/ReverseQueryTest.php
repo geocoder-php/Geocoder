@@ -26,11 +26,11 @@ class ReverseQueryTest extends TestCase
         $query = $query->withData('name', 'value');
 
         $string = $query->__toString();
-        $this->assertContains('ReverseQuery', $string);
-        $this->assertContains('"lat":1', $string);
-        $this->assertContains('"lng":2', $string);
-        $this->assertContains('"locale":"en"', $string);
-        $this->assertContains('"limit":3', $string);
-        $this->assertContains('"name":"value"', $string);
+        $this->assertStringContainsString('ReverseQuery', $string);
+        $this->assertStringContainsString('"lat":1', $string);
+        $this->assertStringContainsString('"lng":2', $string);
+        $this->assertStringContainsString('"locale":"en"', $string);
+        $this->assertStringContainsString('"limit":3', $string);
+        $this->assertStringContainsString('"name":"value"', $string);
     }
 }

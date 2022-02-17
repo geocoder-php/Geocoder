@@ -37,6 +37,11 @@ final class NominatimAddress extends Address
     /**
      * @var string|null
      */
+    private $quarter;
+
+    /**
+     * @var string|null
+     */
     private $osmType;
 
     /**
@@ -50,7 +55,17 @@ final class NominatimAddress extends Address
     private $type;
 
     /**
-     * @return null|string
+     * @var array|null
+     */
+    private $details;
+
+    /**
+     * @var array|null
+     */
+    private $tags;
+
+    /**
+     * @return string|null
      */
     public function getAttribution()
     {
@@ -58,7 +73,7 @@ final class NominatimAddress extends Address
     }
 
     /**
-     * @param null|string $attribution
+     * @param string|null $attribution
      *
      * @return NominatimAddress
      */
@@ -73,7 +88,7 @@ final class NominatimAddress extends Address
     /**
      * @deprecated
      *
-     * @return null|string
+     * @return string|null
      */
     public function getClass()
     {
@@ -83,7 +98,7 @@ final class NominatimAddress extends Address
     /**
      * @deprecated
      *
-     * @param null|string $category
+     * @param string|null $category
      *
      * @return NominatimAddress
      */
@@ -93,7 +108,7 @@ final class NominatimAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getCategory()
     {
@@ -101,7 +116,7 @@ final class NominatimAddress extends Address
     }
 
     /**
-     * @param null|string $category
+     * @param string|null $category
      *
      * @return NominatimAddress
      */
@@ -114,7 +129,7 @@ final class NominatimAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getDisplayName()
     {
@@ -122,7 +137,7 @@ final class NominatimAddress extends Address
     }
 
     /**
-     * @param null|string $displayName
+     * @param string|null $displayName
      *
      * @return NominatimAddress
      */
@@ -135,7 +150,7 @@ final class NominatimAddress extends Address
     }
 
     /**
-     * @return null|int
+     * @return int|null
      */
     public function getOSMId()
     {
@@ -143,7 +158,7 @@ final class NominatimAddress extends Address
     }
 
     /**
-     * @param null|int $osmId
+     * @param int|null $osmId
      *
      * @return NominatimAddress
      */
@@ -156,7 +171,7 @@ final class NominatimAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getOSMType()
     {
@@ -164,7 +179,7 @@ final class NominatimAddress extends Address
     }
 
     /**
-     * @param null|string $osmType
+     * @param string|null $osmType
      *
      * @return NominatimAddress
      */
@@ -177,7 +192,7 @@ final class NominatimAddress extends Address
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getType()
     {
@@ -185,7 +200,7 @@ final class NominatimAddress extends Address
     }
 
     /**
-     * @param null|string $type
+     * @param string|null $type
      *
      * @return NominatimAddress
      */
@@ -193,6 +208,65 @@ final class NominatimAddress extends Address
     {
         $new = clone $this;
         $new->type = $type;
+
+        return $new;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getQuarter(): ?string
+    {
+        return $this->quarter;
+    }
+
+    /**
+     * @param string|null $quarter
+     *
+     * @return NominatimAddress
+     */
+    public function withQuarter(string $quarter = null): self
+    {
+        $new = clone $this;
+        $new->quarter = $quarter;
+
+        return $new;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getDetails(): ?array
+    {
+        return $this->details;
+    }
+
+    /**
+     * @param array|null $details
+     */
+    public function withDetails(array $details = null): self
+    {
+        $new = clone $this;
+        $new->details = $details;
+
+        return $new;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getTags(): ?array
+    {
+        return $this->tags;
+    }
+
+    /**
+     * @param array|null $tags
+     */
+    public function withTags(array $tags = null): self
+    {
+        $new = clone $this;
+        $new->tags = $tags;
 
         return $new;
     }

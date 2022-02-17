@@ -1,0 +1,41 @@
+{
+    "name": "geocoder-php/maptiler-provider",
+    "type": "library",
+    "description": "Geocoder MapTiler adapter",
+    "keywords": [],
+    "homepage": "http://geocoder-php.org/Geocoder/",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jonathan Beliën"
+        }
+    ],
+    "require": {
+        "php": "^7.3 || ^8.0",
+        "geocoder-php/common-http": "^4.1",
+        "willdurand/geocoder": "^4.0"
+    },
+    "provide": {
+        "geocoder-php/provider-implementation": "1.0"
+    },
+    "require-dev": {
+        "geocoder-php/provider-integration-tests": "^1.0",
+        "php-http/curl-client": "^2.2",
+        "php-http/message": "^1.0",
+        "phpunit/phpunit": "^9.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Geocoder\\Provider\\MapTiler\\": ""
+        },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-ci": "vendor/bin/phpunit --coverage-text --coverage-clover=build/coverage.xml"
+    }
+}

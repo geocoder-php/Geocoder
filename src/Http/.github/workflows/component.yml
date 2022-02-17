@@ -1,0 +1,33 @@
+name: Component
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  test:
+    name: PHP ${{ matrix.php-version }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version: ['7.3', '7.4', '8.0', '8.1']
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use PHP ${{ matrix.php-version }}
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php-version }}
+        extensions: curl
+    - name: Validate composer.json and composer.lock
+      run: composer validate --strict
+    - name: Install dependencies
+      run: composer update --prefer-stable --prefer-dist --no-progress
+    - name: Run test suite
+      run: composer run-script test-ci
+    - name: Upload Coverage report
+      run: |
+        wget https://scrutinizer-ci.com/ocular.phar
+        php ocular.phar code-coverage:upload --format=php-clover build/coverage.xml

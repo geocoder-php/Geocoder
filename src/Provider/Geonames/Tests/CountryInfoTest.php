@@ -32,7 +32,7 @@ class CountryInfoTest extends BaseTestCase
         $provider = new Geonames($this->getHttpClient($_SERVER['GEONAMES_USERNAME']), $_SERVER['GEONAMES_USERNAME']);
         $results = $provider->getCountryInfo('IN');
 
-        $this->assertInternalType('array', $results);
+        $this->assertIsArray($results);
         $this->assertEquals(1, count($results));
 
         /* @var CountryInfo $result */
@@ -42,7 +42,7 @@ class CountryInfoTest extends BaseTestCase
         $this->assertInstanceOf('Geocoder\Model\Bounds', $result->getBounds());
         $this->assertEquals('AS', $result->getContinent());
         $this->assertEquals('New Delhi', $result->getCapital());
-        $this->assertInternalType('array', $result->getLanguages());
+        $this->assertIsArray($result->getLanguages());
         $this->assertEquals(1269750, $result->getGeonameId());
         $this->assertEquals('IND', $result->getIsoAlpha3());
         $this->assertEquals('IN', $result->getFipsCode());

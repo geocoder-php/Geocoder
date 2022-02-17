@@ -1,4 +1,4 @@
-s:5119:"{
+s:1585:"{
    "results" : [
       {
          "address_components" : [
@@ -37,130 +37,17 @@ s:5119:"{
             "location_type" : "APPROXIMATE",
             "viewport" : {
                "northeast" : {
-                  "lat" : -12.3300598,
+                  "lat" : -12.3300597,
                   "lng" : 131.0514999
                },
                "southwest" : {
                   "lat" : -12.5217415,
-                  "lng" : 130.8151195
+                  "lng" : 130.8151169
                }
             }
          },
          "place_id" : "ChIJPwRZn_ygwCwRIHwkKqgXAgM",
          "types" : [ "colloquial_area", "locality", "political" ]
-      },
-      {
-         "address_components" : [
-            {
-               "long_name" : "Darwin",
-               "short_name" : "Darwin",
-               "types" : [ "locality", "political" ]
-            },
-            {
-               "long_name" : "Inyo County",
-               "short_name" : "Inyo County",
-               "types" : [ "administrative_area_level_2", "political" ]
-            },
-            {
-               "long_name" : "California",
-               "short_name" : "CA",
-               "types" : [ "administrative_area_level_1", "political" ]
-            },
-            {
-               "long_name" : "United States",
-               "short_name" : "US",
-               "types" : [ "country", "political" ]
-            },
-            {
-               "long_name" : "93522",
-               "short_name" : "93522",
-               "types" : [ "postal_code" ]
-            }
-         ],
-         "formatted_address" : "Darwin, CA 93522, USA",
-         "geometry" : {
-            "bounds" : {
-               "northeast" : {
-                  "lat" : 36.2857869,
-                  "lng" : -117.5727221
-               },
-               "southwest" : {
-                  "lat" : 36.257439,
-                  "lng" : -117.612777
-               }
-            },
-            "location" : {
-               "lat" : 36.2679969,
-               "lng" : -117.5917348
-            },
-            "location_type" : "APPROXIMATE",
-            "viewport" : {
-               "northeast" : {
-                  "lat" : 36.2857869,
-                  "lng" : -117.5727221
-               },
-               "southwest" : {
-                  "lat" : 36.257439,
-                  "lng" : -117.612777
-               }
-            }
-         },
-         "place_id" : "ChIJtc-H-PrqwIARuWuYh5wF5FM",
-         "types" : [ "locality", "political" ]
-      },
-      {
-         "address_components" : [
-            {
-               "long_name" : "Darwin",
-               "short_name" : "Darwin",
-               "types" : [ "locality", "political" ]
-            },
-            {
-               "long_name" : "Meeker County",
-               "short_name" : "Meeker County",
-               "types" : [ "administrative_area_level_2", "political" ]
-            },
-            {
-               "long_name" : "Minnesota",
-               "short_name" : "MN",
-               "types" : [ "administrative_area_level_1", "political" ]
-            },
-            {
-               "long_name" : "United States",
-               "short_name" : "US",
-               "types" : [ "country", "political" ]
-            }
-         ],
-         "formatted_address" : "Darwin, MN, USA",
-         "geometry" : {
-            "bounds" : {
-               "northeast" : {
-                  "lat" : 45.1021238,
-                  "lng" : -94.3936781
-               },
-               "southwest" : {
-                  "lat" : 45.09042789999999,
-                  "lng" : -94.415623
-               }
-            },
-            "location" : {
-               "lat" : 45.0986111,
-               "lng" : -94.41027779999999
-            },
-            "location_type" : "APPROXIMATE",
-            "viewport" : {
-               "northeast" : {
-                  "lat" : 45.1021238,
-                  "lng" : -94.3936781
-               },
-               "southwest" : {
-                  "lat" : 45.09042789999999,
-                  "lng" : -94.415623
-               }
-            }
-         },
-         "place_id" : "ChIJD1YQ5V3YtFIR2LwsAuxcHDs",
-         "types" : [ "locality", "political" ]
       }
    ],
    "status" : "OK"

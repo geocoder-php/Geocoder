@@ -16,7 +16,7 @@ use Geocoder\Plugin\Plugin;
 use Geocoder\Query\Query;
 
 /**
- * Add locale on the query
+ * Add locale on the query.
  *
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
@@ -40,7 +40,8 @@ class LocalePlugin implements Plugin
      */
     public function handleQuery(Query $query, callable $next, callable $first)
     {
-        if (empty($query->getLocale())) {
+        $locale = $query->getLocale();
+        if (null === $locale || '' === $locale) {
             $query = $query->withLocale($this->locale);
         }
 
