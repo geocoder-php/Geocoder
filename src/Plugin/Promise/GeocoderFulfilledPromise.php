@@ -36,7 +36,7 @@ final class GeocoderFulfilledPromise implements Promise
     /**
      * {@inheritdoc}
      */
-    public function then(callable $onFulfilled = null, callable $onRejected = null)
+    public function then(callable $onFulfilled = null, callable $onRejected = null): Promise
     {
         if (null === $onFulfilled) {
             return $this;
@@ -52,13 +52,15 @@ final class GeocoderFulfilledPromise implements Promise
     /**
      * {@inheritdoc}
      */
-    public function getState()
+    public function getState(): string
     {
         return Promise::FULFILLED;
     }
 
     /**
      * {@inheritdoc}
+     *
+     * @return mixed
      */
     public function wait($unwrap = true)
     {
