@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Geocoder\Provider\LocationIQ;
 
 use Geocoder\Collection;
+use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Location;
@@ -58,8 +59,10 @@ final class LocationIQ extends AbstractHttpProvider implements Provider
         }
 
         $this->apiKey = $apiKey;
-        if (!$region || !in_array($region, $this->regions)) {
+        if (null === $region) {
             $region = $this->regions[0];
+        } elseif (true !== in_array($region, $this->regions, true)) {
+            throw new InvalidArgument(sprintf('`region` must be null or one of `%s`', implode('`, `', $this->regions)));
         }
         $this->baseUrl = str_replace('{region}', $region, $this->baseUrl);
 
