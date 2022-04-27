@@ -39,7 +39,7 @@ final class LocationIQ extends AbstractHttpProvider implements Provider
      */
     protected $regions = [
         'us1',
-        'eu1'
+        'eu1',
     ];
 
     /**
