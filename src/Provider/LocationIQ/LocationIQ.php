@@ -32,7 +32,15 @@ final class LocationIQ extends AbstractHttpProvider implements Provider
     /**
      * @var string
      */
-    const BASE_API_URL = 'https://locationiq.org/v1';
+    public $baseUrl = 'https://{region}.locationiq.com/v1';
+
+    /**
+     * @var array
+     */
+    protected $regions = [
+        'us1',
+        'eu1'
+    ];
 
     /**
      * @var string
@@ -43,13 +51,17 @@ final class LocationIQ extends AbstractHttpProvider implements Provider
      * @param HttpClient $client an HTTP adapter
      * @param string     $apiKey an API key
      */
-    public function __construct(HttpClient $client, string $apiKey)
+    public function __construct(HttpClient $client, string $apiKey, string $region = null)
     {
         if (empty($apiKey)) {
             throw new InvalidCredentials('No API key provided.');
         }
 
         $this->apiKey = $apiKey;
+        if (!$region || !in_array($region, $this->regions)) {
+            $region = $this->regions[0];
+        }
+        $this->baseUrl = str_replace('{region}', $region, $this->baseUrl);
 
         parent::__construct($client);
     }
@@ -177,12 +189,12 @@ final class LocationIQ extends AbstractHttpProvider implements Provider
 
     private function getGeocodeEndpointUrl(): string
     {
-        return self::BASE_API_URL.'/search.php?q=%s&format=xmlv1.1&addressdetails=1&normalizecity=1&limit=%d&key='.$this->apiKey;
+        return $this->baseUrl.'/search.php?q=%s&format=xmlv1.1&addressdetails=1&normalizecity=1&limit=%d&key='.$this->apiKey;
     }
 
     private function getReverseEndpointUrl(): string
     {
-        return self::BASE_API_URL.'/reverse.php?format=xmlv1.1&lat=%F&lon=%F&addressdetails=1&normalizecity=1&zoom=%d&key='.$this->apiKey;
+        return $this->baseUrl.'/reverse.php?format=xmlv1.1&lat=%F&lon=%F&addressdetails=1&normalizecity=1&zoom=%d&key='.$this->apiKey;
     }
 
     private function getNodeValue(\DOMNodeList $element)
