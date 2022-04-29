@@ -33,7 +33,12 @@ final class LocationIQ extends AbstractHttpProvider implements Provider
     /**
      * @var string
      */
-    public $baseUrl = 'https://{region}.locationiq.com/v1';
+    const BASE_API_URL = 'https://{region}.locationiq.com/v1';
+
+    /**
+     * @var string
+     */
+    protected $baseUrl;
 
     /**
      * @var array
@@ -64,7 +69,7 @@ final class LocationIQ extends AbstractHttpProvider implements Provider
         } elseif (true !== in_array($region, $this->regions, true)) {
             throw new InvalidArgument(sprintf('`region` must be null or one of `%s`', implode('`, `', $this->regions)));
         }
-        $this->baseUrl = str_replace('{region}', $region, $this->baseUrl);
+        $this->baseUrl = str_replace('{region}', $region, self::BASE_API_URL);
 
         parent::__construct($client);
     }
