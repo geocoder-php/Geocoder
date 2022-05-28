@@ -206,7 +206,7 @@ final class Nominatim extends AbstractHttpProvider implements Provider
             $builder->setPostalCode($postalCode);
         }
 
-        $localityFields = ['city', 'town', 'village', 'hamlet'];
+        $localityFields = ['city', 'town', 'village', 'hamlet', 'municipality'];
         foreach ($localityFields as $localityField) {
             if (isset($place->address->{$localityField})) {
                 $localityFieldContent = $place->address->{$localityField};
