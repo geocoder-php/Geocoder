@@ -2,6 +2,12 @@
 
 The change log describes what is "Added", "Removed", "Changed" or "Fixed" between each release.
 
+## 1.3.0
+
+### Changed
+
+- Update endpoint
+
 ## 1.2.0
 
 ### Added

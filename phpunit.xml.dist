@@ -53,6 +53,7 @@
     <server name="GEOCODE_EARTH_API_KEY" value="YOUR_GEOCODE_EARTH_API_KEY"/>
     <server name="OPEN_ROUTE_SERVICE_API_KEY" value="YOUR_OPEN_ROUTE_SERVICE_API_KEY"/>
     <server name="AZURE_MAPS_SUBSCRIPTION_KEY" value="YOUR_AZURE_MAPS_SUBSCRIPTION_KEY"/>
+    <server name="MAPTILER_KEY" value="YOUR_MAPTILER_KEY"/>
     <!--<server name="MAXMIND_API_KEY" value="YOUR_API_KEY" />-->
   </php>
   <testsuites>

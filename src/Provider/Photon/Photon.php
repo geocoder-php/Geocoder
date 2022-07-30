@@ -142,11 +142,13 @@ final class Photon extends AbstractHttpProvider implements Provider
         $builder->setPostalCode($properties->postcode ?? null);
         $builder->setLocality($properties->city ?? null);
         $builder->setCountry($properties->country ?? null);
+        $builder->setCountryCode($properties->countrycode ?? null);
 
         if (isset($properties->extent)) {
             $builder->setBounds($properties->extent[0], $properties->extent[2], $properties->extent[1], $properties->extent[3]);
         }
 
+        /** @var PhotonAddress $address */
         $address = $builder->build(PhotonAddress::class)
             ->withOSMId($properties->osm_id ?? null)
             ->withOSMType($properties->osm_type ?? null)

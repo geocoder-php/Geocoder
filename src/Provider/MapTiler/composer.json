@@ -1,37 +1,32 @@
 {
-    "name": "geocoder-php/plugin",
+    "name": "geocoder-php/maptiler-provider",
     "type": "library",
-    "description": "Plugins to Geocoder providers",
-    "keywords": [
-        "geocoder plugin"
-    ],
-    "homepage": "http://geocoder-php.org",
+    "description": "Geocoder MapTiler adapter",
+    "keywords": [],
+    "homepage": "http://geocoder-php.org/Geocoder/",
     "license": "MIT",
     "authors": [
         {
-            "name": "Tobias Nyholm",
-            "email": "tobias.nyholm@gmail.com"
+            "name": "Jonathan Beliën"
         }
     ],
     "require": {
         "php": "^7.3 || ^8.0",
-        "php-http/promise": "^1.0",
-        "psr/log": "^1.0|^2.0|^3.0",
-        "psr/simple-cache": "^1.0|^2.0|^3.0",
+        "geocoder-php/common-http": "^4.1",
         "willdurand/geocoder": "^4.0"
     },
-    "require-dev": {
-        "cache/void-adapter": "^1.0",
-        "phpunit/phpunit": "^9.5"
+    "provide": {
+        "geocoder-php/provider-implementation": "1.0"
     },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "1.0-dev"
-        }
+    "require-dev": {
+        "geocoder-php/provider-integration-tests": "^1.0",
+        "php-http/curl-client": "^2.2",
+        "php-http/message": "^1.0",
+        "phpunit/phpunit": "^9.5"
     },
     "autoload": {
         "psr-4": {
-            "Geocoder\\Plugin\\": ""
+            "Geocoder\\Provider\\MapTiler\\": ""
         },
         "exclude-from-classmap": [
             "/Tests/"

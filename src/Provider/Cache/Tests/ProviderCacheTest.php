@@ -83,7 +83,7 @@ class ProviderCacheTest extends TestCase
         $this->cacheMock->expects($this->once())
             ->method('set')
             ->with($this->anything(), $result, $ttl)
-            ->willReturn(null);
+            ->willReturn(true);
 
         $this->providerMock->expects($this->once())
             ->method('geocodeQuery')
@@ -127,7 +127,7 @@ class ProviderCacheTest extends TestCase
         $this->cacheMock->expects($this->once())
             ->method('set')
             ->with($this->anything(), $result, $ttl)
-            ->willReturn(null);
+            ->willReturn(true);
 
         $this->providerMock->expects($this->once())
             ->method('reverseQuery')
