@@ -54,6 +54,17 @@ $results = $provider->geocodeQuery(
 );
 ```
 
+country matches a country name or a two letter ISO 3166-1 country code. If you only use the "region" parameter, you will not be guaranteed to have results on the region, as the documentation indicates [Region](https://developers.google.com/maps/documentation/javascript/geocoding#GeocodingRequests):
+
+> The region parameter will only influence, not fully restrict, results from the geocoder.
+
+```php
+$results = $provider->geocodeQuery(
+    GeocodeQuery::create('montpellier')
+        ->withData('components', 'country:FR');
+);
+```
+
 ### Reverse Geocoding
 Three options available for reverse geocoding of latlon coordinates:
 

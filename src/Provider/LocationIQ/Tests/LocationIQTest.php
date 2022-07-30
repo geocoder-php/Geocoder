@@ -46,6 +46,17 @@ XML;
         $provider->geocodeQuery(GeocodeQuery::create('Läntinen Pitkäkatu 35, Turku'));
     }
 
+    public function testGeocodeWithInvalidRegion()
+    {
+        $this->expectException(\Geocoder\Exception\InvalidArgument::class);
+
+        $emptyXML = <<<'XML'
+<?xml version="1.0" encoding="utf-8"?><searchresults_empty></searchresults_empty>
+XML;
+
+        $provider = new LocationIQ($this->getMockedHttpClient($emptyXML), $_SERVER['LOCATIONIQ_API_KEY'], 'invalid');
+    }
+
     public function testReverseWithCoordinatesGetsError()
     {
         $errorXml = <<<'XML'
