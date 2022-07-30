@@ -23,7 +23,7 @@ use Geocoder\Query\ReverseQuery;
 use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Model\Bounds;
 use Geocoder\Provider\Provider;
-use Http\Client\HttpClient;
+use Psr\Http\Client\ClientInterface;
 
 /**
  * @author Jonathan Beliën
@@ -41,10 +41,10 @@ final class MapTiler extends AbstractHttpProvider implements Provider
     private $apiKey;
 
     /**
-     * @param HttpClient $client an HTTP client
-     * @param string     $key    API key
+     * @param ClientInterface $client an HTTP client
+     * @param string          $key    API key
      */
-    public function __construct(HttpClient $client, string $apiKey)
+    public function __construct(ClientInterface $client, string $apiKey)
     {
         parent::__construct($client);
 
