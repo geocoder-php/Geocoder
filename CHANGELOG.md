@@ -5,6 +5,7 @@
 * Removed: Support for PHP 7.3
 * Added: Support for PHP 8.1
 * Added: GitHub Actions workflows
+* Changed: Migrate from PHP-HTTP to PSR-18 client
 
 ## 4.2.0 (2020-12-22)
 
