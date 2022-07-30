@@ -50,13 +50,13 @@ Read more about HTTPlug in [their docs](http://docs.php-http.org/en/latest/httpl
 
 ### Summary (Just give me the command)
 
-To install Google Maps geocoder with Guzzle 6 you may run the following command:
+To install Google Maps geocoder with Guzzle 7 you may run the following command:
 
 ```cmd
-composer require geocoder-php/google-maps-provider php-http/guzzle6-adapter
+composer require geocoder-php/google-maps-provider guzzlehttp/guzzle
 ```
 
-Or using the curl client (you'll need to provide a PSR7 implementation such as `nyholm/psr7` if not using guzzle)
+Or using the curl client (you'll need to provide a PSR7 implementation such as `nyholm/psr7` if not using Guzzle)
 
 ```cmd
 composer require geocoder-php/google-maps-provider php-http/curl-client nyholm/psr7
@@ -81,13 +81,13 @@ We have a small cookbook where you can find examples on common use cases:
 
 ## Usage
 
-In the code snippet below we use GoogleMaps and Guzzle6.
+In the code snippet below we use GoogleMaps and Guzzle 7.
 
 ```php
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 
-$httpClient = new \Http\Adapter\Guzzle6\Client();
+$httpClient = new \GuzzleHttp\Client();
 $provider = new \Geocoder\Provider\GoogleMaps\GoogleMaps($httpClient, null, 'your-api-key');
 $geocoder = new \Geocoder\StatefulGeocoder($provider, 'en');
 
@@ -203,13 +203,13 @@ when a provider returns a result. The result is returned by `GoogleMaps` because
 use Geocoder\Query\GeocodeQuery;
 
 $geocoder = new \Geocoder\ProviderAggregator();
-$adapter  = new \Http\Adapter\Guzzle6\Client();
+$client  = new \GuzzleHttp\Client();
 
 $chain = new \Geocoder\Provider\Chain\Chain([
-    new \Geocoder\Provider\FreeGeoIp\FreeGeoIp($adapter),
-    new \Geocoder\Provider\HostIp\HostIp($adapter),
-    new \Geocoder\Provider\GoogleMaps\GoogleMaps($adapter, 'France'),
-    new \Geocoder\Provider\BingMaps\BingMaps($adapter, '<API_KEY>'),
+    new \Geocoder\Provider\FreeGeoIp\FreeGeoIp($client),
+    new \Geocoder\Provider\HostIp\HostIp($client),
+    new \Geocoder\Provider\GoogleMaps\GoogleMaps($client, 'France'),
+    new \Geocoder\Provider\BingMaps\BingMaps($client, '<API_KEY>'),
     // ...
 ]);
 
@@ -230,15 +230,15 @@ decide which provider to use later on.
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 
-$adapter  = new \Http\Adapter\Guzzle6\Client();
+$client  = new \GuzzleHttp\Client();
 $geocoder = new \Geocoder\ProviderAggregator();
 
 $geocoder->registerProviders([
-    new \Geocoder\Provider\GoogleMaps\GoogleMaps($adapter),
-    new \Geocoder\Provider\GoogleMaps\GoogleMapsBusiness($adapter, '<CLIENT_ID>'),
-    new \Geocoder\Provider\Yandex\Yandex($adapter),
-    new \Geocoder\Provider\MaxMind\MaxMind($adapter, '<MAXMIND_API_KEY>'),
-    new \Geocoder\Provider\ArcGISOnline\ArcGISOnline($adapter),
+    new \Geocoder\Provider\GoogleMaps\GoogleMaps($client),
+    new \Geocoder\Provider\GoogleMaps\GoogleMapsBusiness($client, '<CLIENT_ID>'),
+    new \Geocoder\Provider\Yandex\Yandex($client),
+    new \Geocoder\Provider\MaxMind\MaxMind($client, '<MAXMIND_API_KEY>'),
+    new \Geocoder\Provider\ArcGISOnline\ArcGISOnline($client),
 ]);
 
 $geocoder->registerProvider(new \Geocoder\Provider\Nominatim\Nominatim($adapter, 'https://your.nominatim.server'));

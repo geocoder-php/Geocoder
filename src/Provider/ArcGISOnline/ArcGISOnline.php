@@ -23,7 +23,7 @@ use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Provider\Provider;
-use Http\Client\HttpClient;
+use Psr\Http\Client\ClientInterface;
 
 /**
  * @author ALKOUM Dorian <baikunz@gmail.com>
@@ -62,14 +62,14 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
      * ArcGIS World Geocoding Service.
      * https://developers.arcgis.com/rest/geocode/api-reference/overview-world-geocoding-service.htm.
      *
-     * @param HttpClient $client        An HTTP adapter
-     * @param string     $token         Your authentication token
-     * @param string     $sourceCountry Country biasing (optional)
+     * @param ClientInterface $client        An HTTP adapter
+     * @param string          $token         Your authentication token
+     * @param string          $sourceCountry Country biasing (optional)
      *
      * @return ArcGISOnline
      */
     public static function token(
-        HttpClient $client,
+        ClientInterface $client,
         string $token,
         string $sourceCountry = null
     ) {
@@ -79,12 +79,12 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * @param HttpClient $client        An HTTP adapter
-     * @param string     $sourceCountry Country biasing (optional)
-     * @param string     $token         ArcGIS World Geocoding Service token
-     *                                  Required for the geocodeAddresses endpoint
+     * @param ClientInterface $client        An HTTP adapter
+     * @param string          $sourceCountry Country biasing (optional)
+     * @param string          $token         ArcGIS World Geocoding Service token
+     *                                       Required for the geocodeAddresses endpoint
      */
-    public function __construct(HttpClient $client, string $sourceCountry = null, string $token = null)
+    public function __construct(ClientInterface $client, string $sourceCountry = null, string $token = null)
     {
         parent::__construct($client);
 

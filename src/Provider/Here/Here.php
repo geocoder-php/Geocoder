@@ -25,7 +25,7 @@ use Geocoder\Provider\Provider;
 use Geocoder\Query\Query;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Http\Client\HttpClient;
+use Psr\Http\Client\ClientInterface;
 
 /**
  * @author Sébastien Barré <sebastien@sheub.eu>
@@ -116,12 +116,12 @@ final class Here extends AbstractHttpProvider implements Provider
     private $apiKey;
 
     /**
-     * @param HttpClient $client  an HTTP adapter
-     * @param string     $appId   an App ID
-     * @param string     $appCode an App code
-     * @param bool       $useCIT  use Customer Integration Testing environment (CIT) instead of production
+     * @param ClientInterface $client  an HTTP adapter
+     * @param string          $appId   an App ID
+     * @param string          $appCode an App code
+     * @param bool            $useCIT  use Customer Integration Testing environment (CIT) instead of production
      */
-    public function __construct(HttpClient $client, string $appId = null, string $appCode = null, bool $useCIT = false)
+    public function __construct(ClientInterface $client, string $appId = null, string $appCode = null, bool $useCIT = false)
     {
         $this->appId = $appId;
         $this->appCode = $appCode;
@@ -130,7 +130,7 @@ final class Here extends AbstractHttpProvider implements Provider
         parent::__construct($client);
     }
 
-    public static function createUsingApiKey(HttpClient $client, string $apiKey, bool $useCIT = false): self
+    public static function createUsingApiKey(ClientInterface $client, string $apiKey, bool $useCIT = false): self
     {
         $client = new self($client, null, null, $useCIT);
         $client->apiKey = $apiKey;

@@ -33,7 +33,7 @@ Since a token is required for the `geocodeAddresses` API, the
 ### Without a token
 
 ```php
-$httpClient = new \Http\Adapter\Guzzle6\Client();
+$httpClient = new \GuzzleHttp\Client();
 
 $provider = new \Geocoder\Provider\ArcGISList\ArcGISList($httpClient);
 
@@ -45,7 +45,7 @@ $result = $geocoder->geocodeQuery(GeocodeQuery::create('Buckingham Palace, Londo
 
 ```php
 
-$httpClient = new \Http\Adapter\Guzzle6\Client();
+$httpClient = new \GuzzleHttp\Client();
 
 // Your token is required.
 $provider = \Geocoder\Provider\ArcGISList\ArcGISList::token($httpClient, 'your-token');

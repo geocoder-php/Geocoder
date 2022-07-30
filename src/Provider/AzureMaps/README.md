@@ -8,7 +8,7 @@
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 
 This is the Bing Maps provider from the PHP Geocoder. This is a **READ ONLY** repository. See the
-[main repo](https://github.com/geocoder-php/Geocoder) for information and documentation. 
+[main repo](https://github.com/geocoder-php/Geocoder) for information and documentation.
 
 ## Install
 
@@ -19,7 +19,7 @@ composer require geocoder-php/azure-maps-provider
 ## Usage
 
 ```php
-$httpClient = new \Http\Adapter\Guzzle6\Client();
+$httpClient = new \GuzzleHttp\Client();
 
 // You must provide a subscription key
 $provider = new \Geocoder\Provider\AzureMaps\AzureMaps($httpClient, 'your-subscription-key');
@@ -29,7 +29,7 @@ $result = $geocoder->geocodeQuery(GeocodeQuery::create('Yehuda Hamaccabi 15, Tel
 
 ## Contribute
 
-Contributions are very welcome! Send a pull request to the [main repository](https://github.com/geocoder-php/Geocoder) or 
+Contributions are very welcome! Send a pull request to the [main repository](https://github.com/geocoder-php/Geocoder) or
 report any issues you find on the [issue tracker](https://github.com/geocoder-php/Geocoder/issues).
 
 

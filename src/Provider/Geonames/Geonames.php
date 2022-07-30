@@ -25,7 +25,7 @@ use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Provider\Provider;
-use Http\Client\HttpClient;
+use Psr\Http\Client\ClientInterface;
 
 /**
  * @author Giovanni Pirrotta <giovanni.pirrotta@gmail.com>
@@ -53,10 +53,10 @@ final class Geonames extends AbstractHttpProvider implements Provider
     private $username;
 
     /**
-     * @param HttpClient $client   An HTTP adapter
-     * @param string     $username Username login (Free registration at http://www.geonames.org/login)
+     * @param ClientInterface $client   An HTTP adapter
+     * @param string          $username Username login (Free registration at http://www.geonames.org/login)
      */
-    public function __construct(HttpClient $client, string $username)
+    public function __construct(ClientInterface $client, string $username)
     {
         if (empty($username)) {
             throw new InvalidCredentials('No username provided.');

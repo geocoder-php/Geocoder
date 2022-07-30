@@ -18,7 +18,7 @@ use Geocoder\Exception\QuotaExceeded;
 use Geocoder\Provider\AbstractProvider;
 use Http\Message\MessageFactory;
 use Http\Discovery\MessageFactoryDiscovery;
-use Http\Client\HttpClient;
+use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -28,7 +28,7 @@ use Psr\Http\Message\RequestInterface;
 abstract class AbstractHttpProvider extends AbstractProvider
 {
     /**
-     * @var HttpClient
+     * @var ClientInterface
      */
     private $client;
 
@@ -38,10 +38,10 @@ abstract class AbstractHttpProvider extends AbstractProvider
     private $messageFactory;
 
     /**
-     * @param HttpClient          $client
+     * @param ClientInterface     $client
      * @param MessageFactory|null $factory
      */
-    public function __construct(HttpClient $client, MessageFactory $factory = null)
+    public function __construct(ClientInterface $client, MessageFactory $factory = null)
     {
         $this->client = $client;
         $this->messageFactory = $factory ?: MessageFactoryDiscovery::find();
@@ -106,9 +106,9 @@ abstract class AbstractHttpProvider extends AbstractProvider
     /**
      * Returns the HTTP adapter.
      *
-     * @return HttpClient
+     * @return ClientInterface
      */
-    protected function getHttpClient(): HttpClient
+    protected function getHttpClient(): ClientInterface
     {
         return $this->client;
     }

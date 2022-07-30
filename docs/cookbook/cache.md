@@ -1,13 +1,13 @@
 # Caching responses
 
-Many of the APIs are not free so it is a good idea to cache the responses so you 
-are not paying for the same information twice. The caching is out of scope for this 
+Many of the APIs are not free so it is a good idea to cache the responses so you
+are not paying for the same information twice. The caching is out of scope for this
 library but we will show you an example how to properly cache responses with the
 HTTPlug [cache plugin](http://php-http.readthedocs.io/en/latest/plugins/cache.html):
 
 ```php
 use Cache\Adapter\Redis\RedisCachePool;
-use Http\Adapter\Guzzle6\Client as GuzzleClient;
+use GuzzleHttp\Client as GuzzleClient;
 use Http\Client\Common\PluginClient;
 use Geocoder\Provider\GoogleMaps;
 
@@ -23,8 +23,8 @@ $cachePlugin = new CachePlugin($pool, StreamFactoryDiscovery::find(), [
     'default_ttl' => null,
     'cache_lifetime' => 86400*365
 ]);
-    
-$adapter = new GuzzleClient();    
+
+$adapter = new GuzzleClient();
 $pluginClient = new PluginClient($adapter, [$cachePlugin]);
 
 // Get a geocoder

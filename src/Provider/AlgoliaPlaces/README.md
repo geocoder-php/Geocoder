@@ -9,7 +9,7 @@
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 
 This is the Algolia Places provider from the PHP Geocoder. This is a **READ ONLY** repository. See the
-[main repo](https://github.com/geocoder-php/Geocoder) for information and documentation. 
+[main repo](https://github.com/geocoder-php/Geocoder) for information and documentation.
 
 ## Install
 
@@ -34,11 +34,11 @@ You should set a locale on the query. If it is missing, results may not be as co
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 
-$httpClient = new \Http\Adapter\Guzzle6\Client();
+$httpClient = new \GuzzleHttp\Client();
 
 // Unauthenticated
 $provider = new \Geocoder\Provider\AlgoliaPlaces\AlgoliaPlaces($httpClient);
-// Authenticated 
+// Authenticated
 $provider = new \Geocoder\Provider\AlgoliaPlaces\AlgoliaPlaces($httpClient, '<your-key>', '<your-app-id>');
 
 $geocoder = new \Geocoder\StatefulGeocoder($provider, 'en');
@@ -48,5 +48,5 @@ $result = $geocoder->geocodeQuery(GeocodeQuery::create('Paris')->withLocale('fr-
 
 ## Contribute
 
-Contributions are very welcome! Send a pull request to the [main repository](https://github.com/geocoder-php/Geocoder) or 
+Contributions are very welcome! Send a pull request to the [main repository](https://github.com/geocoder-php/Geocoder) or
 report any issues you find on the [issue tracker](https://github.com/geocoder-php/Geocoder/issues).

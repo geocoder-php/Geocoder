@@ -8,17 +8,17 @@
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 
 This is the Free GeoIp provider from the PHP Geocoder. This is a **READ ONLY** repository. See the
-[main repo](https://github.com/geocoder-php/Geocoder) for information and documentation. 
+[main repo](https://github.com/geocoder-php/Geocoder) for information and documentation.
 
 Provider Website: https://freegeoip.app
 
 ## Usage
 ```php
-$httpClient = new \Http\Adapter\Guzzle6\Client();
+$httpClient = new \GuzzleHttp\Client();
 
 // Use the default provider (https://freegeoip.app)
 $provider = new Geocoder\Provider\FreeGeoIp\FreeGeoIp($httpClient);
-// Or provide the endpoint of your instance 
+// Or provide the endpoint of your instance
 $provider = new Geocoder\Provider\FreeGeoIp\FreeGeoIp($httpClient, 'http://my.internal.geocoder/json/%s');
 ```
 
@@ -44,5 +44,5 @@ composer require geocoder-php/free-geoip-provider
 
 ## Contribute
 
-Contributions are very welcome! Send a pull request to the [main repository](https://github.com/geocoder-php/Geocoder) or 
+Contributions are very welcome! Send a pull request to the [main repository](https://github.com/geocoder-php/Geocoder) or
 report any issues you find on the [issue tracker](https://github.com/geocoder-php/Geocoder/issues).

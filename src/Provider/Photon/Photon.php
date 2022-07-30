@@ -23,7 +23,7 @@ use Geocoder\Query\ReverseQuery;
 use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Provider\Provider;
 use Geocoder\Provider\Photon\Model\PhotonAddress;
-use Http\Client\HttpClient;
+use Psr\Http\Client\ClientInterface;
 
 /**
  * @author Niklas Närhinen <niklas@narhinen.net>
@@ -37,20 +37,20 @@ final class Photon extends AbstractHttpProvider implements Provider
     private $rootUrl;
 
     /**
-     * @param HttpClient $client an HTTP client
+     * @param ClientInterface $client an HTTP client
      *
      * @return Photon
      */
-    public static function withKomootServer(HttpClient $client): self
+    public static function withKomootServer(ClientInterface $client): self
     {
         return new self($client, 'https://photon.komoot.io');
     }
 
     /**
-     * @param HttpClient $client  an HTTP client
-     * @param string     $rootUrl Root URL of the photon server
+     * @param ClientInterface $client  an HTTP client
+     * @param string          $rootUrl Root URL of the photon server
      */
-    public function __construct(HttpClient $client, $rootUrl)
+    public function __construct(ClientInterface $client, $rootUrl)
     {
         parent::__construct($client);
 

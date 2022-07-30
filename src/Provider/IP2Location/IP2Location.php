@@ -21,7 +21,7 @@ use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Provider\Provider;
-use Http\Client\HttpClient;
+use Psr\Http\Client\ClientInterface;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -44,10 +44,10 @@ final class IP2Location extends AbstractHttpProvider implements Provider
     private $endpointUrl;
 
     /**
-     * @param HttpClient $client a HTTP adapter
-     * @param string     $apiKey an API key
+     * @param ClientInterface $client a HTTP adapter
+     * @param string          $apiKey an API key
      */
-    public function __construct(HttpClient $client, string $apiKey)
+    public function __construct(ClientInterface $client, string $apiKey)
     {
         parent::__construct($client);
 

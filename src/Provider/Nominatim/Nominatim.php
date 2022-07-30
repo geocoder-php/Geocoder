@@ -24,7 +24,7 @@ use Geocoder\Query\ReverseQuery;
 use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Provider\Provider;
 use Geocoder\Provider\Nominatim\Model\NominatimAddress;
-use Http\Client\HttpClient;
+use Psr\Http\Client\ClientInterface;
 
 /**
  * @author Niklas Närhinen <niklas@narhinen.net>
@@ -48,24 +48,24 @@ final class Nominatim extends AbstractHttpProvider implements Provider
     private $referer;
 
     /**
-     * @param HttpClient $client    an HTTP client
-     * @param string     $userAgent Value of the User-Agent header
-     * @param string     $referer   Value of the Referer header
+     * @param ClientInterface $client    an HTTP client
+     * @param string          $userAgent Value of the User-Agent header
+     * @param string          $referer   Value of the Referer header
      *
      * @return Nominatim
      */
-    public static function withOpenStreetMapServer(HttpClient $client, string $userAgent, string $referer = ''): self
+    public static function withOpenStreetMapServer(ClientInterface $client, string $userAgent, string $referer = ''): self
     {
         return new self($client, 'https://nominatim.openstreetmap.org', $userAgent, $referer);
     }
 
     /**
-     * @param HttpClient $client    an HTTP client
-     * @param string     $rootUrl   Root URL of the nominatim server
-     * @param string     $userAgent Value of the User-Agent header
-     * @param string     $referer   Value of the Referer header
+     * @param ClientInterface $client    an HTTP client
+     * @param string          $rootUrl   Root URL of the nominatim server
+     * @param string          $userAgent Value of the User-Agent header
+     * @param string          $referer   Value of the Referer header
      */
-    public function __construct(HttpClient $client, $rootUrl, string $userAgent, string $referer = '')
+    public function __construct(ClientInterface $client, $rootUrl, string $userAgent, string $referer = '')
     {
         parent::__construct($client);
 

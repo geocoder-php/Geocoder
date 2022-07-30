@@ -2,27 +2,25 @@
 
 The Geocoder is decoupled from the HTTP client that sends the HTTP messages. This means
 that you are responsible for configuring the HTTP client. Usually the default configuration
-is good enough but sometime you may want to do something differently. 
+is good enough but sometime you may want to do something differently.
 
 How you configure the client differs between different clients below are two examples,
-one with [Guzzle6 client](https://github.com/guzzle/guzzle) and one with the 
+one with [Guzzle 7 client](https://github.com/guzzle/guzzle) and one with the
 [cURL client](https://github.com/php-http/curl-client).
 
-## Guzzle6
+## Guzzle 7
 
 ```php
-use GuzzleHttp\Client as GuzzleClient;
-use Http\Adapter\Guzzle6\Client;
+use GuzzleHttp\Client;
 use Geocoder\Provider\GoogleMaps;
 
 $config = [
     'timeout' => 2.0,
     'verify' => false,
 ];
-$guzzle = new GuzzleClient($config);
 
-$adapter  = new Client($guzzle);
-$geocoder = new GoogleMaps($adapter);
+$client = new Client($config);
+$geocoder = new GoogleMaps($client);
 
 $geocoder->geocode(...);
 ```
@@ -35,13 +33,12 @@ use Http\Client\Curl\Client;
 use Geocoder\Provider\GoogleMaps;
 
 $options = [
-    CURLOPT_CONNECTTIMEOUT => 2, 
+    CURLOPT_CONNECTTIMEOUT => 2,
     CURLOPT_SSL_VERIFYPEER => false,
 ];
 
-$adapter  = new Client(null, null, $options);
-$geocoder = new GoogleMaps($adapter);
+$client  = new Client(null, null, $options);
+$geocoder = new GoogleMaps($client);
 
 $geocoder->geocode(...);
 ```
- 

@@ -24,7 +24,7 @@ use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Provider\Provider;
-use Http\Client\HttpClient;
+use Psr\Http\Client\ClientInterface;
 
 /**
  * @author mtm <mtm@opencagedata.com>
@@ -42,10 +42,10 @@ final class OpenCage extends AbstractHttpProvider implements Provider
     private $apiKey;
 
     /**
-     * @param HttpClient $client an HTTP adapter
-     * @param string     $apiKey an API key
+     * @param ClientInterface $client an HTTP adapter
+     * @param string          $apiKey an API key
      */
-    public function __construct(HttpClient $client, string $apiKey)
+    public function __construct(ClientInterface $client, string $apiKey)
     {
         if (empty($apiKey)) {
             throw new InvalidCredentials('No API key provided.');

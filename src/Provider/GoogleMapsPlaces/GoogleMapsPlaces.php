@@ -29,7 +29,7 @@ use Geocoder\Provider\Provider;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\Query;
 use Geocoder\Query\ReverseQuery;
-use Http\Client\HttpClient;
+use Psr\Http\Client\ClientInterface;
 use stdClass;
 
 /**
@@ -83,10 +83,10 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
     private $apiKey;
 
     /**
-     * @param HttpClient $client An HTTP adapter
-     * @param string     $apiKey Google Maps Places API Key
+     * @param ClientInterface $client An HTTP adapter
+     * @param string          $apiKey Google Maps Places API Key
      */
-    public function __construct(HttpClient $client, string $apiKey)
+    public function __construct(ClientInterface $client, string $apiKey)
     {
         parent::__construct($client);
 

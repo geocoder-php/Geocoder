@@ -21,7 +21,7 @@ use Geocoder\Provider\Provider;
 use Geocoder\Provider\Yandex\Model\YandexAddress;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Http\Client\HttpClient;
+use Psr\Http\Client\ClientInterface;
 
 /**
  * @author Antoine Corcy <contact@sbin.dk>
@@ -49,11 +49,11 @@ final class Yandex extends AbstractHttpProvider implements Provider
     private $apiKey;
 
     /**
-     * @param HttpClient  $client  an HTTP adapter
-     * @param string      $toponym toponym biasing only for reverse geocoding (optional)
-     * @param string|null $apiKey  API Key
+     * @param ClientInterface $client  an HTTP adapter
+     * @param string          $toponym toponym biasing only for reverse geocoding (optional)
+     * @param string|null     $apiKey  API Key
      */
-    public function __construct(HttpClient $client, string $toponym = null, string $apiKey = null)
+    public function __construct(ClientInterface $client, string $toponym = null, string $apiKey = null)
     {
         parent::__construct($client);
 
