@@ -2,6 +2,24 @@
 
 The change log describes what is "Added", "Removed", "Changed" or "Fixed" between each release.
 
+## 4.5.0
+
+### Changed
+
+- Migrate from PHP-HTTP to PSR-18 client
+
+## 4.4.0
+
+### Added
+
+- Allow `psr/log` 2.0 and 3.0
+- Add support for PHP 8.1
+- Add GitHub Actions workflow
+
+### Removed
+
+- Drop support for PHP 7.3
+
 ## 4.3.0
 
 ### Added

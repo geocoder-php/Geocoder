@@ -2,11 +2,32 @@
 
 The change log describes what is "Added", "Removed", "Changed" or "Fixed" between each release.
 
+## 5.6.0
+
+### Added
+
+- Add support for PHP 8.1
+
+### Removed
+
+- Drop support for PHP 7.3
+
+### Changed
+
+- Migrate from PHP-HTTP to PSR-18 client
+
 ## 5.5.1
 
 ### Changed
 
 - Force query argument separator and encoding type
+
+## 5.5.0
+
+### Added
+
+- Add GitHub Actions workflow
+- Add support for optional address fields and extra tags
 
 ## 5.4.0
 
