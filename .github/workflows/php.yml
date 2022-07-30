@@ -16,8 +16,6 @@ jobs:
       matrix:
         php-version: ['7.4', '8.0', '8.1']
         deps: ['low', 'high']
-        include:
-          - php-version: '7.3'
 
     name: PHP ${{ matrix.php-version }} (${{ matrix.deps }})
 
