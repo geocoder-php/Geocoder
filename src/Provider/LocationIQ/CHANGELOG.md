@@ -2,7 +2,22 @@
 
 The change log describes what is "Added", "Removed", "Changed" or "Fixed" between each release.
 
+## 1.4.0
+
+### Removed
+
+- Drop support for PHP 7.3
+
+### Changed
+
+- Migrate from PHP-HTTP to PSR-18 client
+
 ## 1.3.0
+
+### Added
+
+- Add support for PHP 8.1
+- Add GitHub Actions workflow
 
 ### Changed
 
