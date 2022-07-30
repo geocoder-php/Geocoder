@@ -12,7 +12,7 @@ namespace Geocoder\Provider\MapTiler\Tests;
 
 use Geocoder\IntegrationTest\ProviderIntegrationTest;
 use Geocoder\Provider\MapTiler\MapTiler;
-use Http\Client\HttpClient;
+use Psr\Http\Client\ClientInterface;
 
 /**
  * @author Jonathan Beliën
@@ -29,7 +29,7 @@ class IntegrationTest extends ProviderIntegrationTest
 
     protected $skippedTests = [];
 
-    protected function createProvider(HttpClient $httpClient)
+    protected function createProvider(ClientInterface $httpClient)
     {
         return new MapTiler($httpClient, $this->getApiKey());
     }
