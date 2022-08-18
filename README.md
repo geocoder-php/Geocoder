@@ -30,7 +30,7 @@ providing a powerful abstraction layer for geocoding manipulations.
 To install a Geocoder there are two things you need to know:
 
 1) What [Geocoder provider](https://packagist.org/providers/geocoder-php/provider-implementation) you want to use
-2) What [HTTP client/adapter](https://packagist.org/providers/php-http/client-implementation) you want to use.
+2) What [HTTP client/adapter](https://packagist.org/providers/psr/http-client-implementation) you want to use.
 
 ### Geocoder providers
 
@@ -40,13 +40,11 @@ providers [at Packagist](https://packagist.org/providers/geocoder-php/provider-i
 ### HTTP Clients
 
 In order to talk to geocoding APIs, you need HTTP adapters. While it was part of
-the library in Geocoder before, Geocoder 4.x and upper now relies on HTTPlug
+the library in Geocoder before, Geocoder 4.x and upper now relies on [PSR-18](https://www.php-fig.org/psr/psr-18/)
 which defines how HTTP message should be sent and received. You can use any library to send HTTP messages
-that implements [php-http/client-implementation](https://packagist.org/providers/php-http/client-implementation).
+that implements [psr/http-client-implementation](https://packagist.org/providers/psr/http-client-implementation).
 
-Here is a list of all officially supported clients and adapters by HTTPlug: <http://docs.php-http.org/en/latest/clients.html>
-
-Read more about HTTPlug in [their docs](http://docs.php-http.org/en/latest/httplug/users.html).
+Read more about PSR-18 in [this blog](https://www.php-fig.org/blog/2018/11/psr-18-the-php-standard-for-http-clients/).
 
 ### Summary (Just give me the command)
 
