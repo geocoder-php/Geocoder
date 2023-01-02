@@ -52,7 +52,7 @@ jobs:
           - TomTom
           - Yandex
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Use PHP ${{ matrix.php-version }}
       uses: shivammathur/setup-php@v2
       with:
@@ -78,7 +78,7 @@ jobs:
         provider:
           - Geoip
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Use PHP ${{ matrix.php-version }}
       uses: shivammathur/setup-php@v2
       with:
