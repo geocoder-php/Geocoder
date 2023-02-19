@@ -579,6 +579,7 @@ class GoogleMapsTest extends BaseTestCase
         /** @var GoogleAddress $result */
         $result = $results->first();
         $this->assertInstanceOf(Address::class, $result);
+        $this->assertEquals('Rue de Pont-à-Migneloux, 6210 Les Bons Villers, Belgium', $result->getFormattedAddress());
         $this->assertEquals('Les Bons Villers', $result->getSubLocality());
         $this->assertCount(2, $result->getAdminLevels());
         $this->assertEquals('Région Wallonne', $result->getAdminLevels()->get(1)->getName());
