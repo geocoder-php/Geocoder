@@ -14,7 +14,6 @@ namespace Geocoder\Provider\GoogleMaps\Tests;
 
 use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\IntegrationTest\BaseTestCase;
-use Geocoder\Location;
 use Geocoder\Model\Address;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Provider\GoogleMaps\Model\GoogleAddress;
