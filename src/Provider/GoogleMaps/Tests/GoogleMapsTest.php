@@ -94,7 +94,7 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertInstanceOf(AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
-        /** @var Location $result */
+        /** @var GoogleAddress $result */
         $result = $results->first();
         $this->assertInstanceOf(Address::class, $result);
         $this->assertEqualsWithDelta(48.8630462, $result->getCoordinates()->getLatitude(), 0.001);
@@ -128,7 +128,7 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertInstanceOf(AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
-        /** @var Location $result */
+        /** @var GoogleAddress $result */
         $result = $results->first();
         $this->assertInstanceOf(Address::class, $result);
         $this->assertNotNull($result->getBounds());
@@ -156,7 +156,7 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertInstanceOf(AddressCollection::class, $results);
         $this->assertCount(5, $results);
 
-        /** @var Location $result */
+        /** @var GoogleAddress $result */
         $result = $results->first();
         $this->assertInstanceOf(Address::class, $result);
         $this->assertEquals(12, $result->getStreetNumber());
@@ -180,7 +180,7 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertInstanceOf(AddressCollection::class, $results);
         $this->assertCount(5, $results);
 
-        /** @var Location $result */
+        /** @var GoogleAddress $result */
         $result = $results->first();
         $this->assertInstanceOf(Address::class, $result);
         $this->assertEquals(12, $result->getStreetNumber());
@@ -204,7 +204,7 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertInstanceOf(AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
-        /** @var Location $result */
+        /** @var GoogleAddress $result */
         $result = $results->first();
         $this->assertInstanceOf(Address::class, $result);
         $this->assertEquals('Kalbach-Riedberg', $result->getSubLocality());
@@ -228,7 +228,7 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertInstanceOf(AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
-        /** @var Location $result */
+        /** @var GoogleAddress $result */
         $result = $results->first();
         $this->assertInstanceOf(Address::class, $result);
         $this->assertNotNull($result->getCoordinates()->getLatitude());
@@ -251,7 +251,7 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertInstanceOf(AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
-        /** @var Location $result */
+        /** @var GoogleAddress $result */
         $result = $results->first();
         $this->assertInstanceOf(Address::class, $result);
         $this->assertEquals('Malmö', $result->getLocality());
@@ -340,7 +340,7 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertInstanceOf(AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
-        /** @var Location $result */
+        /** @var GoogleAddress $result */
         $result = $results->first();
         $this->assertInstanceOf(Address::class, $result);
         $this->assertEquals('Pontypridd', $result->getLocality());
@@ -558,7 +558,7 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertInstanceOf(AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var GoogleAddress $result */
         $result = $results->first();
         $this->assertInstanceOf(Address::class, $result);
         $this->assertNotNull($result->getBounds());
@@ -589,6 +589,7 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertEquals('Wayaux / Les Bons Villers', $result->getSubLocalityLevels()->get(1)->getName());
         $this->assertEquals('Wayaux / Les Bons Villers', $result->getSubLocalityLevels()->get(1)->getCode());
     }
+
     private function getGoogleMapsProvider(): GoogleMaps
     {
         if (!isset($_SERVER['GOOGLE_GEOCODING_KEY'])) {
