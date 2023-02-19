@@ -9,3 +9,31 @@ updates:
     directory: "/" # Location of package manifests
     schedule:
       interval: "monthly"
+  - package-ecosystem: "composer" # See documentation for possible values
+    directory: "/" # Location of package manifests
+    schedule:
+      interval: "monthly"
+  - package-ecosystem: "composer" # See documentation for possible values
+    directory: "/src/Common" # Location of package manifests
+    schedule:
+      interval: "monthly"
+    labels:
+      - "dependencies"
+      - "php"
+      - "common"
+  - package-ecosystem: "composer" # See documentation for possible values
+    directory: "/src/Http" # Location of package manifests
+    schedule:
+      interval: "monthly"
+    labels:
+      - "dependencies"
+      - "php"
+      - "http"
+  - package-ecosystem: "composer" # See documentation for possible values
+    directory: "/src/Plugin" # Location of package manifests
+    schedule:
+      interval: "monthly"
+    labels:
+      - "dependencies"
+      - "php"
+      - "plugin"
