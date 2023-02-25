@@ -65,6 +65,11 @@ final class NominatimAddress extends Address
     private $tags;
 
     /**
+     * @var string|null
+     */
+    private $neighbourhood;
+
+    /**
      * @return string|null
      */
     public function getAttribution()
@@ -267,6 +272,27 @@ final class NominatimAddress extends Address
     {
         $new = clone $this;
         $new->tags = $tags;
+
+        return $new;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getNeighbourhood()
+    {
+        return $this->neighbourhood;
+    }
+
+    /**
+     * @param string|null $neighbourhood
+     *
+     * @return NominatimAddress
+     */
+    public function withNeighbourhood(string $neighbourhood = null): self
+    {
+        $new = clone $this;
+        $new->neighbourhood = $neighbourhood;
 
         return $new;
     }
