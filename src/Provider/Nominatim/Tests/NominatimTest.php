@@ -236,4 +236,21 @@ class NominatimTest extends BaseTestCase
         $this->assertEquals('way', $result->getOSMType());
         $this->assertEquals(null, $result->getCountry());
     }
+
+    public function testGeocodeNeighbourhood()
+    {
+        $provider = Nominatim::withOpenStreetMapServer($this->getHttpClient(), 'Geocoder PHP/Nominatim Provider/Nominatim Test');
+        $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(35.685939, 139.811695)->withLocale('en'));
+
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertCount(1, $results);
+
+        /** @var \Geocoder\Provider\Nominatim\Model\NominatimAddress $result */
+        $result = $results->first();
+        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertEquals('Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright', $result->getAttribution());
+
+        $this->assertEquals('Sarue 1-chome', $result->getNeighbourhood());
+        $this->assertEquals('Japan', $result->getCountry());
+    }
 }
