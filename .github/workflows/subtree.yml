@@ -32,6 +32,7 @@ jobs:
           chmod +x /usr/local/bin/git-filter-repo
           git filter-repo https://github.com/geocoder-php/Geocoder.git "src/Provider/${{ matrix.provider }}/"
       - name: Push subtree
+        # if: steps.filter.outputs.provider == 'true'
         uses: ad-m/github-push-action@master
         with:
           repository: geocoder-php/${{ matrix.provider }}-provider-subtree-test
