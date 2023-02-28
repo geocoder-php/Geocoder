@@ -22,7 +22,7 @@ jobs:
             provider:
               - 'src/Provider/${{ matrix.provider }}/**'
       - name: Subtree
-        if: steps.filter.outputs.provider == 'true'
+        # if: steps.filter.outputs.provider == 'true'
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
