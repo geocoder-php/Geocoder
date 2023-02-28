@@ -1,0 +1,31 @@
+name: Subtree
+
+on:
+  push:
+    branches: [ "subtree/github-actions" ]
+
+jobs:
+  subtree:
+    name: Detect changes for provider ${{ matrix.provider }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        provider:
+          - Nominatim
+    steps:
+      - uses: actions/checkout@v2
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            provider:
+              - 'src/Provider/${{ matrix.provider }}/**'
+      - name: Subtree
+        if: steps.filter.outputs.provider == 'true'
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git filter-repo --path "src/Provider/${{ matrix.provider }}/"
+          git remote add subtree "https://github.com/geocoder-php/${{ matrix.provider }}-provider-subtree-test.git"
+          git push --set-upstream subtree master
