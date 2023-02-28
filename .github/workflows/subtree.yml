@@ -30,7 +30,7 @@ jobs:
         run: |
           wget -P /usr/local/bin https://raw.githubusercontent.com/newren/git-filter-repo/main/git-filter-repo
           chmod +x /usr/local/bin/git-filter-repo
-          git filter-repo https://github.com/geocoder-php/Geocoder.git "src/Provider/${{ matrix.provider }}/"
+          git filter-repo --subdirectory-filter "src/Provider/${{ matrix.provider }}/"
       - name: Push subtree
         # if: steps.filter.outputs.provider == 'true'
         uses: ad-m/github-push-action@master
