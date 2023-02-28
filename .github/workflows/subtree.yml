@@ -29,5 +29,5 @@ jobs:
       - name: Push subtree
         uses: ad-m/github-push-action@master
         with:
-          repository: geocoder-php/${{ matrix.provider }}-provider
+          repository: geocoder-php/${{ matrix.provider }}-provider-subtree-test
           github_token: ${{ secrets.SUBTREE_GITHUB_TOKEN }}
