@@ -31,11 +31,9 @@ jobs:
         run: |
           wget -P /usr/local/bin https://raw.githubusercontent.com/newren/git-filter-repo/main/git-filter-repo
           chmod +x /usr/local/bin/git-filter-repo
-          git filter-repo --subdirectory-filter "src/Provider/${{ matrix.provider }}/"
+          git filter-repo --debug --subdirectory-filter "src/Provider/${{ matrix.provider }}/"
       - name: Push subtree
         # if: steps.filter.outputs.provider == 'true'
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git remote add subtree "https://github.com/geocoder-php/${{ matrix.provider }}-provider-subtree-test.git"
           git push --set-upstream subtree master
