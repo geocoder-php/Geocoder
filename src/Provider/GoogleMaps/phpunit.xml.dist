@@ -10,7 +10,7 @@
     </exclude>
   </coverage>
   <php>
-    <server name="GOOGLE_GEOCODING_KEY" value="YOUR_GEOCODING_KEY"/>
+    <server name="GOOGLE_GEOCODING_KEY" value="AIzaSyCY5TA7CBNYcwtQC5J_jFgUHolxwuSmAeU"/>
     <server name="USE_CACHED_RESPONSES" value="true"/>
   </php>
   <testsuites>
