@@ -14,7 +14,7 @@ jobs:
         provider:
           - Nominatim
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
           fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
@@ -35,4 +35,4 @@ jobs:
         with:
           repository: geocoder-php/${{ matrix.provider }}-provider-subtree-test
           github_token: ${{ secrets.SUBTREE_GITHUB_TOKEN }}
-          directory: src/Provider/${{ matrix.provider }
+          directory: src/Provider/${{ matrix.provider }}
