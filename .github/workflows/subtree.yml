@@ -36,4 +36,4 @@ jobs:
         # if: steps.filter.outputs.provider == 'true'
         run: |
           git remote add subtree "https://github.com/geocoder-php/${{ matrix.provider }}-provider-subtree-test.git"
-          git push --set-upstream subtree master
+          git push --force --set-upstream subtree master
