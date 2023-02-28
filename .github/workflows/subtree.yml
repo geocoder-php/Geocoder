@@ -13,10 +13,11 @@ jobs:
       matrix:
         provider:
           - Nominatim
+          - GoogleMaps
     steps:
       - uses: actions/checkout@v3
         with:
-          persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
+          token: ${{ secrets.SUBTREE_GITHUB_TOKEN }}
           fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
       - name: Detect changes
         uses: dorny/paths-filter@v2
@@ -33,8 +34,8 @@ jobs:
           git filter-repo --subdirectory-filter "src/Provider/${{ matrix.provider }}/"
       - name: Push subtree
         # if: steps.filter.outputs.provider == 'true'
-        uses: ad-m/github-push-action@master
-        with:
-          repository: geocoder-php/${{ matrix.provider }}-provider-subtree-test
-          github_token: ${{ secrets.SUBTREE_GITHUB_TOKEN }}
-          force: true
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git remote add subtree "https://github.com/geocoder-php/${{ matrix.provider }}-provider-subtree-test.git"
+          git push --set-upstream subtree master
