@@ -28,7 +28,8 @@ jobs:
       - name: Subtree
         # if: steps.filter.outputs.provider == 'true'
         run: |
-          wget -P "/usr/local/bin" "https://raw.githubusercontent.com/newren/git-filter-repo/main/git-filter-repo"
+          wget -P /usr/local/bin https://raw.githubusercontent.com/newren/git-filter-repo/main/git-filter-repo
+          chmod +x /usr/local/bin/git-filter-repo
           git filter-repo https://github.com/geocoder-php/Geocoder.git "src/Provider/${{ matrix.provider }}/"
       - name: Push subtree
         uses: ad-m/github-push-action@master
