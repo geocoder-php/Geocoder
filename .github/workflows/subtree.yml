@@ -8,11 +8,11 @@
 #
 # This workflow needs a GitHub token with Contents and Workflows read & write scopes.
 
-name: Subtree
+name: Subtree Split
 
 on:
   push:
-    branches: [ "subtree/github-actions" ]
+    branches: [ "master" ]
 
 jobs:
   subtree-common:
