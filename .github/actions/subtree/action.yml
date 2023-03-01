@@ -11,25 +11,33 @@ inputs:
   repository:
     description: "Repository to push to (in the same organization)"
     required: true
+outputs:
+  changes:
+    description: "Is there any changes in the directory?"
+    value: ${{ steps.changes.outputs.directory }}
+  files:
+    description: "List of files changed in the directory"
+    value: ${{ steps.changes.outputs.files }}
 runs:
   using: "composite"
   steps:
     - name: Detect changes
       uses: dorny/paths-filter@v2
-      id: filter
+      id: changes
       with:
+        list-files: shell
         filters: |
-          changes:
+          directory:
             - "${{ inputs.directory }}/**"
     - name: Subtree
-      if: steps.filter.outputs.changes == 'true'
+      if: steps.changes.outputs.directory == 'true'
       shell: bash
       run: |
         wget -P /usr/local/bin https://raw.githubusercontent.com/newren/git-filter-repo/main/git-filter-repo
         chmod +x /usr/local/bin/git-filter-repo
         git filter-repo --debug --subdirectory-filter "${{ inputs.directory }}/"
     - name: Push subtree
-      if: steps.filter.outputs.changes == 'true'
+      if: steps.changes.outputs.directory == 'true'
       shell: bash
       run: |
         git remote add subtree "https://github.com/geocoder-php/${{ inputs.repository }}.git"
