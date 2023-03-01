@@ -29,7 +29,7 @@ jobs:
           repository: php-common
 
   subtree-http:
-    name: Subtree for Common
+    name: Subtree for Http
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -42,7 +42,7 @@ jobs:
           repository: php-common-http
 
   subtree-plugin:
-    name: Subtree for Common
+    name: Subtree for Plugin
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
