@@ -35,7 +35,7 @@ runs:
       run: |
         wget -P /usr/local/bin https://raw.githubusercontent.com/newren/git-filter-repo/main/git-filter-repo
         chmod +x /usr/local/bin/git-filter-repo
-        git filter-repo --debug --subdirectory-filter "${{ inputs.directory }}/"
+        git filter-repo --debug --force --subdirectory-filter "${{ inputs.directory }}/"
     - name: Push subtree
       if: steps.changes.outputs.directory == 'true'
       shell: bash
