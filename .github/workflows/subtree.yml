@@ -1,0 +1,112 @@
+# This GitHub Action will push code for each provider/component to its own repository.
+# This is useful to have a better overview of the code and to have a better control over the releases.
+# The subtree is pushed to a repository named `geocoder-php/{provider}-provider`.
+# Previously, this process used https://www.subtreesplit.com/ service.
+#
+# This worflow is based on GitHub documentation: https://docs.github.com/en/get-started/using-git/splitting-a-subfolder-out-into-a-new-repository
+# This workflow uses https://github.com/newren/git-filter-repo tool.
+#
+# This workflow needs a GitHub token with Contents and Workflows read & write scopes.
+
+name: Subtree Split
+
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+  subtree-common:
+    name: Subtree for Common
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.SUBTREE_GITHUB_TOKEN }}
+          fetch-depth: 0
+      - name: Subtree Split
+        uses: ./.github/actions/subtree
+        with:
+          directory: src/Common
+          repository: php-common
+
+  subtree-http:
+    name: Subtree for Http
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.SUBTREE_GITHUB_TOKEN }}
+          fetch-depth: 0
+      - name: Subtree Split
+        uses: ./.github/actions/subtree
+        with:
+          directory: src/Http
+          repository: php-common-http
+
+  subtree-plugin:
+    name: Subtree for Plugin
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.SUBTREE_GITHUB_TOKEN }}
+          fetch-depth: 0
+      - name: Subtree Split
+        uses: ./.github/actions/subtree
+        with:
+          directory: src/Plugin
+          repository: plugin
+
+  subtree-provider:
+    name: Subtree for provider ${{ matrix.provider }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        provider:
+          - AlgoliaPlaces
+          - ArcGISOnline
+          - AzureMaps
+          - BingMaps
+          - Cache
+          - Chain
+          - FreeGeoIp
+          - GeoIP2
+          # - GeoIPs
+          - GeoPlugin
+          - GeocodeEarth
+          - Geonames
+          - GoogleMaps
+          - GoogleMapsPlaces
+          - GraphHopper
+          - Here
+          - HostIp
+          - IP2Location
+          # - IP2LocationBinary
+          - IpInfo
+          - IpInfoDb
+          - Ipstack
+          - LocationIQ
+          - MapQuest
+          - Mapbox
+          # - Mapzen
+          - MaxMind
+          - MaxMindBinary
+          - Nominatim
+          - OpenCage
+          - OpenRouteService
+          - Pelias
+          - Photon
+          - PickPoint
+          - TomTom
+          - Yandex
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.SUBTREE_GITHUB_TOKEN }}
+          fetch-depth: 0
+      - name: Subtree Split
+        uses: ./.github/actions/subtree
+        with:
+          directory: "src/Provider/${{ matrix.provider }}"
+          repository: ${{ matrix.provider }}-provider
