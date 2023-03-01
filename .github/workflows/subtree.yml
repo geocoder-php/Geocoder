@@ -15,7 +15,46 @@ on:
     branches: [ "subtree/github-actions" ]
 
 jobs:
-  subtree:
+  subtree-common:
+    name: Subtree for Common
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.SUBTREE_GITHUB_TOKEN }}
+          fetch-depth: 0
+      - uses: ./.github/actions/subtree
+        with:
+          directory: src/Common
+          repository: php-common
+
+  subtree-http:
+    name: Subtree for Common
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.SUBTREE_GITHUB_TOKEN }}
+          fetch-depth: 0
+      - uses: ./.github/actions/subtree
+        with:
+          directory: src/Http
+          repository: php-common-http
+
+  subtree-plugin:
+    name: Subtree for Common
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.SUBTREE_GITHUB_TOKEN }}
+          fetch-depth: 0
+      - uses: ./.github/actions/subtree
+        with:
+          directory: src/Plugin
+          repository: plugin
+
+  subtree-provider:
     name: Subtree for provider ${{ matrix.provider }}
     runs-on: ubuntu-latest
     strategy:
@@ -24,26 +63,13 @@ jobs:
         provider:
           - Nominatim
           - GoogleMaps
+          # - ...
     steps:
       - uses: actions/checkout@v3
         with:
           token: ${{ secrets.SUBTREE_GITHUB_TOKEN }}
           fetch-depth: 0
-      - name: Detect changes
-        uses: dorny/paths-filter@v2
-        id: filter
+      - uses: ./.github/actions/subtree
         with:
-          filters: |
-            provider:
-              - 'src/Provider/${{ matrix.provider }}/**'
-      - name: Subtree
-        if: steps.filter.outputs.provider == 'true'
-        run: |
-          wget -P /usr/local/bin https://raw.githubusercontent.com/newren/git-filter-repo/main/git-filter-repo
-          chmod +x /usr/local/bin/git-filter-repo
-          git filter-repo --debug --subdirectory-filter "src/Provider/${{ matrix.provider }}/"
-      - name: Push subtree
-        if: steps.filter.outputs.provider == 'true'
-        run: |
-          git remote add subtree "https://github.com/geocoder-php/${{ matrix.provider }}-provider-subtree-test.git"
-          git push --force --set-upstream subtree master
+          directory: "src/Provider/${{ matrix.provider }}"
+          repository: ${{ matrix.provider }}-provider-subtree-test
