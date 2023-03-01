@@ -27,7 +27,7 @@ jobs:
         uses: ./.github/actions/subtree
         with:
           directory: src/Common
-          repository: php-common
+          repository: php-common-subtree-test
 
   subtree-http:
     name: Subtree for Http
@@ -41,7 +41,7 @@ jobs:
         uses: ./.github/actions/subtree
         with:
           directory: src/Http
-          repository: php-common-http
+          repository: php-common-http-subtree-test
 
   subtree-plugin:
     name: Subtree for Plugin
@@ -55,7 +55,7 @@ jobs:
         uses: ./.github/actions/subtree
         with:
           directory: src/Plugin
-          repository: plugin
+          repository: plugin-subtree-test
 
   subtree-provider:
     name: Subtree for provider ${{ matrix.provider }}
