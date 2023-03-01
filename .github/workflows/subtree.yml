@@ -64,9 +64,42 @@ jobs:
       fail-fast: false
       matrix:
         provider:
-          - Nominatim
+          - AlgoliaPlaces
+          - ArcGISOnline
+          - AzureMaps
+          - BingMaps
+          - Cache
+          - Chain
+          - FreeGeoIp
+          - GeoIP2
+          # - GeoIPs
+          - GeoPlugin
+          - GeocodeEarth
+          - Geonames
           - GoogleMaps
-          # - ...
+          - GoogleMapsPlaces
+          - GraphHopper
+          - Here
+          - HostIp
+          - IP2Location
+          # - IP2LocationBinary
+          - IpInfo
+          - IpInfoDb
+          - Ipstack
+          - LocationIQ
+          - MapQuest
+          - Mapbox
+          # - Mapzen
+          - MaxMind
+          - MaxMindBinary
+          - Nominatim
+          - OpenCage
+          - OpenRouteService
+          - Pelias
+          - Photon
+          - PickPoint
+          - TomTom
+          - Yandex
     steps:
       - uses: actions/checkout@v3
         with:
