@@ -30,14 +30,14 @@ runs:
           directory:
             - "${{ inputs.directory }}/**"
     - name: Subtree
-      # if: steps.changes.outputs.directory == 'true'
+      if: steps.changes.outputs.directory == 'true'
       shell: bash
       run: |
         wget -P /usr/local/bin https://raw.githubusercontent.com/newren/git-filter-repo/main/git-filter-repo
         chmod +x /usr/local/bin/git-filter-repo
         git filter-repo --debug --subdirectory-filter "${{ inputs.directory }}/"
     - name: Push subtree
-      # if: steps.changes.outputs.directory == 'true'
+      if: steps.changes.outputs.directory == 'true'
       shell: bash
       run: |
         git remote add subtree "https://github.com/geocoder-php/${{ inputs.repository }}.git"
