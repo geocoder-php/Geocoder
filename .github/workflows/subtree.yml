@@ -23,7 +23,8 @@ jobs:
         with:
           token: ${{ secrets.SUBTREE_GITHUB_TOKEN }}
           fetch-depth: 0
-      - uses: ./.github/actions/subtree
+      - name: Subtree Split
+        uses: ./.github/actions/subtree
         with:
           directory: src/Common
           repository: php-common
@@ -36,7 +37,8 @@ jobs:
         with:
           token: ${{ secrets.SUBTREE_GITHUB_TOKEN }}
           fetch-depth: 0
-      - uses: ./.github/actions/subtree
+      - name: Subtree Split
+        uses: ./.github/actions/subtree
         with:
           directory: src/Http
           repository: php-common-http
@@ -49,7 +51,8 @@ jobs:
         with:
           token: ${{ secrets.SUBTREE_GITHUB_TOKEN }}
           fetch-depth: 0
-      - uses: ./.github/actions/subtree
+      - name: Subtree Split
+        uses: ./.github/actions/subtree
         with:
           directory: src/Plugin
           repository: plugin
@@ -69,7 +72,8 @@ jobs:
         with:
           token: ${{ secrets.SUBTREE_GITHUB_TOKEN }}
           fetch-depth: 0
-      - uses: ./.github/actions/subtree
+      - name: Subtree Split
+        uses: ./.github/actions/subtree
         with:
           directory: "src/Provider/${{ matrix.provider }}"
           repository: ${{ matrix.provider }}-provider-subtree-test
