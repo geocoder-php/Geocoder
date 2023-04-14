@@ -1,0 +1,80 @@
+s:2655:"{
+   "results" : [
+      {
+         "address_components" : [
+            {
+               "long_name" : "Rue de Pont-à-Migneloux",
+               "short_name" : "Rue de Pont-à-Migneloux",
+               "types" : [ "route" ]
+            },
+            {
+               "long_name" : "Wayaux",
+               "short_name" : "Wayaux",
+               "types" : [ "political", "sublocality", "sublocality_level_1" ]
+            },
+            {
+               "long_name" : "Les Bons Villers",
+               "short_name" : "Les Bons Villers",
+               "types" : [ "political", "sublocality", "sublocality_level_1" ]
+            },
+            {
+               "long_name" : "Frasnes-lez-Gosselies",
+               "short_name" : "Frasnes-lez-Gosselies",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "Hainaut",
+               "short_name" : "HT",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "Région Wallonne",
+               "short_name" : "Région Wallonne",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "Belgium",
+               "short_name" : "BE",
+               "types" : [ "country", "political" ]
+            },
+            {
+               "long_name" : "6210",
+               "short_name" : "6210",
+               "types" : [ "postal_code" ]
+            }
+         ],
+         "formatted_address" : "Rue de Pont-à-Migneloux, 6210 Les Bons Villers, Belgium",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : 50.49571500000003,
+                  "lng" : 4.473629799999999
+               },
+               "southwest" : {
+                  "lat" : 50.48990779999998,
+                  "lng" : 4.4595167
+               }
+            },
+            "location" : {
+               "lat" : 50.4944514,
+               "lng" : 4.4694362
+            },
+            "location_type" : "GEOMETRIC_CENTER",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 50.49571500000003,
+                  "lng" : 4.473629799999999
+               },
+               "southwest" : {
+                  "lat" : 50.48990779999998,
+                  "lng" : 4.4595167
+               }
+            }
+         },
+         "place_id" : "EjhSdWUgZGUgUG9udC3DoC1NaWduZWxvdXgsIDYyMTAgTGVzIEJvbnMgVmlsbGVycywgQmVsZ2l1bSIuKiwKFAoSCcPJx0xGKcJHEUw-Q8kfZcEeEhQKEgmHf2F_QCnCRxF02JKWsgNAAA",
+         "types" : [ "route" ]
+      }
+   ],
+   "status" : "OK"
+}
+";
