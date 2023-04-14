@@ -58,7 +58,7 @@ jobs:
           repository: plugin
 
   subtree-provider:
-    name: Subtree for provider ${{ matrix.provider }}
+    name: Subtree for provider ${{ matrix.provider.folder }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
