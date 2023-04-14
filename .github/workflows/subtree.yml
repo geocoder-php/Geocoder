@@ -64,42 +64,42 @@ jobs:
       fail-fast: false
       matrix:
         provider:
-          - AlgoliaPlaces
-          - ArcGISOnline
-          - AzureMaps
-          - BingMaps
-          - Cache
-          - Chain
-          - FreeGeoIp
-          - GeoIP2
-          # - GeoIPs
-          - GeoPlugin
-          - GeocodeEarth
-          - Geonames
-          - GoogleMaps
-          - GoogleMapsPlaces
-          - GraphHopper
-          - Here
-          - HostIp
-          - IP2Location
-          # - IP2LocationBinary
-          - IpInfo
-          - IpInfoDb
-          - Ipstack
-          - LocationIQ
-          - MapQuest
-          - Mapbox
-          # - Mapzen
-          - MaxMind
-          - MaxMindBinary
-          - Nominatim
-          - OpenCage
-          - OpenRouteService
-          - Pelias
-          - Photon
-          - PickPoint
-          - TomTom
-          - Yandex
+          - { folder: AlgoliaPlaces, repository: algolia-places-provider }
+          - { folder: ArcGISOnline, repository: arcgis-online-provider }
+          - { folder: AzureMaps, repository: azure-maps-provider }
+          - { folder: BingMaps, repository: bing-maps-provider }
+          - { folder: Cache, repository: cache-provider }
+          - { folder: Chain, repository: chain-provider }
+          - { folder: FreeGeoIp, repository: free-geoip-provider }
+          - { folder: GeoIP2, repository: geoip2-provider }
+          # - { folder: GeoIPs, repository: geoips-provider }
+          - { folder: GeoPlugin, repository: geo-plugin-provider }
+          - { folder: GeocodeEarth, repository: geocode-earth-provider }
+          - { folder: Geonames, repository: geonames-provider }
+          - { folder: GoogleMaps, repository: google-maps-provider }
+          - { folder: GoogleMapsPlaces, repository: google-maps-places-provider }
+          - { folder: GraphHopper, repository: graphhopper-provider }
+          - { folder: Here, repository: here-provider }
+          - { folder: HostIp, repository: host-ip-provider }
+          - { folder: IP2Location, repository: ip2location-provider }
+          # - { folder: IP2LocationBinary, repository: ip2location-binary-provider }
+          - { folder: IpInfo, repository: ip-info-provider }
+          - { folder: IpInfoDb, repository: ip-info-db-provider }
+          - { folder: Ipstack, repository: ipstack-provider }
+          - { folder: LocationIQ, repository: locationiq-provider }
+          - { folder: MapQuest, repository: mapquest-provider }
+          - { folder: Mapbox, repository: mapbox-provider }
+          # - { folder: Mapzen, repository: mapzen-provider }
+          - { folder: MaxMind, repository: maxmind-provider }
+          - { folder: MaxMindBinary, repository: maxmind-binary-provider }
+          - { folder: Nominatim, repository: nominatim-provider }
+          - { folder: OpenCage, repository: open-cage-provider }
+          - { folder: OpenRouteService, repository: openrouteservice-provider }
+          - { folder: Pelias, repository: pelias-provider }
+          - { folder: Photon, repository: photon-provider }
+          - { folder: PickPoint, repository: pickpoint-provider }
+          - { folder: TomTom, repository: tomtom-provider }
+          - { folder: Yandex, repository: yandex-provider }
     steps:
       - uses: actions/checkout@v3
         with:
@@ -108,5 +108,5 @@ jobs:
       - name: Subtree Split
         uses: ./.github/actions/subtree
         with:
-          directory: "src/Provider/${{ matrix.provider }}"
-          repository: ${{ matrix.provider }}-provider
+          directory: "src/Provider/${{ matrix.provider.folder }}"
+          repository: ${{ matrix.provider.repository }}
