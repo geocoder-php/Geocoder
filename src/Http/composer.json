@@ -19,7 +19,7 @@
         "php-http/discovery": "^1.6",
         "php-http/httplug": "^1.0 || ^2.0",
         "php-http/message-factory": "^1.0.2",
-        "psr/http-message": "^1.0",
+        "psr/http-message": "^1.0 || ^2.0",
         "psr/http-message-implementation": "^1.0",
         "willdurand/geocoder": "^4.0"
     },
