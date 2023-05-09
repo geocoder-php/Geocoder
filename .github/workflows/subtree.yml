@@ -1,0 +1,112 @@
+# This GitHub Action will push code for each provider/component to its own repository.
+# This is useful to have a better overview of the code and to have a better control over the releases.
+# The subtree is pushed to a repository named `geocoder-php/{provider}-provider`.
+# Previously, this process used https://www.subtreesplit.com/ service.
+#
+# This worflow is based on GitHub documentation: https://docs.github.com/en/get-started/using-git/splitting-a-subfolder-out-into-a-new-repository
+# This workflow uses https://github.com/newren/git-filter-repo tool.
+#
+# This workflow needs a GitHub token with Contents and Workflows read & write scopes.
+
+name: Subtree Split
+
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+  subtree-common:
+    name: Subtree for Common
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.SUBTREE_GITHUB_TOKEN }}
+          fetch-depth: 0
+      - name: Subtree Split
+        uses: ./.github/actions/subtree
+        with:
+          directory: src/Common
+          repository: php-common
+
+  subtree-http:
+    name: Subtree for Http
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.SUBTREE_GITHUB_TOKEN }}
+          fetch-depth: 0
+      - name: Subtree Split
+        uses: ./.github/actions/subtree
+        with:
+          directory: src/Http
+          repository: php-common-http
+
+  subtree-plugin:
+    name: Subtree for Plugin
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.SUBTREE_GITHUB_TOKEN }}
+          fetch-depth: 0
+      - name: Subtree Split
+        uses: ./.github/actions/subtree
+        with:
+          directory: src/Plugin
+          repository: plugin
+
+  subtree-provider:
+    name: Subtree for provider ${{ matrix.provider.folder }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        provider:
+          - { folder: AlgoliaPlaces, repository: algolia-places-provider }
+          - { folder: ArcGISOnline, repository: arcgis-online-provider }
+          - { folder: AzureMaps, repository: azure-maps-provider }
+          - { folder: BingMaps, repository: bing-maps-provider }
+          - { folder: Cache, repository: cache-provider }
+          - { folder: Chain, repository: chain-provider }
+          - { folder: FreeGeoIp, repository: free-geoip-provider }
+          - { folder: GeoIP2, repository: geoip2-provider }
+          # - { folder: GeoIPs, repository: geoips-provider }
+          - { folder: GeoPlugin, repository: geo-plugin-provider }
+          - { folder: GeocodeEarth, repository: geocode-earth-provider }
+          - { folder: Geonames, repository: geonames-provider }
+          - { folder: GoogleMaps, repository: google-maps-provider }
+          - { folder: GoogleMapsPlaces, repository: google-maps-places-provider }
+          - { folder: GraphHopper, repository: graphhopper-provider }
+          - { folder: Here, repository: here-provider }
+          - { folder: HostIp, repository: host-ip-provider }
+          - { folder: IP2Location, repository: ip2location-provider }
+          # - { folder: IP2LocationBinary, repository: ip2location-binary-provider }
+          - { folder: IpInfo, repository: ip-info-provider }
+          - { folder: IpInfoDb, repository: ip-info-db-provider }
+          - { folder: Ipstack, repository: ipstack-provider }
+          - { folder: LocationIQ, repository: locationiq-provider }
+          - { folder: MapQuest, repository: mapquest-provider }
+          - { folder: Mapbox, repository: mapbox-provider }
+          # - { folder: Mapzen, repository: mapzen-provider }
+          - { folder: MaxMind, repository: maxmind-provider }
+          - { folder: MaxMindBinary, repository: maxmind-binary-provider }
+          - { folder: Nominatim, repository: nominatim-provider }
+          - { folder: OpenCage, repository: open-cage-provider }
+          - { folder: OpenRouteService, repository: openrouteservice-provider }
+          - { folder: Pelias, repository: pelias-provider }
+          - { folder: Photon, repository: photon-provider }
+          - { folder: PickPoint, repository: pickpoint-provider }
+          - { folder: TomTom, repository: tomtom-provider }
+          - { folder: Yandex, repository: yandex-provider }
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.SUBTREE_GITHUB_TOKEN }}
+          fetch-depth: 0
+      - name: Subtree Split
+        uses: ./.github/actions/subtree
+        with:
+          directory: "src/Provider/${{ matrix.provider.folder }}"
+          repository: ${{ matrix.provider.repository }}

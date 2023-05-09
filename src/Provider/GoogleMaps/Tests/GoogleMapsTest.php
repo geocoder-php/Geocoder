@@ -14,7 +14,6 @@ namespace Geocoder\Provider\GoogleMaps\Tests;
 
 use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\IntegrationTest\BaseTestCase;
-use Geocoder\Location;
 use Geocoder\Model\Address;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Provider\GoogleMaps\Model\GoogleAddress;
@@ -94,7 +93,7 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertInstanceOf(AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
-        /** @var Location $result */
+        /** @var GoogleAddress $result */
         $result = $results->first();
         $this->assertInstanceOf(Address::class, $result);
         $this->assertEqualsWithDelta(48.8630462, $result->getCoordinates()->getLatitude(), 0.001);
@@ -128,7 +127,7 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertInstanceOf(AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
-        /** @var Location $result */
+        /** @var GoogleAddress $result */
         $result = $results->first();
         $this->assertInstanceOf(Address::class, $result);
         $this->assertNotNull($result->getBounds());
@@ -156,7 +155,7 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertInstanceOf(AddressCollection::class, $results);
         $this->assertCount(5, $results);
 
-        /** @var Location $result */
+        /** @var GoogleAddress $result */
         $result = $results->first();
         $this->assertInstanceOf(Address::class, $result);
         $this->assertEquals(12, $result->getStreetNumber());
@@ -180,7 +179,7 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertInstanceOf(AddressCollection::class, $results);
         $this->assertCount(5, $results);
 
-        /** @var Location $result */
+        /** @var GoogleAddress $result */
         $result = $results->first();
         $this->assertInstanceOf(Address::class, $result);
         $this->assertEquals(12, $result->getStreetNumber());
@@ -204,7 +203,7 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertInstanceOf(AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
-        /** @var Location $result */
+        /** @var GoogleAddress $result */
         $result = $results->first();
         $this->assertInstanceOf(Address::class, $result);
         $this->assertEquals('Kalbach-Riedberg', $result->getSubLocality());
@@ -228,7 +227,7 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertInstanceOf(AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
-        /** @var Location $result */
+        /** @var GoogleAddress $result */
         $result = $results->first();
         $this->assertInstanceOf(Address::class, $result);
         $this->assertNotNull($result->getCoordinates()->getLatitude());
@@ -251,7 +250,7 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertInstanceOf(AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
-        /** @var Location $result */
+        /** @var GoogleAddress $result */
         $result = $results->first();
         $this->assertInstanceOf(Address::class, $result);
         $this->assertEquals('Malmö', $result->getLocality());
@@ -340,7 +339,7 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertInstanceOf(AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
-        /** @var Location $result */
+        /** @var GoogleAddress $result */
         $result = $results->first();
         $this->assertInstanceOf(Address::class, $result);
         $this->assertEquals('Pontypridd', $result->getLocality());
@@ -558,7 +557,7 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertInstanceOf(AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var GoogleAddress $result */
         $result = $results->first();
         $this->assertInstanceOf(Address::class, $result);
         $this->assertNotNull($result->getBounds());
@@ -567,6 +566,28 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertEqualsWithDelta(50.8517, $result->getBounds()->getNorth(), 0.001);
         $this->assertEqualsWithDelta(5.8433, $result->getBounds()->getEast(), 0.001);
         $this->assertEquals(false, $result->isPartialMatch());
+    }
+
+    public function testGeocodeDuplicateSubLocalityLevel()
+    {
+        $provider = $this->getGoogleMapsProvider();
+        $results = $provider->geocodeQuery(GeocodeQuery::create('Rue de Pont-A-Migneloux, 6210 Wayaux, Belgique'));
+
+        $this->assertInstanceOf(AddressCollection::class, $results);
+        $this->assertCount(1, $results);
+
+        /** @var GoogleAddress $result */
+        $result = $results->first();
+        $this->assertInstanceOf(Address::class, $result);
+        $this->assertEquals('Rue de Pont-à-Migneloux, 6210 Les Bons Villers, Belgium', $result->getFormattedAddress());
+        $this->assertEquals('Les Bons Villers', $result->getSubLocality());
+        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertEquals('Région Wallonne', $result->getAdminLevels()->get(1)->getName());
+        $this->assertEquals('Hainaut', $result->getAdminLevels()->get(2)->getName());
+        $this->assertInstanceOf('\Geocoder\Model\AdminLevelCollection', $result->getSubLocalityLevels());
+        $this->assertEquals(1, $result->getSubLocalityLevels()->get(1)->getLevel());
+        $this->assertEquals('Wayaux / Les Bons Villers', $result->getSubLocalityLevels()->get(1)->getName());
+        $this->assertEquals('Wayaux / Les Bons Villers', $result->getSubLocalityLevels()->get(1)->getCode());
     }
 
     private function getGoogleMapsProvider(): GoogleMaps

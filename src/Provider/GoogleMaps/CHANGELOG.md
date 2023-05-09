@@ -2,6 +2,12 @@
 
 The change log describes what is "Added", "Removed", "Changed" or "Fixed" between each release.
 
+## 4.7.1
+
+### Fixed
+
+- Fix issue with duplicated SubLocalityLevels
+
 ## 4.7.0
 
 ### Added

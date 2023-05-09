@@ -516,21 +516,26 @@ final class GoogleAddress extends Address
      */
     public function withSubLocalityLevels(array $subLocalityLevel)
     {
+        $levels = array_filter($subLocalityLevel, function ($level) {
+            return !empty($level['level']) && (!empty($level['name']) || !empty($level['code']));
+        });
+
+        $levelCount = array_count_values(array_column($levels, 'level'));
+
         $subLocalityLevels = [];
-        foreach ($subLocalityLevel as $level) {
-            if (empty($level['level'])) {
-                continue;
-            }
+        foreach ($levelCount as $level => $count) {
+            $_levels = array_filter($levels, function ($l) use ($level) {
+                return $l['level'] === $level;
+            });
 
-            $name = $level['name'] ?? $level['code'] ?? '';
-            if (empty($name)) {
-                continue;
-            }
+            $names = array_filter(array_column($_levels, 'name'), function ($name) { return !empty($name); });
+            $codes = array_filter(array_column($_levels, 'code'), function ($code) { return !empty($code); });
 
-            $subLocalityLevels[] = new AdminLevel($level['level'], $name, $level['code'] ?? null);
+            $name = count($names) > 0 ? implode(' / ', $names) : implode(' / ', $codes);
+            $code = count($codes) > 0 ? implode(' / ', $codes) : null;
+
+            $subLocalityLevels[] = new AdminLevel($level, $name, $code);
         }
-
-        $subLocalityLevels = array_unique($subLocalityLevels);
 
         $new = clone $this;
         $new->subLocalityLevels = new AdminLevelCollection($subLocalityLevels);
