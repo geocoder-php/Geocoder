@@ -115,7 +115,7 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
 
     protected function getRequest(string $url): RequestInterface
     {
-        return $this->getMessageFactory()->createRequest(
+        return $this->createRequest(
             'POST',
             $url,
             $this->buildHeaders(),

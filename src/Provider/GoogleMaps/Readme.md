@@ -13,7 +13,7 @@ This is the Google Maps provider from the PHP Geocoder. This is a **READ ONLY** 
 ## Usage
 
 ```php
-$httpClient = new \GuzzleHttp\Client();
+$httpClient = new \Http\Discovery\Psr18Client();
 
 // You must provide an API key
 $provider = new \Geocoder\Provider\GoogleMaps\GoogleMaps($httpClient, null, 'your-api-key');
@@ -31,7 +31,7 @@ can use the static `business` method on the provider to create a client:
 
 ```php
 
-$httpClient = new \GuzzleHttp\Client();
+$httpClient = new \Http\Discovery\Psr18Client();
 
 // Client ID is required. Private key is optional.
 $provider = \Geocoder\Provider\GoogleMaps\GoogleMaps::business($httpClient, 'your-client-id', 'your-private-key');

@@ -82,9 +82,6 @@ final class BingMaps extends AbstractHttpProvider implements Provider
         return 'bing_maps';
     }
 
-    /**
-     * @param string $locale
-     */
     private function executeQuery(string $url, string $locale = null, int $limit): Collection
     {
         if (null !== $locale) {
