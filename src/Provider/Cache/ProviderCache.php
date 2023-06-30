@@ -41,15 +41,21 @@ class ProviderCache implements Provider
     protected $lifetime;
 
     /**
+     * If true, include the real provider name into the cache key
+     */
+    private bool $separateCache;
+
+    /**
      * @param Provider       $realProvider
      * @param CacheInterface $cache
      * @param int            $lifetime
      */
-    final public function __construct(Provider $realProvider, CacheInterface $cache, int $lifetime = null)
+    final public function __construct(Provider $realProvider, CacheInterface $cache, int $lifetime = null, bool $separateCache = false)
     {
         $this->realProvider = $realProvider;
         $this->cache = $cache;
         $this->lifetime = $lifetime;
+        $this->separateCache = $separateCache;
     }
 
     /**
@@ -104,7 +110,8 @@ class ProviderCache implements Provider
      */
     protected function getCacheKey($query): string
     {
-        // Include the major version number of the geocoder to avoid issues unserializing.
-        return 'v4'.sha1((string) $query);
+        // Include the major version number of the geocoder to avoid issues unserializing
+        // and real provider name if we want to separate cache
+        return 'v4'.sha1((string) $query.($this->separateCache ? $this->realProvider->getName() : ''));
     }
 }
