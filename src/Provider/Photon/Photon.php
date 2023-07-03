@@ -156,7 +156,10 @@ final class Photon extends AbstractHttpProvider implements Provider
                 $properties->osm_key ?? null,
                 $properties->osm_value ?? null
             )
-            ->withName($properties->name ?? null);
+            ->withName($properties->name ?? null)
+            ->withState($properties->state ?? null)
+            ->withCounty($properties->county ?? null)
+            ->withDistrict($properties->district ?? null);
 
         return $address;
     }

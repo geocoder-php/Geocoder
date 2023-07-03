@@ -75,6 +75,9 @@ class PhotonTest extends BaseTestCase
         $this->assertEquals('N', $result->getOSMType());
         $this->assertEquals('place', $result->getOSMTag()->key);
         $this->assertEquals('house', $result->getOSMTag()->value);
+        $this->assertEquals('Île-de-France', $result->getState());
+        $this->assertNull($result->getCounty());
+        $this->assertEquals('Paris', $result->getDistrict());
     }
 
     public function testGeocodeQueryWithNamedResult()
@@ -113,5 +116,8 @@ class PhotonTest extends BaseTestCase
         $this->assertEquals('N', $result->getOSMType());
         $this->assertEquals('tourism', $result->getOSMTag()->key);
         $this->assertEquals('information', $result->getOSMTag()->value);
+        $this->assertEquals('Niedersachsen', $result->getState());
+        $this->assertEquals('Landkreis Hildesheim', $result->getCounty());
+        $this->assertEquals('Sehlem', $result->getDistrict());
     }
 }
