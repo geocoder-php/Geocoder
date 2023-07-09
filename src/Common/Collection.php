@@ -20,6 +20,8 @@ use Geocoder\Exception\OutOfBounds;
  *
  * @author William Durand <william.durand1@gmail.com>
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
+ *
+ * @template-extends \IteratorAggregate<int, Location>
  */
 interface Collection extends \IteratorAggregate, \Countable
 {
