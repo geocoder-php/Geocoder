@@ -1,6 +1,6 @@
 parameters:
-  level: 1
-  paths:
-    - src
-  excludePaths:
-    - **/vendor/**
+    level: 2
+    paths:
+        - src
+    excludePaths:
+        - **/vendor/**

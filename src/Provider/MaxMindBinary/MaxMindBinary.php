@@ -90,20 +90,20 @@ final class MaxMindBinary extends AbstractProvider implements Provider
 
         $adminLevels = [];
 
-        if ($geoIpRecord->region) {
-            $adminLevels[] = ['name' => $geoIpRecord->region, 'level' => 1];
+        if ($geoIpRecord->region) { // @phpstan-ignore-line
+            $adminLevels[] = ['name' => $geoIpRecord->region, 'level' => 1]; // @phpstan-ignore-line
         }
 
         return new AddressCollection([
             Address::createFromArray([
                 'providedBy' => $this->getName(),
-                'countryCode' => $geoIpRecord->country_code,
-                'country' => null === $geoIpRecord->country_name ? null : utf8_encode($geoIpRecord->country_name),
+                'countryCode' => $geoIpRecord->country_code, // @phpstan-ignore-line
+                'country' => null === $geoIpRecord->country_name ? null : utf8_encode($geoIpRecord->country_name), // @phpstan-ignore-line
                 'adminLevels' => $adminLevels,
-                'locality' => null === $geoIpRecord->city ? null : utf8_encode($geoIpRecord->city),
-                'latitude' => $geoIpRecord->latitude,
-                'longitude' => $geoIpRecord->longitude,
-                'postalCode' => $geoIpRecord->postal_code,
+                'locality' => null === $geoIpRecord->city ? null : utf8_encode($geoIpRecord->city), // @phpstan-ignore-line
+                'latitude' => $geoIpRecord->latitude, // @phpstan-ignore-line
+                'longitude' => $geoIpRecord->longitude, // @phpstan-ignore-line
+                'postalCode' => $geoIpRecord->postal_code, // @phpstan-ignore-line
             ]),
         ]);
     }

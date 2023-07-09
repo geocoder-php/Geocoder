@@ -83,7 +83,7 @@ final class YandexAddress extends Address
     /**
      * @return string|null
      */
-    public function getKind(): string
+    public function getKind()
     {
         return $this->kind;
     }

@@ -20,6 +20,7 @@ use Geocoder\Model\Bounds;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\Mapbox\Mapbox;
+use Geocoder\Provider\Mapbox\Model\MapboxAddress;
 
 class MapboxTest extends BaseTestCase
 {
@@ -99,9 +100,9 @@ class MapboxTest extends BaseTestCase
         $this->assertInstanceOf(AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
-        /** @var Location $result */
+        /** @var MapboxAddress $result */
         $result = $results->first();
-        $this->assertInstanceOf(Address::class, $result);
+        $this->assertInstanceOf(MapboxAddress::class, $result);
         $this->assertEqualsWithDelta(43.73125, $result->getCoordinates()->getLatitude(), 0.001);
         $this->assertEqualsWithDelta(7.41974, $result->getCoordinates()->getLongitude(), 0.001);
         $this->assertEquals('Principato di Monaco', $result->getStreetName());
@@ -128,9 +129,9 @@ class MapboxTest extends BaseTestCase
         $this->assertInstanceOf(AddressCollection::class, $results);
         $this->assertCount(5, $results);
 
-        /** @var Location $result */
+        /** @var MapboxAddress $result */
         $result = $results->first();
-        $this->assertInstanceOf(Address::class, $result);
+        $this->assertInstanceOf(MapboxAddress::class, $result);
         $this->assertEqualsWithDelta(37.77572, $result->getCoordinates()->getLatitude(), 0.001);
         $this->assertEqualsWithDelta(-122.41362, $result->getCoordinates()->getLongitude(), 0.001);
         $this->assertNull($result->getBounds());
@@ -169,9 +170,9 @@ class MapboxTest extends BaseTestCase
         $this->assertInstanceOf(AddressCollection::class, $results);
         $this->assertCount(4, $results);
 
-        /** @var Location $result */
+        /** @var MapboxAddress $result */
         $result = $results->first();
-        $this->assertInstanceOf(Address::class, $result);
+        $this->assertInstanceOf(MapboxAddress::class, $result);
         $this->assertEquals(8, $result->getStreetNumber());
         $this->assertEquals('Avenue Gambetta', $result->getStreetName());
         $this->assertEquals(75020, $result->getPostalCode());
@@ -204,9 +205,9 @@ class MapboxTest extends BaseTestCase
         $this->assertInstanceOf(AddressCollection::class, $results);
         $this->assertCount(5, $results);
 
-        /** @var Location $result */
+        /** @var MapboxAddress $result */
         $result = $results->first();
-        $this->assertInstanceOf(Address::class, $result);
+        $this->assertInstanceOf(MapboxAddress::class, $result);
         $this->assertEquals('116th Street', $result->getStreetName());
         $this->assertEquals(11356, $result->getPostalCode());
         $this->assertCount(2, $result->getAdminLevels());

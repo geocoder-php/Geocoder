@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Geocoder\Provider\Ipstack\Tests;
 
 use Geocoder\IntegrationTest\BaseTestCase;
+use Geocoder\Location;
 use Geocoder\Provider\Ipstack\Ipstack;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;

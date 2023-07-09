@@ -123,8 +123,6 @@ class Pelias extends AbstractHttpProvider implements Provider
 
     /**
      * @param $url
-     *
-     * @return Collection
      */
     protected function executeQuery(string $url): AddressCollection
     {

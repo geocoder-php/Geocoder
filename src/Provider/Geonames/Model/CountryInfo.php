@@ -258,10 +258,10 @@ final class CountryInfo
      *
      * @return CountryInfo
      */
-    public function withPopulation(string $population = null): self
+    public function withPopulation(int $population = null): self
     {
         $new = clone $this;
-        $new->population = null === $population ? null : (int) $population;
+        $new->population = null === $population ? null : $population;
 
         return $new;
     }

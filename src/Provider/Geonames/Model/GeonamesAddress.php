@@ -61,7 +61,7 @@ final class GeonamesAddress extends Address
     /**
      * @return string|null
      */
-    public function getName(): string
+    public function getName()
     {
         return $this->name;
     }

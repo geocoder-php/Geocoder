@@ -104,8 +104,6 @@ final class Mapzen extends AbstractHttpProvider implements Provider
 
     /**
      * @param $url
-     *
-     * @return Collection
      */
     private function executeQuery(string $url): AddressCollection
     {

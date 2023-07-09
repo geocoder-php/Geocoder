@@ -121,7 +121,10 @@ class NominatimTest extends BaseTestCase
 
         $this->assertCount(1, $results);
 
-        $this->assertEquals('Ksawerów', $results->first()->getQuarter());
+        /** @var \Geocoder\Provider\Nominatim\Model\NominatimAddress $result */
+        $result = $results->first();
+
+        $this->assertEquals('Ksawerów', $result->getQuarter());
     }
 
     public function testGeocodeWithRealAddressAndExtraTags()

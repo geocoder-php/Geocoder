@@ -44,8 +44,6 @@ final class HostIpXml extends AbstractHostIp
 
     /**
      * @param string $url
-     *
-     * @return Collection
      */
     protected function executeQuery(string $url): AddressCollection
     {
