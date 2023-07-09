@@ -50,7 +50,7 @@ class ChainTest extends TestCase
             }));
 
         $mockTwo = $this->getMockBuilder('Geocoder\\Provider\\Provider')->getMock();
-        $result = new AddressCollection(['foo' => 'bar']);
+        $result = new AddressCollection(['foo' => 'bar']); // @phpstan-ignore-line
         $mockTwo->expects($this->once())
             ->method('reverseQuery')
             ->will($this->returnValue($result));
@@ -71,7 +71,7 @@ class ChainTest extends TestCase
             }));
 
         $mockTwo = $this->getMockBuilder('Geocoder\\Provider\\Provider')->getMock();
-        $result = new AddressCollection(['foo' => 'bar']);
+        $result = new AddressCollection(['foo' => 'bar']); // @phpstan-ignore-line
         $mockTwo->expects($this->once())
             ->method('geocodeQuery')
             ->with($query)

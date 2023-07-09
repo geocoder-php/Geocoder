@@ -155,7 +155,7 @@ final class LocationIQ extends AbstractHttpProvider implements Provider
         $builder->setLocality($this->getNodeValue($addressNode->getElementsByTagName('city')));
         $builder->setSubLocality($this->getNodeValue($addressNode->getElementsByTagName('suburb')));
         $builder->setCountry($this->getNodeValue($addressNode->getElementsByTagName('country')));
-        $builder->setCoordinates($resultNode->getAttribute('lat'), $resultNode->getAttribute('lon'));
+        $builder->setCoordinates((float) $resultNode->getAttribute('lat'), (float) $resultNode->getAttribute('lon'));
 
         $countryCode = $this->getNodeValue($addressNode->getElementsByTagName('country_code'));
         if (!is_null($countryCode)) {
@@ -166,7 +166,7 @@ final class LocationIQ extends AbstractHttpProvider implements Provider
         if ($boundsAttr) {
             $bounds = [];
             list($bounds['south'], $bounds['north'], $bounds['west'], $bounds['east']) = explode(',', $boundsAttr);
-            $builder->setBounds($bounds['south'], $bounds['north'], $bounds['west'], $bounds['east']);
+            $builder->setBounds((float) $bounds['south'], (float) $bounds['north'], (float) $bounds['west'], (float) $bounds['east']);
         }
 
         return $builder->build();

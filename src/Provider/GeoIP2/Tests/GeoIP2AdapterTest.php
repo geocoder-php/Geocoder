@@ -41,7 +41,7 @@ class GeoIP2AdapterTest extends TestCase
 
     public function setUp(): void
     {
-        $this->adapter = new GeoIP2Adapter($this->getGeoIP2ProviderMock());
+        $this->adapter = new GeoIP2Adapter($this->getGeoIP2ProviderMock()); // @phpstan-ignore-line
     }
 
     public function testGetName()
@@ -90,7 +90,7 @@ class GeoIP2AdapterTest extends TestCase
                 $this->getGeoIP2ModelMock($geoIp2Model)
             ));
 
-        $adapter = new GeoIP2Adapter($geoIp2Provider, $geoIp2Model);
+        $adapter = new GeoIP2Adapter($geoIp2Provider, $geoIp2Model); // @phpstan-ignore-line
         $adapter->getContent('file://geoip?127.0.0.1');
     }
 
@@ -99,7 +99,7 @@ class GeoIP2AdapterTest extends TestCase
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('Model "unsupported_model" is not available.');
 
-        new GeoIP2Adapter($this->getGeoIP2ProviderMock(), 'unsupported_model');
+        new GeoIP2Adapter($this->getGeoIP2ProviderMock(), 'unsupported_model'); // @phpstan-ignore-line
     }
 
     public function testReaderResponseIsJsonEncoded()
@@ -112,7 +112,7 @@ class GeoIP2AdapterTest extends TestCase
             ->method('city')
             ->will($this->returnValue($cityModel));
 
-        $adapter = new GeoIP2Adapter($geoIp2Provider);
+        $adapter = new GeoIP2Adapter($geoIp2Provider); // @phpstan-ignore-line
 
         $result = $adapter->getContent('file://database?127.0.0.1');
         $this->assertJson($result);
@@ -132,7 +132,7 @@ class GeoIP2AdapterTest extends TestCase
     }
 
     /**
-     * @param int $geoIP2Model (e.g. GeoIP2Adapter::GEOIP2_MODEL_CITY, ...)
+     * @param string $geoIP2Model (e.g. GeoIP2Adapter::GEOIP2_MODEL_CITY, ...)
      *
      * @return MockObject
      */
