@@ -87,7 +87,7 @@ class Address implements Location
      * @param Country|null         $country
      * @param string|null          $timezone
      */
-    public function __construct(
+    final public function __construct(
         string $providedBy,
         AdminLevelCollection $adminLevels,
         Coordinates $coordinates = null,
@@ -247,7 +247,7 @@ class Address implements Location
             $adminLevels[] = new AdminLevel($adminLevel['level'], $name, $adminLevel['code'] ?? null);
         }
 
-        return new self(
+        return new static(
             $data['providedBy'],
             new AdminLevelCollection($adminLevels),
             self::createCoordinates(
