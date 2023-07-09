@@ -72,8 +72,8 @@ class MaxMindBinaryTest extends BaseTestCase
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
 
-        $this->assertEquals('43.089200000000005', $result->getCoordinates()->getLatitude(), '', 0.001);
-        $this->assertEquals('-76.025000000000006', $result->getCoordinates()->getLongitude(), '', 0.001);
+        $this->assertEqualsWithDelta(43.089200000000005, $result->getCoordinates()->getLatitude(), 0.001);
+        $this->assertEqualsWithDelta(-76.025000000000006, $result->getCoordinates()->getLongitude(), 0.001);
         $this->assertNull($result->getBounds());
         $this->assertNull($result->getStreetNumber());
         $this->assertNull($result->getStreetName());
@@ -100,8 +100,8 @@ class MaxMindBinaryTest extends BaseTestCase
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
 
-        $this->assertEquals('41.543299999999988', $result->getCoordinates()->getLatitude(), '', 0.001);
-        $this->assertEquals('2.1093999999999937', $result->getCoordinates()->getLongitude(), '', 0.001);
+        $this->assertEqualsWithDelta(41.543299999999988, $result->getCoordinates()->getLatitude(), 0.001);
+        $this->assertEqualsWithDelta(2.1093999999999937, $result->getCoordinates()->getLongitude(), 0.001);
         $this->assertNull($result->getBounds());
         $this->assertNull($result->getStreetNumber());
         $this->assertNull($result->getStreetName());

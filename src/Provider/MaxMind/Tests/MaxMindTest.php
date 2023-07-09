@@ -125,8 +125,8 @@ class MaxMindTest extends BaseTestCase
         /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(33.034698486328, $result->getCoordinates()->getLatitude(), '', 0.0001);
-        $this->assertEquals(-96.813400268555, $result->getCoordinates()->getLongitude(), '', 0.0001);
+        $this->assertEqualsWithDelta(33.034698486328, $result->getCoordinates()->getLatitude(), 0.0001);
+        $this->assertEqualsWithDelta(-96.813400268555, $result->getCoordinates()->getLongitude(), 0.0001);
         $this->assertNull($result->getStreetNumber());
         $this->assertNull($result->getStreetName());
         $this->assertEquals(75093, $result->getPostalCode());
@@ -157,8 +157,8 @@ class MaxMindTest extends BaseTestCase
         /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(37.748402, $result->getCoordinates()->getLatitude(), '', 0.0001);
-        $this->assertEquals(-122.415604, $result->getCoordinates()->getLongitude(), '', 0.0001);
+        $this->assertEqualsWithDelta(37.748402, $result->getCoordinates()->getLatitude(), 0.0001);
+        $this->assertEqualsWithDelta(-122.415604, $result->getCoordinates()->getLongitude(), 0.0001);
         $this->assertNull($result->getStreetNumber());
         $this->assertNull($result->getStreetName());
         $this->assertEquals(94110, $result->getPostalCode());
@@ -269,8 +269,8 @@ class MaxMindTest extends BaseTestCase
         /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(33.034698, $result->getCoordinates()->getLatitude(), '', 0.1);
-        $this->assertEquals(-96.813400, $result->getCoordinates()->getLongitude(), '', 0.1);
+        $this->assertEqualsWithDelta(33.034698, $result->getCoordinates()->getLatitude(), 0.1);
+        $this->assertEqualsWithDelta(-96.813400, $result->getCoordinates()->getLongitude(), 0.1);
         $this->assertNull($result->getBounds());
         $this->assertNull($result->getStreetNumber());
         $this->assertNull($result->getStreetName());
@@ -304,8 +304,8 @@ class MaxMindTest extends BaseTestCase
         /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(33.0347, $result->getCoordinates()->getLatitude(), '', 0.1);
-        $this->assertEquals(-96.8134, $result->getCoordinates()->getLongitude(), '', 0.1);
+        $this->assertEqualsWithDelta(33.0347, $result->getCoordinates()->getLatitude(), 0.1);
+        $this->assertEqualsWithDelta(-96.8134, $result->getCoordinates()->getLongitude(), 0.1);
         $this->assertNull($result->getBounds());
         $this->assertNull($result->getStreetNumber());
         $this->assertNull($result->getStreetName());
@@ -339,8 +339,8 @@ class MaxMindTest extends BaseTestCase
         /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(-27.5833, $result->getCoordinates()->getLatitude(), '', 0.1);
-        $this->assertEquals(-48.5666, $result->getCoordinates()->getLongitude(), '', 0.1);
+        $this->assertEqualsWithDelta(-27.5833, $result->getCoordinates()->getLatitude(), 0.1);
+        $this->assertEqualsWithDelta(-48.5666, $result->getCoordinates()->getLongitude(), 0.1);
         $this->assertNull($result->getBounds());
         $this->assertNull($result->getStreetNumber());
         $this->assertNull($result->getStreetName());
@@ -374,8 +374,8 @@ class MaxMindTest extends BaseTestCase
         /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(40.2181, $result->getCoordinates()->getLatitude(), '', 0.1);
-        $this->assertEquals(-111.6133, $result->getCoordinates()->getLongitude(), '', 0.1);
+        $this->assertEqualsWithDelta(40.2181, $result->getCoordinates()->getLatitude(), 0.1);
+        $this->assertEqualsWithDelta(-111.6133, $result->getCoordinates()->getLongitude(), 0.1);
         $this->assertNull($result->getBounds());
         $this->assertNull($result->getStreetNumber());
         $this->assertNull($result->getStreetName());

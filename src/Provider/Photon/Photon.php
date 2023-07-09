@@ -77,7 +77,7 @@ final class Photon extends AbstractHttpProvider implements Provider
                 'lang' => $query->getLocale(),
             ]);
 
-        $json = $this->executeQuery($url, $query->getLocale());
+        $json = $this->executeQuery($url);
 
         if (!isset($json->features) || empty($json->features)) {
             return new AddressCollection([]);

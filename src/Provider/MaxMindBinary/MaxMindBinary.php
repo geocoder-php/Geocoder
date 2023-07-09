@@ -61,7 +61,7 @@ final class MaxMindBinary extends AbstractProvider implements Provider
         }
 
         $this->datFile = $datFile;
-        $this->openFlag = null === $openFlag ? GEOIP_STANDARD : $openFlag;
+        $this->openFlag = null === $openFlag ? GEOIP_STANDARD : $openFlag; // @phpstan-ignore-line
     }
 
     /**

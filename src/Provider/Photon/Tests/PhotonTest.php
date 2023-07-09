@@ -62,8 +62,8 @@ class PhotonTest extends BaseTestCase
         /** @var \Geocoder\Provider\Photon\Model\PhotonAddress $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(48.8631927, $result->getCoordinates()->getLatitude(), '', 0.00001);
-        $this->assertEquals(2.3890894, $result->getCoordinates()->getLongitude(), '', 0.00001);
+        $this->assertEqualsWithDelta(48.8631927, $result->getCoordinates()->getLatitude(), 0.00001);
+        $this->assertEqualsWithDelta(2.3890894, $result->getCoordinates()->getLongitude(), 0.00001);
         $this->assertEquals('10', $result->getStreetNumber());
         $this->assertEquals('Avenue Gambetta', $result->getStreetName());
         $this->assertEquals('75020', $result->getPostalCode());
@@ -105,8 +105,8 @@ class PhotonTest extends BaseTestCase
         /** @var \Geocoder\Provider\Photon\Model\PhotonAddress $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(51.9982968, $result->getCoordinates()->getLatitude(), '', 0.00001);
-        $this->assertEquals(9.998645, $result->getCoordinates()->getLongitude(), '', 0.00001);
+        $this->assertEqualsWithDelta(51.9982968, $result->getCoordinates()->getLatitude(), 0.00001);
+        $this->assertEqualsWithDelta(9.998645, $result->getCoordinates()->getLongitude(), 0.00001);
         $this->assertEquals('31195', $result->getPostalCode());
         $this->assertEquals('Lamspringe', $result->getLocality());
         $this->assertEquals('Deutschland', $result->getCountry()->getName());

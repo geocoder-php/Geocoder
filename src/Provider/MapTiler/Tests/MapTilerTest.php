@@ -85,8 +85,8 @@ class MapTilerTest extends BaseTestCase
         /** @var \Geocoder\Model\Address $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(48.8658863, $result->getCoordinates()->getLatitude(), '', 0.00001);
-        $this->assertEquals(2.3993232, $result->getCoordinates()->getLongitude(), '', 0.00001);
+        $this->assertEqualsWithDelta(48.8658863, $result->getCoordinates()->getLatitude(), 0.00001);
+        $this->assertEqualsWithDelta(2.3993232, $result->getCoordinates()->getLongitude(), 0.00001);
         $this->assertEquals('Avenue Gambetta', $result->getStreetName());
         $this->assertEquals('Paris', $result->getLocality());
         $this->assertEquals('France', $result->getCountry());
@@ -109,8 +109,8 @@ class MapTilerTest extends BaseTestCase
         /** @var \Geocoder\Model\Address $result */
         $result = $results->get(1);
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(48.85881, $result->getCoordinates()->getLatitude(), '', 0.00001);
-        $this->assertEquals(2.320031, $result->getCoordinates()->getLongitude(), '', 0.00001);
+        $this->assertEqualsWithDelta(48.85881, $result->getCoordinates()->getLatitude(), 0.00001);
+        $this->assertEqualsWithDelta(2.320031, $result->getCoordinates()->getLongitude(), 0.00001);
         $this->assertEquals('Paris', $result->getLocality());
         $this->assertEquals('France', $result->getCountry());
     }
@@ -132,8 +132,8 @@ class MapTilerTest extends BaseTestCase
         /** @var \Geocoder\Model\Address $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(47.3774434, $result->getCoordinates()->getLatitude(), '', 0.00001);
-        $this->assertEquals(8.528509, $result->getCoordinates()->getLongitude(), '', 0.00001);
+        $this->assertEqualsWithDelta(47.3774434, $result->getCoordinates()->getLatitude(), 0.00001);
+        $this->assertEqualsWithDelta(8.528509, $result->getCoordinates()->getLongitude(), 0.00001);
         $this->assertEquals('Zurich', $result->getLocality());
         $this->assertEquals('Switzerland', $result->getCountry());
     }

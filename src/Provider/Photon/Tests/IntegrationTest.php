@@ -34,7 +34,7 @@ class IntegrationTest extends ProviderIntegrationTest
 
     protected function createProvider(ClientInterface $httpClient)
     {
-        return Photon::withKomootServer($httpClient, 'Geocoder PHP/Photon Provider/Integration Test');
+        return Photon::withKomootServer($httpClient);
     }
 
     protected function getCacheDir()

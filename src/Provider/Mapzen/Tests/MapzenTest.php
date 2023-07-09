@@ -45,7 +45,7 @@ class MapzenTest extends BaseTestCase
 
     public function testSslSchema()
     {
-        $provider = new Mapzen($this->getMockedHttpClient('{}'), 'api_key', true);
+        $provider = new Mapzen($this->getMockedHttpClient('{}'), 'api_key');
         $result = $provider->geocodeQuery(GeocodeQuery::create('foobar'));
 
         $this->assertInstanceOf(Collection::class, $result);

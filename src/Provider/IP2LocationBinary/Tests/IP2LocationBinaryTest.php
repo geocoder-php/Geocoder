@@ -68,8 +68,8 @@ class IP2LocationBinaryTest extends BaseTestCase
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
 
-        $this->assertEquals('37.405990600586', $result->getCoordinates()->getLatitude(), '', 0.001);
-        $this->assertEquals('-122.07851409912', $result->getCoordinates()->getLongitude(), '', 0.001);
+        $this->assertEqualsWithDelta(37.405990600586, $result->getCoordinates()->getLatitude(), 0.001);
+        $this->assertEqualsWithDelta(-122.07851409912, $result->getCoordinates()->getLongitude(), 0.001);
         $this->assertNull($result->getBounds());
         $this->assertNull($result->getStreetNumber());
         $this->assertNull($result->getStreetName());
@@ -96,8 +96,8 @@ class IP2LocationBinaryTest extends BaseTestCase
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
 
-        $this->assertEquals('39.907501220703', $result->getCoordinates()->getLatitude(), '', 0.001);
-        $this->assertEquals('116.39723205566', $result->getCoordinates()->getLongitude(), '', 0.001);
+        $this->assertEqualsWithDelta(39.907501220703, $result->getCoordinates()->getLatitude(), 0.001);
+        $this->assertEqualsWithDelta(116.39723205566, $result->getCoordinates()->getLongitude(), 0.001);
         $this->assertNull($result->getBounds());
         $this->assertNull($result->getStreetNumber());
         $this->assertNull($result->getStreetName());
@@ -124,8 +124,8 @@ class IP2LocationBinaryTest extends BaseTestCase
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
 
-        $this->assertEquals('37.386051', $result->getCoordinates()->getLatitude(), '', 0.001);
-        $this->assertEquals('-122.083847', $result->getCoordinates()->getLongitude(), '', 0.001);
+        $this->assertEqualsWithDelta(37.386051, $result->getCoordinates()->getLatitude(), 0.001);
+        $this->assertEqualsWithDelta(-122.083847, $result->getCoordinates()->getLongitude(), 0.001);
         $this->assertNull($result->getBounds());
         $this->assertNull($result->getStreetNumber());
         $this->assertNull($result->getStreetName());
