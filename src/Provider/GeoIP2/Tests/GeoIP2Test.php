@@ -262,7 +262,7 @@ class GeoIP2Test extends BaseTestCase
     /**
      * @param mixed $returnValue
      *
-     * @return GeoIP2Adapter|MockObject
+     * @return GeoIP2Adapter&MockObject
      */
     private function getGeoIP2AdapterMock($returnValue = '')
     {
