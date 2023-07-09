@@ -27,7 +27,7 @@ class TimedGeocoderTest extends TestCase
     private $stopwatch;
 
     /**
-     * @var Provider|MockObject
+     * @var Provider&MockObject
      */
     private $delegate;
 
