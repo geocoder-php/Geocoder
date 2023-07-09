@@ -255,7 +255,7 @@ final class Here extends AbstractHttpProvider implements Provider
 
             /** @var HereAddress $address */
             $address = $builder->build(HereAddress::class);
-            $address = $address->withLocationId($location['LocationId']);
+            $address = $address->withLocationId($location['LocationId'] ?? null);
             $address = $address->withLocationType($location['LocationType']);
             $address = $address->withAdditionalData(array_merge($additionalData, $extraAdditionalData));
             $address = $address->withShape($location['Shape'] ?? null);
