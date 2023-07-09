@@ -76,5 +76,10 @@
     "scripts": {
         "test": "vendor/bin/phpunit",
         "phpstan": "vendor/bin/phpstan analyse"
+    },
+    "config": {
+        "allow-plugins": {
+            "phpstan/extension-installer": true
+        }
     }
 }
