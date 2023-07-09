@@ -40,7 +40,8 @@
         "php-http/message": "^1.0",
         "php-http/mock-client": "^1.0",
         "phpunit/phpunit": "^9.5",
-        "symfony/stopwatch": "~2.5 || ~5.0"
+        "symfony/stopwatch": "~2.5 || ~5.0",
+        "phpstan/phpstan": "^1.10"
     },
     "suggest": {
         "ext-geoip": "Enabling the geoip extension allows you to use the MaxMindProvider.",
