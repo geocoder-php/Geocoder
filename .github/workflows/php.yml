@@ -49,4 +49,4 @@ jobs:
     - name: Install dependencies
       run: composer install --no-progress
     - name: Run PHPStan
-      run: composer run-script phpstan
+      run: composer run-script analyse
