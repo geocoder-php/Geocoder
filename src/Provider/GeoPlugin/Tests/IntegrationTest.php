@@ -27,7 +27,7 @@ class IntegrationTest extends ProviderIntegrationTest
 
     protected function createProvider(ClientInterface $httpClient)
     {
-        return new GeoPlugin($httpClient, $this->getApiKey());
+        return new GeoPlugin($httpClient);
     }
 
     protected function getCacheDir()

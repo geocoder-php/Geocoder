@@ -228,7 +228,7 @@ final class Geonames extends AbstractHttpProvider implements Provider
             $address = $address->withAsciiName($item->asciiName ?? null);
             $address = $address->withFclName($item->fclName ?? null);
             $address = $address->withAlternateNames($item->alternateNames ?? []);
-            $address = $address->withPopulation((int) $item->population ?? null);
+            $address = $address->withPopulation($item->population ?? null);
             $address = $address->withGeonameId($item->geonameId ?? null);
             $address = $address->withFcode($item->fcode ?? null);
 
