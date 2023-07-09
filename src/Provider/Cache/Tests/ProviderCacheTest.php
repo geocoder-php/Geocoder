@@ -28,7 +28,7 @@ use Psr\SimpleCache\CacheInterface;
 class ProviderCacheTest extends TestCase
 {
     /**
-     * @var Provider|MockObject
+     * @var Provider&MockObject
      */
     private $providerMock;
 
