@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Geocoder\Provider\GoogleMapsPlaces\Tests;
 
 use Geocoder\Exception\InvalidArgument;
+use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\QuotaExceeded;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\IntegrationTest\BaseTestCase;
@@ -306,6 +307,15 @@ class GoogleMapsPlacesTest extends BaseTestCase
         $resultTwo = $results->first();
         $this->assertNull($resultTwo->getOpeningHours());
         // sometimes giving: Failed asserting that Object ['openNow' => null, 'periods' => [], 'weekdayText' => []] is null
+    }
+
+    public function testInvalidAPIKey()
+    {
+        $this->expectException(InvalidCredentials::class);
+        $this->expectExceptionMessageMatches('/^API key is invalid/');
+
+        $provider = new GoogleMapsPlaces($this->getHttpClient('invalidKey'), 'invalidKey');
+        $provider->geocodeQuery(GeocodeQuery::create('White house'));
     }
 
     private function getGoogleMapsProvider(): GoogleMapsPlaces
