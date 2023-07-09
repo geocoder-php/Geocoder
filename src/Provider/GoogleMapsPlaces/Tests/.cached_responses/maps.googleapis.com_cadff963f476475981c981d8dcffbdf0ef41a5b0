@@ -1,0 +1,6 @@
+s:114:"{
+   "candidates" : [],
+   "error_message" : "The provided API key is invalid.",
+   "status" : "REQUEST_DENIED"
+}
+";
