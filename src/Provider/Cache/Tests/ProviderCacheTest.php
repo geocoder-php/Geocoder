@@ -33,7 +33,7 @@ class ProviderCacheTest extends TestCase
     private $providerMock;
 
     /**
-     * @var CacheInterface|MockObject
+     * @var CacheInterface&MockObject
      */
     private $cacheMock;
 
