@@ -73,7 +73,6 @@
             "phpstan/extension-installer": true,
             "php-http/discovery": true
         },
-        "optimize-autoloader": true,
         "sort-packages": true
     },
     "extra": {
