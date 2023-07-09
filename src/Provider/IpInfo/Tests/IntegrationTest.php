@@ -39,5 +39,6 @@ class IntegrationTest extends ProviderIntegrationTest
 
     protected function getApiKey()
     {
+        return '';
     }
 }

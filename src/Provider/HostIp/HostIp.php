@@ -35,6 +35,14 @@ final class HostIp extends AbstractHostIp
     }
 
     /**
+     * @return string
+     */
+    public function getEndpointURL(): string
+    {
+        return self::ENDPOINT_URL;
+    }
+
+    /**
      * @param string $url
      *
      * @return Collection

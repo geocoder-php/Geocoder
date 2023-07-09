@@ -44,7 +44,7 @@ class IntegrationTest extends ProviderIntegrationTest
     protected function createProvider(ClientInterface $httpClient)
     {
         // Download this BIN database from https://lite.ip2location.com/database/ip-country-region-city-latitude-longitude-zipcode
-        return new IP2LocationBinary(__DIR__.'/fixtures/IP2LOCATION-LITE-DB9.IPV6.BIN', \IP2Location\Database::FILE_IO);
+        return new IP2LocationBinary(__DIR__.'/fixtures/IP2LOCATION-LITE-DB9.IPV6.BIN', \IP2Location\Database::FILE_IO); // @phpstan-ignore-line
     }
 
     protected function getCacheDir()

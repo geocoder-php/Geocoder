@@ -79,12 +79,12 @@ final class MaxMindBinary extends AbstractProvider implements Provider
             throw new UnsupportedOperation('The MaxMindBinary provider does not support IPv6 addresses.');
         }
 
-        $geoIp = geoip_open($this->datFile, $this->openFlag);
-        $geoIpRecord = GeoIP_record_by_addr($geoIp, $address);
+        $geoIp = geoip_open($this->datFile, $this->openFlag); // @phpstan-ignore-line
+        $geoIpRecord = GeoIP_record_by_addr($geoIp, $address); // @phpstan-ignore-line
 
-        geoip_close($geoIp);
+        geoip_close($geoIp); // @phpstan-ignore-line
 
-        if (false === $geoIpRecord instanceof \GeoIpRecord) {
+        if (false === $geoIpRecord instanceof \GeoIpRecord) { // @phpstan-ignore-line
             return new AddressCollection([]);
         }
 

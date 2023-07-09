@@ -29,6 +29,8 @@ abstract class AbstractHostIp extends AbstractHttpProvider implements Provider
 {
     abstract protected function executeQuery(string $url): AddressCollection;
 
+    abstract protected function getEndpointURL(): string;
+
     /**
      * {@inheritdoc}
      */
@@ -48,7 +50,7 @@ abstract class AbstractHostIp extends AbstractHttpProvider implements Provider
             return new AddressCollection([$this->getLocationForLocalhost()]);
         }
 
-        $url = sprintf(static::ENDPOINT_URL, $address);
+        $url = sprintf($this->getEndpointURL(), $address);
 
         return $this->executeQuery($url);
     }

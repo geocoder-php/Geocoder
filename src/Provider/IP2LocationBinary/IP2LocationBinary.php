@@ -70,8 +70,8 @@ final class IP2LocationBinary extends AbstractProvider implements Provider
             throw new UnsupportedOperation('The IP2LocationBinary provider does not support street addresses.');
         }
 
-        $db = new \IP2Location\Database($this->binFile, $this->openFlag);
-        $records = $db->lookup($address, \IP2Location\Database::ALL);
+        $db = new \IP2Location\Database($this->binFile, $this->openFlag); // @phpstan-ignore-line
+        $records = $db->lookup($address, \IP2Location\Database::ALL); // @phpstan-ignore-line
 
         if (false === $records) {
             return new AddressCollection([]);

@@ -247,7 +247,7 @@ class Address implements Location
             $adminLevels[] = new AdminLevel($adminLevel['level'], $name, $adminLevel['code'] ?? null);
         }
 
-        return new static(
+        return new self(
             $data['providedBy'],
             new AdminLevelCollection($adminLevels),
             self::createCoordinates(
