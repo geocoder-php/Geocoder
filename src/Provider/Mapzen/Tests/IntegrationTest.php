@@ -21,26 +21,26 @@ use Psr\Http\Client\ClientInterface;
  */
 class IntegrationTest extends ProviderIntegrationTest
 {
-    protected $skippedTests = [
+    protected array $skippedTests = [
         'testGeocodeQuery' => 'We get wrongs cords',
         'testReverseQueryWithNoResults' => 'We weirdly find stuff here...',
     ];
 
-    protected $testIpv4 = false;
+    protected bool $testIpv4 = false;
 
-    protected $testIpv6 = false;
+    protected bool $testIpv6 = false;
 
     protected function createProvider(ClientInterface $httpClient)
     {
         return new Mapzen($httpClient, $this->getApiKey());
     }
 
-    protected function getCacheDir()
+    protected function getCacheDir(): string
     {
         return __DIR__.'/.cached_responses';
     }
 
-    protected function getApiKey()
+    protected function getApiKey(): string
     {
         return $_SERVER['MAPZEN_API_KEY'];
     }

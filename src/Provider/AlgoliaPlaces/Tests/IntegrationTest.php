@@ -29,18 +29,18 @@ use Psr\Http\Client\ClientInterface;
  */
 class IntegrationTest extends ProviderIntegrationTest
 {
-    protected $testIpv4 = false;
+    protected bool $testIpv4 = false;
 
-    protected $testIpv6 = false;
+    protected bool $testIpv6 = false;
 
-    protected $testReverse = false;
+    protected bool $testReverse = false;
 
     protected function createProvider(ClientInterface $httpClient)
     {
         return new AlgoliaPlaces($httpClient, $this->getApiKey(), $this->getAppId());
     }
 
-    protected function getCacheDir()
+    protected function getCacheDir(): string
     {
         return __DIR__.'/.cached_responses';
     }
@@ -66,17 +66,17 @@ class IntegrationTest extends ProviderIntegrationTest
         return new CachedResponseClient($client, $this->getCacheDir(), $this->getAppId());
     }
 
-    protected function getApiKey()
+    protected function getApiKey(): string
     {
         return $_SERVER['ALGOLIA_API_KEY'];
     }
 
-    protected function getAppId()
+    protected function getAppId(): string
     {
         return $_SERVER['ALGOLIA_APP_ID'];
     }
 
-    public function testGeocodeQuery()
+    public function testGeocodeQuery(): void
     {
         if (isset($this->skippedTests[__FUNCTION__])) {
             $this->markTestSkipped($this->skippedTests[__FUNCTION__]);
@@ -101,7 +101,7 @@ class IntegrationTest extends ProviderIntegrationTest
         }
     }
 
-    public function testGeocodeQueryWithNoResults()
+    public function testGeocodeQueryWithNoResults(): void
     {
         if (isset($this->skippedTests[__FUNCTION__])) {
             $this->markTestSkipped($this->skippedTests[__FUNCTION__]);
@@ -117,7 +117,7 @@ class IntegrationTest extends ProviderIntegrationTest
         $this->assertEquals(0, $result->count());
     }
 
-    public function testReverseQuery()
+    public function testReverseQuery(): void
     {
         if (isset($this->skippedTests[__FUNCTION__])) {
             $this->markTestSkipped($this->skippedTests[__FUNCTION__]);
@@ -133,7 +133,7 @@ class IntegrationTest extends ProviderIntegrationTest
         $this->assertWellFormattedResult($result);
     }
 
-    public function testReverseQueryWithNoResults()
+    public function testReverseQueryWithNoResults(): void
     {
         if (isset($this->skippedTests[__FUNCTION__])) {
             $this->markTestSkipped($this->skippedTests[__FUNCTION__]);
@@ -155,7 +155,7 @@ class IntegrationTest extends ProviderIntegrationTest
      *
      * @param $result
      */
-    private function assertWellFormattedResult(Collection $result)
+    private function assertWellFormattedResult(Collection $result): void
     {
         $this->assertInstanceOf(
             Collection::class,

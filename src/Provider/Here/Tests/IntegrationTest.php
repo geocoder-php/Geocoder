@@ -29,16 +29,16 @@ use Psr\Http\Client\ClientInterface;
  */
 class IntegrationTest extends ProviderIntegrationTest
 {
-    protected $testIpv4 = false;
+    protected bool $testIpv4 = false;
 
-    protected $testIpv6 = false;
+    protected bool $testIpv6 = false;
 
     protected function createProvider(ClientInterface $httpClient, bool $useCIT = false)
     {
         return Here::createUsingApiKey($httpClient, $this->getApiKey(), $useCIT);
     }
 
-    protected function getCacheDir()
+    protected function getCacheDir(): string
     {
         return __DIR__.'/.cached_responses';
     }
@@ -64,12 +64,12 @@ class IntegrationTest extends ProviderIntegrationTest
         return new CachedResponseClient($client, $this->getCacheDir(), $this->getApiKey());
     }
 
-    protected function getApiKey()
+    protected function getApiKey(): string
     {
         return $_SERVER['HERE_APP_ID'];
     }
 
-    protected function getAppId()
+    protected function getAppId(): string
     {
         return $_SERVER['HERE_APP_ID'];
     }
@@ -77,12 +77,12 @@ class IntegrationTest extends ProviderIntegrationTest
     /**
      * @return string the Here AppCode or substring to be removed from cache
      */
-    protected function getAppCode()
+    protected function getAppCode(): string
     {
         return $_SERVER['HERE_APP_CODE'];
     }
 
-    public function testGeocodeQuery()
+    public function testGeocodeQuery(): void
     {
         if (isset($this->skippedTests[__FUNCTION__])) {
             $this->markTestSkipped($this->skippedTests[__FUNCTION__]);
@@ -107,7 +107,7 @@ class IntegrationTest extends ProviderIntegrationTest
         }
     }
 
-    public function testGeocodeQueryCIT()
+    public function testGeocodeQueryCIT(): void
     {
         if (isset($this->skippedTests[__FUNCTION__])) {
             $this->markTestSkipped($this->skippedTests[__FUNCTION__]);
@@ -132,7 +132,7 @@ class IntegrationTest extends ProviderIntegrationTest
         }
     }
 
-    public function testGeocodeQueryWithNoResults()
+    public function testGeocodeQueryWithNoResults(): void
     {
         if (isset($this->skippedTests[__FUNCTION__])) {
             $this->markTestSkipped($this->skippedTests[__FUNCTION__]);
@@ -148,7 +148,7 @@ class IntegrationTest extends ProviderIntegrationTest
         $this->assertEquals(0, $result->count());
     }
 
-    public function testReverseQuery()
+    public function testReverseQuery(): void
     {
         if (isset($this->skippedTests[__FUNCTION__])) {
             $this->markTestSkipped($this->skippedTests[__FUNCTION__]);
@@ -164,7 +164,7 @@ class IntegrationTest extends ProviderIntegrationTest
         $this->assertWellFormattedResult($result);
     }
 
-    public function testReverseQueryCIT()
+    public function testReverseQueryCIT(): void
     {
         if (isset($this->skippedTests[__FUNCTION__])) {
             $this->markTestSkipped($this->skippedTests[__FUNCTION__]);
@@ -180,7 +180,7 @@ class IntegrationTest extends ProviderIntegrationTest
         $this->assertWellFormattedResult($result);
     }
 
-    public function testReverseQueryWithNoResults()
+    public function testReverseQueryWithNoResults(): void
     {
         if (isset($this->skippedTests[__FUNCTION__])) {
             $this->markTestSkipped($this->skippedTests[__FUNCTION__]);

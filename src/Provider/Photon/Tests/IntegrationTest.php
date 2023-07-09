@@ -19,15 +19,15 @@ use Psr\Http\Client\ClientInterface;
  */
 class IntegrationTest extends ProviderIntegrationTest
 {
-    protected $testAddress = true;
+    protected bool $testAddress = true;
 
-    protected $testReverse = true;
+    protected bool $testReverse = true;
 
-    protected $testIpv4 = false;
+    protected bool $testIpv4 = false;
 
-    protected $testIpv6 = false;
+    protected bool $testIpv6 = false;
 
-    protected $skippedTests = [
+    protected array $skippedTests = [
         'testGeocodeQuery' => 'Photon API returns "Great George Street" for "10 Downing St, London, UK" query.',
         'testReverseQueryWithNoResults' => 'Photon API returns "Atlas Buoy 0.00E 0.00N" for reverse query at 0,0.',
     ];
@@ -37,12 +37,12 @@ class IntegrationTest extends ProviderIntegrationTest
         return Photon::withKomootServer($httpClient);
     }
 
-    protected function getCacheDir()
+    protected function getCacheDir(): string
     {
         return __DIR__.'/.cached_responses';
     }
 
-    protected function getApiKey()
+    protected function getApiKey(): string
     {
         return '';
     }

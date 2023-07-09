@@ -21,21 +21,21 @@ use Psr\Http\Client\ClientInterface;
  */
 class IntegrationTest extends ProviderIntegrationTest
 {
-    protected $testIpv4 = false;
+    protected bool $testIpv4 = false;
 
-    protected $testIpv6 = false;
+    protected bool $testIpv6 = false;
 
     protected function createProvider(ClientInterface $httpClient)
     {
         return new Mapbox($httpClient, $this->getApiKey());
     }
 
-    protected function getCacheDir()
+    protected function getCacheDir(): string
     {
         return __DIR__.'/.cached_responses';
     }
 
-    protected function getApiKey()
+    protected function getApiKey(): string
     {
         return $_SERVER['MAPBOX_GEOCODING_KEY'];
     }
