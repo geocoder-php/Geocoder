@@ -60,10 +60,6 @@ class ProviderAggregator implements Geocoder
      */
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
-        if (null === $query->getLimit()) {
-            $query = $query->withLimit($this->limit);
-        }
-
         return call_user_func($this->decider, $query, $this->providers, $this->provider)->geocodeQuery($query);
     }
 
@@ -72,10 +68,6 @@ class ProviderAggregator implements Geocoder
      */
     public function reverseQuery(ReverseQuery $query): Collection
     {
-        if (null === $query->getLimit()) {
-            $query = $query->withLimit($this->limit);
-        }
-
         return call_user_func($this->decider, $query, $this->providers, $this->provider)->reverseQuery($query);
     }
 
@@ -174,7 +166,7 @@ class ProviderAggregator implements Geocoder
      *
      * @throws ProviderNotRegistered
      */
-    private static function getProvider($query, array $providers, Provider $currentProvider = null): Provider
+    private static function getProvider($query, array $providers, Provider $currentProvider = null): Provider // @phpstan-ignore-line
     {
         if (null !== $currentProvider) {
             return $currentProvider;

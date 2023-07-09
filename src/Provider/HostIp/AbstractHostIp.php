@@ -73,8 +73,7 @@ abstract class AbstractHostIp extends AbstractHttpProvider implements Provider
         return empty($data['lat'])
             && empty($data['lng'])
             && '(Unknown City?)' === $data['city']
-            && '(Unknown Country?)' === $data['country_name']
-            && 'XX' === $data;
+            && '(Unknown Country?)' === $data['country_name'];
     }
 
     /**
@@ -87,8 +86,7 @@ abstract class AbstractHostIp extends AbstractHttpProvider implements Provider
         return empty($data['lat'])
             && empty($data['lng'])
             && '(Private Address)' === $data['city']
-            && '(Private Address)' === $data['country_name']
-            && 'XX' === $data;
+            && '(Private Address)' === $data['country_name'];
     }
 
     /**

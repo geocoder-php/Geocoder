@@ -298,14 +298,14 @@ class GoogleMapsPlacesTest extends BaseTestCase
 
         $this->markTestIncomplete('Test is giving irregular results. Marking incomplete for now.');
 
-        /** @var GooglePlace $resultOne */
-        $resultOne = $results->get(13);
-        $this->assertNull($resultOne->getOpeningHours()->isOpenNow());
+        // /** @var GooglePlace $resultOne */
+        // $resultOne = $results->get(13);
+        // $this->assertNull($resultOne->getOpeningHours()->isOpenNow());
         // sometimes giving: Error: Call to a member function isOpenNow() on null
 
-        /** @var GooglePlace $resultTwo */
-        $resultTwo = $results->first();
-        $this->assertNull($resultTwo->getOpeningHours());
+        // /** @var GooglePlace $resultTwo */
+        // $resultTwo = $results->first();
+        // $this->assertNull($resultTwo->getOpeningHours());
         // sometimes giving: Failed asserting that Object ['openNow' => null, 'periods' => [], 'weekdayText' => []] is null
     }
 

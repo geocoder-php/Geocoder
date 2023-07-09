@@ -1,6 +1,7 @@
 parameters:
-    level: 3
+    level: 4
     paths:
         - src
     excludePaths:
         - **/vendor/**
+    treatPhpDocTypesAsCertain: false
