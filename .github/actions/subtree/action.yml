@@ -1,0 +1,44 @@
+# This worflow is based on GitHub documentation:
+# https://docs.github.com/en/get-started/using-git/splitting-a-subfolder-out-into-a-new-repository
+# This workflow uses https://github.com/newren/git-filter-repo tool.
+
+name: "Subtree Split"
+description: "Take the content of one repository and split it into many smaller ones"
+inputs:
+  directory:
+    description: "Directory to split"
+    required: true
+  repository:
+    description: "Repository to push to (in the same organization)"
+    required: true
+outputs:
+  changes:
+    description: "Is there any changes in the directory?"
+    value: ${{ steps.changes.outputs.directory }}
+  files:
+    description: "List of files changed in the directory"
+    value: ${{ steps.changes.outputs.files }}
+runs:
+  using: "composite"
+  steps:
+    - name: Detect changes
+      uses: dorny/paths-filter@v2
+      id: changes
+      with:
+        list-files: shell
+        filters: |
+          directory:
+            - "${{ inputs.directory }}/**"
+    - name: Subtree
+      if: steps.changes.outputs.directory == 'true'
+      shell: bash
+      run: |
+        wget -P /usr/local/bin https://raw.githubusercontent.com/newren/git-filter-repo/main/git-filter-repo
+        chmod +x /usr/local/bin/git-filter-repo
+        git filter-repo --debug --force --subdirectory-filter "${{ inputs.directory }}/"
+    - name: Push subtree
+      if: steps.changes.outputs.directory == 'true'
+      shell: bash
+      run: |
+        git remote add subtree "https://github.com/geocoder-php/${{ inputs.repository }}.git"
+        git push --force --set-upstream subtree master

@@ -20,7 +20,7 @@ use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Provider\Provider;
-use Http\Client\HttpClient;
+use Psr\Http\Client\ClientInterface;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -33,10 +33,10 @@ final class FreeGeoIp extends AbstractHttpProvider implements Provider
     private $baseUrl;
 
     /**
-     * @param HttpClient $client
-     * @param string     $baseUrl
+     * @param ClientInterface $client
+     * @param string          $baseUrl
      */
-    public function __construct(HttpClient $client, string $baseUrl = 'https://freegeoip.app/json/%s')
+    public function __construct(ClientInterface $client, string $baseUrl = 'https://freegeoip.app/json/%s')
     {
         parent::__construct($client);
 

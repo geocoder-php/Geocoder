@@ -14,7 +14,7 @@ namespace Geocoder\Provider\IP2LocationBinary\Tests;
 
 use Geocoder\IntegrationTest\ProviderIntegrationTest;
 use Geocoder\Provider\IP2LocationBinary\IP2LocationBinary;
-use Http\Client\HttpClient;
+use Psr\Http\Client\ClientInterface;
 
 /**
  * @author IP2Location <support@ip2location.com>
@@ -41,7 +41,7 @@ class IntegrationTest extends ProviderIntegrationTest
         parent::setUpBeforeClass();
     }
 
-    protected function createProvider(HttpClient $httpClient)
+    protected function createProvider(ClientInterface $httpClient)
     {
         // Download this BIN database from https://lite.ip2location.com/database/ip-country-region-city-latitude-longitude-zipcode
         return new IP2LocationBinary(__DIR__.'/fixtures/IP2LOCATION-LITE-DB9.IPV6.BIN', \IP2Location\Database::FILE_IO);

@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: ['7.3', '7.4', '8.0']
+        php-version: ['7.4', '8.0', '8.1', '8.2']
         provider:
           - AlgoliaPlaces
           - ArcGISOnline
@@ -52,7 +52,7 @@ jobs:
           - TomTom
           - Yandex
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Use PHP ${{ matrix.php-version }}
       uses: shivammathur/setup-php@v2
       with:
@@ -74,11 +74,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: ['7.3', '7.4']
+        php-version: ['7.4']
         provider:
           - Geoip
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Use PHP ${{ matrix.php-version }}
       uses: shivammathur/setup-php@v2
       with:

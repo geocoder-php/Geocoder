@@ -23,7 +23,7 @@ use Geocoder\Query\ReverseQuery;
 use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Provider\Mapbox\Model\MapboxAddress;
 use Geocoder\Provider\Provider;
-use Http\Client\HttpClient;
+use Psr\Http\Client\ClientInterface;
 
 final class Mapbox extends AbstractHttpProvider implements Provider
 {
@@ -124,7 +124,7 @@ final class Mapbox extends AbstractHttpProvider implements Provider
     const DEFAULT_TYPE = self::TYPE_ADDRESS;
 
     /**
-     * @var HttpClient
+     * @var ClientInterface
      */
     private $client;
 
@@ -144,13 +144,13 @@ final class Mapbox extends AbstractHttpProvider implements Provider
     private $geocodingMode;
 
     /**
-     * @param HttpClient  $client        An HTTP adapter
-     * @param string      $accessToken   Your Mapbox access token
-     * @param string|null $country
-     * @param string      $geocodingMode
+     * @param ClientInterface $client        An HTTP adapter
+     * @param string          $accessToken   Your Mapbox access token
+     * @param string|null     $country
+     * @param string          $geocodingMode
      */
     public function __construct(
-        HttpClient $client,
+        ClientInterface $client,
         string $accessToken,
         string $country = null,
         string $geocodingMode = self::GEOCODING_MODE_PLACES

@@ -20,7 +20,7 @@ use Geocoder\Model\AddressCollection;
 use Geocoder\Provider\Provider;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Http\Client\HttpClient;
+use Psr\Http\Client\ClientInterface;
 use stdClass;
 
 /**
@@ -69,7 +69,7 @@ class AzureMaps extends AbstractHttpProvider implements Provider
      * AzureMaps constructor.
      */
     public function __construct(
-        HttpClient $client,
+        ClientInterface $client,
         string $subscriptionKey,
         array $options = [],
         string $format = 'json'

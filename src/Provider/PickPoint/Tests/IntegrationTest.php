@@ -12,14 +12,14 @@ namespace Geocoder\Provider\PickPoint\Tests;
 
 use Geocoder\IntegrationTest\ProviderIntegrationTest;
 use Geocoder\Provider\PickPoint\PickPoint;
-use Http\Client\HttpClient;
+use Psr\Http\Client\ClientInterface;
 
 /**
  * @author Vladimir Kalinkin <vova.kalinkin@gmail.com>
  */
 class IntegrationTest extends ProviderIntegrationTest
 {
-    protected function createProvider(HttpClient $httpClient)
+    protected function createProvider(ClientInterface $httpClient)
     {
         return new PickPoint($httpClient, $this->getApiKey());
     }

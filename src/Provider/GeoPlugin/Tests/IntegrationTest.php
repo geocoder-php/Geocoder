@@ -14,7 +14,7 @@ namespace Geocoder\Provider\GeoPlugin\Tests;
 
 use Geocoder\IntegrationTest\ProviderIntegrationTest;
 use Geocoder\Provider\GeoPlugin\GeoPlugin;
-use Http\Client\HttpClient;
+use Psr\Http\Client\ClientInterface;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
@@ -25,7 +25,7 @@ class IntegrationTest extends ProviderIntegrationTest
 
     protected $testReverse = false;
 
-    protected function createProvider(HttpClient $httpClient)
+    protected function createProvider(ClientInterface $httpClient)
     {
         return new GeoPlugin($httpClient, $this->getApiKey());
     }

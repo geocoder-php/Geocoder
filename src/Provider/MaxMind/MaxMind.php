@@ -22,7 +22,7 @@ use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Provider\Provider;
-use Http\Client\HttpClient;
+use Psr\Http\Client\ClientInterface;
 
 /**
  * @author Andrea Cristaudo <andrea.cristaudo@gmail.com>
@@ -55,11 +55,11 @@ final class MaxMind extends AbstractHttpProvider implements Provider
     private $service = null;
 
     /**
-     * @param HttpClient $client  an HTTP adapter
-     * @param string     $apiKey  an API key
-     * @param string     $service the specific Maxmind service to use (optional)
+     * @param ClientInterface $client  an HTTP adapter
+     * @param string          $apiKey  an API key
+     * @param string          $service the specific Maxmind service to use (optional)
      */
-    public function __construct(HttpClient $client, string $apiKey, string $service = self::CITY_EXTENDED_SERVICE)
+    public function __construct(ClientInterface $client, string $apiKey, string $service = self::CITY_EXTENDED_SERVICE)
     {
         if (empty($apiKey)) {
             throw new InvalidCredentials('No API key provided.');

@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Geocoder\Provider\LocationIQ;
 
 use Geocoder\Collection;
+use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Location;
@@ -22,7 +23,7 @@ use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Provider\Provider;
-use Http\Client\HttpClient;
+use Psr\Http\Client\ClientInterface;
 
 /**
  * @author Srihari Thalla <srihari@unwiredlabs.com>
@@ -32,7 +33,20 @@ final class LocationIQ extends AbstractHttpProvider implements Provider
     /**
      * @var string
      */
-    const BASE_API_URL = 'https://locationiq.org/v1';
+    const BASE_API_URL = 'https://{region}.locationiq.com/v1';
+
+    /**
+     * @var string
+     */
+    protected $baseUrl;
+
+    /**
+     * @var array
+     */
+    protected $regions = [
+        'us1',
+        'eu1',
+    ];
 
     /**
      * @var string
@@ -40,16 +54,22 @@ final class LocationIQ extends AbstractHttpProvider implements Provider
     private $apiKey;
 
     /**
-     * @param HttpClient $client an HTTP adapter
-     * @param string     $apiKey an API key
+     * @param ClientInterface $client an HTTP adapter
+     * @param string          $apiKey an API key
      */
-    public function __construct(HttpClient $client, string $apiKey)
+    public function __construct(ClientInterface $client, string $apiKey, string $region = null)
     {
         if (empty($apiKey)) {
             throw new InvalidCredentials('No API key provided.');
         }
 
         $this->apiKey = $apiKey;
+        if (null === $region) {
+            $region = $this->regions[0];
+        } elseif (true !== in_array($region, $this->regions, true)) {
+            throw new InvalidArgument(sprintf('`region` must be null or one of `%s`', implode('`, `', $this->regions)));
+        }
+        $this->baseUrl = str_replace('{region}', $region, self::BASE_API_URL);
 
         parent::__construct($client);
     }
@@ -177,12 +197,12 @@ final class LocationIQ extends AbstractHttpProvider implements Provider
 
     private function getGeocodeEndpointUrl(): string
     {
-        return self::BASE_API_URL.'/search.php?q=%s&format=xmlv1.1&addressdetails=1&normalizecity=1&limit=%d&key='.$this->apiKey;
+        return $this->baseUrl.'/search.php?q=%s&format=xmlv1.1&addressdetails=1&normalizecity=1&limit=%d&key='.$this->apiKey;
     }
 
     private function getReverseEndpointUrl(): string
     {
-        return self::BASE_API_URL.'/reverse.php?format=xmlv1.1&lat=%F&lon=%F&addressdetails=1&normalizecity=1&zoom=%d&key='.$this->apiKey;
+        return $this->baseUrl.'/reverse.php?format=xmlv1.1&lat=%F&lon=%F&addressdetails=1&normalizecity=1&zoom=%d&key='.$this->apiKey;
     }
 
     private function getNodeValue(\DOMNodeList $element)

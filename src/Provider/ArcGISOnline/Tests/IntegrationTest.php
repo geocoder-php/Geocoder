@@ -14,7 +14,7 @@ namespace Geocoder\Provider\ArcGISOnlineTest\Tests;
 
 use Geocoder\IntegrationTest\ProviderIntegrationTest;
 use Geocoder\Provider\ArcGISOnline\ArcGISOnline;
-use Http\Client\HttpClient;
+use Psr\Http\Client\ClientInterface;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
@@ -29,7 +29,7 @@ class IntegrationTest extends ProviderIntegrationTest
         'testReverseQueryWithNoResults' => 'ArcGIS REST API returns "אצטדיון כדורגל עירוני" for reverse query at 0,0.',
     ];
 
-    protected function createProvider(HttpClient $httpClient)
+    protected function createProvider(ClientInterface $httpClient)
     {
         return new ArcGISOnline($httpClient);
     }

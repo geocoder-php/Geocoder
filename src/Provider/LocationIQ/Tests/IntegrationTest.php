@@ -12,7 +12,7 @@ namespace Geocoder\Provider\LocationIQ\Tests;
 
 use Geocoder\IntegrationTest\ProviderIntegrationTest;
 use Geocoder\Provider\LocationIQ\LocationIQ;
-use Http\Client\HttpClient;
+use Psr\Http\Client\ClientInterface;
 
 /**
  * @author Srihari Thalla <srihari@unwiredlabs.com>
@@ -27,7 +27,7 @@ class IntegrationTest extends ProviderIntegrationTest
 
     protected $testIpv6 = false;
 
-    protected function createProvider(HttpClient $httpClient)
+    protected function createProvider(ClientInterface $httpClient)
     {
         return new LocationIQ($httpClient, $this->getApiKey());
     }

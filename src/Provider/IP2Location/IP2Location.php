@@ -21,7 +21,7 @@ use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Provider\Provider;
-use Http\Client\HttpClient;
+use Psr\Http\Client\ClientInterface;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -44,10 +44,10 @@ final class IP2Location extends AbstractHttpProvider implements Provider
     private $endpointUrl;
 
     /**
-     * @param HttpClient $client a HTTP adapter
-     * @param string     $apiKey an API key
+     * @param ClientInterface $client a HTTP adapter
+     * @param string          $apiKey an API key
      */
-    public function __construct(HttpClient $client, string $apiKey)
+    public function __construct(ClientInterface $client, string $apiKey)
     {
         parent::__construct($client);
 
@@ -110,14 +110,14 @@ final class IP2Location extends AbstractHttpProvider implements Provider
         }
 
         if (isset($data['response'])) {
-            if (preg_match('/suspended|denied|invalid account/i', $data['response'])) {
+            if (preg_match('/suspended|denied|invalid/i', $data['response'])) {
                 throw new InvalidCredentials('API Key provided is not valid.');
             } elseif (preg_match('/insufficient/i', $data['response'])) {
                 throw new InvalidCredentials('Insufficient credits to use IP2Location service.');
             } elseif (preg_match('/invalid ip address/i', $data['response'])) {
                 throw new UnsupportedOperation('Invalid IP address.');
             } else {
-                throw new UnsupportedOperation('Unexpected error.');
+                throw new UnsupportedOperation(sprintf('Unexpected error: %s.', $data['response']));
             }
         }
 

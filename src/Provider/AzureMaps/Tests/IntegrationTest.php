@@ -9,6 +9,7 @@
  */
 
 use Geocoder\IntegrationTest\ProviderIntegrationTest;
+use Psr\Http\Client\ClientInterface;
 
 class IntegrationTest extends ProviderIntegrationTest
 {
@@ -19,7 +20,7 @@ class IntegrationTest extends ProviderIntegrationTest
     /**
      * @return \Geocoder\Provider\Provider that is used in the tests
      */
-    protected function createProvider(Http\Client\HttpClient $httpClient)
+    protected function createProvider(ClientInterface $httpClient)
     {
         return new \Geocoder\Provider\AzureMaps\AzureMaps($httpClient, $_SERVER['AZURE_MAPS_SUBSCRIPTION_KEY']);
     }

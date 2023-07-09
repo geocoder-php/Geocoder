@@ -22,7 +22,7 @@ use Geocoder\Model\AddressCollection;
 use Geocoder\Provider\Provider;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Http\Client\HttpClient;
+use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
 
 class AlgoliaPlaces extends AbstractHttpProvider implements Provider
@@ -53,10 +53,10 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
     /** @var GeocodeQuery */
     private $query;
 
-    /** @var HttpClient */
+    /** @var ClientInterface */
     private $client;
 
-    public function __construct(HttpClient $client, string $apiKey = null, string $appId = null)
+    public function __construct(ClientInterface $client, string $apiKey = null, string $appId = null)
     {
         parent::__construct($client);
 

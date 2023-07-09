@@ -14,7 +14,7 @@ namespace Geocoder\Provider\Geoip\Tests;
 
 use Geocoder\IntegrationTest\ProviderIntegrationTest;
 use Geocoder\Provider\Geoip\Geoip;
-use Http\Client\HttpClient;
+use Psr\Http\Client\ClientInterface;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
@@ -36,7 +36,7 @@ class IntegrationTest extends ProviderIntegrationTest
         }
     }
 
-    protected function createProvider(HttpClient $httpClient)
+    protected function createProvider(ClientInterface $httpClient)
     {
         return new Geoip();
     }

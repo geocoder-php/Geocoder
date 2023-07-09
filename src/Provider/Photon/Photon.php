@@ -23,7 +23,7 @@ use Geocoder\Query\ReverseQuery;
 use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Provider\Provider;
 use Geocoder\Provider\Photon\Model\PhotonAddress;
-use Http\Client\HttpClient;
+use Psr\Http\Client\ClientInterface;
 
 /**
  * @author Niklas Närhinen <niklas@narhinen.net>
@@ -37,20 +37,20 @@ final class Photon extends AbstractHttpProvider implements Provider
     private $rootUrl;
 
     /**
-     * @param HttpClient $client an HTTP client
+     * @param ClientInterface $client an HTTP client
      *
      * @return Photon
      */
-    public static function withKomootServer(HttpClient $client): self
+    public static function withKomootServer(ClientInterface $client): self
     {
         return new self($client, 'https://photon.komoot.io');
     }
 
     /**
-     * @param HttpClient $client  an HTTP client
-     * @param string     $rootUrl Root URL of the photon server
+     * @param ClientInterface $client  an HTTP client
+     * @param string          $rootUrl Root URL of the photon server
      */
-    public function __construct(HttpClient $client, $rootUrl)
+    public function __construct(ClientInterface $client, $rootUrl)
     {
         parent::__construct($client);
 
@@ -142,11 +142,13 @@ final class Photon extends AbstractHttpProvider implements Provider
         $builder->setPostalCode($properties->postcode ?? null);
         $builder->setLocality($properties->city ?? null);
         $builder->setCountry($properties->country ?? null);
+        $builder->setCountryCode($properties->countrycode ?? null);
 
         if (isset($properties->extent)) {
             $builder->setBounds($properties->extent[0], $properties->extent[2], $properties->extent[1], $properties->extent[3]);
         }
 
+        /** @var PhotonAddress $address */
         $address = $builder->build(PhotonAddress::class)
             ->withOSMId($properties->osm_id ?? null)
             ->withOSMType($properties->osm_type ?? null)

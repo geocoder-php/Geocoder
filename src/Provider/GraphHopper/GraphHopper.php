@@ -17,11 +17,12 @@ use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Model\Address;
 use Geocoder\Model\AddressCollection;
+use Geocoder\Model\Bounds;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Provider\Provider;
-use Http\Client\HttpClient;
+use Psr\Http\Client\ClientInterface;
 
 /**
  * @author Gary Gale <gary@vicchi.org>
@@ -44,10 +45,10 @@ final class GraphHopper extends AbstractHttpProvider implements Provider
     private $apiKey;
 
     /**
-     * @param HttpClient $client an HTTP adapter
-     * @param string     $apiKey an API key
+     * @param ClientInterface $client an HTTP adapter
+     * @param string          $apiKey an API key
      */
-    public function __construct(HttpClient $client, string $apiKey)
+    public function __construct(ClientInterface $client, string $apiKey)
     {
         if (empty($apiKey)) {
             throw new InvalidCredentials('No API key provided.');
@@ -70,6 +71,11 @@ final class GraphHopper extends AbstractHttpProvider implements Provider
         }
 
         $url = sprintf(self::GEOCODE_ENDPOINT_URL, urlencode($address), $this->apiKey, $query->getLocale(), $query->getLimit());
+
+        $bounds = $query->getBounds();
+        if ($bounds instanceof Bounds) {
+            $url .= sprintf('&bbox=%f,%f,%f,%f', $bounds->getWest(), $bounds->getSouth(), $bounds->getEast(), $bounds->getNorth());
+        }
 
         return $this->executeQuery($url);
     }

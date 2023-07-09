@@ -2,6 +2,22 @@
 
 The change log describes what is "Added", "Removed", "Changed" or "Fixed" between each release.
 
+## 4.6.0
+
+### Removed
+
+- Drop support for PHP 7.3
+
+## 4.5.0
+
+### Added
+
+- Add support for PHP 8.1
+
+### Changed
+
+- Replace `empty()` by more strict checks
+
 ## 4.4.0
 
 ### Added

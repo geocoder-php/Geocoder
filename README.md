@@ -30,7 +30,7 @@ providing a powerful abstraction layer for geocoding manipulations.
 To install a Geocoder there are two things you need to know:
 
 1) What [Geocoder provider](https://packagist.org/providers/geocoder-php/provider-implementation) you want to use
-2) What [HTTP client/adapter](https://packagist.org/providers/php-http/client-implementation) you want to use.
+2) What [HTTP client/adapter](https://packagist.org/providers/psr/http-client-implementation) you want to use.
 
 ### Geocoder providers
 
@@ -40,23 +40,21 @@ providers [at Packagist](https://packagist.org/providers/geocoder-php/provider-i
 ### HTTP Clients
 
 In order to talk to geocoding APIs, you need HTTP adapters. While it was part of
-the library in Geocoder before, Geocoder 4.x and upper now relies on HTTPlug
+the library in Geocoder before, Geocoder 4.x and upper now relies on [PSR-18](https://www.php-fig.org/psr/psr-18/)
 which defines how HTTP message should be sent and received. You can use any library to send HTTP messages
-that implements [php-http/client-implementation](https://packagist.org/providers/php-http/client-implementation).
+that implements [psr/http-client-implementation](https://packagist.org/providers/psr/http-client-implementation).
 
-Here is a list of all officially supported clients and adapters by HTTPlug: <http://docs.php-http.org/en/latest/clients.html>
-
-Read more about HTTPlug in [their docs](http://docs.php-http.org/en/latest/httplug/users.html).
+Read more about PSR-18 in [this blog](https://www.php-fig.org/blog/2018/11/psr-18-the-php-standard-for-http-clients/).
 
 ### Summary (Just give me the command)
 
-To install Google Maps geocoder with Guzzle 6 you may run the following command:
+To install Google Maps geocoder with Guzzle 7 you may run the following command:
 
 ```cmd
-composer require geocoder-php/google-maps-provider php-http/guzzle6-adapter
+composer require geocoder-php/google-maps-provider guzzlehttp/guzzle
 ```
 
-Or using the curl client (you'll need to provide a PSR7 implementation such as `nyholm/psr7` if not using guzzle)
+Or using the curl client (you'll need to provide a PSR7 implementation such as `nyholm/psr7` if not using Guzzle)
 
 ```cmd
 composer require geocoder-php/google-maps-provider php-http/curl-client nyholm/psr7
@@ -81,13 +79,13 @@ We have a small cookbook where you can find examples on common use cases:
 
 ## Usage
 
-In the code snippet below we use GoogleMaps and Guzzle6.
+In the code snippet below we use GoogleMaps and Guzzle 7.
 
 ```php
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 
-$httpClient = new \Http\Adapter\Guzzle6\Client();
+$httpClient = new \GuzzleHttp\Client();
 $provider = new \Geocoder\Provider\GoogleMaps\GoogleMaps($httpClient, null, 'your-api-key');
 $geocoder = new \Geocoder\StatefulGeocoder($provider, 'en');
 
@@ -138,6 +136,7 @@ Provider       | Package | Features | Stats
 [LocationIQ](https://github.com/geocoder-php/locationiq-provider) | `geocoder-php/locationiq-provider` | address, reverse <br> [Website](https://locationiq.org/) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/locationiq-provider/v/stable)](https://packagist.org/packages/geocoder-php/locationiq-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/locationiq-provider/downloads)](https://packagist.org/packages/geocoder-php/locationiq-provider)
 [Mapbox](https://github.com/geocoder-php/mapbox-provider) | `geocoder-php/mapbox-provider` | address, reverse <br> [Website](https://www.mapbox.com/geocoding/) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/mapbox-provider/v/stable)](https://packagist.org/packages/geocoder-php/mapbox-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/mapbox-provider/downloads)](https://packagist.org/packages/geocoder-php/mapbox-provider)
 [MapQuest](https://github.com/geocoder-php/mapquest-provider) | `geocoder-php/mapquest-provider` | address, reverse <br> [Website](http://developer.mapquest.com/web/products/dev-services/geocoding-ws) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/mapquest-provider/v/stable)](https://packagist.org/packages/geocoder-php/mapquest-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/mapquest-provider/downloads)](https://packagist.org/packages/geocoder-php/mapquest-provider)
+[MapTiler](https://github.com/geocoder-php/maptiler-provider) | `geocoder-php/maptiler-provider` | address, reverse <br> [Website](https://www.maptiler.com/cloud/geocoding/) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/maptiler-provider/v/stable)](https://packagist.org/packages/geocoder-php/maptiler-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/maptiler-provider/downloads)](https://packagist.org/packages/geocoder-php/maptiler-provider)
 [Nominatim](https://github.com/geocoder-php/nominatim-provider) <br> (OpenStreetMap) | `geocoder-php/nominatim-provider` | address, reverse <br> [Website](http://wiki.openstreetmap.org/wiki/Nominatim) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/nominatim-provider/v/stable)](https://packagist.org/packages/geocoder-php/nominatim-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/nominatim-provider/downloads)](https://packagist.org/packages/geocoder-php/nominatim-provider)
 [OpenCage](https://github.com/geocoder-php/open-cage-provider) | `geocoder-php/open-cage-provider` | address, reverse <br> [Website](https://opencagedata.com/) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/open-cage-provider/v/stable)](https://packagist.org/packages/geocoder-php/open-cage-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/open-cage-provider/downloads)](https://packagist.org/packages/geocoder-php/open-cage-provider)
 [OpenRouteService](https://github.com/geocoder-php/openrouteservice-provider) | `geocoder-php/openrouteservice-provider` | address, reverse <br> [Website](https://openrouteservice.org/) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/openrouteservice-provider/v/stable)](https://packagist.org/packages/geocoder-php/openrouteservice-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/openrouteservice-provider/downloads)](https://packagist.org/packages/geocoder-php/openrouteservice-provider)
@@ -202,13 +201,13 @@ when a provider returns a result. The result is returned by `GoogleMaps` because
 use Geocoder\Query\GeocodeQuery;
 
 $geocoder = new \Geocoder\ProviderAggregator();
-$adapter  = new \Http\Adapter\Guzzle6\Client();
+$client  = new \GuzzleHttp\Client();
 
 $chain = new \Geocoder\Provider\Chain\Chain([
-    new \Geocoder\Provider\FreeGeoIp\FreeGeoIp($adapter),
-    new \Geocoder\Provider\HostIp\HostIp($adapter),
-    new \Geocoder\Provider\GoogleMaps\GoogleMaps($adapter, 'France'),
-    new \Geocoder\Provider\BingMaps\BingMaps($adapter, '<API_KEY>'),
+    new \Geocoder\Provider\FreeGeoIp\FreeGeoIp($client),
+    new \Geocoder\Provider\HostIp\HostIp($client),
+    new \Geocoder\Provider\GoogleMaps\GoogleMaps($client, 'France'),
+    new \Geocoder\Provider\BingMaps\BingMaps($client, '<API_KEY>'),
     // ...
 ]);
 
@@ -229,15 +228,15 @@ decide which provider to use later on.
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 
-$adapter  = new \Http\Adapter\Guzzle6\Client();
+$client  = new \GuzzleHttp\Client();
 $geocoder = new \Geocoder\ProviderAggregator();
 
 $geocoder->registerProviders([
-    new \Geocoder\Provider\GoogleMaps\GoogleMaps($adapter),
-    new \Geocoder\Provider\GoogleMaps\GoogleMapsBusiness($adapter, '<CLIENT_ID>'),
-    new \Geocoder\Provider\Yandex\Yandex($adapter),
-    new \Geocoder\Provider\MaxMind\MaxMind($adapter, '<MAXMIND_API_KEY>'),
-    new \Geocoder\Provider\ArcGISOnline\ArcGISOnline($adapter),
+    new \Geocoder\Provider\GoogleMaps\GoogleMaps($client),
+    new \Geocoder\Provider\GoogleMaps\GoogleMapsBusiness($client, '<CLIENT_ID>'),
+    new \Geocoder\Provider\Yandex\Yandex($client),
+    new \Geocoder\Provider\MaxMind\MaxMind($client, '<MAXMIND_API_KEY>'),
+    new \Geocoder\Provider\ArcGISOnline\ArcGISOnline($client),
 ]);
 
 $geocoder->registerProvider(new \Geocoder\Provider\Nominatim\Nominatim($adapter, 'https://your.nominatim.server'));

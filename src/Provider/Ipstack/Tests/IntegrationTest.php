@@ -14,7 +14,7 @@ namespace Geocoder\Provider\Ipstack\Tests;
 
 use Geocoder\IntegrationTest\ProviderIntegrationTest;
 use Geocoder\Provider\Ipstack\Ipstack;
-use Http\Client\HttpClient;
+use Psr\Http\Client\ClientInterface;
 
 /**
  * @author Jonas Gielen <gielenjonas@gmail.com>
@@ -25,7 +25,7 @@ class IntegrationTest extends ProviderIntegrationTest
 
     protected $testReverse = false;
 
-    protected function createProvider(HttpClient $httpClient)
+    protected function createProvider(ClientInterface $httpClient)
     {
         return new Ipstack($httpClient, $this->getApiKey());
     }

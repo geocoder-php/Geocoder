@@ -21,8 +21,8 @@ use Geocoder\Model\Coordinates;
 use Geocoder\Model\Country;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Http\Client\HttpClient;
-use Http\Discovery\HttpClientDiscovery;
+use Http\Discovery\Psr18ClientDiscovery;
+use Psr\Http\Client\ClientInterface;
 
 /**
  * @author Sébastien Barré <sebastien@sheub.eu>
@@ -33,7 +33,7 @@ class IntegrationTest extends ProviderIntegrationTest
 
     protected $testIpv6 = false;
 
-    protected function createProvider(HttpClient $httpClient, bool $useCIT = false)
+    protected function createProvider(ClientInterface $httpClient, bool $useCIT = false)
     {
         return Here::createUsingApiKey($httpClient, $this->getApiKey(), $useCIT);
     }
@@ -51,9 +51,9 @@ class IntegrationTest extends ProviderIntegrationTest
     private function getCachedHttpClient()
     {
         try {
-            $client = HttpClientDiscovery::find();
-        } catch (\Http\Discovery\NotFoundException $e) {
-            $client = $this->getMockForAbstractClass(HttpClient::class);
+            $client = Psr18ClientDiscovery::find();
+        } catch (\Http\Discovery\Exception\NotFoundException $e) {
+            $client = $this->getMockForAbstractClass(ClientInterface::class);
 
             $client
                 ->expects($this->any())

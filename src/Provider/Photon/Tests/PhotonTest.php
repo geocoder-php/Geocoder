@@ -59,7 +59,7 @@ class PhotonTest extends BaseTestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var \Geocoder\Provider\Photon\Model\PhotonAddress $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(48.8631927, $result->getCoordinates()->getLatitude(), '', 0.00001);
@@ -68,7 +68,8 @@ class PhotonTest extends BaseTestCase
         $this->assertEquals('Avenue Gambetta', $result->getStreetName());
         $this->assertEquals('75020', $result->getPostalCode());
         $this->assertEquals('Paris', $result->getLocality());
-        $this->assertEquals('France', $result->getCountry());
+        $this->assertEquals('France', $result->getCountry()->getName());
+        $this->assertEquals('FR', $result->getCountry()->getCode());
 
         $this->assertEquals(1988097192, $result->getOSMId());
         $this->assertEquals('N', $result->getOSMType());
@@ -84,7 +85,7 @@ class PhotonTest extends BaseTestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var \Geocoder\Provider\Photon\Model\PhotonAddress $result */
         $result = $results->first();
 
         $this->assertEquals('The Sherlock Holmes Museum and shop', $result->getName());
@@ -98,14 +99,15 @@ class PhotonTest extends BaseTestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var \Geocoder\Model\Address $result */
+        /** @var \Geocoder\Provider\Photon\Model\PhotonAddress $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals(51.9982968, $result->getCoordinates()->getLatitude(), '', 0.00001);
         $this->assertEquals(9.998645, $result->getCoordinates()->getLongitude(), '', 0.00001);
         $this->assertEquals('31195', $result->getPostalCode());
         $this->assertEquals('Lamspringe', $result->getLocality());
-        $this->assertEquals('Deutschland', $result->getCountry());
+        $this->assertEquals('Deutschland', $result->getCountry()->getName());
+        $this->assertEquals('DE', $result->getCountry()->getCode());
 
         $this->assertEquals(693697564, $result->getOSMId());
         $this->assertEquals('N', $result->getOSMType());

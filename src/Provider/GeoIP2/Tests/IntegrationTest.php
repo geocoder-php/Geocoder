@@ -16,7 +16,7 @@ use Geocoder\IntegrationTest\ProviderIntegrationTest;
 use Geocoder\Provider\GeoIP2\GeoIP2;
 use Geocoder\Provider\GeoIP2\GeoIP2Adapter;
 use GeoIp2\Database\Reader;
-use Http\Client\HttpClient;
+use Psr\Http\Client\ClientInterface;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
@@ -31,7 +31,7 @@ class IntegrationTest extends ProviderIntegrationTest
 
     protected $testHttpProvider = false;
 
-    protected function createProvider(HttpClient $httpClient)
+    protected function createProvider(ClientInterface $httpClient)
     {
         $reader = new Reader(__DIR__.'/fixtures/GeoLite2-City.mmdb');
 

@@ -14,7 +14,7 @@ namespace Geocoder\Provider\GoogleMapsPlaces\Tests;
 
 use Geocoder\IntegrationTest\ProviderIntegrationTest;
 use Geocoder\Provider\GoogleMapsPlaces\GoogleMapsPlaces;
-use Http\Client\HttpClient;
+use Psr\Http\Client\ClientInterface;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
@@ -29,7 +29,7 @@ class IntegrationTest extends ProviderIntegrationTest
 
     protected $testIpv6 = false;
 
-    protected function createProvider(HttpClient $httpClient)
+    protected function createProvider(ClientInterface $httpClient)
     {
         return new GoogleMapsPlaces($httpClient, $_SERVER['GOOGLE_GEOCODING_KEY']);
     }

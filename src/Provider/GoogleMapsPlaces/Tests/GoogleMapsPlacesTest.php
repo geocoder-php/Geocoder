@@ -270,7 +270,7 @@ class GoogleMapsPlacesTest extends BaseTestCase
 
         $query = ReverseQuery::fromCoordinates(-33.892674, 151.200727)
                 ->withData('mode', GoogleMapsPlaces::GEOCODE_MODE_NEARBY)
-                //->withData('rankby', 'prominence'); // =default
+                // ->withData('rankby', 'prominence'); // =default
                 ->withData('radius', 500)
                 ;
 

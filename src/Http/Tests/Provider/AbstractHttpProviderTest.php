@@ -17,7 +17,7 @@ use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Http\Client\HttpClient;
+use Psr\Http\Client\ClientInterface;
 use Http\Mock\Client;
 use PHPUnit\Framework\TestCase;
 
@@ -33,7 +33,7 @@ class AbstractHttpProviderTest extends TestCase
 
 class DummyProvider extends AbstractHttpProvider
 {
-    public function getHttpClient(): HttpClient
+    public function getHttpClient(): ClientInterface
     {
         return parent::getHttpClient();
     }

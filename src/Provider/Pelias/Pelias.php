@@ -22,7 +22,7 @@ use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Provider\Provider;
-use Http\Client\HttpClient;
+use Psr\Http\Client\ClientInterface;
 
 class Pelias extends AbstractHttpProvider implements Provider
 {
@@ -37,11 +37,11 @@ class Pelias extends AbstractHttpProvider implements Provider
     private $version;
 
     /**
-     * @param HttpClient $client  an HTTP adapter
-     * @param string     $root    url of Pelias API
-     * @param int        $version version of Pelias API
+     * @param ClientInterface $client  an HTTP adapter
+     * @param string          $root    url of Pelias API
+     * @param int             $version version of Pelias API
      */
-    public function __construct(HttpClient $client, string $root, int $version = 1)
+    public function __construct(ClientInterface $client, string $root, int $version = 1)
     {
         $this->root = sprintf('%s/v%d', rtrim($root, '/'), $version);
         $this->version = $version;
