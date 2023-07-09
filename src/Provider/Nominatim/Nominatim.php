@@ -25,6 +25,7 @@ use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Provider\Provider;
 use Geocoder\Provider\Nominatim\Model\NominatimAddress;
 use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * @author Niklas Närhinen <niklas@narhinen.net>
@@ -285,9 +286,11 @@ final class Nominatim extends AbstractHttpProvider implements Provider
         }
 
         $request = $this->getRequest($url);
+        /** @var RequestInterface $request */
         $request = $request->withHeader('User-Agent', $this->userAgent);
 
         if (!empty($this->referer)) {
+            /** @var RequestInterface $request */
             $request = $request->withHeader('Referer', $this->referer);
         }
 

@@ -21,6 +21,7 @@ use Geocoder\Query\ReverseQuery;
 use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Provider\Provider;
 use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -61,6 +62,7 @@ final class FreeGeoIp extends AbstractHttpProvider implements Provider
         $request = $this->getRequest(sprintf($this->baseUrl, $address));
 
         if (null !== $query->getLocale()) {
+            /** @var RequestInterface $request */
             $request = $request->withHeader('Accept-Language', $query->getLocale());
         }
 

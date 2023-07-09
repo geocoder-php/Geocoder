@@ -75,7 +75,7 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
         $this->query = $query;
 
         $request = $this->getRequest(self::ENDPOINT_URL_SSL);
-        $jsonParsed = AbstractHttpProvider::getParsedResponse($request);
+        $jsonParsed = $this->getParsedResponse($request);
         $jsonResponse = json_decode($jsonParsed, true);
 
         if (is_null($jsonResponse)) {
