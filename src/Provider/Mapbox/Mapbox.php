@@ -124,11 +124,6 @@ final class Mapbox extends AbstractHttpProvider implements Provider
     const DEFAULT_TYPE = self::TYPE_ADDRESS;
 
     /**
-     * @var ClientInterface
-     */
-    private $client;
-
-    /**
      * @var string
      */
     private $accessToken;
@@ -161,7 +156,6 @@ final class Mapbox extends AbstractHttpProvider implements Provider
             throw new InvalidArgument('The Mapbox geocoding mode should be either mapbox.places or mapbox.places-permanent.');
         }
 
-        $this->client = $client;
         $this->accessToken = $accessToken;
         $this->country = $country;
         $this->geocodingMode = $geocodingMode;
@@ -199,7 +193,7 @@ final class Mapbox extends AbstractHttpProvider implements Provider
             $urlParameters['fuzzyMatch'] = $fuzzyMatch ? 'true' : 'false';
         }
 
-        if ($urlParameters) {
+        if (count($urlParameters) > 0) {
             $url .= '?'.http_build_query($urlParameters);
         }
 
@@ -222,7 +216,7 @@ final class Mapbox extends AbstractHttpProvider implements Provider
             $urlParameters['types'] = self::DEFAULT_TYPE;
         }
 
-        if ($urlParameters) {
+        if (count($urlParameters) > 0) {
             $url .= '?'.http_build_query($urlParameters);
         }
 

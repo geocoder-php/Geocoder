@@ -53,15 +53,11 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
     /** @var GeocodeQuery */
     private $query;
 
-    /** @var ClientInterface */
-    private $client;
-
     public function __construct(ClientInterface $client, string $apiKey = null, string $appId = null)
     {
         parent::__construct($client);
 
         $this->apiKey = $apiKey;
-        $this->client = $client;
         $this->appId = $appId;
     }
 
@@ -79,7 +75,7 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
         $this->query = $query;
 
         $request = $this->getRequest(self::ENDPOINT_URL_SSL);
-        $jsonParsed = AbstractHttpProvider::getParsedResponse($request);
+        $jsonParsed = $this->getParsedResponse($request);
         $jsonResponse = json_decode($jsonParsed, true);
 
         if (is_null($jsonResponse)) {

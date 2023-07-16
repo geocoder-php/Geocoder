@@ -238,12 +238,12 @@ class AzureMaps extends AbstractHttpProvider implements Provider
             $east = array_shift($northEast);
 
             $builder = new AddressBuilder($this->getName());
-            $builder->setCoordinates($latitude, $longitude);
+            $builder->setCoordinates((float) $latitude, (float) $longitude);
             $builder->setBounds(
-                $south,
-                $west,
-                $north,
-                $east
+                (float) $south,
+                (float) $west,
+                (float) $north,
+                (float) $east
             );
 
             $builder->setStreetName($address->address->streetName ?? null);

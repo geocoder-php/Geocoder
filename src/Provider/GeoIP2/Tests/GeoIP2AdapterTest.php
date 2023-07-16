@@ -14,6 +14,7 @@ namespace Geocoder\Provider\GeoIP2\Tests;
 
 use Geocoder\Provider\GeoIP2\GeoIP2Adapter;
 use RuntimeException;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -121,7 +122,7 @@ class GeoIP2AdapterTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return MockObject
      */
     protected function getGeoIP2ProviderMock()
     {
@@ -131,9 +132,9 @@ class GeoIP2AdapterTest extends TestCase
     }
 
     /**
-     * @param int $geoIP2Model (e.g. GeoIP2Adapter::GEOIP2_MODEL_CITY, ...)
+     * @param string $geoIP2Model (e.g. GeoIP2Adapter::GEOIP2_MODEL_CITY, ...)
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return MockObject
      */
     protected function getGeoIP2ModelMock($geoIP2Model)
     {

@@ -49,10 +49,7 @@ class PluginProvider implements Provider
     /**
      * @param Provider $provider
      * @param Plugin[] $plugins
-     * @param array    $options  {
-     *
-     *     @var int      $max_restarts
-     * }
+     * @param array{max_restarts?: int<0, max>} $options
      */
     public function __construct(Provider $provider, array $plugins = [], array $options = [])
     {

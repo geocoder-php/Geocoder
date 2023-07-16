@@ -1,0 +1,61 @@
+parameters:
+    ignoreErrors:
+        -
+            message: "#^Static method Geocoder\\\\ProviderAggregator\\:\\:getProvider\\(\\) is unused\\.$#"
+            count: 1
+            path: src/Common/ProviderAggregator.php
+
+        -
+            message: "#^Parameter \\#1 \\$locations of class Geocoder\\\\Model\\\\AddressCollection constructor expects array\\<Geocoder\\\\Location\\>, array\\<string, string\\> given\\.$#"
+            count: 2
+            path: src/Provider/Chain/Tests/ChainTest.php
+
+        -
+            message: "#^Parameter \\#1 \\$geoIpProvider of class Geocoder\\\\Provider\\\\GeoIP2\\\\GeoIP2Adapter constructor expects GeoIp2\\\\ProviderInterface, PHPUnit\\\\Framework\\\\MockObject\\\\MockObject given\\.$#"
+            count: 4
+            path: src/Provider/GeoIP2/Tests/GeoIP2AdapterTest.php
+
+        -
+            message: "#^Access to constant ALL on an unknown class IP2Location\\\\Database\\.$#"
+            count: 1
+            path: src/Provider/IP2LocationBinary/IP2LocationBinary.php
+
+        -
+            message: "#^Call to method lookup\\(\\) on an unknown class IP2Location\\\\Database\\.$#"
+            count: 1
+            path: src/Provider/IP2LocationBinary/IP2LocationBinary.php
+
+        -
+            message: "#^Instantiated class IP2Location\\\\Database not found\\.$#"
+            count: 1
+            path: src/Provider/IP2LocationBinary/IP2LocationBinary.php
+
+        -
+            message: "#^Access to constant FILE_IO on an unknown class IP2Location\\\\Database\\.$#"
+            count: 1
+            path: src/Provider/IP2LocationBinary/Tests/IntegrationTest.php
+
+        -
+            message: "#^Access to property \\$[a-zA-Z_]+ on an unknown class GeoIpRecord\\.$#"
+            count: 10
+            path: src/Provider/MaxMindBinary/MaxMindBinary.php
+
+        -
+            message: "#^Class GeoIpRecord not found\\.$#"
+            count: 1
+            path: src/Provider/MaxMindBinary/MaxMindBinary.php
+
+        -
+            message: "#^Constant GEOIP_STANDARD not found\\.$#"
+            count: 1
+            path: src/Provider/MaxMindBinary/MaxMindBinary.php
+
+        -
+            message: "#^Function GeoIP_record_by_addr not found\\.$#"
+            count: 1
+            path: src/Provider/MaxMindBinary/MaxMindBinary.php
+
+        -
+            message: "#^Function geoip_(open|close) not found\\.$#"
+            count: 2
+            path: src/Provider/MaxMindBinary/MaxMindBinary.php

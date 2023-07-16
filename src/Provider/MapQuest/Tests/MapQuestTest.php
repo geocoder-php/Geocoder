@@ -358,7 +358,7 @@ class MapQuestTest extends BaseTestCase
 
         $query = GeocodeQuery::create('foobar');
         $query = $query->withData(MapQuest::DATA_KEY_ADDRESS, $address);
-        $query = $query->withBounds(new Bounds('39', '-77', '41', '-75'));
+        $query = $query->withBounds(new Bounds(39, -77, 41, -75));
         $results = $provider->geocodeQuery($query);
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);

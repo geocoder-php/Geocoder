@@ -21,25 +21,25 @@ use Psr\Http\Client\ClientInterface;
  */
 class IntegrationTest extends ProviderIntegrationTest
 {
-    protected $skippedTests = [
+    protected array $skippedTests = [
         'testReverseQueryWithNoResults' => 'There is a null island',
     ];
 
-    protected $testIpv4 = false;
+    protected bool $testIpv4 = false;
 
-    protected $testIpv6 = false;
+    protected bool $testIpv6 = false;
 
     protected function createProvider(ClientInterface $httpClient)
     {
         return new OpenCage($httpClient, $this->getApiKey());
     }
 
-    protected function getCacheDir()
+    protected function getCacheDir(): string
     {
         return __DIR__.'/.cached_responses';
     }
 
-    protected function getApiKey()
+    protected function getApiKey(): string
     {
         return $_SERVER['OPENCAGE_API_KEY'];
     }

@@ -18,6 +18,7 @@ use Geocoder\Location;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Provider\AlgoliaPlaces\AlgoliaPlaces;
 use Http\Client\Curl\Client as HttplugClient;
+use Psr\Http\Client\ClientInterface;
 
 /**
  * @author Sébastien Barré <sebastien@sheub.eu>
@@ -31,10 +32,8 @@ class AlgoliaPlacesTest extends BaseTestCase
 
     /**
      * Get a real HTTP client. If a cache dir is set to a path it will use cached responses.
-     *
-     * @return HttpClient
      */
-    protected function getHttpClient($apiKey = null, $appCode = null)
+    protected function getHttpClient($apiKey = null, $appCode = null): ClientInterface
     {
         if (null !== $cacheDir = $this->getCacheDir()) {
             return new CachedResponseClient(new HttplugClient(), $cacheDir, $apiKey, $appCode);

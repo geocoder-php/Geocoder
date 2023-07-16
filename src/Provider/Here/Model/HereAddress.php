@@ -53,7 +53,7 @@ final class HereAddress extends Address
     }
 
     /**
-     * @param string|null $LocationId
+     * @param string|null $locationId
      *
      * @return HereAddress
      */
@@ -74,7 +74,7 @@ final class HereAddress extends Address
     }
 
     /**
-     * @param string|null $LocationType
+     * @param string|null $locationType
      *
      * @return HereAddress
      */
@@ -95,7 +95,7 @@ final class HereAddress extends Address
     }
 
     /**
-     * @param string|null $LocationName
+     * @param string|null $locationName
      *
      * @return HereAddress
      */

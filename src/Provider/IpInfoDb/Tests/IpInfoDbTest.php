@@ -118,8 +118,8 @@ class IpInfoDbTest extends BaseTestCase
         /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(36.154, $result->getCoordinates()->getLatitude(), '', 0.001);
-        $this->assertEquals(-95.9928, $result->getCoordinates()->getLongitude(), '', 0.001);
+        $this->assertEqualsWithDelta(36.154, $result->getCoordinates()->getLatitude(), 0.001);
+        $this->assertEqualsWithDelta(-95.9928, $result->getCoordinates()->getLongitude(), 0.001);
         $this->assertEquals(74101, $result->getPostalCode());
         $this->assertEquals('Tulsa', $result->getLocality());
         $this->assertCount(1, $result->getAdminLevels());

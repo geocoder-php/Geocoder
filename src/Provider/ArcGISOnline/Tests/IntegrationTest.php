@@ -21,11 +21,11 @@ use Psr\Http\Client\ClientInterface;
  */
 class IntegrationTest extends ProviderIntegrationTest
 {
-    protected $testIpv4 = false;
+    protected bool $testIpv4 = false;
 
-    protected $testIpv6 = false;
+    protected bool $testIpv6 = false;
 
-    protected $skippedTests = [
+    protected array $skippedTests = [
         'testReverseQueryWithNoResults' => 'ArcGIS REST API returns "אצטדיון כדורגל עירוני" for reverse query at 0,0.',
     ];
 
@@ -34,13 +34,13 @@ class IntegrationTest extends ProviderIntegrationTest
         return new ArcGISOnline($httpClient);
     }
 
-    protected function getCacheDir()
+    protected function getCacheDir(): string
     {
         return __DIR__.'/.cached_responses';
     }
 
-    protected function getApiKey()
+    protected function getApiKey(): string
     {
-        return null;
+        return '';
     }
 }

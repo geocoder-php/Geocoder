@@ -14,6 +14,7 @@ namespace Geocoder\Plugin\Plugin;
 
 use Geocoder\Collection;
 use Geocoder\Exception\Exception;
+use Geocoder\Plugin\Plugin;
 use Geocoder\Query\Query;
 use Psr\Log\LoggerInterface;
 
@@ -22,7 +23,7 @@ use Psr\Log\LoggerInterface;
  *
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-class LoggerPlugin
+class LoggerPlugin implements Plugin
 {
     /**
      * @var LoggerInterface

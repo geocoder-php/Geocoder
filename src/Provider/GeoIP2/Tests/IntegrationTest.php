@@ -23,13 +23,13 @@ use Psr\Http\Client\ClientInterface;
  */
 class IntegrationTest extends ProviderIntegrationTest
 {
-    protected $testAddress = false;
+    protected bool $testAddress = false;
 
-    protected $testReverse = false;
+    protected bool $testReverse = false;
 
-    protected $testIpv6 = false;
+    protected bool $testIpv6 = false;
 
-    protected $testHttpProvider = false;
+    protected bool $testHttpProvider = false;
 
     protected function createProvider(ClientInterface $httpClient)
     {
@@ -38,13 +38,13 @@ class IntegrationTest extends ProviderIntegrationTest
         return new GeoIP2(new GeoIP2Adapter($reader));
     }
 
-    protected function getCacheDir()
+    protected function getCacheDir(): string
     {
         return __DIR__.'/.cached_responses';
     }
 
-    protected function getApiKey()
+    protected function getApiKey(): string
     {
-        return null;
+        return '';
     }
 }

@@ -79,8 +79,8 @@ class CachePlugin implements Plugin
     {
         if (null !== $this->precision && $query instanceof ReverseQuery) {
             $query = $query->withCoordinates(new Coordinates(
-                number_format($query->getCoordinates()->getLatitude(), $this->precision),
-                number_format($query->getCoordinates()->getLongitude(), $this->precision)
+                (float) number_format($query->getCoordinates()->getLatitude(), $this->precision),
+                (float) number_format($query->getCoordinates()->getLongitude(), $this->precision)
             ));
         }
 

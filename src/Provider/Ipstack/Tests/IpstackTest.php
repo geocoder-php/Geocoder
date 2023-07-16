@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Geocoder\Provider\Ipstack\Tests;
 
 use Geocoder\IntegrationTest\BaseTestCase;
+use Geocoder\Location;
 use Geocoder\Provider\Ipstack\Ipstack;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
@@ -91,8 +92,8 @@ class IpstackTest extends BaseTestCase
         /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(37.751, $result->getCoordinates()->getLatitude(), '', 0.01);
-        $this->assertEquals(-97.822, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertEqualsWithDelta(37.751, $result->getCoordinates()->getLatitude(), 0.01);
+        $this->assertEqualsWithDelta(-97.822, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('United States', $result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
     }
@@ -108,8 +109,8 @@ class IpstackTest extends BaseTestCase
         /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(37.751, $result->getCoordinates()->getLatitude(), '', 0.01);
-        $this->assertEquals(-97.822, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertEqualsWithDelta(37.751, $result->getCoordinates()->getLatitude(), 0.01);
+        $this->assertEqualsWithDelta(-97.822, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('États-Unis', $result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
     }

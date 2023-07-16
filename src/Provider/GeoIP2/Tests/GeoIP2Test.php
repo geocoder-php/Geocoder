@@ -24,6 +24,7 @@ use GeoIp2\Exception\AuthenticationException;
 use GeoIp2\Exception\OutOfQueriesException;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\QuotaExceeded;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * @author Jens Wiese <jens@howtrueisfalse.de>
@@ -261,7 +262,7 @@ class GeoIP2Test extends BaseTestCase
     /**
      * @param mixed $returnValue
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|GeoIP2Adapter
+     * @return GeoIP2Adapter&MockObject
      */
     private function getGeoIP2AdapterMock($returnValue = '')
     {

@@ -32,11 +32,6 @@ class Pelias extends AbstractHttpProvider implements Provider
     protected $root;
 
     /**
-     * @var int
-     */
-    private $version;
-
-    /**
      * @param ClientInterface $client  an HTTP adapter
      * @param string          $root    url of Pelias API
      * @param int             $version version of Pelias API
@@ -44,7 +39,6 @@ class Pelias extends AbstractHttpProvider implements Provider
     public function __construct(ClientInterface $client, string $root, int $version = 1)
     {
         $this->root = sprintf('%s/v%d', rtrim($root, '/'), $version);
-        $this->version = $version;
 
         parent::__construct($client);
     }
@@ -123,8 +117,6 @@ class Pelias extends AbstractHttpProvider implements Provider
 
     /**
      * @param $url
-     *
-     * @return Collection
      */
     protected function executeQuery(string $url): AddressCollection
     {

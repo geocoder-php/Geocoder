@@ -134,13 +134,13 @@ final class PickPoint extends AbstractHttpProvider implements Provider
         $builder->setSubLocality($this->getNodeValue($addressNode->getElementsByTagName('suburb')));
         $builder->setCountry($this->getNodeValue($addressNode->getElementsByTagName('country')));
         $builder->setCountryCode(strtoupper($this->getNodeValue($addressNode->getElementsByTagName('country_code'))));
-        $builder->setCoordinates($resultNode->getAttribute('lat'), $resultNode->getAttribute('lon'));
+        $builder->setCoordinates((float) $resultNode->getAttribute('lat'), (float) $resultNode->getAttribute('lon'));
 
         $boundsAttr = $resultNode->getAttribute('boundingbox');
         if ($boundsAttr) {
             $bounds = [];
             list($bounds['south'], $bounds['north'], $bounds['west'], $bounds['east']) = explode(',', $boundsAttr);
-            $builder->setBounds($bounds['south'], $bounds['north'], $bounds['west'], $bounds['east']);
+            $builder->setBounds((float) $bounds['south'], (float) $bounds['north'], (float) $bounds['west'], (float) $bounds['east']);
         }
 
         return $builder->build();

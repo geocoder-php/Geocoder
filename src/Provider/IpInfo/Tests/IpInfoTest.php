@@ -96,8 +96,8 @@ class IpInfoTest extends BaseTestCase
         /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(36.154, $result->getCoordinates()->getLatitude(), '', 0.001);
-        $this->assertEquals(-95.9928, $result->getCoordinates()->getLongitude(), '', 0.001);
+        $this->assertEqualsWithDelta(36.154, $result->getCoordinates()->getLatitude(), 0.001);
+        $this->assertEqualsWithDelta(-95.9928, $result->getCoordinates()->getLongitude(), 0.001);
         $this->assertEquals(74102, $result->getPostalCode());
         $this->assertEquals('Tulsa', $result->getLocality());
         $this->assertCount(1, $result->getAdminLevels());
@@ -118,8 +118,8 @@ class IpInfoTest extends BaseTestCase
         /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(39.934, $result->getCoordinates()->getLatitude(), '', 0.001);
-        $this->assertEquals(-74.891, $result->getCoordinates()->getLongitude(), '', 0.001);
+        $this->assertEqualsWithDelta(39.934, $result->getCoordinates()->getLatitude(), 0.001);
+        $this->assertEqualsWithDelta(-74.891, $result->getCoordinates()->getLongitude(), 0.001);
         $this->assertEquals('08054', $result->getPostalCode());
         $this->assertEquals('Mount Laurel', $result->getLocality());
         $this->assertNull($result->getCountry()->getName());

@@ -408,7 +408,7 @@ class YandexTest extends BaseTestCase
         $provider = new Yandex($this->getHttpClient(), 'metro');
         $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(60.036843, 30.324285));
 
-        /** @var YandexAddress $first */
+        /** @var YandexAddress $result */
         $result = $results->first();
         $this->assertInstanceOf('Geocoder\Provider\Yandex\Model\YandexAddress', $result);
         $this->assertEquals('other', $result->getPrecision());

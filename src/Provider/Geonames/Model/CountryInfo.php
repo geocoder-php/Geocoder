@@ -254,14 +254,14 @@ final class CountryInfo
     }
 
     /**
-     * @param int|null $population
+     * @param int|string|null $population
      *
      * @return CountryInfo
      */
-    public function withPopulation(string $population = null): self
+    public function withPopulation($population = null): self
     {
         $new = clone $this;
-        $new->population = null === $population ? null : (int) $population;
+        $new->population = null === $population ? null : (is_string($population) ? (int) $population : $population);
 
         return $new;
     }

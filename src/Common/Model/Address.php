@@ -87,7 +87,7 @@ class Address implements Location
      * @param Country|null         $country
      * @param string|null          $timezone
      */
-    public function __construct(
+    final public function __construct(
         string $providedBy,
         AdminLevelCollection $adminLevels,
         Coordinates $coordinates = null,

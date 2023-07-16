@@ -15,6 +15,7 @@ namespace Geocoder\Tests;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Provider\Provider;
 use Geocoder\TimedGeocoder;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Stopwatch\Stopwatch;
 
@@ -26,7 +27,7 @@ class TimedGeocoderTest extends TestCase
     private $stopwatch;
 
     /**
-     * @var Provider|\PHPUnit_Framework_MockObject_MockObject
+     * @var Provider&MockObject
      */
     private $delegate;
 

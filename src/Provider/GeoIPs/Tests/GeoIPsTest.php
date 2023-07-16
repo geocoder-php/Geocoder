@@ -160,8 +160,8 @@ class GeoIPsTest extends BaseTestCase
         /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(40.3402, $result->getCoordinates()->getLatitude(), '', 0.0001);
-        $this->assertEquals(-111.6073, $result->getCoordinates()->getLongitude(), '', 0.0001);
+        $this->assertEqualsWithDelta(40.3402, $result->getCoordinates()->getLatitude(), 0.0001);
+        $this->assertEqualsWithDelta(-111.6073, $result->getCoordinates()->getLongitude(), 0.0001);
         $this->assertNull($result->getStreetName());
         $this->assertNull($result->getPostalCode());
         $this->assertEquals('PROVO', $result->getLocality());
@@ -314,8 +314,8 @@ class GeoIPsTest extends BaseTestCase
         /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(40.3402, $result->getCoordinates()->getLatitude(), '', 0.0001);
-        $this->assertEquals(-111.6073, $result->getCoordinates()->getLongitude(), '', 0.0001);
+        $this->assertEqualsWithDelta(40.3402, $result->getCoordinates()->getLatitude(), 0.0001);
+        $this->assertEqualsWithDelta(-111.6073, $result->getCoordinates()->getLongitude(), 0.0001);
         $this->assertNull($result->getStreetName());
         $this->assertNull($result->getPostalCode());
         $this->assertEquals('PROVO', $result->getLocality());

@@ -21,6 +21,7 @@ use Geocoder\Location;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\Here\Here;
+use Geocoder\Provider\Here\Model\HereAddress;
 
 class HereTest extends BaseTestCase
 {
@@ -81,7 +82,7 @@ class HereTest extends BaseTestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var Location $result */
+        /** @var HereAddress $result */
         $result = $results->first();
 
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
@@ -127,7 +128,7 @@ class HereTest extends BaseTestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
 
-        /** @var Location $result */
+        /** @var HereAddress $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEqualsWithDelta(41.37854, $result->getCoordinates()->getLatitude(), 0.01);
@@ -250,7 +251,9 @@ class HereTest extends BaseTestCase
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $resultsRegion1);
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $resultsRegion2);
 
+        /** @var HereAddress $resultRegion1 */
         $resultRegion1 = $resultsRegion1->first();
+        /** @var HereAddress $resultRegion2 */
         $resultRegion2 = $resultsRegion2->first();
 
         $this->assertEquals('Cabanes', $resultRegion1->getLocality());

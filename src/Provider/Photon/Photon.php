@@ -77,7 +77,7 @@ final class Photon extends AbstractHttpProvider implements Provider
                 'lang' => $query->getLocale(),
             ]);
 
-        $json = $this->executeQuery($url, $query->getLocale());
+        $json = $this->executeQuery($url);
 
         if (!isset($json->features) || empty($json->features)) {
             return new AddressCollection([]);
@@ -149,7 +149,9 @@ final class Photon extends AbstractHttpProvider implements Provider
         }
 
         /** @var PhotonAddress $address */
-        $address = $builder->build(PhotonAddress::class)
+        $address = $builder->build(PhotonAddress::class);
+
+        $address = $address
             ->withOSMId($properties->osm_id ?? null)
             ->withOSMType($properties->osm_type ?? null)
             ->withOSMTag(

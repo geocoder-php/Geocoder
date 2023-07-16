@@ -81,8 +81,8 @@ class HostIpXmlTest extends BaseTestCase
         /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(56.8833, $result->getCoordinates()->getLatitude(), '', 0.0001);
-        $this->assertEquals(24.0833, $result->getCoordinates()->getLongitude(), '', 0.0001);
+        $this->assertEqualsWithDelta(56.8833, $result->getCoordinates()->getLatitude(), 0.0001);
+        $this->assertEqualsWithDelta(24.0833, $result->getCoordinates()->getLongitude(), 0.0001);
         $this->assertNull($result->getPostalCode());
         $this->assertEquals('Riga', $result->getLocality());
         $this->assertEmpty($result->getAdminLevels());

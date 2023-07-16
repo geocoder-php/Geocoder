@@ -20,6 +20,7 @@ use Geocoder\Model\Bounds;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\Mapbox\Mapbox;
+use Geocoder\Provider\Mapbox\Model\MapboxAddress;
 
 class MapboxTest extends BaseTestCase
 {
@@ -99,11 +100,11 @@ class MapboxTest extends BaseTestCase
         $this->assertInstanceOf(AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
-        /** @var Location $result */
+        /** @var MapboxAddress $result */
         $result = $results->first();
-        $this->assertInstanceOf(Address::class, $result);
-        $this->assertEquals(43.73125, $result->getCoordinates()->getLatitude(), '', 0.001);
-        $this->assertEquals(7.41974, $result->getCoordinates()->getLongitude(), '', 0.001);
+        $this->assertInstanceOf(MapboxAddress::class, $result);
+        $this->assertEqualsWithDelta(43.73125, $result->getCoordinates()->getLatitude(), 0.001);
+        $this->assertEqualsWithDelta(7.41974, $result->getCoordinates()->getLongitude(), 0.001);
         $this->assertEquals('Principato di Monaco', $result->getStreetName());
         $this->assertEquals('Principato di Monaco', $result->getCountry()->getName());
         $this->assertEquals('place.4899176537126140', $result->getId());
@@ -128,11 +129,11 @@ class MapboxTest extends BaseTestCase
         $this->assertInstanceOf(AddressCollection::class, $results);
         $this->assertCount(5, $results);
 
-        /** @var Location $result */
+        /** @var MapboxAddress $result */
         $result = $results->first();
-        $this->assertInstanceOf(Address::class, $result);
-        $this->assertEquals(37.77572, $result->getCoordinates()->getLatitude(), '', 0.001);
-        $this->assertEquals(-122.41362, $result->getCoordinates()->getLongitude(), '', 0.001);
+        $this->assertInstanceOf(MapboxAddress::class, $result);
+        $this->assertEqualsWithDelta(37.77572, $result->getCoordinates()->getLatitude(), 0.001);
+        $this->assertEqualsWithDelta(-122.41362, $result->getCoordinates()->getLongitude(), 0.001);
         $this->assertNull($result->getBounds());
         $this->assertEquals(149, $result->getStreetNumber());
         $this->assertEquals('9th Street', $result->getStreetName());
@@ -169,9 +170,9 @@ class MapboxTest extends BaseTestCase
         $this->assertInstanceOf(AddressCollection::class, $results);
         $this->assertCount(4, $results);
 
-        /** @var Location $result */
+        /** @var MapboxAddress $result */
         $result = $results->first();
-        $this->assertInstanceOf(Address::class, $result);
+        $this->assertInstanceOf(MapboxAddress::class, $result);
         $this->assertEquals(8, $result->getStreetNumber());
         $this->assertEquals('Avenue Gambetta', $result->getStreetName());
         $this->assertEquals(75020, $result->getPostalCode());
@@ -204,9 +205,9 @@ class MapboxTest extends BaseTestCase
         $this->assertInstanceOf(AddressCollection::class, $results);
         $this->assertCount(5, $results);
 
-        /** @var Location $result */
+        /** @var MapboxAddress $result */
         $result = $results->first();
-        $this->assertInstanceOf(Address::class, $result);
+        $this->assertInstanceOf(MapboxAddress::class, $result);
         $this->assertEquals('116th Street', $result->getStreetName());
         $this->assertEquals(11356, $result->getPostalCode());
         $this->assertCount(2, $result->getAdminLevels());
@@ -215,8 +216,8 @@ class MapboxTest extends BaseTestCase
         $this->assertEquals('address.2431617896783536', $result->getId());
         $this->assertNotNull($result->getCoordinates()->getLatitude());
         $this->assertNotNull($result->getCoordinates()->getLongitude());
-        $this->assertEquals(40.786596, $result->getCoordinates()->getLatitude(), '', 0.001);
-        $this->assertEquals(-73.851157, $result->getCoordinates()->getLongitude(), '', 0.001);
+        $this->assertEqualsWithDelta(40.786596, $result->getCoordinates()->getLatitude(), 0.001);
+        $this->assertEqualsWithDelta(-73.851157, $result->getCoordinates()->getLongitude(), 0.001);
         $this->assertEquals('New York', $result->getLocality());
         $this->assertCount(2, $result->getAdminLevels());
         $this->assertEquals('New York', $result->getAdminLevels()->get(1)->getName());

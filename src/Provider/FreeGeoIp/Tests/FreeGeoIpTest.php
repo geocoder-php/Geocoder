@@ -81,8 +81,8 @@ class FreeGeoIpTest extends BaseTestCase
         /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEquals(37.751, $result->getCoordinates()->getLatitude(), '', 0.01);
-        $this->assertEquals(-97.822, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertEqualsWithDelta(37.751, $result->getCoordinates()->getLatitude(), 0.01);
+        $this->assertEqualsWithDelta(-97.822, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('United States', $result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
     }
@@ -99,8 +99,8 @@ class FreeGeoIpTest extends BaseTestCase
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
 
-        $this->assertEquals(37.751, $result->getCoordinates()->getLatitude(), '', 0.01);
-        $this->assertEquals(-97.822, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertEqualsWithDelta(37.751, $result->getCoordinates()->getLatitude(), 0.01);
+        $this->assertEqualsWithDelta(-97.822, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('United States', $result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
     }
@@ -117,8 +117,8 @@ class FreeGeoIpTest extends BaseTestCase
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
 
-        $this->assertEquals(40.7263, $result->getCoordinates()->getLatitude(), '', 0.01);
-        $this->assertEquals(-73.9819, $result->getCoordinates()->getLongitude(), '', 0.01);
+        $this->assertEqualsWithDelta(40.7263, $result->getCoordinates()->getLatitude(), 0.01);
+        $this->assertEqualsWithDelta(-73.9819, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertCount(1, $result->getAdminLevels());
         $this->assertEquals('New York', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('NY', $result->getAdminLevels()->get(1)->getCode());

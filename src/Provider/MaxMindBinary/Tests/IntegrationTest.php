@@ -21,16 +21,15 @@ use Psr\Http\Client\ClientInterface;
  */
 class IntegrationTest extends ProviderIntegrationTest
 {
-    protected $skippedTests = [
-    ];
+    protected array $skippedTests = [];
 
-    protected $testAddress = false;
+    protected bool $testAddress = false;
 
-    protected $testReverse = false;
+    protected bool $testReverse = false;
 
-    protected $testIpv6 = false;
+    protected bool $testIpv6 = false;
 
-    protected $testHttpProvider = false;
+    protected bool $testHttpProvider = false;
 
     public static function setUpBeforeClass(): void
     {
@@ -50,13 +49,13 @@ class IntegrationTest extends ProviderIntegrationTest
         return new MaxMindBinary(__DIR__.'/fixtures/GeoLiteCity.dat');
     }
 
-    protected function getCacheDir()
+    protected function getCacheDir(): string
     {
         return __DIR__.'/.cached_responses';
     }
 
-    protected function getApiKey()
+    protected function getApiKey(): string
     {
-        return null;
+        return '';
     }
 }

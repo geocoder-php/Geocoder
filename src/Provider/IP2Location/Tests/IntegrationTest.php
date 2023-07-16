@@ -19,21 +19,21 @@ use Psr\Http\Client\ClientInterface;
  */
 class IntegrationTest extends ProviderIntegrationTest
 {
-    protected $testAddress = false;
+    protected bool $testAddress = false;
 
-    protected $testReverse = false;
+    protected bool $testReverse = false;
 
     protected function createProvider(ClientInterface $httpClient)
     {
         return new IP2Location($httpClient, $this->getApiKey());
     }
 
-    protected function getCacheDir()
+    protected function getCacheDir(): string
     {
         return __DIR__.'/.cached_responses';
     }
 
-    protected function getApiKey()
+    protected function getApiKey(): string
     {
         if (!isset($_SERVER['IP2Location_API_KEY'])) {
             $this->markTestSkipped('No IP2Location API key');

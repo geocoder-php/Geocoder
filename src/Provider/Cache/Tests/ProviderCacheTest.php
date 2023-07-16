@@ -18,6 +18,7 @@ use Geocoder\Provider\Cache\ProviderCache;
 use Geocoder\Provider\Provider;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\SimpleCache\CacheInterface;
 
@@ -27,12 +28,12 @@ use Psr\SimpleCache\CacheInterface;
 class ProviderCacheTest extends TestCase
 {
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|Provider
+     * @var Provider&MockObject
      */
     private $providerMock;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|CacheInterface
+     * @var CacheInterface&MockObject
      */
     private $cacheMock;
 
@@ -58,16 +59,6 @@ class ProviderCacheTest extends TestCase
 
         $providerCache = new ProviderCache($this->providerMock, $this->cacheMock);
         $this->assertEquals('foo (cache)', $providerCache->getName());
-    }
-
-    public function testMagicFunction()
-    {
-        $this->providerMock->expects($this->once())
-            ->method('getFoo')
-            ->willReturn('foo');
-
-        $providerCache = new ProviderCache($this->providerMock, $this->cacheMock);
-        $this->assertEquals('foo', $providerCache->getFoo());
     }
 
     public function testGeocodeMiss()

@@ -42,7 +42,7 @@ final class MapTiler extends AbstractHttpProvider implements Provider
 
     /**
      * @param ClientInterface $client an HTTP client
-     * @param string          $key    API key
+     * @param string          $apiKey API key
      */
     public function __construct(ClientInterface $client, string $apiKey)
     {
