@@ -179,7 +179,7 @@ final class PickPoint extends AbstractHttpProvider implements Provider
         return self::BASE_API_URL.'/reverse?format=xml&lat=%F&lon=%F&addressdetails=1&zoom=%d&key='.$this->apiKey;
     }
 
-    private function getNodeValue(\DOMNodeList $element)
+    private function getNodeValue(\DOMNodeList $element): ?string
     {
         return $element->length ? $element->item(0)->nodeValue : null;
     }
