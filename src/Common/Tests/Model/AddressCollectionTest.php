@@ -20,7 +20,7 @@ use PHPUnit\Framework\TestCase;
  */
 class AddressCollectionTest extends TestCase
 {
-    public function testFirstOnEmpty()
+    public function testFirstOnEmpty(): void
     {
         $this->expectException(\Geocoder\Exception\CollectionIsEmpty::class);
 

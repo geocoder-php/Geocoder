@@ -198,7 +198,7 @@ final class MapQuest extends AbstractHttpProvider implements Provider
         return $query->getData(static::DATA_KEY_ADDRESS);
     }
 
-    private function getUrl($endpoint): string
+    private function getUrl(string $endpoint): string
     {
         if ($this->licensed) {
             $baseUrl = static::LICENSED_BASE_URL;
@@ -235,7 +235,7 @@ final class MapQuest extends AbstractHttpProvider implements Provider
         return $params;
     }
 
-    private function executePostQuery(string $endpoint, array $params)
+    private function executePostQuery(string $endpoint, array $params): AddressCollection
     {
         $url = $this->getUrl($endpoint);
 

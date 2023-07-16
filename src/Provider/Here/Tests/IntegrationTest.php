@@ -202,7 +202,7 @@ class IntegrationTest extends ProviderIntegrationTest
      *
      * @param $result
      */
-    private function assertWellFormattedResult(Collection $result)
+    private function assertWellFormattedResult(Collection $result): void
     {
         $this->assertInstanceOf(
             Collection::class,

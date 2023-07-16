@@ -19,7 +19,7 @@ use PHPUnit\Framework\TestCase;
 
 class LimitPluginTest extends TestCase
 {
-    public function testPlugin()
+    public function testPlugin(): void
     {
         $query = GeocodeQuery::create('foo');
         $first = function (Query $query) {

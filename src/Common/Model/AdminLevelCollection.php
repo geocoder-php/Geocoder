@@ -130,7 +130,7 @@ final class AdminLevelCollection implements \IteratorAggregate, \Countable
      *
      * @throws \OutOfBoundsException
      */
-    private function checkLevel(int $level)
+    private function checkLevel(int $level): void
     {
         if ($level <= 0 || $level > self::MAX_LEVEL_DEPTH) {
             throw new OutOfBounds(sprintf('Administrative level should be an integer in [1,%d], %d given', self::MAX_LEVEL_DEPTH, $level));

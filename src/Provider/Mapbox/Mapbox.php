@@ -48,7 +48,7 @@ final class Mapbox extends AbstractHttpProvider implements Provider
     const GEOCODING_MODE_PLACES_PERMANENT = 'mapbox.places-permanent';
 
     /**
-     * @var array
+     * @var array<string>
      */
     const GEOCODING_MODES = [
         self::GEOCODING_MODE_PLACES,
@@ -106,7 +106,7 @@ final class Mapbox extends AbstractHttpProvider implements Provider
     const TYPE_POI_LANDMARK = 'poi.landmark';
 
     /**
-     * @var array
+     * @var array<string>
      */
     const TYPES = [
         self::TYPE_COUNTRY,
@@ -121,6 +121,9 @@ final class Mapbox extends AbstractHttpProvider implements Provider
         self::TYPE_POI_LANDMARK,
     ];
 
+    /**
+     * @var string
+     */
     const DEFAULT_TYPE = self::TYPE_ADDRESS;
 
     /**
@@ -327,7 +330,7 @@ final class Mapbox extends AbstractHttpProvider implements Provider
      * @param string         $type    Component type
      * @param array          $value   The component value
      */
-    private function updateAddressComponent(AddressBuilder $builder, string $type, array $value)
+    private function updateAddressComponent(AddressBuilder $builder, string $type, array $value): void
     {
         $typeParts = explode('.', $type);
         $type = reset($typeParts);
@@ -401,7 +404,7 @@ final class Mapbox extends AbstractHttpProvider implements Provider
      * @param AddressBuilder $builder
      * @param array          $result
      */
-    private function parseCoordinates(AddressBuilder $builder, array $result)
+    private function parseCoordinates(AddressBuilder $builder, array $result): void
     {
         $coordinates = $result['geometry']['coordinates'];
         $builder->setCoordinates($coordinates[1], $coordinates[0]);

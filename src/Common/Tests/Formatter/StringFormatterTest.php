@@ -34,7 +34,7 @@ class StringFormatterTest extends TestCase
     /**
      * @dataProvider dataProviderForTestFormat
      */
-    public function testFormat($data, $format, $expected)
+    public function testFormat(array $data, string $format, string $expected): void
     {
         $address = Address::createFromArray($data);
         $result = $this->formatter->format($address, $format);
@@ -43,7 +43,7 @@ class StringFormatterTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function dataProviderForTestFormat()
+    public function dataProviderForTestFormat(): array
     {
         return [
             [

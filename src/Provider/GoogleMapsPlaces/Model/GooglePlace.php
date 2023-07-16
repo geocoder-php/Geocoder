@@ -209,6 +209,11 @@ final class GooglePlace extends Address
         return $this->icon;
     }
 
+    /**
+     * @param string|null $icon
+     *
+     * @return GooglePlace
+     */
     public function withIcon(string $icon = null)
     {
         $new = clone $this;
@@ -225,6 +230,11 @@ final class GooglePlace extends Address
         return $this->plusCode;
     }
 
+    /**
+     * @param PlusCode|null $plusCode
+     *
+     * @return GooglePlace
+     */
     public function withPlusCode(PlusCode $plusCode = null)
     {
         $new = clone $this;
@@ -241,6 +251,11 @@ final class GooglePlace extends Address
         return $this->photos;
     }
 
+    /**
+     * @param array|null $photos
+     *
+     * @return GooglePlace
+     */
     public function withPhotos(array $photos = null)
     {
         $new = clone $this;
@@ -265,6 +280,11 @@ final class GooglePlace extends Address
         return $this->priceLevel;
     }
 
+    /**
+     * @param int|null $priceLevel
+     *
+     * @return GooglePlace
+     */
     public function withPriceLevel(int $priceLevel = null)
     {
         $new = clone $this;
@@ -281,6 +301,11 @@ final class GooglePlace extends Address
         return $this->rating;
     }
 
+    /**
+     * @param float|null $rating
+     *
+     * @return GooglePlace
+     */
     public function withRating(float $rating = null)
     {
         $new = clone $this;
@@ -297,6 +322,11 @@ final class GooglePlace extends Address
         return $this->formattedPhoneNumber;
     }
 
+    /**
+     * @param string $phone
+     *
+     * @return GooglePlace
+     */
     public function withFormattedPhoneNumber(string $phone)
     {
         $new = clone $this;
@@ -313,6 +343,11 @@ final class GooglePlace extends Address
         return $this->internationalPhoneNumber;
     }
 
+    /**
+     * @param string $phone
+     *
+     * @return GooglePlace
+     */
     public function withInternationalPhoneNumber(string $phone)
     {
         $new = clone $this;
@@ -329,6 +364,11 @@ final class GooglePlace extends Address
         return $this->website;
     }
 
+    /**
+     * @param string $website
+     *
+     * @return GooglePlace
+     */
     public function withWebsite(string $website)
     {
         $new = clone $this;
@@ -345,6 +385,11 @@ final class GooglePlace extends Address
         return $this->openingHours;
     }
 
+    /**
+     * @param OpeningHours $openingHours
+     *
+     * @return GooglePlace
+     */
     public function withOpeningHours(OpeningHours $openingHours)
     {
         $new = clone $this;
@@ -361,6 +406,9 @@ final class GooglePlace extends Address
         return $this->permanentlyClosed;
     }
 
+    /**
+     * @return GooglePlace
+     */
     public function setPermanentlyClosed()
     {
         $new = clone $this;

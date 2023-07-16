@@ -27,18 +27,18 @@ class GeoipTest extends BaseTestCase
         }
     }
 
-    protected function getCacheDir()
+    protected function getCacheDir(): string
     {
         return __DIR__.'/.cached_responses';
     }
 
-    public function testGetName()
+    public function testGetName(): void
     {
         $provider = new Geoip();
         $this->assertEquals('geoip', $provider->getName());
     }
 
-    public function testGeocodeWithAddress()
+    public function testGeocodeWithAddress(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The Geoip provider does not support street addresses, only IPv4 addresses.');
@@ -47,7 +47,7 @@ class GeoipTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
     }
 
-    public function testGeocodeWithLocalhostIPv4()
+    public function testGeocodeWithLocalhostIPv4(): void
     {
         $provider = new Geoip();
         $results = $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
@@ -67,7 +67,7 @@ class GeoipTest extends BaseTestCase
         $this->assertNotNull($result->getCountry());
     }
 
-    public function testGeocodeWithLocalhostIPv6()
+    public function testGeocodeWithLocalhostIPv6(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The Geoip provider does not support IPv6 addresses, only IPv4 addresses.');
@@ -76,7 +76,7 @@ class GeoipTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
-    public function testGeocodeWithRealIPv6()
+    public function testGeocodeWithRealIPv6(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The Geoip provider does not support IPv6 addresses, only IPv4 addresses.');
@@ -85,7 +85,7 @@ class GeoipTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('::ffff:74.200.247.59'));
     }
 
-    public function testReverse()
+    public function testReverse(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The Geoip provider is not able to do reverse geocoding.');

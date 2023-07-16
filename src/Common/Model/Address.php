@@ -307,7 +307,7 @@ class Address implements Location
      *
      * @return Bounds|null
      */
-    private static function createBounds($south, $west, $north, $east)
+    private static function createBounds(?float $south, ?float $west, ?float $north, ?float $east)
     {
         if (null === $south || null === $west || null === $north || null === $east) {
             return null;

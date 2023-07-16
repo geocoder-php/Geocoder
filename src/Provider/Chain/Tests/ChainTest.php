@@ -25,7 +25,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ChainTest extends TestCase
 {
-    public function testAdd()
+    public function testAdd(): void
     {
         $mock = $this->getMockBuilder('Geocoder\Provider\Provider')->getMock();
         $chain = new Chain();
@@ -34,13 +34,13 @@ class ChainTest extends TestCase
         $this->assertCount(1, NSA::getProperty($chain, 'providers'));
     }
 
-    public function testGetName()
+    public function testGetName(): void
     {
         $chain = new Chain();
         $this->assertEquals('chain', $chain->getName());
     }
 
-    public function testReverse()
+    public function testReverse(): void
     {
         $mockOne = $this->getMockBuilder(Provider::class)->getMock();
         $mockOne->expects($this->once())
@@ -60,7 +60,7 @@ class ChainTest extends TestCase
         $this->assertEquals($result, $chain->reverseQuery(ReverseQuery::fromCoordinates(11, 22)));
     }
 
-    public function testGeocode()
+    public function testGeocode(): void
     {
         $query = GeocodeQuery::create('Paris');
         $mockOne = $this->getMockBuilder('Geocoder\\Provider\\Provider')->getMock();

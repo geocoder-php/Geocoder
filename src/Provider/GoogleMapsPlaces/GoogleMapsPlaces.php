@@ -454,7 +454,7 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
      * @param AddressBuilder $builder
      * @param StdClass       $result
      */
-    private function parseCoordinates(AddressBuilder $builder, StdClass $result)
+    private function parseCoordinates(AddressBuilder $builder, StdClass $result): void
     {
         $coordinates = $result->geometry->location;
         $builder->setCoordinates($coordinates->lat, $coordinates->lng);

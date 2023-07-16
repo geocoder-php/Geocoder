@@ -21,7 +21,7 @@ use PHPUnit\Framework\TestCase;
 
 class BoundsPluginTest extends TestCase
 {
-    public function testGeocode()
+    public function testGeocode(): void
     {
         $bounds = new Bounds(4, 7, 1, 1);
         $query = GeocodeQuery::create('foo');
@@ -36,7 +36,7 @@ class BoundsPluginTest extends TestCase
         $plugin->handleQuery($query, $next, $first);
     }
 
-    public function testReverse()
+    public function testReverse(): void
     {
         $bounds = new Bounds(4, 7, 1, 1);
         $query = ReverseQuery::fromCoordinates(71, 11);

@@ -23,7 +23,7 @@ use PHPUnit\Framework\TestCase;
 
 class AbstractHttpProviderTest extends TestCase
 {
-    public function testHttpClientGetter()
+    public function testHttpClientGetter(): void
     {
         $client = $this->getMockBuilder(Client::class)->disableOriginalConstructor()->getMock();
         $provider = new DummyProvider($client);

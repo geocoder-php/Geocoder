@@ -32,7 +32,7 @@ class GpxTest extends TestCase
         $this->dumper = new Gpx();
     }
 
-    public function testDump()
+    public function testDump(): void
     {
         $address = Address::createFromArray([]);
         $expected = sprintf(<<<'GPX'
@@ -57,7 +57,7 @@ GPX
         $this->assertEquals($expected, $result);
     }
 
-    public function testDumpWithData()
+    public function testDumpWithData(): void
     {
         $address = Address::createFromArray([
             'latitude' => 48.8631507,
@@ -86,7 +86,7 @@ GPX
         $this->assertEquals($expected, $result);
     }
 
-    public function testDumpWithBounds()
+    public function testDumpWithBounds(): void
     {
         $address = Address::createFromArray([
             'latitude' => 48.8631507,
@@ -125,7 +125,7 @@ GPX
         $this->assertEquals($expected, $result);
     }
 
-    public function testDumpWithName()
+    public function testDumpWithName(): void
     {
         $bounds = [
             'south' => 48.8631507,

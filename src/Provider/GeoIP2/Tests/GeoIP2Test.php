@@ -41,17 +41,17 @@ class GeoIP2Test extends BaseTestCase
         $this->provider = new GeoIP2($this->getGeoIP2AdapterMock());
     }
 
-    protected function getCacheDir()
+    protected function getCacheDir(): string
     {
         return __DIR__.'/.cached_responses';
     }
 
-    public function testGetName()
+    public function testGetName(): void
     {
         $this->assertEquals('geoip2', $this->provider->getName());
     }
 
-    public function testQueryingReverseLeadsToException()
+    public function testQueryingReverseLeadsToException(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The GeoIP2 provider is not able to do reverse geocoding.');
@@ -59,7 +59,7 @@ class GeoIP2Test extends BaseTestCase
         $this->provider->reverseQuery(ReverseQuery::fromCoordinates(50, 9));
     }
 
-    public function testGeocodeWithLocalhostIPv4()
+    public function testGeocodeWithLocalhostIPv4(): void
     {
         $results = $this->provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
 
@@ -73,7 +73,7 @@ class GeoIP2Test extends BaseTestCase
         $this->assertEquals('localhost', $result->getCountry()->getName());
     }
 
-    public function testOnlyIpAddressesCouldBeResolved()
+    public function testOnlyIpAddressesCouldBeResolved(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The GeoIP2 provider does not support street addresses, only IP addresses.');
@@ -167,7 +167,7 @@ class GeoIP2Test extends BaseTestCase
      * @param mixed  $adapterResponse
      * @param mixed  $expectedGeodata
      */
-    public function testRetrievingGeodata($address, $adapterResponse, $expectedGeodata)
+    public function testRetrievingGeodata($address, $adapterResponse, $expectedGeodata): void
     {
         $adapter = $this->getGeoIP2AdapterMock($adapterResponse);
         $provider = new GeoIP2($adapter);
@@ -214,7 +214,7 @@ class GeoIP2Test extends BaseTestCase
         }
     }
 
-    public function testRetrievingGeodataNotExistingLocation()
+    public function testRetrievingGeodataNotExistingLocation(): void
     {
         $adapter = $this->getGeoIP2AdapterMock('');
         $provider = new GeoIP2($adapter);
@@ -224,7 +224,7 @@ class GeoIP2Test extends BaseTestCase
         $this->assertEquals(0, $result->count());
     }
 
-    public function testGeoIp2Encoding()
+    public function testGeoIp2Encoding(): void
     {
         $reader = new Reader(__DIR__.'/fixtures/GeoLite2-City.mmdb');
         $adapter = new GeoIP2Adapter($reader);
@@ -239,7 +239,7 @@ class GeoIP2Test extends BaseTestCase
      * @param \Exception $original
      * @param string     $replacementClass
      */
-    public function testExceptionConversion(\Exception $original, string $replacementClass)
+    public function testExceptionConversion(\Exception $original, string $replacementClass): void
     {
         $adapter = $this->getGeoIP2AdapterMock($original);
         $provider = new GeoIP2($adapter);

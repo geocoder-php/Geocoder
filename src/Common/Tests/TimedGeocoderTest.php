@@ -43,7 +43,7 @@ class TimedGeocoderTest extends TestCase
         $this->geocoder = new TimedGeocoder($this->delegate, $this->stopwatch);
     }
 
-    public function testGeocode()
+    public function testGeocode(): void
     {
         $this->delegate->expects($this->once())
              ->method('geocodeQuery')
@@ -54,7 +54,7 @@ class TimedGeocoderTest extends TestCase
         $this->assertCount(1, $this->stopwatch->getSectionEvents('__root__'));
     }
 
-    public function testGeocodeThrowsException()
+    public function testGeocodeThrowsException(): void
     {
         $this->delegate->expects($this->once())
              ->method('geocodeQuery')
@@ -70,7 +70,7 @@ class TimedGeocoderTest extends TestCase
         $this->assertCount(1, $this->stopwatch->getSectionEvents('__root__'));
     }
 
-    public function testReverse()
+    public function testReverse(): void
     {
         $this->delegate->expects($this->once())
              ->method('reverseQuery')
@@ -81,7 +81,7 @@ class TimedGeocoderTest extends TestCase
         $this->assertCount(1, $this->stopwatch->getSectionEvents('__root__'));
     }
 
-    public function testReverseThrowsException()
+    public function testReverseThrowsException(): void
     {
         $this->delegate->expects($this->once())
              ->method('reverseQuery')

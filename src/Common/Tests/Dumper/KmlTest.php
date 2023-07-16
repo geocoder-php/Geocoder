@@ -32,7 +32,7 @@ class KmlTest extends TestCase
         $this->dumper = new Kml();
     }
 
-    public function testDump()
+    public function testDump(): void
     {
         $address = Address::createFromArray([]);
         $expected = <<<'KML'
@@ -56,7 +56,7 @@ KML;
         $this->assertEquals($expected, $result);
     }
 
-    public function testDumpWithData()
+    public function testDumpWithData(): void
     {
         $address = Address::createFromArray([
             'latitude' => 48.8631507,

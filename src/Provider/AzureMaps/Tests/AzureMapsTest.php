@@ -33,7 +33,7 @@ class AzureMapsTest extends BaseTestCase
         return null;
     }
 
-    public function testGeocodeWithRealAddress()
+    public function testGeocodeWithRealAddress(): void
     {
         if (!isset($_SERVER['AZURE_MAPS_SUBSCRIPTION_KEY'])) {
             $this->markTestSkipped('You need to configure the AZURE_MAPS_SUBSCRIPTION_KEY value in phpunit.xml');
@@ -64,7 +64,7 @@ class AzureMapsTest extends BaseTestCase
         $this->assertEquals('IL', $result->getCountry()->getCode());
     }
 
-    public function testReverseWithRealCoordinates()
+    public function testReverseWithRealCoordinates(): void
     {
         if (!isset($_SERVER['AZURE_MAPS_SUBSCRIPTION_KEY'])) {
             $this->markTestSkipped('You need to configure the AZURE_MAPS_SUBSCRIPTION_KEY value in phpunit.xml');

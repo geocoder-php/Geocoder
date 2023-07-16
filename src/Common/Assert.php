@@ -20,7 +20,7 @@ class Assert
      * @param float  $value
      * @param string $message
      */
-    public static function latitude($value, string $message = '')
+    public static function latitude($value, string $message = ''): void
     {
         self::float($value, $message);
         if ($value < -90 || $value > 90) {
@@ -32,7 +32,7 @@ class Assert
      * @param float  $value
      * @param string $message
      */
-    public static function longitude($value, string $message = '')
+    public static function longitude($value, string $message = ''): void
     {
         self::float($value, $message);
         if ($value < -180 || $value > 180) {
@@ -44,7 +44,7 @@ class Assert
      * @param mixed  $value
      * @param string $message
      */
-    public static function notNull($value, string $message = '')
+    public static function notNull($value, string $message = ''): void
     {
         if (null === $value) {
             throw new InvalidArgument(sprintf($message ?: 'Value cannot be null'));
@@ -60,7 +60,7 @@ class Assert
      * @param $value
      * @param $message
      */
-    private static function float($value, string $message)
+    private static function float($value, string $message): void
     {
         if (!is_float($value)) {
             throw new InvalidArgument(sprintf($message ?: 'Expected a float. Got: %s', self::typeToString($value)));

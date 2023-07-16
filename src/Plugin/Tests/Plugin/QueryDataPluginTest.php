@@ -19,7 +19,7 @@ use PHPUnit\Framework\TestCase;
 
 class QueryDataPluginTest extends TestCase
 {
-    public function testPlugin()
+    public function testPlugin(): void
     {
         $query = GeocodeQuery::create('xxx');
         $query = $query->withData('default', 'value');
@@ -35,7 +35,7 @@ class QueryDataPluginTest extends TestCase
         $plugin->handleQuery($query, $next, $first);
     }
 
-    public function testPluginForce()
+    public function testPluginForce(): void
     {
         $query = GeocodeQuery::create('xxx');
         $query = $query->withData('default', 'value');

@@ -32,7 +32,7 @@ class GeoJsonTest extends TestCase
         $this->dumper = new GeoJson();
     }
 
-    public function testDump()
+    public function testDump(): void
     {
         $address = Address::createFromArray([]);
         $expected = [
@@ -52,7 +52,7 @@ class GeoJsonTest extends TestCase
         $this->assertEquals($expected, json_decode($result, true));
     }
 
-    public function testDumpWithData()
+    public function testDumpWithData(): void
     {
         $address = Address::createFromArray([
             'latitude' => 48.8631507,
@@ -76,7 +76,7 @@ class GeoJsonTest extends TestCase
         $this->assertEquals($expected, json_decode($result, true));
     }
 
-    public function testDumpWithBounds()
+    public function testDumpWithBounds(): void
     {
         $address = Address::createFromArray([
             'latitude' => 48.8631507,
@@ -112,7 +112,7 @@ class GeoJsonTest extends TestCase
         $this->assertEquals($expected, json_decode($result, true));
     }
 
-    public function testDumpWithProperties()
+    public function testDumpWithProperties(): void
     {
         $address = Address::createFromArray([
             'latitude' => 48.8631507,

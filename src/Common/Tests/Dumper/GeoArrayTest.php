@@ -31,7 +31,7 @@ class GeoArrayTest extends TestCase
         $this->dumper = new GeoArray();
     }
 
-    public function testDump()
+    public function testDump(): void
     {
         $address = Address::createFromArray([]);
         $expected = [
@@ -51,7 +51,7 @@ class GeoArrayTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testDumpWithData()
+    public function testDumpWithData(): void
     {
         $address = Address::createFromArray([
             'latitude' => 48.8631507,
@@ -75,7 +75,7 @@ class GeoArrayTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testDumpWithBounds()
+    public function testDumpWithBounds(): void
     {
         $address = Address::createFromArray([
             'latitude' => 48.8631507,
@@ -111,7 +111,7 @@ class GeoArrayTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testDumpWithProperties()
+    public function testDumpWithProperties(): void
     {
         $address = Address::createFromArray([
             'latitude' => 48.8631507,
