@@ -166,7 +166,7 @@ class ProviderAggregator implements Geocoder
      *
      * @throws ProviderNotRegistered
      */
-    private static function getProvider($query, array $providers, Provider $currentProvider = null): Provider // @phpstan-ignore-line
+    private static function getProvider($query, array $providers, Provider $currentProvider = null): Provider
     {
         if (null !== $currentProvider) {
             return $currentProvider;

@@ -61,7 +61,7 @@ final class MaxMindBinary extends AbstractProvider implements Provider
         }
 
         $this->datFile = $datFile;
-        $this->openFlag = null === $openFlag ? GEOIP_STANDARD : $openFlag; // @phpstan-ignore-line
+        $this->openFlag = null === $openFlag ? GEOIP_STANDARD : $openFlag;
     }
 
     /**
@@ -79,31 +79,31 @@ final class MaxMindBinary extends AbstractProvider implements Provider
             throw new UnsupportedOperation('The MaxMindBinary provider does not support IPv6 addresses.');
         }
 
-        $geoIp = geoip_open($this->datFile, $this->openFlag); // @phpstan-ignore-line
-        $geoIpRecord = GeoIP_record_by_addr($geoIp, $address); // @phpstan-ignore-line
+        $geoIp = geoip_open($this->datFile, $this->openFlag);
+        $geoIpRecord = GeoIP_record_by_addr($geoIp, $address);
 
-        geoip_close($geoIp); // @phpstan-ignore-line
+        geoip_close($geoIp);
 
-        if (false === $geoIpRecord instanceof \GeoIpRecord) { // @phpstan-ignore-line
+        if (false === $geoIpRecord instanceof \GeoIpRecord) {
             return new AddressCollection([]);
         }
 
         $adminLevels = [];
 
-        if ($geoIpRecord->region) { // @phpstan-ignore-line
-            $adminLevels[] = ['name' => $geoIpRecord->region, 'level' => 1]; // @phpstan-ignore-line
+        if ($geoIpRecord->region) {
+            $adminLevels[] = ['name' => $geoIpRecord->region, 'level' => 1];
         }
 
         return new AddressCollection([
             Address::createFromArray([
                 'providedBy' => $this->getName(),
-                'countryCode' => $geoIpRecord->country_code, // @phpstan-ignore-line
-                'country' => null === $geoIpRecord->country_name ? null : utf8_encode($geoIpRecord->country_name), // @phpstan-ignore-line
+                'countryCode' => $geoIpRecord->country_code,
+                'country' => null === $geoIpRecord->country_name ? null : utf8_encode($geoIpRecord->country_name),
                 'adminLevels' => $adminLevels,
-                'locality' => null === $geoIpRecord->city ? null : utf8_encode($geoIpRecord->city), // @phpstan-ignore-line
-                'latitude' => $geoIpRecord->latitude, // @phpstan-ignore-line
-                'longitude' => $geoIpRecord->longitude, // @phpstan-ignore-line
-                'postalCode' => $geoIpRecord->postal_code, // @phpstan-ignore-line
+                'locality' => null === $geoIpRecord->city ? null : utf8_encode($geoIpRecord->city),
+                'latitude' => $geoIpRecord->latitude,
+                'longitude' => $geoIpRecord->longitude,
+                'postalCode' => $geoIpRecord->postal_code,
             ]),
         ]);
     }
