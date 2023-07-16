@@ -21,18 +21,18 @@ use Geocoder\Provider\MaxMind\MaxMind;
 
 class MaxMindTest extends BaseTestCase
 {
-    protected function getCacheDir()
+    protected function getCacheDir(): string
     {
         return __DIR__.'/.cached_responses';
     }
 
-    public function testGetName()
+    public function testGetName(): void
     {
         $provider = new MaxMind($this->getMockedHttpClient(), 'api_key');
         $this->assertEquals('maxmind', $provider->getName());
     }
 
-    public function testGeocodeWithAddress()
+    public function testGeocodeWithAddress(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The MaxMind provider does not support street addresses, only IP addresses.');
@@ -41,7 +41,7 @@ class MaxMindTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
     }
 
-    public function testGeocodeWithLocalhostIPv4()
+    public function testGeocodeWithLocalhostIPv4(): void
     {
         $provider = new MaxMind($this->getMockedHttpClient(), 'api_key');
         $results = $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
@@ -56,7 +56,7 @@ class MaxMindTest extends BaseTestCase
         $this->assertEquals('localhost', $result->getCountry()->getName());
     }
 
-    public function testGeocodeWithLocalhostIPv6()
+    public function testGeocodeWithLocalhostIPv6(): void
     {
         $provider = new MaxMind($this->getMockedHttpClient(), 'api_key');
         $results = $provider->geocodeQuery(GeocodeQuery::create('::1'));
@@ -71,7 +71,7 @@ class MaxMindTest extends BaseTestCase
         $this->assertEquals('localhost', $result->getCountry()->getName());
     }
 
-    public function testGeocodeWithRealIPv4AndNotSupportedService()
+    public function testGeocodeWithRealIPv4AndNotSupportedService(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('Unknown MaxMind service foo');
@@ -80,7 +80,7 @@ class MaxMindTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
-    public function testGeocodeWithRealIPv6AndNotSupportedService()
+    public function testGeocodeWithRealIPv6AndNotSupportedService(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('Unknown MaxMind service 12345');
@@ -89,7 +89,7 @@ class MaxMindTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('::ffff:74.200.247.59'));
     }
 
-    public function testGeocodeWithRealIPv4GetsFakeContentFormattedEmpty()
+    public function testGeocodeWithRealIPv4GetsFakeContentFormattedEmpty(): void
     {
         $provider = new MaxMind($this->getMockedHttpClient(',,,,,,,,,'), 'api_key');
         $results = $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
@@ -112,7 +112,7 @@ class MaxMindTest extends BaseTestCase
         $this->assertNull($result->getTimezone());
     }
 
-    public function testGeocodeWithRealIPv4GetsFakeContent()
+    public function testGeocodeWithRealIPv4GetsFakeContent(): void
     {
         $provider = new MaxMind($this->getMockedHttpClient(
             'US,TX,Plano,75093,33.034698486328,-96.813400268555,,,,'
@@ -171,7 +171,7 @@ class MaxMindTest extends BaseTestCase
         $this->assertNull($result->getTimezone());
     }
 
-    public function testGeocodeWithRealIPv4AndInvalidApiKeyGetsFakeContent()
+    public function testGeocodeWithRealIPv4AndInvalidApiKeyGetsFakeContent(): void
     {
         $this->expectException(\Geocoder\Exception\InvalidCredentials::class);
         $this->expectExceptionMessage('API Key provided is not valid.');
@@ -180,7 +180,7 @@ class MaxMindTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
-    public function testGeocodeOmniServiceWithRealIPv6AndInvalidApiKeyGetsFakeContent()
+    public function testGeocodeOmniServiceWithRealIPv6AndInvalidApiKeyGetsFakeContent(): void
     {
         $this->expectException(\Geocoder\Exception\InvalidCredentials::class);
         $this->expectExceptionMessage('API Key provided is not valid.');
@@ -193,7 +193,7 @@ class MaxMindTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('::ffff:74.200.247.59'));
     }
 
-    public function testGeocodeWithRealIPv4AndInvalidApiKey()
+    public function testGeocodeWithRealIPv4AndInvalidApiKey(): void
     {
         $this->expectException(\Geocoder\Exception\InvalidCredentials::class);
         $this->expectExceptionMessage('API Key provided is not valid.');
@@ -202,7 +202,7 @@ class MaxMindTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
-    public function testGeocodeWithRealIPv4AndInvalidApiKeyGetsFakeContent2()
+    public function testGeocodeWithRealIPv4AndInvalidApiKeyGetsFakeContent2(): void
     {
         $this->expectException(\Geocoder\Exception\InvalidCredentials::class);
         $this->expectExceptionMessage('API Key provided is not valid.');
@@ -211,7 +211,7 @@ class MaxMindTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
-    public function testGeocodeOmniServiceWithRealIPv6AndInvalidApiKeyGetsFakeContent2()
+    public function testGeocodeOmniServiceWithRealIPv6AndInvalidApiKeyGetsFakeContent2(): void
     {
         $this->expectException(\Geocoder\Exception\InvalidCredentials::class);
         $this->expectExceptionMessage('API Key provided is not valid.');
@@ -224,7 +224,7 @@ class MaxMindTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('::ffff:74.200.247.59'));
     }
 
-    public function testGeocodeWithRealIPv4GetsFakeContentWithIpNotFound()
+    public function testGeocodeWithRealIPv4GetsFakeContentWithIpNotFound(): void
     {
         $provider = new MaxMind($this->getMockedHttpClient(',,,,,,,,,,IP_NOT_FOUND'), 'api_key');
         $result = $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
@@ -233,7 +233,7 @@ class MaxMindTest extends BaseTestCase
         $this->assertEquals(0, $result->count());
     }
 
-    public function testGeocodeOmniServiceWithRealIPv6GetsFakeContentWithIpNotFound()
+    public function testGeocodeOmniServiceWithRealIPv6GetsFakeContentWithIpNotFound(): void
     {
         $provider = new MaxMind(
             $this->getMockedHttpClient(',,,,,,,,,,,,,,,,,,,,,,,IP_NOT_FOUND'),
@@ -246,7 +246,7 @@ class MaxMindTest extends BaseTestCase
         $this->assertEquals(0, $result->count());
     }
 
-    public function testGeocodeGetsFakeContentWithInvalidData()
+    public function testGeocodeGetsFakeContentWithInvalidData(): void
     {
         $this->expectException(\Geocoder\Exception\InvalidServerResponse::class);
 
@@ -254,7 +254,7 @@ class MaxMindTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
-    public function testGeocodeServiceWithRealIPv4()
+    public function testGeocodeServiceWithRealIPv4(): void
     {
         if (!isset($_SERVER['MAXMIND_API_KEY'])) {
             $this->markTestSkipped('You need to configure the MAXMIND_API_KEY value in phpunit.xml');
@@ -284,7 +284,7 @@ class MaxMindTest extends BaseTestCase
         $this->assertNull($result->getTimezone());
     }
 
-    public function testGeocodeOmniServiceWithRealIPv4()
+    public function testGeocodeOmniServiceWithRealIPv4(): void
     {
         if (!isset($_SERVER['MAXMIND_API_KEY'])) {
             $this->markTestSkipped('You need to configure the MAXMIND_API_KEY value in phpunit.xml');
@@ -319,7 +319,7 @@ class MaxMindTest extends BaseTestCase
         $this->assertEquals('America/Chicago', $result->getTimezone());
     }
 
-    public function testGeocodeOmniServiceWithRealIPv4WithSslAndEncoding()
+    public function testGeocodeOmniServiceWithRealIPv4WithSslAndEncoding(): void
     {
         if (!isset($_SERVER['MAXMIND_API_KEY'])) {
             $this->markTestSkipped('You need to configure the MAXMIND_API_KEY value in phpunit.xml');
@@ -354,7 +354,7 @@ class MaxMindTest extends BaseTestCase
         $this->assertEquals('America/Sao_Paulo', $result->getTimezone());
     }
 
-    public function testGeocodeOmniServiceWithRealIPv6WithSsl()
+    public function testGeocodeOmniServiceWithRealIPv6WithSsl(): void
     {
         if (!isset($_SERVER['MAXMIND_API_KEY'])) {
             $this->markTestSkipped('You need to configure the MAXMIND_API_KEY value in phpunit.xml');
@@ -389,7 +389,7 @@ class MaxMindTest extends BaseTestCase
         $this->assertEquals('America/Denver', $result->getTimezone());
     }
 
-    public function testReverse()
+    public function testReverse(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The MaxMind provider is not able to do reverse geocoding.');
