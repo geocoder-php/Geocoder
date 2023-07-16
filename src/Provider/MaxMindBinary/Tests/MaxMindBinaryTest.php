@@ -21,14 +21,14 @@ use Geocoder\Provider\MaxMindBinary\MaxMindBinary;
 
 class MaxMindBinaryTest extends BaseTestCase
 {
-    private $binaryFile;
+    private string $binaryFile;
 
     public function setUp(): void
     {
         $this->binaryFile = __DIR__.'/fixtures/GeoLiteCity.dat';
     }
 
-    protected function getCacheDir()
+    protected function getCacheDir(): string
     {
         return __DIR__.'/.cached_responses';
     }
@@ -44,7 +44,7 @@ class MaxMindBinaryTest extends BaseTestCase
         }
     }
 
-    public static function provideIps()
+    public static function provideIps(): array
     {
         return [
             '24.24.24.24' => ['24.24.24.24', 'East Syracuse', 'United States'],
@@ -52,7 +52,7 @@ class MaxMindBinaryTest extends BaseTestCase
         ];
     }
 
-    public function testThrowIfNotExistBinaryFileGiven()
+    public function testThrowIfNotExistBinaryFileGiven(): void
     {
         $this->expectException(\Geocoder\Exception\InvalidArgument::class);
         $this->expectExceptionMessage('Given MaxMind dat file "not_exist.dat" does not exist.');
@@ -60,7 +60,7 @@ class MaxMindBinaryTest extends BaseTestCase
         new MaxMindBinary('not_exist.dat');
     }
 
-    public function testLocationResultContainsExpectedFieldsForAnAmericanIp()
+    public function testLocationResultContainsExpectedFieldsForAnAmericanIp(): void
     {
         $provider = new MaxMindBinary($this->binaryFile);
         $results = $provider->geocodeQuery(GeocodeQuery::create('24.24.24.24'));
@@ -88,7 +88,7 @@ class MaxMindBinaryTest extends BaseTestCase
         $this->assertNull($result->getTimezone());
     }
 
-    public function testLocationResultContainsExpectedFieldsForASpanishIp()
+    public function testLocationResultContainsExpectedFieldsForASpanishIp(): void
     {
         $provider = new MaxMindBinary($this->binaryFile);
         $results = $provider->geocodeQuery(GeocodeQuery::create('80.24.24.24'));
@@ -119,7 +119,7 @@ class MaxMindBinaryTest extends BaseTestCase
     /**
      * @dataProvider provideIps
      */
-    public function testFindLocationByIp($ip, $expectedCity, $expectedCountry)
+    public function testFindLocationByIp(string $ip, ?string $expectedCity, ?string $expectedCountry): void
     {
         $provider = new MaxMindBinary($this->binaryFile);
         $results = $provider->geocodeQuery(GeocodeQuery::create($ip));
@@ -134,7 +134,7 @@ class MaxMindBinaryTest extends BaseTestCase
         $this->assertEquals($expectedCountry, $result->getCountry()->getName());
     }
 
-    public function testShouldReturnResultsAsUtf8Encoded()
+    public function testShouldReturnResultsAsUtf8Encoded(): void
     {
         $provider = new MaxMindBinary($this->binaryFile);
         $results = $provider->geocodeQuery(GeocodeQuery::create('212.51.181.237'));
@@ -145,14 +145,14 @@ class MaxMindBinaryTest extends BaseTestCase
         $this->assertSame('Châlette-sur-loing', $result->getLocality());
     }
 
-    public function testGetName()
+    public function testGetName(): void
     {
         $provider = new MaxMindBinary($this->binaryFile);
 
         $this->assertEquals('maxmind_binary', $provider->getName());
     }
 
-    public function testThrowIfIpAddressCouldNotBeLocated()
+    public function testThrowIfIpAddressCouldNotBeLocated(): void
     {
         $provider = new MaxMindBinary($this->binaryFile);
         $result = $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
@@ -161,7 +161,7 @@ class MaxMindBinaryTest extends BaseTestCase
         $this->assertEquals(0, $result->count());
     }
 
-    public function testThrowIfIpAddressIsNotIpV4()
+    public function testThrowIfIpAddressIsNotIpV4(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The MaxMindBinary provider does not support IPv6 addresses.');
@@ -171,7 +171,7 @@ class MaxMindBinaryTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('2002:5018:1818:0:0:0:0:0'));
     }
 
-    public function testThrowIfInvalidIpAddressGiven()
+    public function testThrowIfInvalidIpAddressGiven(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The MaxMindBinary provider does not support street addresses.');
@@ -181,7 +181,7 @@ class MaxMindBinaryTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('invalidIp'));
     }
 
-    public function testThrowOnReverseMethodUsage()
+    public function testThrowOnReverseMethodUsage(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The MaxMindBinary is not able to do reverse geocoding.');
