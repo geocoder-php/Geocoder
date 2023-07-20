@@ -98,6 +98,7 @@ final class Photon extends AbstractHttpProvider implements Provider
             .http_build_query([
                 'lat' => $latitude,
                 'lon' => $longitude,
+                'query_string_filter' => $query->getData('query_string_filter'),
                 'lang' => $query->getLocale(),
             ]);
 

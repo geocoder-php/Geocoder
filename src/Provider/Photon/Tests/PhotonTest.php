@@ -120,4 +120,17 @@ class PhotonTest extends BaseTestCase
         $this->assertEquals('Landkreis Hildesheim', $result->getCounty());
         $this->assertEquals('Sehlem', $result->getDistrict());
     }
+
+    public function testReverseQueryWithOsmDataFilter()
+    {
+        $provider = Photon::withKomootServer($this->getHttpClient());
+        $reverseQuery = ReverseQuery::fromCoordinates(45.73179, 6.03248)
+            ->withData('query_string_filter', 'osm_key:place')
+            ->withLimit(1);
+        /** @var \Geocoder\Provider\Photon\Model\PhotonAddress $result */
+        $result = $provider->reverseQuery($reverseQuery)->first();
+
+        $this->assertEquals('place', $result->getOSMTag()->key);
+        $this->assertEquals('locality', $result->getOSMTag()->value);
+    }
 }
