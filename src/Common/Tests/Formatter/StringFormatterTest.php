@@ -33,6 +33,8 @@ class StringFormatterTest extends TestCase
 
     /**
      * @dataProvider dataProviderForTestFormat
+     *
+     * @param array<string, mixed> $data
      */
     public function testFormat(array $data, string $format, string $expected): void
     {

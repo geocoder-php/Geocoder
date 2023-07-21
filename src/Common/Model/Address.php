@@ -158,6 +158,8 @@ class Address implements Location
     /**
      * Create an Address with an array. Useful for testing.
      *
+     * @param array<string, mixed> $data
+     *
      * @return static
      */
     public static function createFromArray(array $data)
