@@ -33,7 +33,7 @@ class AlgoliaPlacesTest extends BaseTestCase
     /**
      * Get a real HTTP client. If a cache dir is set to a path it will use cached responses.
      */
-    protected function getHttpClient($apiKey = null, $appCode = null): ClientInterface
+    protected function getHttpClient(string $apiKey = null, string $appCode = null): ClientInterface
     {
         return new CachedResponseClient(new HttplugClient(), $this->getCacheDir(), $apiKey, $appCode);
     }

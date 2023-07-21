@@ -137,7 +137,7 @@ final class MaxMind extends AbstractHttpProvider implements Provider
         return $countryNames[$code];
     }
 
-    private function replaceAdmins($data)
+    private function replaceAdmins(array $data): array
     {
         $adminLevels = [];
 

@@ -76,7 +76,7 @@ class GeoIP2AdapterTest extends TestCase
     /**
      * @dataProvider provideDataForSwitchingRequestMethods
      */
-    public function testIpAddressIsPassedCorrectToReader($geoIp2Model): void
+    public function testIpAddressIsPassedCorrectToReader(string $geoIp2Model): void
     {
         $geoIp2Provider = $this->getGeoIP2ProviderMock();
         $geoIp2Provider

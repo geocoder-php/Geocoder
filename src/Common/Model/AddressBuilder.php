@@ -249,17 +249,14 @@ final class AddressBuilder
         return $this;
     }
 
-    public function setValue(string $name, $value): self
+    public function setValue(string $name, mixed $value): self
     {
         $this->data[$name] = $value;
 
         return $this;
     }
 
-    /**
-     * @param mixed|null $default
-     */
-    public function getValue(string $name, $default = null)
+    public function getValue(string $name, mixed $default = null): mixed
     {
         if ($this->hasValue($name)) {
             return $this->data[$name];

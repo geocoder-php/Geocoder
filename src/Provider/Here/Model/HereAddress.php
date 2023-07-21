@@ -122,10 +122,7 @@ final class HereAddress extends Address
         return $new;
     }
 
-    /**
-     * @param mixed|null $default
-     */
-    public function getAdditionalDataValue(string $name, $default = null)
+    public function getAdditionalDataValue(string $name, mixed $default = null): mixed
     {
         if ($this->hasAdditionalDataValue($name)) {
             return $this->additionalData[$name];
@@ -152,10 +149,7 @@ final class HereAddress extends Address
         return $new;
     }
 
-    /**
-     * @param mixed|null $value
-     */
-    public function addShape(string $name, $value = null): self
+    public function addShape(string $name, mixed $value = null): self
     {
         $new = clone $this;
         $new->shape[$name] = $value;
@@ -163,7 +157,7 @@ final class HereAddress extends Address
         return $new;
     }
 
-    public function getShapeValue(string $name, $default = null)
+    public function getShapeValue(string $name, mixed $default = null): mixed
     {
         if ($this->hasShapeValue($name)) {
             return $this->shape[$name];

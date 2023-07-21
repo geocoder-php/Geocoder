@@ -162,10 +162,8 @@ class GeoIP2Test extends BaseTestCase
 
     /**
      * @dataProvider provideDataForRetrievingGeodata
-     *
-     * @param string $address
      */
-    public function testRetrievingGeodata($address, $adapterResponse, $expectedGeodata): void
+    public function testRetrievingGeodata(string $address, string $adapterResponse, array $expectedGeodata): void
     {
         $adapter = $this->getGeoIP2AdapterMock($adapterResponse);
         $provider = new GeoIP2($adapter);

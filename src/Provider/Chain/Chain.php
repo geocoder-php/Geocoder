@@ -129,7 +129,7 @@ final class Chain implements Provider, LoggerAwareInterface
         return $this;
     }
 
-    private function log($level, string $message, array $context = []): void
+    private function log(mixed $level, string $message, array $context = []): void
     {
         if ($this->logger) {
             $this->logger->log($level, $message, $context);

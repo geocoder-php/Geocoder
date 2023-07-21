@@ -87,7 +87,7 @@ class ProviderCache implements Provider
         return sprintf('%s (cache)', $this->realProvider->getName());
     }
 
-    final public function __call($method, $args)
+    final public function __call(string $method, array $args): mixed
     {
         return call_user_func_array([$this->realProvider, $method], $args);
     }
