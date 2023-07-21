@@ -31,7 +31,6 @@ interface Plugin
     /**
      * Handle the Query and return the Collection coming from the next callable.
      *
-     * @param Query    $query
      * @param callable $next  Next middleware in the chain, the query is passed as the first argument
      * @param callable $first First middleware in the chain, used to to restart a request
      *

@@ -16,12 +16,12 @@ use Geocoder\Collection;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\QuotaExceeded;
 use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Model\Address;
 use Geocoder\Model\AddressCollection;
+use Geocoder\Provider\Provider;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Http\Provider\AbstractHttpProvider;
-use Geocoder\Provider\Provider;
 use Psr\Http\Client\ClientInterface;
 
 class Pelias extends AbstractHttpProvider implements Provider
@@ -44,10 +44,7 @@ class Pelias extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * @param GeocodeQuery $query
-     * @param array        $query_data additional query data (API key for instance)
-     *
-     * @return string
+     * @param array $query_data additional query data (API key for instance)
      *
      * @throws \Geocoder\Exception\Exception
      */
@@ -68,19 +65,13 @@ class Pelias extends AbstractHttpProvider implements Provider
         return sprintf('%s/search?%s', $this->root, http_build_query(array_merge($data, $query_data)));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
         return $this->executeQuery($this->getGeocodeQueryUrl($query));
     }
 
     /**
-     * @param ReverseQuery $query
-     * @param array        $query_data additional query data (API key for instance)
-     *
-     * @return string
+     * @param array $query_data additional query data (API key for instance)
      *
      * @throws \Geocoder\Exception\Exception
      */
@@ -99,25 +90,16 @@ class Pelias extends AbstractHttpProvider implements Provider
         return sprintf('%s/reverse?%s', $this->root, http_build_query(array_merge($data, $query_data)));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function reverseQuery(ReverseQuery $query): Collection
     {
         return $this->executeQuery($this->getReverseQueryUrl($query));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName(): string
     {
         return 'pelias';
     }
 
-    /**
-     * @param $url
-     */
     protected function executeQuery(string $url): AddressCollection
     {
         $content = $this->getUrlContents($url);
@@ -195,8 +177,6 @@ class Pelias extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * @param array $components
-     *
      * @return string|null
      */
     protected function guessLocality(array $components)
@@ -207,8 +187,6 @@ class Pelias extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * @param array $components
-     *
      * @return string|null
      */
     protected function guessStreetName(array $components)
@@ -219,8 +197,6 @@ class Pelias extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * @param array $components
-     *
      * @return string|null
      */
     protected function guessSubLocality(array $components)
@@ -231,9 +207,6 @@ class Pelias extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * @param array $components
-     * @param array $keys
-     *
      * @return string|null
      */
     protected function guessBestComponent(array $components, array $keys)

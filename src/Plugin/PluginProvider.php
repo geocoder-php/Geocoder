@@ -15,13 +15,13 @@ namespace Geocoder\Plugin;
 use Geocoder\Collection;
 use Geocoder\Exception\Exception;
 use Geocoder\Exception\LogicException;
+use Geocoder\Plugin\Exception\LoopException;
 use Geocoder\Plugin\Promise\GeocoderFulfilledPromise;
 use Geocoder\Plugin\Promise\GeocoderRejectedPromise;
 use Geocoder\Provider\Provider;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\Query;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Plugin\Exception\LoopException;
 
 /**
  * @author Joel Wurtz <joel.wurtz@gmail.com>
@@ -47,8 +47,7 @@ class PluginProvider implements Provider
     private $options;
 
     /**
-     * @param Provider $provider
-     * @param Plugin[] $plugins
+     * @param Plugin[]                          $plugins
      * @param array{max_restarts?: int<0, max>} $options
      */
     public function __construct(Provider $provider, array $plugins = [], array $options = [])
@@ -58,9 +57,6 @@ class PluginProvider implements Provider
         $this->options = $this->configure($options);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
         $pluginChain = $this->createPluginChain($this->plugins, function (GeocodeQuery $query) {
@@ -74,9 +70,6 @@ class PluginProvider implements Provider
         return $pluginChain($query)->wait();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function reverseQuery(ReverseQuery $query): Collection
     {
         $pluginChain = $this->createPluginChain($this->plugins, function (ReverseQuery $query) {
@@ -90,9 +83,6 @@ class PluginProvider implements Provider
         return $pluginChain($query)->wait();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName(): string
     {
         return $this->provider->getName();
@@ -100,10 +90,6 @@ class PluginProvider implements Provider
 
     /**
      * Configure the plugin provider.
-     *
-     * @param array $options
-     *
-     * @return array
      */
     private function configure(array $options = []): array
     {

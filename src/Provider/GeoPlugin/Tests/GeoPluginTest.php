@@ -13,9 +13,9 @@ declare(strict_types=1);
 namespace Geocoder\Provider\GeoPlugin\Tests;
 
 use Geocoder\IntegrationTest\BaseTestCase;
+use Geocoder\Provider\GeoPlugin\GeoPlugin;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Provider\GeoPlugin\GeoPlugin;
 
 class GeoPluginTest extends BaseTestCase
 {

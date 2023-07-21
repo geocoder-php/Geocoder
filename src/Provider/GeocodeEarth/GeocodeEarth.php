@@ -14,17 +14,17 @@ namespace Geocoder\Provider\GeocodeEarth;
 
 use Geocoder\Collection;
 use Geocoder\Exception\InvalidCredentials;
-use Geocoder\Query\GeocodeQuery;
-use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\Pelias\Pelias;
 use Geocoder\Provider\Provider;
+use Geocoder\Query\GeocodeQuery;
+use Geocoder\Query\ReverseQuery;
 use Psr\Http\Client\ClientInterface;
 
 final class GeocodeEarth extends Pelias implements Provider
 {
-    const API_URL = 'https://api.geocode.earth/';
+    public const API_URL = 'https://api.geocode.earth/';
 
-    const API_VERSION = 1;
+    public const API_VERSION = 1;
 
     /**
      * @var string
@@ -45,9 +45,6 @@ final class GeocodeEarth extends Pelias implements Provider
         parent::__construct($client, self::API_URL, self::API_VERSION);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
         $url = $this->getGeocodeQueryUrl($query, [
@@ -57,9 +54,6 @@ final class GeocodeEarth extends Pelias implements Provider
         return $this->executeQuery($url);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function reverseQuery(ReverseQuery $query): Collection
     {
         $url = $this->getReverseQueryUrl($query, [
@@ -69,9 +63,6 @@ final class GeocodeEarth extends Pelias implements Provider
         return $this->executeQuery($url);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName(): string
     {
         return 'geocode_earth';

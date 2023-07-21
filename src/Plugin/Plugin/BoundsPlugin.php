@@ -29,17 +29,11 @@ class BoundsPlugin implements Plugin
      */
     private $bounds;
 
-    /**
-     * @param Bounds $bounds
-     */
     public function __construct(Bounds $bounds)
     {
         $this->bounds = $bounds;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handleQuery(Query $query, callable $next, callable $first)
     {
         if (!$query instanceof GeocodeQuery) {

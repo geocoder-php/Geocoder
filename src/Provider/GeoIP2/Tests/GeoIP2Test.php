@@ -13,17 +13,17 @@ declare(strict_types=1);
 namespace Geocoder\Provider\GeoIP2\Tests;
 
 use Geocoder\Collection;
+use Geocoder\Exception\InvalidCredentials;
+use Geocoder\Exception\QuotaExceeded;
 use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Location;
-use Geocoder\Query\GeocodeQuery;
-use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\GeoIP2\GeoIP2;
 use Geocoder\Provider\GeoIP2\GeoIP2Adapter;
+use Geocoder\Query\GeocodeQuery;
+use Geocoder\Query\ReverseQuery;
 use GeoIp2\Database\Reader;
 use GeoIp2\Exception\AuthenticationException;
 use GeoIp2\Exception\OutOfQueriesException;
-use Geocoder\Exception\InvalidCredentials;
-use Geocoder\Exception\QuotaExceeded;
 use PHPUnit\Framework\MockObject\MockObject;
 
 /**
@@ -164,8 +164,6 @@ class GeoIP2Test extends BaseTestCase
      * @dataProvider provideDataForRetrievingGeodata
      *
      * @param string $address
-     * @param mixed  $adapterResponse
-     * @param mixed  $expectedGeodata
      */
     public function testRetrievingGeodata($address, $adapterResponse, $expectedGeodata)
     {
@@ -235,9 +233,6 @@ class GeoIP2Test extends BaseTestCase
 
     /**
      * @dataProvider provideDataForTestingExceptions
-     *
-     * @param \Exception $original
-     * @param string     $replacementClass
      */
     public function testExceptionConversion(\Exception $original, string $replacementClass)
     {
@@ -260,8 +255,6 @@ class GeoIP2Test extends BaseTestCase
     }
 
     /**
-     * @param mixed $returnValue
-     *
      * @return GeoIP2Adapter&MockObject
      */
     private function getGeoIP2AdapterMock($returnValue = '')

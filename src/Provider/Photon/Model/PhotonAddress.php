@@ -62,11 +62,6 @@ final class PhotonAddress extends Address
         return $this->name;
     }
 
-    /**
-     * @param string|null $name
-     *
-     * @return PhotonAddress
-     */
     public function withName(string $name = null): self
     {
         $new = clone $this;
@@ -83,11 +78,6 @@ final class PhotonAddress extends Address
         return $this->osmId;
     }
 
-    /**
-     * @param int|null $osmId
-     *
-     * @return PhotonAddress
-     */
     public function withOSMId(int $osmId = null): self
     {
         $new = clone $this;
@@ -104,11 +94,6 @@ final class PhotonAddress extends Address
         return $this->osmType;
     }
 
-    /**
-     * @param string|null $osmType
-     *
-     * @return PhotonAddress
-     */
     public function withOSMType(string $osmType = null): self
     {
         $new = clone $this;
@@ -125,12 +110,6 @@ final class PhotonAddress extends Address
         return $this->osmTag;
     }
 
-    /**
-     * @param string|null $key
-     * @param string|null $value
-     *
-     * @return PhotonAddress
-     */
     public function withOSMTag(string $key = null, string $value = null): self
     {
         $new = clone $this;
@@ -155,10 +134,6 @@ final class PhotonAddress extends Address
         return $this->state;
     }
 
-    /**
-     * @param string|null $state
-     * @return PhotonAddress
-     */
     public function withState(string $state = null): self
     {
         $new = clone $this;
@@ -175,10 +150,6 @@ final class PhotonAddress extends Address
         return $this->county;
     }
 
-    /**
-     * @param string|null $county
-     * @return PhotonAddress
-     */
     public function withCounty(string $county = null): self
     {
         $new = clone $this;
@@ -195,10 +166,6 @@ final class PhotonAddress extends Address
         return $this->district;
     }
 
-    /**
-     * @param string|null $district
-     * @return PhotonAddress
-     */
     public function withDistrict(string $district = null): self
     {
         $new = clone $this;

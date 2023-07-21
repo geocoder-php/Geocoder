@@ -31,9 +31,6 @@ abstract class AbstractHostIp extends AbstractHttpProvider implements Provider
 
     abstract protected function getEndpointURL(): string;
 
-    /**
-     * {@inheritdoc}
-     */
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
         $address = $query->getText();
@@ -55,19 +52,11 @@ abstract class AbstractHostIp extends AbstractHttpProvider implements Provider
         return $this->executeQuery($url);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function reverseQuery(ReverseQuery $query): Collection
     {
         throw new UnsupportedOperation('The HostIp provider is not able to do reverse geocoding.');
     }
 
-    /**
-     * @param array $data
-     *
-     * @return bool
-     */
     protected function isUnknownLocation(array $data): bool
     {
         return empty($data['lat'])
@@ -76,11 +65,6 @@ abstract class AbstractHostIp extends AbstractHttpProvider implements Provider
             && '(Unknown Country?)' === $data['country_name'];
     }
 
-    /**
-     * @param array $data
-     *
-     * @return bool
-     */
     protected function isPrivateLocation(array $data): bool
     {
         return empty($data['lat'])
@@ -89,11 +73,6 @@ abstract class AbstractHostIp extends AbstractHttpProvider implements Provider
             && '(Private Address)' === $data['country_name'];
     }
 
-    /**
-     * @param array $data
-     *
-     * @return AddressCollection
-     */
     protected function prepareAddressCollection(array $data): AddressCollection
     {
         // Return empty collection if address was not found

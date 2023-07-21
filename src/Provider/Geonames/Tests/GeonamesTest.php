@@ -15,10 +15,10 @@ namespace Geocoder\Provider\Geonames\Tests;
 use Geocoder\Collection;
 use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Location;
+use Geocoder\Provider\Geonames\Geonames;
 use Geocoder\Provider\Geonames\Model\GeonamesAddress;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Provider\Geonames\Geonames;
 
 class GeonamesTest extends BaseTestCase
 {

@@ -24,17 +24,11 @@ final class GeocoderRejectedPromise implements Promise
      */
     private $exception;
 
-    /**
-     * @param Exception $exception
-     */
     public function __construct(Exception $exception)
     {
         $this->exception = $exception;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function then(callable $onFulfilled = null, callable $onRejected = null): Promise
     {
         if (null === $onRejected) {
@@ -48,19 +42,11 @@ final class GeocoderRejectedPromise implements Promise
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getState(): string
     {
         return Promise::REJECTED;
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * @return mixed
-     */
     public function wait($unwrap = true)
     {
         if ($unwrap) {

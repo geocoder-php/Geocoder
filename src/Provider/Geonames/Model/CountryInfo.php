@@ -98,14 +98,6 @@ final class CountryInfo
         return $this->bounds;
     }
 
-    /**
-     * @param float $south
-     * @param float $west
-     * @param float $north
-     * @param float $east
-     *
-     * @return CountryInfo
-     */
     public function setBounds(float $south, float $west, float $north, float $east): self
     {
         $new = clone $this;
@@ -127,11 +119,6 @@ final class CountryInfo
         return $this->continent;
     }
 
-    /**
-     * @param string|null $continent
-     *
-     * @return CountryInfo
-     */
     public function withContinent(string $continent = null): self
     {
         $new = clone $this;
@@ -148,11 +135,6 @@ final class CountryInfo
         return $this->capital;
     }
 
-    /**
-     * @param string|null $capital
-     *
-     * @return CountryInfo
-     */
     public function withCapital(string $capital = null): self
     {
         $new = clone $this;
@@ -161,19 +143,11 @@ final class CountryInfo
         return $new;
     }
 
-    /**
-     * @return array
-     */
     public function getLanguages(): array
     {
         return $this->languages;
     }
 
-    /**
-     * @param string $languages
-     *
-     * @return CountryInfo
-     */
     public function withLanguages(string $languages = ''): self
     {
         $new = clone $this;
@@ -190,11 +164,6 @@ final class CountryInfo
         return $this->geonameId;
     }
 
-    /**
-     * @param int|null $geonameId
-     *
-     * @return CountryInfo
-     */
     public function withGeonameId(int $geonameId = null): self
     {
         $new = clone $this;
@@ -211,11 +180,6 @@ final class CountryInfo
         return $this->isoAlpha3;
     }
 
-    /**
-     * @param string|null $isoAlpha3
-     *
-     * @return CountryInfo
-     */
     public function withIsoAlpha3(string $isoAlpha3 = null): self
     {
         $new = clone $this;
@@ -232,11 +196,6 @@ final class CountryInfo
         return $this->fipsCode;
     }
 
-    /**
-     * @param string|null $fipsCode
-     *
-     * @return CountryInfo
-     */
     public function withFipsCode(string $fipsCode = null): self
     {
         $new = clone $this;
@@ -255,8 +214,6 @@ final class CountryInfo
 
     /**
      * @param int|string|null $population
-     *
-     * @return CountryInfo
      */
     public function withPopulation($population = null): self
     {
@@ -274,11 +231,6 @@ final class CountryInfo
         return $this->isoNumeric;
     }
 
-    /**
-     * @param string|null $isoNumeric
-     *
-     * @return CountryInfo
-     */
     public function withIsoNumeric(string $isoNumeric = null): self
     {
         $new = clone $this;
@@ -295,11 +247,6 @@ final class CountryInfo
         return $this->areaInSqKm;
     }
 
-    /**
-     * @param string|null $areaInSqKm
-     *
-     * @return CountryInfo
-     */
     public function withAreaInSqKm(string $areaInSqKm = null): self
     {
         $new = clone $this;
@@ -316,11 +263,6 @@ final class CountryInfo
         return $this->countryCode;
     }
 
-    /**
-     * @param string|null $countryCode
-     *
-     * @return CountryInfo
-     */
     public function withCountryCode(string $countryCode = null): self
     {
         $new = clone $this;
@@ -337,11 +279,6 @@ final class CountryInfo
         return $this->countryName;
     }
 
-    /**
-     * @param string|null $countryName
-     *
-     * @return CountryInfo
-     */
     public function withCountryName(string $countryName = null): self
     {
         $new = clone $this;
@@ -358,11 +295,6 @@ final class CountryInfo
         return $this->continentName;
     }
 
-    /**
-     * @param string|null $continentName
-     *
-     * @return CountryInfo
-     */
     public function withContinentName(string $continentName = null): self
     {
         $new = clone $this;
@@ -379,11 +311,6 @@ final class CountryInfo
         return $this->currencyCode;
     }
 
-    /**
-     * @param string|null $currencyCode
-     *
-     * @return CountryInfo
-     */
     public function withCurrencyCode(string $currencyCode = null): self
     {
         $new = clone $this;

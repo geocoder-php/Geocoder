@@ -15,12 +15,12 @@ namespace Geocoder\Provider\BingMaps;
 use Geocoder\Collection;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Model\AddressBuilder;
 use Geocoder\Model\AddressCollection;
+use Geocoder\Provider\Provider;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Http\Provider\AbstractHttpProvider;
-use Geocoder\Provider\Provider;
 use Psr\Http\Client\ClientInterface;
 
 /**
@@ -31,12 +31,12 @@ final class BingMaps extends AbstractHttpProvider implements Provider
     /**
      * @var string
      */
-    const GEOCODE_ENDPOINT_URL = 'https://dev.virtualearth.net/REST/v1/Locations/?maxResults=%d&q=%s&key=%s&incl=ciso2';
+    public const GEOCODE_ENDPOINT_URL = 'https://dev.virtualearth.net/REST/v1/Locations/?maxResults=%d&q=%s&key=%s&incl=ciso2';
 
     /**
      * @var string
      */
-    const REVERSE_ENDPOINT_URL = 'https://dev.virtualearth.net/REST/v1/Locations/%F,%F?key=%s&incl=ciso2';
+    public const REVERSE_ENDPOINT_URL = 'https://dev.virtualearth.net/REST/v1/Locations/%F,%F?key=%s&incl=ciso2';
 
     /**
      * @var string
@@ -57,9 +57,6 @@ final class BingMaps extends AbstractHttpProvider implements Provider
         parent::__construct($client);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
         // This API doesn't handle IPs
@@ -72,9 +69,6 @@ final class BingMaps extends AbstractHttpProvider implements Provider
         return $this->executeQuery($url, $query->getLocale(), $query->getLimit());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function reverseQuery(ReverseQuery $query): Collection
     {
         $coordinates = $query->getCoordinates();
@@ -83,20 +77,13 @@ final class BingMaps extends AbstractHttpProvider implements Provider
         return $this->executeQuery($url, $query->getLocale(), $query->getLimit());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName(): string
     {
         return 'bing_maps';
     }
 
     /**
-     * @param string $url
      * @param string $locale
-     * @param int    $limit
-     *
-     * @return \Geocoder\Collection
      */
     private function executeQuery(string $url, string $locale = null, int $limit): Collection
     {

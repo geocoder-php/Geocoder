@@ -14,17 +14,17 @@ namespace Geocoder\Provider\OpenRouteService;
 
 use Geocoder\Collection;
 use Geocoder\Exception\InvalidCredentials;
-use Geocoder\Query\GeocodeQuery;
-use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\Pelias\Pelias;
 use Geocoder\Provider\Provider;
+use Geocoder\Query\GeocodeQuery;
+use Geocoder\Query\ReverseQuery;
 use Psr\Http\Client\ClientInterface;
 
 final class OpenRouteService extends Pelias implements Provider
 {
-    const API_URL = 'https://api.openrouteservice.org/geocode';
+    public const API_URL = 'https://api.openrouteservice.org/geocode';
 
-    const API_VERSION = 1;
+    public const API_VERSION = 1;
 
     /**
      * @var string
@@ -55,9 +55,6 @@ final class OpenRouteService extends Pelias implements Provider
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
         $url = $this->getGeocodeQueryUrl($query, [
@@ -67,9 +64,6 @@ final class OpenRouteService extends Pelias implements Provider
         return $this->executeQuery($url);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function reverseQuery(ReverseQuery $query): Collection
     {
         $url = $this->getReverseQueryUrl($query, [
@@ -79,9 +73,6 @@ final class OpenRouteService extends Pelias implements Provider
         return $this->executeQuery($url);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName(): string
     {
         return 'openrouteservice';

@@ -19,9 +19,6 @@ use Geocoder\Location;
  */
 final class Wkb implements Dumper
 {
-    /**
-     * {@inheritdoc}
-     */
     public function dump(Location $location): string
     {
         $lat = null;

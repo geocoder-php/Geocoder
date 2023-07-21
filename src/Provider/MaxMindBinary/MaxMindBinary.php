@@ -18,10 +18,10 @@ use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Model\Address;
 use Geocoder\Model\AddressCollection;
-use Geocoder\Query\GeocodeQuery;
-use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\AbstractProvider;
 use Geocoder\Provider\Provider;
+use Geocoder\Query\GeocodeQuery;
+use Geocoder\Query\ReverseQuery;
 
 final class MaxMindBinary extends AbstractProvider implements Provider
 {
@@ -36,9 +36,6 @@ final class MaxMindBinary extends AbstractProvider implements Provider
     private $openFlag;
 
     /**
-     * @param string   $datFile
-     * @param int|null $openFlag
-     *
      * @throws FunctionNotFound if maxmind's lib not installed
      * @throws InvalidArgument  if dat file is not correct (optional)
      */
@@ -64,9 +61,6 @@ final class MaxMindBinary extends AbstractProvider implements Provider
         $this->openFlag = null === $openFlag ? GEOIP_STANDARD : $openFlag;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
         $address = $query->getText();
@@ -108,17 +102,11 @@ final class MaxMindBinary extends AbstractProvider implements Provider
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function reverseQuery(ReverseQuery $query): Collection
     {
         throw new UnsupportedOperation('The MaxMindBinary is not able to do reverse geocoding.');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName(): string
     {
         return 'maxmind_binary';

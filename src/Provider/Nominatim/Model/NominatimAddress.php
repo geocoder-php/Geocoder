@@ -77,11 +77,6 @@ final class NominatimAddress extends Address
         return $this->attribution;
     }
 
-    /**
-     * @param string|null $attribution
-     *
-     * @return NominatimAddress
-     */
     public function withAttribution(string $attribution = null): self
     {
         $new = clone $this;
@@ -102,10 +97,6 @@ final class NominatimAddress extends Address
 
     /**
      * @deprecated
-     *
-     * @param string|null $category
-     *
-     * @return NominatimAddress
      */
     public function withClass(string $category = null): self
     {
@@ -120,11 +111,6 @@ final class NominatimAddress extends Address
         return $this->category;
     }
 
-    /**
-     * @param string|null $category
-     *
-     * @return NominatimAddress
-     */
     public function withCategory(string $category = null): self
     {
         $new = clone $this;
@@ -141,11 +127,6 @@ final class NominatimAddress extends Address
         return $this->displayName;
     }
 
-    /**
-     * @param string|null $displayName
-     *
-     * @return NominatimAddress
-     */
     public function withDisplayName(string $displayName = null): self
     {
         $new = clone $this;
@@ -162,11 +143,6 @@ final class NominatimAddress extends Address
         return $this->osmId;
     }
 
-    /**
-     * @param int|null $osmId
-     *
-     * @return NominatimAddress
-     */
     public function withOSMId(int $osmId = null): self
     {
         $new = clone $this;
@@ -183,11 +159,6 @@ final class NominatimAddress extends Address
         return $this->osmType;
     }
 
-    /**
-     * @param string|null $osmType
-     *
-     * @return NominatimAddress
-     */
     public function withOSMType(string $osmType = null): self
     {
         $new = clone $this;
@@ -204,11 +175,6 @@ final class NominatimAddress extends Address
         return $this->type;
     }
 
-    /**
-     * @param string|null $type
-     *
-     * @return NominatimAddress
-     */
     public function withType(string $type = null): self
     {
         $new = clone $this;
@@ -217,19 +183,11 @@ final class NominatimAddress extends Address
         return $new;
     }
 
-    /**
-     * @return string|null
-     */
     public function getQuarter(): ?string
     {
         return $this->quarter;
     }
 
-    /**
-     * @param string|null $quarter
-     *
-     * @return NominatimAddress
-     */
     public function withQuarter(string $quarter = null): self
     {
         $new = clone $this;
@@ -238,17 +196,11 @@ final class NominatimAddress extends Address
         return $new;
     }
 
-    /**
-     * @return array|null
-     */
     public function getDetails(): ?array
     {
         return $this->details;
     }
 
-    /**
-     * @param array|null $details
-     */
     public function withDetails(array $details = null): self
     {
         $new = clone $this;
@@ -257,17 +209,11 @@ final class NominatimAddress extends Address
         return $new;
     }
 
-    /**
-     * @return array|null
-     */
     public function getTags(): ?array
     {
         return $this->tags;
     }
 
-    /**
-     * @param array|null $tags
-     */
     public function withTags(array $tags = null): self
     {
         $new = clone $this;
@@ -284,11 +230,6 @@ final class NominatimAddress extends Address
         return $this->neighbourhood;
     }
 
-    /**
-     * @param string|null $neighbourhood
-     *
-     * @return NominatimAddress
-     */
     public function withNeighbourhood(string $neighbourhood = null): self
     {
         $new = clone $this;

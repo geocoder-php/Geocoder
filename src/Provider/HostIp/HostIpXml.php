@@ -12,9 +12,7 @@ declare(strict_types=1);
 
 namespace Geocoder\Provider\HostIp;
 
-use Geocoder\Collection;
 use Geocoder\Model\AddressCollection;
-use function simplexml_load_string;
 
 /**
  * @author Oleg Andreyev <oleg@andreyev.lv>
@@ -24,31 +22,22 @@ final class HostIpXml extends AbstractHostIp
     /**
      * @var string
      */
-    const ENDPOINT_URL = 'http://api.hostip.info/get_xml.php?ip=%s&position=true';
+    public const ENDPOINT_URL = 'http://api.hostip.info/get_xml.php?ip=%s&position=true';
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName(): string
     {
         return 'host_ip_xml';
     }
 
-    /**
-     * @return string
-     */
     public function getEndpointURL(): string
     {
         return self::ENDPOINT_URL;
     }
 
-    /**
-     * @param string $url
-     */
     protected function executeQuery(string $url): AddressCollection
     {
         $content = $this->getUrlContents($url);
-        $xml = simplexml_load_string($content);
+        $xml = \simplexml_load_string($content);
 
         $hostIp = $xml->xpath('/HostipLookupResultSet/gml:featureMember/Hostip');
         if (empty($hostIp[0])) {

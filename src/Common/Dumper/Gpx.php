@@ -20,11 +20,6 @@ use Geocoder\Location;
  */
 final class Gpx extends AbstractDumper implements Dumper
 {
-    /**
-     * @param Location $location
-     *
-     * @return string
-     */
     public function dump(Location $location): string
     {
         $gpx = sprintf(<<<'GPX'
@@ -37,14 +32,14 @@ version="1.0"
     xsi:schemaLocation="http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd">
 
 GPX
-        , Geocoder::VERSION);
+            , Geocoder::VERSION);
 
         if (null !== $bounds = $location->getBounds()) {
             $gpx .= sprintf(<<<'GPX'
     <bounds minlat="%f" minlon="%f" maxlat="%f" maxlon="%f"/>
 
 GPX
-            , $bounds->getWest(), $bounds->getSouth(), $bounds->getEast(), $bounds->getNorth());
+                , $bounds->getWest(), $bounds->getSouth(), $bounds->getEast(), $bounds->getNorth());
         }
 
         $lat = null;
@@ -61,7 +56,7 @@ GPX
     </wpt>
 
 GPX
-        , $lat, $lon, $this->formatName($location));
+            , $lat, $lon, $this->formatName($location));
 
         $gpx .= <<<'GPX'
 </gpx>

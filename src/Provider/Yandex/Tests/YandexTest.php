@@ -16,9 +16,9 @@ use Geocoder\Collection;
 use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Location;
 use Geocoder\Provider\Yandex\Model\YandexAddress;
+use Geocoder\Provider\Yandex\Yandex;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Provider\Yandex\Yandex;
 
 /**
  * @author Antoine Corcy <contact@sbin.dk>

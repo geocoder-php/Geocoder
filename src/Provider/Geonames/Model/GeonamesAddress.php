@@ -66,11 +66,6 @@ final class GeonamesAddress extends Address
         return $this->name;
     }
 
-    /**
-     * @param string|null $name
-     *
-     * @return self
-     */
     public function withName(string $name = null): self
     {
         $new = clone $this;
@@ -163,17 +158,12 @@ final class GeonamesAddress extends Address
         return $new;
     }
 
-    /**
-     * @return array
-     */
     public function getAlternateNames(): array
     {
         return $this->alternateNames;
     }
 
     /**
-     * @param array $alternateNames
-     *
      * @return GeonamesAddress
      */
     public function withAlternateNames(array $alternateNames)

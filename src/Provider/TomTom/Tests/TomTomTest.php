@@ -15,9 +15,9 @@ namespace Geocoder\Provider\TomTom\Tests;
 use Geocoder\Collection;
 use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Location;
+use Geocoder\Provider\TomTom\TomTom;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Provider\TomTom\TomTom;
 
 class TomTomTest extends BaseTestCase
 {
