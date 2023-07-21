@@ -22,6 +22,8 @@ interface Dumper
     /**
      * Dumps an `Location` object as a string representation of
      * the implemented format.
+     *
+     * @return string|array
      */
-    public function dump(Location $location): mixed;
+    public function dump(Location $location);
 }
