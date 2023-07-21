@@ -13,9 +13,9 @@ declare(strict_types=1);
 namespace Geocoder\Provider\Cache;
 
 use Geocoder\Collection;
+use Geocoder\Provider\Provider;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Provider\Provider;
 use Psr\SimpleCache\CacheInterface;
 
 /**
@@ -41,14 +41,12 @@ class ProviderCache implements Provider
     protected $lifetime;
 
     /**
-     * If true, include the real provider name into the cache key
+     * If true, include the real provider name into the cache key.
      */
     private bool $separateCache;
 
     /**
-     * @param Provider       $realProvider
-     * @param CacheInterface $cache
-     * @param int            $lifetime
+     * @param int $lifetime
      */
     final public function __construct(Provider $realProvider, CacheInterface $cache, int $lifetime = null, bool $separateCache = false)
     {
@@ -58,9 +56,6 @@ class ProviderCache implements Provider
         $this->separateCache = $separateCache;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     final public function geocodeQuery(GeocodeQuery $query): Collection
     {
         $cacheKey = $this->getCacheKey($query);
@@ -74,9 +69,6 @@ class ProviderCache implements Provider
         return $result;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     final public function reverseQuery(ReverseQuery $query): Collection
     {
         $cacheKey = $this->getCacheKey($query);
@@ -90,9 +82,6 @@ class ProviderCache implements Provider
         return $result;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName(): string
     {
         return sprintf('%s (cache)', $this->realProvider->getName());
@@ -105,8 +94,6 @@ class ProviderCache implements Provider
 
     /**
      * @param GeocodeQuery|ReverseQuery $query
-     *
-     * @return string
      */
     protected function getCacheKey($query): string
     {

@@ -105,8 +105,6 @@ final class GooglePlace extends Address
     }
 
     /**
-     * @param string|null $id
-     *
      * @return GooglePlace
      */
     public function withId(string $id = null)
@@ -126,8 +124,6 @@ final class GooglePlace extends Address
     }
 
     /**
-     * @param string|null $name
-     *
      * @return GooglePlace
      */
     public function withName(string $name = null)
@@ -138,17 +134,12 @@ final class GooglePlace extends Address
         return $new;
     }
 
-    /**
-     * @return array
-     */
     public function getType(): array
     {
         return $this->type;
     }
 
     /**
-     * @param array $type
-     *
      * @return GooglePlace
      */
     public function withType(array $type)
@@ -168,8 +159,6 @@ final class GooglePlace extends Address
     }
 
     /**
-     * @param string|null $formattedAddress
-     *
      * @return GooglePlace
      */
     public function withFormattedAddress(string $formattedAddress = null)
@@ -189,8 +178,6 @@ final class GooglePlace extends Address
     }
 
     /**
-     * @param string|null $vicinity
-     *
      * @return GooglePlace
      */
     public function withVicinity(string $vicinity = null)
@@ -217,9 +204,6 @@ final class GooglePlace extends Address
         return $new;
     }
 
-    /**
-     * @return PlusCode|null
-     */
     public function getPlusCode(): ?PlusCode
     {
         return $this->plusCode;
@@ -353,9 +337,6 @@ final class GooglePlace extends Address
         return $new;
     }
 
-    /**
-     * @return bool
-     */
     public function isPermanentlyClosed(): bool
     {
         return $this->permanentlyClosed;

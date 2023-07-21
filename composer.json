@@ -36,6 +36,7 @@
         "geoip2/geoip2": "~2.0",
         "nyholm/nsa": "^1.1",
         "nyholm/psr7": "^1.0",
+        "php-cs-fixer/shim": "^3.22",
         "php-http/curl-client": "^2.2",
         "php-http/message": "^1.0",
         "php-http/mock-client": "^1.0",
@@ -82,6 +83,8 @@
     },
     "scripts": {
         "analyse": "vendor/bin/phpstan analyse",
+        "cs": "vendor/bin/php-cs-fixer fix -v --dry-run",
+        "cs:fix": "vendor/bin/php-cs-fixer fix -v",
         "test": "vendor/bin/phpunit"
     }
 }

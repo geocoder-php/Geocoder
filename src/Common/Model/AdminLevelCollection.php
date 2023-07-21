@@ -15,14 +15,13 @@ namespace Geocoder\Model;
 use Geocoder\Exception\CollectionIsEmpty;
 use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\OutOfBounds;
-use Traversable;
 
 /**
  * @author Giorgio Premi <giosh94mhz@gmail.com>
  */
 final class AdminLevelCollection implements \IteratorAggregate, \Countable
 {
-    const MAX_LEVEL_DEPTH = 5;
+    public const MAX_LEVEL_DEPTH = 5;
 
     /**
      * @var AdminLevel[]
@@ -51,25 +50,17 @@ final class AdminLevelCollection implements \IteratorAggregate, \Countable
         ksort($this->adminLevels, SORT_NUMERIC);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getIterator(): Traversable
+    public function getIterator(): \Traversable
     {
         return new \ArrayIterator($this->all());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function count(): int
     {
         return count($this->adminLevels);
     }
 
     /**
-     * @return AdminLevel
-     *
      * @throws CollectionIsEmpty
      */
     public function first(): AdminLevel
@@ -82,9 +73,6 @@ final class AdminLevelCollection implements \IteratorAggregate, \Countable
     }
 
     /**
-     * @param int      $offset
-     * @param int|null $length
-     *
      * @return AdminLevel[]
      */
     public function slice(int $offset, int $length = null): array
@@ -92,17 +80,12 @@ final class AdminLevelCollection implements \IteratorAggregate, \Countable
         return array_slice($this->adminLevels, $offset, $length, true);
     }
 
-    /**
-     * @return bool
-     */
     public function has(int $level): bool
     {
         return isset($this->adminLevels[$level]);
     }
 
     /**
-     * @return AdminLevel
-     *
      * @throws \OutOfBoundsException
      * @throws InvalidArgument
      */
@@ -126,8 +109,6 @@ final class AdminLevelCollection implements \IteratorAggregate, \Countable
     }
 
     /**
-     * @param int $level
-     *
      * @throws \OutOfBoundsException
      */
     private function checkLevel(int $level)

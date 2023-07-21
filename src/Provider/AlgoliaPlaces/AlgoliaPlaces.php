@@ -27,22 +27,22 @@ use Psr\Http\Message\RequestInterface;
 
 class AlgoliaPlaces extends AbstractHttpProvider implements Provider
 {
-    const TYPE_CITY = 'city';
+    public const TYPE_CITY = 'city';
 
-    const TYPE_COUNTRY = 'country';
+    public const TYPE_COUNTRY = 'country';
 
-    const TYPE_ADDRESS = 'address';
+    public const TYPE_ADDRESS = 'address';
 
-    const TYPE_BUS_STOP = 'busStop';
+    public const TYPE_BUS_STOP = 'busStop';
 
-    const TYPE_TRAIN_STATION = 'trainStation';
+    public const TYPE_TRAIN_STATION = 'trainStation';
 
-    const TYPE_TOWN_HALL = 'townhall';
+    public const TYPE_TOWN_HALL = 'townhall';
 
-    const TYPE_AIRPORT = 'airport';
+    public const TYPE_AIRPORT = 'airport';
 
     /** @var string */
-    const ENDPOINT_URL_SSL = 'https://places-dsn.algolia.net/1/places/query';
+    public const ENDPOINT_URL_SSL = 'https://places-dsn.algolia.net/1/places/query';
 
     /** @var string */
     private $apiKey;
@@ -156,9 +156,6 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
         }, $query->getData('countries') ?? []);
     }
 
-    /**
-     * @return array
-     */
     private function buildHeaders(): array
     {
         if (empty($this->appId) || empty($this->apiKey)) {
@@ -171,12 +168,6 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
         ];
     }
 
-    /**
-     * @param array       $jsonResponse
-     * @param string|null $locale
-     *
-     * @return AddressCollection
-     */
     private function buildResult(array $jsonResponse, string $locale = null): AddressCollection
     {
         $results = [];
@@ -219,10 +210,6 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
     /**
      * When no locale was set in the query, Algolia will return results for all locales.
      * In this case, we return the default locale value.
-     *
-     * @param array       $result
-     * @param string      $attribute
-     * @param string|null $locale
      *
      * @return string|int|float
      */

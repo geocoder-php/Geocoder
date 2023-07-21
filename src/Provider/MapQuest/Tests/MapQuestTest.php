@@ -18,9 +18,9 @@ use Geocoder\Location;
 use Geocoder\Model\AddressBuilder;
 use Geocoder\Model\AdminLevel;
 use Geocoder\Model\Bounds;
+use Geocoder\Provider\MapQuest\MapQuest;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Provider\MapQuest\MapQuest;
 
 /**
  * @author William Durand <william.durand1@gmail.com>

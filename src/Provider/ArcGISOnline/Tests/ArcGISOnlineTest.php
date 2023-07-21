@@ -15,9 +15,9 @@ namespace Geocoder\Provider\ArcGISOnlineTest\Tests;
 use Geocoder\Collection;
 use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Location;
+use Geocoder\Provider\ArcGISOnline\ArcGISOnline;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Provider\ArcGISOnline\ArcGISOnline;
 
 class ArcGISOnlineTest extends BaseTestCase
 {

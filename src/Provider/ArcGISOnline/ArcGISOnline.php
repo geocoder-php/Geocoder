@@ -17,12 +17,12 @@ use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Model\Address;
 use Geocoder\Model\AddressCollection;
+use Geocoder\Provider\Provider;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Http\Provider\AbstractHttpProvider;
-use Geocoder\Provider\Provider;
 use Psr\Http\Client\ClientInterface;
 
 /**
@@ -33,17 +33,17 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
     /**
      * @var string
      */
-    const ENDPOINT_URL = 'https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?SingleLine=%s';
+    public const ENDPOINT_URL = 'https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?SingleLine=%s';
 
     /**
      * @var string
      */
-    const TOKEN_ENDPOINT_URL = 'https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/geocodeAddresses?token=%s&addresses=%s';
+    public const TOKEN_ENDPOINT_URL = 'https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/geocodeAddresses?token=%s&addresses=%s';
 
     /**
      * @var string
      */
-    const REVERSE_ENDPOINT_URL = 'https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/reverseGeocode?location=%F,%F';
+    public const REVERSE_ENDPOINT_URL = 'https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/reverseGeocode?location=%F,%F';
 
     /**
      * @var string
@@ -92,9 +92,6 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
         $this->token = $token;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
         $address = $query->getText();
@@ -155,9 +152,6 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
         return new AddressCollection($results);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function reverseQuery(ReverseQuery $query): Collection
     {
         $coordinates = $query->getCoordinates();
@@ -195,20 +189,11 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName(): string
     {
         return 'arcgis_online';
     }
 
-    /**
-     * @param string $query
-     * @param int    $limit
-     *
-     * @return string
-     */
     private function buildQuery(string $query, int $limit): string
     {
         if (null !== $this->sourceCountry) {
@@ -221,12 +206,6 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
         return sprintf('%s&f=%s', $query, 'json');
     }
 
-    /**
-     * @param string $url
-     * @param int    $limit
-     *
-     * @return \stdClass
-     */
     private function executeQuery(string $url, int $limit): \stdClass
     {
         $url = $this->buildQuery($url, $limit);

@@ -12,9 +12,9 @@ declare(strict_types=1);
 
 namespace Geocoder\Provider\GeoIP2;
 
-use GeoIp2\ProviderInterface;
 use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\UnsupportedOperation;
+use GeoIp2\ProviderInterface;
 
 /**
  * @author Jens Wiese <jens@howtrueisfalse.de>
@@ -24,9 +24,9 @@ class GeoIP2Adapter
     /**
      * GeoIP2 models (e.g. city or country).
      */
-    const GEOIP2_MODEL_CITY = 'city';
+    public const GEOIP2_MODEL_CITY = 'city';
 
-    const GEOIP2_MODEL_COUNTRY = 'country';
+    public const GEOIP2_MODEL_COUNTRY = 'country';
 
     /**
      * @var ProviderInterface
@@ -39,8 +39,7 @@ class GeoIP2Adapter
     protected $geoIP2Model;
 
     /**
-     * @param \GeoIp2\ProviderInterface $geoIpProvider
-     * @param string                    $geoIP2Model   (e.g. self::GEOIP2_MODEL_CITY)
+     * @param string $geoIP2Model (e.g. self::GEOIP2_MODEL_CITY)
      */
     public function __construct(ProviderInterface $geoIpProvider, $geoIP2Model = self::GEOIP2_MODEL_CITY)
     {
@@ -57,8 +56,6 @@ class GeoIP2Adapter
      * Returns the content fetched from a given resource.
      *
      * @param string $url (e.g. file://database?127.0.0.1)
-     *
-     * @return string
      */
     public function getContent(string $url): string
     {
@@ -81,8 +78,6 @@ class GeoIP2Adapter
 
     /**
      * Returns the name of the Adapter.
-     *
-     * @return string
      */
     public function getName(): string
     {
@@ -91,10 +86,6 @@ class GeoIP2Adapter
 
     /**
      * Returns whether method is supported by GeoIP2.
-     *
-     * @param string $method
-     *
-     * @return bool
      */
     protected function isSupportedGeoIP2Model(string $method): bool
     {

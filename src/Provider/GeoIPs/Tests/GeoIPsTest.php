@@ -15,9 +15,9 @@ namespace Geocoder\Provider\GeoIPs\Tests;
 use Geocoder\Collection;
 use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Location;
+use Geocoder\Provider\GeoIPs\GeoIPs;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Provider\GeoIPs\GeoIPs;
 
 class GeoIPsTest extends BaseTestCase
 {

@@ -12,9 +12,9 @@ declare(strict_types=1);
 
 namespace Geocoder;
 
+use Geocoder\Provider\Provider;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Provider\Provider;
 use Symfony\Component\Stopwatch\Stopwatch;
 
 /**
@@ -42,9 +42,6 @@ final class TimedGeocoder implements Geocoder
         $this->stopwatch = $stopwatch;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
         $this->stopwatch->start('geocode', 'geocoder');
@@ -62,9 +59,6 @@ final class TimedGeocoder implements Geocoder
         return $result;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function reverseQuery(ReverseQuery $query): Collection
     {
         $this->stopwatch->start('reverse', 'geocoder');

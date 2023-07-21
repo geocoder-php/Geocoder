@@ -27,17 +27,11 @@ class LocalePlugin implements Plugin
      */
     private $locale;
 
-    /**
-     * @param string $locale
-     */
     public function __construct(string $locale)
     {
         $this->locale = $locale;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handleQuery(Query $query, callable $next, callable $first)
     {
         $locale = $query->getLocale();

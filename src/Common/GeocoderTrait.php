@@ -26,17 +26,11 @@ trait GeocoderTrait
 
     abstract public function reverseQuery(ReverseQuery $query): Collection;
 
-    /**
-     * {@inheritdoc}
-     */
     public function geocode(string $value): Collection
     {
         return $this->geocodeQuery(GeocodeQuery::create($value));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function reverse(float $latitude, float $longitude): Collection
     {
         return $this->reverseQuery(ReverseQuery::fromCoordinates($latitude, $longitude));

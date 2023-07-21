@@ -74,19 +74,6 @@ class Address implements Location
      */
     private $providedBy;
 
-    /**
-     * @param string               $providedBy
-     * @param AdminLevelCollection $adminLevels
-     * @param Coordinates|null     $coordinates
-     * @param Bounds|null          $bounds
-     * @param string|null          $streetNumber
-     * @param string|null          $streetName
-     * @param string|null          $postalCode
-     * @param string|null          $locality
-     * @param string|null          $subLocality
-     * @param Country|null         $country
-     * @param string|null          $timezone
-     */
     final public function __construct(
         string $providedBy,
         AdminLevelCollection $adminLevels,
@@ -113,89 +100,56 @@ class Address implements Location
         $this->timezone = $timezone;
     }
 
-    /**
-     * @return string
-     */
     public function getProvidedBy(): string
     {
         return $this->providedBy;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCoordinates()
     {
         return $this->coordinates;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBounds()
     {
         return $this->bounds;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getStreetNumber()
     {
         return $this->streetNumber;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getStreetName()
     {
         return $this->streetName;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getLocality()
     {
         return $this->locality;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPostalCode()
     {
         return $this->postalCode;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSubLocality()
     {
         return $this->subLocality;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getAdminLevels(): AdminLevelCollection
     {
         return $this->adminLevels;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCountry()
     {
         return $this->country;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTimezone()
     {
         return $this->timezone;
@@ -203,8 +157,6 @@ class Address implements Location
 
     /**
      * Create an Address with an array. Useful for testing.
-     *
-     * @param array $data
      *
      * @return static
      */
@@ -316,9 +268,6 @@ class Address implements Location
         return new Bounds($south, $west, $north, $east);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function toArray(): array
     {
         $adminLevels = [];

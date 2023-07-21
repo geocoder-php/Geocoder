@@ -13,14 +13,12 @@ declare(strict_types=1);
 namespace Geocoder\Provider\Mapbox\Tests;
 
 use Geocoder\IntegrationTest\BaseTestCase;
-use Geocoder\Location;
-use Geocoder\Model\Address;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Model\Bounds;
-use Geocoder\Query\GeocodeQuery;
-use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\Mapbox\Mapbox;
 use Geocoder\Provider\Mapbox\Model\MapboxAddress;
+use Geocoder\Query\GeocodeQuery;
+use Geocoder\Query\ReverseQuery;
 
 class MapboxTest extends BaseTestCase
 {

@@ -12,41 +12,36 @@ declare(strict_types=1);
 
 namespace Geocoder\Formatter;
 
-use Geocoder\Model\AdminLevelCollection;
 use Geocoder\Location;
+use Geocoder\Model\AdminLevelCollection;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
 final class StringFormatter
 {
-    const STREET_NUMBER = '%n';
+    public const STREET_NUMBER = '%n';
 
-    const STREET_NAME = '%S';
+    public const STREET_NAME = '%S';
 
-    const LOCALITY = '%L';
+    public const LOCALITY = '%L';
 
-    const POSTAL_CODE = '%z';
+    public const POSTAL_CODE = '%z';
 
-    const SUB_LOCALITY = '%D';
+    public const SUB_LOCALITY = '%D';
 
-    const ADMIN_LEVEL = '%A';
+    public const ADMIN_LEVEL = '%A';
 
-    const ADMIN_LEVEL_CODE = '%a';
+    public const ADMIN_LEVEL_CODE = '%a';
 
-    const COUNTRY = '%C';
+    public const COUNTRY = '%C';
 
-    const COUNTRY_CODE = '%c';
+    public const COUNTRY_CODE = '%c';
 
-    const TIMEZONE = '%T';
+    public const TIMEZONE = '%T';
 
     /**
      * Transform an `Address` instance into a string representation.
-     *
-     * @param Location $location
-     * @param string   $format
-     *
-     * @return string
      */
     public function format(Location $location, string $format): string
     {

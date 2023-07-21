@@ -25,17 +25,11 @@ final class GeocoderFulfilledPromise implements Promise
      */
     private $collection;
 
-    /**
-     * @param Collection $collection
-     */
     public function __construct(Collection $collection)
     {
         $this->collection = $collection;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function then(callable $onFulfilled = null, callable $onRejected = null): Promise
     {
         if (null === $onFulfilled) {
@@ -49,19 +43,11 @@ final class GeocoderFulfilledPromise implements Promise
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getState(): string
     {
         return Promise::FULFILLED;
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * @return mixed
-     */
     public function wait($unwrap = true)
     {
         if ($unwrap) {

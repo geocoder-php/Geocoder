@@ -22,8 +22,6 @@ abstract class AbstractProvider implements Provider
 {
     /**
      * Returns the results for the 'localhost' special case.
-     *
-     * @return Location
      */
     protected function getLocationForLocalhost(): Location
     {

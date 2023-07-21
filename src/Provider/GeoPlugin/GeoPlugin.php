@@ -15,12 +15,12 @@ namespace Geocoder\Provider\GeoPlugin;
 use Geocoder\Collection;
 use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Model\Address;
 use Geocoder\Model\AddressCollection;
+use Geocoder\Provider\Provider;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Http\Provider\AbstractHttpProvider;
-use Geocoder\Provider\Provider;
 
 /**
  * @author Andrea Cristaudo <andrea.cristaudo@gmail.com>
@@ -30,11 +30,8 @@ final class GeoPlugin extends AbstractHttpProvider implements Provider
     /**
      * @var string
      */
-    const GEOCODE_ENDPOINT_URL = 'http://www.geoplugin.net/json.gp?ip=%s';
+    public const GEOCODE_ENDPOINT_URL = 'http://www.geoplugin.net/json.gp?ip=%s';
 
-    /**
-     * {@inheritdoc}
-     */
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
         $address = $query->getText();
@@ -51,27 +48,16 @@ final class GeoPlugin extends AbstractHttpProvider implements Provider
         return $this->executeQuery($url);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function reverseQuery(ReverseQuery $query): Collection
     {
         throw new UnsupportedOperation('The GeoPlugin provider is not able to do reverse geocoding.');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName(): string
     {
         return 'geo_plugin';
     }
 
-    /**
-     * @param string $url
-     *
-     * @return AddressCollection
-     */
     private function executeQuery(string $url): AddressCollection
     {
         $content = $this->getUrlContents($url);

@@ -10,15 +10,15 @@
 
 namespace Geocoder\Provider\Here\Tests;
 
-use Geocoder\IntegrationTest\ProviderIntegrationTest;
-use Geocoder\IntegrationTest\CachedResponseClient;
-use Geocoder\Provider\Here\Here;
 use Geocoder\Collection;
+use Geocoder\IntegrationTest\CachedResponseClient;
+use Geocoder\IntegrationTest\ProviderIntegrationTest;
 use Geocoder\Location;
 use Geocoder\Model\AdminLevelCollection;
 use Geocoder\Model\Bounds;
 use Geocoder\Model\Coordinates;
 use Geocoder\Model\Country;
+use Geocoder\Provider\Here\Here;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Http\Discovery\Psr18ClientDiscovery;
@@ -199,8 +199,6 @@ class IntegrationTest extends ProviderIntegrationTest
     /**
      * Make sure that a result for a Geocoder is well formatted. Be aware that even
      * a Location with no data may be well formatted.
-     *
-     * @param $result
      */
     private function assertWellFormattedResult(Collection $result)
     {

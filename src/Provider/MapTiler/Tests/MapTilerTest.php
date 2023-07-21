@@ -14,9 +14,9 @@ namespace Geocoder\Provider\MapTiler\Tests;
 
 use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Model\Bounds;
+use Geocoder\Provider\MapTiler\MapTiler;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Provider\MapTiler\MapTiler;
 
 /**
  * @author Jonathan Beliën

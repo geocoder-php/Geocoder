@@ -19,9 +19,6 @@ use Geocoder\Location;
  */
 final class GeoArray extends AbstractArrayDumper implements Dumper
 {
-    /**
-     * {@inheritdoc}
-     */
     public function dump(Location $location): array
     {
         return $this->getArray($location);

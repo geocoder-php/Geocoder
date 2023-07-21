@@ -37,12 +37,6 @@ class Photo
      */
     private $htmlAttributions = [];
 
-    /**
-     * @param string $photoReference
-     * @param int    $height
-     * @param int    $width
-     * @param array  $htmlAttributions
-     */
     public function __construct(string $photoReference, int $height, int $width, array $htmlAttributions)
     {
         $this->photoReference = $photoReference;
@@ -51,33 +45,21 @@ class Photo
         $this->htmlAttributions = $htmlAttributions;
     }
 
-    /**
-     * @return string
-     */
     public function getPhotoReference(): string
     {
         return $this->photoReference;
     }
 
-    /**
-     * @return int
-     */
     public function getHeight(): int
     {
         return $this->height;
     }
 
-    /**
-     * @return int
-     */
     public function getWidth(): int
     {
         return $this->width;
     }
 
-    /**
-     * @return array
-     */
     public function getHtmlAttributions(): array
     {
         return $this->htmlAttributions;

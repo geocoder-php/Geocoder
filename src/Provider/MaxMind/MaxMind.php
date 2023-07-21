@@ -16,12 +16,12 @@ use Geocoder\Collection;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Model\Address;
 use Geocoder\Model\AddressCollection;
+use Geocoder\Provider\Provider;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Http\Provider\AbstractHttpProvider;
-use Geocoder\Provider\Provider;
 use Psr\Http\Client\ClientInterface;
 
 /**
@@ -32,27 +32,27 @@ final class MaxMind extends AbstractHttpProvider implements Provider
     /**
      * @var string Country, City, ISP and Organization
      */
-    const CITY_EXTENDED_SERVICE = 'f';
+    public const CITY_EXTENDED_SERVICE = 'f';
 
     /**
      * @var string Extended
      */
-    const OMNI_SERVICE = 'e';
+    public const OMNI_SERVICE = 'e';
 
     /**
      * @var string
      */
-    const GEOCODE_ENDPOINT_URL_SSL = 'https://geoip.maxmind.com/%s?l=%s&i=%s';
+    public const GEOCODE_ENDPOINT_URL_SSL = 'https://geoip.maxmind.com/%s?l=%s&i=%s';
 
     /**
      * @var string
      */
-    private $apiKey = null;
+    private $apiKey;
 
     /**
      * @var string
      */
-    private $service = null;
+    private $service;
 
     /**
      * @param ClientInterface $client  an HTTP adapter
@@ -70,9 +70,6 @@ final class MaxMind extends AbstractHttpProvider implements Provider
         parent::__construct($client);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
         $address = $query->getText();
@@ -90,25 +87,16 @@ final class MaxMind extends AbstractHttpProvider implements Provider
         return $this->executeQuery($url);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function reverseQuery(ReverseQuery $query): Collection
     {
         throw new UnsupportedOperation('The MaxMind provider is not able to do reverse geocoding.');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName(): string
     {
         return 'maxmind';
     }
 
-    /**
-     * @param string $url
-     */
     private function executeQuery(string $url): AddressCollection
     {
         $fields = $this->fieldsForService($this->service);
@@ -171,8 +159,6 @@ final class MaxMind extends AbstractHttpProvider implements Provider
      *
      * @see http://dev.maxmind.com/geoip/web-services
      *
-     * @param string $service
-     *
      * @return string[]
      */
     private function fieldsForService(string $service): array
@@ -223,9 +209,6 @@ final class MaxMind extends AbstractHttpProvider implements Provider
         }
     }
 
-    /**
-     * @return array
-     */
     private function getCountryNames(): array
     {
         return [

@@ -18,7 +18,6 @@ namespace Geocoder\Exception;
 final class FunctionNotFound extends \RuntimeException implements Exception
 {
     /**
-     * @param string $functionName
      * @param string $description
      */
     public function __construct(string $functionName, $description = null)
