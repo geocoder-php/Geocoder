@@ -29,6 +29,9 @@ interface Query
 
     public function getData(string $name, mixed $default = null): mixed;
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getAllData(): array;
 
     public function __toString(): string;

@@ -23,7 +23,7 @@ use Geocoder\Query\Query;
 class QueryDataPlugin implements Plugin
 {
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     private $data;
 
@@ -33,7 +33,8 @@ class QueryDataPlugin implements Plugin
     private $force;
 
     /**
-     * @param bool $force If true we overwrite existing values
+     * @param array<string, mixed> $data
+     * @param bool                 $force If true we overwrite existing values
      */
     public function __construct(array $data, $force = false)
     {

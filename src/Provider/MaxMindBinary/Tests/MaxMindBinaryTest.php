@@ -44,6 +44,9 @@ class MaxMindBinaryTest extends BaseTestCase
         }
     }
 
+    /**
+     * @return array<string, string[]>
+     */
     public static function provideIps(): array
     {
         return [

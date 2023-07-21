@@ -32,7 +32,7 @@ final class GoogleAddress extends Address
     private $locationType;
 
     /**
-     * @var array
+     * @var string[]
      */
     private $resultType = [];
 
@@ -161,12 +161,17 @@ final class GoogleAddress extends Address
         return $this->locationType;
     }
 
+    /**
+     * @return string[]
+     */
     public function getResultType(): array
     {
         return $this->resultType;
     }
 
     /**
+     * @param string[] $resultType
+     *
      * @return GoogleAddress
      */
     public function withResultType(array $resultType)
@@ -473,6 +478,8 @@ final class GoogleAddress extends Address
     }
 
     /**
+     * @param array<array{level: int, name: string, code: string}> $subLocalityLevel
+     *
      * @return $this
      */
     public function withSubLocalityLevels(array $subLocalityLevel)

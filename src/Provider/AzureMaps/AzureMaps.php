@@ -15,6 +15,7 @@ namespace Geocoder\Provider\AzureMaps;
 use Geocoder\Collection;
 use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Http\Provider\AbstractHttpProvider;
+use Geocoder\Location;
 use Geocoder\Model\AddressBuilder;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Provider\Provider;
@@ -38,7 +39,7 @@ class AzureMaps extends AbstractHttpProvider implements Provider
     public const REVERSE_ENDPOINT_URL = 'https://atlas.microsoft.com/search/address/reverse';
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     private $options = [
         'typeahead' => null,
@@ -66,6 +67,8 @@ class AzureMaps extends AbstractHttpProvider implements Provider
 
     /**
      * AzureMaps constructor.
+     *
+     * @param array<string, mixed> $options
      */
     public function __construct(
         ClientInterface $client,
@@ -123,6 +126,8 @@ class AzureMaps extends AbstractHttpProvider implements Provider
 
     /**
      * Returns an array of non null geocode /reverse-geocode options.
+     *
+     * @param array<string, mixed> $options
      */
     private function setOptions(array $options): void
     {
@@ -135,6 +140,8 @@ class AzureMaps extends AbstractHttpProvider implements Provider
 
     /**
      * Returns an array of keys to replace.
+     *
+     * @return array<string, mixed>
      */
     public function getOptions(): array
     {
@@ -192,6 +199,9 @@ class AzureMaps extends AbstractHttpProvider implements Provider
         return $response;
     }
 
+    /**
+     * @return Location[]
+     */
     private function formatGeocodeResponse(\stdClass $response): array
     {
         return array_map(function ($result) {
@@ -220,6 +230,9 @@ class AzureMaps extends AbstractHttpProvider implements Provider
         }, $response->results);
     }
 
+    /**
+     * @return Location[]
+     */
     private function formatReverseGeocodeResponse(\stdClass $response): array
     {
         return array_filter(array_map(function ($address) {

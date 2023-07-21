@@ -161,6 +161,9 @@ final class OpenCage extends AbstractHttpProvider implements Provider
         return new AddressCollection($results);
     }
 
+    /**
+     * @param array<string, mixed> $location
+     */
     private function parseCoordinates(AddressBuilder $builder, array $location): void
     {
         $builder->setCoordinates($location['geometry']['lat'], $location['geometry']['lng']);
@@ -189,6 +192,9 @@ final class OpenCage extends AbstractHttpProvider implements Provider
         );
     }
 
+    /**
+     * @param array<string, mixed> $components
+     */
     private function parseAdminsLevels(AddressBuilder $builder, array $components): void
     {
         if (isset($components['state'])) {
@@ -201,6 +207,9 @@ final class OpenCage extends AbstractHttpProvider implements Provider
         }
     }
 
+    /**
+     * @param array<string, mixed> $components
+     */
     private function parseCountry(AddressBuilder $builder, array $components): void
     {
         if (isset($components['country'])) {
@@ -213,6 +222,8 @@ final class OpenCage extends AbstractHttpProvider implements Provider
     }
 
     /**
+     * @param array<string, mixed> $components
+     *
      * @return string|null
      */
     protected function guessLocality(array $components)
@@ -223,6 +234,8 @@ final class OpenCage extends AbstractHttpProvider implements Provider
     }
 
     /**
+     * @param array<string, mixed> $components
+     *
      * @return string|null
      */
     protected function guessStreetName(array $components)
@@ -233,6 +246,8 @@ final class OpenCage extends AbstractHttpProvider implements Provider
     }
 
     /**
+     * @param array<string, mixed> $components
+     *
      * @return string|null
      */
     protected function guessSubLocality(array $components)
@@ -243,6 +258,9 @@ final class OpenCage extends AbstractHttpProvider implements Provider
     }
 
     /**
+     * @param array<string, mixed> $components
+     * @param string[]             $keys
+     *
      * @return string|null
      */
     protected function guessBestComponent(array $components, array $keys)

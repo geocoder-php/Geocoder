@@ -121,6 +121,9 @@ final class MapTiler extends AbstractHttpProvider implements Provider
         return $builder->build();
     }
 
+    /**
+     * @param array<string, \stdClass> $context
+     */
     private function extractFromContext(AddressBuilder &$builder, array $context): AddressBuilder
     {
         $cityContext = array_filter($context, function ($c) { return 1 === preg_match('/^city\.\d+$/', $c->id); });

@@ -84,7 +84,7 @@ class GeoIP2Test extends BaseTestCase
     /**
      * Provides data for geocode test.
      *
-     * @return array
+     * @return array<string, array<array<string, array<array<string, string>>|float|int|string|null>|string>>
      */
     public static function provideDataForRetrievingGeodata()
     {
@@ -162,6 +162,8 @@ class GeoIP2Test extends BaseTestCase
 
     /**
      * @dataProvider provideDataForRetrievingGeodata
+     *
+     * @param array<string, mixed> $expectedGeodata
      */
     public function testRetrievingGeodata(string $address, string $adapterResponse, array $expectedGeodata): void
     {
@@ -244,6 +246,9 @@ class GeoIP2Test extends BaseTestCase
         $results = $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
+    /**
+     * @return array<array<AuthenticationException|OutOfQueriesException|class-string>>
+     */
     public static function provideDataForTestingExceptions(): array
     {
         return [
@@ -253,6 +258,8 @@ class GeoIP2Test extends BaseTestCase
     }
 
     /**
+     * @param \Exception|string $returnValue
+     *
      * @return GeoIP2Adapter&MockObject
      */
     private function getGeoIP2AdapterMock($returnValue = '')

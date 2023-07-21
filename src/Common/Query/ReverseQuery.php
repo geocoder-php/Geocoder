@@ -36,7 +36,7 @@ final class ReverseQuery implements Query
     private $limit = Geocoder::DEFAULT_RESULT_LIMIT;
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     private $data = [];
 
@@ -118,6 +118,9 @@ final class ReverseQuery implements Query
         return $this->data[$name];
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getAllData(): array
     {
         return $this->data;

@@ -63,7 +63,7 @@ final class AddressBuilder
     private $subLocality;
 
     /**
-     * @var array
+     * @var AdminLevel[]
      */
     private $adminLevels = [];
 
@@ -85,7 +85,7 @@ final class AddressBuilder
     /**
      * A storage for extra parameters.
      *
-     * @var array
+     * @var array<string, mixed>
      */
     private $data = [];
 
@@ -210,7 +210,7 @@ final class AddressBuilder
     }
 
     /**
-     * @param array $adminLevels
+     * @param AdminLevel[] $adminLevels
      */
     public function setAdminLevels($adminLevels): self
     {

@@ -18,6 +18,8 @@ use Geocoder\Exception\OutOfBounds;
 
 /**
  * @author Giorgio Premi <giosh94mhz@gmail.com>
+ *
+ * @phpstan-implements \IteratorAggregate<int, AdminLevel>
  */
 final class AdminLevelCollection implements \IteratorAggregate, \Countable
 {

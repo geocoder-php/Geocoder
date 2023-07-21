@@ -44,7 +44,7 @@ class Pelias extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * @param array $query_data additional query data (API key for instance)
+     * @param array<string, mixed> $query_data additional query data (API key for instance)
      *
      * @throws \Geocoder\Exception\Exception
      */
@@ -71,7 +71,7 @@ class Pelias extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * @param array $query_data additional query data (API key for instance)
+     * @param array<string, mixed> $query_data additional query data (API key for instance)
      *
      * @throws \Geocoder\Exception\Exception
      */
@@ -177,6 +177,8 @@ class Pelias extends AbstractHttpProvider implements Provider
     }
 
     /**
+     * @param array<string, mixed> $components
+     *
      * @return string|null
      */
     protected function guessLocality(array $components)
@@ -187,6 +189,8 @@ class Pelias extends AbstractHttpProvider implements Provider
     }
 
     /**
+     * @param array<string, mixed> $components
+     *
      * @return string|null
      */
     protected function guessStreetName(array $components)
@@ -197,6 +201,8 @@ class Pelias extends AbstractHttpProvider implements Provider
     }
 
     /**
+     * @param array<string, mixed> $components
+     *
      * @return string|null
      */
     protected function guessSubLocality(array $components)
@@ -207,6 +213,9 @@ class Pelias extends AbstractHttpProvider implements Provider
     }
 
     /**
+     * @param array<string, mixed> $components
+     * @param string[]             $keys
+     *
      * @return string|null
      */
     protected function guessBestComponent(array $components, array $keys)

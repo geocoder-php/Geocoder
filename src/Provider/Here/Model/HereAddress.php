@@ -35,12 +35,12 @@ final class HereAddress extends Address
     private $locationName;
 
     /**
-     * @var array|null
+     * @var array<string, mixed>|null
      */
     private $additionalData;
 
     /**
-     * @var array|null
+     * @var array<string, mixed>|null
      */
     private $shape;
 
@@ -93,13 +93,16 @@ final class HereAddress extends Address
     }
 
     /**
-     * @return array|null
+     * @return array<string, mixed>|null
      */
     public function getAdditionalData()
     {
         return $this->additionalData;
     }
 
+    /**
+     * @param array<string, mixed>|null $additionalData
+     */
     public function withAdditionalData(array $additionalData = null): self
     {
         $new = clone $this;
@@ -136,6 +139,9 @@ final class HereAddress extends Address
         return array_key_exists($name, $this->additionalData);
     }
 
+    /**
+     * @param array<string, mixed>|null $shape
+     */
     public function withShape(array $shape = null): self
     {
         $new = clone $this;

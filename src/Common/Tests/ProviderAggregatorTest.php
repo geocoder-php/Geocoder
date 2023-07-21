@@ -143,6 +143,9 @@ class MockProvider implements Provider
 {
     protected string $name;
 
+    /**
+     * @var Address[]
+     */
     public array $result = [];
 
     public function __construct(string $name)

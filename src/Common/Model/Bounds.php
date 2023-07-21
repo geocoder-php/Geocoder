@@ -102,6 +102,8 @@ final class Bounds
 
     /**
      * Returns an array with bounds.
+     *
+     * @return array{south: float, west: float, north: float, east: float}
      */
     public function toArray(): array
     {

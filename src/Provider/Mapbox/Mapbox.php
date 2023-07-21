@@ -48,7 +48,7 @@ final class Mapbox extends AbstractHttpProvider implements Provider
     public const GEOCODING_MODE_PLACES_PERMANENT = 'mapbox.places-permanent';
 
     /**
-     * @var array<string>
+     * @var string[]
      */
     public const GEOCODING_MODES = [
         self::GEOCODING_MODE_PLACES,
@@ -106,7 +106,7 @@ final class Mapbox extends AbstractHttpProvider implements Provider
     public const TYPE_POI_LANDMARK = 'poi.landmark';
 
     /**
-     * @var array<string>
+     * @var string[]
      */
     public const TYPES = [
         self::TYPE_COUNTRY,
@@ -308,8 +308,8 @@ final class Mapbox extends AbstractHttpProvider implements Provider
     /**
      * Update current resultSet with given key/value.
      *
-     * @param string $type  Component type
-     * @param array  $value The component value
+     * @param string               $type  Component type
+     * @param array<string, mixed> $value Component value
      */
     private function updateAddressComponent(AddressBuilder $builder, string $type, array $value): void
     {
@@ -362,9 +362,9 @@ final class Mapbox extends AbstractHttpProvider implements Provider
     /**
      * Decode the response content and validate it to make sure it does not have any errors.
      *
-     * @param string $content
+     * @return array<string, mixed>
      */
-    private function validateResponse(string $url, $content): array
+    private function validateResponse(string $url, string $content): array
     {
         $json = json_decode($content, true);
 
@@ -378,6 +378,8 @@ final class Mapbox extends AbstractHttpProvider implements Provider
 
     /**
      * Parse coordinats and bounds.
+     *
+     * @param array<string, mixed> $result
      */
     private function parseCoordinates(AddressBuilder $builder, array $result): void
     {

@@ -30,7 +30,7 @@ final class GooglePlace extends Address
     private $name;
 
     /**
-     * @var array
+     * @var string[]
      */
     private $type = [];
 
@@ -134,12 +134,17 @@ final class GooglePlace extends Address
         return $new;
     }
 
+    /**
+     * @return string[]
+     */
     public function getType(): array
     {
         return $this->type;
     }
 
     /**
+     * @param string[] $type
+     *
      * @return GooglePlace
      */
     public function withType(array $type)
@@ -232,6 +237,8 @@ final class GooglePlace extends Address
     }
 
     /**
+     * @param Photo[]|null $photos
+     *
      * @return GooglePlace
      */
     public function withPhotos(array $photos = null)

@@ -27,17 +27,13 @@ interface Location
 {
     /**
      * Will always return the coordinates value object.
-     *
-     * @return Coordinates|null
      */
-    public function getCoordinates();
+    public function getCoordinates(): ?Coordinates;
 
     /**
      * Returns the bounds value object.
-     *
-     * @return Bounds|null
      */
-    public function getBounds();
+    public function getBounds(): ?Bounds;
 
     /**
      * Returns the street number value.
@@ -48,32 +44,24 @@ interface Location
 
     /**
      * Returns the street name value.
-     *
-     * @return string|null
      */
-    public function getStreetName();
+    public function getStreetName(): ?string;
 
     /**
      * Returns the city or locality value.
-     *
-     * @return string|null
      */
-    public function getLocality();
+    public function getLocality(): ?string;
 
     /**
      * Returns the postal code or zipcode value.
-     *
-     * @return string|null
      */
-    public function getPostalCode();
+    public function getPostalCode(): ?string;
 
     /**
      * Returns the locality district, or
      * sublocality, or neighborhood.
-     *
-     * @return string|null
      */
-    public function getSubLocality();
+    public function getSubLocality(): ?string;
 
     /**
      * Returns the administrative levels.
@@ -84,22 +72,20 @@ interface Location
 
     /**
      * Returns the country value object.
-     *
-     * @return Country|null
      */
-    public function getCountry();
+    public function getCountry(): ?Country;
 
     /**
      * Returns the timezone for the Location. The timezone MUST be in the list of supported timezones.
      *
      * {@link http://php.net/manual/en/timezones.php}
-     *
-     * @return string|null
      */
-    public function getTimezone();
+    public function getTimezone(): ?string;
 
     /**
      * Returns an array with data indexed by name.
+     *
+     * @return array<string, mixed>
      */
     public function toArray(): array;
 

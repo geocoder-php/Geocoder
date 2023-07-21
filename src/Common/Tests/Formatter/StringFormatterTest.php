@@ -43,6 +43,9 @@ class StringFormatterTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
+    /**
+     * @return array<array<array<string, array<array<string, int|string>>|string>|string>>
+     */
     public function dataProviderForTestFormat(): array
     {
         return [

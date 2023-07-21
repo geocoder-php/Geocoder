@@ -65,6 +65,9 @@ class GeoIP2AdapterTest extends TestCase
         $this->adapter->getContent($url);
     }
 
+    /**
+     * @return array<string[]>
+     */
     public static function provideDataForSwitchingRequestMethods(): array
     {
         return [
@@ -135,6 +138,7 @@ class GeoIP2AdapterTest extends TestCase
      */
     protected function getGeoIP2ModelMock($geoIP2Model)
     {
+        /** @var class-string $mockClass */
         $mockClass = '\\GeoIp2\\Model\\'.ucfirst($geoIP2Model);
 
         $mock = $this->getMockBuilder($mockClass)->disableOriginalConstructor()->getMock();

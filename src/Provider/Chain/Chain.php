@@ -129,6 +129,9 @@ final class Chain implements Provider, LoggerAwareInterface
         return $this;
     }
 
+    /**
+     * @param mixed[] $context
+     */
     private function log(mixed $level, string $message, array $context = []): void
     {
         if ($this->logger) {

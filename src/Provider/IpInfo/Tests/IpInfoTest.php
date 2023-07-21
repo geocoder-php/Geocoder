@@ -71,6 +71,9 @@ class IpInfoTest extends BaseTestCase
         $this->assertEquals('localhost', $result->getCountry()->getName());
     }
 
+    /**
+     * @return iterable<string[]>
+     */
     public function provideLocalhostIps(): iterable
     {
         yield ['127.0.0.1'];

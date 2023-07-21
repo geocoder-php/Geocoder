@@ -385,6 +385,8 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
 
     /**
      * Serialize the component query parameter.
+     *
+     * @param array<string, string> $components
      */
     private function serializeComponents(array $components): string
     {

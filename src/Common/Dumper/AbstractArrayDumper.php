@@ -19,6 +19,9 @@ use Geocoder\Location;
  */
 abstract class AbstractArrayDumper
 {
+    /**
+     * @return array{type: 'Feature', geometry: array{type: 'Point', coordinates: array{0: float, 1: float}}, properties: array<string, mixed>, bounds?: array{south: float, west: float, north: float, east: float}}
+     */
     protected function getArray(Location $location): array
     {
         $properties = array_filter($location->toArray(), function ($value) {

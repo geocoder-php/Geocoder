@@ -40,6 +40,9 @@ class IP2LocationBinaryTest extends BaseTestCase
         }
     }
 
+    /**
+     * @return array<string, string[]>
+     */
     public static function provideIps(): array
     {
         return [
