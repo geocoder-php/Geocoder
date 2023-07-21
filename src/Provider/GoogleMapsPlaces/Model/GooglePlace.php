@@ -197,8 +197,6 @@ final class GooglePlace extends Address
     }
 
     /**
-     * @param string|null $icon
-     *
      * @return GooglePlace
      */
     public function withIcon(string $icon = null)
@@ -215,8 +213,6 @@ final class GooglePlace extends Address
     }
 
     /**
-     * @param PlusCode|null $plusCode
-     *
      * @return GooglePlace
      */
     public function withPlusCode(PlusCode $plusCode = null)
@@ -236,8 +232,6 @@ final class GooglePlace extends Address
     }
 
     /**
-     * @param array|null $photos
-     *
      * @return GooglePlace
      */
     public function withPhotos(array $photos = null)
@@ -265,8 +259,6 @@ final class GooglePlace extends Address
     }
 
     /**
-     * @param int|null $priceLevel
-     *
      * @return GooglePlace
      */
     public function withPriceLevel(int $priceLevel = null)
@@ -286,8 +278,6 @@ final class GooglePlace extends Address
     }
 
     /**
-     * @param float|null $rating
-     *
      * @return GooglePlace
      */
     public function withRating(float $rating = null)
@@ -307,8 +297,6 @@ final class GooglePlace extends Address
     }
 
     /**
-     * @param string $phone
-     *
      * @return GooglePlace
      */
     public function withFormattedPhoneNumber(string $phone)
@@ -328,8 +316,6 @@ final class GooglePlace extends Address
     }
 
     /**
-     * @param string $phone
-     *
      * @return GooglePlace
      */
     public function withInternationalPhoneNumber(string $phone)
@@ -349,8 +335,6 @@ final class GooglePlace extends Address
     }
 
     /**
-     * @param string $website
-     *
      * @return GooglePlace
      */
     public function withWebsite(string $website)
@@ -370,8 +354,6 @@ final class GooglePlace extends Address
     }
 
     /**
-     * @param OpeningHours $openingHours
-     *
      * @return GooglePlace
      */
     public function withOpeningHours(OpeningHours $openingHours)
