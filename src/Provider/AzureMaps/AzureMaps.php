@@ -21,7 +21,6 @@ use Geocoder\Provider\Provider;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Psr\Http\Client\ClientInterface;
-use stdClass;
 
 /**
  * @author Max Langerman <max@langerman.io>
@@ -31,12 +30,12 @@ class AzureMaps extends AbstractHttpProvider implements Provider
     /**
      * @var string
      */
-    const GEOCODE_ENDPOINT_SSL = 'https://atlas.microsoft.com/search/address';
+    public const GEOCODE_ENDPOINT_SSL = 'https://atlas.microsoft.com/search/address';
 
     /**
      * @var string
      */
-    const REVERSE_ENDPOINT_URL = 'https://atlas.microsoft.com/search/address/reverse';
+    public const REVERSE_ENDPOINT_URL = 'https://atlas.microsoft.com/search/address/reverse';
 
     /**
      * @var array
@@ -178,7 +177,7 @@ class AzureMaps extends AbstractHttpProvider implements Provider
         );
     }
 
-    private function validateResponse(string $content, string $url): stdClass
+    private function validateResponse(string $content, string $url): \stdClass
     {
         $response = json_decode($content);
 
@@ -193,7 +192,7 @@ class AzureMaps extends AbstractHttpProvider implements Provider
         return $response;
     }
 
-    private function formatGeocodeResponse(stdClass $response): array
+    private function formatGeocodeResponse(\stdClass $response): array
     {
         return array_map(function ($result) {
             $builder = new AddressBuilder($this->getName());
@@ -221,7 +220,7 @@ class AzureMaps extends AbstractHttpProvider implements Provider
         }, $response->results);
     }
 
-    private function formatReverseGeocodeResponse(stdClass $response): array
+    private function formatReverseGeocodeResponse(\stdClass $response): array
     {
         return array_filter(array_map(function ($address) {
             $coordinates = explode(',', $address->position);

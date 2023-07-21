@@ -15,14 +15,14 @@ namespace Geocoder\Provider\Photon;
 use Geocoder\Collection;
 use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Location;
 use Geocoder\Model\AddressBuilder;
 use Geocoder\Model\AddressCollection;
+use Geocoder\Provider\Photon\Model\PhotonAddress;
+use Geocoder\Provider\Provider;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Http\Provider\AbstractHttpProvider;
-use Geocoder\Provider\Provider;
-use Geocoder\Provider\Photon\Model\PhotonAddress;
 use Psr\Http\Client\ClientInterface;
 
 /**
@@ -38,8 +38,6 @@ final class Photon extends AbstractHttpProvider implements Provider
 
     /**
      * @param ClientInterface $client an HTTP client
-     *
-     * @return Photon
      */
     public static function withKomootServer(ClientInterface $client): self
     {
@@ -57,9 +55,6 @@ final class Photon extends AbstractHttpProvider implements Provider
         $this->rootUrl = rtrim($rootUrl, '/');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
         $address = $query->getText();
@@ -91,9 +86,6 @@ final class Photon extends AbstractHttpProvider implements Provider
         return new AddressCollection($results);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function reverseQuery(ReverseQuery $query): Collection
     {
         $coordinates = $query->getCoordinates();
@@ -123,11 +115,6 @@ final class Photon extends AbstractHttpProvider implements Provider
         return new AddressCollection($results);
     }
 
-    /**
-     * @param \stdClass $feature
-     *
-     * @return Location
-     */
     private function featureToAddress(\stdClass $feature): Location
     {
         $builder = new AddressBuilder($this->getName());
@@ -166,19 +153,11 @@ final class Photon extends AbstractHttpProvider implements Provider
         return $address;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName(): string
     {
         return 'photon';
     }
 
-    /**
-     * @param string $url
-     *
-     * @return \stdClass
-     */
     private function executeQuery(string $url): \stdClass
     {
         $content = $this->getUrlContents($url);

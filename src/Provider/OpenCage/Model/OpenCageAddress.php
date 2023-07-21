@@ -49,11 +49,6 @@ final class OpenCageAddress extends Address
      */
     private $formattedAddress;
 
-    /**
-     * @param string|null $mgrs
-     *
-     * @return OpenCageAddress
-     */
     public function withMGRS(string $mgrs = null): self
     {
         $new = clone $this;
@@ -70,11 +65,6 @@ final class OpenCageAddress extends Address
         return $this->mgrs;
     }
 
-    /**
-     * @param string|null $maidenhead
-     *
-     * @return OpenCageAddress
-     */
     public function withMaidenhead(string $maidenhead = null): self
     {
         $new = clone $this;
@@ -91,11 +81,6 @@ final class OpenCageAddress extends Address
         return $this->maidenhead;
     }
 
-    /**
-     * @param string|null $geohash
-     *
-     * @return OpenCageAddress
-     */
     public function withGeohash(string $geohash = null): self
     {
         $new = clone $this;
@@ -112,11 +97,6 @@ final class OpenCageAddress extends Address
         return $this->geohash;
     }
 
-    /**
-     * @param string|null $what3words
-     *
-     * @return OpenCageAddress
-     */
     public function withWhat3words(string $what3words = null): self
     {
         $new = clone $this;
@@ -133,11 +113,6 @@ final class OpenCageAddress extends Address
         return $this->what3words;
     }
 
-    /**
-     * @param string|null $formattedAddress
-     *
-     * @return OpenCageAddress
-     */
     public function withFormattedAddress(string $formattedAddress = null): self
     {
         $new = clone $this;

@@ -15,8 +15,8 @@ namespace Geocoder\Provider\AlgoliaPlaces\Tests;
 use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\IntegrationTest\CachedResponseClient;
 use Geocoder\Location;
-use Geocoder\Query\GeocodeQuery;
 use Geocoder\Provider\AlgoliaPlaces\AlgoliaPlaces;
+use Geocoder\Query\GeocodeQuery;
 use Http\Client\Curl\Client as HttplugClient;
 use Psr\Http\Client\ClientInterface;
 

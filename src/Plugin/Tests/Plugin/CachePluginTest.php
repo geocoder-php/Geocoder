@@ -13,7 +13,6 @@ declare(strict_types=1);
 namespace Geocoder\Plugin\Tests\Plugin;
 
 use Cache\Adapter\Void\VoidCachePool;
-use Generator;
 use Geocoder\Model\Coordinates;
 use Geocoder\Plugin\Plugin\CachePlugin;
 use Geocoder\Query\GeocodeQuery;
@@ -53,7 +52,7 @@ class CachePluginTest extends TestCase
         $this->assertEquals('result', $plugin->handleQuery($query, $next, $first));
     }
 
-    public function getQueryProvider(): Generator
+    public function getQueryProvider(): \Generator
     {
         $query = GeocodeQuery::create('foo');
         $key = sha1($query->__toString());

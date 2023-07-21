@@ -32,11 +32,6 @@ final class AdminLevel
      */
     private $code;
 
-    /**
-     * @param int         $level
-     * @param string      $name
-     * @param string|null $code
-     */
     public function __construct(int $level, string $name, string $code = null)
     {
         $this->level = $level;
@@ -56,8 +51,6 @@ final class AdminLevel
 
     /**
      * Returns the administrative level name.
-     *
-     * @return string
      */
     public function getName(): string
     {
@@ -76,8 +69,6 @@ final class AdminLevel
 
     /**
      * Returns a string with the administrative level name.
-     *
-     * @return string
      */
     public function __toString(): string
     {

@@ -15,9 +15,9 @@ namespace Geocoder\Provider\MaxMind\Tests;
 use Geocoder\Collection;
 use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Location;
+use Geocoder\Provider\MaxMind\MaxMind;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Provider\MaxMind\MaxMind;
 
 class MaxMindTest extends BaseTestCase
 {

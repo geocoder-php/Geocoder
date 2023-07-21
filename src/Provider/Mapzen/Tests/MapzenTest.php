@@ -14,9 +14,9 @@ namespace Geocoder\Provider\Mapzen\Tests;
 
 use Geocoder\Collection;
 use Geocoder\IntegrationTest\BaseTestCase;
+use Geocoder\Provider\Mapzen\Mapzen;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Provider\Mapzen\Mapzen;
 
 /**
  * @author Gary Gale <gary@vicchi.org>

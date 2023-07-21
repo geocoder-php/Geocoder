@@ -47,8 +47,6 @@ final class MapboxAddress extends Address
     private $neighborhood;
 
     /**
-     * @param string|null $id
-     *
      * @return MapboxAddress
      */
     public function withId(string $id = null)
@@ -78,8 +76,6 @@ final class MapboxAddress extends Address
     }
 
     /**
-     * @param string|null $streetName
-     *
      * @return MapboxAddress
      */
     public function withStreetName(string $streetName = null)
@@ -99,8 +95,6 @@ final class MapboxAddress extends Address
     }
 
     /**
-     * @param string|null $streetNumber
-     *
      * @return MapboxAddress
      */
     public function withStreetNumber(string $streetNumber = null)
@@ -111,17 +105,12 @@ final class MapboxAddress extends Address
         return $new;
     }
 
-    /**
-     * @return array
-     */
     public function getResultType(): array
     {
         return $this->resultType;
     }
 
     /**
-     * @param array $resultType
-     *
      * @return MapboxAddress
      */
     public function withResultType(array $resultType)
@@ -141,8 +130,6 @@ final class MapboxAddress extends Address
     }
 
     /**
-     * @param string|null $formattedAddress
-     *
      * @return MapboxAddress
      */
     public function withFormattedAddress(string $formattedAddress = null)
@@ -162,8 +149,6 @@ final class MapboxAddress extends Address
     }
 
     /**
-     * @param string|null $neighborhood
-     *
      * @return MapboxAddress
      */
     public function withNeighborhood(string $neighborhood = null)

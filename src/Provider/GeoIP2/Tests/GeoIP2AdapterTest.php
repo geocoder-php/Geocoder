@@ -13,7 +13,6 @@ declare(strict_types=1);
 namespace Geocoder\Provider\GeoIP2\Tests;
 
 use Geocoder\Provider\GeoIP2\GeoIP2Adapter;
-use RuntimeException;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -28,14 +27,12 @@ class GeoIP2AdapterTest extends TestCase
     protected $adapter;
 
     /**
-     * {@inheritdoc}
-     *
-     * @throws RuntimeException
+     * @throws \RuntimeException
      */
     public static function setUpBeforeClass(): void
     {
         if (false === class_exists('\GeoIp2\Database\Reader')) {
-            throw new RuntimeException("The maxmind's lib 'geoip2/geoip2' is required to run this test.");
+            throw new \RuntimeException("The maxmind's lib 'geoip2/geoip2' is required to run this test.");
         }
     }
 

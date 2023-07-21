@@ -14,9 +14,9 @@ namespace Geocoder\Provider\IP2LocationBinary\Tests;
 
 use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Location;
+use Geocoder\Provider\IP2LocationBinary\IP2LocationBinary;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Provider\IP2LocationBinary\IP2LocationBinary;
 
 class IP2LocationBinaryTest extends BaseTestCase
 {

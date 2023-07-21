@@ -46,11 +46,6 @@ final class YandexAddress extends Address
         return $this->precision;
     }
 
-    /**
-     * @param string|null $precision
-     *
-     * @return YandexAddress
-     */
     public function withPrecision(string $precision = null): self
     {
         $new = clone $this;
@@ -67,11 +62,6 @@ final class YandexAddress extends Address
         return $this->name;
     }
 
-    /**
-     * @param string|null $name
-     *
-     * @return YandexAddress
-     */
     public function withName(string $name = null): self
     {
         $new = clone $this;
@@ -88,11 +78,6 @@ final class YandexAddress extends Address
         return $this->kind;
     }
 
-    /**
-     * @param string|null $kind
-     *
-     * @return YandexAddress
-     */
     public function withKind(string $kind = null): self
     {
         $new = clone $this;

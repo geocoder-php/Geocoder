@@ -22,21 +22,17 @@ interface Geocoder extends Provider
     /**
      * Version of this package.
      */
-    const MAJOR_VERSION = 4;
+    public const MAJOR_VERSION = 4;
 
-    const VERSION = '4.0';
+    public const VERSION = '4.0';
 
     /**
      * The default result limit.
      */
-    const DEFAULT_RESULT_LIMIT = 5;
+    public const DEFAULT_RESULT_LIMIT = 5;
 
     /**
      * Geocodes a given value.
-     *
-     * @param string $value
-     *
-     * @return Collection
      *
      * @throws \Geocoder\Exception\Exception
      */
@@ -44,11 +40,6 @@ interface Geocoder extends Provider
 
     /**
      * Reverses geocode given latitude and longitude values.
-     *
-     * @param float $latitude
-     * @param float $longitude
-     *
-     * @return Collection
      *
      * @throws \Geocoder\Exception\Exception
      */

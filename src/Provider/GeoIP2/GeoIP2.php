@@ -13,15 +13,15 @@ declare(strict_types=1);
 namespace Geocoder\Provider\GeoIP2;
 
 use Geocoder\Collection;
-use Geocoder\Model\Address;
-use Geocoder\Model\AddressCollection;
-use Geocoder\Query\GeocodeQuery;
-use Geocoder\Query\ReverseQuery;
-use Geocoder\Provider\AbstractProvider;
-use Geocoder\Provider\Provider;
-use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\QuotaExceeded;
+use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Model\Address;
+use Geocoder\Model\AddressCollection;
+use Geocoder\Provider\AbstractProvider;
+use Geocoder\Provider\Provider;
+use Geocoder\Query\GeocodeQuery;
+use Geocoder\Query\ReverseQuery;
 use GeoIp2\Exception\AddressNotFoundException;
 use GeoIp2\Exception\AuthenticationException;
 use GeoIp2\Exception\OutOfQueriesException;
@@ -41,9 +41,6 @@ final class GeoIP2 extends AbstractProvider implements Provider
         $this->adapter = $adapter;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
         $address = $query->getText();
@@ -89,25 +86,16 @@ final class GeoIP2 extends AbstractProvider implements Provider
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function reverseQuery(ReverseQuery $query): Collection
     {
         throw new UnsupportedOperation('The GeoIP2 provider is not able to do reverse geocoding.');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName(): string
     {
         return 'geoip2';
     }
 
-    /**
-     * @param string $address
-     */
     private function executeQuery(string $address): string
     {
         $uri = sprintf('file://geoip?%s', $address);

@@ -19,11 +19,6 @@ use Geocoder\Location;
  */
 abstract class AbstractArrayDumper
 {
-    /**
-     * @param Location $location
-     *
-     * @return array
-     */
     protected function getArray(Location $location): array
     {
         $properties = array_filter($location->toArray(), function ($value) {

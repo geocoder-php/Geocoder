@@ -14,9 +14,9 @@ namespace Geocoder\Provider\BingMaps\Tests;
 
 use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Location;
+use Geocoder\Provider\BingMaps\BingMaps;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Provider\BingMaps\BingMaps;
 
 class BingMapsTest extends BaseTestCase
 {

@@ -14,9 +14,9 @@ namespace Geocoder\Provider\GraphHopper\Tests;
 
 use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Model\Bounds;
+use Geocoder\Provider\GraphHopper\GraphHopper;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Provider\GraphHopper\GraphHopper;
 
 /**
  * @author Gary Gale <gary@vicchi.org>

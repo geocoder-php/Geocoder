@@ -27,17 +27,11 @@ class LimitPlugin implements Plugin
      */
     private $limit;
 
-    /**
-     * @param int $limit
-     */
     public function __construct(int $limit)
     {
         $this->limit = $limit;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handleQuery(Query $query, callable $next, callable $first)
     {
         $limit = $query->getLimit();

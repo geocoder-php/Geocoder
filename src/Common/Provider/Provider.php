@@ -25,27 +25,17 @@ use Geocoder\Query\ReverseQuery;
 interface Provider
 {
     /**
-     * @param GeocodeQuery $query
-     *
-     * @return Collection
-     *
      * @throws \Geocoder\Exception\Exception
      */
     public function geocodeQuery(GeocodeQuery $query): Collection;
 
     /**
-     * @param ReverseQuery $query
-     *
-     * @return Collection
-     *
      * @throws \Geocoder\Exception\Exception
      */
     public function reverseQuery(ReverseQuery $query): Collection;
 
     /**
      * Returns the provider's name.
-     *
-     * @return string
      */
     public function getName(): string;
 }

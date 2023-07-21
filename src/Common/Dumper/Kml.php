@@ -19,9 +19,6 @@ use Geocoder\Location;
  */
 final class Kml extends AbstractDumper implements Dumper
 {
-    /**
-     * {@inheritdoc}
-     */
     public function dump(Location $location): string
     {
         $name = $this->formatName($location);

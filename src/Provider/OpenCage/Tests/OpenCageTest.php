@@ -17,9 +17,9 @@ use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Model\Bounds;
 use Geocoder\Provider\OpenCage\Model\OpenCageAddress;
+use Geocoder\Provider\OpenCage\OpenCage;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Provider\OpenCage\OpenCage;
 
 /**
  * @author mtm <mtm@opencagedata.com>

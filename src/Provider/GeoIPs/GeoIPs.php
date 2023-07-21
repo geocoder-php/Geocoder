@@ -18,12 +18,12 @@ use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\QuotaExceeded;
 use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Model\Address;
 use Geocoder\Model\AddressCollection;
+use Geocoder\Provider\Provider;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Http\Provider\AbstractHttpProvider;
-use Geocoder\Provider\Provider;
 use Psr\Http\Client\ClientInterface;
 
 /**
@@ -38,21 +38,21 @@ final class GeoIPs extends AbstractHttpProvider implements Provider
     /**
      * @var string
      */
-    const GEOCODE_ENDPOINT_URL = 'https://api.geoips.com/ip/%s/key/%s/output/json/timezone/true/';
+    public const GEOCODE_ENDPOINT_URL = 'https://api.geoips.com/ip/%s/key/%s/output/json/timezone/true/';
 
-    const CODE_SUCCESS = '200_1'; // The following results has been returned.
+    public const CODE_SUCCESS = '200_1'; // The following results has been returned.
 
-    const CODE_NOT_FOUND = '200_2'; // No result set has been returned.
+    public const CODE_NOT_FOUND = '200_2'; // No result set has been returned.
 
-    const CODE_BAD_KEY = '400_1'; // Error in the URI - The API call should include a API key parameter.
+    public const CODE_BAD_KEY = '400_1'; // Error in the URI - The API call should include a API key parameter.
 
-    const CODE_BAD_IP = '400_2'; // Error in the URI - The API call should include a valid IP address.
+    public const CODE_BAD_IP = '400_2'; // Error in the URI - The API call should include a valid IP address.
 
-    const CODE_NOT_AUTHORIZED = '403_1'; // The API key associated with your request was not recognized.
+    public const CODE_NOT_AUTHORIZED = '403_1'; // The API key associated with your request was not recognized.
 
-    const CODE_ACCOUNT_INACTIVE = '403_2'; // The API key has not been approved or has been disabled.
+    public const CODE_ACCOUNT_INACTIVE = '403_2'; // The API key has not been approved or has been disabled.
 
-    const CODE_LIMIT_EXCEEDED = '403_3'; // The service you have requested is over capacity.
+    public const CODE_LIMIT_EXCEEDED = '403_3'; // The service you have requested is over capacity.
 
     /**
      * @var string
@@ -75,9 +75,6 @@ final class GeoIPs extends AbstractHttpProvider implements Provider
         parent::__construct($client);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
         $address = $query->getText();
@@ -98,27 +95,16 @@ final class GeoIPs extends AbstractHttpProvider implements Provider
         return $this->executeQuery($query);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function reverseQuery(ReverseQuery $query): Collection
     {
         throw new UnsupportedOperation('The GeoIPs provider is not able to do reverse geocoding.');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName(): string
     {
         return 'geo_ips';
     }
 
-    /**
-     * @param string $url
-     *
-     * @return AddressCollection
-     */
     private function executeQuery(string $url): AddressCollection
     {
         $content = $this->getUrlContents($url);

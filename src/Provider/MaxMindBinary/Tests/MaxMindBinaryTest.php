@@ -15,9 +15,9 @@ namespace Geocoder\Provider\MaxMindBinary\Tests;
 use Geocoder\Collection;
 use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Location;
+use Geocoder\Provider\MaxMindBinary\MaxMindBinary;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Provider\MaxMindBinary\MaxMindBinary;
 
 class MaxMindBinaryTest extends BaseTestCase
 {

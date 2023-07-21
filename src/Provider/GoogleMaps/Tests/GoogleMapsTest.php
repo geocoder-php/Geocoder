@@ -16,10 +16,10 @@ use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Model\Address;
 use Geocoder\Model\AddressCollection;
+use Geocoder\Provider\GoogleMaps\GoogleMaps;
 use Geocoder\Provider\GoogleMaps\Model\GoogleAddress;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Provider\GoogleMaps\GoogleMaps;
 use Psr\Http\Message\RequestInterface;
 
 class GoogleMapsTest extends BaseTestCase

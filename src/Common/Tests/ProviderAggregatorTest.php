@@ -15,10 +15,10 @@ namespace Geocoder\Tests;
 use Geocoder\Collection;
 use Geocoder\Model\Address;
 use Geocoder\Model\AddressCollection;
+use Geocoder\Provider\Provider;
+use Geocoder\ProviderAggregator;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\ProviderAggregator;
-use Geocoder\Provider\Provider;
 use Nyholm\NSA;
 use PHPUnit\Framework\TestCase;
 

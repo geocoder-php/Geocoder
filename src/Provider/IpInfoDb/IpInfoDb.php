@@ -12,16 +12,16 @@ declare(strict_types=1);
 
 namespace Geocoder\Provider\IpInfoDb;
 
+use Geocoder\Collection;
 use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\UnsupportedOperation;
-use Geocoder\Collection;
+use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Model\Address;
 use Geocoder\Model\AddressCollection;
+use Geocoder\Provider\Provider;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Http\Provider\AbstractHttpProvider;
-use Geocoder\Provider\Provider;
 use Psr\Http\Client\ClientInterface;
 
 /**
@@ -32,12 +32,12 @@ final class IpInfoDb extends AbstractHttpProvider implements Provider
     /**
      * @var string
      */
-    const CITY_PRECISION_ENDPOINT_URL = 'https://api.ipinfodb.com/v3/ip-city/?key=%s&format=json&ip=%s';
+    public const CITY_PRECISION_ENDPOINT_URL = 'https://api.ipinfodb.com/v3/ip-city/?key=%s&format=json&ip=%s';
 
     /**
      * @var string
      */
-    const COUNTRY_PRECISION_ENDPOINT_URL = 'https://api.ipinfodb.com/v3/ip-country/?key=%s&format=json&ip=%s';
+    public const COUNTRY_PRECISION_ENDPOINT_URL = 'https://api.ipinfodb.com/v3/ip-country/?key=%s&format=json&ip=%s';
 
     /**
      * @var string
@@ -77,9 +77,6 @@ final class IpInfoDb extends AbstractHttpProvider implements Provider
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
         $address = $query->getText();
@@ -105,25 +102,16 @@ final class IpInfoDb extends AbstractHttpProvider implements Provider
         return $this->executeQuery($url);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function reverseQuery(ReverseQuery $query): Collection
     {
         throw new UnsupportedOperation('The IpInfoDb provider is not able to do reverse geocoding.');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName(): string
     {
         return 'ip_info_db';
     }
 
-    /**
-     * @param string $url
-     */
     private function executeQuery(string $url): AddressCollection
     {
         $content = $this->getUrlContents($url);

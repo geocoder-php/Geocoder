@@ -31,12 +31,12 @@ final class Yandex extends AbstractHttpProvider implements Provider
     /**
      * @var string
      */
-    const GEOCODE_ENDPOINT_URL = 'https://geocode-maps.yandex.ru/1.x/?format=json&geocode=%s';
+    public const GEOCODE_ENDPOINT_URL = 'https://geocode-maps.yandex.ru/1.x/?format=json&geocode=%s';
 
     /**
      * @var string
      */
-    const REVERSE_ENDPOINT_URL = 'https://geocode-maps.yandex.ru/1.x/?format=json&geocode=%F,%F';
+    public const REVERSE_ENDPOINT_URL = 'https://geocode-maps.yandex.ru/1.x/?format=json&geocode=%F,%F';
 
     /**
      * @var string
@@ -61,9 +61,6 @@ final class Yandex extends AbstractHttpProvider implements Provider
         $this->apiKey = $apiKey;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
         $address = $query->getText();
@@ -78,9 +75,6 @@ final class Yandex extends AbstractHttpProvider implements Provider
         return $this->executeQuery($url, $query->getLimit(), $query->getLocale());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function reverseQuery(ReverseQuery $query): Collection
     {
         $coordinates = $query->getCoordinates();
@@ -95,20 +89,13 @@ final class Yandex extends AbstractHttpProvider implements Provider
         return $this->executeQuery($url, $query->getLimit(), $query->getLocale());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName(): string
     {
         return 'yandex';
     }
 
     /**
-     * @param string $url
-     * @param int    $limit
      * @param string $locale
-     *
-     * @return AddressCollection
      */
     private function executeQuery(string $url, int $limit, string $locale = null): AddressCollection
     {
@@ -124,8 +111,8 @@ final class Yandex extends AbstractHttpProvider implements Provider
         $content = $this->getUrlContents($url);
         $json = json_decode($content, true);
 
-        if (empty($json) || isset($json['error']) ||
-            (isset($json['response']) && '0' === $json['response']['GeoObjectCollection']['metaDataProperty']['GeocoderResponseMetaData']['found'])
+        if (empty($json) || isset($json['error'])
+            || (isset($json['response']) && '0' === $json['response']['GeoObjectCollection']['metaDataProperty']['GeocoderResponseMetaData']['found'])
         ) {
             return new AddressCollection([]);
         }

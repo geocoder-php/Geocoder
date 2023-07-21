@@ -27,27 +27,17 @@ class PlusCode
      */
     private $compoundCode;
 
-    /**
-     * @param string $globalCode
-     * @param string $compoundCode
-     */
     public function __construct(string $globalCode, string $compoundCode)
     {
         $this->globalCode = $globalCode;
         $this->compoundCode = $compoundCode;
     }
 
-    /**
-     * @return string
-     */
     public function getGlobalCode(): string
     {
         return $this->globalCode;
     }
 
-    /**
-     * @return string
-     */
     public function getCompoundCode(): string
     {
         return $this->compoundCode;

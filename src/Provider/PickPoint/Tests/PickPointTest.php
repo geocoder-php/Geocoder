@@ -15,9 +15,9 @@ namespace Geocoder\Provider\PickPoint\Tests;
 use Geocoder\Collection;
 use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Location;
+use Geocoder\Provider\PickPoint\PickPoint;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Provider\PickPoint\PickPoint;
 
 class PickPointTest extends BaseTestCase
 {

@@ -17,12 +17,12 @@ use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\QuotaExceeded;
 use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Model\Address;
 use Geocoder\Model\AddressCollection;
+use Geocoder\Provider\Provider;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Http\Provider\AbstractHttpProvider;
-use Geocoder\Provider\Provider;
 use Psr\Http\Client\ClientInterface;
 
 /**
@@ -33,7 +33,7 @@ final class Ipstack extends AbstractHttpProvider implements Provider
     /**
      * @var string
      */
-    const GEOCODE_ENDPOINT_URL = 'http://api.ipstack.com/%s?access_key=%s';
+    public const GEOCODE_ENDPOINT_URL = 'http://api.ipstack.com/%s?access_key=%s';
 
     /**
      * @var string
@@ -54,9 +54,6 @@ final class Ipstack extends AbstractHttpProvider implements Provider
         parent::__construct($client);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
         $address = $query->getText();
@@ -115,17 +112,11 @@ final class Ipstack extends AbstractHttpProvider implements Provider
         return new AddressCollection($locations);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function reverseQuery(ReverseQuery $query): Collection
     {
         throw new UnsupportedOperation('The Ipstack provider is not able to do reverse geocoding.');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName(): string
     {
         return 'ipstack';

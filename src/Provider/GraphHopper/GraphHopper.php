@@ -15,13 +15,13 @@ namespace Geocoder\Provider\GraphHopper;
 use Geocoder\Collection;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\UnsupportedOperation;
+use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Model\Address;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Model\Bounds;
+use Geocoder\Provider\Provider;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Http\Provider\AbstractHttpProvider;
-use Geocoder\Provider\Provider;
 use Psr\Http\Client\ClientInterface;
 
 /**
@@ -32,12 +32,12 @@ final class GraphHopper extends AbstractHttpProvider implements Provider
     /**
      * @var string
      */
-    const GEOCODE_ENDPOINT_URL = 'https://graphhopper.com/api/1/geocode?q=%s&key=%s&locale=%s&limit=%d';
+    public const GEOCODE_ENDPOINT_URL = 'https://graphhopper.com/api/1/geocode?q=%s&key=%s&locale=%s&limit=%d';
 
     /**
      * @var string
      */
-    const REVERSE_ENDPOINT_URL = 'https://graphhopper.com/api/1/geocode?reverse=true&point=%f,%f&key=%s&locale=%s&limit=%d';
+    public const REVERSE_ENDPOINT_URL = 'https://graphhopper.com/api/1/geocode?reverse=true&point=%f,%f&key=%s&locale=%s&limit=%d';
 
     /**
      * @var string
@@ -58,9 +58,6 @@ final class GraphHopper extends AbstractHttpProvider implements Provider
         parent::__construct($client);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
         $address = $query->getText();
@@ -80,9 +77,6 @@ final class GraphHopper extends AbstractHttpProvider implements Provider
         return $this->executeQuery($url);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function reverseQuery(ReverseQuery $query): Collection
     {
         $coordinates = $query->getCoordinates();
@@ -94,17 +88,11 @@ final class GraphHopper extends AbstractHttpProvider implements Provider
         return $this->executeQuery($url);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName(): string
     {
         return 'graphhopper';
     }
 
-    /**
-     * @param $url
-     */
     private function executeQuery(string $url): AddressCollection
     {
         $content = $this->getUrlContents($url);

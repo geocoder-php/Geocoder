@@ -13,10 +13,10 @@ declare(strict_types=1);
 namespace Geocoder\Provider\Chain\Tests;
 
 use Geocoder\Model\AddressCollection;
+use Geocoder\Provider\Chain\Chain;
+use Geocoder\Provider\Provider;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Provider\Provider;
-use Geocoder\Provider\Chain\Chain;
 use Nyholm\NSA;
 use PHPUnit\Framework\TestCase;
 

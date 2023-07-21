@@ -35,9 +35,6 @@ class LoopException extends \RuntimeException implements Exception
         return $ex;
     }
 
-    /**
-     * @return Query
-     */
     public function getQuery(): Query
     {
         return $this->query;

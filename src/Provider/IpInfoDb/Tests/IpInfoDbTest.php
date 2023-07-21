@@ -14,9 +14,9 @@ namespace Geocoder\Provider\IpInfoDb\Tests;
 
 use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Location;
+use Geocoder\Provider\IpInfoDb\IpInfoDb;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Provider\IpInfoDb\IpInfoDb;
 
 class IpInfoDbTest extends BaseTestCase
 {

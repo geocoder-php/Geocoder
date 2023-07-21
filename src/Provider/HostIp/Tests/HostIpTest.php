@@ -14,9 +14,9 @@ namespace Geocoder\Provider\HostIp\Tests;
 
 use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Location;
+use Geocoder\Provider\HostIp\HostIp;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Provider\HostIp\HostIp;
 
 class HostIpTest extends BaseTestCase
 {

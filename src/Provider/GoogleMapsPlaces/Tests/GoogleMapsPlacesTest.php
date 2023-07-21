@@ -184,7 +184,7 @@ class GoogleMapsPlacesTest extends BaseTestCase
         $provider = $this->getGoogleMapsProvider();
         $query = ReverseQuery::fromCoordinates(-33.8865019, 151.2080413)
             ->withData('rankby', 'distance')
-            ;
+        ;
 
         $provider->reverseQuery($query);
     }
@@ -196,7 +196,7 @@ class GoogleMapsPlacesTest extends BaseTestCase
         $query = ReverseQuery::fromCoordinates(-33.892674, 151.200727)
             // ->withData('mode', GoogleMapsPlaces::GEOCODE_MODE_SEARCH) // =default
             ->withData('type', 'bar')
-            ;
+        ;
 
         $results = $provider->reverseQuery($query);
 
@@ -221,7 +221,7 @@ class GoogleMapsPlacesTest extends BaseTestCase
             ->withData('mode', GoogleMapsPlaces::GEOCODE_MODE_NEARBY)
             ->withData('rankby', 'distance')
             // ->withData('keyword', 'bar')
-            ;
+        ;
 
         $provider->reverseQuery($query);
     }
@@ -234,7 +234,7 @@ class GoogleMapsPlacesTest extends BaseTestCase
             ->withData('mode', GoogleMapsPlaces::GEOCODE_MODE_NEARBY)
             ->withData('rankby', 'distance')
             ->withData('keyword', 'bar')
-            ;
+        ;
 
         $results = $provider->reverseQuery($query);
 
@@ -261,7 +261,7 @@ class GoogleMapsPlacesTest extends BaseTestCase
             ->withData('mode', GoogleMapsPlaces::GEOCODE_MODE_NEARBY)
             // ->withData('rankby', 'prominence')
             // ->withData('radius', 500)
-            ;
+        ;
 
         $provider->reverseQuery($query);
     }
@@ -274,7 +274,7 @@ class GoogleMapsPlacesTest extends BaseTestCase
                 ->withData('mode', GoogleMapsPlaces::GEOCODE_MODE_NEARBY)
                 // ->withData('rankby', 'prominence'); // =default
                 ->withData('radius', 500)
-                ;
+        ;
 
         $results = $provider->reverseQuery($query);
         $this->assertCount(20, $results);
@@ -292,7 +292,7 @@ class GoogleMapsPlacesTest extends BaseTestCase
 
         $query = ReverseQuery::fromCoordinates(51.0572773, 13.7763207)
             ->withData('type', 'transit_station')
-            ;
+        ;
 
         $results = $provider->reverseQuery($query);
         $this->assertCount(20, $results);

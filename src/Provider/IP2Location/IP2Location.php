@@ -12,15 +12,15 @@ declare(strict_types=1);
 
 namespace Geocoder\Provider\IP2Location;
 
+use Geocoder\Collection;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\UnsupportedOperation;
-use Geocoder\Collection;
+use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Model\Address;
 use Geocoder\Model\AddressCollection;
+use Geocoder\Provider\Provider;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Http\Provider\AbstractHttpProvider;
-use Geocoder\Provider\Provider;
 use Psr\Http\Client\ClientInterface;
 
 /**
@@ -31,7 +31,7 @@ final class IP2Location extends AbstractHttpProvider implements Provider
     /**
      * @var string
      */
-    const ENDPOINT_URL = 'https://api.ip2location.com/v2/?key=%s&ip=%s&format=json&package=WS9';
+    public const ENDPOINT_URL = 'https://api.ip2location.com/v2/?key=%s&ip=%s&format=json&package=WS9';
 
     /**
      * @var string
@@ -55,9 +55,6 @@ final class IP2Location extends AbstractHttpProvider implements Provider
         $this->endpointUrl = self::ENDPOINT_URL;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
         $address = $query->getText();
@@ -79,25 +76,16 @@ final class IP2Location extends AbstractHttpProvider implements Provider
         return $this->executeQuery($url);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function reverseQuery(ReverseQuery $query): Collection
     {
         throw new UnsupportedOperation('The IP2Location provider is not able to do reverse geocoding.');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName(): string
     {
         return 'ip2location';
     }
 
-    /**
-     * @param string $url
-     */
     private function executeQuery(string $url): AddressCollection
     {
         $content = $this->getUrlContents($url);

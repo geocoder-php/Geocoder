@@ -18,10 +18,10 @@ use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Model\Address;
 use Geocoder\Model\AddressCollection;
-use Geocoder\Query\GeocodeQuery;
-use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\AbstractProvider;
 use Geocoder\Provider\Provider;
+use Geocoder\Query\GeocodeQuery;
+use Geocoder\Query\ReverseQuery;
 
 final class IP2LocationBinary extends AbstractProvider implements Provider
 {
@@ -36,9 +36,6 @@ final class IP2LocationBinary extends AbstractProvider implements Provider
     private $openFlag;
 
     /**
-     * @param string   $binFile
-     * @param int|null $openFlag
-     *
      * @throws FunctionNotFound if IP2Location's library not installed
      * @throws InvalidArgument  if dat file is not correct (optional)
      */
@@ -60,9 +57,6 @@ final class IP2LocationBinary extends AbstractProvider implements Provider
         $this->openFlag = null === $openFlag ? \IP2Location\Database::FILE_IO : $openFlag;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
         $address = $query->getText();
@@ -97,17 +91,11 @@ final class IP2LocationBinary extends AbstractProvider implements Provider
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function reverseQuery(ReverseQuery $query): Collection
     {
         throw new UnsupportedOperation('The IP2LocationBinary is not able to do reverse geocoding.');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName(): string
     {
         return 'ip2location_binary';

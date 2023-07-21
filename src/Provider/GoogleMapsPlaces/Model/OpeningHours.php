@@ -12,8 +12,6 @@ declare(strict_types=1);
 
 namespace Geocoder\Provider\GoogleMapsPlaces\Model;
 
-use stdClass;
-
 /**
  * @author atymic <atymicq@gmail.com>
  */
@@ -70,7 +68,7 @@ class OpeningHours
         return $this->weekdayText;
     }
 
-    public static function fromResult(stdClass $openingHours): self
+    public static function fromResult(\stdClass $openingHours): self
     {
         return new self(
             $openingHours->open_now ?? null,

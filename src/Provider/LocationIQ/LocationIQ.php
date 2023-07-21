@@ -14,15 +14,15 @@ namespace Geocoder\Provider\LocationIQ;
 
 use Geocoder\Collection;
 use Geocoder\Exception\InvalidArgument;
-use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\InvalidCredentials;
+use Geocoder\Exception\InvalidServerResponse;
+use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Location;
 use Geocoder\Model\AddressBuilder;
 use Geocoder\Model\AddressCollection;
+use Geocoder\Provider\Provider;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Http\Provider\AbstractHttpProvider;
-use Geocoder\Provider\Provider;
 use Psr\Http\Client\ClientInterface;
 
 /**
@@ -33,7 +33,7 @@ final class LocationIQ extends AbstractHttpProvider implements Provider
     /**
      * @var string
      */
-    const BASE_API_URL = 'https://{region}.locationiq.com/v1';
+    public const BASE_API_URL = 'https://{region}.locationiq.com/v1';
 
     /**
      * @var string
@@ -74,9 +74,6 @@ final class LocationIQ extends AbstractHttpProvider implements Provider
         parent::__construct($client);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
         $address = $query->getText();
@@ -105,9 +102,6 @@ final class LocationIQ extends AbstractHttpProvider implements Provider
         return new AddressCollection($results);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function reverseQuery(ReverseQuery $query): Collection
     {
         $coordinates = $query->getCoordinates();
@@ -128,12 +122,6 @@ final class LocationIQ extends AbstractHttpProvider implements Provider
         return new AddressCollection([$this->xmlResultToArray($result, $addressParts)]);
     }
 
-    /**
-     * @param \DOMElement $resultNode
-     * @param \DOMElement $addressNode
-     *
-     * @return Location
-     */
     private function xmlResultToArray(\DOMElement $resultNode, \DOMElement $addressNode): Location
     {
         $builder = new AddressBuilder($this->getName());
@@ -172,20 +160,11 @@ final class LocationIQ extends AbstractHttpProvider implements Provider
         return $builder->build();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName(): string
     {
         return 'locationiq';
     }
 
-    /**
-     * @param string      $url
-     * @param string|null $locale
-     *
-     * @return string
-     */
     private function executeQuery(string $url, string $locale = null): string
     {
         if (null !== $locale) {

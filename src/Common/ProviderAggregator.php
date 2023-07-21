@@ -14,9 +14,9 @@ namespace Geocoder;
 
 use Geocoder\Exception\ProviderNotRegistered;
 use Geocoder\Model\Coordinates;
+use Geocoder\Provider\Provider;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
-use Geocoder\Provider\Provider;
 
 /**
  * @author William Durand <william.durand1@gmail.com>
@@ -45,52 +45,33 @@ class ProviderAggregator implements Geocoder
      */
     private $decider;
 
-    /**
-     * @param callable|null $decider
-     * @param int           $limit
-     */
     public function __construct(callable $decider = null, int $limit = Geocoder::DEFAULT_RESULT_LIMIT)
     {
         $this->limit = $limit;
         $this->decider = $decider ?? __CLASS__.'::getProvider';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
         return call_user_func($this->decider, $query, $this->providers, $this->provider)->geocodeQuery($query);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function reverseQuery(ReverseQuery $query): Collection
     {
         return call_user_func($this->decider, $query, $this->providers, $this->provider)->reverseQuery($query);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName(): string
     {
         return 'provider_aggregator';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function geocode(string $value): Collection
     {
         return $this->geocodeQuery(GeocodeQuery::create($value)
             ->withLimit($this->limit));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function reverse(float $latitude, float $longitude): Collection
     {
         return $this->reverseQuery(ReverseQuery::create(new Coordinates($latitude, $longitude))
@@ -99,10 +80,6 @@ class ProviderAggregator implements Geocoder
 
     /**
      * Registers a new provider to the aggregator.
-     *
-     * @param Provider $provider
-     *
-     * @return ProviderAggregator
      */
     public function registerProvider(Provider $provider): self
     {
@@ -115,8 +92,6 @@ class ProviderAggregator implements Geocoder
      * Registers a set of providers.
      *
      * @param Provider[] $providers
-     *
-     * @return ProviderAggregator
      */
     public function registerProviders(array $providers = []): self
     {
@@ -129,10 +104,6 @@ class ProviderAggregator implements Geocoder
 
     /**
      * Sets the default provider to use.
-     *
-     * @param string $name
-     *
-     * @return ProviderAggregator
      */
     public function using(string $name): self
     {
@@ -161,8 +132,6 @@ class ProviderAggregator implements Geocoder
      * @param GeocodeQuery|ReverseQuery $query
      * @param Provider[]                $providers
      * @param Provider                  $currentProvider
-     *
-     * @return Provider
      *
      * @throws ProviderNotRegistered
      */

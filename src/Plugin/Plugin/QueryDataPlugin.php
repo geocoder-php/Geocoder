@@ -33,8 +33,7 @@ class QueryDataPlugin implements Plugin
     private $force;
 
     /**
-     * @param array $data
-     * @param bool  $force If true we overwrite existing values
+     * @param bool $force If true we overwrite existing values
      */
     public function __construct(array $data, $force = false)
     {
@@ -42,9 +41,6 @@ class QueryDataPlugin implements Plugin
         $this->force = $force;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handleQuery(Query $query, callable $next, callable $first)
     {
         $queryData = $query->getAllData();

@@ -67,8 +67,6 @@ final class Country
 
     /**
      * Returns a string with the country name.
-     *
-     * @return string
      */
     public function __toString(): string
     {

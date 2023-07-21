@@ -18,10 +18,10 @@ namespace Geocoder\Provider\Here\Tests;
 
 use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Location;
-use Geocoder\Query\GeocodeQuery;
-use Geocoder\Query\ReverseQuery;
 use Geocoder\Provider\Here\Here;
 use Geocoder\Provider\Here\Model\HereAddress;
+use Geocoder\Query\GeocodeQuery;
+use Geocoder\Query\ReverseQuery;
 
 class HereTest extends BaseTestCase
 {
