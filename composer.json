@@ -32,8 +32,9 @@
         "cache/array-adapter": "^1.0",
         "cache/simple-cache-bridge": "^1.0",
         "cache/void-adapter": "^1.0",
+        "friendsofphp/php-cs-fixer": "^3.22",
         "geocoder-php/provider-integration-tests": "^1.6.2",
-        "geoip2/geoip2": "~2.0",
+        "geoip2/geoip2": "^2.0",
         "nyholm/nsa": "^1.1",
         "nyholm/psr7": "^1.0",
         "php-http/curl-client": "^2.2",
@@ -82,6 +83,8 @@
     },
     "scripts": {
         "analyse": "vendor/bin/phpstan analyse",
+        "cs": "vendor/bin/php-cs-fixer fix -v --dry-run --rules=@Symfony src/",
+        "cs:fix": "vendor/bin/php-cs-fixer fix -v --rules=@Symfony src/",
         "test": "vendor/bin/phpunit"
     }
 }
