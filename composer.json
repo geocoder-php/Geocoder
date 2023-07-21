@@ -83,8 +83,8 @@
     },
     "scripts": {
         "analyse": "vendor/bin/phpstan analyse",
-        "cs": "vendor/bin/php-cs-fixer fix -v --dry-run --rules=@Symfony src/",
-        "cs:fix": "vendor/bin/php-cs-fixer fix -v --rules=@Symfony src/",
+        "cs": "vendor/bin/php-cs-fixer fix -v --dry-run",
+        "cs:fix": "vendor/bin/php-cs-fixer fix -v",
         "test": "vendor/bin/phpunit"
     }
 }
