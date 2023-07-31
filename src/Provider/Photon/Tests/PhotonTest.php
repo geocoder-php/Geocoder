@@ -111,6 +111,22 @@ class PhotonTest extends BaseTestCase
         }
     }
 
+    public function testGeocodeQueryWithMultipleOsmTagFilter()
+    {
+        $provider = Photon::withKomootServer($this->getHttpClient());
+        $query = GeocodeQuery::create('Paris')
+            ->withData('osm_tag', ['tourism', ':!museum'])
+            ->withLimit(5);
+        $results = $provider->geocodeQuery($query);
+
+        $this->assertCount(5, $results);
+        foreach ($results as $result) {
+            $this->assertInstanceOf(PhotonAddress::class, $result);
+            $this->assertEquals('tourism', $result->getOSMTag()->key);
+            $this->assertNotEquals('museum', $result->getOSMTag()->value);
+        }
+    }
+
     public function testReverseQuery()
     {
         $provider = Photon::withKomootServer($this->getHttpClient());
