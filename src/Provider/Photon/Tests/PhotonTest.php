@@ -14,6 +14,7 @@ namespace Geocoder\Provider\Photon\Tests;
 
 use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Provider\Photon\Photon;
+use Geocoder\Provider\Photon\Model\PhotonAddress;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 
@@ -97,7 +98,8 @@ class PhotonTest extends BaseTestCase
     public function testReverseQuery()
     {
         $provider = Photon::withKomootServer($this->getHttpClient());
-        $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(52, 10));
+        $reverseQuery = ReverseQuery::fromCoordinates(52, 10)->withLimit(1);
+        $results = $provider->reverseQuery($reverseQuery);
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -121,16 +123,19 @@ class PhotonTest extends BaseTestCase
         $this->assertEquals('Sehlem', $result->getDistrict());
     }
 
-    public function testReverseQueryWithOsmDataFilter()
+    public function testReverseQueryWithOsmTagFilter()
     {
         $provider = Photon::withKomootServer($this->getHttpClient());
-        $reverseQuery = ReverseQuery::fromCoordinates(45.73179, 6.03248)
-            ->withData('query_string_filter', 'osm_key:place')
-            ->withLimit(1);
-        /** @var \Geocoder\Provider\Photon\Model\PhotonAddress $result */
-        $result = $provider->reverseQuery($reverseQuery)->first();
+        $reverseQuery = ReverseQuery::fromCoordinates(52.51644, 13.38890)
+            ->withData('osm_tag', 'amenity:pharmacy')
+            ->withLimit(3);
+        $results = $provider->reverseQuery($reverseQuery);
 
-        $this->assertEquals('place', $result->getOSMTag()->key);
-        $this->assertEquals('locality', $result->getOSMTag()->value);
+        $this->assertCount(3, $results);
+        foreach ($results as $result) {
+            $this->assertInstanceOf(PhotonAddress::class, $result);
+            $this->assertEquals('amenity', $result->getOSMTag()->key);
+            $this->assertEquals('pharmacy', $result->getOSMTag()->value);
+        }
     }
 }
