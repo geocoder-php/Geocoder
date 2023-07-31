@@ -8,7 +8,10 @@
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 
 This is the Geoip provider from the PHP Geocoder. This is a **READ ONLY** repository. See the
-[main repo](https://github.com/geocoder-php/Geocoder) for information and documentation. 
+[main repo](https://github.com/geocoder-php/Geocoder) for information and documentation.
+
+> **Warning**  
+> This provider is deprecated. Please use the [Geoip2 provider](https://github.com/geocoder-php/geoip2-provider).
 
 ### Install
 
@@ -18,5 +21,5 @@ composer require geocoder-php/geoip-provider
 
 ### Contribute
 
-Contributions are very welcome! Send a pull request to the [main repository](https://github.com/geocoder-php/Geocoder) or 
+Contributions are very welcome! Send a pull request to the [main repository](https://github.com/geocoder-php/Geocoder) or
 report any issues you find on the [issue tracker](https://github.com/geocoder-php/Geocoder/issues).
