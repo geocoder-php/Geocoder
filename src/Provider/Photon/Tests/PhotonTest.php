@@ -13,8 +13,8 @@ declare(strict_types=1);
 namespace Geocoder\Provider\Photon\Tests;
 
 use Geocoder\IntegrationTest\BaseTestCase;
-use Geocoder\Provider\Photon\Photon;
 use Geocoder\Provider\Photon\Model\PhotonAddress;
+use Geocoder\Provider\Photon\Photon;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 
