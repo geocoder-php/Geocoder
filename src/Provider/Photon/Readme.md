@@ -27,7 +27,7 @@ You can use your own photon instance :
 // New instance of the provider :
 $provider = new Geocoder\Provider\Photon\Photon($httpClient, 'https://your-photon-root-url');
 // Run geocode or reverse query
-$query = $provider->geocodeQuery(new \Geocoder\Query\GeocodeQuery('Paris'));
+$query = $provider->geocodeQuery(\Geocoder\Query\GeocodeQuery::create('Paris'));
 $reverseQuery = $provider->reverseQuery(\Geocoder\Query\ReverseQuery::fromCoordinates(48.86036 ,2.33852));
 ```
 

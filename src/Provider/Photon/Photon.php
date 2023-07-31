@@ -68,6 +68,7 @@ final class Photon extends AbstractHttpProvider implements Provider
             .'/api?'
             .http_build_query([
                 'q' => $address,
+                'osm_tag' => $query->getData('osm_tag'),
                 'limit' => $query->getLimit(),
                 'lang' => $query->getLocale(),
             ]);
