@@ -33,10 +33,13 @@ class Photo
     private $width;
 
     /**
-     * @var array
+     * @var string[]
      */
     private $htmlAttributions = [];
 
+    /**
+     * @param string[] $htmlAttributions
+     */
     public function __construct(string $photoReference, int $height, int $width, array $htmlAttributions)
     {
         $this->photoReference = $photoReference;
@@ -60,11 +63,19 @@ class Photo
         return $this->width;
     }
 
+    /**
+     * @return string[]
+     */
     public function getHtmlAttributions(): array
     {
         return $this->htmlAttributions;
     }
 
+    /**
+     * @param \stdClass[] $photos
+     *
+     * @return self[]
+     */
     public static function getPhotosFromResult(array $photos): array
     {
         return array_map(function ($photo) {

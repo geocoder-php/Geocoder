@@ -21,12 +21,12 @@ use Geocoder\Query\ReverseQuery;
 
 class NominatimTest extends BaseTestCase
 {
-    protected function getCacheDir()
+    protected function getCacheDir(): string
     {
         return __DIR__.'/.cached_responses';
     }
 
-    public function testGeocodeWithLocalhostIPv4()
+    public function testGeocodeWithLocalhostIPv4(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The Nominatim provider does not support IP addresses.');
@@ -35,7 +35,7 @@ class NominatimTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
     }
 
-    public function testGeocodeWithLocalhostIPv6()
+    public function testGeocodeWithLocalhostIPv6(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The Nominatim provider does not support IP addresses.');
@@ -44,7 +44,7 @@ class NominatimTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
-    public function testGeocodeWithRealIPv6()
+    public function testGeocodeWithRealIPv6(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The Nominatim provider does not support IP addresses.');
@@ -53,7 +53,7 @@ class NominatimTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('::ffff:88.188.221.14'));
     }
 
-    public function testReverseWithCoordinatesGetsError()
+    public function testReverseWithCoordinatesGetsError(): void
     {
         $errorJSON = '{"error":"Unable to geocode"}';
 
@@ -64,7 +64,7 @@ class NominatimTest extends BaseTestCase
         $this->assertEquals(0, $result->count());
     }
 
-    public function testGetNodeStreetName()
+    public function testGetNodeStreetName(): void
     {
         $provider = Nominatim::withOpenStreetMapServer($this->getHttpClient(), 'Geocoder PHP/Nominatim Provider/Nominatim Test');
         $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(48.86, 2.35));
@@ -78,7 +78,7 @@ class NominatimTest extends BaseTestCase
         $this->assertEquals('Rue Quincampoix', $result->getStreetName());
     }
 
-    public function testGeocodeWithRealAddress()
+    public function testGeocodeWithRealAddress(): void
     {
         $provider = Nominatim::withOpenStreetMapServer($this->getHttpClient(), 'Geocoder PHP/Nominatim Provider/Nominatim Test');
         $results = $provider->geocodeQuery(GeocodeQuery::create('1 Place des Palais 1000 bruxelles'));
@@ -114,7 +114,7 @@ class NominatimTest extends BaseTestCase
         $this->assertEquals('attraction', $result->getType());
     }
 
-    public function testGeocodeWithRealAddressThatReturnsOptionalQuarter()
+    public function testGeocodeWithRealAddressThatReturnsOptionalQuarter(): void
     {
         $provider = Nominatim::withOpenStreetMapServer($this->getHttpClient(), 'Geocoder PHP/Nominatim Provider/Nominatim Test');
         $results = $provider->geocodeQuery(GeocodeQuery::create('woronicza 17, warszawa, polska'));
@@ -127,7 +127,7 @@ class NominatimTest extends BaseTestCase
         $this->assertEquals('Ksawerów', $result->getQuarter());
     }
 
-    public function testGeocodeWithRealAddressAndExtraTags()
+    public function testGeocodeWithRealAddressAndExtraTags(): void
     {
         $provider = Nominatim::withOpenStreetMapServer($this->getHttpClient(), 'Geocoder PHP/Nominatim Provider/Nominatim Test');
 
@@ -145,7 +145,7 @@ class NominatimTest extends BaseTestCase
         $this->assertEquals('110 m', $result->getTags()['height']);
     }
 
-    public function testGeocodeWithCountrycodes()
+    public function testGeocodeWithCountrycodes(): void
     {
         $provider = Nominatim::withOpenStreetMapServer($this->getHttpClient(), 'Geocoder PHP/Nominatim Provider/Nominatim Test');
 
@@ -163,7 +163,7 @@ class NominatimTest extends BaseTestCase
         }
     }
 
-    public function testGeocodeWithViewbox()
+    public function testGeocodeWithViewbox(): void
     {
         $provider = Nominatim::withOpenStreetMapServer($this->getHttpClient(), 'Geocoder PHP/Nominatim Provider/Nominatim Test');
 
@@ -196,7 +196,7 @@ class NominatimTest extends BaseTestCase
         $this->assertEquals('attraction', $result->getType());
     }
 
-    public function testGeocodeNoOSMId()
+    public function testGeocodeNoOSMId(): void
     {
         $provider = Nominatim::withOpenStreetMapServer($this->getHttpClient(), 'Geocoder PHP/Nominatim Provider/Nominatim Test');
         $results = $provider->geocodeQuery(GeocodeQuery::create('90210,United States'));
@@ -217,7 +217,7 @@ class NominatimTest extends BaseTestCase
         $this->assertEquals(null, $result->getOSMType());
     }
 
-    public function testGeocodeNoCountry()
+    public function testGeocodeNoCountry(): void
     {
         $provider = Nominatim::withOpenStreetMapServer($this->getHttpClient(), 'Geocoder PHP/Nominatim Provider/Nominatim Test');
         $query = GeocodeQuery::create('Italia')
@@ -240,7 +240,7 @@ class NominatimTest extends BaseTestCase
         $this->assertEquals(null, $result->getCountry());
     }
 
-    public function testGeocodeNeighbourhood()
+    public function testGeocodeNeighbourhood(): void
     {
         $provider = Nominatim::withOpenStreetMapServer($this->getHttpClient(), 'Geocoder PHP/Nominatim Provider/Nominatim Test');
         $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(35.685939, 139.811695)->withLocale('en'));

@@ -19,12 +19,12 @@ use Geocoder\Query\ReverseQuery;
 
 class PhotonTest extends BaseTestCase
 {
-    protected function getCacheDir()
+    protected function getCacheDir(): string
     {
         return __DIR__.'/.cached_responses';
     }
 
-    public function testGeocodeWithLocalhostIPv4()
+    public function testGeocodeWithLocalhostIPv4(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The Photon provider does not support IP addresses.');
@@ -33,7 +33,7 @@ class PhotonTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
     }
 
-    public function testGeocodeWithLocalhostIPv6()
+    public function testGeocodeWithLocalhostIPv6(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The Photon provider does not support IP addresses.');
@@ -42,7 +42,7 @@ class PhotonTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
-    public function testGeocodeWithRealIPv6()
+    public function testGeocodeWithRealIPv6(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The Photon provider does not support IP addresses.');
@@ -51,7 +51,7 @@ class PhotonTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('::ffff:88.188.221.14'));
     }
 
-    public function testGeocodeQuery()
+    public function testGeocodeQuery(): void
     {
         $provider = Photon::withKomootServer($this->getHttpClient());
         $results = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
@@ -80,7 +80,7 @@ class PhotonTest extends BaseTestCase
         $this->assertEquals('Paris', $result->getDistrict());
     }
 
-    public function testGeocodeQueryWithNamedResult()
+    public function testGeocodeQueryWithNamedResult(): void
     {
         $provider = Photon::withKomootServer($this->getHttpClient());
         $results = $provider->geocodeQuery(GeocodeQuery::create('Sherlock Holmes Museum, 221B Baker St, London, England'));
@@ -94,7 +94,7 @@ class PhotonTest extends BaseTestCase
         $this->assertEquals('The Sherlock Holmes Museum and shop', $result->getName());
     }
 
-    public function testReverseQuery()
+    public function testReverseQuery(): void
     {
         $provider = Photon::withKomootServer($this->getHttpClient());
         $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(52, 10));

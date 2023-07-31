@@ -42,7 +42,7 @@ class PluginProvider implements Provider
     /**
      * A list of options.
      *
-     * @var array
+     * @var array{max_restarts?: int<0, max>}
      */
     private $options;
 
@@ -90,6 +90,10 @@ class PluginProvider implements Provider
 
     /**
      * Configure the plugin provider.
+     *
+     * @param array{max_restarts?: int<0, max>} $options
+     *
+     * @return array{max_restarts: int<0, max>}
      */
     private function configure(array $options = []): array
     {

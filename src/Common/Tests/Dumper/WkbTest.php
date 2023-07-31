@@ -32,7 +32,7 @@ class WkbTest extends TestCase
         $this->dumper = new Wkb();
     }
 
-    public function testDump()
+    public function testDump(): void
     {
         $address = Address::createFromArray([]);
         $expected = pack('H*', '010100000000000000000000000000000000000000');
@@ -42,7 +42,7 @@ class WkbTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testDumpWithData()
+    public function testDumpWithData(): void
     {
         $address = Address::createFromArray([
             'latitude' => 48.8631507,

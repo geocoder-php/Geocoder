@@ -25,7 +25,7 @@ use Psr\Http\Client\ClientInterface;
  */
 class AlgoliaPlacesTest extends BaseTestCase
 {
-    protected function getCacheDir()
+    protected function getCacheDir(): string
     {
         return __DIR__.'/.cached_responses';
     }
@@ -33,16 +33,12 @@ class AlgoliaPlacesTest extends BaseTestCase
     /**
      * Get a real HTTP client. If a cache dir is set to a path it will use cached responses.
      */
-    protected function getHttpClient($apiKey = null, $appCode = null): ClientInterface
+    protected function getHttpClient(string $apiKey = null, string $appCode = null): ClientInterface
     {
-        if (null !== $cacheDir = $this->getCacheDir()) {
-            return new CachedResponseClient(new HttplugClient(), $cacheDir, $apiKey, $appCode);
-        } else {
-            return new HttplugClient();
-        }
+        return new CachedResponseClient(new HttplugClient(), $this->getCacheDir(), $apiKey, $appCode);
     }
 
-    public function testGeocodeQueryWithLocale()
+    public function testGeocodeQueryWithLocale(): void
     {
         if (!isset($_SERVER['ALGOLIA_APP_ID']) || !isset($_SERVER['ALGOLIA_API_KEY'])) {
             $this->markTestSkipped('You need to configure the ALGOLIA_APP_ID and ALGOLIA_API_KEY value in phpunit.xml');
@@ -67,7 +63,7 @@ class AlgoliaPlacesTest extends BaseTestCase
         $this->assertEquals('fr', $result->getCountry()->getCode());
     }
 
-    public function testGeocodeQueryWithoutLocale()
+    public function testGeocodeQueryWithoutLocale(): void
     {
         if (!isset($_SERVER['ALGOLIA_APP_ID']) || !isset($_SERVER['ALGOLIA_API_KEY'])) {
             $this->markTestSkipped('You need to configure the ALGOLIA_APP_ID and ALGOLIA_API_KEY value in phpunit.xml');
@@ -92,7 +88,7 @@ class AlgoliaPlacesTest extends BaseTestCase
         $this->assertSame('fr', $result->getCountry()->getCode());
     }
 
-    public function testGeocodeUnauthenticated()
+    public function testGeocodeUnauthenticated(): void
     {
         $provider = new AlgoliaPlaces($this->getHttpClient());
         $results = $provider->geocodeQuery(GeocodeQuery::create('Paris, France'));
@@ -101,13 +97,13 @@ class AlgoliaPlacesTest extends BaseTestCase
         $this->assertCount(20, $results);
     }
 
-    public function testGetName()
+    public function testGetName(): void
     {
         $provider = new AlgoliaPlaces($this->getMockedHttpClient(), 'appId', 'appCode');
         $this->assertEquals('algolia_places', $provider->getName());
     }
 
-    public function testGeocodeWithInvalidData()
+    public function testGeocodeWithInvalidData(): void
     {
         $this->expectException(\Geocoder\Exception\InvalidServerResponse::class);
 
@@ -115,7 +111,7 @@ class AlgoliaPlacesTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('foobar'));
     }
 
-    public function testGeocodeIpv4()
+    public function testGeocodeIpv4(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The AlgoliaPlaces provider does not support IP addresses, only street addresses.');
@@ -128,7 +124,7 @@ class AlgoliaPlacesTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
     }
 
-    public function testGeocodeWithLocalhostIPv6()
+    public function testGeocodeWithLocalhostIPv6(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The AlgoliaPlaces provider does not support IP addresses, only street addresses.');
@@ -137,7 +133,7 @@ class AlgoliaPlacesTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
-    public function testGeocodeWithRealIPv6()
+    public function testGeocodeWithRealIPv6(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The AlgoliaPlaces provider does not support IP addresses, only street addresses.');

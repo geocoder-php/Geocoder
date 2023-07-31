@@ -18,12 +18,12 @@ use Geocoder\Provider\Geonames\Model\CountryInfo;
 
 class CountryInfoTest extends BaseTestCase
 {
-    protected function getCacheDir()
+    protected function getCacheDir(): string
     {
         return __DIR__.'/.cached_responses';
     }
 
-    public function testCountryInfoWithOneCountry()
+    public function testCountryInfoWithOneCountry(): void
     {
         if (!isset($_SERVER['GEONAMES_USERNAME'])) {
             $this->markTestSkipped('You need to configure the GEONAMES_USERNAME value in phpunit.xml');
@@ -55,7 +55,7 @@ class CountryInfoTest extends BaseTestCase
         $this->assertEquals('INR', $result->getCurrencyCode());
     }
 
-    public function testCountryInfoWithMultipleCountries()
+    public function testCountryInfoWithMultipleCountries(): void
     {
         if (!isset($_SERVER['GEONAMES_USERNAME'])) {
             $this->markTestSkipped('You need to configure the GEONAMES_USERNAME value in phpunit.xml');
@@ -67,7 +67,7 @@ class CountryInfoTest extends BaseTestCase
         $this->assertEquals(2, count($results));
     }
 
-    public function testCountryInfoWithInvalidCountry()
+    public function testCountryInfoWithInvalidCountry(): void
     {
         if (!isset($_SERVER['GEONAMES_USERNAME'])) {
             $this->markTestSkipped('You need to configure the GEONAMES_USERNAME value in phpunit.xml');
@@ -79,7 +79,7 @@ class CountryInfoTest extends BaseTestCase
         $this->assertEquals(0, count($results));
     }
 
-    public function testCountryInfoWithLocale()
+    public function testCountryInfoWithLocale(): void
     {
         if (!isset($_SERVER['GEONAMES_USERNAME'])) {
             $this->markTestSkipped('You need to configure the GEONAMES_USERNAME value in phpunit.xml');
@@ -94,7 +94,7 @@ class CountryInfoTest extends BaseTestCase
         $this->assertEquals('Nuova Delhi', $result->getCapital());
     }
 
-    public function testCountryInfoWithNoCountry()
+    public function testCountryInfoWithNoCountry(): void
     {
         if (!isset($_SERVER['GEONAMES_USERNAME'])) {
             $this->markTestSkipped('You need to configure the GEONAMES_USERNAME value in phpunit.xml');

@@ -105,37 +105,37 @@ class Address implements Location
         return $this->providedBy;
     }
 
-    public function getCoordinates()
+    public function getCoordinates(): ?Coordinates
     {
         return $this->coordinates;
     }
 
-    public function getBounds()
+    public function getBounds(): ?Bounds
     {
         return $this->bounds;
     }
 
-    public function getStreetNumber()
+    public function getStreetNumber(): ?string
     {
         return $this->streetNumber;
     }
 
-    public function getStreetName()
+    public function getStreetName(): ?string
     {
         return $this->streetName;
     }
 
-    public function getLocality()
+    public function getLocality(): ?string
     {
         return $this->locality;
     }
 
-    public function getPostalCode()
+    public function getPostalCode(): ?string
     {
         return $this->postalCode;
     }
 
-    public function getSubLocality()
+    public function getSubLocality(): ?string
     {
         return $this->subLocality;
     }
@@ -145,18 +145,20 @@ class Address implements Location
         return $this->adminLevels;
     }
 
-    public function getCountry()
+    public function getCountry(): ?Country
     {
         return $this->country;
     }
 
-    public function getTimezone()
+    public function getTimezone(): ?string
     {
         return $this->timezone;
     }
 
     /**
      * Create an Address with an array. Useful for testing.
+     *
+     * @param array<string, mixed> $data
      *
      * @return static
      */
@@ -259,7 +261,7 @@ class Address implements Location
      *
      * @return Bounds|null
      */
-    private static function createBounds($south, $west, $north, $east)
+    private static function createBounds(?float $south, ?float $west, ?float $north, ?float $east)
     {
         if (null === $south || null === $west || null === $north || null === $east) {
             return null;

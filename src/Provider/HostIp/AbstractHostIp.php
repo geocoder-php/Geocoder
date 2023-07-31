@@ -57,6 +57,9 @@ abstract class AbstractHostIp extends AbstractHttpProvider implements Provider
         throw new UnsupportedOperation('The HostIp provider is not able to do reverse geocoding.');
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     protected function isUnknownLocation(array $data): bool
     {
         return empty($data['lat'])
@@ -65,6 +68,9 @@ abstract class AbstractHostIp extends AbstractHttpProvider implements Provider
             && '(Unknown Country?)' === $data['country_name'];
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     protected function isPrivateLocation(array $data): bool
     {
         return empty($data['lat'])
@@ -73,6 +79,9 @@ abstract class AbstractHostIp extends AbstractHttpProvider implements Provider
             && '(Private Address)' === $data['country_name'];
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     protected function prepareAddressCollection(array $data): AddressCollection
     {
         // Return empty collection if address was not found

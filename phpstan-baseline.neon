@@ -6,6 +6,16 @@ parameters:
             path: src/Common/ProviderAggregator.php
 
         -
+            message: "#^Method Geocoder\\\\TimedGeocoder\\:\\:__call\\(\\) has parameter \\$args with no value type specified in iterable type array\\.$#"
+            count: 1
+            path: src/Common/TimedGeocoder.php
+
+        -
+            message: "#^Method Geocoder\\\\Provider\\\\Cache\\\\ProviderCache\\:\\:__call\\(\\) has parameter \\$args with no value type specified in iterable type array\\.$#"
+            count: 1
+            path: src/Provider/Cache/ProviderCache.php
+
+        -
             message: "#^Parameter \\#1 \\$locations of class Geocoder\\\\Model\\\\AddressCollection constructor expects array\\<Geocoder\\\\Location\\>, array\\<string, string\\> given\\.$#"
             count: 2
             path: src/Provider/Chain/Tests/ChainTest.php

@@ -20,18 +20,18 @@ use Geocoder\Query\ReverseQuery;
 
 class GeocodeEarthTest extends BaseTestCase
 {
-    protected function getCacheDir()
+    protected function getCacheDir(): string
     {
         return __DIR__.'/.cached_responses';
     }
 
-    public function testGetName()
+    public function testGetName(): void
     {
         $provider = new GeocodeEarth($this->getMockedHttpClient(), 'api_key');
         $this->assertEquals('geocode_earth', $provider->getName());
     }
 
-    public function testGeocode()
+    public function testGeocode(): void
     {
         $provider = new GeocodeEarth($this->getMockedHttpClient('{}'), 'api_key');
         $result = $provider->geocodeQuery(GeocodeQuery::create('foobar'));
@@ -40,7 +40,7 @@ class GeocodeEarthTest extends BaseTestCase
         $this->assertEquals(0, $result->count());
     }
 
-    public function testGeocodeWithRealAddress()
+    public function testGeocodeWithRealAddress(): void
     {
         if (!isset($_SERVER['GEOCODE_EARTH_API_KEY'])) {
             $this->markTestSkipped('You need to configure the GEOCODE_EARTH_API_KEY value in phpunit.xml');
@@ -65,7 +65,7 @@ class GeocodeEarthTest extends BaseTestCase
         $this->assertEquals('GBR', $result->getCountry()->getCode());
     }
 
-    public function testReverseWithRealCoordinates()
+    public function testReverseWithRealCoordinates(): void
     {
         if (!isset($_SERVER['GEOCODE_EARTH_API_KEY'])) {
             $this->markTestSkipped('You need to configure the GEOCODE_EARTH_API_KEY value in phpunit.xml');
@@ -93,7 +93,7 @@ class GeocodeEarthTest extends BaseTestCase
         $this->assertEquals('GBR', $result->getCountry()->getCode());
     }
 
-    public function testReverseWithVillage()
+    public function testReverseWithVillage(): void
     {
         if (!isset($_SERVER['GEOCODE_EARTH_API_KEY'])) {
             $this->markTestSkipped('You need to configure the GEOCODE_EARTH_API_KEY value in phpunit.xml');
@@ -111,7 +111,7 @@ class GeocodeEarthTest extends BaseTestCase
         $this->assertEquals('Bray-et-Lû', $result->getLocality());
     }
 
-    public function testGeocodeWithCity()
+    public function testGeocodeWithCity(): void
     {
         if (!isset($_SERVER['GEOCODE_EARTH_API_KEY'])) {
             $this->markTestSkipped('You need to configure the GEOCODE_EARTH_API_KEY value in phpunit.xml');
@@ -164,7 +164,7 @@ class GeocodeEarthTest extends BaseTestCase
         $this->assertEquals('United States', $result->getCountry()->getName());
     }
 
-    public function testGeocodeWithCityDistrict()
+    public function testGeocodeWithCityDistrict(): void
     {
         if (!isset($_SERVER['GEOCODE_EARTH_API_KEY'])) {
             $this->markTestSkipped('You need to configure the GEOCODE_EARTH_API_KEY value in phpunit.xml');
@@ -193,7 +193,7 @@ class GeocodeEarthTest extends BaseTestCase
         $this->assertEquals('DEU', $result->getCountry()->getCode());
     }
 
-    public function testGeocodeNoBounds()
+    public function testGeocodeNoBounds(): void
     {
         if (!isset($_SERVER['GEOCODE_EARTH_API_KEY'])) {
             $this->markTestSkipped('You need to configure the GEOCODE_EARTH_API_KEY value in phpunit.xml');
@@ -216,7 +216,7 @@ class GeocodeEarthTest extends BaseTestCase
         $this->assertNull($result->getBounds());
     }
 
-    public function testGeocodeQuotaExceeded()
+    public function testGeocodeQuotaExceeded(): void
     {
         $this->expectException(\Geocoder\Exception\QuotaExceeded::class);
         $this->expectExceptionMessage('Valid request but quota exceeded.');
@@ -241,7 +241,7 @@ class GeocodeEarthTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('New York'));
     }
 
-    public function testGeocodeInvalidApiKey()
+    public function testGeocodeInvalidApiKey(): void
     {
         $this->expectException(\Geocoder\Exception\InvalidCredentials::class);
         $this->expectExceptionMessage('Invalid or missing api key.');
@@ -266,7 +266,7 @@ class GeocodeEarthTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('New York'));
     }
 
-    public function testGeocodeWithLocalhostIPv4()
+    public function testGeocodeWithLocalhostIPv4(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The geocode_earth provider does not support IP addresses, only street addresses.');
@@ -275,7 +275,7 @@ class GeocodeEarthTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
     }
 
-    public function testGeocodeWithLocalhostIPv6()
+    public function testGeocodeWithLocalhostIPv6(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The geocode_earth provider does not support IP addresses, only street addresses.');
@@ -284,7 +284,7 @@ class GeocodeEarthTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
-    public function testGeocodeWithRealIPv4()
+    public function testGeocodeWithRealIPv4(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The geocode_earth provider does not support IP addresses, only street addresses.');
@@ -293,7 +293,7 @@ class GeocodeEarthTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
-    public function testGeocodeWithRealIPv6()
+    public function testGeocodeWithRealIPv6(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The geocode_earth provider does not support IP addresses, only street addresses.');

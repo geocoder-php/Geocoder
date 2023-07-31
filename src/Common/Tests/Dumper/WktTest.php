@@ -32,7 +32,7 @@ class WktTest extends TestCase
         $this->dumper = new Wkt();
     }
 
-    public function testDump()
+    public function testDump(): void
     {
         $address = Address::createFromArray([]);
         $expected = sprintf('POINT(%F %F)', 0, 0);
@@ -42,7 +42,7 @@ class WktTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testDumpWithData()
+    public function testDumpWithData(): void
     {
         $address = Address::createFromArray([
             'latitude' => 48.8631507,

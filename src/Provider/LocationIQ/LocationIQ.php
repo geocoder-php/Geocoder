@@ -41,7 +41,7 @@ final class LocationIQ extends AbstractHttpProvider implements Provider
     protected $baseUrl;
 
     /**
-     * @var array
+     * @var string[]
      */
     protected $regions = [
         'us1',
@@ -184,7 +184,10 @@ final class LocationIQ extends AbstractHttpProvider implements Provider
         return $this->baseUrl.'/reverse.php?format=xmlv1.1&lat=%F&lon=%F&addressdetails=1&normalizecity=1&zoom=%d&key='.$this->apiKey;
     }
 
-    private function getNodeValue(\DOMNodeList $element)
+    /**
+     * @param \DOMNodeList<\DOMElement> $element
+     */
+    private function getNodeValue(\DOMNodeList $element): ?string
     {
         return $element->length ? $element->item(0)->nodeValue : null;
     }

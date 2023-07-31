@@ -41,17 +41,17 @@ class GeoIP2Test extends BaseTestCase
         $this->provider = new GeoIP2($this->getGeoIP2AdapterMock());
     }
 
-    protected function getCacheDir()
+    protected function getCacheDir(): string
     {
         return __DIR__.'/.cached_responses';
     }
 
-    public function testGetName()
+    public function testGetName(): void
     {
         $this->assertEquals('geoip2', $this->provider->getName());
     }
 
-    public function testQueryingReverseLeadsToException()
+    public function testQueryingReverseLeadsToException(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The GeoIP2 provider is not able to do reverse geocoding.');
@@ -59,7 +59,7 @@ class GeoIP2Test extends BaseTestCase
         $this->provider->reverseQuery(ReverseQuery::fromCoordinates(50, 9));
     }
 
-    public function testGeocodeWithLocalhostIPv4()
+    public function testGeocodeWithLocalhostIPv4(): void
     {
         $results = $this->provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
 
@@ -73,7 +73,7 @@ class GeoIP2Test extends BaseTestCase
         $this->assertEquals('localhost', $result->getCountry()->getName());
     }
 
-    public function testOnlyIpAddressesCouldBeResolved()
+    public function testOnlyIpAddressesCouldBeResolved(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The GeoIP2 provider does not support street addresses, only IP addresses.');
@@ -84,7 +84,7 @@ class GeoIP2Test extends BaseTestCase
     /**
      * Provides data for geocode test.
      *
-     * @return array
+     * @return array<string, array<array<string, array<array<string, string>>|float|int|string|null>|string>>
      */
     public static function provideDataForRetrievingGeodata()
     {
@@ -163,9 +163,9 @@ class GeoIP2Test extends BaseTestCase
     /**
      * @dataProvider provideDataForRetrievingGeodata
      *
-     * @param string $address
+     * @param array<string, mixed> $expectedGeodata
      */
-    public function testRetrievingGeodata($address, $adapterResponse, $expectedGeodata)
+    public function testRetrievingGeodata(string $address, string $adapterResponse, array $expectedGeodata): void
     {
         $adapter = $this->getGeoIP2AdapterMock($adapterResponse);
         $provider = new GeoIP2($adapter);
@@ -212,7 +212,7 @@ class GeoIP2Test extends BaseTestCase
         }
     }
 
-    public function testRetrievingGeodataNotExistingLocation()
+    public function testRetrievingGeodataNotExistingLocation(): void
     {
         $adapter = $this->getGeoIP2AdapterMock('');
         $provider = new GeoIP2($adapter);
@@ -222,7 +222,7 @@ class GeoIP2Test extends BaseTestCase
         $this->assertEquals(0, $result->count());
     }
 
-    public function testGeoIp2Encoding()
+    public function testGeoIp2Encoding(): void
     {
         $reader = new Reader(__DIR__.'/fixtures/GeoLite2-City.mmdb');
         $adapter = new GeoIP2Adapter($reader);
@@ -234,7 +234,7 @@ class GeoIP2Test extends BaseTestCase
     /**
      * @dataProvider provideDataForTestingExceptions
      */
-    public function testExceptionConversion(\Exception $original, string $replacementClass)
+    public function testExceptionConversion(\Exception $original, string $replacementClass): void
     {
         $adapter = $this->getGeoIP2AdapterMock($original);
         $provider = new GeoIP2($adapter);
@@ -246,6 +246,9 @@ class GeoIP2Test extends BaseTestCase
         $results = $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
+    /**
+     * @return array<array<AuthenticationException|OutOfQueriesException|class-string>>
+     */
     public static function provideDataForTestingExceptions(): array
     {
         return [
@@ -255,6 +258,8 @@ class GeoIP2Test extends BaseTestCase
     }
 
     /**
+     * @param \Exception|string $returnValue
+     *
      * @return GeoIP2Adapter&MockObject
      */
     private function getGeoIP2AdapterMock($returnValue = '')

@@ -37,7 +37,7 @@ class ProviderAggregatorTest extends TestCase
         $this->geocoder = new ProviderAggregator();
     }
 
-    public function testGeocode()
+    public function testGeocode(): void
     {
         $provider1 = new MockProvider('test1');
         $provider1->result = [Address::createFromArray(['providedBy' => 'p1'])];
@@ -51,7 +51,7 @@ class ProviderAggregatorTest extends TestCase
         $this->assertEquals('p1', $result->first()->getProvidedBy());
     }
 
-    public function testReverse()
+    public function testReverse(): void
     {
         $provider1 = new MockProvider('test1');
         $provider1->result = [Address::createFromArray(['providedBy' => 'p1'])];
@@ -66,7 +66,7 @@ class ProviderAggregatorTest extends TestCase
         $this->assertEquals('p2', $result->first()->getProvidedBy());
     }
 
-    public function testRegisterProvider()
+    public function testRegisterProvider(): void
     {
         $provider = new MockProvider('test');
         $this->geocoder->registerProvider($provider);
@@ -74,7 +74,7 @@ class ProviderAggregatorTest extends TestCase
         $this->assertSame(['test' => $provider], NSA::getProperty($this->geocoder, 'providers'));
     }
 
-    public function testRegisterProviders()
+    public function testRegisterProviders(): void
     {
         $provider = new MockProvider('test');
         $this->geocoder->registerProviders([$provider]);
@@ -82,7 +82,7 @@ class ProviderAggregatorTest extends TestCase
         $this->assertSame(['test' => $provider], NSA::getProperty($this->geocoder, 'providers'));
     }
 
-    public function testUsingNonExistantProviderShouldThrowAnException()
+    public function testUsingNonExistantProviderShouldThrowAnException(): void
     {
         $this->expectException(\Geocoder\Exception\ProviderNotRegistered::class);
         $this->expectExceptionMessage('Provider "non_existant" is not registered, so you cannot use it. Did you forget to register it or made a typo? Registered providers are: test1.');
@@ -92,14 +92,14 @@ class ProviderAggregatorTest extends TestCase
         $this->geocoder->using('non_existant');
     }
 
-    public function testUsingAnEmptyProviderNameShouldThrowAnException()
+    public function testUsingAnEmptyProviderNameShouldThrowAnException(): void
     {
         $this->expectException(\Geocoder\Exception\ProviderNotRegistered::class);
 
         $this->geocoder->using('');
     }
 
-    public function testGetProviders()
+    public function testGetProviders(): void
     {
         $provider1 = new MockProvider('test1');
         $provider2 = new MockProvider('test2');
@@ -117,7 +117,7 @@ class ProviderAggregatorTest extends TestCase
         $this->assertArrayHasKey('test2', $result);
     }
 
-    public function testGetProvider()
+    public function testGetProvider(): void
     {
         $this->expectException(\RuntimeException::class);
 
@@ -125,7 +125,7 @@ class ProviderAggregatorTest extends TestCase
         $this->fail('getProvider() should throw an exception');
     }
 
-    public function testGetProviderWithMultipleProvidersReturnsTheFirstOne()
+    public function testGetProviderWithMultipleProvidersReturnsTheFirstOne(): void
     {
         $providers = [
             $provider1 = new MockProvider('test1'),
@@ -141,11 +141,14 @@ class ProviderAggregatorTest extends TestCase
 
 class MockProvider implements Provider
 {
-    protected $name;
+    protected string $name;
 
-    public $result = [];
+    /**
+     * @var Address[]
+     */
+    public array $result = [];
 
-    public function __construct($name)
+    public function __construct(string $name)
     {
         $this->name = $name;
     }
@@ -165,16 +168,16 @@ class MockProvider implements Provider
         return $this->name;
     }
 
-    public function getLimit()
+    public function getLimit(): void
     {
     }
 
-    public function limit($limit)
+    public function limit(int $limit): self
     {
         return $this;
     }
 
-    private function returnResult()
+    private function returnResult(): AddressCollection
     {
         return new AddressCollection($this->result);
     }

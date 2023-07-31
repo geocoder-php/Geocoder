@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
  */
 class GeocodeQueryTest extends TestCase
 {
-    public function testToString()
+    public function testToString(): void
     {
         $query = GeocodeQuery::create('foo');
         $query = $query->withLocale('en');

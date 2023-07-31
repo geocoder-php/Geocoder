@@ -55,12 +55,12 @@ final class NominatimAddress extends Address
     private $type;
 
     /**
-     * @var array|null
+     * @var array<string, mixed>|null
      */
     private $details;
 
     /**
-     * @var array|null
+     * @var array<string, mixed>|null
      */
     private $tags;
 
@@ -196,11 +196,17 @@ final class NominatimAddress extends Address
         return $new;
     }
 
+    /**
+     * @return array<string, mixed>|null
+     */
     public function getDetails(): ?array
     {
         return $this->details;
     }
 
+    /**
+     * @param array<string, mixed>|null $details
+     */
     public function withDetails(array $details = null): self
     {
         $new = clone $this;
@@ -209,11 +215,17 @@ final class NominatimAddress extends Address
         return $new;
     }
 
+    /**
+     * @return array<string, mixed>|null
+     */
     public function getTags(): ?array
     {
         return $this->tags;
     }
 
+    /**
+     * @param array<string, mixed>|null $tags
+     */
     public function withTags(array $tags = null): self
     {
         $new = clone $this;

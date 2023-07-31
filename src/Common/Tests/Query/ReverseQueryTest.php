@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ReverseQueryTest extends TestCase
 {
-    public function testToString()
+    public function testToString(): void
     {
         $query = ReverseQuery::fromCoordinates(1, 2);
         $query = $query->withLocale('en');

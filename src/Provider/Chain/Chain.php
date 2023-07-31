@@ -51,12 +51,12 @@ final class Chain implements Provider, LoggerAwareInterface
         $this->providers = $providers;
     }
 
-    public function setGeocodeQueryLogLevel(string $level)
+    public function setGeocodeQueryLogLevel(string $level): void
     {
         $this->geocodeQueryLogLevel = $level;
     }
 
-    public function setReverseQueryLogLevel(string $level)
+    public function setReverseQueryLogLevel(string $level): void
     {
         $this->reverseQueryLogLevel = $level;
     }
@@ -129,7 +129,10 @@ final class Chain implements Provider, LoggerAwareInterface
         return $this;
     }
 
-    private function log($level, $message, array $context = [])
+    /**
+     * @param mixed[] $context
+     */
+    private function log(mixed $level, string $message, array $context = []): void
     {
         if ($this->logger) {
             $this->logger->log($level, $message, $context);

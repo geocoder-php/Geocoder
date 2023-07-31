@@ -23,18 +23,18 @@ use Geocoder\Query\ReverseQuery;
  */
 class IpstackTest extends BaseTestCase
 {
-    protected function getCacheDir()
+    protected function getCacheDir(): string
     {
         return __DIR__.'/.cached_responses';
     }
 
-    public function testGetName()
+    public function testGetName(): void
     {
         $provider = new Ipstack($this->getMockedHttpClient(), 'api_key');
         $this->assertEquals('ipstack', $provider->getName());
     }
 
-    public function testGeocodeWithNoKey()
+    public function testGeocodeWithNoKey(): void
     {
         $this->expectException(\Geocoder\Exception\InvalidCredentials::class);
         $this->expectExceptionMessage('No API key provided.');
@@ -42,7 +42,7 @@ class IpstackTest extends BaseTestCase
         $provider = new Ipstack($this->getMockedHttpClient(), '');
     }
 
-    public function testGeocodeWithAddress()
+    public function testGeocodeWithAddress(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The Ipstack provider does not support street addresses.');
@@ -51,7 +51,7 @@ class IpstackTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
     }
 
-    public function testGeocodeWithLocalhostIPv4()
+    public function testGeocodeWithLocalhostIPv4(): void
     {
         $provider = new Ipstack($this->getMockedHttpClient(), 'api_key');
         $results = $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
@@ -66,7 +66,7 @@ class IpstackTest extends BaseTestCase
         $this->assertEquals('localhost', $result->getCountry()->getName());
     }
 
-    public function testGeocodeWithLocalhostIPv6()
+    public function testGeocodeWithLocalhostIPv6(): void
     {
         $provider = new Ipstack($this->getMockedHttpClient(), 'api_key');
         $results = $provider->geocodeQuery(GeocodeQuery::create('::1'));
@@ -81,7 +81,7 @@ class IpstackTest extends BaseTestCase
         $this->assertEquals('localhost', $result->getCountry()->getName());
     }
 
-    public function testGeocodeWithRealIPv4()
+    public function testGeocodeWithRealIPv4(): void
     {
         $provider = new Ipstack($this->getHttpClient($_SERVER['IPSTACK_API_KEY']), $_SERVER['IPSTACK_API_KEY']);
         $results = $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
@@ -98,7 +98,7 @@ class IpstackTest extends BaseTestCase
         $this->assertEquals('US', $result->getCountry()->getCode());
     }
 
-    public function testGeocodeWithRealIPv4InFrench()
+    public function testGeocodeWithRealIPv4InFrench(): void
     {
         $provider = new Ipstack($this->getHttpClient($_SERVER['IPSTACK_API_KEY']), $_SERVER['IPSTACK_API_KEY']);
         $results = $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59')->withLocale('fr'));
@@ -115,7 +115,7 @@ class IpstackTest extends BaseTestCase
         $this->assertEquals('US', $result->getCountry()->getCode());
     }
 
-    public function testReverse()
+    public function testReverse(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The Ipstack provider is not able to do reverse geocoding.');
@@ -124,7 +124,7 @@ class IpstackTest extends BaseTestCase
         $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
     }
 
-    public function testGeocodeWith301Code()
+    public function testGeocodeWith301Code(): void
     {
         $this->expectException(\Geocoder\Exception\InvalidArgument::class);
         $this->expectExceptionMessage('Invalid request (a required parameter is missing).');
@@ -136,7 +136,7 @@ JSON;
         $result = $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
-    public function testGeocodeWith303Code()
+    public function testGeocodeWith303Code(): void
     {
         $this->expectException(\Geocoder\Exception\InvalidArgument::class);
         $this->expectExceptionMessage('Bulk requests are not supported on your plan. Please upgrade your subscription.');
@@ -148,7 +148,7 @@ JSON;
         $result = $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
-    public function testGeocodeWith104Code()
+    public function testGeocodeWith104Code(): void
     {
         $this->expectException(\Geocoder\Exception\QuotaExceeded::class);
         $this->expectExceptionMessage('The maximum allowed amount of monthly API requests has been reached.');
@@ -160,7 +160,7 @@ JSON;
         $result = $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
-    public function testGeocodeWith101Code()
+    public function testGeocodeWith101Code(): void
     {
         $this->expectException(\Geocoder\Exception\InvalidCredentials::class);
         $this->expectExceptionMessage('No API Key was specified or an invalid API Key was specified.');

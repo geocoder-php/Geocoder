@@ -22,18 +22,18 @@ use Geocoder\Query\ReverseQuery;
 
 class GeonamesTest extends BaseTestCase
 {
-    protected function getCacheDir()
+    protected function getCacheDir(): string
     {
         return __DIR__.'/.cached_responses';
     }
 
-    public function testGetName()
+    public function testGetName(): void
     {
         $provider = new Geonames($this->getMockedHttpClient(), 'username');
         $this->assertEquals('geonames', $provider->getName());
     }
 
-    public function testGeocodeWithLocalhostIPv4()
+    public function testGeocodeWithLocalhostIPv4(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The Geonames provider does not support IP addresses.');
@@ -42,7 +42,7 @@ class GeonamesTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
     }
 
-    public function testGeocodeWithLocalhostIPv6()
+    public function testGeocodeWithLocalhostIPv6(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The Geonames provider does not support IP addresses.');
@@ -51,7 +51,7 @@ class GeonamesTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
-    public function testGeocodeWithUnknownCity()
+    public function testGeocodeWithUnknownCity(): void
     {
         $noPlacesFoundResponse = <<<'JSON'
 {
@@ -66,7 +66,7 @@ JSON;
         $this->assertEquals(0, $result->count());
     }
 
-    public function testGeocodeWithRealPlace()
+    public function testGeocodeWithRealPlace(): void
     {
         if (!isset($_SERVER['GEONAMES_USERNAME'])) {
             $this->markTestSkipped('You need to configure the GEONAMES_USERNAME value in phpunit.xml');
@@ -95,7 +95,7 @@ JSON;
         $this->assertCount(10, $result->getAlternateNames());
     }
 
-    public function testGeocodeWithMultipleRealPlaces()
+    public function testGeocodeWithMultipleRealPlaces(): void
     {
         if (!isset($_SERVER['GEONAMES_USERNAME'])) {
             $this->markTestSkipped('You need to configure the GEONAMES_USERNAME value in phpunit.xml');
@@ -199,7 +199,7 @@ JSON;
         $this->assertEquals('America/New_York', $result->getTimezone());
     }
 
-    public function testGeocodeWithMultipleRealPlacesWithLocale()
+    public function testGeocodeWithMultipleRealPlacesWithLocale(): void
     {
         if (!isset($_SERVER['GEONAMES_USERNAME'])) {
             $this->markTestSkipped('You need to configure the GEONAMES_USERNAME value in phpunit.xml');
@@ -303,7 +303,7 @@ JSON;
         $this->assertEquals('America/New_York', $result->getTimezone());
     }
 
-    public function testReverseWithRealCoordinates()
+    public function testReverseWithRealCoordinates(): void
     {
         if (!isset($_SERVER['GEONAMES_USERNAME'])) {
             $this->markTestSkipped('You need to configure the GEONAMES_USERNAME value in phpunit.xml');
@@ -329,7 +329,7 @@ JSON;
         $this->assertEquals('Europe/London', $result->getTimezone());
     }
 
-    public function testReverseWithRealCoordinatesWithLocale()
+    public function testReverseWithRealCoordinatesWithLocale(): void
     {
         if (!isset($_SERVER['GEONAMES_USERNAME'])) {
             $this->markTestSkipped('You need to configure the GEONAMES_USERNAME value in phpunit.xml');
@@ -355,7 +355,7 @@ JSON;
         $this->assertEquals('Europe/London', $result->getTimezone());
     }
 
-    public function testReverseWithBadCoordinates()
+    public function testReverseWithBadCoordinates(): void
     {
         $badCoordinateResponse = <<<'JSON'
 {

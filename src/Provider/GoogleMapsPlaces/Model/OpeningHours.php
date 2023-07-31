@@ -23,7 +23,7 @@ class OpeningHours
     private $openNow;
 
     /**
-     * @var array[]
+     * @var array{close: array{day: int, time: string}, open: array{day: int, time: string}}
      */
     private $periods;
 
@@ -33,9 +33,9 @@ class OpeningHours
     private $weekdayText;
 
     /**
-     * @param bool|null $openNow
-     * @param array[]   $periods
-     * @param string[]  $weekdayText
+     * @param bool|null                                                                        $openNow
+     * @param array{close: array{day: int, time: string}, open: array{day: int, time: string}} $periods
+     * @param string[]                                                                         $weekdayText
      */
     public function __construct($openNow, array $periods, array $weekdayText)
     {
@@ -53,7 +53,7 @@ class OpeningHours
     }
 
     /**
-     * @return array[]
+     * @return array{close: array{day: int, time: string}, open: array{day: int, time: string}}
      */
     public function getPeriods(): array
     {

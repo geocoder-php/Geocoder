@@ -51,7 +51,7 @@ class ProviderCacheTest extends TestCase
             ->getMock();
     }
 
-    public function testName()
+    public function testName(): void
     {
         $this->providerMock->expects($this->once())
             ->method('getName')
@@ -61,7 +61,7 @@ class ProviderCacheTest extends TestCase
         $this->assertEquals('foo (cache)', $providerCache->getName());
     }
 
-    public function testGeocodeMiss()
+    public function testGeocodeMiss(): void
     {
         $query = GeocodeQuery::create('foo');
         $result = new AddressCollection([Address::createFromArray([])]);
@@ -85,7 +85,7 @@ class ProviderCacheTest extends TestCase
         $providerCache->geocodeQuery($query);
     }
 
-    public function testGeocodeHit()
+    public function testGeocodeHit(): void
     {
         $query = GeocodeQuery::create('foo');
         $result = new AddressCollection([Address::createFromArray([])]);
@@ -105,7 +105,7 @@ class ProviderCacheTest extends TestCase
         $providerCache->geocodeQuery($query);
     }
 
-    public function testReverseMiss()
+    public function testReverseMiss(): void
     {
         $query = ReverseQuery::fromCoordinates(1, 2);
         $result = new AddressCollection([Address::createFromArray([])]);
@@ -129,7 +129,7 @@ class ProviderCacheTest extends TestCase
         $providerCache->reverseQuery($query);
     }
 
-    public function testReverseHit()
+    public function testReverseHit(): void
     {
         $query = ReverseQuery::fromCoordinates(1, 2);
         $result = new AddressCollection([Address::createFromArray([])]);
@@ -149,7 +149,7 @@ class ProviderCacheTest extends TestCase
         $providerCache->reverseQuery($query);
     }
 
-    public function testCacheSeparation()
+    public function testCacheSeparation(): void
     {
         $query = GeocodeQuery::create('foo');
         $ttl = 4711;
@@ -169,7 +169,7 @@ class ProviderCacheTest extends TestCase
         );
     }
 
-    protected static function getMethod($name)
+    protected static function getMethod(string $name): \ReflectionMethod
     {
         $class = new \ReflectionClass(ProviderCache::class);
         $method = $class->getMethod($name);

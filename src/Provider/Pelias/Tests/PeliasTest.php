@@ -21,18 +21,18 @@ use Geocoder\Query\ReverseQuery;
 
 class PeliasTest extends BaseTestCase
 {
-    protected function getCacheDir()
+    protected function getCacheDir(): string
     {
         return __DIR__.'/.cached_responses';
     }
 
-    public function testGetName()
+    public function testGetName(): void
     {
         $provider = new Pelias($this->getMockedHttpClient(), 'http://localhost/');
         $this->assertEquals('pelias', $provider->getName());
     }
 
-    public function testGeocode()
+    public function testGeocode(): void
     {
         $provider = new Pelias($this->getMockedHttpClient('{}'), 'http://localhost/');
         $result = $provider->geocodeQuery(GeocodeQuery::create('foobar'));
@@ -41,7 +41,7 @@ class PeliasTest extends BaseTestCase
         $this->assertEquals(0, $result->count());
     }
 
-    public function testReverse()
+    public function testReverse(): void
     {
         $provider = new Pelias($this->getMockedHttpClient('{}'), 'http://localhost/');
         $result = $provider->reverseQuery(ReverseQuery::fromCoordinates(0, 0));
@@ -50,7 +50,7 @@ class PeliasTest extends BaseTestCase
         $this->assertEquals(0, $result->count());
     }
 
-    public function testGeocodeWithLocalhostIPv4()
+    public function testGeocodeWithLocalhostIPv4(): void
     {
         $this->expectException(UnsupportedOperation::class);
         $this->expectExceptionMessage('The pelias provider does not support IP addresses, only street addresses.');
@@ -59,7 +59,7 @@ class PeliasTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
     }
 
-    public function testGeocodeWithLocalhostIPv6()
+    public function testGeocodeWithLocalhostIPv6(): void
     {
         $this->expectException(UnsupportedOperation::class);
         $this->expectExceptionMessage('The pelias provider does not support IP addresses, only street addresses.');
@@ -68,7 +68,7 @@ class PeliasTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
-    public function testGeocodeWithRealIPv4()
+    public function testGeocodeWithRealIPv4(): void
     {
         $this->expectException(UnsupportedOperation::class);
         $this->expectExceptionMessage('The pelias provider does not support IP addresses, only street addresses.');
@@ -77,7 +77,7 @@ class PeliasTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
-    public function testGeocodeWithRealIPv6()
+    public function testGeocodeWithRealIPv6(): void
     {
         $this->expectException(UnsupportedOperation::class);
         $this->expectExceptionMessage('The pelias provider does not support IP addresses, only street addresses.');

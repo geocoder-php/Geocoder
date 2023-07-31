@@ -228,7 +228,7 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
     /**
      * Formatter for 1..n addresses, for the geocodeAddresses endpoint.
      *
-     * @param array $array an array of SingleLine addresses
+     * @param string[] $array an array of SingleLine addresses
      *
      * @return string an Array formatted as a JSON string
      */

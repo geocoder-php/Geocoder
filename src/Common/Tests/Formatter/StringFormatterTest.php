@@ -33,8 +33,10 @@ class StringFormatterTest extends TestCase
 
     /**
      * @dataProvider dataProviderForTestFormat
+     *
+     * @param array<string, mixed> $data
      */
-    public function testFormat($data, $format, $expected)
+    public function testFormat(array $data, string $format, string $expected): void
     {
         $address = Address::createFromArray($data);
         $result = $this->formatter->format($address, $format);
@@ -43,7 +45,10 @@ class StringFormatterTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function dataProviderForTestFormat()
+    /**
+     * @return array<array<array<string, array<array<string, int|string>>|string>|string>>
+     */
+    public function dataProviderForTestFormat(): array
     {
         return [
             [

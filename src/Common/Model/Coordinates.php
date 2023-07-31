@@ -66,6 +66,8 @@ final class Coordinates
 
     /**
      * Returns the coordinates as a tuple.
+     *
+     * @return array{float, float}
      */
     public function toArray(): array
     {
