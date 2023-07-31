@@ -35,7 +35,6 @@ $reverseQuery = $provider->reverseQuery(\Geocoder\Query\ReverseQuery::fromCoordi
 You can search for location data based on osm tag filters.
 
 For example, you can filter a geocode query to only include results of type 'place'. You can even restrict it to only have places of type 'city'.
-
 In the reverse geocoding context you can search for the 3 pharmacies closest to a location.
 
 To see what you can do with this feature, check [the official photon documentation](https://github.com/komoot/photon#filter-results-by-tags-and-values)
@@ -43,12 +42,23 @@ To see what you can do with this feature, check [the official photon documentati
 Below is an example to query the 3 pharmacies closest to a location :
 ```php
 $provider = new Geocoder\Provider\Photon\Photon($httpClient, 'https://your-photon-root-url');
-$reverseQuery = ReverseQuery::fromCoordinates(52.51644, 13.38890)
+$reverseQuery = \Geocoder\Query\ReverseQuery::fromCoordinates(52.51644, 13.38890)
     ->withData('osm_tag', 'amenity:pharmacy')
     ->withLimit(3);
 
 $results = $provider->reverseQuery($reverseQuery);
 ```
+
+You can combine multiple osm tag filters :
+```php
+$provider = new Geocoder\Provider\Photon\Photon($httpClient, 'https://your-photon-root-url');
+$reverseQuery = \Geocoder\Query\GeocodeQuery::create('Paris')
+    ->withData('osm_tag', ['tourism', ':!museum'])
+    ->withLimit(5);
+// Here we get 5 tourism results in Paris which are not museums
+$results = $provider->reverseQuery($reverseQuery);
+```
+
 
 ## Contribute
 Contributions are very welcome! Send a pull request to the [main repository](https://github.com/geocoder-php/Geocoder) or
