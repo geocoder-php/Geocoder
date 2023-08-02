@@ -168,7 +168,7 @@ final class Photon extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * @param string|array|null $filters
+     * @param string|array<int, string>|null $filters
      */
     private function buildOsmTagFilterQuery($filters): string
     {
