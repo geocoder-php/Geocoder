@@ -21,12 +21,12 @@ use Geocoder\Query\ReverseQuery;
 
 class PickPointTest extends BaseTestCase
 {
-    protected function getCacheDir()
+    protected function getCacheDir(): string
     {
         return __DIR__.'/.cached_responses';
     }
 
-    public function testGeocodeWithAddressGetsEmptyContent()
+    public function testGeocodeWithAddressGetsEmptyContent(): void
     {
         $this->expectException(\Geocoder\Exception\InvalidServerResponse::class);
 
@@ -34,7 +34,7 @@ class PickPointTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('Läntinen Pitkäkatu 35, Turku'));
     }
 
-    public function testGeocodeWithAddressGetsEmptyXML()
+    public function testGeocodeWithAddressGetsEmptyXML(): void
     {
         $this->expectException(\Geocoder\Exception\InvalidServerResponse::class);
 
@@ -45,7 +45,7 @@ XML;
         $provider->geocodeQuery(GeocodeQuery::create('Läntinen Pitkäkatu 35, Turku'));
     }
 
-    public function testReverseWithCoordinatesGetsError()
+    public function testReverseWithCoordinatesGetsError(): void
     {
         $errorXml = <<<'XML'
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -61,7 +61,7 @@ XML;
         $this->assertEquals(0, $result->count());
     }
 
-    public function testGetNodeStreetName()
+    public function testGetNodeStreetName(): void
     {
         $provider = new PickPoint($this->getHttpClient($_SERVER['PICKPOINT_API_KEY']), $_SERVER['PICKPOINT_API_KEY']);
         $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(48.86, 2.35));

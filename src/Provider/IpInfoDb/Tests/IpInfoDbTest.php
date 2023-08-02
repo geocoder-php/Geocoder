@@ -20,12 +20,12 @@ use Geocoder\Query\ReverseQuery;
 
 class IpInfoDbTest extends BaseTestCase
 {
-    protected function getCacheDir()
+    protected function getCacheDir(): string
     {
         return __DIR__.'/.cached_responses';
     }
 
-    public function testConstructWithInvalidPrecision()
+    public function testConstructWithInvalidPrecision(): void
     {
         $this->expectException(\Geocoder\Exception\InvalidArgument::class);
         $this->expectExceptionMessage('Invalid precision value "foo" (allowed values: "city", "country").');
@@ -33,13 +33,13 @@ class IpInfoDbTest extends BaseTestCase
         new IpInfoDb($this->getMockedHttpClient(), 'api_key', 'foo');
     }
 
-    public function testGetName()
+    public function testGetName(): void
     {
         $provider = new IpInfoDb($this->getMockedHttpClient(), 'api_key');
         $this->assertEquals('ip_info_db', $provider->getName());
     }
 
-    public function testGeocodeWithRandomString()
+    public function testGeocodeWithRandomString(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The IpInfoDb provider does not support street addresses, only IPv4 addresses.');
@@ -48,7 +48,7 @@ class IpInfoDbTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('foobar'));
     }
 
-    public function testGeocodeWithAddress()
+    public function testGeocodeWithAddress(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The IpInfoDb provider does not support street addresses, only IPv4 addresses.');
@@ -57,7 +57,7 @@ class IpInfoDbTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
     }
 
-    public function testGeocodeWithLocalhostIPv4()
+    public function testGeocodeWithLocalhostIPv4(): void
     {
         $provider = new IpInfoDb($this->getMockedHttpClient(), 'api_key');
         $results = $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
@@ -78,7 +78,7 @@ class IpInfoDbTest extends BaseTestCase
         $this->assertEquals('localhost', $result->getCountry()->getName());
     }
 
-    public function testGeocodeWithLocalhostIPv6()
+    public function testGeocodeWithLocalhostIPv6(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The IpInfoDb provider does not support IPv6 addresses, only IPv4 addresses.');
@@ -87,7 +87,7 @@ class IpInfoDbTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
-    public function testGeocodeWithRealIPv4GetsNullContent()
+    public function testGeocodeWithRealIPv4GetsNullContent(): void
     {
         $this->expectException(\Geocoder\Exception\InvalidServerResponse::class);
 
@@ -95,7 +95,7 @@ class IpInfoDbTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('74.125.45.100'));
     }
 
-    public function testGeocodeWithRealIPv4GetsEmptyContent()
+    public function testGeocodeWithRealIPv4GetsEmptyContent(): void
     {
         $this->expectException(\Geocoder\Exception\InvalidServerResponse::class);
 
@@ -103,7 +103,7 @@ class IpInfoDbTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('74.125.45.100'));
     }
 
-    public function testGeocodeWithRealIPv4()
+    public function testGeocodeWithRealIPv4(): void
     {
         if (!isset($_SERVER['IPINFODB_API_KEY'])) {
             $this->markTestSkipped('You need to configure the IPINFODB_API_KEY value in phpunit.xml');
@@ -129,7 +129,7 @@ class IpInfoDbTest extends BaseTestCase
         $this->assertEquals('America/New_York', $result->getTimezone());
     }
 
-    public function testGeocodeWithRealIPv6()
+    public function testGeocodeWithRealIPv6(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The IpInfoDb provider does not support IPv6 addresses, only IPv4 addresses.');
@@ -145,7 +145,7 @@ class IpInfoDbTest extends BaseTestCase
     /**
      * @group temp
      */
-    public function testGetGeocodedDataWithCountryPrecision()
+    public function testGetGeocodedDataWithCountryPrecision(): void
     {
         if (!isset($_SERVER['IPINFODB_API_KEY'])) {
             $this->markTestSkipped('You need to configure the IPINFODB_API_KEY value in phpunit.xml');
@@ -170,7 +170,7 @@ class IpInfoDbTest extends BaseTestCase
         $this->assertNull($result->getTimezone());
     }
 
-    public function testReverse()
+    public function testReverse(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The IpInfoDb provider is not able to do reverse geocoding.');

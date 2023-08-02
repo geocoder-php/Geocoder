@@ -36,7 +36,7 @@ final class CountryInfo
     private $capital;
 
     /**
-     * @var array
+     * @var string[]
      */
     private $languages = [];
 
@@ -143,6 +143,9 @@ final class CountryInfo
         return $new;
     }
 
+    /**
+     * @return string[]
+     */
     public function getLanguages(): array
     {
         return $this->languages;

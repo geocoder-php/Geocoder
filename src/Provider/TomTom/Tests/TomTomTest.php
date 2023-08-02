@@ -21,18 +21,18 @@ use Geocoder\Query\ReverseQuery;
 
 class TomTomTest extends BaseTestCase
 {
-    protected function getCacheDir()
+    protected function getCacheDir(): string
     {
         return __DIR__.'/.cached_responses';
     }
 
-    public function testGetName()
+    public function testGetName(): void
     {
         $provider = new TomTom($this->getMockedHttpClient(), 'api_key');
         $this->assertEquals('tomtom', $provider->getName());
     }
 
-    public function testGeocodeWithAddress()
+    public function testGeocodeWithAddress(): void
     {
         $this->expectException(\Geocoder\Exception\InvalidServerResponse::class);
 
@@ -40,7 +40,7 @@ class TomTomTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('Tagensvej 47, 2200 København N'));
     }
 
-    public function testGeocodeWithRealAddress()
+    public function testGeocodeWithRealAddress(): void
     {
         $provider = new TomTom($this->getHttpClient($_SERVER['TOMTOM_MAP_KEY']), $_SERVER['TOMTOM_MAP_KEY']);
         $results = $provider->geocodeQuery(GeocodeQuery::create('Tagensvej 47, 2200 København N')->withLocale('en-GB'));
@@ -64,7 +64,7 @@ class TomTomTest extends BaseTestCase
         $this->assertNull($result->getTimezone());
     }
 
-    public function testGeocodeWithRealAddressWithFrenchLocale()
+    public function testGeocodeWithRealAddressWithFrenchLocale(): void
     {
         $provider = new TomTom($this->getHttpClient($_SERVER['TOMTOM_MAP_KEY']), $_SERVER['TOMTOM_MAP_KEY']);
         $results = $provider->geocodeQuery(GeocodeQuery::create('Tagensvej 47, 2200 København N')->withLocale('fr-FR'));
@@ -77,7 +77,7 @@ class TomTomTest extends BaseTestCase
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
     }
 
-    public function testGeocodeWithLocalhostIPv4()
+    public function testGeocodeWithLocalhostIPv4(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The TomTom provider does not support IP addresses, only street addresses.');
@@ -86,7 +86,7 @@ class TomTomTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
     }
 
-    public function testGeocodeWithLocalhostIPv6()
+    public function testGeocodeWithLocalhostIPv6(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The TomTom provider does not support IP addresses, only street addresses.');
@@ -95,7 +95,7 @@ class TomTomTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
-    public function testGeocodeWithIPv4()
+    public function testGeocodeWithIPv4(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The TomTom provider does not support IP addresses, only street addresses.');
@@ -104,7 +104,7 @@ class TomTomTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
-    public function testGeocodeWithIPv6()
+    public function testGeocodeWithIPv6(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The TomTom provider does not support IP addresses, only street addresses.');
@@ -113,7 +113,7 @@ class TomTomTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('::ffff:74.200.247.59'));
     }
 
-    public function testWithoutApiKey()
+    public function testWithoutApiKey(): void
     {
         $this->expectException(\Geocoder\Exception\InvalidCredentials::class);
         $this->expectExceptionMessage('No API key provided');
@@ -121,7 +121,7 @@ class TomTomTest extends BaseTestCase
         new TomTom($this->getMockedHttpClient(), '');
     }
 
-    public function testReverse()
+    public function testReverse(): void
     {
         $this->expectException(\Geocoder\Exception\InvalidServerResponse::class);
 
@@ -129,7 +129,7 @@ class TomTomTest extends BaseTestCase
         $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
     }
 
-    public function testReverseError400()
+    public function testReverseError400(): void
     {
         $error400 = <<<'JSON'
 {
@@ -150,7 +150,7 @@ JSON;
         $this->assertEquals(0, $result->count());
     }
 
-    public function testReverseWithRealCoordinates()
+    public function testReverseWithRealCoordinates(): void
     {
         if (!isset($_SERVER['TOMTOM_MAP_KEY'])) {
             $this->markTestSkipped('You need to configure the TOMTOM_MAP_KEY value in phpunit.xml');
@@ -178,7 +178,7 @@ JSON;
         $this->assertNull($result->getTimezone());
     }
 
-    public function testGeocodeWithRealCoordinates()
+    public function testGeocodeWithRealCoordinates(): void
     {
         if (!isset($_SERVER['TOMTOM_MAP_KEY'])) {
             $this->markTestSkipped('You need to configure the TOMTOM_MAP_KEY value in phpunit.xml');

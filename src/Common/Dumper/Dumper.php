@@ -23,5 +23,5 @@ interface Dumper
      * Dumps an `Location` object as a string representation of
      * the implemented format.
      */
-    public function dump(Location $location);
+    public function dump(Location $location): mixed;
 }

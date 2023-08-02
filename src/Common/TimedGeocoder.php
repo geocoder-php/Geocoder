@@ -76,7 +76,7 @@ final class TimedGeocoder implements Geocoder
         return $result;
     }
 
-    public function __call($method, $args)
+    public function __call(string $method, array $args): mixed
     {
         return call_user_func_array([$this->delegate, $method], $args);
     }

@@ -22,7 +22,7 @@ use Geocoder\Query\ReverseQuery;
 
 class MapboxTest extends BaseTestCase
 {
-    protected function getCacheDir()
+    protected function getCacheDir(): ?string
     {
         if (isset($_SERVER['USE_CACHED_RESPONSES']) && true === $_SERVER['USE_CACHED_RESPONSES']) {
             return __DIR__.'/.cached_responses';
@@ -31,13 +31,13 @@ class MapboxTest extends BaseTestCase
         return null;
     }
 
-    public function testGetName()
+    public function testGetName(): void
     {
         $provider = new Mapbox($this->getMockedHttpClient(), 'access_token');
         $this->assertEquals('mapbox', $provider->getName());
     }
 
-    public function testGeocodeWithLocalhostIPv4()
+    public function testGeocodeWithLocalhostIPv4(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The Mapbox provider does not support IP addresses, only street addresses.');
@@ -46,7 +46,7 @@ class MapboxTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
     }
 
-    public function testGeocodeWithLocalhostIPv6()
+    public function testGeocodeWithLocalhostIPv6(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The Mapbox provider does not support IP addresses, only street addresses.');
@@ -55,7 +55,7 @@ class MapboxTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
-    public function testGeocodeWithRealIp()
+    public function testGeocodeWithRealIp(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The Mapbox provider does not support IP addresses, only street addresses.');
@@ -64,7 +64,7 @@ class MapboxTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
-    public function testGeocodeWithQuotaExceeded()
+    public function testGeocodeWithQuotaExceeded(): void
     {
         $this->expectException(\Geocoder\Exception\QuotaExceeded::class);
 
@@ -72,7 +72,7 @@ class MapboxTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
     }
 
-    public function testGeocodePlaceWithNoCountryShortCode()
+    public function testGeocodePlaceWithNoCountryShortCode(): void
     {
         $provider = new Mapbox($this->getHttpClient($_SERVER['MAPBOX_GEOCODING_KEY']), $_SERVER['MAPBOX_GEOCODING_KEY']);
 
@@ -115,7 +115,7 @@ class MapboxTest extends BaseTestCase
         $this->assertNull($result->getStreetNumber());
     }
 
-    public function testGeocodeWithRealAddress()
+    public function testGeocodeWithRealAddress(): void
     {
         if (!isset($_SERVER['MAPBOX_GEOCODING_KEY'])) {
             $this->markTestSkipped('You need to configure the MAPBOX_GEOCODING_KEY value in phpunit.xml');
@@ -148,7 +148,7 @@ class MapboxTest extends BaseTestCase
         $this->assertNull($result->getTimezone());
     }
 
-    public function testReverse()
+    public function testReverse(): void
     {
         $this->expectException(\Geocoder\Exception\InvalidServerResponse::class);
 
@@ -156,7 +156,7 @@ class MapboxTest extends BaseTestCase
         $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
     }
 
-    public function testReverseWithRealCoordinates()
+    public function testReverseWithRealCoordinates(): void
     {
         if (!isset($_SERVER['MAPBOX_GEOCODING_KEY'])) {
             $this->markTestSkipped('You need to configure the MAPBOX_GEOCODING_KEY value in phpunit.xml');
@@ -182,7 +182,7 @@ class MapboxTest extends BaseTestCase
         $this->assertEquals('address.1085979616', $result->getId());
     }
 
-    public function testGeocodeWithInvalidApiKey()
+    public function testGeocodeWithInvalidApiKey(): void
     {
         $this->expectException(\Geocoder\Exception\InvalidCredentials::class);
 
@@ -190,7 +190,7 @@ class MapboxTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
     }
 
-    public function testGeocodeWithRealValidApiKey()
+    public function testGeocodeWithRealValidApiKey(): void
     {
         if (!isset($_SERVER['MAPBOX_GEOCODING_KEY'])) {
             $this->markTestSkipped('You need to configure the MAPBOX_GEOCODING_KEY value in phpunit.xml');
@@ -222,7 +222,7 @@ class MapboxTest extends BaseTestCase
         $this->assertEquals('NY', $result->getAdminLevels()->get(2)->getCode());
     }
 
-    public function testGeocodeWithFuzzyMatch()
+    public function testGeocodeWithFuzzyMatch(): void
     {
         if (!isset($_SERVER['MAPBOX_GEOCODING_KEY'])) {
             $this->markTestSkipped('You need to configure the MAPBOX_GEOCODING_KEY value in phpunit.xml');
@@ -244,7 +244,7 @@ class MapboxTest extends BaseTestCase
         $this->assertCount(5, $results);
     }
 
-    public function testGeocodeWithoutFuzzyMatch()
+    public function testGeocodeWithoutFuzzyMatch(): void
     {
         if (!isset($_SERVER['MAPBOX_GEOCODING_KEY'])) {
             $this->markTestSkipped('You need to configure the MAPBOX_GEOCODING_KEY value in phpunit.xml');

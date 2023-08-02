@@ -164,6 +164,8 @@ final class Mapzen extends AbstractHttpProvider implements Provider
     }
 
     /**
+     * @param array<string, mixed> $components
+     *
      * @return string|null
      */
     protected function guessLocality(array $components)
@@ -174,6 +176,8 @@ final class Mapzen extends AbstractHttpProvider implements Provider
     }
 
     /**
+     * @param array<string, mixed> $components
+     *
      * @return string|null
      */
     protected function guessStreetName(array $components)
@@ -184,6 +188,8 @@ final class Mapzen extends AbstractHttpProvider implements Provider
     }
 
     /**
+     * @param array<string, mixed> $components
+     *
      * @return string|null
      */
     protected function guessSubLocality(array $components)
@@ -194,6 +200,9 @@ final class Mapzen extends AbstractHttpProvider implements Provider
     }
 
     /**
+     * @param array<string, mixed> $components
+     * @param string[]             $keys
+     *
      * @return string|null
      */
     protected function guessBestComponent(array $components, array $keys)

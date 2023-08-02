@@ -27,18 +27,18 @@ use Geocoder\Query\ReverseQuery;
  */
 class MapQuestTest extends BaseTestCase
 {
-    protected function getCacheDir()
+    protected function getCacheDir(): string
     {
         return __DIR__.'/.cached_responses';
     }
 
-    public function testGetName()
+    public function testGetName(): void
     {
         $provider = new MapQuest($this->getMockedHttpClient(), 'api_key');
         $this->assertEquals('map_quest', $provider->getName());
     }
 
-    public function testGeocode()
+    public function testGeocode(): void
     {
         $provider = new MapQuest($this->getMockedHttpClient('{}'), 'api_key');
         $result = $provider->geocodeQuery(GeocodeQuery::create('foobar'));
@@ -47,7 +47,7 @@ class MapQuestTest extends BaseTestCase
         $this->assertEquals(0, $result->count());
     }
 
-    public function testGetNotRelevantData()
+    public function testGetNotRelevantData(): void
     {
         $json = '{"results":[{"locations":[{"street":"","postalCode":"","adminArea5":"","adminArea4":"","adminArea3":"","adminArea1":""}]}]}';
 
@@ -58,7 +58,7 @@ class MapQuestTest extends BaseTestCase
         $this->assertEquals(0, $result->count());
     }
 
-    public function testGeocodeWithRealAddress()
+    public function testGeocodeWithRealAddress(): void
     {
         if (!isset($_SERVER['MAPQUEST_API_KEY'])) {
             $this->markTestSkipped('You need to configure the MAPQUEST_API_KEY value in phpunit.xml');
@@ -108,7 +108,7 @@ class MapQuestTest extends BaseTestCase
         $this->assertNull($result->getTimezone());
     }
 
-    public function testGeocodeWithRealSpecificAddress()
+    public function testGeocodeWithRealSpecificAddress(): void
     {
         if (!isset($_SERVER['MAPQUEST_API_KEY'])) {
             $this->markTestSkipped('You need to configure the MAPQUEST_API_KEY value in phpunit.xml');
@@ -157,7 +157,7 @@ class MapQuestTest extends BaseTestCase
         $this->assertNull($result->getTimezone());
     }
 
-    public function testReverseWithRealCoordinates()
+    public function testReverseWithRealCoordinates(): void
     {
         if (!isset($_SERVER['MAPQUEST_API_KEY'])) {
             $this->markTestSkipped('You need to configure the MAPQUEST_API_KEY value in phpunit.xml');
@@ -188,7 +188,7 @@ class MapQuestTest extends BaseTestCase
         $this->assertNull($result->getTimezone());
     }
 
-    public function testGeocodeWithCity()
+    public function testGeocodeWithCity(): void
     {
         if (!isset($_SERVER['MAPQUEST_API_KEY'])) {
             $this->markTestSkipped('You need to configure the MAPQUEST_API_KEY value in phpunit.xml');
@@ -262,7 +262,7 @@ class MapQuestTest extends BaseTestCase
         $this->assertEquals('US', $result->getCountry()->getCode());
     }
 
-    public function testGeocodeWithSpecificCity()
+    public function testGeocodeWithSpecificCity(): void
     {
         if (!isset($_SERVER['MAPQUEST_API_KEY'])) {
             $this->markTestSkipped('You need to configure the MAPQUEST_API_KEY value in phpunit.xml');
@@ -344,7 +344,7 @@ class MapQuestTest extends BaseTestCase
         $this->assertEquals('US', $result->getCountry()->getCode());
     }
 
-    public function testGeocodeWithSpecificCityAndBounds()
+    public function testGeocodeWithSpecificCityAndBounds(): void
     {
         if (!isset($_SERVER['MAPQUEST_API_KEY'])) {
             $this->markTestSkipped('You need to configure the MAPQUEST_API_KEY value in phpunit.xml');
@@ -429,7 +429,7 @@ class MapQuestTest extends BaseTestCase
         $this->assertEquals('DE', $result->getCountry()->getCode());
     }
 
-    public function testGeocodeWithCityDistrict()
+    public function testGeocodeWithCityDistrict(): void
     {
         if (!isset($_SERVER['MAPQUEST_API_KEY'])) {
             $this->markTestSkipped('You need to configure the MAPQUEST_API_KEY value in phpunit.xml');
@@ -461,7 +461,7 @@ class MapQuestTest extends BaseTestCase
         $this->assertNull($result->getTimezone());
     }
 
-    public function testGeocodeWithLocalhostIPv4()
+    public function testGeocodeWithLocalhostIPv4(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The MapQuest provider does not support IP addresses, only street addresses.');
@@ -470,7 +470,7 @@ class MapQuestTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
     }
 
-    public function testGeocodeWithLocalhostIPv6()
+    public function testGeocodeWithLocalhostIPv6(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The MapQuest provider does not support IP addresses, only street addresses.');
@@ -479,7 +479,7 @@ class MapQuestTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
-    public function testGeocodeWithRealIPv4()
+    public function testGeocodeWithRealIPv4(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The MapQuest provider does not support IP addresses, only street addresses.');
@@ -488,7 +488,7 @@ class MapQuestTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
     }
 
-    public function testGeocodeWithRealIPv6()
+    public function testGeocodeWithRealIPv6(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The MapQuest provider does not support IP addresses, only street addresses.');

@@ -21,7 +21,7 @@ use PHPUnit\Framework\TestCase;
  */
 class AddressTest extends TestCase
 {
-    public function testDumpEmptyAddress()
+    public function testDumpEmptyAddress(): void
     {
         $expected = [
             'providedBy' => 'n/a',
@@ -48,7 +48,7 @@ class AddressTest extends TestCase
         $this->assertEquals($address->toArray(), $expected);
     }
 
-    public function testToArray()
+    public function testToArray(): void
     {
         $data = [
             'providedBy' => 'n/a',

@@ -35,12 +35,12 @@ final class HereAddress extends Address
     private $locationName;
 
     /**
-     * @var array|null
+     * @var array<string, mixed>|null
      */
     private $additionalData;
 
     /**
-     * @var array|null
+     * @var array<string, mixed>|null
      */
     private $shape;
 
@@ -93,13 +93,16 @@ final class HereAddress extends Address
     }
 
     /**
-     * @return array|null
+     * @return array<string, mixed>|null
      */
     public function getAdditionalData()
     {
         return $this->additionalData;
     }
 
+    /**
+     * @param array<string, mixed>|null $additionalData
+     */
     public function withAdditionalData(array $additionalData = null): self
     {
         $new = clone $this;
@@ -122,10 +125,7 @@ final class HereAddress extends Address
         return $new;
     }
 
-    /**
-     * @param mixed|null $default
-     */
-    public function getAdditionalDataValue(string $name, $default = null)
+    public function getAdditionalDataValue(string $name, mixed $default = null): mixed
     {
         if ($this->hasAdditionalDataValue($name)) {
             return $this->additionalData[$name];
@@ -139,6 +139,9 @@ final class HereAddress extends Address
         return array_key_exists($name, $this->additionalData);
     }
 
+    /**
+     * @param array<string, mixed>|null $shape
+     */
     public function withShape(array $shape = null): self
     {
         $new = clone $this;
@@ -152,10 +155,7 @@ final class HereAddress extends Address
         return $new;
     }
 
-    /**
-     * @param mixed|null $value
-     */
-    public function addShape(string $name, $value = null): self
+    public function addShape(string $name, mixed $value = null): self
     {
         $new = clone $this;
         $new->shape[$name] = $value;
@@ -163,7 +163,7 @@ final class HereAddress extends Address
         return $new;
     }
 
-    public function getShapeValue(string $name, $default = null)
+    public function getShapeValue(string $name, mixed $default = null): mixed
     {
         if ($this->hasShapeValue($name)) {
             return $this->shape[$name];

@@ -275,7 +275,7 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
      * @param string $type   Component type
      * @param object $values The component values
      */
-    private function updateAddressComponent(AddressBuilder $builder, string $type, $values)
+    private function updateAddressComponent(AddressBuilder $builder, string $type, $values): void
     {
         switch ($type) {
             case 'postal_code':
@@ -385,6 +385,8 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
 
     /**
      * Serialize the component query parameter.
+     *
+     * @param array<string, string> $components
      */
     private function serializeComponents(array $components): string
     {
@@ -439,7 +441,7 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
      *
      * @param \Stdclass $result
      */
-    private function parseCoordinates(AddressBuilder $builder, $result)
+    private function parseCoordinates(AddressBuilder $builder, $result): void
     {
         $coordinates = $result->geometry->location;
         $builder->setCoordinates($coordinates->lat, $coordinates->lng);

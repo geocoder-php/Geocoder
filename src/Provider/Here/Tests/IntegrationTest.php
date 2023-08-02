@@ -200,7 +200,7 @@ class IntegrationTest extends ProviderIntegrationTest
      * Make sure that a result for a Geocoder is well formatted. Be aware that even
      * a Location with no data may be well formatted.
      */
-    private function assertWellFormattedResult(Collection $result)
+    private function assertWellFormattedResult(Collection $result): void
     {
         $this->assertInstanceOf(
             Collection::class,

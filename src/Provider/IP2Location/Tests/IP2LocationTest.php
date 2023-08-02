@@ -20,18 +20,18 @@ use Geocoder\Query\ReverseQuery;
 
 class IP2LocationTest extends BaseTestCase
 {
-    protected function getCacheDir()
+    protected function getCacheDir(): string
     {
         return __DIR__.'/.cached_responses';
     }
 
-    public function testGetName()
+    public function testGetName(): void
     {
         $provider = new IP2Location($this->getMockedHttpClient(), 'api_key');
         $this->assertEquals('ip2location', $provider->getName());
     }
 
-    public function testGeocodeWithRandomString()
+    public function testGeocodeWithRandomString(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The IP2Location provider does not support street addresses, only IP addresses.');
@@ -40,7 +40,7 @@ class IP2LocationTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('foobar'));
     }
 
-    public function testGeocodeWithAddress()
+    public function testGeocodeWithAddress(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The IP2Location provider does not support street addresses, only IP addresses.');
@@ -49,7 +49,7 @@ class IP2LocationTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
     }
 
-    public function testGeocodeWithInvalidKey()
+    public function testGeocodeWithInvalidKey(): void
     {
         $this->expectException(\Geocoder\Exception\InvalidCredentials::class);
         $this->expectExceptionMessage('API Key provided is not valid.');
@@ -58,7 +58,7 @@ class IP2LocationTest extends BaseTestCase
         $results = $provider->geocodeQuery(GeocodeQuery::create('74.125.45.100'));
     }
 
-    public function testGeocodeWithInvalidIPAddress()
+    public function testGeocodeWithInvalidIPAddress(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The IP2Location provider does not support street addresses, only IP addresses.');
@@ -67,7 +67,7 @@ class IP2LocationTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('300.23.255.5'));
     }
 
-    public function testGeocodeWithRealIPv4()
+    public function testGeocodeWithRealIPv4(): void
     {
         if (!isset($_SERVER['IP2LOCATION_API_KEY'])) {
             $this->markTestSkipped('You need to configure the IP2LOCATION_API_KEY value in phpunit.xml');
@@ -92,7 +92,7 @@ class IP2LocationTest extends BaseTestCase
         $this->assertEquals('US', $result->getCountry()->getCode());
     }
 
-    public function testGeocodeWithRealIPv6()
+    public function testGeocodeWithRealIPv6(): void
     {
         if (!isset($_SERVER['IP2LOCATION_API_KEY'])) {
             $this->markTestSkipped('You need to configure the IP2LOCATION_API_KEY value in phpunit.xml');
@@ -117,7 +117,7 @@ class IP2LocationTest extends BaseTestCase
         $this->assertEquals('US', $result->getCountry()->getCode());
     }
 
-    public function testReverse()
+    public function testReverse(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The IP2Location provider is not able to do reverse geocoding.');

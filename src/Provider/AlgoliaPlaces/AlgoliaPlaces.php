@@ -97,6 +97,9 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
         throw new UnsupportedOperation('The AlgoliaPlaces provided does not support reverse geocoding.');
     }
 
+    /**
+     * @return string[]
+     */
     public function getTypes(): array
     {
         return [
@@ -145,6 +148,9 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
         return $type;
     }
 
+    /**
+     * @return string[]
+     */
     private function buildCountries(GeocodeQuery $query): array
     {
         return array_map(function (string $country) {
@@ -156,6 +162,9 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
         }, $query->getData('countries') ?? []);
     }
 
+    /**
+     * @return array<string, string>
+     */
     private function buildHeaders(): array
     {
         if (empty($this->appId) || empty($this->apiKey)) {
@@ -168,6 +177,9 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
         ];
     }
 
+    /**
+     * @param array<string, mixed> $jsonResponse
+     */
     private function buildResult(array $jsonResponse, string $locale = null): AddressCollection
     {
         $results = [];
@@ -210,6 +222,8 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
     /**
      * When no locale was set in the query, Algolia will return results for all locales.
      * In this case, we return the default locale value.
+     *
+     * @param array<string, mixed> $result
      *
      * @return string|int|float
      */

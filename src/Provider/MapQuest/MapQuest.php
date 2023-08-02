@@ -184,12 +184,12 @@ final class MapQuest extends AbstractHttpProvider implements Provider
         return 'map_quest';
     }
 
-    private function extractAddressFromQuery(GeocodeQuery $query)
+    private function extractAddressFromQuery(GeocodeQuery $query): mixed
     {
         return $query->getData(static::DATA_KEY_ADDRESS);
     }
 
-    private function getUrl($endpoint): string
+    private function getUrl(string $endpoint): string
     {
         if ($this->licensed) {
             $baseUrl = static::LICENSED_BASE_URL;
@@ -200,11 +200,20 @@ final class MapQuest extends AbstractHttpProvider implements Provider
         return $baseUrl.$endpoint;
     }
 
+    /**
+     * @param array<string, mixed> $params
+     */
     private function addGetQuery(string $url, array $params): string
     {
         return $url.'?'.http_build_query($params, '', '&', PHP_QUERY_RFC3986);
     }
 
+    /**
+     * @param array<string, mixed> $params
+     * @param array<string, mixed> $options
+     *
+     * @return array<string, mixed>
+     */
     private function addOptionsForGetQuery(array $params, array $options): array
     {
         foreach ($options as $key => $value) {
@@ -219,6 +228,12 @@ final class MapQuest extends AbstractHttpProvider implements Provider
         return $params;
     }
 
+    /**
+     * @param array<string, mixed> $params
+     * @param array<string, mixed> $options
+     *
+     * @return array<string, mixed>
+     */
     private function addOptionsForPostQuery(array $params, array $options): array
     {
         $params['options'] = $options;
@@ -226,7 +241,10 @@ final class MapQuest extends AbstractHttpProvider implements Provider
         return $params;
     }
 
-    private function executePostQuery(string $endpoint, array $params)
+    /**
+     * @param array<string, mixed> $params
+     */
+    private function executePostQuery(string $endpoint, array $params): AddressCollection
     {
         $url = $this->getUrl($endpoint);
 
@@ -243,6 +261,9 @@ final class MapQuest extends AbstractHttpProvider implements Provider
         return $this->parseResponseContent($content);
     }
 
+    /**
+     * @param array<string, mixed> $params
+     */
     private function executeGetQuery(string $endpoint, array $params): AddressCollection
     {
         $baseUrl = $this->getUrl($endpoint);
@@ -314,6 +335,9 @@ final class MapQuest extends AbstractHttpProvider implements Provider
         return new AddressCollection($results);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     private function mapAddressToArray(Location $address): array
     {
         $location = [];
@@ -374,7 +398,10 @@ final class MapQuest extends AbstractHttpProvider implements Provider
         return $location;
     }
 
-    private function mapBoundsToArray(Bounds $bounds)
+    /**
+     * @return array<string, array<string,float>>
+     */
+    private function mapBoundsToArray(Bounds $bounds): array
     {
         return [
             'ul' => [static::KEY_LAT => $bounds->getNorth(), static::KEY_LNG => $bounds->getWest()],

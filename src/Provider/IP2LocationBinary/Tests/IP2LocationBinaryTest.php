@@ -20,7 +20,7 @@ use Geocoder\Query\ReverseQuery;
 
 class IP2LocationBinaryTest extends BaseTestCase
 {
-    private $binaryFile;
+    private string $binaryFile;
 
     public function setUp(): void
     {
@@ -28,7 +28,7 @@ class IP2LocationBinaryTest extends BaseTestCase
         $this->binaryFile = __DIR__.'/fixtures/IP2LOCATION-LITE-DB9.IPV6.BIN';
     }
 
-    protected function getCacheDir()
+    protected function getCacheDir(): string
     {
         return __DIR__.'/.cached_responses';
     }
@@ -40,7 +40,10 @@ class IP2LocationBinaryTest extends BaseTestCase
         }
     }
 
-    public static function provideIps()
+    /**
+     * @return array<string, string[]>
+     */
+    public static function provideIps(): array
     {
         return [
             '8.8.8.8' => ['8.8.8.8', 'Mountain View', 'United States'],
@@ -48,7 +51,7 @@ class IP2LocationBinaryTest extends BaseTestCase
         ];
     }
 
-    public function testThrowIfNotExistBinaryFileGiven()
+    public function testThrowIfNotExistBinaryFileGiven(): void
     {
         $this->expectException(\Geocoder\Exception\InvalidArgument::class);
         $this->expectExceptionMessage('Given IP2Location BIN file "NOT_EXIST.BIN" does not exist.');
@@ -56,7 +59,7 @@ class IP2LocationBinaryTest extends BaseTestCase
         new IP2LocationBinary('NOT_EXIST.BIN');
     }
 
-    public function testLocationResultContainsExpectedFieldsForAnAmericanIp()
+    public function testLocationResultContainsExpectedFieldsForAnAmericanIp(): void
     {
         $provider = new IP2LocationBinary($this->binaryFile);
         $results = $provider->geocodeQuery(GeocodeQuery::create('8.8.8.8'));
@@ -84,7 +87,7 @@ class IP2LocationBinaryTest extends BaseTestCase
         $this->assertNull($result->getTimezone());
     }
 
-    public function testLocationResultContainsExpectedFieldsForAChinaIp()
+    public function testLocationResultContainsExpectedFieldsForAChinaIp(): void
     {
         $provider = new IP2LocationBinary($this->binaryFile);
         $results = $provider->geocodeQuery(GeocodeQuery::create('123.123.123.123'));
@@ -112,7 +115,7 @@ class IP2LocationBinaryTest extends BaseTestCase
         $this->assertNull($result->getTimezone());
     }
 
-    public function testGeocodeWithRealIPv6()
+    public function testGeocodeWithRealIPv6(): void
     {
         $provider = new IP2LocationBinary($this->binaryFile);
         $results = $provider->geocodeQuery(GeocodeQuery::create('2001:4860:4860::8888'));
@@ -143,7 +146,7 @@ class IP2LocationBinaryTest extends BaseTestCase
     /**
      * @dataProvider provideIps
      */
-    public function testFindLocationByIp($ip, $expectedCity, $expectedCountry)
+    public function testFindLocationByIp(string $ip, ?string $expectedCity, ?string $expectedCountry): void
     {
         $provider = new IP2LocationBinary($this->binaryFile);
         $results = $provider->geocodeQuery(GeocodeQuery::create($ip));
@@ -158,14 +161,14 @@ class IP2LocationBinaryTest extends BaseTestCase
         $this->assertEquals($expectedCountry, $result->getCountry()->getName());
     }
 
-    public function testGetName()
+    public function testGetName(): void
     {
         $provider = new IP2LocationBinary($this->binaryFile);
 
         $this->assertEquals('ip2location_binary', $provider->getName());
     }
 
-    public function testThrowIfInvalidIpAddressGiven()
+    public function testThrowIfInvalidIpAddressGiven(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The IP2LocationBinary provider does not support street addresses.');
@@ -175,7 +178,7 @@ class IP2LocationBinaryTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('invalidIp'));
     }
 
-    public function testThrowOnReverseMethodUsage()
+    public function testThrowOnReverseMethodUsage(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The IP2LocationBinary is not able to do reverse geocoding.');

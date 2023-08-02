@@ -25,7 +25,7 @@ use Geocoder\Query\ReverseQuery;
 
 class HereTest extends BaseTestCase
 {
-    protected function getCacheDir()
+    protected function getCacheDir(): ?string
     {
         if (isset($_SERVER['USE_CACHED_RESPONSES']) && true === $_SERVER['USE_CACHED_RESPONSES']) {
             return __DIR__.'/.cached_responses';
@@ -34,7 +34,7 @@ class HereTest extends BaseTestCase
         return null;
     }
 
-    public function testGeocodeWithRealAddress()
+    public function testGeocodeWithRealAddress(): void
     {
         if (!isset($_SERVER['HERE_API_KEY'])) {
             $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
@@ -69,7 +69,7 @@ class HereTest extends BaseTestCase
     /**
      * @throws \Geocoder\Exception\Exception
      */
-    public function testGeocodeWithDefaultAdditionalData()
+    public function testGeocodeWithDefaultAdditionalData(): void
     {
         if (!isset($_SERVER['HERE_API_KEY'])) {
             $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
@@ -111,7 +111,7 @@ class HereTest extends BaseTestCase
      *
      * @throws \Geocoder\Exception\Exception
      */
-    public function testGeocodeWithAdditionalData()
+    public function testGeocodeWithAdditionalData(): void
     {
         if (!isset($_SERVER['HERE_API_KEY'])) {
             $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
@@ -161,7 +161,7 @@ class HereTest extends BaseTestCase
      *
      * @throws \Geocoder\Exception\Exception
      */
-    public function testGeocodeWithExtraFilterCountry()
+    public function testGeocodeWithExtraFilterCountry(): void
     {
         if (!isset($_SERVER['HERE_API_KEY'])) {
             $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
@@ -196,7 +196,7 @@ class HereTest extends BaseTestCase
      *
      * @throws \Geocoder\Exception\Exception
      */
-    public function testGeocodeWithExtraFilterCity()
+    public function testGeocodeWithExtraFilterCity(): void
     {
         if (!isset($_SERVER['HERE_API_KEY'])) {
             $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
@@ -234,7 +234,7 @@ class HereTest extends BaseTestCase
         $this->assertEquals('ESP', $resultCity3->getCountry()->getCode());
     }
 
-    public function testGeocodeWithExtraFilterCounty()
+    public function testGeocodeWithExtraFilterCounty(): void
     {
         if (!isset($_SERVER['HERE_API_KEY'])) {
             $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
@@ -268,7 +268,7 @@ class HereTest extends BaseTestCase
         $this->assertEquals('ESP', $resultRegion2->getCountry()->getCode());
     }
 
-    public function testReverseWithRealCoordinates()
+    public function testReverseWithRealCoordinates(): void
     {
         if (!isset($_SERVER['HERE_API_KEY'])) {
             $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
@@ -298,13 +298,13 @@ class HereTest extends BaseTestCase
         $this->assertEquals('FRA', $result->getCountry()->getCode());
     }
 
-    public function testGetName()
+    public function testGetName(): void
     {
         $provider = new Here($this->getMockedHttpClient(), 'appId', 'appCode');
         $this->assertEquals('Here', $provider->getName());
     }
 
-    public function testGeocodeWithInvalidData()
+    public function testGeocodeWithInvalidData(): void
     {
         $this->expectException(\Geocoder\Exception\InvalidServerResponse::class);
 
@@ -312,7 +312,7 @@ class HereTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('foobar'));
     }
 
-    public function testGeocodeIpv4()
+    public function testGeocodeIpv4(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The Here provider does not support IP addresses, only street addresses.');
@@ -321,7 +321,7 @@ class HereTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
     }
 
-    public function testGeocodeWithLocalhostIPv6()
+    public function testGeocodeWithLocalhostIPv6(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The Here provider does not support IP addresses, only street addresses.');
@@ -330,7 +330,7 @@ class HereTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
-    public function testGeocodeInvalidApiKey()
+    public function testGeocodeInvalidApiKey(): void
     {
         $this->expectException(\Geocoder\Exception\InvalidCredentials::class);
         $this->expectExceptionMessage('Invalid or missing api key.');
@@ -349,7 +349,7 @@ class HereTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('New York'));
     }
 
-    public function testGeocodeWithRealIPv6()
+    public function testGeocodeWithRealIPv6(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The Here provider does not support IP addresses, only street addresses.');
@@ -358,7 +358,7 @@ class HereTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('::ffff:88.188.221.14'));
     }
 
-    public function getProvider()
+    public function getProvider(): Here
     {
         if (!isset($_SERVER['HERE_API_KEY'])) {
             $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');

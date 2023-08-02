@@ -36,7 +36,7 @@ final class ReverseQuery implements Query
     private $limit = Geocoder::DEFAULT_RESULT_LIMIT;
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     private $data = [];
 
@@ -86,7 +86,7 @@ final class ReverseQuery implements Query
         return $new;
     }
 
-    public function withData(string $name, $value): self
+    public function withData(string $name, mixed $value): self
     {
         $new = clone $this;
         $new->data[$name] = $value;
@@ -104,18 +104,12 @@ final class ReverseQuery implements Query
         return $this->limit;
     }
 
-    /**
-     * @return string
-     */
-    public function getLocale()
+    public function getLocale(): ?string
     {
         return $this->locale;
     }
 
-    /**
-     * @param mixed|null $default
-     */
-    public function getData(string $name, $default = null)
+    public function getData(string $name, mixed $default = null): mixed
     {
         if (!array_key_exists($name, $this->data)) {
             return $default;
@@ -124,6 +118,9 @@ final class ReverseQuery implements Query
         return $this->data[$name];
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getAllData(): array
     {
         return $this->data;
@@ -131,10 +128,8 @@ final class ReverseQuery implements Query
 
     /**
      * String for logging. This is also a unique key for the query.
-     *
-     * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return sprintf('ReverseQuery: %s', json_encode([
             'lat' => $this->getCoordinates()->getLatitude(),

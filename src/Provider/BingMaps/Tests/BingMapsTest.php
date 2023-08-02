@@ -20,7 +20,7 @@ use Geocoder\Query\ReverseQuery;
 
 class BingMapsTest extends BaseTestCase
 {
-    protected function getCacheDir()
+    protected function getCacheDir(): ?string
     {
         if (isset($_SERVER['USE_CACHED_RESPONSES']) && true === $_SERVER['USE_CACHED_RESPONSES']) {
             return __DIR__.'/.cached_responses';
@@ -29,13 +29,13 @@ class BingMapsTest extends BaseTestCase
         return null;
     }
 
-    public function testGetName()
+    public function testGetName(): void
     {
         $provider = new BingMaps($this->getMockedHttpClient(), 'api_key');
         $this->assertEquals('bing_maps', $provider->getName());
     }
 
-    public function testGeocodeWithInvalidData()
+    public function testGeocodeWithInvalidData(): void
     {
         $this->expectException(\Geocoder\Exception\InvalidServerResponse::class);
 
@@ -43,7 +43,7 @@ class BingMapsTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('foobar'));
     }
 
-    public function testGeocodeWithLocalhostIPv4()
+    public function testGeocodeWithLocalhostIPv4(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The BingMaps provider does not support IP addresses, only street addresses.');
@@ -52,7 +52,7 @@ class BingMapsTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
     }
 
-    public function testGeocodeWithLocalhostIPv6()
+    public function testGeocodeWithLocalhostIPv6(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The BingMaps provider does not support IP addresses, only street addresses.');
@@ -61,7 +61,7 @@ class BingMapsTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
-    public function testGeocodeReturnsMultipleResults()
+    public function testGeocodeReturnsMultipleResults(): void
     {
         $json = <<<JSON
 {"authenticationResultCode":"ValidCredentials","brandLogoUri":"https:\/\/dev.virtualearth.net\/Branding\/logo_powered_by.png","copyright":"Copyright © 2013 Microsoft and its suppliers. All rights reserved. This API cannot be accessed and the content and any results may not be used, reproduced or transmitted in any manner without express written permission from Microsoft Corporation.","resourceSets":[{"estimatedTotal":3,"resources":[{"__type":"Location:https:\/\/schemas.microsoft.com\/search\/local\/ws\/rest\/v1","bbox":[48.859354042429317,2.3809438666389395,48.86707947757067,2.3966003933610596],"name":"10 Avenue Gambetta, 75020 Paris","point":{"type":"Point","coordinates":[48.863216759999993,2.3887721299999995]},"address":{"addressLine":"10 Avenue Gambetta","adminDistrict":"IdF","adminDistrict2":"Paris","countryRegion":"France","countryRegionIso2":"FR","formattedAddress":"10 Avenue Gambetta, 75020 Paris","locality":"Paris","postalCode":"75020"},"confidence":"Medium","entityType":"Address","geocodePoints":[{"type":"Point","coordinates":[48.863216759999993,2.3887721299999995],"calculationMethod":"Interpolation","usageTypes":["Display","Route"]}],"matchCodes":["Ambiguous","Good"]},{"__type":"Location:https:\/\/schemas.microsoft.com\/search\/local\/ws\/rest\/v1","bbox":[48.809565092429317,2.3172171827738461,48.81729052757067,2.3328581572261538],"name":"10 Avenue Léon Gambetta, 92120 Montrouge","point":{"type":"Point","coordinates":[48.813427809999993,2.32503767]},"address":{"addressLine":"10 Avenue Léon Gambetta","adminDistrict":"IdF","adminDistrict2":"Hauts-de-Seine","countryRegion":"France","countryRegionIso2":"FR","formattedAddress":"10 Avenue Léon Gambetta, 92120 Montrouge","locality":"Montrouge","postalCode":"92120"},"confidence":"Medium","entityType":"Address","geocodePoints":[{"type":"Point","coordinates":[48.813427809999993,2.32503767],"calculationMethod":"Interpolation","usageTypes":["Display","Route"]}],"matchCodes":["Ambiguous","Good"]},{"__type":"Location:https:\/\/schemas.microsoft.com\/search\/local\/ws\/rest\/v1","bbox":[48.806278752429328,2.4278605052896745,48.814004187570681,2.4435004547103261],"name":"10 Avenue Gambetta, 94700 Maisons-Alfort","point":{"type":"Point","coordinates":[48.810141470000005,2.4356804800000003]},"address":{"addressLine":"10 Avenue Gambetta","adminDistrict":"IdF","adminDistrict2":"Val-De-Marne","countryRegion":"France","countryRegionIso2":"FR","formattedAddress":"10 Avenue Gambetta, 94700 Maisons-Alfort","locality":"Maisons-Alfort","postalCode":"94700"},"confidence":"Medium","entityType":"Address","geocodePoints":[{"type":"Point","coordinates":[48.810141470000005,2.4356804800000003],"calculationMethod":"Interpolation","usageTypes":["Display","Route"]}],"matchCodes":["Ambiguous","Good"]}]}],"statusCode":200,"statusDescription":"OK","traceId":"fd9b0b8fe1a34ad384923b5d0937bfb2|AMSM001404|02.00.139.700|AMSMSNVM002409, AMSMSNVM001862, AMSMSNVM001322, AMSMSNVM000044"}
@@ -136,7 +136,7 @@ JSON;
         $this->assertEquals('FR', $result->getCountry()->getCode());
     }
 
-    public function testReverseReturnsSingleResult()
+    public function testReverseReturnsSingleResult(): void
     {
         $json = <<<JSON
 {"authenticationResultCode":"ValidCredentials","brandLogoUri":"https:\/\/dev.virtualearth.net\/Branding\/logo_powered_by.png","copyright":"Copyright © 2013 Microsoft and its suppliers. All rights reserved. This API cannot be accessed and the content and any results may not be used, reproduced or transmitted in any manner without express written permission from Microsoft Corporation.","resourceSets":[{"estimatedTotal":1,"resources":[{"__type":"Location:https:\/\/schemas.microsoft.com\/search\/local\/ws\/rest\/v1","bbox":[48.859353771982775,2.3809437325832983,48.867079207124128,2.3966002592208246],"name":"10 Avenue Gambetta, 75020 20e Arrondissement","point":{"type":"Point","coordinates":[48.863216489553452,2.3887719959020615]},"address":{"addressLine":"10 Avenue Gambetta","adminDistrict":"IdF","adminDistrict2":"Paris","countryRegion":"France","countryRegionIso2":"FR","formattedAddress":"10 Avenue Gambetta, 75020 20e Arrondissement","locality":"20e Arrondissement","postalCode":"75020"},"confidence":"Medium","entityType":"Address","geocodePoints":[{"type":"Point","coordinates":[48.863216489553452,2.3887719959020615],"calculationMethod":"Interpolation","usageTypes":["Display","Route"]}],"matchCodes":["Good"]}]}],"statusCode":200,"statusDescription":"OK","traceId":"0691dabd257043b381b678fbfaf799dd|AMSM001401|02.00.139.700|AMSMSNVM001951, AMSMSNVM002152"}
@@ -171,7 +171,7 @@ JSON;
         $this->assertNull($result->getTimezone());
     }
 
-    public function testGeocodeWithRealAddressReturnsSingleResults()
+    public function testGeocodeWithRealAddressReturnsSingleResults(): void
     {
         if (!isset($_SERVER['BINGMAPS_API_KEY'])) {
             $this->markTestSkipped('You need to configure the BINGMAPS_API_KEY value in phpunit.xml');
@@ -208,7 +208,7 @@ JSON;
         $this->assertNull($result->getTimezone());
     }
 
-    public function testGeocodeWithRealAddressReturnsMultipleResults()
+    public function testGeocodeWithRealAddressReturnsMultipleResults(): void
     {
         if (!isset($_SERVER['BINGMAPS_API_KEY'])) {
             $this->markTestSkipped('You need to configure the BINGMAPS_API_KEY value in phpunit.xml');
@@ -221,7 +221,7 @@ JSON;
         $this->assertCount(5, $results);
     }
 
-    public function testReverseWithRealCoordinatesReturnsSingleResult()
+    public function testReverseWithRealCoordinatesReturnsSingleResult(): void
     {
         if (!isset($_SERVER['BINGMAPS_API_KEY'])) {
             $this->markTestSkipped('You need to configure the BINGMAPS_API_KEY value in phpunit.xml');
@@ -256,7 +256,7 @@ JSON;
         $this->assertNull($result->getTimezone());
     }
 
-    public function testGeocodeWithRealIPv4()
+    public function testGeocodeWithRealIPv4(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The BingMaps provider does not support IP addresses, only street addresses.');
@@ -269,7 +269,7 @@ JSON;
         $provider->geocodeQuery(GeocodeQuery::create('88.188.221.14'));
     }
 
-    public function testGeocodeWithRealIPv6()
+    public function testGeocodeWithRealIPv6(): void
     {
         $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
         $this->expectExceptionMessage('The BingMaps provider does not support IP addresses, only street addresses.');

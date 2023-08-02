@@ -135,6 +135,8 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
 
     /**
      * Build query for the find place API.
+     *
+     * @return array<string, mixed>
      */
     private function buildFindPlaceQuery(GeocodeQuery $geocodeQuery): array
     {
@@ -168,6 +170,8 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
 
     /**
      * Build query for the place search API.
+     *
+     * @return array<string, mixed>
      */
     private function buildPlaceSearchQuery(GeocodeQuery $geocodeQuery): array
     {
@@ -197,6 +201,8 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
 
     /**
      * Build query for the nearby search api.
+     *
+     * @return array<string, mixed>
      */
     private function buildNearbySearchQuery(ReverseQuery $reverseQuery): array
     {
@@ -265,7 +271,10 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * @return array
+     * @param array<string, mixed> $request
+     * @param string[]             $keys
+     *
+     * @return array<string, mixed>
      */
     private function applyDataFromQuery(Query $query, array $request, array $keys)
     {
@@ -280,6 +289,9 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
         return $request;
     }
 
+    /**
+     * @param array<string, mixed> $query
+     */
     private function fetchUrl(string $url, array $query): AddressCollection
     {
         $query['key'] = $this->apiKey;
@@ -414,7 +426,7 @@ final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
     /**
      * Parse coordinates and bounds.
      */
-    private function parseCoordinates(AddressBuilder $builder, \stdClass $result)
+    private function parseCoordinates(AddressBuilder $builder, \stdClass $result): void
     {
         $coordinates = $result->geometry->location;
         $builder->setCoordinates($coordinates->lat, $coordinates->lng);

@@ -73,7 +73,7 @@ final class Here extends AbstractHttpProvider implements Provider
     public const REVERSE_CIT_ENDPOINT_URL_APP_CODE = 'https://reverse.geocoder.cit.api.here.com/6.2/reversegeocode.json';
 
     /**
-     * @var array
+     * @var string[]
      */
     public const GEOCODE_ADDITIONAL_DATA_PARAMS = [
         'CrossingStreets',
@@ -282,6 +282,10 @@ final class Here extends AbstractHttpProvider implements Provider
 
     /**
      * Add API credentials to query params.
+     *
+     * @param array<string, string> $queryParams
+     *
+     * @return array<string, string>
      */
     private function withApiCredentials(array $queryParams): array
     {
@@ -323,6 +327,8 @@ final class Here extends AbstractHttpProvider implements Provider
 
     /**
      * Serialize the component query parameter.
+     *
+     * @param array<string, string> $components
      */
     private function serializeComponents(array $components): string
     {

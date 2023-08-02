@@ -24,7 +24,7 @@ use PHPUnit\Framework\TestCase;
 
 class PluginProviderTest extends TestCase
 {
-    public function testDispatchQueries()
+    public function testDispatchQueries(): void
     {
         $geocodeQuery = GeocodeQuery::create('foo');
         $reverseQuery = ReverseQuery::fromCoordinates(47, 11);
@@ -49,7 +49,7 @@ class PluginProviderTest extends TestCase
         $this->assertSame($collection, $pluginProvider->reverseQuery($reverseQuery));
     }
 
-    public function testPluginsIsBeingUsedWhenGeocoding()
+    public function testPluginsIsBeingUsedWhenGeocoding(): void
     {
         $geocodeQuery = GeocodeQuery::create('foo');
         $collection = new AddressCollection([]);
@@ -80,7 +80,7 @@ class PluginProviderTest extends TestCase
         $this->assertSame($collection, $pluginProvider->geocodeQuery($geocodeQuery));
     }
 
-    public function testPluginsIsBeingUsedWhenReverse()
+    public function testPluginsIsBeingUsedWhenReverse(): void
     {
         $reverseQuery = ReverseQuery::fromCoordinates(47, 11);
         $collection = new AddressCollection([]);
@@ -111,7 +111,7 @@ class PluginProviderTest extends TestCase
         $this->assertSame($collection, $pluginProvider->reverseQuery($reverseQuery));
     }
 
-    public function testLoopException()
+    public function testLoopException(): void
     {
         $this->expectException(LoopException::class);
         $geocodeQuery = GeocodeQuery::create('foo');

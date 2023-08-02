@@ -22,7 +22,7 @@ use PHPUnit\Framework\TestCase;
 
 class CachePluginTest extends TestCase
 {
-    public function testPluginMiss()
+    public function testPluginMiss(): void
     {
         $ttl = 4711;
         $query = GeocodeQuery::create('foo');
@@ -67,7 +67,7 @@ class CachePluginTest extends TestCase
     /**
      * @dataProvider getQueryProvider
      */
-    public function testPluginHit(Query $query, string $key)
+    public function testPluginHit(Query $query, string $key): void
     {
         $cache = $this->getMockBuilder(VoidCachePool::class)
             ->disableOriginalConstructor()

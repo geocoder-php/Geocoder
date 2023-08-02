@@ -23,7 +23,7 @@ use Psr\Log\AbstractLogger;
 
 class LoggerPluginTest extends TestCase
 {
-    public function testPlugin()
+    public function testPlugin(): void
     {
         $logger = $this->getMockBuilder(AbstractLogger::class)
             ->disableOriginalConstructor()
@@ -53,7 +53,7 @@ class LoggerPluginTest extends TestCase
         $this->assertSame($collection, $pluginProvider->geocodeQuery($geocodeQuery));
     }
 
-    public function testPluginException()
+    public function testPluginException(): void
     {
         $this->expectException(QuotaExceeded::class);
         $logger = $this->getMockBuilder(AbstractLogger::class)
