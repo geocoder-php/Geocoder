@@ -20,7 +20,7 @@ jobs:
     name: PHP ${{ matrix.php-version }} / ${{ matrix.component }}
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Use PHP ${{ matrix.php-version }}
       uses: shivammathur/setup-php@v2
