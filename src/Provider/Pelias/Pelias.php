@@ -132,48 +132,57 @@ class Pelias extends AbstractHttpProvider implements Provider
 
         $results = [];
         foreach ($locations as $location) {
-            if (isset($location['bbox'])) {
-                $bounds = [
-                    'south' => $location['bbox'][3],
-                    'west' => $location['bbox'][2],
-                    'north' => $location['bbox'][1],
-                    'east' => $location['bbox'][0],
-                ];
-            } else {
-                $bounds = [
-                    'south' => null,
-                    'west' => null,
-                    'north' => null,
-                    'east' => null,
-                ];
-            }
-
-            $props = $location['properties'];
-
-            $adminLevels = [];
-            foreach (['region', 'county', 'locality', 'macroregion', 'country'] as $i => $component) {
-                if (isset($props[$component])) {
-                    $adminLevels[] = ['name' => $props[$component], 'level' => $i + 1];
-                }
-            }
-
-            $results[] = Address::createFromArray([
-                'providedBy' => $this->getName(),
-                'latitude' => $location['geometry']['coordinates'][1],
-                'longitude' => $location['geometry']['coordinates'][0],
-                'bounds' => $bounds,
-                'streetNumber' => isset($props['housenumber']) ? $props['housenumber'] : null,
-                'streetName' => isset($props['street']) ? $props['street'] : null,
-                'subLocality' => isset($props['neighbourhood']) ? $props['neighbourhood'] : null,
-                'locality' => isset($props['locality']) ? $props['locality'] : null,
-                'postalCode' => isset($props['postalcode']) ? $props['postalcode'] : null,
-                'adminLevels' => $adminLevels,
-                'country' => isset($props['country']) ? $props['country'] : null,
-                'countryCode' => isset($props['country_a']) ? strtoupper($props['country_a']) : null,
-            ]);
+            $results[] = $this->buildAddress($location);
         }
 
         return new AddressCollection($results);
+    }
+
+    /**
+     * Build the Address object from the the Feature
+     * @param array $location the Feature array
+     * @return Address the address object
+     */
+    protected function buildAddress(array $location)
+    {
+        if (isset($location['bbox'])) {
+            $bounds = [
+                'south' => $location['bbox'][3],
+                'west' => $location['bbox'][2],
+                'north' => $location['bbox'][1],
+                'east' => $location['bbox'][0],
+            ];
+        } else {
+            $bounds = [
+                'south' => null,
+                'west' => null,
+                'north' => null,
+                'east' => null,
+            ];
+        }
+
+        $props = $location['properties'];
+        $adminLevels = [];
+        foreach (['region', 'county', 'locality', 'macroregion', 'country'] as $i => $component) {
+            if (isset($props[$component])) {
+                $adminLevels[] = ['name' => $props[$component], 'level' => $i + 1];
+            }
+        }
+
+        return Address::createFromArray([
+            'providedBy' => $this->getName(),
+            'latitude' => $location['geometry']['coordinates'][1],
+            'longitude' => $location['geometry']['coordinates'][0],
+            'bounds' => $bounds,
+            'streetNumber' => isset($props['housenumber']) ? $props['housenumber'] : null,
+            'streetName' => isset($props['street']) ? $props['street'] : null,
+            'subLocality' => isset($props['neighbourhood']) ? $props['neighbourhood'] : null,
+            'locality' => isset($props['locality']) ? $props['locality'] : null,
+            'postalCode' => isset($props['postalcode']) ? $props['postalcode'] : null,
+            'adminLevels' => $adminLevels,
+            'country' => isset($props['country']) ? $props['country'] : null,
+            'countryCode' => isset($props['country_a']) ? strtoupper($props['country_a']) : null,
+        ]);
     }
 
     /**
