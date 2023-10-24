@@ -19,6 +19,7 @@ use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Model\Address;
 use Geocoder\Model\AddressCollection;
+use Geocoder\Provider\Pelias\Model\PeliasAddress;
 use Geocoder\Provider\Provider;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
@@ -169,7 +170,7 @@ class Pelias extends AbstractHttpProvider implements Provider
             }
         }
 
-        return Address::createFromArray([
+        return PeliasAddress::createFromArray([
             'providedBy' => $this->getName(),
             'latitude' => $location['geometry']['coordinates'][1],
             'longitude' => $location['geometry']['coordinates'][0],
@@ -182,6 +183,11 @@ class Pelias extends AbstractHttpProvider implements Provider
             'adminLevels' => $adminLevels,
             'country' => isset($props['country']) ? $props['country'] : null,
             'countryCode' => isset($props['country_a']) ? strtoupper($props['country_a']) : null,
+            'layer' => $props['layer'] ?? null,
+            'confidence' => $props['confidence'] ?? null,
+            'match_type' => $props['match_type'] ?? null,
+            'source' => $props['source'] ?? null,
+            'accuracy' => $props['accuracy'] ?? null,
         ]);
     }
 
