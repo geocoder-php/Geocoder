@@ -146,21 +146,12 @@ class Pelias extends AbstractHttpProvider implements Provider
      */
     protected function buildAddress(array $location)
     {
-        if (isset($location['bbox'])) {
-            $bounds = [
-                'south' => $location['bbox'][3],
-                'west' => $location['bbox'][2],
-                'north' => $location['bbox'][1],
-                'east' => $location['bbox'][0],
-            ];
-        } else {
-            $bounds = [
-                'south' => null,
-                'west' => null,
-                'north' => null,
-                'east' => null,
-            ];
-        }
+        $bounds = [
+            'south' => $location['bbox'][3] ?? null,
+            'west' => $location['bbox'][2] ?? null,
+            'north' => $location['bbox'][1] ?? null,
+            'east' => $location['bbox'][0] ?? null,
+        ];
 
         $props = $location['properties'];
         $adminLevels = [];
@@ -175,13 +166,13 @@ class Pelias extends AbstractHttpProvider implements Provider
             'latitude' => $location['geometry']['coordinates'][1],
             'longitude' => $location['geometry']['coordinates'][0],
             'bounds' => $bounds,
-            'streetNumber' => isset($props['housenumber']) ? $props['housenumber'] : null,
-            'streetName' => isset($props['street']) ? $props['street'] : null,
-            'subLocality' => isset($props['neighbourhood']) ? $props['neighbourhood'] : null,
-            'locality' => isset($props['locality']) ? $props['locality'] : null,
-            'postalCode' => isset($props['postalcode']) ? $props['postalcode'] : null,
+            'streetNumber' => $props['housenumber'] ?? null,
+            'streetName' => $props['street'] ?? null,
+            'subLocality' => $props['neighbourhood'] ?? null,
+            'locality' => $props['locality'] ?? null,
+            'postalCode' => $props['postalcode'] ?? null,
             'adminLevels' => $adminLevels,
-            'country' => isset($props['country']) ? $props['country'] : null,
+            'country' => $props['country'] ?? null,
             'countryCode' => isset($props['country_a']) ? strtoupper($props['country_a']) : null,
             'layer' => $props['layer'] ?? null,
             'confidence' => $props['confidence'] ?? null,

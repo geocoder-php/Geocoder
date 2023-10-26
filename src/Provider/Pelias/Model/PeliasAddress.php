@@ -20,31 +20,31 @@ class PeliasAddress extends Address
      * The pelias layer returned
      * @var string|null
      */
-    private $layer;
+    private ?string $layer = null;
 
     /**
      * Confidence score from pelias
      * @var float|null
      */
-    private $confidence;
+    private ?float $confidence = null;
 
     /**
      * Match type from pelias
      * @var string|null
      */
-    private $matchType;
+    private ?string $matchType = null;
 
     /**
      * Data source from pelias
      * @var string|null
      */
-    private $source;
+    private ?string $source = null;
 
     /**
      * Accuracy from pelias
      * @var string|null
      */
-    private $accuracy;
+    private ?string $accuracy = null;
 
     public static function createFromArray(array $data)
     {
