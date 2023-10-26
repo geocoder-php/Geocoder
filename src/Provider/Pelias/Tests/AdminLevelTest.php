@@ -55,10 +55,10 @@ class AdminLevelTest extends BaseTestCase
         $result = $provider->geocodeQuery(GeocodeQuery::create('foobar'));
 
         $this->assertInstanceOf(Collection::class, $result);
-        $this->assertEquals(1, $result->count());
+        $this->assertSame(1, $result->count());
         $address = $result->get(0);
 
-        $expectedOrder= [
+        $expectedOrder = [
             'COUNTRY',
             'MACROREGION',
             'REGION',
@@ -67,8 +67,8 @@ class AdminLevelTest extends BaseTestCase
         ];
 
         foreach ($address->getAdminLevels()->all() as $key => $adminLevel) {
-            $this->assertEquals($expectedOrder[$key-1], $adminLevel->getName());
-            $this->assertEquals($key, $adminLevel->getLevel(), 'Invalid admin level number for level '.$adminLevel->getName());
+            $this->assertSame($expectedOrder[$key-1], $adminLevel->getName());
+            $this->assertSame($key, $adminLevel->getLevel(), 'Invalid admin level number for level '.$adminLevel->getName());
         }
     }
 }
