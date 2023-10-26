@@ -2,6 +2,13 @@
 
 The change log describes what is "Added", "Removed", "Changed" or "Fixed" between each release.
 
+## 1.4.0
+
+### Changed
+
+ - Admin levels are numbered in a strict top->down order. 1 is the Country level, 5 is the locality level.
+
+
 ## 1.3.0
 
 ### Added
