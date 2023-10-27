@@ -17,32 +17,37 @@ use Geocoder\Model\Address;
 class PeliasAddress extends Address
 {
     /**
-     * The pelias layer returned
-     * @var string|null
+     * The pelias layer returned.
+     *
+     * @see https://github.com/pelias/documentation/blob/master/result_quality.md#layer
      */
     private ?string $layer = null;
 
     /**
-     * Confidence score from pelias
-     * @var float|null
+     * Confidence score from pelias.
+     *
+     * @see https://github.com/pelias/documentation/blob/master/result_quality.md#confidence
      */
     private ?float $confidence = null;
 
     /**
-     * Match type from pelias
-     * @var string|null
+     * Match type from pelias.
+     *
+     * @see https://github.com/pelias/documentation/blob/master/result_quality.md#match_type
      */
     private ?string $matchType = null;
 
     /**
-     * Data source from pelias
-     * @var string|null
+     * Data source from pelias.
+     *
+     * @see https://github.com/pelias/documentation/blob/master/data-sources.md
      */
     private ?string $source = null;
 
     /**
-     * Accuracy from pelias
-     * @var string|null
+     * Accuracy from pelias.
+     *
+     * @see https://github.com/pelias/documentation/blob/master/result_quality.md#accuracy
      */
     private ?string $accuracy = null;
 
@@ -54,53 +59,54 @@ class PeliasAddress extends Address
         $address->matchType = $data['match_type'] ?? null;
         $address->source = $data['source'] ?? null;
         $address->accuracy = $data['accuracy'] ?? null;
+
         return $address;
     }
 
     /**
-     * Get the pelias layer returned
+     * Get the pelias layer returned.
      *
-     * @return  string|null
-     */ 
+     * @return string|null
+     */
     public function getLayer()
     {
         return $this->layer;
     }
 
     /**
-     * Get confidence score from pelias
+     * Get confidence score from pelias.
      *
-     * @return  float|null
-     */ 
+     * @return float|null
+     */
     public function getConfidence()
     {
         return $this->confidence;
     }
 
     /**
-     * Get match type from pelias
+     * Get match type from pelias.
      *
-     * @return  string|null
-     */ 
+     * @return string|null
+     */
     public function getMatchType()
     {
         return $this->matchType;
     }
 
     /**
-     * Get data source from pelias
+     * Get data source from pelias.
      *
-     * @return  string|null
-     */ 
+     * @return string|null
+     */
     public function getSource()
     {
         return $this->source;
     }
 
     /**
-     * Get accuracy from pelias
+     * Get accuracy from pelias.
      *
-     * @return  string|null
+     * @return string|null
      */
     public function getAccuracy()
     {
@@ -108,8 +114,10 @@ class PeliasAddress extends Address
     }
 
     /**
-     * Set the pelias layer returned
+     * Set the pelias layer returned.
+     *
      * @param string|null $layer name of the pelias layer
+     *
      * @return PeliasAddress
      */
     public function withLayer(string $layer = null)
@@ -121,8 +129,10 @@ class PeliasAddress extends Address
     }
 
     /**
-     * Set confidence score from pelias
+     * Set confidence score from pelias.
+     *
      * @param float|null $confidence confidence level as a float
+     *
      * @return PeliasAddress
      */
     public function withConfidence(float $confidence = null)
@@ -134,8 +144,10 @@ class PeliasAddress extends Address
     }
 
     /**
-     * Set match type from pelias
+     * Set match type from pelias.
+     *
      * @param string|null $matchType precision of the match like "exact"
+     *
      * @return PeliasAddress
      */
     public function withMatchType(string $matchType = null)
@@ -147,8 +159,10 @@ class PeliasAddress extends Address
     }
 
     /**
-     * Set data source from pelias
+     * Set data source from pelias.
+     *
      * @param string|null $source address source from pelias
+     *
      * @return PeliasAddress
      */
     public function withSource(string $source = null)
@@ -160,8 +174,10 @@ class PeliasAddress extends Address
     }
 
     /**
-     * Set accuracy from pelias
+     * Set accuracy from pelias.
+     *
      * @param string|null $accuracy accuracy level from pelias like "point"
+     *
      * @return PeliasAddress
      */
     public function withAccuracy(string $accuracy = null)
@@ -171,5 +187,4 @@ class PeliasAddress extends Address
 
         return $new;
     }
-
 }

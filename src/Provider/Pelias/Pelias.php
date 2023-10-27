@@ -140,11 +140,13 @@ class Pelias extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * Build the Address object from the the Feature
-     * @param array $location the Feature array
-     * @return Address the address object
+     * Build the Address object from the the Feature.
+     *
+     * @param array<mixed> $location the Feature array
+     *
+     * @return PeliasAddress the address object
      */
-    protected function buildAddress(array $location)
+    protected function buildAddress(array $location): PeliasAddress
     {
         $bounds = [
             'south' => $location['bbox'][3] ?? null,

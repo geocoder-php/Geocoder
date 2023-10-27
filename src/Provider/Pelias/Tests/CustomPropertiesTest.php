@@ -26,7 +26,7 @@ class CustomPropertiesTest extends BaseTestCase
         return __DIR__.'/.cached_responses';
     }
 
-    public function testPeliasAddressReturned()
+    public function testPeliasAddressReturned(): void
     {
         $response = '
         {
@@ -63,6 +63,7 @@ class CustomPropertiesTest extends BaseTestCase
 
         $this->assertInstanceOf(Collection::class, $result);
         $this->assertEquals(1, $result->count());
+        /** @var PeliasAddress $address */
         $address = $result->get(0);
 
         $this->assertInstanceOf(PeliasAddress::class, $address);
@@ -74,7 +75,7 @@ class CustomPropertiesTest extends BaseTestCase
         $this->assertEquals('point', $address->getAccuracy());
     }
 
-    public function testWithSource()
+    public function testWithSource(): void
     {
         $address = new PeliasAddress('Pelias', new AdminLevelCollection());
         $newAddress = $address->withSource('openaddresses');
@@ -82,7 +83,7 @@ class CustomPropertiesTest extends BaseTestCase
         $this->assertNull($address->getSource());
     }
 
-    public function testWithLayer()
+    public function testWithLayer(): void
     {
         $address = new PeliasAddress('Pelias', new AdminLevelCollection());
         $newAddress = $address->withLayer('address');
@@ -90,7 +91,7 @@ class CustomPropertiesTest extends BaseTestCase
         $this->assertNull($address->getLayer());
     }
 
-    public function testWithConfidence()
+    public function testWithConfidence(): void
     {
         $address = new PeliasAddress('Pelias', new AdminLevelCollection());
         $newAddress = $address->withConfidence(1);
@@ -98,7 +99,7 @@ class CustomPropertiesTest extends BaseTestCase
         $this->assertNull($address->getConfidence());
     }
 
-    public function testWithMatchType()
+    public function testWithMatchType(): void
     {
         $address = new PeliasAddress('Pelias', new AdminLevelCollection());
         $newAddress = $address->withMatchType('exact');
@@ -106,12 +107,11 @@ class CustomPropertiesTest extends BaseTestCase
         $this->assertNull($address->getMatchType());
     }
 
-    public function testWithAccuracy()
+    public function testWithAccuracy(): void
     {
         $address = new PeliasAddress('Pelias', new AdminLevelCollection());
         $newAddress = $address->withAccuracy('point');
         $this->assertEquals('point', $newAddress->getAccuracy());
         $this->assertNull($address->getAccuracy());
     }
-    
 }
