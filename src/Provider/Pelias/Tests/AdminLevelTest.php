@@ -19,13 +19,12 @@ use Geocoder\Query\GeocodeQuery;
 
 class AdminLevelTest extends BaseTestCase
 {
-
     protected function getCacheDir(): string
     {
         return __DIR__.'/.cached_responses';
     }
 
-    public function testAdminLevelsOrder()
+    public function testAdminLevelsOrder(): void
     {
         $response = '
         {
@@ -55,7 +54,7 @@ class AdminLevelTest extends BaseTestCase
         $result = $provider->geocodeQuery(GeocodeQuery::create('foobar'));
 
         $this->assertInstanceOf(Collection::class, $result);
-        $this->assertSame(1, $result->count());
+        $this->assertCount(1, $result);
         $address = $result->get(0);
 
         $expectedOrder = [
@@ -67,7 +66,7 @@ class AdminLevelTest extends BaseTestCase
         ];
 
         foreach ($address->getAdminLevels()->all() as $key => $adminLevel) {
-            $this->assertSame($expectedOrder[$key-1], $adminLevel->getName());
+            $this->assertSame($expectedOrder[$key - 1], $adminLevel->getName());
             $this->assertSame($key, $adminLevel->getLevel(), 'Invalid admin level number for level '.$adminLevel->getName());
         }
     }
