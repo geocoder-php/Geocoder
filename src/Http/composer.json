@@ -15,7 +15,6 @@
     ],
     "require": {
         "php": "^8.0",
-        "php": "^7.4 || ^8.0",
         "php-http/discovery": "^1.17",
         "psr/http-client-implementation": "^1.0",
         "psr/http-factory-implementation": "^1.0",
