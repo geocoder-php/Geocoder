@@ -255,10 +255,6 @@ class Address implements Location
     }
 
     /**
-     * @param float $south
-     * @param float $west
-     * @param float $north
-     *
      * @return Bounds|null
      */
     private static function createBounds(?float $south, ?float $west, ?float $north, ?float $east)

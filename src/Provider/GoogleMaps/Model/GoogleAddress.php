@@ -381,8 +381,6 @@ final class GoogleAddress extends Address
     }
 
     /**
-     * @param string $premise
-     *
      * @return GoogleAddress
      */
     public function withPremise(string $premise = null)

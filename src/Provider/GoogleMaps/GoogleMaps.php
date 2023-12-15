@@ -158,8 +158,6 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * @param string $locale
-     *
      * @return string query with extra params
      */
     private function buildQuery(string $url, string $locale = null, string $region = null): string
@@ -196,9 +194,6 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * @param string $locale
-     * @param string $region
-     *
      * @throws InvalidServerResponse
      * @throws InvalidCredentials
      */

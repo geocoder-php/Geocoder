@@ -15,12 +15,9 @@
     ],
     "require": {
         "php": "^8.0",
-        "php-http/client-implementation": "^1.0",
-        "php-http/discovery": "^1.6",
-        "php-http/httplug": "^1.0 || ^2.0",
-        "php-http/message-factory": "^1.0.2",
-        "psr/http-message": "^1.0 || ^2.0",
-        "psr/http-message-implementation": "^1.0",
+        "php-http/discovery": "^1.17",
+        "psr/http-client-implementation": "^1.0",
+        "psr/http-factory-implementation": "^1.0",
         "willdurand/geocoder": "^4.0"
     },
     "require-dev": {
@@ -48,5 +45,10 @@
     "scripts": {
         "test": "vendor/bin/phpunit",
         "test-ci": "vendor/bin/phpunit --coverage-text --coverage-clover=build/coverage.xml"
+    },
+    "config": {
+        "allow-plugins": {
+            "php-http/discovery": false
+        }
     }
 }

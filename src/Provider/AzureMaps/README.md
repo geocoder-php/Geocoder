@@ -19,7 +19,7 @@ composer require geocoder-php/azure-maps-provider
 ## Usage
 
 ```php
-$httpClient = new \GuzzleHttp\Client();
+$httpClient = new \Http\Discovery\Psr18Client();
 
 // You must provide a subscription key
 $provider = new \Geocoder\Provider\AzureMaps\AzureMaps($httpClient, 'your-subscription-key');

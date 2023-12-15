@@ -131,7 +131,6 @@ class ProviderAggregator implements Geocoder
      *
      * @param GeocodeQuery|ReverseQuery $query
      * @param Provider[]                $providers
-     * @param Provider                  $currentProvider
      *
      * @throws ProviderNotRegistered
      */

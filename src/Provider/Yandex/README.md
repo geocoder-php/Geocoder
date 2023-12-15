@@ -21,7 +21,7 @@ composer require geocoder-php/yandex-provider
 The API now requires an API key. [See here for more information](https://yandex.ru/blog/mapsapi/novye-pravila-dostupa-k-api-kart?from=tech_pp).
 
 ```php
-$httpClient = new \GuzzleHttp\Client();
+$httpClient = new \Http\Discovery\Psr18Client();
 $provider = new \Geocoder\Provider\Yandex\Yandex($httpClient, null, '<your-api-key>);
 
 $result = $geocoder->geocodeQuery(GeocodeQuery::create('ул.Ленина, 19, Минск 220030, Республика Беларусь'));

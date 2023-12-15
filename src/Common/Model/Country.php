@@ -31,10 +31,6 @@ final class Country
      */
     private $code;
 
-    /**
-     * @param string $name
-     * @param string $code
-     */
     public function __construct(string $name = null, string $code = null)
     {
         if (null === $name && null === $code) {

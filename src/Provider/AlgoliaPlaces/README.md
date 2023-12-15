@@ -34,7 +34,7 @@ You should set a locale on the query. If it is missing, results may not be as co
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 
-$httpClient = new \GuzzleHttp\Client();
+$httpClient = new \Http\Discovery\Psr18Client();
 
 // Unauthenticated
 $provider = new \Geocoder\Provider\AlgoliaPlaces\AlgoliaPlaces($httpClient);

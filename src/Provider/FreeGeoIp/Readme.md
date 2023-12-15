@@ -14,7 +14,7 @@ Provider Website: https://freegeoip.app
 
 ## Usage
 ```php
-$httpClient = new \GuzzleHttp\Client();
+$httpClient = new \Http\Discovery\Psr18Client();
 
 // Use the default provider (https://freegeoip.app)
 $provider = new Geocoder\Provider\FreeGeoIp\FreeGeoIp($httpClient);
