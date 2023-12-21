@@ -1,9 +1,11 @@
 # CHANGELOG
 
-## 4.4.0 (2023-??-??)
+## 4.4.0 (2023-12-21)
 
 * Added: Method `AbstractHttpProvider::createRequest()`
 * Deprecated: Method `AbstractHttpProvider::getMessageFactory()`
+* Removed dependency on abandoned `php-http/message-factory`
+* Removed: Support for PHP 7.4
 
 ## 4.3.0 (2022-07-30)
 
