@@ -17,7 +17,7 @@
     ],
     "homepage": "http://geocoder-php.org",
     "require": {
-        "php": "^8.0",
+        "php": ">=8.2",
         "igorw/get-in": "^1.0",
         "php-http/discovery": "^1.17",
         "php-http/promise": "^1.0",
