@@ -4,7 +4,7 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 
 ## 5.0.0
 
-- Drop support for PHP 7.4
+- Drop support for PHP < 8.2
 - Added return values on classes and interfaces
 
 ## 4.6.0
