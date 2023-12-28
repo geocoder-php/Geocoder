@@ -19,7 +19,7 @@ jobs:
     name: Subtree for Common
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           token: ${{ secrets.SUBTREE_GITHUB_TOKEN }}
           fetch-depth: 0
@@ -33,7 +33,7 @@ jobs:
     name: Subtree for Http
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           token: ${{ secrets.SUBTREE_GITHUB_TOKEN }}
           fetch-depth: 0
@@ -47,7 +47,7 @@ jobs:
     name: Subtree for Plugin
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           token: ${{ secrets.SUBTREE_GITHUB_TOKEN }}
           fetch-depth: 0
@@ -101,7 +101,7 @@ jobs:
           - { folder: TomTom, repository: tomtom-provider }
           - { folder: Yandex, repository: yandex-provider }
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           token: ${{ secrets.SUBTREE_GITHUB_TOKEN }}
           fetch-depth: 0
