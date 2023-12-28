@@ -2,6 +2,11 @@
 
 The change log describes what is "Added", "Removed", "Changed" or "Fixed" between each release.
 
+## 4.6.0
+
+- Drop support for PHP 7
+- Make PSR-17 a first class citizen
+
 ## 4.5.0
 
 ### Added
