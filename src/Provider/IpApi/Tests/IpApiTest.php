@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Geocoder\Provider\IpApi\Tests;
 
-use Geocoder\Exception\InvalidServerResponse;
+use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Location;
@@ -38,10 +38,10 @@ class IpApiTest extends BaseTestCase
 
     public function testInvalidApiKey(): void
     {
-        $provider = new IpApi($this->getMockedHttpClient(), 'InVaLiDkEy');
+        $provider = new IpApi($this->getHttpClient('InVaLiDkEy'), 'InVaLiDkEy');
 
-        $this->expectException(InvalidServerResponse::class);
-        $provider->geocodeQuery(GeocodeQuery::create('74.125.45.100'));
+        $this->expectException(InvalidCredentials::class);
+        $provider->geocodeQuery(GeocodeQuery::create('64.233.160.0'));
     }
 
     public function testGeocodeWithAddress(): void
@@ -108,6 +108,13 @@ class IpApiTest extends BaseTestCase
         $this->assertEquals('Oklahoma', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('United States', $result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
+        $this->assertFalse($result->isProxy());
+        $this->assertTrue($result->isHosting());
+
+        // Calling code is available only for authenticated calls
+        if (null !== $apiKey) {
+            $this->assertEquals('1', $result->getCallingCode());
+        }
     }
 
     /**
@@ -133,6 +140,13 @@ class IpApiTest extends BaseTestCase
         $this->assertEquals('Oklahoma', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('United States', $result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
+        $this->assertFalse($result->isProxy());
+        $this->assertTrue($result->isHosting());
+
+        // Calling code is available only for authenticated calls
+        if (null !== $apiKey) {
+            $this->assertEquals('1', $result->getCallingCode());
+        }
     }
 
     public function testReverse(): void

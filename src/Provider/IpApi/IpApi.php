@@ -29,7 +29,7 @@ final class IpApi extends AbstractHttpProvider
 {
     private const URL = '{host_prefix}ip-api.com/json/{ip}';
 
-    private const FIELDS = 'status,message,lat,lon,city,district,zip,country,countryCode,timezone,regionName,region,proxy,hosting';
+    private const FIELDS = 'status,message,lat,lon,city,district,zip,country,countryCode,timezone,regionName,region,currency,callingCode,proxy,hosting';
 
     private string|null $apiKey;
 
@@ -78,7 +78,7 @@ final class IpApi extends AbstractHttpProvider
         return 'ip-api';
     }
 
-    public function buildUrl(string $ip, string|null $locale): string
+    private function buildUrl(string $ip, string|null $locale): string
     {
         $baseUrl = strtr(self::URL, [
             '{host_prefix}' => $this->apiKey ? 'https://pro.' : 'http://',
@@ -121,6 +121,8 @@ final class IpApi extends AbstractHttpProvider
         $location = $builder->build(IpApiLocation::class);
 
         return $location
+            ->withCurrency($data['currency'] ?? null)
+            ->withCallingCode($data['callingCode'] ?? null)
             ->withIsProxy($data['proxy'])
             ->withIsHosting($data['hosting']);
     }
@@ -134,16 +136,16 @@ final class IpApi extends AbstractHttpProvider
     {
         if (
             in_array($message, ['private range', 'reserved range', 'invalid query'], true)
-            || str_contains('Origin restriction', $message)
-            || str_contains('IP range restriction', $message)
-            || str_contains('Calling IP restriction', $message)
+            || str_contains($message, 'Origin restriction')
+            || str_contains($message, 'IP range restriction')
+            || str_contains($message, 'Calling IP restriction')
         ) {
             throw new InvalidArgument($message);
         }
 
         if (
-            str_contains('invalid/expired ke', $message)
-            || str_contains('no API key supplied', $message)
+            str_contains($message, 'invalid/expired key')
+            || str_contains($message, 'no API key supplied')
         ) {
             throw new InvalidCredentials($message);
         }
