@@ -108,6 +108,7 @@ class IpApiTest extends BaseTestCase
         $this->assertEquals('Oklahoma', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('United States', $result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
+        $this->assertEquals('USD', $result->getCurrency());
         $this->assertFalse($result->isProxy());
         $this->assertTrue($result->isHosting());
 
@@ -140,6 +141,7 @@ class IpApiTest extends BaseTestCase
         $this->assertEquals('Oklahoma', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('United States', $result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
+        $this->assertEquals('USD', $result->getCurrency());
         $this->assertFalse($result->isProxy());
         $this->assertTrue($result->isHosting());
 
