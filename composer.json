@@ -30,6 +30,7 @@
         "cache/array-adapter": "^1.0",
         "cache/simple-cache-bridge": "^1.0",
         "cache/void-adapter": "^1.0",
+        "fakerphp/faker": "^1.23",
         "geocoder-php/provider-integration-tests": "^1.6.3",
         "geoip2/geoip2": "^2.0|^3.0",
         "nyholm/nsa": "^1.1",
