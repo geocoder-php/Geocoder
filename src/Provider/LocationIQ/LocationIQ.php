@@ -57,7 +57,7 @@ final class LocationIQ extends AbstractHttpProvider implements Provider
      * @param ClientInterface $client an HTTP adapter
      * @param string          $apiKey an API key
      */
-    public function __construct(ClientInterface $client, string $apiKey, string $region = null)
+    public function __construct(ClientInterface $client, string $apiKey, ?string $region = null)
     {
         if (empty($apiKey)) {
             throw new InvalidCredentials('No API key provided.');
@@ -165,7 +165,7 @@ final class LocationIQ extends AbstractHttpProvider implements Provider
         return 'locationiq';
     }
 
-    private function executeQuery(string $url, string $locale = null): string
+    private function executeQuery(string $url, ?string $locale = null): string
     {
         if (null !== $locale) {
             $url = sprintf('%s&accept-language=%s', $url, $locale);

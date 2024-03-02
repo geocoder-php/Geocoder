@@ -32,7 +32,7 @@ final class AdminLevel
      */
     private $code;
 
-    public function __construct(int $level, string $name, string $code = null)
+    public function __construct(int $level, string $name, ?string $code = null)
     {
         $this->level = $level;
         $this->name = $name;

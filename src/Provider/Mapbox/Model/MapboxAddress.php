@@ -46,7 +46,7 @@ final class MapboxAddress extends Address
      */
     private $neighborhood;
 
-    public function withId(string $id = null): self
+    public function withId(?string $id = null): self
     {
         $new = clone $this;
         $new->id = $id;
@@ -67,7 +67,7 @@ final class MapboxAddress extends Address
         return $this->streetName;
     }
 
-    public function withStreetName(string $streetName = null): self
+    public function withStreetName(?string $streetName = null): self
     {
         $new = clone $this;
         $new->streetName = $streetName;
@@ -80,7 +80,7 @@ final class MapboxAddress extends Address
         return $this->streetNumber;
     }
 
-    public function withStreetNumber(string $streetNumber = null): self
+    public function withStreetNumber(?string $streetNumber = null): self
     {
         $new = clone $this;
         $new->streetNumber = $streetNumber;
@@ -112,7 +112,7 @@ final class MapboxAddress extends Address
         return $this->formattedAddress;
     }
 
-    public function withFormattedAddress(string $formattedAddress = null): self
+    public function withFormattedAddress(?string $formattedAddress = null): self
     {
         $new = clone $this;
         $new->formattedAddress = $formattedAddress;
@@ -125,7 +125,7 @@ final class MapboxAddress extends Address
         return $this->neighborhood;
     }
 
-    public function withNeighborhood(string $neighborhood = null): self
+    public function withNeighborhood(?string $neighborhood = null): self
     {
         $new = clone $this;
         $new->neighborhood = $neighborhood;

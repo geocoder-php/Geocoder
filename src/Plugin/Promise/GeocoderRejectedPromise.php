@@ -29,7 +29,7 @@ final class GeocoderRejectedPromise implements Promise
         $this->exception = $exception;
     }
 
-    public function then(callable $onFulfilled = null, callable $onRejected = null): Promise
+    public function then(?callable $onFulfilled = null, ?callable $onRejected = null): Promise
     {
         if (null === $onRejected) {
             return $this;

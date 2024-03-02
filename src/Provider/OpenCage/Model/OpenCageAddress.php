@@ -49,7 +49,7 @@ final class OpenCageAddress extends Address
      */
     private $formattedAddress;
 
-    public function withMGRS(string $mgrs = null): self
+    public function withMGRS(?string $mgrs = null): self
     {
         $new = clone $this;
         $new->mgrs = $mgrs;
@@ -65,7 +65,7 @@ final class OpenCageAddress extends Address
         return $this->mgrs;
     }
 
-    public function withMaidenhead(string $maidenhead = null): self
+    public function withMaidenhead(?string $maidenhead = null): self
     {
         $new = clone $this;
         $new->maidenhead = $maidenhead;
@@ -81,7 +81,7 @@ final class OpenCageAddress extends Address
         return $this->maidenhead;
     }
 
-    public function withGeohash(string $geohash = null): self
+    public function withGeohash(?string $geohash = null): self
     {
         $new = clone $this;
         $new->geohash = $geohash;
@@ -97,7 +97,7 @@ final class OpenCageAddress extends Address
         return $this->geohash;
     }
 
-    public function withWhat3words(string $what3words = null): self
+    public function withWhat3words(?string $what3words = null): self
     {
         $new = clone $this;
         $new->what3words = $what3words;
@@ -113,7 +113,7 @@ final class OpenCageAddress extends Address
         return $this->what3words;
     }
 
-    public function withFormattedAddress(string $formattedAddress = null): self
+    public function withFormattedAddress(?string $formattedAddress = null): self
     {
         $new = clone $this;
         $new->formattedAddress = $formattedAddress;

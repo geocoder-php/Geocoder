@@ -107,7 +107,7 @@ final class GooglePlace extends Address
     /**
      * @return GooglePlace
      */
-    public function withId(string $id = null)
+    public function withId(?string $id = null)
     {
         $new = clone $this;
         $new->id = $id;
@@ -126,7 +126,7 @@ final class GooglePlace extends Address
     /**
      * @return GooglePlace
      */
-    public function withName(string $name = null)
+    public function withName(?string $name = null)
     {
         $new = clone $this;
         $new->name = $name;
@@ -166,7 +166,7 @@ final class GooglePlace extends Address
     /**
      * @return GooglePlace
      */
-    public function withFormattedAddress(string $formattedAddress = null)
+    public function withFormattedAddress(?string $formattedAddress = null)
     {
         $new = clone $this;
         $new->formattedAddress = $formattedAddress;
@@ -185,7 +185,7 @@ final class GooglePlace extends Address
     /**
      * @return GooglePlace
      */
-    public function withVicinity(string $vicinity = null)
+    public function withVicinity(?string $vicinity = null)
     {
         $new = clone $this;
         $new->vicinity = $vicinity;
@@ -204,7 +204,7 @@ final class GooglePlace extends Address
     /**
      * @return GooglePlace
      */
-    public function withIcon(string $icon = null)
+    public function withIcon(?string $icon = null)
     {
         $new = clone $this;
         $new->icon = $icon;
@@ -220,7 +220,7 @@ final class GooglePlace extends Address
     /**
      * @return GooglePlace
      */
-    public function withPlusCode(PlusCode $plusCode = null)
+    public function withPlusCode(?PlusCode $plusCode = null)
     {
         $new = clone $this;
         $new->plusCode = $plusCode;
@@ -241,7 +241,7 @@ final class GooglePlace extends Address
      *
      * @return GooglePlace
      */
-    public function withPhotos(array $photos = null)
+    public function withPhotos(?array $photos = null)
     {
         $new = clone $this;
         $new->photos = $photos;
@@ -268,7 +268,7 @@ final class GooglePlace extends Address
     /**
      * @return GooglePlace
      */
-    public function withPriceLevel(int $priceLevel = null)
+    public function withPriceLevel(?int $priceLevel = null)
     {
         $new = clone $this;
         $new->priceLevel = $priceLevel;
@@ -287,7 +287,7 @@ final class GooglePlace extends Address
     /**
      * @return GooglePlace
      */
-    public function withRating(float $rating = null)
+    public function withRating(?float $rating = null)
     {
         $new = clone $this;
         $new->rating = $rating;

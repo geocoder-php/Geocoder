@@ -152,7 +152,7 @@ final class AddressBuilder
         return $this;
     }
 
-    public function addAdminLevel(int $level, string $name, string $code = null): self
+    public function addAdminLevel(int $level, string $name, ?string $code = null): self
     {
         $this->adminLevels[] = new AdminLevel($level, $name, $code);
 

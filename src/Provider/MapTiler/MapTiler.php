@@ -146,7 +146,7 @@ final class MapTiler extends AbstractHttpProvider implements Provider
         return 'maptiler';
     }
 
-    private function executeQuery(string $url, string $locale = null, Bounds $bounds = null): \stdClass
+    private function executeQuery(string $url, ?string $locale = null, ?Bounds $bounds = null): \stdClass
     {
         $url .= '&'.http_build_query([
             'language' => $locale,
