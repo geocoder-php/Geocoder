@@ -34,7 +34,7 @@ use Psr\Http\Client\ClientInterface;
 /**
  * @author atymic <atymicq@gmail.com>
  */
-final class GoogleMapsPlaces extends AbstractHttpProvider implements Provider
+final class GoogleMapsPlaces extends AbstractHttpProvider
 {
     /**
      * @var string

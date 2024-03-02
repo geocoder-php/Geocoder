@@ -27,7 +27,7 @@ use Psr\Http\Client\ClientInterface;
 /**
  * @author Andrea Cristaudo <andrea.cristaudo@gmail.com>
  */
-final class MaxMind extends AbstractHttpProvider implements Provider
+final class MaxMind extends AbstractHttpProvider
 {
     /**
      * @var string Country, City, ISP and Organization

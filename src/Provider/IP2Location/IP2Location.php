@@ -26,7 +26,7 @@ use Psr\Http\Client\ClientInterface;
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-final class IP2Location extends AbstractHttpProvider implements Provider
+final class IP2Location extends AbstractHttpProvider
 {
     /**
      * @var string

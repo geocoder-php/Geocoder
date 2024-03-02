@@ -26,7 +26,7 @@ use Psr\Http\Client\ClientInterface;
 /**
  * @author Antoine Corcy <contact@sbin.dk>
  */
-final class TomTom extends AbstractHttpProvider implements Provider
+final class TomTom extends AbstractHttpProvider
 {
     /**
      * @var string

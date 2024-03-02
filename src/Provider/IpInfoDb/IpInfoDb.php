@@ -27,7 +27,7 @@ use Psr\Http\Client\ClientInterface;
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-final class IpInfoDb extends AbstractHttpProvider implements Provider
+final class IpInfoDb extends AbstractHttpProvider
 {
     /**
      * @var string

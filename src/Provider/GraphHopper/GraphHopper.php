@@ -27,7 +27,7 @@ use Psr\Http\Client\ClientInterface;
 /**
  * @author Gary Gale <gary@vicchi.org>
  */
-final class GraphHopper extends AbstractHttpProvider implements Provider
+final class GraphHopper extends AbstractHttpProvider
 {
     /**
      * @var string

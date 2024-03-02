@@ -30,7 +30,7 @@ use Psr\Http\Client\ClientInterface;
 /**
  * @author Giovanni Pirrotta <giovanni.pirrotta@gmail.com>
  */
-final class Geonames extends AbstractHttpProvider implements Provider
+final class Geonames extends AbstractHttpProvider
 {
     /**
      * @var string

@@ -28,7 +28,7 @@ use Psr\Http\Client\ClientInterface;
 /**
  * @author ALKOUM Dorian <baikunz@gmail.com>
  */
-final class ArcGISOnline extends AbstractHttpProvider implements Provider
+final class ArcGISOnline extends AbstractHttpProvider
 {
     /**
      * @var string

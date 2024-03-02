@@ -26,7 +26,7 @@ use Psr\Http\Client\ClientInterface;
 /**
  * @author Antoine Corcy <contact@sbin.dk>
  */
-final class Yandex extends AbstractHttpProvider implements Provider
+final class Yandex extends AbstractHttpProvider
 {
     /**
      * @var string

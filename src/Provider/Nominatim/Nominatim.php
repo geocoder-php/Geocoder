@@ -31,7 +31,7 @@ use Psr\Http\Message\RequestInterface;
  * @author Niklas Närhinen <niklas@narhinen.net>
  * @author Jonathan Beliën <jbe@geo6.be>
  */
-final class Nominatim extends AbstractHttpProvider implements Provider
+final class Nominatim extends AbstractHttpProvider
 {
     /**
      * @var string

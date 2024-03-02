@@ -29,7 +29,7 @@ use Psr\Http\Client\ClientInterface;
 /**
  * @author mtm <mtm@opencagedata.com>
  */
-final class OpenCage extends AbstractHttpProvider implements Provider
+final class OpenCage extends AbstractHttpProvider
 {
     /**
      * @var string

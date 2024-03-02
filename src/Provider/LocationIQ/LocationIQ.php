@@ -28,7 +28,7 @@ use Psr\Http\Client\ClientInterface;
 /**
  * @author Srihari Thalla <srihari@unwiredlabs.com>
  */
-final class LocationIQ extends AbstractHttpProvider implements Provider
+final class LocationIQ extends AbstractHttpProvider
 {
     /**
      * @var string

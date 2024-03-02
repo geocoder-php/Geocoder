@@ -29,7 +29,7 @@ use Psr\Http\Client\ClientInterface;
  *
  * @deprecated https://github.com/geocoder-php/Geocoder/issues/808
  */
-final class Mapzen extends AbstractHttpProvider implements Provider
+final class Mapzen extends AbstractHttpProvider
 {
     /**
      * @var string

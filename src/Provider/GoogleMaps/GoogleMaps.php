@@ -29,7 +29,7 @@ use Psr\Http\Client\ClientInterface;
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-final class GoogleMaps extends AbstractHttpProvider implements Provider
+final class GoogleMaps extends AbstractHttpProvider
 {
     /**
      * @var string

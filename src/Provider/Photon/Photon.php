@@ -29,7 +29,7 @@ use Psr\Http\Client\ClientInterface;
  * @author Niklas Närhinen <niklas@narhinen.net>
  * @author Jonathan Beliën <jbe@geo6.be>
  */
-final class Photon extends AbstractHttpProvider implements Provider
+final class Photon extends AbstractHttpProvider
 {
     /**
      * @var string

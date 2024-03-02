@@ -27,7 +27,7 @@ use Psr\Http\Client\ClientInterface;
 /**
  * @author Vladimir Kalinkin <vova.kalinkin@gmail.com>
  */
-final class PickPoint extends AbstractHttpProvider implements Provider
+final class PickPoint extends AbstractHttpProvider
 {
     /**
      * @var string

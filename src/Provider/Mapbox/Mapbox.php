@@ -25,7 +25,7 @@ use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Psr\Http\Client\ClientInterface;
 
-final class Mapbox extends AbstractHttpProvider implements Provider
+final class Mapbox extends AbstractHttpProvider
 {
     /**
      * @var string

@@ -26,7 +26,7 @@ use Psr\Http\Message\RequestInterface;
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-final class FreeGeoIp extends AbstractHttpProvider implements Provider
+final class FreeGeoIp extends AbstractHttpProvider
 {
     /**
      * @var string|null

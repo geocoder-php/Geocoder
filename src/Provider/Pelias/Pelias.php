@@ -24,7 +24,7 @@ use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Psr\Http\Client\ClientInterface;
 
-class Pelias extends AbstractHttpProvider implements Provider
+class Pelias extends AbstractHttpProvider
 {
     /**
      * @var string

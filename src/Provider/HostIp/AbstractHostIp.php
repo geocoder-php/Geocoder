@@ -25,7 +25,7 @@ use Geocoder\Query\ReverseQuery;
  * @author William Durand <william.durand1@gmail.com>
  * @author Oleg Andreyev <oleg@andreyev.lv>
  */
-abstract class AbstractHostIp extends AbstractHttpProvider implements Provider
+abstract class AbstractHostIp extends AbstractHttpProvider
 {
     abstract protected function executeQuery(string $url): AddressCollection;
 

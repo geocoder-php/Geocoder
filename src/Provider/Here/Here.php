@@ -30,7 +30,7 @@ use Psr\Http\Client\ClientInterface;
 /**
  * @author Sébastien Barré <sebastien@sheub.eu>
  */
-final class Here extends AbstractHttpProvider implements Provider
+final class Here extends AbstractHttpProvider
 {
     /**
      * @var string

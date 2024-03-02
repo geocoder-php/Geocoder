@@ -34,7 +34,7 @@ use Psr\Http\Message\ResponseInterface;
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-final class MapQuest extends AbstractHttpProvider implements Provider
+final class MapQuest extends AbstractHttpProvider
 {
     public const DATA_KEY_ADDRESS = 'address';
 

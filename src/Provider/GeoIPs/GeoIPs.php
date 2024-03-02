@@ -33,7 +33,7 @@ use Psr\Http\Client\ClientInterface;
  * @deprecated The GeoIPs provider has shut down
  * @see https://github.com/geocoder-php/Geocoder/issues/965
  */
-final class GeoIPs extends AbstractHttpProvider implements Provider
+final class GeoIPs extends AbstractHttpProvider
 {
     /**
      * @var string

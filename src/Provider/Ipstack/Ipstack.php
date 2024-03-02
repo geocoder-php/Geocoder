@@ -28,7 +28,7 @@ use Psr\Http\Client\ClientInterface;
 /**
  * @author Jonas Gielen <gielenjonas@gmail.com>
  */
-final class Ipstack extends AbstractHttpProvider implements Provider
+final class Ipstack extends AbstractHttpProvider
 {
     /**
      * @var string

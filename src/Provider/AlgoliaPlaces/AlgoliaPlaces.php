@@ -25,7 +25,7 @@ use Geocoder\Query\ReverseQuery;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
 
-class AlgoliaPlaces extends AbstractHttpProvider implements Provider
+class AlgoliaPlaces extends AbstractHttpProvider
 {
     public const TYPE_CITY = 'city';
 

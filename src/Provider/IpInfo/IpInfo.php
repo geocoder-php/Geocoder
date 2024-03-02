@@ -24,7 +24,7 @@ use Geocoder\Query\ReverseQuery;
 /**
  * @author Roro Neutron <imprec@gmail.com>
  */
-final class IpInfo extends AbstractHttpProvider implements Provider
+final class IpInfo extends AbstractHttpProvider
 {
     /**
      * @var string

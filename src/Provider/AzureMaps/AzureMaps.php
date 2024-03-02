@@ -26,7 +26,7 @@ use Psr\Http\Client\ClientInterface;
 /**
  * @author Max Langerman <max@langerman.io>
  */
-class AzureMaps extends AbstractHttpProvider implements Provider
+class AzureMaps extends AbstractHttpProvider
 {
     /**
      * @var string

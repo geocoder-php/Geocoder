@@ -28,7 +28,7 @@ use Psr\Http\Client\ClientInterface;
 /**
  * @author Jonathan Beliën
  */
-final class MapTiler extends AbstractHttpProvider implements Provider
+final class MapTiler extends AbstractHttpProvider
 {
     /**
      * @var string

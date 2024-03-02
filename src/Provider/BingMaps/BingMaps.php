@@ -26,7 +26,7 @@ use Psr\Http\Client\ClientInterface;
 /**
  * @author David Guyon <dguyon@gmail.com>
  */
-final class BingMaps extends AbstractHttpProvider implements Provider
+final class BingMaps extends AbstractHttpProvider
 {
     /**
      * @var string
