@@ -83,10 +83,10 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
     public static function business(
         ClientInterface $client,
         string $clientId,
-        string $privateKey = null,
-        string $region = null,
-        string $apiKey = null,
-        string $channel = null
+        ?string $privateKey = null,
+        ?string $region = null,
+        ?string $apiKey = null,
+        ?string $channel = null
     ) {
         $provider = new self($client, $region, $apiKey);
         $provider->clientId = $clientId;
@@ -101,7 +101,7 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
      * @param string          $region Region biasing (optional)
      * @param string          $apiKey Google Geocoding API key (optional)
      */
-    public function __construct(ClientInterface $client, string $region = null, string $apiKey = null)
+    public function __construct(ClientInterface $client, ?string $region = null, ?string $apiKey = null)
     {
         parent::__construct($client);
 
@@ -160,7 +160,7 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
     /**
      * @return string query with extra params
      */
-    private function buildQuery(string $url, string $locale = null, string $region = null): string
+    private function buildQuery(string $url, ?string $locale = null, ?string $region = null): string
     {
         if (null === $this->apiKey && null === $this->clientId) {
             throw new InvalidCredentials('You must provide an API key. Keyless access was removed in June, 2016');
@@ -197,7 +197,7 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
      * @throws InvalidServerResponse
      * @throws InvalidCredentials
      */
-    private function fetchUrl(string $url, string $locale = null, int $limit, string $region = null): AddressCollection
+    private function fetchUrl(string $url, ?string $locale = null, int $limit, ?string $region = null): AddressCollection
     {
         $url = $this->buildQuery($url, $locale, $region);
         $content = $this->getUrlContents($url);

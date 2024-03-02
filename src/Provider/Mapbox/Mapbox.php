@@ -148,7 +148,7 @@ final class Mapbox extends AbstractHttpProvider implements Provider
     public function __construct(
         ClientInterface $client,
         string $accessToken,
-        string $country = null,
+        ?string $country = null,
         string $geocodingMode = self::GEOCODING_MODE_PLACES
     ) {
         parent::__construct($client);
@@ -232,7 +232,7 @@ final class Mapbox extends AbstractHttpProvider implements Provider
     /**
      * @return string query with extra params
      */
-    private function buildQuery(string $url, int $limit, string $locale = null, string $country = null): string
+    private function buildQuery(string $url, int $limit, ?string $locale = null, ?string $country = null): string
     {
         $parameters = array_filter([
             'country' => $country,
@@ -246,7 +246,7 @@ final class Mapbox extends AbstractHttpProvider implements Provider
         return $url.$separator.http_build_query($parameters);
     }
 
-    private function fetchUrl(string $url, int $limit, string $locale = null, string $country = null): AddressCollection
+    private function fetchUrl(string $url, int $limit, ?string $locale = null, ?string $country = null): AddressCollection
     {
         $url = $this->buildQuery($url, $limit, $locale, $country);
         $content = $this->getUrlContents($url);

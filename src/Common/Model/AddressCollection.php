@@ -59,7 +59,7 @@ final class AddressCollection implements Collection
     /**
      * @return Location[]
      */
-    public function slice(int $offset, int $length = null)
+    public function slice(int $offset, ?int $length = null)
     {
         return array_slice($this->locations, $offset, $length);
     }

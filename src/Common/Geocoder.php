@@ -34,14 +34,14 @@ interface Geocoder extends Provider
     /**
      * Geocodes a given value.
      *
-     * @throws \Geocoder\Exception\Exception
+     * @throws Exception\Exception
      */
     public function geocode(string $value): Collection;
 
     /**
      * Reverses geocode given latitude and longitude values.
      *
-     * @throws \Geocoder\Exception\Exception
+     * @throws Exception\Exception
      */
     public function reverse(float $latitude, float $longitude): Collection;
 }

@@ -53,7 +53,7 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
     /** @var GeocodeQuery */
     private $query;
 
-    public function __construct(ClientInterface $client, string $apiKey = null, string $appId = null)
+    public function __construct(ClientInterface $client, ?string $apiKey = null, ?string $appId = null)
     {
         parent::__construct($client);
 
@@ -180,7 +180,7 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
     /**
      * @param array<string, mixed> $jsonResponse
      */
-    private function buildResult(array $jsonResponse, string $locale = null): AddressCollection
+    private function buildResult(array $jsonResponse, ?string $locale = null): AddressCollection
     {
         $results = [];
 
@@ -227,7 +227,7 @@ class AlgoliaPlaces extends AbstractHttpProvider implements Provider
      *
      * @return string|int|float
      */
-    private function getResultAttribute(array $result, string $attribute, string $locale = null)
+    private function getResultAttribute(array $result, string $attribute, ?string $locale = null)
     {
         if (!is_array($result[$attribute])) {
             return $result[$attribute];

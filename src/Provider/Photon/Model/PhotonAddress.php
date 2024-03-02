@@ -62,7 +62,7 @@ final class PhotonAddress extends Address
         return $this->name;
     }
 
-    public function withName(string $name = null): self
+    public function withName(?string $name = null): self
     {
         $new = clone $this;
         $new->name = $name;
@@ -78,7 +78,7 @@ final class PhotonAddress extends Address
         return $this->osmId;
     }
 
-    public function withOSMId(int $osmId = null): self
+    public function withOSMId(?int $osmId = null): self
     {
         $new = clone $this;
         $new->osmId = $osmId;
@@ -94,7 +94,7 @@ final class PhotonAddress extends Address
         return $this->osmType;
     }
 
-    public function withOSMType(string $osmType = null): self
+    public function withOSMType(?string $osmType = null): self
     {
         $new = clone $this;
         $new->osmType = $osmType;
@@ -110,7 +110,7 @@ final class PhotonAddress extends Address
         return $this->osmTag;
     }
 
-    public function withOSMTag(string $key = null, string $value = null): self
+    public function withOSMTag(?string $key = null, ?string $value = null): self
     {
         $new = clone $this;
 
@@ -134,7 +134,7 @@ final class PhotonAddress extends Address
         return $this->state;
     }
 
-    public function withState(string $state = null): self
+    public function withState(?string $state = null): self
     {
         $new = clone $this;
         $new->state = $state;
@@ -150,7 +150,7 @@ final class PhotonAddress extends Address
         return $this->county;
     }
 
-    public function withCounty(string $county = null): self
+    public function withCounty(?string $county = null): self
     {
         $new = clone $this;
         $new->county = $county;
@@ -166,7 +166,7 @@ final class PhotonAddress extends Address
         return $this->district;
     }
 
-    public function withDistrict(string $district = null): self
+    public function withDistrict(?string $district = null): self
     {
         $new = clone $this;
         $new->district = $district;
