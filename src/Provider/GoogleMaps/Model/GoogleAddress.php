@@ -124,7 +124,7 @@ final class GoogleAddress extends Address
     /**
      * @return GoogleAddress
      */
-    public function withId(string $id = null)
+    public function withId(?string $id = null)
     {
         $new = clone $this;
         $new->id = $id;
@@ -145,7 +145,7 @@ final class GoogleAddress extends Address
     /**
      * @return GoogleAddress
      */
-    public function withLocationType(string $locationType = null)
+    public function withLocationType(?string $locationType = null)
     {
         $new = clone $this;
         $new->locationType = $locationType;
@@ -193,7 +193,7 @@ final class GoogleAddress extends Address
     /**
      * @return GoogleAddress
      */
-    public function withFormattedAddress(string $formattedAddress = null)
+    public function withFormattedAddress(?string $formattedAddress = null)
     {
         $new = clone $this;
         $new->formattedAddress = $formattedAddress;
@@ -212,7 +212,7 @@ final class GoogleAddress extends Address
     /**
      * @return GoogleAddress
      */
-    public function withAirport(string $airport = null)
+    public function withAirport(?string $airport = null)
     {
         $new = clone $this;
         $new->airport = $airport;
@@ -231,7 +231,7 @@ final class GoogleAddress extends Address
     /**
      * @return GoogleAddress
      */
-    public function withColloquialArea(string $colloquialArea = null)
+    public function withColloquialArea(?string $colloquialArea = null)
     {
         $new = clone $this;
         $new->colloquialArea = $colloquialArea;
@@ -250,7 +250,7 @@ final class GoogleAddress extends Address
     /**
      * @return GoogleAddress
      */
-    public function withIntersection(string $intersection = null)
+    public function withIntersection(?string $intersection = null)
     {
         $new = clone $this;
         $new->intersection = $intersection;
@@ -269,7 +269,7 @@ final class GoogleAddress extends Address
     /**
      * @return GoogleAddress
      */
-    public function withPostalCodeSuffix(string $postalCodeSuffix = null)
+    public function withPostalCodeSuffix(?string $postalCodeSuffix = null)
     {
         $new = clone $this;
         $new->postalCodeSuffix = $postalCodeSuffix;
@@ -288,7 +288,7 @@ final class GoogleAddress extends Address
     /**
      * @return GoogleAddress
      */
-    public function withNaturalFeature(string $naturalFeature = null)
+    public function withNaturalFeature(?string $naturalFeature = null)
     {
         $new = clone $this;
         $new->naturalFeature = $naturalFeature;
@@ -307,7 +307,7 @@ final class GoogleAddress extends Address
     /**
      * @return GoogleAddress
      */
-    public function withNeighborhood(string $neighborhood = null)
+    public function withNeighborhood(?string $neighborhood = null)
     {
         $new = clone $this;
         $new->neighborhood = $neighborhood;
@@ -326,7 +326,7 @@ final class GoogleAddress extends Address
     /**
      * @return GoogleAddress
      */
-    public function withPark(string $park = null)
+    public function withPark(?string $park = null)
     {
         $new = clone $this;
         $new->park = $park;
@@ -345,7 +345,7 @@ final class GoogleAddress extends Address
     /**
      * @return GoogleAddress
      */
-    public function withPointOfInterest(string $pointOfInterest = null)
+    public function withPointOfInterest(?string $pointOfInterest = null)
     {
         $new = clone $this;
         $new->pointOfInterest = $pointOfInterest;
@@ -364,7 +364,7 @@ final class GoogleAddress extends Address
     /**
      * @return GoogleAddress
      */
-    public function withPolitical(string $political = null)
+    public function withPolitical(?string $political = null)
     {
         $new = clone $this;
         $new->political = $political;
@@ -383,7 +383,7 @@ final class GoogleAddress extends Address
     /**
      * @return GoogleAddress
      */
-    public function withPremise(string $premise = null)
+    public function withPremise(?string $premise = null)
     {
         $new = clone $this;
         $new->premise = $premise;
@@ -402,7 +402,7 @@ final class GoogleAddress extends Address
     /**
      * @return GoogleAddress
      */
-    public function withStreetAddress(string $streetAddress = null)
+    public function withStreetAddress(?string $streetAddress = null)
     {
         $new = clone $this;
         $new->streetAddress = $streetAddress;
@@ -421,7 +421,7 @@ final class GoogleAddress extends Address
     /**
      * @return GoogleAddress
      */
-    public function withSubpremise(string $subpremise = null)
+    public function withSubpremise(?string $subpremise = null)
     {
         $new = clone $this;
         $new->subpremise = $subpremise;
@@ -440,7 +440,7 @@ final class GoogleAddress extends Address
     /**
      * @return GoogleAddress
      */
-    public function withWard(string $ward = null)
+    public function withWard(?string $ward = null)
     {
         $new = clone $this;
         $new->ward = $ward;
@@ -459,7 +459,7 @@ final class GoogleAddress extends Address
     /**
      * @return GoogleAddress
      */
-    public function withEstablishment(string $establishment = null)
+    public function withEstablishment(?string $establishment = null)
     {
         $new = clone $this;
         $new->establishment = $establishment;

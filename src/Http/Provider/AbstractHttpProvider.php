@@ -46,7 +46,7 @@ abstract class AbstractHttpProvider extends AbstractProvider
     /**
      * @param Psr17Factory|MessageFactory|null $factory Passing a MessageFactory is @deprecated
      */
-    public function __construct(ClientInterface $client, MessageFactory|Psr17Factory $factory = null)
+    public function __construct(ClientInterface $client, MessageFactory|Psr17Factory|null $factory = null)
     {
         $this->client = $client;
         $this->messageFactory = $factory ?? ($client instanceof RequestFactoryInterface && $client instanceof StreamFactoryInterface ? $client : new Psr17Factory());
@@ -72,7 +72,7 @@ abstract class AbstractHttpProvider extends AbstractProvider
     /**
      * @param array<string,string|string[]> $headers
      */
-    protected function createRequest(string $method, string $uri, array $headers = [], string $body = null): RequestInterface
+    protected function createRequest(string $method, string $uri, array $headers = [], ?string $body = null): RequestInterface
     {
         if ($this->messageFactory instanceof MessageFactory) {
             return $this->messageFactory->createRequest($method, $uri, $headers, $body);

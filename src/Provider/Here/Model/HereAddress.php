@@ -52,7 +52,7 @@ final class HereAddress extends Address
         return $this->locationId;
     }
 
-    public function withLocationId(string $locationId = null): self
+    public function withLocationId(?string $locationId = null): self
     {
         $new = clone $this;
         $new->locationId = $locationId;
@@ -68,7 +68,7 @@ final class HereAddress extends Address
         return $this->locationType;
     }
 
-    public function withLocationType(string $locationType = null): self
+    public function withLocationType(?string $locationType = null): self
     {
         $new = clone $this;
         $new->locationType = $locationType;
@@ -84,7 +84,7 @@ final class HereAddress extends Address
         return $this->locationName;
     }
 
-    public function withLocationName(string $locationName = null): self
+    public function withLocationName(?string $locationName = null): self
     {
         $new = clone $this;
         $new->locationName = $locationName;
@@ -103,7 +103,7 @@ final class HereAddress extends Address
     /**
      * @param array<string, mixed>|null $additionalData
      */
-    public function withAdditionalData(array $additionalData = null): self
+    public function withAdditionalData(?array $additionalData = null): self
     {
         $new = clone $this;
 
@@ -142,7 +142,7 @@ final class HereAddress extends Address
     /**
      * @param array<string, mixed>|null $shape
      */
-    public function withShape(array $shape = null): self
+    public function withShape(?array $shape = null): self
     {
         $new = clone $this;
 
