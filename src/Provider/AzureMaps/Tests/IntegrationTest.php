@@ -18,11 +18,11 @@ class IntegrationTest extends ProviderIntegrationTest
     ];
 
     /**
-     * @return \Geocoder\Provider\Provider that is used in the tests
+     * @return Geocoder\Provider\Provider that is used in the tests
      */
     protected function createProvider(ClientInterface $httpClient)
     {
-        return new \Geocoder\Provider\AzureMaps\AzureMaps($httpClient, $_SERVER['AZURE_MAPS_SUBSCRIPTION_KEY']);
+        return new Geocoder\Provider\AzureMaps\AzureMaps($httpClient, $_SERVER['AZURE_MAPS_SUBSCRIPTION_KEY']);
     }
 
     /**

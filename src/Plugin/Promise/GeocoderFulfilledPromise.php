@@ -30,7 +30,7 @@ final class GeocoderFulfilledPromise implements Promise
         $this->collection = $collection;
     }
 
-    public function then(callable $onFulfilled = null, callable $onRejected = null): Promise
+    public function then(?callable $onFulfilled = null, ?callable $onRejected = null): Promise
     {
         if (null === $onFulfilled) {
             return $this;

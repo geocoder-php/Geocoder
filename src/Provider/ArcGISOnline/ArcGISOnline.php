@@ -71,7 +71,7 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
     public static function token(
         ClientInterface $client,
         string $token,
-        string $sourceCountry = null
+        ?string $sourceCountry = null
     ) {
         $provider = new self($client, $sourceCountry, $token);
 
@@ -84,7 +84,7 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
      * @param string          $token         ArcGIS World Geocoding Service token
      *                                       Required for the geocodeAddresses endpoint
      */
-    public function __construct(ClientInterface $client, string $sourceCountry = null, string $token = null)
+    public function __construct(ClientInterface $client, ?string $sourceCountry = null, ?string $token = null)
     {
         parent::__construct($client);
 

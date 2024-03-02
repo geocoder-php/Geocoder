@@ -53,7 +53,7 @@ final class Yandex extends AbstractHttpProvider implements Provider
      * @param string          $toponym toponym biasing only for reverse geocoding (optional)
      * @param string|null     $apiKey  API Key
      */
-    public function __construct(ClientInterface $client, string $toponym = null, string $apiKey = null)
+    public function __construct(ClientInterface $client, ?string $toponym = null, ?string $apiKey = null)
     {
         parent::__construct($client);
 
@@ -94,7 +94,7 @@ final class Yandex extends AbstractHttpProvider implements Provider
         return 'yandex';
     }
 
-    private function executeQuery(string $url, int $limit, string $locale = null): AddressCollection
+    private function executeQuery(string $url, int $limit, ?string $locale = null): AddressCollection
     {
         if (null !== $locale) {
             $url = sprintf('%s&lang=%s', $url, str_replace('_', '-', $locale));

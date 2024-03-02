@@ -141,7 +141,7 @@ class GoogleMapsTest extends BaseTestCase
 
     public function testReverse(): void
     {
-        $this->expectException(\Geocoder\Exception\InvalidServerResponse::class);
+        $this->expectException(InvalidServerResponse::class);
 
         $provider = new GoogleMaps($this->getMockedHttpClient(), null, 'mock-api-key');
         $provider->reverseQuery(ReverseQuery::fromCoordinates(1, 2));
