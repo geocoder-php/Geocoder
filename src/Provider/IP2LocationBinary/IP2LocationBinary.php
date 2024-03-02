@@ -39,7 +39,7 @@ final class IP2LocationBinary extends AbstractProvider implements Provider
      * @throws FunctionNotFound if IP2Location's library not installed
      * @throws InvalidArgument  if dat file is not correct (optional)
      */
-    public function __construct(string $binFile, int $openFlag = null)
+    public function __construct(string $binFile, ?int $openFlag = null)
     {
         if (false === class_exists('\\IP2Location\\Database')) {
             throw new FunctionNotFound('ip2location_database', 'The IP2LocationBinary requires IP2Location\'s library to be installed and loaded.');

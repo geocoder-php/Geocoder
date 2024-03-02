@@ -94,7 +94,7 @@ final class Geonames extends AbstractHttpProvider implements Provider
     /**
      * @return CountryInfo[]
      */
-    public function getCountryInfo(string $country = null, string $locale = null): array
+    public function getCountryInfo(?string $country = null, ?string $locale = null): array
     {
         $url = sprintf(self::BASE_ENDPOINT_URL, 'countryInfoJSON', $this->username);
 
@@ -154,7 +154,7 @@ final class Geonames extends AbstractHttpProvider implements Provider
         return 'geonames';
     }
 
-    private function executeQuery(string $url, string $locale = null): AddressCollection
+    private function executeQuery(string $url, ?string $locale = null): AddressCollection
     {
         if (null !== $locale) {
             // Locale code transformation: for example from it_IT to it

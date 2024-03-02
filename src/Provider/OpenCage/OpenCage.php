@@ -99,7 +99,7 @@ final class OpenCage extends AbstractHttpProvider implements Provider
     /**
      * @throws \Geocoder\Exception\Exception
      */
-    private function executeQuery(string $url, string $locale = null): AddressCollection
+    private function executeQuery(string $url, ?string $locale = null): AddressCollection
     {
         if (null !== $locale) {
             $url = sprintf('%s&language=%s', $url, $locale);
