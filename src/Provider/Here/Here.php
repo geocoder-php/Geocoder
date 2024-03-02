@@ -21,7 +21,6 @@ use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Model\AddressBuilder;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Provider\Here\Model\HereAddress;
-use Geocoder\Provider\Provider;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\Query;
 use Geocoder\Query\ReverseQuery;

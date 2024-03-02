@@ -19,11 +19,10 @@ use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Model\Address;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Provider\AbstractProvider;
-use Geocoder\Provider\Provider;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 
-final class MaxMindBinary extends AbstractProvider implements Provider
+final class MaxMindBinary extends AbstractProvider
 {
     /**
      * @var string

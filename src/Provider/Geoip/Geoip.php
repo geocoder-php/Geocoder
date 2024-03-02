@@ -18,7 +18,6 @@ use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Model\Address;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Provider\AbstractProvider;
-use Geocoder\Provider\Provider;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 
@@ -27,7 +26,7 @@ use Geocoder\Query\ReverseQuery;
  *
  * @see http://php.net/manual/ref.geoip.php
  */
-final class Geoip extends AbstractProvider implements Provider
+final class Geoip extends AbstractProvider
 {
     public function __construct()
     {

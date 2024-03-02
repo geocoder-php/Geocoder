@@ -25,7 +25,6 @@ use Geocoder\Provider\GoogleMapsPlaces\Model\GooglePlace;
 use Geocoder\Provider\GoogleMapsPlaces\Model\OpeningHours;
 use Geocoder\Provider\GoogleMapsPlaces\Model\Photo;
 use Geocoder\Provider\GoogleMapsPlaces\Model\PlusCode;
-use Geocoder\Provider\Provider;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\Query;
 use Geocoder\Query\ReverseQuery;

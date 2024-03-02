@@ -15,12 +15,11 @@ namespace Geocoder\Provider\OpenRouteService;
 use Geocoder\Collection;
 use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Provider\Pelias\Pelias;
-use Geocoder\Provider\Provider;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use Psr\Http\Client\ClientInterface;
 
-final class OpenRouteService extends Pelias implements Provider
+final class OpenRouteService extends Pelias
 {
     public const API_URL = 'https://api.openrouteservice.org/geocode';
 

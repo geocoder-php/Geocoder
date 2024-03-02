@@ -19,7 +19,6 @@ use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Model\Address;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Provider\AbstractProvider;
-use Geocoder\Provider\Provider;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use GeoIp2\Exception\AddressNotFoundException;
@@ -29,7 +28,7 @@ use GeoIp2\Exception\OutOfQueriesException;
 /**
  * @author Jens Wiese <jens@howtrueisfalse.de>
  */
-final class GeoIP2 extends AbstractProvider implements Provider
+final class GeoIP2 extends AbstractProvider
 {
     /**
      * @var GeoIP2Adapter
