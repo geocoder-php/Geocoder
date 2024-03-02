@@ -15,7 +15,7 @@ jobs:
       matrix:
         php-version: ['8.0', '8.1', '8.2']
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Use PHP ${{ matrix.php-version }}
       uses: shivammathur/setup-php@v2
       with:
