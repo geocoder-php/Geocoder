@@ -119,7 +119,7 @@ final class CountryInfo
         return $this->continent;
     }
 
-    public function withContinent(string $continent = null): self
+    public function withContinent(?string $continent = null): self
     {
         $new = clone $this;
         $new->continent = $continent;
@@ -135,7 +135,7 @@ final class CountryInfo
         return $this->capital;
     }
 
-    public function withCapital(string $capital = null): self
+    public function withCapital(?string $capital = null): self
     {
         $new = clone $this;
         $new->capital = $capital;
@@ -167,7 +167,7 @@ final class CountryInfo
         return $this->geonameId;
     }
 
-    public function withGeonameId(int $geonameId = null): self
+    public function withGeonameId(?int $geonameId = null): self
     {
         $new = clone $this;
         $new->geonameId = null === $geonameId ? null : (int) $geonameId;
@@ -183,7 +183,7 @@ final class CountryInfo
         return $this->isoAlpha3;
     }
 
-    public function withIsoAlpha3(string $isoAlpha3 = null): self
+    public function withIsoAlpha3(?string $isoAlpha3 = null): self
     {
         $new = clone $this;
         $new->isoAlpha3 = $isoAlpha3;
@@ -199,7 +199,7 @@ final class CountryInfo
         return $this->fipsCode;
     }
 
-    public function withFipsCode(string $fipsCode = null): self
+    public function withFipsCode(?string $fipsCode = null): self
     {
         $new = clone $this;
         $new->fipsCode = $fipsCode;
@@ -234,7 +234,7 @@ final class CountryInfo
         return $this->isoNumeric;
     }
 
-    public function withIsoNumeric(string $isoNumeric = null): self
+    public function withIsoNumeric(?string $isoNumeric = null): self
     {
         $new = clone $this;
         $new->isoNumeric = null === $isoNumeric ? null : (int) $isoNumeric;
@@ -250,7 +250,7 @@ final class CountryInfo
         return $this->areaInSqKm;
     }
 
-    public function withAreaInSqKm(string $areaInSqKm = null): self
+    public function withAreaInSqKm(?string $areaInSqKm = null): self
     {
         $new = clone $this;
         $new->areaInSqKm = null === $areaInSqKm ? null : (float) $areaInSqKm;
@@ -266,7 +266,7 @@ final class CountryInfo
         return $this->countryCode;
     }
 
-    public function withCountryCode(string $countryCode = null): self
+    public function withCountryCode(?string $countryCode = null): self
     {
         $new = clone $this;
         $new->countryCode = $countryCode;
@@ -282,7 +282,7 @@ final class CountryInfo
         return $this->countryName;
     }
 
-    public function withCountryName(string $countryName = null): self
+    public function withCountryName(?string $countryName = null): self
     {
         $new = clone $this;
         $new->countryName = $countryName;
@@ -298,7 +298,7 @@ final class CountryInfo
         return $this->continentName;
     }
 
-    public function withContinentName(string $continentName = null): self
+    public function withContinentName(?string $continentName = null): self
     {
         $new = clone $this;
         $new->continentName = $continentName;
@@ -314,7 +314,7 @@ final class CountryInfo
         return $this->currencyCode;
     }
 
-    public function withCurrencyCode(string $currencyCode = null): self
+    public function withCurrencyCode(?string $currencyCode = null): self
     {
         $new = clone $this;
         $new->currencyCode = $currencyCode;

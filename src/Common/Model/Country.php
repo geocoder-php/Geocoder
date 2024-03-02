@@ -31,7 +31,7 @@ final class Country
      */
     private $code;
 
-    public function __construct(string $name = null, string $code = null)
+    public function __construct(?string $name = null, ?string $code = null)
     {
         if (null === $name && null === $code) {
             throw new InvalidArgument('A country must have either a name or a code');

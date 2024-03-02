@@ -45,7 +45,7 @@ class ProviderAggregator implements Geocoder
      */
     private $decider;
 
-    public function __construct(callable $decider = null, int $limit = Geocoder::DEFAULT_RESULT_LIMIT)
+    public function __construct(?callable $decider = null, int $limit = Geocoder::DEFAULT_RESULT_LIMIT)
     {
         $this->limit = $limit;
         $this->decider = $decider ?? __CLASS__.'::getProvider';
@@ -134,7 +134,7 @@ class ProviderAggregator implements Geocoder
      *
      * @throws ProviderNotRegistered
      */
-    private static function getProvider($query, array $providers, Provider $currentProvider = null): Provider
+    private static function getProvider($query, array $providers, ?Provider $currentProvider = null): Provider
     {
         if (null !== $currentProvider) {
             return $currentProvider;

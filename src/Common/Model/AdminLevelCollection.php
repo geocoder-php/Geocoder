@@ -77,7 +77,7 @@ final class AdminLevelCollection implements \IteratorAggregate, \Countable
     /**
      * @return AdminLevel[]
      */
-    public function slice(int $offset, int $length = null): array
+    public function slice(int $offset, ?int $length = null): array
     {
         return array_slice($this->adminLevels, $offset, $length, true);
     }
