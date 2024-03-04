@@ -19,6 +19,7 @@ use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Model\Address;
 use Geocoder\Model\AddressCollection;
+use Geocoder\Provider\Pelias\Model\PeliasAddress;
 use Geocoder\Provider\Provider;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
@@ -132,48 +133,55 @@ class Pelias extends AbstractHttpProvider implements Provider
 
         $results = [];
         foreach ($locations as $location) {
-            if (isset($location['bbox'])) {
-                $bounds = [
-                    'south' => $location['bbox'][3],
-                    'west' => $location['bbox'][2],
-                    'north' => $location['bbox'][1],
-                    'east' => $location['bbox'][0],
-                ];
-            } else {
-                $bounds = [
-                    'south' => null,
-                    'west' => null,
-                    'north' => null,
-                    'east' => null,
-                ];
-            }
-
-            $props = $location['properties'];
-
-            $adminLevels = [];
-            foreach (['region', 'county', 'locality', 'macroregion', 'country'] as $i => $component) {
-                if (isset($props[$component])) {
-                    $adminLevels[] = ['name' => $props[$component], 'level' => $i + 1];
-                }
-            }
-
-            $results[] = Address::createFromArray([
-                'providedBy' => $this->getName(),
-                'latitude' => $location['geometry']['coordinates'][1],
-                'longitude' => $location['geometry']['coordinates'][0],
-                'bounds' => $bounds,
-                'streetNumber' => isset($props['housenumber']) ? $props['housenumber'] : null,
-                'streetName' => isset($props['street']) ? $props['street'] : null,
-                'subLocality' => isset($props['neighbourhood']) ? $props['neighbourhood'] : null,
-                'locality' => isset($props['locality']) ? $props['locality'] : null,
-                'postalCode' => isset($props['postalcode']) ? $props['postalcode'] : null,
-                'adminLevels' => $adminLevels,
-                'country' => isset($props['country']) ? $props['country'] : null,
-                'countryCode' => isset($props['country_a']) ? strtoupper($props['country_a']) : null,
-            ]);
+            $results[] = $this->buildAddress($location);
         }
 
         return new AddressCollection($results);
+    }
+
+    /**
+     * Build the Address object from the the Feature.
+     *
+     * @param array<mixed> $location the Feature array
+     *
+     * @return PeliasAddress the address object
+     */
+    protected function buildAddress(array $location): PeliasAddress
+    {
+        $bounds = [
+            'south' => $location['bbox'][3] ?? null,
+            'west' => $location['bbox'][2] ?? null,
+            'north' => $location['bbox'][1] ?? null,
+            'east' => $location['bbox'][0] ?? null,
+        ];
+
+        $props = $location['properties'];
+        $adminLevels = [];
+        foreach (['region', 'county', 'locality', 'macroregion', 'country'] as $i => $component) {
+            if (isset($props[$component])) {
+                $adminLevels[] = ['name' => $props[$component], 'level' => $i + 1];
+            }
+        }
+
+        return PeliasAddress::createFromArray([
+            'providedBy' => $this->getName(),
+            'latitude' => $location['geometry']['coordinates'][1],
+            'longitude' => $location['geometry']['coordinates'][0],
+            'bounds' => $bounds,
+            'streetNumber' => $props['housenumber'] ?? null,
+            'streetName' => $props['street'] ?? null,
+            'subLocality' => $props['neighbourhood'] ?? null,
+            'locality' => $props['locality'] ?? null,
+            'postalCode' => $props['postalcode'] ?? null,
+            'adminLevels' => $adminLevels,
+            'country' => $props['country'] ?? null,
+            'countryCode' => isset($props['country_a']) ? strtoupper($props['country_a']) : null,
+            'layer' => $props['layer'] ?? null,
+            'confidence' => $props['confidence'] ?? null,
+            'match_type' => $props['match_type'] ?? null,
+            'source' => $props['source'] ?? null,
+            'accuracy' => $props['accuracy'] ?? null,
+        ]);
     }
 
     /**
