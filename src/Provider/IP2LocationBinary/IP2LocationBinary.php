@@ -81,9 +81,9 @@ final class IP2LocationBinary extends AbstractProvider implements Provider
             Address::createFromArray([
                 'providedBy' => $this->getName(),
                 'countryCode' => $records['countryCode'],
-                'country' => null === $records['countryName'] ? null : utf8_encode($records['countryName']),
+                'country' => null === $records['countryName'] ? null : mb_convert_encoding($records['countryName'], 'UTF-8', 'ISO-8859-1'),
                 'adminLevels' => $adminLevels,
-                'locality' => null === $records['cityName'] ? null : utf8_encode($records['cityName']),
+                'locality' => null === $records['cityName'] ? null : mb_convert_encoding($records['cityName'], 'UTF-8', 'ISO-8859-1'),
                 'latitude' => $records['latitude'],
                 'longitude' => $records['longitude'],
                 'postalCode' => $records['zipCode'],
