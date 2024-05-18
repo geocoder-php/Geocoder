@@ -197,7 +197,7 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
      * @throws InvalidServerResponse
      * @throws InvalidCredentials
      */
-    private function fetchUrl(string $url, ?string $locale = null, int $limit, ?string $region = null): AddressCollection
+    private function fetchUrl(string $url, ?string $locale = null, int $limit = 1, ?string $region = null): AddressCollection
     {
         $url = $this->buildQuery($url, $locale, $region);
         $content = $this->getUrlContents($url);
