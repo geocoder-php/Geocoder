@@ -16,6 +16,7 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 ### Changed
 
 - Migrate from PHP-HTTP to PSR-18 client
+- Admin levels are numbered in a strict top->down order. 1 is the Country level, 5 is the locality level.
 
 ## 1.3.0
 
