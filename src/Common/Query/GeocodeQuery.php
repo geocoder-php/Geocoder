@@ -24,7 +24,7 @@ final class GeocodeQuery implements Query
     /**
      * The address or text that should be geocoded.
      *
-     * @var string
+     * @var string | null
      */
     private $text;
 
@@ -48,16 +48,12 @@ final class GeocodeQuery implements Query
      */
     private $data = [];
 
-    private function __construct(string $text)
+    private function __construct(?string $text)
     {
-        if ('' === $text) {
-            throw new InvalidArgument('Geocode query cannot be empty');
-        }
-
         $this->text = $text;
     }
 
-    public static function create(string $text): self
+    public static function create(?string $text): self
     {
         return new self($text);
     }
@@ -102,7 +98,7 @@ final class GeocodeQuery implements Query
         return $new;
     }
 
-    public function getText(): string
+    public function getText(): ?string
     {
         return $this->text;
     }
