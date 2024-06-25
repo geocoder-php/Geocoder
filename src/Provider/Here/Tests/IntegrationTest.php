@@ -28,6 +28,7 @@ use Psr\Http\Client\ClientInterface;
 
 /**
  * @author Sébastien Barré <sebastien@sheub.eu>
+ *
  * @group here
  * @group here-integration
  */

@@ -2,6 +2,16 @@
 
 The change log describes what is "Added", "Removed", "Changed" or "Fixed" between each release.
 
+## 0.8.0
+
+### Added
+
+- Add support for GS7 API as per https://www.here.com/docs/bundle/geocoding-and-search-api-v7-api-reference/page/index.html
+
+### Removed
+
+- Drop support for Geocode version 6
+
 ## 0.7.1
 
 ### Fixed

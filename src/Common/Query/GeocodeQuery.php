@@ -12,7 +12,6 @@ declare(strict_types=1);
 
 namespace Geocoder\Query;
 
-use Geocoder\Exception\InvalidArgument;
 use Geocoder\Geocoder;
 use Geocoder\Model\Bounds;
 
@@ -24,7 +23,7 @@ final class GeocodeQuery implements Query
     /**
      * The address or text that should be geocoded.
      *
-     * @var string | null
+     * @var string|null
      */
     private $text;
 
