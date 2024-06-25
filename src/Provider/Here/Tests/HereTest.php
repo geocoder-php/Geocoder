@@ -47,7 +47,7 @@ class HereTest extends BaseTestCase
     }
 
     /**
-     * @throws Exception
+     * @throws Exception|\JsonException
      */
     public function testGeocodeWithRealAddress(): void
     {
@@ -62,7 +62,6 @@ class HereTest extends BaseTestCase
         $this->assertInstanceOf(AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
-        /** @var Location $result */
         $result = $results->first();
 
         $this->assertInstanceOf(Address::class, $result);
@@ -83,7 +82,7 @@ class HereTest extends BaseTestCase
     }
 
     /**
-     * @throws Exception
+     * @throws Exception|\JsonException
      */
     public function testGeocodeWithQualifiedQuery(): void
     {
@@ -126,7 +125,7 @@ class HereTest extends BaseTestCase
     }
 
     /**
-     * @throws Exception
+     * @throws Exception|\JsonException
      */
     public function testGeocodeWithCenterOn(): void
     {
@@ -167,7 +166,7 @@ class HereTest extends BaseTestCase
     }
 
     /**
-     * @throws Exception
+     * @throws \JsonException
      */
     public function testGeocodeWithCenterOnWithTwoManyCoordinates(): void
     {
@@ -192,7 +191,7 @@ class HereTest extends BaseTestCase
     }
 
     /**
-     * @throws Exception
+     * @throws Exception|\JsonException
      */
     public function testGeocodeWithInString(): void
     {
@@ -225,7 +224,7 @@ class HereTest extends BaseTestCase
     }
 
     /**
-     * @throws Exception
+     * @throws Exception|\JsonException
      */
     public function testGeocodeWithInArray(): void
     {
@@ -250,7 +249,7 @@ class HereTest extends BaseTestCase
     }
 
     /**
-     * @throws Exception
+     * @throws \JsonException
      */
     public function testGeocodeWithInvalidIn(): void
     {
@@ -269,7 +268,7 @@ class HereTest extends BaseTestCase
     }
 
     /**
-     * @throws Exception
+     * @throws \JsonException
      */
     public function testGeocodeWithLimit(): void
     {
@@ -288,7 +287,7 @@ class HereTest extends BaseTestCase
     }
 
     /**
-     * @throws Exception
+     * @throws \JsonException
      */
     public function testGeocodeWithNegativeInvalidLimit(): void
     {
@@ -307,7 +306,7 @@ class HereTest extends BaseTestCase
     }
 
     /**
-     * @throws Exception
+     * @throws \JsonException
      */
     public function testGeocodeWithOvermaxInvalidLimit(): void
     {
@@ -326,7 +325,7 @@ class HereTest extends BaseTestCase
     }
 
     /**
-     * @throws Exception
+     * @throws Exception|\JsonException
      */
     public function testGeocodeWithTypes(): void
     {
@@ -352,7 +351,7 @@ class HereTest extends BaseTestCase
     }
 
     /**
-     * @throws Exception
+     * @throws \JsonException
      */
     public function testGeocodeWithInvalidTypes(): void
     {
@@ -371,7 +370,7 @@ class HereTest extends BaseTestCase
     }
 
     /**
-     * @throws Exception
+     * @throws Exception|\JsonException
      */
     public function testGeocodeWithPoliticalView(): void
     {
@@ -405,7 +404,7 @@ class HereTest extends BaseTestCase
     }
 
     /**
-     * @throws Exception
+     * @throws \JsonException
      */
     public function testGeocodeWithInvalidPoliticalView(): void
     {
@@ -425,7 +424,7 @@ class HereTest extends BaseTestCase
     }
 
     /**
-     * @throws Exception
+     * @throws Exception|\JsonException
      */
     public function testGeocodeWithShowParams(): void
     {
@@ -462,11 +461,10 @@ class HereTest extends BaseTestCase
             ],
             $additionalData['streetInfo']
         );
-        //        $this->assertEquals(,$additionalData['postalCodeDetails']); //TODO Why isn't this working?
     }
 
     /**
-     * @throws Exception
+     * @throws \JsonException
      */
     public function testGeocodeWithShowParamsNotArray(): void
     {
@@ -485,7 +483,7 @@ class HereTest extends BaseTestCase
     }
 
     /**
-     * @throws Exception
+     * @throws \JsonException
      */
     public function testGeocodeWithInvalidShowParams(): void
     {
@@ -504,7 +502,7 @@ class HereTest extends BaseTestCase
     }
 
     /**
-     * @throws Exception
+     * @throws Exception|\JsonException
      */
     public function testGeocodeWithShowMapReferenceParams(): void
     {
@@ -537,7 +535,7 @@ class HereTest extends BaseTestCase
     }
 
     /**
-     * @throws Exception
+     * @throws \JsonException
      */
     public function testGeocodeWithShowMapReferenceParamsNotArray(): void
     {
@@ -556,7 +554,7 @@ class HereTest extends BaseTestCase
     }
 
     /**
-     * @throws Exception
+     * @throws \JsonException
      */
     public function testGeocodeWithInvalidShowMapReferenceParams(): void
     {
@@ -575,7 +573,7 @@ class HereTest extends BaseTestCase
     }
 
     /**
-     * @throws Exception
+     * @throws Exception|\JsonException
      */
     public function testGeocodeWithShowNavAttributesParams(): void
     {
@@ -603,7 +601,7 @@ class HereTest extends BaseTestCase
     }
 
     /**
-     * @throws Exception
+     * @throws \JsonException
      */
     public function testGeocodeWithShowNavAttributesNotArray(): void
     {
@@ -621,9 +619,6 @@ class HereTest extends BaseTestCase
         $provider->geocodeQuery($query);
     }
 
-    /**
-     * @throws Exception
-     */
     public function testGeocodeWithInvalidShowNavAttributesParams(): void
     {
         if (!isset($_SERVER['HERE_API_KEY'])) {
@@ -641,7 +636,7 @@ class HereTest extends BaseTestCase
     }
 
     /**
-     * @throws Exception
+     * @throws Exception|\JsonException
      */
     public function testReverseWithRealCoordinates(): void
     {
@@ -674,7 +669,7 @@ class HereTest extends BaseTestCase
     }
 
     /**
-     * @throws Exception
+     * @throws Exception|\JsonException
      */
     public function testReverseWithBearing(): void
     {
@@ -701,7 +696,7 @@ class HereTest extends BaseTestCase
     }
 
     /**
-     * @throws Exception
+     * @throws \JsonException
      */
     public function testReverseWithInvalidBearing(): void
     {
@@ -721,7 +716,7 @@ class HereTest extends BaseTestCase
     }
 
     /**
-     * @throws Exception
+     * @throws Exception|\JsonException
      */
     public function testReverseWithIn(): void
     {
@@ -756,7 +751,7 @@ class HereTest extends BaseTestCase
     }
 
     /**
-     * @throws Exception
+     * @throws \JsonException
      */
     public function testReverseWithInvalidIn(): void
     {
@@ -776,7 +771,7 @@ class HereTest extends BaseTestCase
     }
 
     /**
-     * @throws Exception
+     * @throws \JsonException
      */
     public function testReverseWithLimit(): void
     {
@@ -796,7 +791,7 @@ class HereTest extends BaseTestCase
     }
 
     /**
-     * @throws Exception
+     * @throws \JsonException
      */
     public function testReverseWithNegativeInvalidLimit(): void
     {
@@ -816,7 +811,7 @@ class HereTest extends BaseTestCase
     }
 
     /**
-     * @throws Exception
+     * @throws \JsonException
      */
     public function testReverseWithOverMaxInvalidLimit(): void
     {
@@ -836,7 +831,7 @@ class HereTest extends BaseTestCase
     }
 
     /**
-     * @throws Exception
+     * @throws Exception|\JsonException
      */
     public function testReverseWithTypes(): void
     {
@@ -861,7 +856,7 @@ class HereTest extends BaseTestCase
     }
 
     /**
-     * @throws Exception
+     * @throws \JsonException
      */
     public function testReverseWithInvalidTypes(): void
     {
@@ -881,7 +876,7 @@ class HereTest extends BaseTestCase
     }
 
     /**
-     * @throws Exception
+     * @throws Exception|\JsonException
      */
     public function testReverseWithLocale(): void
     {
@@ -915,7 +910,7 @@ class HereTest extends BaseTestCase
     }
 
     /**
-     * @throws Exception
+     * @throws Exception|\JsonException
      */
     public function testReverseWithPoliticalView(): void
     {
@@ -949,7 +944,7 @@ class HereTest extends BaseTestCase
     }
 
     /**
-     * @throws Exception
+     * @throws \JsonException
      */
     public function testReverseWithInvalidPoliticalView(): void
     {
@@ -969,7 +964,7 @@ class HereTest extends BaseTestCase
     }
 
     /**
-     * @throws Exception
+     * @throws Exception|\JsonException
      */
     public function testReverseWithShow(): void
     {
@@ -1010,7 +1005,7 @@ class HereTest extends BaseTestCase
     }
 
     /**
-     * @throws Exception
+     * @throws \JsonException
      */
     public function testReverseWithShowNotArray(): void
     {
@@ -1030,7 +1025,7 @@ class HereTest extends BaseTestCase
     }
 
     /**
-     * @throws Exception
+     * @throws \JsonException
      */
     public function testReverseWithInvalidShowParams(): void
     {
@@ -1050,7 +1045,7 @@ class HereTest extends BaseTestCase
     }
 
     /**
-     * @throws Exception
+     * @throws Exception|\JsonException
      */
     public function testReverseWithShowMapReferences(): void
     {
@@ -1084,7 +1079,7 @@ class HereTest extends BaseTestCase
     }
 
     /**
-     * @throws Exception
+     * @throws \JsonException
      */
     public function testReverseWithShowMapReferencesNotArray(): void
     {
@@ -1104,7 +1099,7 @@ class HereTest extends BaseTestCase
     }
 
     /**
-     * @throws Exception
+     * @throws \JsonException
      */
     public function testReverseWithInvalidShowMapReferences(): void
     {
@@ -1124,7 +1119,7 @@ class HereTest extends BaseTestCase
     }
 
     /**
-     * @throws Exception
+     * @throws Exception|\JsonException
      */
     public function testReverseWithShowNavAttributes(): void
     {
@@ -1153,7 +1148,7 @@ class HereTest extends BaseTestCase
     }
 
     /**
-     * @throws Exception
+     * @throws \JsonException
      */
     public function testReverseWithShowNavAttributesNotArray(): void
     {
@@ -1173,7 +1168,7 @@ class HereTest extends BaseTestCase
     }
 
     /**
-     * @throws Exception
+     * @throws \JsonException
      */
     public function testReverseWithInvalidShowNavAttributes(): void
     {
@@ -1198,6 +1193,9 @@ class HereTest extends BaseTestCase
         $this->assertEquals('Here', $provider->getName());
     }
 
+    /**
+     * @throws \JsonException
+     */
     public function testGeocodeWithInvalidData(): void
     {
         $this->expectException(InvalidServerResponse::class);
@@ -1206,6 +1204,9 @@ class HereTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('foobar'));
     }
 
+    /**
+     * @throws \JsonException
+     */
     public function testGeocodeIpv4(): void
     {
         $this->expectException(UnsupportedOperation::class);
@@ -1215,6 +1216,9 @@ class HereTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
     }
 
+    /**
+     * @throws \JsonException
+     */
     public function testGeocodeWithLocalhostIPv6(): void
     {
         $this->expectException(UnsupportedOperation::class);
@@ -1224,6 +1228,9 @@ class HereTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
+    /**
+     * @throws \JsonException
+     */
     public function testGeocodeInvalidApiKey(): void
     {
         $this->expectException(InvalidCredentials::class);
@@ -1242,6 +1249,9 @@ class HereTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('New York'));
     }
 
+    /**
+     * @throws \JsonException
+     */
     public function testGeocodeWithRealIPv6(): void
     {
         $this->expectException(UnsupportedOperation::class);

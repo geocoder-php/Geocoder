@@ -210,6 +210,9 @@ final class Here extends AbstractHttpProvider
         return $this->executeQuery(sprintf('%s?%s', $this->getBaseUrl($query), http_build_query($queryParams)), $query->getLimit());
     }
 
+    /**
+     * @throws \JsonException
+     */
     public function reverseQuery(ReverseQuery $query): Collection
     {
         $queryParams = $this->withApiCredentials([]);

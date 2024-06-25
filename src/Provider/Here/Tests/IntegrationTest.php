@@ -38,7 +38,7 @@ class IntegrationTest extends ProviderIntegrationTest
 
     protected bool $testIpv6 = false;
 
-    protected function createProvider(ClientInterface $httpClient)
+    protected function createProvider(ClientInterface $httpClient): Here
     {
         return Here::createUsingApiKey($httpClient, $this->getApiKey(), true);
     }
@@ -50,10 +50,8 @@ class IntegrationTest extends ProviderIntegrationTest
 
     /**
      * This client will make real request if cache was not found.
-     *
-     * @return CachedResponseClient
      */
-    private function getCachedHttpClient()
+    private function getCachedHttpClient(): CachedResponseClient
     {
         try {
             $client = Psr18ClientDiscovery::find();
@@ -88,7 +86,7 @@ class IntegrationTest extends ProviderIntegrationTest
     }
 
     /**
-     * @throws Exception
+     * @throws Exception|\JsonException
      */
     public function testGeocodeQuery(): void
     {
@@ -116,7 +114,7 @@ class IntegrationTest extends ProviderIntegrationTest
     }
 
     /**
-     * @throws Exception
+     * @throws \JsonException
      */
     public function testGeocodeQueryWithNoResults(): void
     {
@@ -135,7 +133,7 @@ class IntegrationTest extends ProviderIntegrationTest
     }
 
     /**
-     * @throws Exception
+     * @throws \JsonException
      */
     public function testReverseQuery(): void
     {
@@ -154,7 +152,7 @@ class IntegrationTest extends ProviderIntegrationTest
     }
 
     /**
-     * @throws Exception
+     * @throws \JsonException
      */
     public function testReverseQueryWithNoResults(): void
     {
