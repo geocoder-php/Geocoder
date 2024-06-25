@@ -21,7 +21,6 @@ use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Model\AddressBuilder;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Provider\Here\Model\HereAddress;
-use Geocoder\Provider\Provider;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\Query;
 use Geocoder\Query\ReverseQuery;
@@ -30,7 +29,7 @@ use Psr\Http\Client\ClientInterface;
 /**
  * @author Sébastien Barré <sebastien@sheub.eu>
  */
-final class Here extends AbstractHttpProvider implements Provider
+final class Here extends AbstractHttpProvider
 {
     /**
      * @var string
@@ -41,29 +40,6 @@ final class Here extends AbstractHttpProvider implements Provider
      * @var string
      */
     public const REVERSE_ENDPOINT_URL = 'https://revgeocode.search.hereapi.com/v1/revgeocode';
-
-    /**
-     * @var string[]
-     */
-    public const GEOCODE_ADDITIONAL_DATA_PARAMS = [
-        'CrossingStreets',
-        'PreserveUnitDesignators',
-        'Country2',
-        'IncludeChildPOIs',
-        'IncludeRoutingInformation',
-        'AdditionalAddressProvider',
-        'HouseNumberMode',
-        'FlexibleAdminValues',
-        'IntersectionSnapTolerance',
-        'AddressRangeSqueezeOffset',
-        'AddressRangeSqueezeFactor',
-        'AddressRangeSqueezeOffset',
-        'IncludeShapeLevel',
-        'RestrictLevel',
-        'SuppressStreetType',
-        'NormalizeNames',
-        'IncludeMicroPointAddresses',
-    ];
 
     /**
      * @var string[]
@@ -112,14 +88,14 @@ final class Here extends AbstractHttpProvider implements Provider
     public const GEOCODE_SHOW_PARAMS = [
         'countryInfo',
         'parsing',
-        'postalCodeDetails', // does not work
+        'postalCodeDetails',
         'streetInfo',
         'tz',
     ];
 
     public const REV_GEOCODE_SHOW_PARAMS = [
         'countryInfo',
-        'postalCodeDetails', // does not work
+        'postalCodeDetails',
         'streetInfo',
         'tz',
     ];
@@ -137,26 +113,16 @@ final class Here extends AbstractHttpProvider implements Provider
         'physical',
     ];
 
-    /**
-     * @var string
-     */
-    private $appId;
-
-    /**
-     * @var string
-     */
-    private $appCode;
-
-    /**
-     * @var string
-     */
-    private $apiKey;
+    private ?string $appId;
+    private ?string $appCode;
+    private ?string $apiKey = null;
+    private bool $useTestHeader;
 
     /**
      * @param ClientInterface $client        an HTTP adapter
-     * @param string          $appId         an App ID
-     * @param string          $appCode       an App code
-     * @param bool            $useTestHeader use Customer Integration Testing environment (CIT) instead of production
+     * @param string|null     $appId         an App ID
+     * @param string|null     $appCode       an App code
+     * @param bool            $useTestHeader use testing header
      */
     public function __construct(ClientInterface $client, ?string $appId = null, ?string $appCode = null, bool $useTestHeader = false)
     {
@@ -169,12 +135,15 @@ final class Here extends AbstractHttpProvider implements Provider
 
     public static function createUsingApiKey(ClientInterface $client, string $apiKey, bool $useTestHeader = false): self
     {
-        $client = new self($client, null, null, $useTestHeader);
-        $client->apiKey = $apiKey;
+        $newClient = new self($client, null, null, $useTestHeader);
+        $newClient->apiKey = $apiKey;
 
-        return $client;
+        return $newClient;
     }
 
+    /**
+     * @throws \JsonException
+     */
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
         // This API doesn't handle IPs
@@ -193,9 +162,9 @@ final class Here extends AbstractHttpProvider implements Provider
                 if (!\array_key_exists('qq', $queryParams)) {
                     $queryParams['qq'] = '';
                 } else {
-                    $queryParams['qq'] = $queryParams['qq'].';';
+                    $queryParams['qq'] .= ';';
                 }
-                $queryParams['qq'] = $queryParams['qq'].$param.'='.$data;
+                $queryParams['qq'] .= $param.'='.$data;
             }
         }
 
@@ -224,36 +193,6 @@ final class Here extends AbstractHttpProvider implements Provider
             }
         }
 
-        if ($limit = $query->getData('limit')) {
-            if (!\is_int($limit) || $limit < 0 || $limit > 100) {
-                throw new InvalidArgument(sprintf('%s is not a valid value', $limit));
-            }
-
-            $queryParams['limit'] = $limit;
-        }
-
-        if ($types = $query->getData('types')) {
-            foreach ($types as $type) {
-                if (!\in_array($type, $this::GEOCODE_TYPES, true)) {
-                    throw new InvalidArgument(sprintf('"%s" is not a valid type', $type));
-                }
-            }
-
-            $queryParams['types'] = \implode(',', $types);
-        }
-
-        if ($local = $query->getLocale()) {
-            $queryParams['lang'] = $local;
-        }
-
-        if ($view = $query->getData('politicalView')) {
-            if (!\in_array($view, $this::GEOCODE_POLITICAL_VIEWS, true)) {
-                throw new InvalidArgument(sprintf('Political view for "%s" is not a supported', $view));
-            }
-
-            $queryParams['politicalView'] = $view;
-        }
-
         if ($showParams = $query->getData('show')) {
             if (!is_array($showParams)) {
                 throw new InvalidArgument('Show param(s) must be an array');
@@ -266,44 +205,9 @@ final class Here extends AbstractHttpProvider implements Provider
             $queryParams['show'] = \implode(',', $showParams);
         }
 
-        if ($showMapReferencesParams = $query->getData('showMapReferences')) {
-            if (!is_array($showMapReferencesParams)) {
-                throw new InvalidArgument('Show map reference preference(s) must be an array');
-            }
+        $queryParams = $this->buildGenericQueryPararms($query, $queryParams);
 
-            if (
-                \count(\array_intersect($showMapReferencesParams, $this::GEOCODE_SHOW_MAP_REFERENCE_PARAMS))
-                < \count($showMapReferencesParams)
-            ) {
-                throw new InvalidArgument(sprintf('Show map reference param(s) "%s" are invalid', implode(',', array_diff($showMapReferencesParams, $this::GEOCODE_SHOW_MAP_REFERENCE_PARAMS))));
-            }
-
-            $queryParams['showMapReferences'] = implode(',', $showMapReferencesParams);
-        }
-
-        if ($showNavAttributesParams = $query->getData('showNavAttributes')) {
-            if (!is_array($showNavAttributesParams)) {
-                throw new InvalidArgument('Show map nav attribute param(s) must be an array');
-            }
-
-            if (
-                \count(\array_intersect($showNavAttributesParams, $this::GEOCODE_SHOW_NAV_ATTRIBUTES))
-                < \count($showNavAttributesParams)
-            ) {
-                throw new InvalidArgument(sprintf('Show map nav attribute param(s) "%s" are invalid', implode(',', array_diff($showNavAttributesParams, $this::GEOCODE_SHOW_NAV_ATTRIBUTES))));
-            }
-
-            $queryParams['showNavAttributes'] = implode(',', $showNavAttributesParams);
-        }
-
-        return $this->executeQuery(
-            sprintf(
-                '%s?%s',
-                $this->getBaseUrl($query),
-                http_build_query($queryParams)
-            ),
-            $query->getLimit()
-        );
+        return $this->executeQuery(sprintf('%s?%s', $this->getBaseUrl($query), http_build_query($queryParams)), $query->getLimit());
     }
 
     public function reverseQuery(ReverseQuery $query): Collection
@@ -329,36 +233,6 @@ final class Here extends AbstractHttpProvider implements Provider
             $queryParams['bearing'] = $bearing;
         }
 
-        if ($limit = $query->getData('limit')) {
-            if (!\is_int($limit) || $limit < 0 || $limit > 100) {
-                throw new InvalidArgument(sprintf('%s is not a valid value', $limit));
-            }
-
-            $queryParams['limit'] = $limit;
-        }
-
-        if ($types = $query->getData('types')) {
-            foreach ($types as $type) {
-                if (!\in_array($type, $this::GEOCODE_TYPES, true)) {
-                    throw new InvalidArgument(sprintf('"%s" is not a valid type', $type));
-                }
-            }
-
-            $queryParams['types'] = \implode(',', $types);
-        }
-
-        if ($locale = $query->getLocale()) {
-            $queryParams['lang'] = $locale;
-        }
-
-        if ($view = $query->getData('politicalView')) {
-            if (!\in_array($view, $this::GEOCODE_POLITICAL_VIEWS, true)) {
-                throw new InvalidArgument(sprintf('Political view for "%s" is not a supported', $view));
-            }
-
-            $queryParams['politicalView'] = $view;
-        }
-
         if ($showParams = $query->getData('show')) {
             if (!is_array($showParams)) {
                 throw new InvalidArgument('Show param(s) must be an array');
@@ -371,39 +245,14 @@ final class Here extends AbstractHttpProvider implements Provider
             $queryParams['show'] = \implode(',', $showParams);
         }
 
-        if ($showMapReferencesParams = $query->getData('showMapReferences')) {
-            if (!is_array($showMapReferencesParams)) {
-                throw new InvalidArgument('Show map reference preference(s) must be an array');
-            }
-
-            if (
-                \count(\array_intersect($showMapReferencesParams, $this::GEOCODE_SHOW_MAP_REFERENCE_PARAMS))
-                < \count($showMapReferencesParams)
-            ) {
-                throw new InvalidArgument(sprintf('Show map reference param(s) "%s" are invalid', implode(',', array_diff($showMapReferencesParams, $this::GEOCODE_SHOW_MAP_REFERENCE_PARAMS))));
-            }
-
-            $queryParams['showMapReferences'] = implode(',', $showMapReferencesParams);
-        }
-
-        if ($showNavAttributesParams = $query->getData('showNavAttributes')) {
-            if (!is_array($showNavAttributesParams)) {
-                throw new InvalidArgument('Show map nav attribute param(s) must be an array');
-            }
-
-            if (
-                \count(\array_intersect($showNavAttributesParams, $this::GEOCODE_SHOW_NAV_ATTRIBUTES))
-                < \count($showNavAttributesParams)
-            ) {
-                throw new InvalidArgument(sprintf('Show map nav attribute param(s) "%s" are invalid', implode(',', array_diff($showNavAttributesParams, $this::GEOCODE_SHOW_NAV_ATTRIBUTES))));
-            }
-
-            $queryParams['showNavAttributes'] = implode(',', $showNavAttributesParams);
-        }
+        $queryParams = $this->buildGenericQueryPararms($query, $queryParams);
 
         return $this->executeQuery(sprintf('%s?%s', $this->getBaseUrl($query), http_build_query($queryParams)), $query->getLimit());
     }
 
+    /**
+     * @throws \JsonException
+     */
     private function executeQuery(string $url, int $limit): Collection
     {
         // X-OLP-Testing header keeps search relevance from being affected.
@@ -416,7 +265,7 @@ final class Here extends AbstractHttpProvider implements Provider
 
         $content = $this->getParsedResponse($response);
 
-        $json = json_decode($content, true);
+        $json = json_decode($content, true, 512, JSON_THROW_ON_ERROR);
 
         if (isset($json['error'])) {
             switch ($json['error']) {
@@ -429,7 +278,7 @@ final class Here extends AbstractHttpProvider implements Provider
             }
         }
 
-        if (!isset($json['items']) || empty($json['items'])) {
+        if (empty($json['items'])) {
             return new AddressCollection([]);
         }
 
@@ -457,7 +306,7 @@ final class Here extends AbstractHttpProvider implements Provider
                 'countryInfo' => $location['countryInfo'] ?? null,
                 'parsing' => $location['parsing'] ?? null,
                 'streetInfo' => $location['streetInfo'] ?? null,
-                'postalCodeDetails' => $location['postalCodeDetails'] ?? null, // TODO double check this
+                'postalCodeDetails' => $location['postalCodeDetails'] ?? null,
                 'mapReferences' => $location['mapReferences'] ?? null,
                 'navigationAttributes' => $location['navigationAttributes'] ?? null,
             ];
@@ -481,24 +330,6 @@ final class Here extends AbstractHttpProvider implements Provider
     public function getName(): string
     {
         return 'Here';
-    }
-
-    /**
-     * Get serialized additional data param.
-     */
-    private function getAdditionalDataParam(GeocodeQuery $query): string
-    {
-        $additionalDataParams = [
-            'IncludeShapeLevel' => 'country',
-        ];
-
-        foreach (self::GEOCODE_ADDITIONAL_DATA_PARAMS as $paramKey) {
-            if (null !== $query->getData($paramKey)) {
-                $additionalDataParams[$paramKey] = $query->getData($paramKey);
-            }
-        }
-
-        return $this->serializeComponents($additionalDataParams);
     }
 
     /**
@@ -537,14 +368,72 @@ final class Here extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * Serialize the component query parameter.
+     * @param array<string,string> $queryParams
      *
-     * @param array<string, string> $components
+     * @return array<string,string>
      */
-    private function serializeComponents(array $components): string
+    private function buildGenericQueryPararms(Query $query, array $queryParams): array
     {
-        return implode(';', array_map(function ($name, $value) {
-            return sprintf('%s,%s', $name, $value);
-        }, array_keys($components), $components));
+        if ($limit = $query->getData('limit')) {
+            if (!\is_int($limit) || $limit < 0 || $limit > 100) {
+                throw new InvalidArgument(sprintf('%s is not a valid value', $limit));
+            }
+
+            $queryParams['limit'] = $limit;
+        }
+
+        if ($types = $query->getData('types')) {
+            foreach ($types as $type) {
+                if (!\in_array($type, $this::GEOCODE_TYPES, true)) {
+                    throw new InvalidArgument(sprintf('"%s" is not a valid type', $type));
+                }
+            }
+
+            $queryParams['types'] = \implode(',', $types);
+        }
+
+        if ($locale = $query->getLocale()) {
+            $queryParams['lang'] = $locale;
+        }
+
+        if ($showMapReferencesParams = $query->getData('showMapReferences')) {
+            if (!is_array($showMapReferencesParams)) {
+                throw new InvalidArgument('Show map reference preference(s) must be an array');
+            }
+
+            if (
+                \count(\array_intersect($showMapReferencesParams, $this::GEOCODE_SHOW_MAP_REFERENCE_PARAMS))
+                < \count($showMapReferencesParams)
+            ) {
+                throw new InvalidArgument(sprintf('Show map reference param(s) "%s" are invalid', implode(',', array_diff($showMapReferencesParams, $this::GEOCODE_SHOW_MAP_REFERENCE_PARAMS))));
+            }
+
+            $queryParams['showMapReferences'] = implode(',', $showMapReferencesParams);
+        }
+
+        if ($showNavAttributesParams = $query->getData('showNavAttributes')) {
+            if (!is_array($showNavAttributesParams)) {
+                throw new InvalidArgument('Show map nav attribute param(s) must be an array');
+            }
+
+            if (
+                \count(\array_intersect($showNavAttributesParams, $this::GEOCODE_SHOW_NAV_ATTRIBUTES))
+                < \count($showNavAttributesParams)
+            ) {
+                throw new InvalidArgument(sprintf('Show map nav attribute param(s) "%s" are invalid', implode(',', array_diff($showNavAttributesParams, $this::GEOCODE_SHOW_NAV_ATTRIBUTES))));
+            }
+
+            $queryParams['showNavAttributes'] = implode(',', $showNavAttributesParams);
+        }
+
+        if ($view = $query->getData('politicalView')) {
+            if (!\in_array($view, $this::GEOCODE_POLITICAL_VIEWS, true)) {
+                throw new InvalidArgument(sprintf('Political view for "%s" is not a supported', $view));
+            }
+
+            $queryParams['politicalView'] = $view;
+        }
+
+        return $queryParams;
     }
 }
