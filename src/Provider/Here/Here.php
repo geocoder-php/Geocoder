@@ -88,7 +88,7 @@ final class Here extends AbstractHttpProvider
     public const GEOCODE_SHOW_PARAMS = [
         'countryInfo',
         'parsing',
-        'postalCodeDetails',
+        'postalCodeDetails', // Does not work as of Jun 26 2024. Response never returns postalCodeDetails property.
         'streetInfo',
         'tz',
     ];
