@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Geocoder\Query;
 
+use Geocoder\Exception\InvalidArgument;
 use Geocoder\Geocoder;
 use Geocoder\Model\Bounds;
 
@@ -49,6 +50,10 @@ final class GeocodeQuery implements Query
 
     private function __construct(?string $text)
     {
+        if ('' === $text) {
+            throw new InvalidArgument('Geocode query cannot be empty');
+        }
+
         $this->text = $text;
     }
 
