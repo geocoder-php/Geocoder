@@ -118,7 +118,7 @@ class GeoIP2AdapterTest extends TestCase
         $this->assertJson($result);
 
         $decodedResult = json_decode($result);
-        $this->assertObjectHasProperty('city', $decodedResult);
+        $this->assertObjectHasAttribute('city', $decodedResult);
     }
 
     /**
