@@ -107,8 +107,8 @@ final class HereAddress extends Address
     {
         $new = clone $this;
 
-        foreach ($additionalData as $key => $value) {
-            $new = $new->addAdditionalData($key, $value);
+        foreach ($additionalData as $data) {
+            $new = $new->addAdditionalData($data['key'], $data['value']);
         }
 
         return $new;
