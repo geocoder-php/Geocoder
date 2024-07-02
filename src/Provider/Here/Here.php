@@ -44,20 +44,6 @@ final class Here extends AbstractHttpProvider
     /**
      * @var string[]
      */
-    public const GEOCODE_QUALIFIED_QUERY_PARAMS = [
-        'houseNumber',
-        'street',
-        'city',
-        'district',
-        'county',
-        'state',
-        'country',
-        'postalCode',
-    ];
-
-    /**
-     * @var string[]
-     */
     public const GEOCODE_TYPES = [
         'address',
         'area',
@@ -153,23 +139,10 @@ final class Here extends AbstractHttpProvider
 
         $queryParams = $this->withApiCredentials([]);
 
-        if ($queryString = $query->getText()) {
-            $queryParams['q'] = $queryString;
-        }
-
-        foreach ($this::GEOCODE_QUALIFIED_QUERY_PARAMS as $param) {
-            if ($data = $query->getData($param)) {
-                if (!\array_key_exists('qq', $queryParams)) {
-                    $queryParams['qq'] = '';
-                } else {
-                    $queryParams['qq'] .= ';';
-                }
-                $queryParams['qq'] .= $param.'='.$data;
-            }
-        }
-
-        if (!\array_key_exists('q', $queryParams) && !\array_key_exists('qq', $queryParams)) {
-            throw new InvalidArgument('Query q or Qualified Query qq is required');
+        if (true === $query->getData('qq')) {
+            $queryParams['qq'] = $query->getText();
+        } else {
+            $queryParams['q'] = $query->getText();
         }
 
         if ($center = $query->getData('centerOn')) {
@@ -306,12 +279,12 @@ final class Here extends AbstractHttpProvider
             $builder->setTimezone($location['timeZone']['name'] ?? null);
 
             $additionalData = [
-                'countryInfo' => $location['countryInfo'] ?? null,
-                'parsing' => $location['parsing'] ?? null,
-                'streetInfo' => $location['streetInfo'] ?? null,
-                'postalCodeDetails' => $location['postalCodeDetails'] ?? null,
-                'mapReferences' => $location['mapReferences'] ?? null,
-                'navigationAttributes' => $location['navigationAttributes'] ?? null,
+                ['key' => 'countryInfo', 'value' => $location['countryInfo'] ?? null],
+                ['key' => 'parsing', 'value' => $location['parsing'] ?? null],
+                ['key' => 'streetInfo', 'value' => $location['streetInfo'] ?? null],
+                ['key' => 'postalCodeDetails', 'value' => $location['postalCodeDetails'] ?? null],
+                ['key' => 'mapReferences', 'value' => $location['mapReferences'] ?? null],
+                ['key' => 'navigationAttributes', 'value' => $location['navigationAttributes'] ?? null],
             ];
 
             /** @var HereAddress $address */
