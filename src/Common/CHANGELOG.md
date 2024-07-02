@@ -2,12 +2,6 @@
 
 The change log describes what is "Added", "Removed", "Changed" or "Fixed" between each release.
 
-## 4.7.0
-
-### Added
-
-- Add support for providers that use alternative queries to string search
-
 ## 4.6.0
 
 ### Removed
