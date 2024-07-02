@@ -92,13 +92,8 @@ class HereTest extends BaseTestCase
 
         $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY'], true);
 
-        $query = GeocodeQuery::create(null)
-            ->withData('houseNumber', '405')
-            ->withData('street', 'Urban St')
-            ->withData('city', 'lakewood')
-            ->withData('state', 'CO')
-            ->withData('postalCode', '80228')
-            ->withData('country', 'UnitedStates');
+        $query = GeocodeQuery::create('houseNumber=405;street=Urban St;city=lakewood;state=CO;postalCode=80228;country=UnitedStates')
+                             ->withData('qq', true);
 
         $results = $provider->geocodeQuery($query);
 
