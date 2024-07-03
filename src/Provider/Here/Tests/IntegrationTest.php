@@ -11,6 +11,7 @@
 namespace Geocoder\Provider\Here\Tests;
 
 use Geocoder\Collection;
+use Geocoder\Exception\Exception;
 use Geocoder\IntegrationTest\CachedResponseClient;
 use Geocoder\IntegrationTest\ProviderIntegrationTest;
 use Geocoder\Location;
@@ -21,11 +22,15 @@ use Geocoder\Model\Country;
 use Geocoder\Provider\Here\Here;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
+use Http\Discovery\Exception\NotFoundException;
 use Http\Discovery\Psr18ClientDiscovery;
 use Psr\Http\Client\ClientInterface;
 
 /**
  * @author Sébastien Barré <sebastien@sheub.eu>
+ *
+ * @group here
+ * @group here-integration
  */
 class IntegrationTest extends ProviderIntegrationTest
 {
@@ -33,9 +38,9 @@ class IntegrationTest extends ProviderIntegrationTest
 
     protected bool $testIpv6 = false;
 
-    protected function createProvider(ClientInterface $httpClient, bool $useCIT = false)
+    protected function createProvider(ClientInterface $httpClient): Here
     {
-        return Here::createUsingApiKey($httpClient, $this->getApiKey(), $useCIT);
+        return Here::createUsingApiKey($httpClient, $this->getApiKey(), true);
     }
 
     protected function getCacheDir(): string
@@ -45,14 +50,12 @@ class IntegrationTest extends ProviderIntegrationTest
 
     /**
      * This client will make real request if cache was not found.
-     *
-     * @return CachedResponseClient
      */
-    private function getCachedHttpClient()
+    private function getCachedHttpClient(): CachedResponseClient
     {
         try {
             $client = Psr18ClientDiscovery::find();
-        } catch (\Http\Discovery\Exception\NotFoundException $e) {
+        } catch (NotFoundException $e) {
             $client = $this->getMockForAbstractClass(ClientInterface::class);
 
             $client
@@ -66,7 +69,7 @@ class IntegrationTest extends ProviderIntegrationTest
 
     protected function getApiKey(): string
     {
-        return $_SERVER['HERE_APP_ID'];
+        return $_SERVER['HERE_API_KEY'];
     }
 
     protected function getAppId(): string
@@ -82,6 +85,9 @@ class IntegrationTest extends ProviderIntegrationTest
         return $_SERVER['HERE_APP_CODE'];
     }
 
+    /**
+     * @throws Exception|\JsonException
+     */
     public function testGeocodeQuery(): void
     {
         if (isset($this->skippedTests[__FUNCTION__])) {
@@ -107,31 +113,9 @@ class IntegrationTest extends ProviderIntegrationTest
         }
     }
 
-    public function testGeocodeQueryCIT(): void
-    {
-        if (isset($this->skippedTests[__FUNCTION__])) {
-            $this->markTestSkipped($this->skippedTests[__FUNCTION__]);
-        }
-        if (!$this->testAddress) {
-            $this->markTestSkipped('Geocoding address is not supported by this provider');
-        }
-
-        $provider = $this->createProvider($this->getCachedHttpClient(), true);
-        $query = GeocodeQuery::create('10 Downing St, London, UK')->withLocale('en');
-        $result = $provider->geocodeQuery($query);
-        $this->assertWellFormattedResult($result);
-
-        // Check Downing Street
-        $location = $result->first();
-        $this->assertEqualsWithDelta(51.5033, $location->getCoordinates()->getLatitude(), 0.1, 'Latitude should be in London');
-        $this->assertEqualsWithDelta(-0.1276, $location->getCoordinates()->getLongitude(), 0.1, 'Longitude should be in London');
-        $this->assertStringContainsString('Downing', $location->getStreetName(), 'Street name should contain "Downing St"');
-
-        if (null !== $streetNumber = $location->getStreetNumber()) {
-            $this->assertStringContainsString('10', $streetNumber, 'Street number should contain "10"');
-        }
-    }
-
+    /**
+     * @throws \JsonException
+     */
     public function testGeocodeQueryWithNoResults(): void
     {
         if (isset($this->skippedTests[__FUNCTION__])) {
@@ -148,6 +132,9 @@ class IntegrationTest extends ProviderIntegrationTest
         $this->assertEquals(0, $result->count());
     }
 
+    /**
+     * @throws \JsonException
+     */
     public function testReverseQuery(): void
     {
         if (isset($this->skippedTests[__FUNCTION__])) {
@@ -164,22 +151,9 @@ class IntegrationTest extends ProviderIntegrationTest
         $this->assertWellFormattedResult($result);
     }
 
-    public function testReverseQueryCIT(): void
-    {
-        if (isset($this->skippedTests[__FUNCTION__])) {
-            $this->markTestSkipped($this->skippedTests[__FUNCTION__]);
-        }
-        if (!$this->testReverse) {
-            $this->markTestSkipped('Reverse geocoding address is not supported by this provider');
-        }
-
-        $provider = $this->createProvider($this->getCachedHttpClient(), true);
-
-        // Close to the white house
-        $result = $provider->reverseQuery(ReverseQuery::fromCoordinates(38.900206, -77.036991)->withLocale('en'));
-        $this->assertWellFormattedResult($result);
-    }
-
+    /**
+     * @throws \JsonException
+     */
     public function testReverseQueryWithNoResults(): void
     {
         if (isset($this->skippedTests[__FUNCTION__])) {
