@@ -149,7 +149,7 @@ final class Mapbox extends AbstractHttpProvider implements Provider
         ClientInterface $client,
         string $accessToken,
         ?string $country = null,
-        string $geocodingMode = self::GEOCODING_MODE_PLACES
+        string $geocodingMode = self::GEOCODING_MODE_PLACES,
     ) {
         parent::__construct($client);
 

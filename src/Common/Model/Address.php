@@ -85,7 +85,7 @@ class Address implements Location
         ?string $locality = null,
         ?string $subLocality = null,
         ?Country $country = null,
-        ?string $timezone = null
+        ?string $timezone = null,
     ) {
         $this->providedBy = $providedBy;
         $this->adminLevels = $adminLevels;

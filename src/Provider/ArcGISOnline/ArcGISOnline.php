@@ -71,7 +71,7 @@ final class ArcGISOnline extends AbstractHttpProvider implements Provider
     public static function token(
         ClientInterface $client,
         string $token,
-        ?string $sourceCountry = null
+        ?string $sourceCountry = null,
     ) {
         $provider = new self($client, $sourceCountry, $token);
 

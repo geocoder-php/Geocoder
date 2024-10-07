@@ -74,7 +74,7 @@ class AzureMaps extends AbstractHttpProvider implements Provider
         ClientInterface $client,
         string $subscriptionKey,
         array $options = [],
-        string $format = 'json'
+        string $format = 'json',
     ) {
         parent::__construct($client);
 

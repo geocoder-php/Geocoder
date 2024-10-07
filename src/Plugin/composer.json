@@ -18,7 +18,7 @@
         "php-http/promise": "^1.0",
         "psr/log": "^1.0|^2.0|^3.0",
         "psr/simple-cache": "^1.0|^2.0|^3.0",
-        "willdurand/geocoder": "^4.0"
+        "willdurand/geocoder": "^4.0|^5.0"
     },
     "require-dev": {
         "cache/void-adapter": "^1.0",
