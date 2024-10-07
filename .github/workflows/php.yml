@@ -63,5 +63,5 @@ jobs:
         extensions: curl
     - name: Install dependencies
       run: composer install --no-progress
-    - name: Run PHPStan
+    - name: Run php-cs-fixer
       run: composer run-script cs
