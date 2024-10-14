@@ -150,14 +150,14 @@ class GeoIP2AdapterTest extends TestCase
                     'city' => [
                         'geoname_id' => 2911298,
                         'names' => [
-                              'de' => 'Hamburg',
-                              'en' => 'Hamburg',
-                              'es' => 'Hamburgo',
-                              'fr' => 'Hambourg',
-                              'ja' => 'ハンブルク',
-                              'pt-BR' => 'Hamburgo',
-                              'ru' => 'Гамбург',
-                              'zh-CN' => '汉堡市',
+                            'de' => 'Hamburg',
+                            'en' => 'Hamburg',
+                            'es' => 'Hamburgo',
+                            'fr' => 'Hambourg',
+                            'ja' => 'ハンブルク',
+                            'pt-BR' => 'Hamburgo',
+                            'ru' => 'Гамбург',
+                            'zh-CN' => '汉堡市',
                         ],
                     ],
                 ]

@@ -82,7 +82,7 @@ jobs:
           - { folder: Here, repository: here-provider }
           - { folder: HostIp, repository: host-ip-provider }
           - { folder: IP2Location, repository: ip2location-provider }
-          # - { folder: IP2LocationBinary, repository: ip2location-binary-provider }
+          - { folder: IP2LocationBinary, repository: ip2location-binary-provider }
           - { folder: IpInfo, repository: ip-info-provider }
           - { folder: IpInfoDb, repository: ip-info-db-provider }
           - { folder: Ipstack, repository: ipstack-provider }
