@@ -86,7 +86,7 @@ final class GoogleMaps extends AbstractHttpProvider implements Provider
         ?string $privateKey = null,
         ?string $region = null,
         ?string $apiKey = null,
-        ?string $channel = null
+        ?string $channel = null,
     ) {
         $provider = new self($client, $region, $apiKey);
         $provider->clientId = $clientId;
