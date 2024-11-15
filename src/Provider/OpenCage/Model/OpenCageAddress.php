@@ -49,6 +49,11 @@ final class OpenCageAddress extends Address
      */
     private $formattedAddress;
 
+    /**
+     * @var int|null
+     */
+    private $confidence;
+
     public function withMGRS(?string $mgrs = null): self
     {
         $new = clone $this;
@@ -127,5 +132,21 @@ final class OpenCageAddress extends Address
     public function getFormattedAddress()
     {
         return $this->formattedAddress;
+    }
+
+    public function withConfidence(?int $confidence = null): self
+    {
+        $new = clone $this;
+        $new->confidence = $confidence;
+
+        return $new;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getConfidence()
+    {
+        return $this->confidence;
     }
 }
