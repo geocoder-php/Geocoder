@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Geocoder\Provider\Photon\Tests;
 
 use Geocoder\IntegrationTest\BaseTestCase;
+use Geocoder\Provider\Photon\Model\PhotonAddress;
 use Geocoder\Provider\Photon\Photon;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
@@ -94,10 +95,43 @@ class PhotonTest extends BaseTestCase
         $this->assertEquals('The Sherlock Holmes Museum and shop', $result->getName());
     }
 
+    public function testGeocodeQueryWithOsmTagFilter(): void
+    {
+        $provider = Photon::withKomootServer($this->getHttpClient());
+        $query = GeocodeQuery::create('Paris')
+            ->withData('osm_tag', 'tourism:museum')
+            ->withLimit(5);
+        $results = $provider->geocodeQuery($query);
+
+        $this->assertCount(5, $results);
+        foreach ($results as $result) {
+            $this->assertInstanceOf(PhotonAddress::class, $result);
+            $this->assertEquals('tourism', $result->getOSMTag()->key);
+            $this->assertEquals('museum', $result->getOSMTag()->value);
+        }
+    }
+
+    public function testGeocodeQueryWithMultipleOsmTagFilter(): void
+    {
+        $provider = Photon::withKomootServer($this->getHttpClient());
+        $query = GeocodeQuery::create('Paris')
+            ->withData('osm_tag', ['tourism', ':!museum'])
+            ->withLimit(5);
+        $results = $provider->geocodeQuery($query);
+
+        $this->assertCount(5, $results);
+        foreach ($results as $result) {
+            $this->assertInstanceOf(PhotonAddress::class, $result);
+            $this->assertEquals('tourism', $result->getOSMTag()->key);
+            $this->assertNotEquals('museum', $result->getOSMTag()->value);
+        }
+    }
+
     public function testReverseQuery(): void
     {
         $provider = Photon::withKomootServer($this->getHttpClient());
-        $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(52, 10));
+        $reverseQuery = ReverseQuery::fromCoordinates(52, 10)->withLimit(1);
+        $results = $provider->reverseQuery($reverseQuery);
 
         $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
         $this->assertCount(1, $results);
@@ -119,5 +153,21 @@ class PhotonTest extends BaseTestCase
         $this->assertEquals('Niedersachsen', $result->getState());
         $this->assertEquals('Landkreis Hildesheim', $result->getCounty());
         $this->assertEquals('Sehlem', $result->getDistrict());
+    }
+
+    public function testReverseQueryWithOsmTagFilter(): void
+    {
+        $provider = Photon::withKomootServer($this->getHttpClient());
+        $reverseQuery = ReverseQuery::fromCoordinates(52.51644, 13.38890)
+            ->withData('osm_tag', 'amenity:pharmacy')
+            ->withLimit(3);
+        $results = $provider->reverseQuery($reverseQuery);
+
+        $this->assertCount(3, $results);
+        foreach ($results as $result) {
+            $this->assertInstanceOf(PhotonAddress::class, $result);
+            $this->assertEquals('amenity', $result->getOSMTag()->key);
+            $this->assertEquals('pharmacy', $result->getOSMTag()->value);
+        }
     }
 }
