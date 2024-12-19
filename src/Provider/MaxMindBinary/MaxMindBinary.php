@@ -39,7 +39,7 @@ final class MaxMindBinary extends AbstractProvider implements Provider
      * @throws FunctionNotFound if maxmind's lib not installed
      * @throws InvalidArgument  if dat file is not correct (optional)
      */
-    public function __construct(string $datFile, int $openFlag = null)
+    public function __construct(string $datFile, ?int $openFlag = null)
     {
         if (false === function_exists('geoip_open')) {
             throw new FunctionNotFound('geoip_open', 'The MaxMindBinary requires maxmind\'s lib to be installed and loaded. Have you included geoip.inc file?');
@@ -92,9 +92,9 @@ final class MaxMindBinary extends AbstractProvider implements Provider
             Address::createFromArray([
                 'providedBy' => $this->getName(),
                 'countryCode' => $geoIpRecord->country_code,
-                'country' => null === $geoIpRecord->country_name ? null : utf8_encode($geoIpRecord->country_name),
+                'country' => null === $geoIpRecord->country_name ? null : mb_convert_encoding($geoIpRecord->country_name, 'UTF-8', 'ISO-8859-1'),
                 'adminLevels' => $adminLevels,
-                'locality' => null === $geoIpRecord->city ? null : utf8_encode($geoIpRecord->city),
+                'locality' => null === $geoIpRecord->city ? null : mb_convert_encoding($geoIpRecord->city, 'UTF-8', 'ISO-8859-1'),
                 'latitude' => $geoIpRecord->latitude,
                 'longitude' => $geoIpRecord->longitude,
                 'postalCode' => $geoIpRecord->postal_code,

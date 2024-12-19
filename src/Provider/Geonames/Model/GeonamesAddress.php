@@ -66,7 +66,7 @@ final class GeonamesAddress extends Address
         return $this->name;
     }
 
-    public function withName(string $name = null): self
+    public function withName(?string $name = null): self
     {
         $new = clone $this;
         $new->name = $name;

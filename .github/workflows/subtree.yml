@@ -19,9 +19,15 @@ jobs:
     name: Subtree for Common
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/create-github-app-token@v1
+        id: app-token
         with:
-          token: ${{ secrets.SUBTREE_GITHUB_TOKEN }}
+          app-id: ${{ vars.SUBTREE_APP_ID }}
+          private-key: ${{ secrets.SUBTREE_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ steps.app-token.outputs.token }}
           fetch-depth: 0
       - name: Subtree Split
         uses: ./.github/actions/subtree
@@ -33,9 +39,15 @@ jobs:
     name: Subtree for Http
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/create-github-app-token@v1
+        id: app-token
         with:
-          token: ${{ secrets.SUBTREE_GITHUB_TOKEN }}
+          app-id: ${{ vars.SUBTREE_APP_ID }}
+          private-key: ${{ secrets.SUBTREE_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ steps.app-token.outputs.token }}
           fetch-depth: 0
       - name: Subtree Split
         uses: ./.github/actions/subtree
@@ -47,9 +59,15 @@ jobs:
     name: Subtree for Plugin
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/create-github-app-token@v1
+        id: app-token
         with:
-          token: ${{ secrets.SUBTREE_GITHUB_TOKEN }}
+          app-id: ${{ vars.SUBTREE_APP_ID }}
+          private-key: ${{ secrets.SUBTREE_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ steps.app-token.outputs.token }}
           fetch-depth: 0
       - name: Subtree Split
         uses: ./.github/actions/subtree
@@ -82,7 +100,7 @@ jobs:
           - { folder: Here, repository: here-provider }
           - { folder: HostIp, repository: host-ip-provider }
           - { folder: IP2Location, repository: ip2location-provider }
-          # - { folder: IP2LocationBinary, repository: ip2location-binary-provider }
+          - { folder: IP2LocationBinary, repository: ip2location-binary-provider }
           - { folder: IpInfo, repository: ip-info-provider }
           - { folder: IpInfoDb, repository: ip-info-db-provider }
           - { folder: Ipstack, repository: ipstack-provider }
@@ -101,9 +119,15 @@ jobs:
           - { folder: TomTom, repository: tomtom-provider }
           - { folder: Yandex, repository: yandex-provider }
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/create-github-app-token@v1
+        id: app-token
         with:
-          token: ${{ secrets.SUBTREE_GITHUB_TOKEN }}
+          app-id: ${{ vars.SUBTREE_APP_ID }}
+          private-key: ${{ secrets.SUBTREE_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ steps.app-token.outputs.token }}
           fetch-depth: 0
       - name: Subtree Split
         uses: ./.github/actions/subtree

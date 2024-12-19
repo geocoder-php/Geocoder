@@ -20,7 +20,7 @@
         "geocoder-php/provider-implementation": "1.0"
     },
     "require-dev": {
-        "geocoder-php/provider-integration-tests": "^1.0.1",
+        "geocoder-php/provider-integration-tests": "^1.6.3",
         "phpunit/phpunit": "^9.5"
     },
     "extra": {

@@ -254,7 +254,7 @@ final class Nominatim extends AbstractHttpProvider implements Provider
         return 'nominatim';
     }
 
-    private function executeQuery(string $url, string $locale = null): string
+    private function executeQuery(string $url, ?string $locale = null): string
     {
         if (null !== $locale) {
             $url .= '&'.http_build_query([

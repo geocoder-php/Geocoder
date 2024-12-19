@@ -17,7 +17,7 @@ use Geocoder\IntegrationTest\CachedResponseClient;
 use Geocoder\Location;
 use Geocoder\Provider\AlgoliaPlaces\AlgoliaPlaces;
 use Geocoder\Query\GeocodeQuery;
-use Http\Client\Curl\Client as HttplugClient;
+use Http\Discovery\Psr18Client;
 use Psr\Http\Client\ClientInterface;
 
 /**
@@ -33,9 +33,9 @@ class AlgoliaPlacesTest extends BaseTestCase
     /**
      * Get a real HTTP client. If a cache dir is set to a path it will use cached responses.
      */
-    protected function getHttpClient(string $apiKey = null, string $appCode = null): ClientInterface
+    protected function getHttpClient(?string $apiKey = null, ?string $appCode = null): ClientInterface
     {
-        return new CachedResponseClient(new HttplugClient(), $this->getCacheDir(), $apiKey, $appCode);
+        return new CachedResponseClient(new Psr18Client(), $this->getCacheDir(), $apiKey, $appCode);
     }
 
     public function testGeocodeQueryWithLocale(): void

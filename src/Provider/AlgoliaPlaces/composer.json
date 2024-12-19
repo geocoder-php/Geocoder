@@ -14,15 +14,14 @@
     "require": {
         "php": "^8.0",
         "ext-json": "*",
-        "geocoder-php/common-http": "^4.1",
+        "geocoder-php/common-http": "^4.6",
         "willdurand/geocoder": "^4.0"
     },
     "provide": {
         "geocoder-php/provider-implementation": "1.0"
     },
     "require-dev": {
-        "geocoder-php/provider-integration-tests": "^1.1",
-        "php-http/curl-client": "^2.2",
+        "geocoder-php/provider-integration-tests": "^1.6.3",
         "php-http/message": "^1.0",
         "phpunit/phpunit": "^9.5"
     },

@@ -77,15 +77,15 @@ class Address implements Location
     final public function __construct(
         string $providedBy,
         AdminLevelCollection $adminLevels,
-        Coordinates $coordinates = null,
-        Bounds $bounds = null,
-        string $streetNumber = null,
-        string $streetName = null,
-        string $postalCode = null,
-        string $locality = null,
-        string $subLocality = null,
-        Country $country = null,
-        string $timezone = null
+        ?Coordinates $coordinates = null,
+        ?Bounds $bounds = null,
+        ?string $streetNumber = null,
+        ?string $streetName = null,
+        ?string $postalCode = null,
+        ?string $locality = null,
+        ?string $subLocality = null,
+        ?Country $country = null,
+        ?string $timezone = null,
     ) {
         $this->providedBy = $providedBy;
         $this->adminLevels = $adminLevels;
@@ -255,10 +255,6 @@ class Address implements Location
     }
 
     /**
-     * @param float $south
-     * @param float $west
-     * @param float $north
-     *
      * @return Bounds|null
      */
     private static function createBounds(?float $south, ?float $west, ?float $north, ?float $east)

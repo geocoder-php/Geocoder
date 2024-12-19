@@ -42,10 +42,7 @@ final class StatefulGeocoder implements Geocoder
      */
     private $provider;
 
-    /**
-     * @param string $locale
-     */
-    public function __construct(Provider $provider, string $locale = null)
+    public function __construct(Provider $provider, ?string $locale = null)
     {
         $this->provider = $provider;
         $this->locale = $locale;

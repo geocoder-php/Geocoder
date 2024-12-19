@@ -121,7 +121,7 @@ final class Here extends AbstractHttpProvider implements Provider
      * @param string          $appCode an App code
      * @param bool            $useCIT  use Customer Integration Testing environment (CIT) instead of production
      */
-    public function __construct(ClientInterface $client, string $appId = null, string $appCode = null, bool $useCIT = false)
+    public function __construct(ClientInterface $client, ?string $appId = null, ?string $appCode = null, bool $useCIT = false)
     {
         $this->appId = $appId;
         $this->appCode = $appCode;

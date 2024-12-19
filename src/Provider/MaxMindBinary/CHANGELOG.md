@@ -2,6 +2,12 @@
 
 The change log describes what is "Added", "Removed", "Changed" or "Fixed" between each release.
 
+## 4.3.1
+
+### Changed
+
+- Fix `utf8_encode()` deprecation[^1]
+
 ## 4.3.0
 
 ### Added
@@ -46,3 +52,5 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 ## 4.0.0
 
 First release of this library.
+
+[^1]: See https://www.php.net/manual/en/function.utf8-encode.php

@@ -14,13 +14,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: ['8.0', '8.1', '8.2']
+        php-version: ['8.0', '8.1', '8.2', '8.3', '8.4']
         component: [Common, Http, Plugin]
 
     name: PHP ${{ matrix.php-version }} / ${{ matrix.component }}
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Use PHP ${{ matrix.php-version }}
       uses: shivammathur/setup-php@v2
