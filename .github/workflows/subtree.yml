@@ -19,9 +19,15 @@ jobs:
     name: Subtree for Common
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ vars.SUBTREE_APP_ID }}
+          private-key: ${{ secrets.SUBTREE_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
       - uses: actions/checkout@v4
         with:
-          token: ${{ secrets.SUBTREE_GITHUB_TOKEN }}
+          token: ${{ steps.app-token.outputs.token }}
           fetch-depth: 0
       - name: Subtree Split
         uses: ./.github/actions/subtree
@@ -33,9 +39,15 @@ jobs:
     name: Subtree for Http
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ vars.SUBTREE_APP_ID }}
+          private-key: ${{ secrets.SUBTREE_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
       - uses: actions/checkout@v4
         with:
-          token: ${{ secrets.SUBTREE_GITHUB_TOKEN }}
+          token: ${{ steps.app-token.outputs.token }}
           fetch-depth: 0
       - name: Subtree Split
         uses: ./.github/actions/subtree
@@ -47,9 +59,15 @@ jobs:
     name: Subtree for Plugin
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ vars.SUBTREE_APP_ID }}
+          private-key: ${{ secrets.SUBTREE_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
       - uses: actions/checkout@v4
         with:
-          token: ${{ secrets.SUBTREE_GITHUB_TOKEN }}
+          token: ${{ steps.app-token.outputs.token }}
           fetch-depth: 0
       - name: Subtree Split
         uses: ./.github/actions/subtree
@@ -101,9 +119,15 @@ jobs:
           - { folder: TomTom, repository: tomtom-provider }
           - { folder: Yandex, repository: yandex-provider }
     steps:
+      - uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ vars.SUBTREE_APP_ID }}
+          private-key: ${{ secrets.SUBTREE_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
       - uses: actions/checkout@v4
         with:
-          token: ${{ secrets.SUBTREE_GITHUB_TOKEN }}
+          token: ${{ steps.app-token.outputs.token }}
           fetch-depth: 0
       - name: Subtree Split
         uses: ./.github/actions/subtree
