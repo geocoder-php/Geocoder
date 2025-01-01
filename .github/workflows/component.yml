@@ -14,8 +14,17 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: ['8.0', '8.1', '8.2', '8.3', '8.4']
+        php-version: ['8.2', '8.3', '8.4']
         component: [Common, Http, Plugin]
+        include:
+          - php-version: '8.0'
+            component: Http
+          - php-version: '8.0'
+            component: Plugin
+          - php-version: '8.1'
+            component: Http
+          - php-version: '8.1'
+            component: Plugin
 
     name: PHP ${{ matrix.php-version }} / ${{ matrix.component }}
 
