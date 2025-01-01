@@ -1,9 +1,13 @@
 # CHANGELOG
 
-## 4.4.0 (2023-??-??)
+## 5.0.0 (2025-01-01)
 
+* Removed: Support for PHP < 8.2
+* Added: Support for PHP 8.2, 8.3, 8.4
 * Added: Method `AbstractHttpProvider::createRequest()`
-* Deprecated: Method `AbstractHttpProvider::getMessageFactory()`
+* Added: PHPStan Level 6
+* Changed: Method `AbstractHttpProvider::getMessageFactory()` is now deprecated
+* Changed: Run "Subtree Split" using GitHub Actions
 
 ## 4.3.0 (2022-07-30)
 
