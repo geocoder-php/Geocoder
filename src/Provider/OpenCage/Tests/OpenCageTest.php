@@ -83,6 +83,7 @@ class OpenCageTest extends BaseTestCase
         $this->assertEquals('u09tyr78tz64jdcgfnhe', $result->getGeohash());
         $this->assertEquals('listed.emphasis.greeting', $result->getWhat3words());
         $this->assertEquals('10 Avenue Gambetta, 75020 Paris, France', $result->getFormattedAddress());
+        $this->assertEquals(10, $result->getConfidence());
     }
 
     public function testReverseWithRealCoordinates(): void
