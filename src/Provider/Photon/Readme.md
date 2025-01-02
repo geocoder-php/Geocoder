@@ -53,9 +53,9 @@ You can combine multiple osm tag filters :
 ```php
 $provider = new Geocoder\Provider\Photon\Photon($httpClient, 'https://your-photon-root-url');
 $reverseQuery = \Geocoder\Query\GeocodeQuery::create('Paris')
-    ->withData('osm_tag', ['tourism', ':!museum'])
+    ->withData('osm_tag', ['tourism:museum', 'tourism:gallery'])
     ->withLimit(5);
-// Here we get 5 tourism results in Paris which are not museums
+// Here we get 5 tourism results in Paris which are either museum or art gallery
 $results = $provider->reverseQuery($reverseQuery);
 ```
 
