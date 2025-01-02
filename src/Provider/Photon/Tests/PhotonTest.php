@@ -115,16 +115,24 @@ class PhotonTest extends BaseTestCase
     {
         $provider = Photon::withKomootServer($this->getHttpClient());
         $query = GeocodeQuery::create('Paris')
-            ->withData('osm_tag', ['tourism', ':!museum'])
-            ->withLimit(5);
+            ->withData('osm_tag', ['tourism:museum', 'tourism:gallery'])
+            ->withLimit(10);
         $results = $provider->geocodeQuery($query);
 
-        $this->assertCount(5, $results);
+        $this->assertCount(10, $results);
+        $countMuseums = $countGalleries = 0;
         foreach ($results as $result) {
             $this->assertInstanceOf(PhotonAddress::class, $result);
             $this->assertEquals('tourism', $result->getOSMTag()->key);
-            $this->assertNotEquals('museum', $result->getOSMTag()->value);
+            $this->assertContains($result->getOSMTag()->value, ['museum', 'gallery']);
+            if ('museum' === $result->getOSMTag()->value) {
+                ++$countMuseums;
+            } elseif ('gallery' === $result->getOSMTag()->value) {
+                ++$countGalleries;
+            }
         }
+        $this->assertGreaterThan(0, $countMuseums);
+        $this->assertGreaterThan(0, $countGalleries);
     }
 
     public function testReverseQuery(): void
