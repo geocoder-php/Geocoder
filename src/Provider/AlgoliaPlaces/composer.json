@@ -15,7 +15,7 @@
         "php": "^8.0",
         "ext-json": "*",
         "geocoder-php/common-http": "^4.6",
-        "willdurand/geocoder": "^4.0"
+        "willdurand/geocoder": "^4.0|^5.0"
     },
     "provide": {
         "geocoder-php/provider-implementation": "1.0"

@@ -15,7 +15,7 @@
         "php": "^8.0",
         "ip2location/ip2location-php": "^8.1.1",
         "symfony/polyfill-mbstring": "^1.0",
-        "willdurand/geocoder": "^4.0"
+        "willdurand/geocoder": "^4.0|^5.0"
     },
     "provide": {
         "geocoder-php/provider-implementation": "1.0"
