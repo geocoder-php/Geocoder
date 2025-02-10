@@ -62,7 +62,7 @@ final class PhotonAddress extends Address
     public function getLocality(): ?string
     {
         $locality = parent::getLocality();
-        if ($locality === null && $this->type === 'city' && $this->name !== null) {
+        if (null === $locality && 'city' === $this->type && null !== $this->name) {
             $locality = $this->name;
         }
 
