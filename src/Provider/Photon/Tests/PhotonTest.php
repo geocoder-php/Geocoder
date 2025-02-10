@@ -178,4 +178,18 @@ class PhotonTest extends BaseTestCase
             $this->assertEquals('pharmacy', $result->getOSMTag()->value);
         }
     }
+
+    public function testReverseQueryWithLayerCityAndRadiusFilter(): void
+    {
+        $provider = Photon::withKomootServer($this->getHttpClient());
+        $reverseQuery = ReverseQuery::fromCoordinates(52.51644, 13.38890)
+            ->withData('layer', 'city')
+            ->withData('radius', 20)
+            ->withLimit(1);
+        $result = $provider->reverseQuery($reverseQuery)->first();
+
+        $this->assertInstanceOf(PhotonAddress::class, $result);
+        $this->assertEquals('city', $result->getType());
+        $this->assertEquals('Berlin', $result->getLocality());
+    }
 }
