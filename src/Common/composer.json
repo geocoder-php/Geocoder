@@ -22,7 +22,7 @@
     "require-dev": {
         "nyholm/nsa": "^1.1",
         "phpunit/phpunit": "^9.5",
-        "symfony/stopwatch": "~2.5 || ~5.0"
+        "symfony/stopwatch": "~2.5 || ~5.0 || ~7.0"
     },
     "suggest": {
         "symfony/stopwatch": "If you want to use the TimedGeocoder"
