@@ -19,7 +19,7 @@
     "require": {
         "php": "^8.0",
         "geocoder-php/common-http": "^4.0",
-        "willdurand/geocoder": "^4.0"
+        "willdurand/geocoder": "^4.0|^5.0"
     },
     "require-dev": {
         "geocoder-php/provider-integration-tests": "^1.6.3",

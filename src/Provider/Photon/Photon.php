@@ -71,6 +71,10 @@ final class Photon extends AbstractHttpProvider implements Provider
                 'limit' => $query->getLimit(),
                 'lang' => $query->getLocale(),
             ]);
+        $osmTagFilters = $this->buildOsmTagFilterQuery($query->getData('osm_tag'));
+        if (!empty($osmTagFilters)) {
+            $url .= $osmTagFilters;
+        }
 
         $json = $this->executeQuery($url);
 
@@ -98,8 +102,13 @@ final class Photon extends AbstractHttpProvider implements Provider
             .http_build_query([
                 'lat' => $latitude,
                 'lon' => $longitude,
+                'limit' => $query->getLimit(),
                 'lang' => $query->getLocale(),
             ]);
+        $osmTagFilters = $this->buildOsmTagFilterQuery($query->getData('osm_tag'));
+        if (!empty($osmTagFilters)) {
+            $url .= $osmTagFilters;
+        }
 
         $json = $this->executeQuery($url);
 
@@ -156,6 +165,25 @@ final class Photon extends AbstractHttpProvider implements Provider
     public function getName(): string
     {
         return 'photon';
+    }
+
+    /**
+     * @param string|array<int, string>|null $filters
+     */
+    private function buildOsmTagFilterQuery($filters): string
+    {
+        $query = '';
+        if (null === $filters) {
+            return $query;
+        }
+        if (is_string($filters)) {
+            return '&osm_tag='.urlencode($filters);
+        }
+        foreach ($filters as $filter) {
+            $query .= '&osm_tag='.urlencode($filter);
+        }
+
+        return $query;
     }
 
     private function executeQuery(string $url): \stdClass
