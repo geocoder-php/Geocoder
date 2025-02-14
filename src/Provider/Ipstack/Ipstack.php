@@ -73,6 +73,21 @@ final class Ipstack extends AbstractHttpProvider implements Provider
             $url = sprintf('%s&language=%s', $url, $query->getLocale());
         }
 
+        return $this->executeQuery($url);
+    }
+
+    public function reverseQuery(ReverseQuery $query): Collection
+    {
+        throw new UnsupportedOperation('The Ipstack provider is not able to do reverse geocoding.');
+    }
+
+    public function getName(): string
+    {
+        return 'ipstack';
+    }
+
+    private function executeQuery(string $url): AddressCollection
+    {
         $body = $this->getUrlContents($url);
         $data = json_decode($body, true);
 
@@ -99,26 +114,17 @@ final class Ipstack extends AbstractHttpProvider implements Provider
             return new AddressCollection([]);
         }
 
-        $locations[] = Address::createFromArray([
-            'providedBy' => $this->getName(),
-            'latitude' => $data['latitude'] ?: null,
-            'longitude' => $data['longitude'] ?: null,
-            'locality' => $data['city'] ?: null,
-            'postalCode' => $data['zip'] ?: null,
-            'country' => $data['country_name'] ?: null,
-            'countryCode' => $data['country_code'] ?: null,
+        return new AddressCollection([
+            Address::createFromArray([
+                'providedBy' => $this->getName(),
+                'latitude' => $data['latitude'] ?? null,
+                'longitude' => $data['longitude'] ?? null,
+                'locality' => $data['city'] ?? null,
+                'postalCode' => $data['zip'] ?? null,
+                'country' => $data['country_name'] ?? null,
+                'adminLevels' => isset($data['region_name']) ? [['name' => $data['region_name'], 'level' => 1]] : [],
+                'countryCode' => $data['country_code'] ?? null,
+            ]),
         ]);
-
-        return new AddressCollection($locations);
-    }
-
-    public function reverseQuery(ReverseQuery $query): Collection
-    {
-        throw new UnsupportedOperation('The Ipstack provider is not able to do reverse geocoding.');
-    }
-
-    public function getName(): string
-    {
-        return 'ipstack';
     }
 }
