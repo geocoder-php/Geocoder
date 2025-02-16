@@ -68,6 +68,7 @@ final class Photon extends AbstractHttpProvider implements Provider
             .'/api?'
             .http_build_query([
                 'q' => $address,
+                'layer' => $query->getData('layer'),
                 'limit' => $query->getLimit(),
                 'lang' => $query->getLocale(),
             ]);
@@ -102,6 +103,8 @@ final class Photon extends AbstractHttpProvider implements Provider
             .http_build_query([
                 'lat' => $latitude,
                 'lon' => $longitude,
+                'layer' => $query->getData('layer'),
+                'radius' => $query->getData('radius'),
                 'limit' => $query->getLimit(),
                 'lang' => $query->getLocale(),
             ]);
@@ -157,7 +160,8 @@ final class Photon extends AbstractHttpProvider implements Provider
             ->withName($properties->name ?? null)
             ->withState($properties->state ?? null)
             ->withCounty($properties->county ?? null)
-            ->withDistrict($properties->district ?? null);
+            ->withDistrict($properties->district ?? null)
+            ->withType($properties->type ?? null);
 
         return $address;
     }
