@@ -76,6 +76,10 @@ final class Photon extends AbstractHttpProvider implements Provider
         if (!empty($osmTagFilters)) {
             $url .= $osmTagFilters;
         }
+        $bboxQueryString = $this->buildBboxFilterQuery($query);
+        if ($bboxQueryString) {
+            $url .= $bboxQueryString;
+        }
 
         $json = $this->executeQuery($url);
 
@@ -188,6 +192,20 @@ final class Photon extends AbstractHttpProvider implements Provider
         }
 
         return $query;
+    }
+
+    private function buildBboxFilterQuery(GeocodeQuery $query): ?string
+    {
+        if (null === $query->getBounds()) {
+            return null;
+        }
+
+        return '&bbox='.sprintf('%s,%s,%s,%s',
+            $query->getBounds()->getWest(),
+            $query->getBounds()->getSouth(),
+            $query->getBounds()->getEast(),
+            $query->getBounds()->getNorth()
+        );
     }
 
     private function executeQuery(string $url): \stdClass
