@@ -2,6 +2,17 @@
 
 The change log describes what is "Added", "Removed", "Changed" or "Fixed" between each release.
 
+## 0.5.0
+
+### Added
+
+- Add support for PHP 8.3 and 8.4
+- Add support for region name (as admin level)
+
+### Removed
+
+- Drop support for PHP 7.4
+
 ## 0.4.0
 
 ### Added
