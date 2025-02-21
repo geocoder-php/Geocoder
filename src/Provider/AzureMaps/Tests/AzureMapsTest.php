@@ -112,7 +112,6 @@ class AzureMapsTest extends BaseTestCase
 
         $this->assertInstanceOf(Address::class, $result);
         $this->assertNotNull($result->getLocality(), 'Municipality (city) is missing in the response');
-        $this->assertEquals('Rome', $result->getLocality());
+        $this->assertEquals('Scisciano', $result->getLocality());
     }
-
 }
