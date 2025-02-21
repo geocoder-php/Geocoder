@@ -64,6 +64,7 @@ class IpstackTest extends BaseTestCase
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals('localhost', $result->getLocality());
         $this->assertEquals('localhost', $result->getCountry()->getName());
+        $this->assertEmpty($result->getAdminLevels());
     }
 
     public function testGeocodeWithLocalhostIPv6(): void
@@ -79,6 +80,7 @@ class IpstackTest extends BaseTestCase
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
         $this->assertEquals('localhost', $result->getLocality());
         $this->assertEquals('localhost', $result->getCountry()->getName());
+        $this->assertEmpty($result->getAdminLevels());
     }
 
     public function testGeocodeWithRealIPv4(): void
@@ -92,10 +94,12 @@ class IpstackTest extends BaseTestCase
         /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEqualsWithDelta(37.751, $result->getCoordinates()->getLatitude(), 0.01);
-        $this->assertEqualsWithDelta(-97.822, $result->getCoordinates()->getLongitude(), 0.01);
+        $this->assertEqualsWithDelta(40.724, $result->getCoordinates()->getLatitude(), 0.01);
+        $this->assertEqualsWithDelta(-74.059, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('United States', $result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
+        $this->assertCount(1, $result->getAdminLevels());
+        $this->assertEquals('New Jersey', $result->getAdminLevels()->get(1)->getName());
     }
 
     public function testGeocodeWithRealIPv4InFrench(): void
@@ -109,10 +113,12 @@ class IpstackTest extends BaseTestCase
         /** @var Location $result */
         $result = $results->first();
         $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEqualsWithDelta(37.751, $result->getCoordinates()->getLatitude(), 0.01);
-        $this->assertEqualsWithDelta(-97.822, $result->getCoordinates()->getLongitude(), 0.01);
+        $this->assertEqualsWithDelta(40.724, $result->getCoordinates()->getLatitude(), 0.01);
+        $this->assertEqualsWithDelta(-74.059, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('États-Unis', $result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
+        $this->assertCount(1, $result->getAdminLevels());
+        $this->assertEquals('New Jersey', $result->getAdminLevels()->get(1)->getName());
     }
 
     public function testReverse(): void
