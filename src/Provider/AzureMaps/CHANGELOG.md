@@ -2,6 +2,17 @@
 
 The change log describes what is "Added", "Removed", "Changed" or "Fixed" between each release.
 
+## 1.3.0
+
+### Added
+
+- Add support for PHP 8.2, 8.3, and 8.4
+- Add support for municipality
+
+### Removed
+
+- Drop support for PHP 7.4
+
 ## 1.2.0
 
 ### Added
