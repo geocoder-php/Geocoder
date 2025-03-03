@@ -16,13 +16,25 @@ declare(strict_types=1);
 
 namespace Geocoder\Provider\Here\Tests;
 
+use Geocoder\Exception\Exception;
+use Geocoder\Exception\InvalidArgument;
+use Geocoder\Exception\InvalidCredentials;
+use Geocoder\Exception\InvalidServerResponse;
+use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Location;
+use Geocoder\Model\Address;
+use Geocoder\Model\AddressCollection;
+use Geocoder\Model\Coordinates;
 use Geocoder\Provider\Here\Here;
 use Geocoder\Provider\Here\Model\HereAddress;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 
+/**
+ * @group here
+ * @group here-unit
+ */
 class HereTest extends BaseTestCase
 {
     protected function getCacheDir(): ?string
@@ -34,22 +46,25 @@ class HereTest extends BaseTestCase
         return null;
     }
 
+    /**
+     * @throws Exception|\JsonException
+     */
     public function testGeocodeWithRealAddress(): void
     {
         if (!isset($_SERVER['HERE_API_KEY'])) {
             $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
         }
 
-        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY']);
+        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY'], true);
 
         $results = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France')->withLocale('fr-FR'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
-        /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+
+        $this->assertInstanceOf(Address::class, $result);
         $this->assertEqualsWithDelta(48.8653, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(2.39844, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertNotNull($result->getBounds());
@@ -67,116 +82,128 @@ class HereTest extends BaseTestCase
     }
 
     /**
-     * @throws \Geocoder\Exception\Exception
+     * @throws Exception|\JsonException
      */
-    public function testGeocodeWithDefaultAdditionalData(): void
+    public function testGeocodeWithQualifiedQuery(): void
     {
         if (!isset($_SERVER['HERE_API_KEY'])) {
             $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
         }
 
-        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY']);
+        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY'], true);
 
-        $results = $provider->geocodeQuery(GeocodeQuery::create('Sant Roc, Santa Coloma de Cervelló, Espanya')->withLocale('ca'));
+        $query = GeocodeQuery::create('houseNumber=405;street=Urban St;city=lakewood;state=CO;postalCode=80228;country=UnitedStates')
+                             ->withData('qq', true);
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $results = $provider->geocodeQuery($query);
+
+        $this->assertInstanceOf(AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var HereAddress $result */
         $result = $results->first();
 
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEqualsWithDelta(41.37854, $result->getCoordinates()->getLatitude(), 0.01);
-        $this->assertEqualsWithDelta(2.01196, $result->getCoordinates()->getLongitude(), 0.01);
+        $this->assertInstanceOf(Address::class, $result);
+        $this->assertEqualsWithDelta(39.72362, $result->getCoordinates()->getLatitude(), 0.01);
+        $this->assertEqualsWithDelta(-105.13472, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertNotNull($result->getBounds());
-        $this->assertEqualsWithDelta(41.36505, $result->getBounds()->getSouth(), 0.01);
-        $this->assertEqualsWithDelta(1.99398, $result->getBounds()->getWest(), 0.01);
-        $this->assertEqualsWithDelta(41.39203, $result->getBounds()->getNorth(), 0.01);
-        $this->assertEqualsWithDelta(2.02994, $result->getBounds()->getEast(), 0.01);
+        $this->assertEqualsWithDelta(-105.13589, $result->getBounds()->getWest(), 0.01);
+        $this->assertEqualsWithDelta(39.72272, $result->getBounds()->getSouth(), 0.01);
+        $this->assertEqualsWithDelta(-105.13355, $result->getBounds()->getEast(), 0.01);
+        $this->assertEqualsWithDelta(39.72452, $result->getBounds()->getNorth(), 0.01);
 
-        $this->assertEquals('08690', $result->getPostalCode());
-        $this->assertEquals('Sant Roc', $result->getSubLocality());
-        $this->assertEquals('Santa Coloma de Cervelló', $result->getLocality());
-        $this->assertEquals('Espanya', $result->getCountry()->getName());
-        $this->assertEquals('ESP', $result->getCountry()->getCode());
-
-        $this->assertEquals('Espanya', $result->getAdditionalDataValue('CountryName'));
-        $this->assertEquals('Catalunya', $result->getAdditionalDataValue('StateName'));
-        $this->assertEquals('Barcelona', $result->getAdditionalDataValue('CountyName'));
+        $this->assertEquals('80228-1205', $result->getPostalCode());
+        $this->assertEquals('Union Square', $result->getSubLocality());
+        $this->assertEquals('Lakewood', $result->getLocality());
+        $this->assertEquals('United States', $result->getCountry()->getName());
+        $this->assertEquals('USA', $result->getCountry()->getCode());
     }
 
     /**
-     * Validation of some AdditionalData filters.
-     * https://developer.here.com/documentation/geocoder/topics/resource-params-additional.html.
-     *
-     * @throws \Geocoder\Exception\Exception
+     * @throws Exception|\JsonException
      */
-    public function testGeocodeWithAdditionalData(): void
+    public function testGeocodeWithCenterOn(): void
     {
         if (!isset($_SERVER['HERE_API_KEY'])) {
             $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
         }
 
-        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY']);
+        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY'], true);
 
-        $results = $provider->geocodeQuery(GeocodeQuery::create('Sant Roc, Santa Coloma de Cervelló, Espanya')
-            ->withData('Country2', 'true')
-            ->withData('IncludeShapeLevel', 'country')
-            ->withData('IncludeRoutingInformation', 'true')
-            ->withLocale('ca'));
+        $results = $provider->geocodeQuery(
+            GeocodeQuery::create('405 Urban St')
+            ->withData('centerOn', [
+                'lat' => 39.72344,
+                'lon' => -105.13392,
+            ])
+        );
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
-        $this->assertCount(1, $results);
+        $this->assertInstanceOf(AddressCollection::class, $results);
+        $this->assertCount(5, $results);
 
         /** @var HereAddress $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEqualsWithDelta(41.37854, $result->getCoordinates()->getLatitude(), 0.01);
-        $this->assertEqualsWithDelta(2.01196, $result->getCoordinates()->getLongitude(), 0.01);
+
+        $this->assertInstanceOf(Address::class, $result);
+        $this->assertEqualsWithDelta(39.72362, $result->getCoordinates()->getLatitude(), 0.01);
+        $this->assertEqualsWithDelta(-105.13472, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertNotNull($result->getBounds());
-        $this->assertEqualsWithDelta(41.36505, $result->getBounds()->getSouth(), 0.01);
-        $this->assertEqualsWithDelta(1.99398, $result->getBounds()->getWest(), 0.01);
-        $this->assertEqualsWithDelta(41.39203, $result->getBounds()->getNorth(), 0.01);
-        $this->assertEqualsWithDelta(2.02994, $result->getBounds()->getEast(), 0.01);
+        $this->assertEqualsWithDelta(-105.13589, $result->getBounds()->getWest(), 0.01);
+        $this->assertEqualsWithDelta(39.72272, $result->getBounds()->getSouth(), 0.01);
+        $this->assertEqualsWithDelta(-105.13355, $result->getBounds()->getEast(), 0.01);
+        $this->assertEqualsWithDelta(39.72452, $result->getBounds()->getNorth(), 0.01);
 
-        $this->assertEquals('08690', $result->getPostalCode());
-        $this->assertEquals('Sant Roc', $result->getSubLocality());
-        $this->assertEquals('Santa Coloma de Cervelló', $result->getLocality());
-        $this->assertEquals('Espanya', $result->getCountry()->getName());
-        $this->assertEquals('ESP', $result->getCountry()->getCode());
-
-        $this->assertEquals('ES', $result->getAdditionalDataValue('Country2'));
-        $this->assertEquals('Espanya', $result->getAdditionalDataValue('CountryName'));
-        $this->assertEquals('Catalunya', $result->getAdditionalDataValue('StateName'));
-        $this->assertEquals('Barcelona', $result->getAdditionalDataValue('CountyName'));
-        $this->assertEquals('district', $result->getAdditionalDataValue('routing_address_matchLevel'));
-        $this->assertEquals('NT_TzyupfxmTFN0Rh1TXEMqSA', $result->getAdditionalDataValue('routing_locationId'));
-        $this->assertEquals('address', $result->getAdditionalDataValue('routing_result_type'));
-        $this->assertEquals('WKTShapeType', $result->getShapeValue('_type'));
-        $this->assertMatchesRegularExpression('/^MULTIPOLYGON/', $result->getShapeValue('Value'));
+        $this->assertEquals('80228-1205', $result->getPostalCode());
+        $this->assertEquals('Union Square', $result->getSubLocality());
+        $this->assertEquals('Lakewood', $result->getLocality());
+        $this->assertEquals('United States', $result->getCountry()->getName());
+        $this->assertEquals('USA', $result->getCountry()->getCode());
     }
 
     /**
-     * Search for a specific city in a different country.
-     *
-     * @throws \Geocoder\Exception\Exception
+     * @throws \JsonException
      */
-    public function testGeocodeWithExtraFilterCountry(): void
+    public function testGeocodeWithCenterOnWithTwoManyCoordinates(): void
     {
         if (!isset($_SERVER['HERE_API_KEY'])) {
             $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
         }
 
-        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY']);
+        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY'], true);
 
-        $queryBarcelonaFromSpain = GeocodeQuery::create('Barcelona')->withData('country', 'ES')->withLocale('ca');
-        $queryBarcelonaFromVenezuela = GeocodeQuery::create('Barcelona')->withData('country', 'VE')->withLocale('ca');
+        $this->expectException(InvalidArgument::class);
+        $this->expectExceptionMessage('Expected a set of 2 coordinates got 4');
+
+        $provider->geocodeQuery(
+            GeocodeQuery::create('405 Urban St')
+                        ->withData('centerOn', [
+                            'lat' => 39.72344,
+                            'lon' => -105.13392,
+                            'lat2' => 39.72344,
+                            'lon2' => -105.13392,
+                        ])
+        );
+    }
+
+    /**
+     * @throws Exception|\JsonException
+     */
+    public function testGeocodeWithInString(): void
+    {
+        if (!isset($_SERVER['HERE_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
+        }
+
+        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY'], true);
+
+        $queryBarcelonaFromSpain = GeocodeQuery::create('Barcelona')->withData('in', 'ESP')->withLocale('ca');
+        $queryBarcelonaFromVenezuela = GeocodeQuery::create('Barcelona')->withData('in', 'VEN')->withLocale('ca');
 
         $resultsSpain = $provider->geocodeQuery($queryBarcelonaFromSpain);
         $resultsVenezuela = $provider->geocodeQuery($queryBarcelonaFromVenezuela);
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $resultsSpain);
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $resultsVenezuela);
+        $this->assertInstanceOf(AddressCollection::class, $resultsSpain);
+        $this->assertInstanceOf(AddressCollection::class, $resultsVenezuela);
         $this->assertCount(1, $resultsSpain);
         $this->assertCount(1, $resultsVenezuela);
 
@@ -186,116 +213,973 @@ class HereTest extends BaseTestCase
         $this->assertEquals('Barcelona', $resultSpain->getLocality());
         $this->assertEquals('Barcelona', $resultVenezuela->getLocality());
         $this->assertEquals('Espanya', $resultSpain->getCountry()->getName());
-        $this->assertEquals('República Bolivariana De Venezuela', $resultVenezuela->getCountry()->getName());
+        $this->assertEquals('Venezuela', $resultVenezuela->getCountry()->getName());
         $this->assertEquals('ESP', $resultSpain->getCountry()->getCode());
         $this->assertEquals('VEN', $resultVenezuela->getCountry()->getCode());
     }
 
     /**
-     * Search for a specific street in different towns in the same country.
-     *
-     * @throws \Geocoder\Exception\Exception
+     * @throws Exception|\JsonException
      */
-    public function testGeocodeWithExtraFilterCity(): void
+    public function testGeocodeWithInArray(): void
     {
         if (!isset($_SERVER['HERE_API_KEY'])) {
             $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
         }
 
-        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY']);
+        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY'], true);
 
-        $queryStreetCity1 = GeocodeQuery::create('Carrer de Barcelona')->withData('city', 'Sant Vicenç dels Horts')->withLocale('ca')->withLimit(1);
-        $queryStreetCity2 = GeocodeQuery::create('Carrer de Barcelona')->withData('city', 'Girona')->withLocale('ca')->withLimit(1);
-        $queryStreetCity3 = GeocodeQuery::create('Carrer de Barcelona')->withData('city', 'Pallejà')->withLocale('ca')->withLimit(1);
+        $query = GeocodeQuery::create('Barcelona')->withData('in', ['VEN', 'ESP']);
 
-        $resultsCity1 = $provider->geocodeQuery($queryStreetCity1);
-        $resultsCity2 = $provider->geocodeQuery($queryStreetCity2);
-        $resultsCity3 = $provider->geocodeQuery($queryStreetCity3);
+        $results = $provider->geocodeQuery($query);
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $resultsCity1);
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $resultsCity2);
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $resultsCity3);
+        $this->assertInstanceOf(AddressCollection::class, $results);
+        $this->assertCount(1, $results);
 
-        $resultCity1 = $resultsCity1->first();
-        $resultCity2 = $resultsCity2->first();
-        $resultCity3 = $resultsCity3->first();
+        $result = $results->first();
 
-        $this->assertEquals('Carrer de Barcelona', $resultCity1->getStreetName());
-        $this->assertEquals('Carrer de Barcelona', $resultCity2->getStreetName());
-        $this->assertEquals('Carrer de Barcelona', $resultCity3->getStreetName());
-        $this->assertEquals('Sant Vicenç dels Horts', $resultCity1->getLocality());
-        $this->assertEquals('Girona', $resultCity2->getLocality());
-        $this->assertEquals('Pallejà', $resultCity3->getLocality());
-        $this->assertEquals('Espanya', $resultCity1->getCountry()->getName());
-        $this->assertEquals('Espanya', $resultCity2->getCountry()->getName());
-        $this->assertEquals('Espanya', $resultCity3->getCountry()->getName());
-        $this->assertEquals('ESP', $resultCity1->getCountry()->getCode());
-        $this->assertEquals('ESP', $resultCity2->getCountry()->getCode());
-        $this->assertEquals('ESP', $resultCity3->getCountry()->getCode());
+        $this->assertEquals('Barcelona', $result->getLocality());
+        $this->assertEquals('Espanya', $result->getCountry()->getName());
+        $this->assertEquals('ESP', $result->getCountry()->getCode());
     }
 
-    public function testGeocodeWithExtraFilterCounty(): void
+    /**
+     * @throws \JsonException
+     */
+    public function testGeocodeWithInvalidIn(): void
     {
         if (!isset($_SERVER['HERE_API_KEY'])) {
             $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
         }
 
-        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY']);
+        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY'], true);
 
-        $queryCityRegion1 = GeocodeQuery::create('Cabanes')->withData('county', 'Girona')->withLocale('ca')->withLimit(1);
-        $queryCityRegion2 = GeocodeQuery::create('Cabanes')->withData('county', 'Castelló')->withLocale('ca')->withLimit(1);
+        $query = GeocodeQuery::create('Barcelona')->withData('in', 1.0);
 
-        $resultsRegion1 = $provider->geocodeQuery($queryCityRegion1);
-        $resultsRegion2 = $provider->geocodeQuery($queryCityRegion2);
+        $this->expectException(InvalidArgument::class);
+        $this->expectExceptionMessage('Expected a string or an array of country codes');
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $resultsRegion1);
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $resultsRegion2);
-
-        /** @var HereAddress $resultRegion1 */
-        $resultRegion1 = $resultsRegion1->first();
-        /** @var HereAddress $resultRegion2 */
-        $resultRegion2 = $resultsRegion2->first();
-
-        $this->assertEquals('Cabanes', $resultRegion1->getLocality());
-        $this->assertEquals('Cabanes', $resultRegion2->getLocality());
-        $this->assertEquals('Girona', $resultRegion1->getAdditionalDataValue('CountyName'));
-        $this->assertEquals('Castelló', $resultRegion2->getAdditionalDataValue('CountyName'));
-        $this->assertEquals('Catalunya', $resultRegion1->getAdditionalDataValue('StateName'));
-        $this->assertEquals('Comunitat Valenciana', $resultRegion2->getAdditionalDataValue('StateName'));
-        $this->assertEquals('Espanya', $resultRegion1->getCountry()->getName());
-        $this->assertEquals('Espanya', $resultRegion2->getCountry()->getName());
-        $this->assertEquals('ESP', $resultRegion1->getCountry()->getCode());
-        $this->assertEquals('ESP', $resultRegion2->getCountry()->getCode());
+        $provider->geocodeQuery($query);
     }
 
+    /**
+     * @throws \JsonException
+     */
+    public function testGeocodeWithLimit(): void
+    {
+        if (!isset($_SERVER['HERE_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
+        }
+
+        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY'], true);
+
+        $query = GeocodeQuery::create('Union')->withData('limit', 2);
+
+        $results = $provider->geocodeQuery($query);
+
+        $this->assertInstanceOf(AddressCollection::class, $results);
+        $this->assertCount(2, $results);
+    }
+
+    /**
+     * @throws \JsonException
+     */
+    public function testGeocodeWithNegativeInvalidLimit(): void
+    {
+        if (!isset($_SERVER['HERE_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
+        }
+
+        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY'], true);
+
+        $query = GeocodeQuery::create('Union')->withData('limit', -1);
+
+        $this->expectException(InvalidArgument::class);
+        $this->expectExceptionMessage('-1 is not a valid value');
+
+        $provider->geocodeQuery($query);
+    }
+
+    /**
+     * @throws \JsonException
+     */
+    public function testGeocodeWithOvermaxInvalidLimit(): void
+    {
+        if (!isset($_SERVER['HERE_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
+        }
+
+        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY'], true);
+
+        $query = GeocodeQuery::create('Union')->withData('limit', 101);
+
+        $this->expectException(InvalidArgument::class);
+        $this->expectExceptionMessage('101 is not a valid value');
+
+        $provider->geocodeQuery($query);
+    }
+
+    /**
+     * @throws Exception|\JsonException
+     */
+    public function testGeocodeWithTypes(): void
+    {
+        if (!isset($_SERVER['HERE_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
+        }
+
+        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY'], true);
+
+        $query = GeocodeQuery::create('405 Urban St Lakewood Colorado')->withData('types', ['area']);
+
+        $results = $provider->geocodeQuery($query);
+
+        $this->assertInstanceOf(AddressCollection::class, $results);
+        $this->assertCount(1, $results);
+
+        $result = $results->first();
+
+        $this->assertEquals('locality', $result->getLocationType());
+        $this->assertNull($result->getStreetNumber());
+        $this->assertNull($result->getStreetName());
+        $this->assertEquals('Lakewood', $result->getLocality());
+    }
+
+    /**
+     * @throws \JsonException
+     */
+    public function testGeocodeWithInvalidTypes(): void
+    {
+        if (!isset($_SERVER['HERE_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
+        }
+
+        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY'], true);
+
+        $this->expectException(InvalidArgument::class);
+        $this->expectExceptionMessage('"notAType" is not a valid type');
+
+        $query = GeocodeQuery::create('405 Urban St Lakewood Colorado')->withData('types', ['notAType']);
+
+        $provider->geocodeQuery($query);
+    }
+
+    /**
+     * @throws Exception|\JsonException
+     */
+    public function testGeocodeWithPoliticalView(): void
+    {
+        if (!isset($_SERVER['HERE_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
+        }
+
+        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY'], true);
+        $kosovoQuery = GeocodeQuery::create('M5C7+Q59, Vëllezërit Fazliu, Prishtina')->withLocale('USA');
+        $serbQuery = GeocodeQuery::create('M5C7+Q59, Vëllezërit Fazliu, Prishtina')
+            ->withData('politicalView', 'SRB')
+            ->withLocale('USA');
+
+        $results = $provider->geocodeQuery($kosovoQuery);
+
+        $this->assertInstanceOf(AddressCollection::class, $results);
+        $this->assertCount(1, $results);
+
+        $result = $results->first();
+
+        $this->assertEquals('KOS', $result->getCountry()->getCode());
+
+        $results = $provider->geocodeQuery($serbQuery);
+
+        $this->assertInstanceOf(AddressCollection::class, $results);
+        $this->assertCount(1, $results);
+
+        $result = $results->first();
+
+        $this->assertEquals('SRB', $result->getCountry()->getCode());
+    }
+
+    /**
+     * @throws \JsonException
+     */
+    public function testGeocodeWithInvalidPoliticalView(): void
+    {
+        if (!isset($_SERVER['HERE_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
+        }
+
+        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY'], true);
+        $query = GeocodeQuery::create('M5C7+Q59, Vëllezërit Fazliu, Prishtina')
+                                 ->withData('politicalView', 'notAView')
+                                 ->withLocale('USA');
+
+        $this->expectException(InvalidArgument::class);
+        $this->expectExceptionMessage('Political view for "notAView" is not a supported');
+
+        $provider->geocodeQuery($query);
+    }
+
+    /**
+     * @throws Exception|\JsonException
+     */
+    public function testGeocodeWithShowParams(): void
+    {
+        if (!isset($_SERVER['HERE_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
+        }
+
+        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY'], true);
+        $query = GeocodeQuery::create('405 Urban St Lakewood Colorado')->withData('show', Here::GEOCODE_SHOW_PARAMS);
+
+        $results = $provider->geocodeQuery($query);
+
+        $this->assertInstanceOf(AddressCollection::class, $results);
+        $this->assertCount(1, $results);
+
+        $result = $results->first();
+
+        $this->assertEquals('America/Denver', $result->getTimezone());
+
+        $additionalData = $result->getAdditionalData();
+
+        $this->assertEquals(['alpha2' => 'US', 'alpha3' => 'USA'], $additionalData['countryInfo']);
+
+        $this->assertNotNull($additionalData['parsing']);
+        $this->assertEquals(
+            [
+                [
+                    'baseName' => 'Urban',
+                    'streetType' => 'St',
+                    'streetTypePrecedes' => false,
+                    'streetTypeAttached' => false,
+                    'language' => 'en',
+                ],
+            ],
+            $additionalData['streetInfo']
+        );
+    }
+
+    /**
+     * @throws \JsonException
+     */
+    public function testGeocodeWithShowParamsNotArray(): void
+    {
+        if (!isset($_SERVER['HERE_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
+        }
+
+        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY'], true);
+        $query = GeocodeQuery::create('405 Urban St Lakewood Colorado')
+                             ->withData('show', 'notAnArray');
+
+        $this->expectException(InvalidArgument::class);
+        $this->expectExceptionMessage('Show param(s) must be an array');
+
+        $provider->geocodeQuery($query);
+    }
+
+    /**
+     * @throws \JsonException
+     */
+    public function testGeocodeWithInvalidShowParams(): void
+    {
+        if (!isset($_SERVER['HERE_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
+        }
+
+        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY'], true);
+        $query = GeocodeQuery::create('405 Urban St Lakewood Colorado')
+            ->withData('show', \array_merge(Here::GEOCODE_SHOW_PARAMS, ['notAParam']));
+
+        $this->expectException(InvalidArgument::class);
+        $this->expectExceptionMessage('Show param(s) "notAParam" are invalid');
+
+        $provider->geocodeQuery($query);
+    }
+
+    /**
+     * @throws Exception|\JsonException
+     */
+    public function testGeocodeWithShowMapReferenceParams(): void
+    {
+        if (!isset($_SERVER['HERE_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
+        }
+
+        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY'], true);
+        $query = GeocodeQuery::create('405 Urban St Lakewood Colorado')
+                                ->withData('showMapReferences', Here::GEOCODE_SHOW_MAP_REFERENCE_PARAMS);
+
+        $results = $provider->geocodeQuery($query);
+
+        $this->assertInstanceOf(AddressCollection::class, $results);
+        $this->assertCount(1, $results);
+
+        $result = $results->first();
+
+        $additionalData = $result->getAdditionalData();
+
+        $this->assertNotNull($additionalData['mapReferences']);
+        $this->assertArrayHasKey('pointAddress', $additionalData['mapReferences']);
+        $this->assertArrayHasKey('segments', $additionalData['mapReferences']);
+        $this->assertArrayHasKey('country', $additionalData['mapReferences']);
+        $this->assertArrayHasKey('state', $additionalData['mapReferences']);
+        $this->assertArrayHasKey('county', $additionalData['mapReferences']);
+        $this->assertArrayHasKey('city', $additionalData['mapReferences']);
+        $this->assertArrayHasKey('district', $additionalData['mapReferences']);
+        $this->assertArrayHasKey('cmVersion', $additionalData['mapReferences']);
+    }
+
+    /**
+     * @throws \JsonException
+     */
+    public function testGeocodeWithShowMapReferenceParamsNotArray(): void
+    {
+        if (!isset($_SERVER['HERE_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
+        }
+
+        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY'], true);
+        $query = GeocodeQuery::create('405 Urban St Lakewood Colorado')
+                             ->withData('showMapReferences', 'notAnArray');
+
+        $this->expectException(InvalidArgument::class);
+        $this->expectExceptionMessage('Show map reference preference(s) must be an array');
+
+        $provider->geocodeQuery($query);
+    }
+
+    /**
+     * @throws \JsonException
+     */
+    public function testGeocodeWithInvalidShowMapReferenceParams(): void
+    {
+        if (!isset($_SERVER['HERE_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
+        }
+
+        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY'], true);
+        $query = GeocodeQuery::create('405 Urban St Lakewood Colorado')
+                             ->withData('showMapReferences', \array_merge(Here::GEOCODE_SHOW_MAP_REFERENCE_PARAMS, ['notAParam']));
+
+        $this->expectException(InvalidArgument::class);
+        $this->expectExceptionMessage('Show map reference param(s) "notAParam" are invalid');
+
+        $provider->geocodeQuery($query);
+    }
+
+    /**
+     * @throws Exception|\JsonException
+     */
+    public function testGeocodeWithShowNavAttributesParams(): void
+    {
+        if (!isset($_SERVER['HERE_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
+        }
+
+        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY'], true);
+        $query = GeocodeQuery::create('405 Urban St Lakewood Colorado')
+                                ->withData('showNavAttributes', Here::GEOCODE_SHOW_NAV_ATTRIBUTES);
+
+        $results = $provider->geocodeQuery($query);
+
+        $this->assertInstanceOf(AddressCollection::class, $results);
+        $this->assertCount(1, $results);
+
+        $result = $results->first();
+
+        $additionalData = $result->getAdditionalData();
+
+        $this->assertNotNull($additionalData['navigationAttributes']);
+        $this->assertArrayHasKey('functionalClass', $additionalData['navigationAttributes']);
+        $this->assertArrayHasKey('access', $additionalData['navigationAttributes']);
+        $this->assertArrayHasKey('physical', $additionalData['navigationAttributes']);
+    }
+
+    /**
+     * @throws \JsonException
+     */
+    public function testGeocodeWithShowNavAttributesNotArray(): void
+    {
+        if (!isset($_SERVER['HERE_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
+        }
+
+        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY'], true);
+        $query = GeocodeQuery::create('405 Urban St Lakewood Colorado')
+                             ->withData('showNavAttributes', 'notAnArray');
+
+        $this->expectException(InvalidArgument::class);
+        $this->expectExceptionMessage('Show map nav attribute param(s) must be an array');
+
+        $provider->geocodeQuery($query);
+    }
+
+    public function testGeocodeWithInvalidShowNavAttributesParams(): void
+    {
+        if (!isset($_SERVER['HERE_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
+        }
+
+        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY'], true);
+        $query = GeocodeQuery::create('405 Urban St Lakewood Colorado')
+                             ->withData('showNavAttributes', \array_merge(Here::GEOCODE_SHOW_NAV_ATTRIBUTES, ['notAParam']));
+
+        $this->expectException(InvalidArgument::class);
+        $this->expectExceptionMessage('Show map nav attribute param(s) "notAParam" are invalid');
+
+        $provider->geocodeQuery($query);
+    }
+
+    /**
+     * @throws Exception|\JsonException
+     */
     public function testReverseWithRealCoordinates(): void
     {
         if (!isset($_SERVER['HERE_API_KEY'])) {
             $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
         }
 
-        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY']);
+        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY'], true);
 
         $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(48.8632156, 2.3887722));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEqualsWithDelta(48.8632147, $result->getCoordinates()->getLatitude(), 0.001);
+        $this->assertInstanceOf(Address::class, $result);
+        $this->assertEqualsWithDelta(48.8632156, $result->getCoordinates()->getLatitude(), 0.001);
         $this->assertEqualsWithDelta(2.3887722, $result->getCoordinates()->getLongitude(), 0.001);
         $this->assertNotNull($result->getBounds());
-        $this->assertEqualsWithDelta(48.86315, $result->getBounds()->getSouth(), 0.001);
-        $this->assertEqualsWithDelta(2.38853, $result->getBounds()->getWest(), 0.001);
-        $this->assertEqualsWithDelta(48.8632147, $result->getBounds()->getNorth(), 0.001);
-        $this->assertEqualsWithDelta(2.38883, $result->getBounds()->getEast(), 0.001);
+        $this->assertEqualsWithDelta(2.3875, $result->getBounds()->getWest(), 0.001);
+        $this->assertEqualsWithDelta(48.86294, $result->getBounds()->getSouth(), 0.001);
+        $this->assertEqualsWithDelta(2.39555, $result->getBounds()->getEast(), 0.001);
+        $this->assertEqualsWithDelta(48.86499, $result->getBounds()->getNorth(), 0.001);
         $this->assertEquals('Avenue Gambetta', $result->getStreetName());
         $this->assertEquals(75020, $result->getPostalCode());
         $this->assertEquals('Paris', $result->getLocality());
         $this->assertEquals('France', $result->getCountry()->getName());
         $this->assertEquals('FRA', $result->getCountry()->getCode());
+    }
+
+    /**
+     * @throws Exception|\JsonException
+     */
+    public function testReverseWithBearing(): void
+    {
+        if (!isset($_SERVER['HERE_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
+        }
+
+        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY'], true);
+
+        $reverseQuery = ReverseQuery::fromCoordinates(48.8632157, 2.3887722)
+            ->withData('bearing', 180);
+
+        $results = $provider->reverseQuery($reverseQuery);
+
+        $this->assertInstanceOf(AddressCollection::class, $results);
+        $this->assertCount(1, $results);
+
+        $result = $results->first();
+
+        $this->assertEquals('street', $result->getLocationType());
+        $this->assertNull($result->getStreetNumber());
+        $this->assertEquals('Avenue Gambetta', $result->getStreetName());
+        $this->assertEquals('Paris', $result->getLocality());
+    }
+
+    /**
+     * @throws \JsonException
+     */
+    public function testReverseWithInvalidBearing(): void
+    {
+        if (!isset($_SERVER['HERE_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
+        }
+
+        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY'], true);
+
+        $this->expectException(InvalidArgument::class);
+        $this->expectExceptionMessage('Bearing must be between 0 and 359 degrees');
+
+        $reverseQuery = ReverseQuery::fromCoordinates(48.8632157, 2.3887722)
+                                    ->withData('bearing', 99999);
+
+        $provider->reverseQuery($reverseQuery);
+    }
+
+    /**
+     * @throws Exception|\JsonException
+     */
+    public function testReverseWithIn(): void
+    {
+        if (!isset($_SERVER['HERE_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
+        }
+
+        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY'], true);
+
+        $reverseQuery = ReverseQuery::create(new Coordinates(48.87, 2.38))
+            ->withData('in', ['radius' => 10]);
+
+        $results = $provider->reverseQuery($reverseQuery);
+
+        $this->assertInstanceOf(AddressCollection::class, $results);
+        $this->assertCount(1, $results);
+
+        $result = $results->first();
+        $this->assertInstanceOf(Address::class, $result);
+        $this->assertEqualsWithDelta(48.85717, $result->getCoordinates()->getLatitude(), 0.001);
+        $this->assertEqualsWithDelta(2.3414, $result->getCoordinates()->getLongitude(), 0.001);
+        $this->assertNotNull($result->getBounds());
+        $this->assertEqualsWithDelta(2.22383, $result->getBounds()->getWest(), 0.001);
+        $this->assertEqualsWithDelta(48.81571, $result->getBounds()->getSouth(), 0.001);
+        $this->assertEqualsWithDelta(2.4698, $result->getBounds()->getEast(), 0.001);
+        $this->assertEqualsWithDelta(48.90248, $result->getBounds()->getNorth(), 0.001);
+        $this->assertNull($result->getStreetName());
+        $this->assertEquals(75001, $result->getPostalCode());
+        $this->assertEquals('Paris', $result->getLocality());
+        $this->assertEquals('France', $result->getCountry()->getName());
+        $this->assertEquals('FRA', $result->getCountry()->getCode());
+    }
+
+    /**
+     * @throws \JsonException
+     */
+    public function testReverseWithInvalidIn(): void
+    {
+        if (!isset($_SERVER['HERE_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
+        }
+
+        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY'], true);
+
+        $this->expectException(InvalidArgument::class);
+        $this->expectExceptionMessage('In requires radius');
+
+        $reverseQuery = ReverseQuery::create(new Coordinates(48.87, 2.38))
+                                    ->withData('in', ['blah' => 'notARadius']);
+
+        $provider->reverseQuery($reverseQuery);
+    }
+
+    /**
+     * @throws \JsonException
+     */
+    public function testReverseWithLimit(): void
+    {
+        if (!isset($_SERVER['HERE_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
+        }
+
+        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY'], true);
+
+        $reverseQuery = ReverseQuery::fromCoordinates(48.8632156, 2.3887722)
+            ->withData('limit', 2);
+
+        $results = $provider->reverseQuery($reverseQuery);
+
+        $this->assertInstanceOf(AddressCollection::class, $results);
+        $this->assertCount(2, $results);
+    }
+
+    /**
+     * @throws \JsonException
+     */
+    public function testReverseWithNegativeInvalidLimit(): void
+    {
+        if (!isset($_SERVER['HERE_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
+        }
+
+        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY'], true);
+
+        $reverseQuery = ReverseQuery::fromCoordinates(48.8632156, 2.3887722)
+        ->withData('limit', -1);
+
+        $this->expectException(InvalidArgument::class);
+        $this->expectExceptionMessage('-1 is not a valid value');
+
+        $provider->reverseQuery($reverseQuery);
+    }
+
+    /**
+     * @throws \JsonException
+     */
+    public function testReverseWithOverMaxInvalidLimit(): void
+    {
+        if (!isset($_SERVER['HERE_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
+        }
+
+        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY'], true);
+
+        $reverseQuery = ReverseQuery::fromCoordinates(48.8632156, 2.3887722)
+                                    ->withData('limit', 101);
+
+        $this->expectException(InvalidArgument::class);
+        $this->expectExceptionMessage('101 is not a valid value');
+
+        $provider->reverseQuery($reverseQuery);
+    }
+
+    /**
+     * @throws Exception|\JsonException
+     */
+    public function testReverseWithTypes(): void
+    {
+        if (!isset($_SERVER['HERE_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
+        }
+
+        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY'], true);
+
+        $reverseQuery = ReverseQuery::fromCoordinates(48.8632156, 2.3887722)
+            ->withData('types', ['city']);
+
+        $results = $provider->reverseQuery($reverseQuery);
+
+        $this->assertInstanceOf(AddressCollection::class, $results);
+        $this->assertCount(1, $results);
+
+        $result = $results->first();
+
+        $this->assertEquals('locality', $result->getLocationType());
+        $this->assertEquals('Paris', $result->getLocality());
+    }
+
+    /**
+     * @throws \JsonException
+     */
+    public function testReverseWithInvalidTypes(): void
+    {
+        if (!isset($_SERVER['HERE_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
+        }
+
+        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY'], true);
+
+        $reverseQuery = ReverseQuery::fromCoordinates(48.8632156, 2.3887722)
+                                    ->withData('types', ['notAType']);
+
+        $this->expectException(InvalidArgument::class);
+        $this->expectExceptionMessage('"notAType" is not a valid type');
+
+        $provider->reverseQuery($reverseQuery);
+    }
+
+    /**
+     * @throws Exception|\JsonException
+     */
+    public function testReverseWithLocale(): void
+    {
+        if (!isset($_SERVER['HERE_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
+        }
+
+        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY'], true);
+
+        $reverseQuery = ReverseQuery::fromCoordinates(42.66122, 21.14459);
+
+        $results = $provider->reverseQuery($reverseQuery);
+
+        $this->assertInstanceOf(AddressCollection::class, $results);
+        $this->assertCount(1, $results);
+
+        $result = $results->first();
+
+        $this->assertEquals('Kosovë', $result->getCountry());
+
+        $reverseQuery = $reverseQuery->withLocale('en');
+
+        $results = $provider->reverseQuery($reverseQuery);
+
+        $this->assertInstanceOf(AddressCollection::class, $results);
+        $this->assertCount(1, $results);
+
+        $result = $results->first();
+
+        $this->assertEquals('Kosovo', $result->getCountry());
+    }
+
+    /**
+     * @throws Exception|\JsonException
+     */
+    public function testReverseWithPoliticalView(): void
+    {
+        if (!isset($_SERVER['HERE_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
+        }
+
+        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY'], true);
+
+        $reverseQuery = ReverseQuery::fromCoordinates(42.66122, 21.14448);
+
+        $results = $provider->reverseQuery($reverseQuery);
+
+        $this->assertInstanceOf(AddressCollection::class, $results);
+        $this->assertCount(1, $results);
+
+        $result = $results->first();
+
+        $this->assertEquals('Kosovë', $result->getCountry()->getName());
+
+        $reverseQuery = $reverseQuery->withData('politicalView', 'SRB');
+
+        $results = $provider->reverseQuery($reverseQuery);
+
+        $this->assertInstanceOf(AddressCollection::class, $results);
+        $this->assertCount(1, $results);
+
+        $result = $results->first();
+
+        $this->assertEquals('Србија', $result->getCountry()->getName());
+    }
+
+    /**
+     * @throws \JsonException
+     */
+    public function testReverseWithInvalidPoliticalView(): void
+    {
+        if (!isset($_SERVER['HERE_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
+        }
+
+        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY'], true);
+
+        $reverseQuery = ReverseQuery::fromCoordinates(42.66122, 21.14448)
+            ->withData('politicalView', 'notAView');
+
+        $this->expectException(InvalidArgument::class);
+        $this->expectExceptionMessage('Political view for "notAView" is not a supported');
+
+        $provider->reverseQuery($reverseQuery);
+    }
+
+    /**
+     * @throws Exception|\JsonException
+     */
+    public function testReverseWithShow(): void
+    {
+        if (!isset($_SERVER['HERE_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
+        }
+
+        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY'], true);
+
+        $reverseQuery = ReverseQuery::fromCoordinates(48.8632156, 2.3887722)
+            ->withData('show', Here::REV_GEOCODE_SHOW_PARAMS);
+
+        $results = $provider->reverseQuery($reverseQuery);
+
+        $this->assertInstanceOf(AddressCollection::class, $results);
+        $this->assertCount(1, $results);
+
+        $result = $results->first();
+
+        $this->assertEquals('Europe/Paris', $result->getTimezone());
+
+        $additionalData = $result->getAdditionalData();
+
+        $this->assertEquals(['alpha2' => 'FR', 'alpha3' => 'FRA'], $additionalData['countryInfo']);
+
+        $this->assertEquals(
+            [
+                [
+                    'baseName' => 'Gambetta',
+                    'streetType' => 'Avenue',
+                    'streetTypePrecedes' => true,
+                    'streetTypeAttached' => false,
+                    'language' => 'fr',
+                ],
+            ],
+            $additionalData['streetInfo']
+        );
+    }
+
+    /**
+     * @throws \JsonException
+     */
+    public function testReverseWithShowNotArray(): void
+    {
+        if (!isset($_SERVER['HERE_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
+        }
+
+        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY'], true);
+
+        $reverseQuery = ReverseQuery::fromCoordinates(48.8632156, 2.3887722)
+                                    ->withData('show', 'tz');
+
+        $this->expectException(InvalidArgument::class);
+        $this->expectExceptionMessage('Show param(s) must be an array');
+
+        $provider->reverseQuery($reverseQuery);
+    }
+
+    /**
+     * @throws \JsonException
+     */
+    public function testReverseWithInvalidShowParams(): void
+    {
+        if (!isset($_SERVER['HERE_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
+        }
+
+        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY'], true);
+
+        $reverseQuery = ReverseQuery::fromCoordinates(48.8632156, 2.3887722)
+                                    ->withData('show', ['notAParam']);
+
+        $this->expectException(InvalidArgument::class);
+        $this->expectExceptionMessage('Show param(s) "notAParam" are invalid');
+
+        $provider->reverseQuery($reverseQuery);
+    }
+
+    /**
+     * @throws Exception|\JsonException
+     */
+    public function testReverseWithShowMapReferences(): void
+    {
+        if (!isset($_SERVER['HERE_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
+        }
+
+        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY'], true);
+
+        $reverseQuery = ReverseQuery::fromCoordinates(48.8632156, 2.3887722)
+            ->withData('showMapReferences', Here::GEOCODE_SHOW_MAP_REFERENCE_PARAMS);
+
+        $results = $provider->reverseQuery($reverseQuery);
+
+        $this->assertInstanceOf(AddressCollection::class, $results);
+        $this->assertCount(1, $results);
+
+        $result = $results->first();
+
+        $additionalData = $result->getAdditionalData();
+
+        $this->assertNotNull($additionalData['mapReferences']);
+        $this->assertArrayHasKey('pointAddress', $additionalData['mapReferences']);
+        $this->assertArrayHasKey('segments', $additionalData['mapReferences']);
+        $this->assertArrayHasKey('country', $additionalData['mapReferences']);
+        $this->assertArrayHasKey('state', $additionalData['mapReferences']);
+        $this->assertArrayHasKey('county', $additionalData['mapReferences']);
+        $this->assertArrayHasKey('city', $additionalData['mapReferences']);
+        $this->assertArrayHasKey('district', $additionalData['mapReferences']);
+        $this->assertArrayHasKey('cmVersion', $additionalData['mapReferences']);
+    }
+
+    /**
+     * @throws \JsonException
+     */
+    public function testReverseWithShowMapReferencesNotArray(): void
+    {
+        if (!isset($_SERVER['HERE_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
+        }
+
+        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY'], true);
+
+        $reverseQuery = ReverseQuery::fromCoordinates(48.8632156, 2.3887722)
+                                    ->withData('showMapReferences', 'adminIds');
+
+        $this->expectException(InvalidArgument::class);
+        $this->expectExceptionMessage('Show map reference preference(s) must be an array');
+
+        $provider->reverseQuery($reverseQuery);
+    }
+
+    /**
+     * @throws \JsonException
+     */
+    public function testReverseWithInvalidShowMapReferences(): void
+    {
+        if (!isset($_SERVER['HERE_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
+        }
+
+        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY'], true);
+
+        $reverseQuery = ReverseQuery::fromCoordinates(48.8632156, 2.3887722)
+                                    ->withData('showMapReferences', ['notAParam']);
+
+        $this->expectException(InvalidArgument::class);
+        $this->expectExceptionMessage('Show map reference param(s) "notAParam" are invalid');
+
+        $provider->reverseQuery($reverseQuery);
+    }
+
+    /**
+     * @throws Exception|\JsonException
+     */
+    public function testReverseWithShowNavAttributes(): void
+    {
+        if (!isset($_SERVER['HERE_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
+        }
+
+        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY'], true);
+
+        $reverseQuery = ReverseQuery::fromCoordinates(48.8632156, 2.3887722)
+            ->withData('showNavAttributes', Here::GEOCODE_SHOW_NAV_ATTRIBUTES);
+
+        $results = $provider->reverseQuery($reverseQuery);
+
+        $this->assertInstanceOf(AddressCollection::class, $results);
+        $this->assertCount(1, $results);
+
+        $result = $results->first();
+
+        $additionalData = $result->getAdditionalData();
+
+        $this->assertNotNull($additionalData['navigationAttributes']);
+        $this->assertArrayHasKey('functionalClass', $additionalData['navigationAttributes']);
+        $this->assertArrayHasKey('access', $additionalData['navigationAttributes']);
+        $this->assertArrayHasKey('physical', $additionalData['navigationAttributes']);
+    }
+
+    /**
+     * @throws \JsonException
+     */
+    public function testReverseWithShowNavAttributesNotArray(): void
+    {
+        if (!isset($_SERVER['HERE_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
+        }
+
+        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY'], true);
+
+        $reverseQuery = ReverseQuery::fromCoordinates(48.8632156, 2.3887722)
+                                    ->withData('showNavAttributes', 'access');
+
+        $this->expectException(InvalidArgument::class);
+        $this->expectExceptionMessage('Show map nav attribute param(s) must be an array');
+
+        $provider->reverseQuery($reverseQuery);
+    }
+
+    /**
+     * @throws \JsonException
+     */
+    public function testReverseWithInvalidShowNavAttributes(): void
+    {
+        if (!isset($_SERVER['HERE_API_KEY'])) {
+            $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
+        }
+
+        $provider = Here::createUsingApiKey($this->getHttpClient($_SERVER['HERE_API_KEY']), $_SERVER['HERE_API_KEY'], true);
+
+        $reverseQuery = ReverseQuery::fromCoordinates(48.8632156, 2.3887722)
+                                    ->withData('showNavAttributes', ['notAParam']);
+
+        $this->expectException(InvalidArgument::class);
+        $this->expectExceptionMessage('Show map nav attribute param(s) "notAParam" are invalid');
+
+        $provider->reverseQuery($reverseQuery);
     }
 
     public function testGetName(): void
@@ -304,43 +1188,54 @@ class HereTest extends BaseTestCase
         $this->assertEquals('Here', $provider->getName());
     }
 
+    /**
+     * @throws \JsonException
+     */
     public function testGeocodeWithInvalidData(): void
     {
-        $this->expectException(\Geocoder\Exception\InvalidServerResponse::class);
+        $this->expectException(InvalidServerResponse::class);
 
         $provider = new Here($this->getMockedHttpClient(), 'appId', 'appCode');
         $provider->geocodeQuery(GeocodeQuery::create('foobar'));
     }
 
+    /**
+     * @throws \JsonException
+     */
     public function testGeocodeIpv4(): void
     {
-        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectException(UnsupportedOperation::class);
         $this->expectExceptionMessage('The Here provider does not support IP addresses, only street addresses.');
 
         $provider = $this->getProvider();
         $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
     }
 
+    /**
+     * @throws \JsonException
+     */
     public function testGeocodeWithLocalhostIPv6(): void
     {
-        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectException(UnsupportedOperation::class);
         $this->expectExceptionMessage('The Here provider does not support IP addresses, only street addresses.');
 
         $provider = $this->getProvider();
         $provider->geocodeQuery(GeocodeQuery::create('::1'));
     }
 
+    /**
+     * @throws \JsonException
+     */
     public function testGeocodeInvalidApiKey(): void
     {
-        $this->expectException(\Geocoder\Exception\InvalidCredentials::class);
+        $this->expectException(InvalidCredentials::class);
         $this->expectExceptionMessage('Invalid or missing api key.');
 
         $provider = new Here(
             $this->getMockedHttpClient(
                 '{
-					"type": {
-						"subtype": "InvalidCredentials"
-					}
+                    "error": "Unauthorized",
+                    "error_description": "apiKey invalid. apiKey not found."
                 }'
             ),
             'appId',
@@ -349,9 +1244,12 @@ class HereTest extends BaseTestCase
         $provider->geocodeQuery(GeocodeQuery::create('New York'));
     }
 
+    /**
+     * @throws \JsonException
+     */
     public function testGeocodeWithRealIPv6(): void
     {
-        $this->expectException(\Geocoder\Exception\UnsupportedOperation::class);
+        $this->expectException(UnsupportedOperation::class);
         $this->expectExceptionMessage('The Here provider does not support IP addresses, only street addresses.');
 
         $provider = $this->getProvider();
@@ -364,6 +1262,6 @@ class HereTest extends BaseTestCase
             $this->markTestSkipped('You need to configure the HERE_API_KEY value in phpunit.xml');
         }
 
-        return Here::createUsingApiKey($this->getHttpClient(), $_SERVER['HERE_API_KEY']);
+        return Here::createUsingApiKey($this->getHttpClient(), $_SERVER['HERE_API_KEY'], true);
     }
 }
