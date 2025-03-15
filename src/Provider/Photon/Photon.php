@@ -71,6 +71,8 @@ final class Photon extends AbstractHttpProvider implements Provider
                 'layer' => $query->getData('layer'),
                 'limit' => $query->getLimit(),
                 'lang' => $query->getLocale(),
+                'lat' => $query->getData('lat'),
+                'lon' => $query->getData('lon'),
             ]);
         $osmTagFilters = $this->buildOsmTagFilterQuery($query->getData('osm_tag'));
         if (!empty($osmTagFilters)) {

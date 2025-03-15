@@ -135,6 +135,25 @@ class PhotonTest extends BaseTestCase
         $this->assertGreaterThan(0, $countGalleries);
     }
 
+    public function testGeocodeQueryWithLatLon(): void
+    {
+        $provider = Photon::withKomootServer($this->getHttpClient());
+
+        $query = GeocodeQuery::create('Paris')->withLimit(1);
+        $results = $provider->geocodeQuery($query);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertCount(1, $results);
+        $this->assertEquals('France', $results->first()->getCountry());
+
+        $query = $query
+            ->withData('lat', 33.661426)
+            ->withData('lon', -95.556321);
+        $results = $provider->geocodeQuery($query);
+        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertCount(1, $results);
+        $this->assertEquals('United States', $results->first()->getCountry());
+    }
+
     public function testReverseQuery(): void
     {
         $provider = Photon::withKomootServer($this->getHttpClient());
