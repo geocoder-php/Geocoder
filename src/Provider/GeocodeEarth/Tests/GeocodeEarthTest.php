@@ -60,9 +60,9 @@ class GeocodeEarthTest extends BaseTestCase
         $this->assertEquals('Acklam Road', $result->getStreetName());
         $this->assertEquals('London', $result->getLocality());
         $this->assertCount(5, $result->getAdminLevels());
-        $this->assertEquals('London', $result->getAdminLevels()->get(3)->getName());
+        $this->assertEquals('London', $result->getAdminLevels()->get(5)->getName());
         $this->assertEquals('United Kingdom', $result->getCountry()->getName());
-        $this->assertEquals('GBR', $result->getCountry()->getCode());
+        $this->assertEquals('GB', $result->getCountry()->getCode());
     }
 
     public function testReverseWithRealCoordinates(): void
@@ -87,10 +87,10 @@ class GeocodeEarthTest extends BaseTestCase
         $this->assertEquals('LA1 1UG', $result->getPostalCode());
         $this->assertEquals('Lancaster', $result->getLocality());
         $this->assertCount(5, $result->getAdminLevels());
-        $this->assertEquals('Lancashire', $result->getAdminLevels()->get(1)->getName());
-        $this->assertEquals('England', $result->getAdminLevels()->get(4)->getName());
+        $this->assertEquals('Lancashire', $result->getAdminLevels()->get(3)->getName());
+        $this->assertEquals('England', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('United Kingdom', $result->getCountry()->getName());
-        $this->assertEquals('GBR', $result->getCountry()->getCode());
+        $this->assertEquals('GB', $result->getCountry()->getCode());
     }
 
     public function testReverseWithVillage(): void
@@ -140,7 +140,7 @@ class GeocodeEarthTest extends BaseTestCase
         $this->assertEqualsWithDelta(18.393428, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(-78.107687, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertNull($result->getLocality());
-        $this->assertCount(2, $result->getAdminLevels());
+        $this->assertCount(1, $result->getAdminLevels());
         $this->assertEquals('Hanover', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('Jamaica', $result->getCountry()->getName());
 
@@ -150,7 +150,7 @@ class GeocodeEarthTest extends BaseTestCase
         $this->assertEqualsWithDelta(39.192889999999998, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(-76.724140000000006, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('Hanover', $result->getLocality());
-        $this->assertCount(4, $result->getAdminLevels());
+        $this->assertCount(3, $result->getAdminLevels());
         $this->assertEquals('Hanover', $result->getAdminLevels()->get(3)->getName());
         $this->assertEquals('United States', $result->getCountry()->getName());
     }
@@ -176,12 +176,12 @@ class GeocodeEarthTest extends BaseTestCase
         $this->assertEquals('Kalbacher Hauptstraße', $result->getStreetName());
         $this->assertEquals(60437, $result->getPostalCode());
         $this->assertEquals('Frankfurt', $result->getLocality());
-        $this->assertCount(4, $result->getAdminLevels());
-        $this->assertEquals('Frankfurt', $result->getAdminLevels()->get(2)->getName());
+        $this->assertCount(5, $result->getAdminLevels());
+        $this->assertEquals('Frankfurt', $result->getAdminLevels()->get(3)->getName());
         $this->assertEquals('Hesse', $result->getAdminLevels()->get(1)->getName());
-        $this->assertNull($result->getAdminLevels()->get(1)->getCode());
+        $this->assertEquals('HE', $result->getAdminLevels()->get(1)->getCode());
         $this->assertEquals('Germany', $result->getCountry()->getName());
-        $this->assertEquals('DEU', $result->getCountry()->getCode());
+        $this->assertEquals('DE', $result->getCountry()->getCode());
     }
 
     public function testGeocodeNoBounds(): void
@@ -203,7 +203,7 @@ class GeocodeEarthTest extends BaseTestCase
         $this->assertEqualsWithDelta(21.004552, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('Warsaw', $result->getLocality());
         $this->assertEquals('Poland', $result->getCountry()->getName());
-        $this->assertEquals('POL', $result->getCountry()->getCode());
+        $this->assertEquals('PL', $result->getCountry()->getCode());
         $this->assertNull($result->getBounds());
     }
 
