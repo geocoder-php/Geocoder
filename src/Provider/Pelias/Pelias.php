@@ -105,7 +105,7 @@ class Pelias extends AbstractHttpProvider implements Provider
         return 'pelias';
     }
 
-    protected function executeQuery(string $url, ?string $locale): AddressCollection
+    protected function executeQuery(string $url, ?string $locale = null): AddressCollection
     {
         $headers = [];
         if (null !== $locale) {
