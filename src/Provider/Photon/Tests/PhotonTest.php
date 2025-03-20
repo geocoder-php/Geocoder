@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Geocoder\Provider\Photon\Tests;
 
 use Geocoder\IntegrationTest\BaseTestCase;
+use Geocoder\Model\AddressCollection;
 use Geocoder\Provider\Photon\Model\PhotonAddress;
 use Geocoder\Provider\Photon\Photon;
 use Geocoder\Query\GeocodeQuery;
@@ -141,7 +142,7 @@ class PhotonTest extends BaseTestCase
 
         $query = GeocodeQuery::create('Paris')->withLimit(1);
         $results = $provider->geocodeQuery($query);
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(AddressCollection::class, $results);
         $this->assertCount(1, $results);
         $this->assertEquals('France', $results->first()->getCountry());
 
@@ -149,7 +150,7 @@ class PhotonTest extends BaseTestCase
             ->withData('lat', 33.661426)
             ->withData('lon', -95.556321);
         $results = $provider->geocodeQuery($query);
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(AddressCollection::class, $results);
         $this->assertCount(1, $results);
         $this->assertEquals('United States', $results->first()->getCountry());
     }
