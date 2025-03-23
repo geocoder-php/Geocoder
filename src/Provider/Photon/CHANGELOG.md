@@ -2,6 +2,13 @@
 
 The change log describes what is "Added", "Removed", "Changed" or "Fixed" between each release.
 
+## 0.9.0
+
+### Added
+
+- Add support for `lat`, `lon` parameters
+- Add support for `bbox` parameter
+
 ## 0.8.0
 
 ### Added
