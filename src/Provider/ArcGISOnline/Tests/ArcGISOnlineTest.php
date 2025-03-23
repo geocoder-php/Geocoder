@@ -55,12 +55,12 @@ class ArcGISOnlineTest extends BaseTestCase
         $provider = new ArcGISOnline($this->getHttpClient());
         $results = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(5, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(48.863279997000461, $result->getCoordinates()->getLatitude(), 0.0001);
         $this->assertEqualsWithDelta(2.3890199980004354, $result->getCoordinates()->getLongitude(), 0.0001);
         $this->assertEquals(10, $result->getStreetNumber());
@@ -88,11 +88,11 @@ class ArcGISOnlineTest extends BaseTestCase
         $provider = ArcGISOnline::token($this->getHttpClient($_SERVER['ARCGIS_TOKEN']), $_SERVER['ARCGIS_TOKEN']);
         $results = $provider->geocodeQuery(GeocodeQuery::create('5754 WI-23, Spring Green, WI 53588, USA'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(43.093663, $result->getCoordinates()->getLatitude(), 0.0001);
         $this->assertEqualsWithDelta(-90.131796, $result->getCoordinates()->getLongitude(), 0.0001);
         $this->assertEquals(5754, $result->getStreetNumber());
@@ -126,12 +126,12 @@ class ArcGISOnlineTest extends BaseTestCase
         $provider = new ArcGISOnline($this->getHttpClient(), null);
         $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(48.863279997000461, 2.3890199980004354));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(48.863279997000461, $result->getCoordinates()->getLatitude(), 0.0001);
         $this->assertEqualsWithDelta(2.3890199980004354, $result->getCoordinates()->getLongitude(), 0.0001);
         $this->assertNull($result->getStreetNumber());
@@ -152,12 +152,12 @@ class ArcGISOnlineTest extends BaseTestCase
         $provider = new ArcGISOnline($this->getHttpClient());
         $results = $provider->geocodeQuery(GeocodeQuery::create('Hannover'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(5, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(52.37227000000007, $result->getCoordinates()->getLatitude(), 0.0001);
         $this->assertEqualsWithDelta(9.738150000000076, $result->getCoordinates()->getLongitude(), 0.0001);
         $this->assertNull($result->getStreetNumber());
@@ -175,7 +175,7 @@ class ArcGISOnlineTest extends BaseTestCase
 
         /** @var Location $result */
         $result = $results->get(1);
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(39.391768472000479, $result->getCoordinates()->getLatitude(), 0.0001);
         $this->assertEqualsWithDelta(-77.440257128999633, $result->getCoordinates()->getLongitude(), 0.0001);
         $this->assertNull($result->getStreetName());
@@ -186,7 +186,7 @@ class ArcGISOnlineTest extends BaseTestCase
 
         /** @var Location $result */
         $result = $results->get(2);
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(53.174198173, $result->getCoordinates()->getLatitude(), 0.0001);
         $this->assertEqualsWithDelta(8.5069383810005, $result->getCoordinates()->getLongitude(), 0.0001);
         $this->assertNull($result->getStreetName());
@@ -197,7 +197,7 @@ class ArcGISOnlineTest extends BaseTestCase
 
         /** @var Location $result */
         $result = $results->get(3);
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(47.111290000000054, $result->getCoordinates()->getLatitude(), 0.0001);
         $this->assertEqualsWithDelta(-101.42142999999999, $result->getCoordinates()->getLongitude(), 0.0001);
         $this->assertNull($result->getStreetName());
@@ -208,7 +208,7 @@ class ArcGISOnlineTest extends BaseTestCase
 
         /** @var Location $result */
         $result = $results->get(4);
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(32.518790000000024, $result->getCoordinates()->getLatitude(), 0.0001);
         $this->assertEqualsWithDelta(-90.06298999999996, $result->getCoordinates()->getLongitude(), 0.0001);
         $this->assertNull($result->getStreetName());

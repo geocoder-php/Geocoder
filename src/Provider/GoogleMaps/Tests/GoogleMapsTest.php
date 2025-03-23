@@ -528,7 +528,7 @@ class GoogleMapsTest extends BaseTestCase
         /** @var GoogleAddress $result */
         $result = $results->first();
         $this->assertInstanceOf(Address::class, $result);
-        $this->assertInstanceOf('\Geocoder\Model\AdminLevelCollection', $result->getSubLocalityLevels());
+        $this->assertInstanceOf(\Geocoder\Model\AdminLevelCollection::class, $result->getSubLocalityLevels());
         $this->assertEquals('Iijima', $result->getSubLocalityLevels()->get(2)->getName());
         $this->assertEquals(false, $result->isPartialMatch());
     }
@@ -584,7 +584,7 @@ class GoogleMapsTest extends BaseTestCase
         $this->assertCount(2, $result->getAdminLevels());
         $this->assertEquals('Région Wallonne', $result->getAdminLevels()->get(1)->getName());
         $this->assertEquals('Hainaut', $result->getAdminLevels()->get(2)->getName());
-        $this->assertInstanceOf('\Geocoder\Model\AdminLevelCollection', $result->getSubLocalityLevels());
+        $this->assertInstanceOf(\Geocoder\Model\AdminLevelCollection::class, $result->getSubLocalityLevels());
         $this->assertEquals(1, $result->getSubLocalityLevels()->get(1)->getLevel());
         $this->assertEquals('Wayaux / Les Bons Villers', $result->getSubLocalityLevels()->get(1)->getName());
         $this->assertEquals('Wayaux / Les Bons Villers', $result->getSubLocalityLevels()->get(1)->getCode());

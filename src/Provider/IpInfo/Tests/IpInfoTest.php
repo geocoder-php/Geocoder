@@ -55,12 +55,12 @@ class IpInfoTest extends BaseTestCase
         $provider = new IpInfo($this->getMockedHttpClient());
         $results = $provider->geocodeQuery(GeocodeQuery::create($localhostIp));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertNull($result->getCoordinates());
 
         $this->assertNull($result->getPostalCode());
@@ -93,12 +93,12 @@ class IpInfoTest extends BaseTestCase
         $provider = new IpInfo($this->getHttpClient());
         $results = $provider->geocodeQuery(GeocodeQuery::create('74.125.45.100'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(36.154, $result->getCoordinates()->getLatitude(), 0.001);
         $this->assertEqualsWithDelta(-95.9928, $result->getCoordinates()->getLongitude(), 0.001);
         $this->assertEquals(74102, $result->getPostalCode());
@@ -115,12 +115,12 @@ class IpInfoTest extends BaseTestCase
         $provider = new IpInfo($this->getHttpClient());
         $results = $provider->geocodeQuery(GeocodeQuery::create('2601:9:7680:363:75df:f491:6f85:352f'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(39.934, $result->getCoordinates()->getLatitude(), 0.001);
         $this->assertEqualsWithDelta(-74.891, $result->getCoordinates()->getLongitude(), 0.001);
         $this->assertEquals('08054', $result->getPostalCode());

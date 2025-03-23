@@ -46,12 +46,12 @@ class MaxMindTest extends BaseTestCase
         $provider = new MaxMind($this->getMockedHttpClient(), 'api_key');
         $results = $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEquals('localhost', $result->getLocality());
         $this->assertEquals('localhost', $result->getCountry()->getName());
     }
@@ -61,12 +61,12 @@ class MaxMindTest extends BaseTestCase
         $provider = new MaxMind($this->getMockedHttpClient(), 'api_key');
         $results = $provider->geocodeQuery(GeocodeQuery::create('::1'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEquals('localhost', $result->getLocality());
         $this->assertEquals('localhost', $result->getCountry()->getName());
     }
@@ -94,12 +94,12 @@ class MaxMindTest extends BaseTestCase
         $provider = new MaxMind($this->getMockedHttpClient(',,,,,,,,,'), 'api_key');
         $results = $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertNull($result->getCoordinates());
 
         $this->assertNull($result->getStreetNumber());
@@ -119,12 +119,12 @@ class MaxMindTest extends BaseTestCase
         ), 'api_key');
         $results = $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(33.034698486328, $result->getCoordinates()->getLatitude(), 0.0001);
         $this->assertEqualsWithDelta(-96.813400268555, $result->getCoordinates()->getLongitude(), 0.0001);
         $this->assertNull($result->getStreetNumber());
@@ -151,12 +151,12 @@ class MaxMindTest extends BaseTestCase
         ), 'api_key');
         $results = $provider4->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(37.748402, $result->getCoordinates()->getLatitude(), 0.0001);
         $this->assertEqualsWithDelta(-122.415604, $result->getCoordinates()->getLongitude(), 0.0001);
         $this->assertNull($result->getStreetNumber());
@@ -263,12 +263,12 @@ class MaxMindTest extends BaseTestCase
         $provider = new MaxMind($this->getHttpClient($_SERVER['MAXMIND_API_KEY']), $_SERVER['MAXMIND_API_KEY']);
         $results = $provider->geocodeQuery(GeocodeQuery::create('74.200.247.159'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(33.034698, $result->getCoordinates()->getLatitude(), 0.1);
         $this->assertEqualsWithDelta(-96.813400, $result->getCoordinates()->getLongitude(), 0.1);
         $this->assertNull($result->getBounds());
@@ -297,12 +297,12 @@ class MaxMindTest extends BaseTestCase
         );
         $results = $provider->geocodeQuery(GeocodeQuery::create('74.200.247.159'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(33.0347, $result->getCoordinates()->getLatitude(), 0.1);
         $this->assertEqualsWithDelta(-96.8134, $result->getCoordinates()->getLongitude(), 0.1);
         $this->assertNull($result->getBounds());
@@ -332,12 +332,12 @@ class MaxMindTest extends BaseTestCase
         );
         $results = $provider->geocodeQuery(GeocodeQuery::create('189.26.128.80'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(-27.5833, $result->getCoordinates()->getLatitude(), 0.1);
         $this->assertEqualsWithDelta(-48.5666, $result->getCoordinates()->getLongitude(), 0.1);
         $this->assertNull($result->getBounds());
@@ -367,12 +367,12 @@ class MaxMindTest extends BaseTestCase
         );
         $results = $provider->geocodeQuery(GeocodeQuery::create('2002:4293:f4d6:0:0:0:0:0'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(40.2181, $result->getCoordinates()->getLatitude(), 0.1);
         $this->assertEqualsWithDelta(-111.6133, $result->getCoordinates()->getLongitude(), 0.1);
         $this->assertNull($result->getBounds());

@@ -44,12 +44,12 @@ class HereTest extends BaseTestCase
 
         $results = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France')->withLocale('fr-FR'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(48.8653, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(2.39844, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertNotNull($result->getBounds());
@@ -79,13 +79,13 @@ class HereTest extends BaseTestCase
 
         $results = $provider->geocodeQuery(GeocodeQuery::create('Sant Roc, Santa Coloma de Cervelló, Espanya')->withLocale('ca'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var HereAddress $result */
         $result = $results->first();
 
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(41.37854, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(2.01196, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertNotNull($result->getBounds());
@@ -125,12 +125,12 @@ class HereTest extends BaseTestCase
             ->withData('IncludeRoutingInformation', 'true')
             ->withLocale('ca'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var HereAddress $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(41.37854, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(2.01196, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertNotNull($result->getBounds());
@@ -175,8 +175,8 @@ class HereTest extends BaseTestCase
         $resultsSpain = $provider->geocodeQuery($queryBarcelonaFromSpain);
         $resultsVenezuela = $provider->geocodeQuery($queryBarcelonaFromVenezuela);
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $resultsSpain);
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $resultsVenezuela);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $resultsSpain);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $resultsVenezuela);
         $this->assertCount(1, $resultsSpain);
         $this->assertCount(1, $resultsVenezuela);
 
@@ -212,9 +212,9 @@ class HereTest extends BaseTestCase
         $resultsCity2 = $provider->geocodeQuery($queryStreetCity2);
         $resultsCity3 = $provider->geocodeQuery($queryStreetCity3);
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $resultsCity1);
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $resultsCity2);
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $resultsCity3);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $resultsCity1);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $resultsCity2);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $resultsCity3);
 
         $resultCity1 = $resultsCity1->first();
         $resultCity2 = $resultsCity2->first();
@@ -248,8 +248,8 @@ class HereTest extends BaseTestCase
         $resultsRegion1 = $provider->geocodeQuery($queryCityRegion1);
         $resultsRegion2 = $provider->geocodeQuery($queryCityRegion2);
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $resultsRegion1);
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $resultsRegion2);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $resultsRegion1);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $resultsRegion2);
 
         /** @var HereAddress $resultRegion1 */
         $resultRegion1 = $resultsRegion1->first();
@@ -278,12 +278,12 @@ class HereTest extends BaseTestCase
 
         $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(48.8632156, 2.3887722));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(48.8632147, $result->getCoordinates()->getLatitude(), 0.001);
         $this->assertEqualsWithDelta(2.3887722, $result->getCoordinates()->getLongitude(), 0.001);
         $this->assertNotNull($result->getBounds());
