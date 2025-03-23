@@ -79,12 +79,12 @@ class MapTilerTest extends BaseTestCase
         $provider = new MapTiler($this->getHttpClient($_SERVER['MAPTILER_KEY']), $_SERVER['MAPTILER_KEY']);
         $results = $provider->geocodeQuery($query);
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         // $this->assertCount(1, $results);
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(48.8658863, $result->getCoordinates()->getLatitude(), 0.00001);
         $this->assertEqualsWithDelta(2.3993232, $result->getCoordinates()->getLongitude(), 0.00001);
         $this->assertEquals('Avenue Gambetta', $result->getStreetName());
@@ -103,12 +103,12 @@ class MapTilerTest extends BaseTestCase
         $provider = new MapTiler($this->getHttpClient($_SERVER['MAPTILER_KEY']), $_SERVER['MAPTILER_KEY']);
         $results = $provider->geocodeQuery($query);
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         // $this->assertCount(1, $results);
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results->get(1);
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(48.85881, $result->getCoordinates()->getLatitude(), 0.00001);
         $this->assertEqualsWithDelta(2.320031, $result->getCoordinates()->getLongitude(), 0.00001);
         $this->assertEquals('Paris', $result->getLocality());
@@ -126,12 +126,12 @@ class MapTilerTest extends BaseTestCase
         $provider = new MapTiler($this->getHttpClient($_SERVER['MAPTILER_KEY']), $_SERVER['MAPTILER_KEY']);
         $results = $provider->reverseQuery($query);
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         // $this->assertCount(1, $results);
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(47.3774434, $result->getCoordinates()->getLatitude(), 0.00001);
         $this->assertEqualsWithDelta(8.528509, $result->getCoordinates()->getLongitude(), 0.00001);
         $this->assertEquals('Zurich', $result->getLocality());

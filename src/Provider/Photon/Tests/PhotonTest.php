@@ -58,12 +58,12 @@ class PhotonTest extends BaseTestCase
         $provider = Photon::withKomootServer($this->getHttpClient());
         $results = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var PhotonAddress $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(48.8631927, $result->getCoordinates()->getLatitude(), 0.00001);
         $this->assertEqualsWithDelta(2.3890894, $result->getCoordinates()->getLongitude(), 0.00001);
         $this->assertEquals('10', $result->getStreetNumber());
@@ -87,7 +87,7 @@ class PhotonTest extends BaseTestCase
         $provider = Photon::withKomootServer($this->getHttpClient());
         $results = $provider->geocodeQuery(GeocodeQuery::create('Sherlock Holmes Museum, 221B Baker St, London, England'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var PhotonAddress $result */
@@ -161,12 +161,12 @@ class PhotonTest extends BaseTestCase
         $reverseQuery = ReverseQuery::fromCoordinates(52, 10)->withLimit(1);
         $results = $provider->reverseQuery($reverseQuery);
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var PhotonAddress $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(51.9982968, $result->getCoordinates()->getLatitude(), 0.00001);
         $this->assertEqualsWithDelta(9.998645, $result->getCoordinates()->getLongitude(), 0.00001);
         $this->assertEquals('31195', $result->getPostalCode());

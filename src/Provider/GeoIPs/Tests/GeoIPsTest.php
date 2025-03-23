@@ -46,12 +46,12 @@ class GeoIPsTest extends BaseTestCase
         $provider = new GeoIPs($this->getMockedHttpClient(), 'api_key');
         $results = $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEquals('localhost', $result->getLocality());
         $this->assertEquals('localhost', $result->getCountry()->getName());
     }
@@ -112,12 +112,12 @@ class GeoIPsTest extends BaseTestCase
         $provider = new GeoIPs($this->getMockedHttpClient($json), 'api_key');
         $results = $provider->geocodeQuery(GeocodeQuery::create('66.147.244.214'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertNull($result->getCoordinates());
 
         $this->assertNull($result->getPostalCode());
@@ -154,12 +154,12 @@ class GeoIPsTest extends BaseTestCase
         $provider = new GeoIPs($this->getMockedHttpClient($json), 'api_key');
         $results = $provider->geocodeQuery(GeocodeQuery::create('66.147.244.214'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(40.3402, $result->getCoordinates()->getLatitude(), 0.0001);
         $this->assertEqualsWithDelta(-111.6073, $result->getCoordinates()->getLongitude(), 0.0001);
         $this->assertNull($result->getStreetName());
@@ -308,12 +308,12 @@ class GeoIPsTest extends BaseTestCase
         $provider = new GeoIPs($this->getHttpClient($_SERVER['GEOIPS_API_KEY']), $_SERVER['GEOIPS_API_KEY']);
         $results = $provider->geocodeQuery(GeocodeQuery::create('66.147.244.214'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(40.3402, $result->getCoordinates()->getLatitude(), 0.0001);
         $this->assertEqualsWithDelta(-111.6073, $result->getCoordinates()->getLongitude(), 0.0001);
         $this->assertNull($result->getStreetName());

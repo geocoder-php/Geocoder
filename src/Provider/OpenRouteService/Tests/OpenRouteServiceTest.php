@@ -49,12 +49,12 @@ class OpenRouteServiceTest extends BaseTestCase
         $provider = new OpenRouteService($this->getHttpClient($_SERVER['OPEN_ROUTE_SERVICE_API_KEY']), $_SERVER['OPEN_ROUTE_SERVICE_API_KEY']);
         $results = $provider->geocodeQuery(GeocodeQuery::create('242 Acklam Road, London, United Kingdom'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(51.521124, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(-0.20360200000000001, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('Acklam Road', $result->getStreetName());
@@ -74,12 +74,12 @@ class OpenRouteServiceTest extends BaseTestCase
         $provider = new OpenRouteService($this->getHttpClient($_SERVER['OPEN_ROUTE_SERVICE_API_KEY']), $_SERVER['OPEN_ROUTE_SERVICE_API_KEY']);
         $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(54.0484068, -2.7990345));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(5, $results);
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(54.048411999999999, $result->getCoordinates()->getLatitude(), 0.001);
         $this->assertEqualsWithDelta(-2.7989549999999999, $result->getCoordinates()->getLongitude(), 0.001);
         $this->assertEquals(1, $result->getStreetNumber());
@@ -102,12 +102,12 @@ class OpenRouteServiceTest extends BaseTestCase
         $provider = new OpenRouteService($this->getHttpClient($_SERVER['OPEN_ROUTE_SERVICE_API_KEY']), $_SERVER['OPEN_ROUTE_SERVICE_API_KEY']);
         $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(49.1390924, 1.6572462));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(5, $results);
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEquals('Bray-et-Lû', $result->getLocality());
     }
 
@@ -120,12 +120,12 @@ class OpenRouteServiceTest extends BaseTestCase
         $provider = new OpenRouteService($this->getHttpClient($_SERVER['OPEN_ROUTE_SERVICE_API_KEY']), $_SERVER['OPEN_ROUTE_SERVICE_API_KEY']);
         $results = $provider->geocodeQuery(GeocodeQuery::create('Hanover'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(5, $results);
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(52.379952, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(9.787455, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('Hanover', $result->getLocality());
@@ -136,7 +136,7 @@ class OpenRouteServiceTest extends BaseTestCase
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results->get(1);
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(52.37362, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(9.73711, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertCount(3, $result->getAdminLevels());
@@ -145,7 +145,7 @@ class OpenRouteServiceTest extends BaseTestCase
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results->get(2);
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(18.393428, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(-78.107687, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertNull($result->getLocality());
@@ -155,7 +155,7 @@ class OpenRouteServiceTest extends BaseTestCase
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results->get(3);
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(39.192889999999998, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(-76.724140000000006, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('Hanover', $result->getLocality());
@@ -173,12 +173,12 @@ class OpenRouteServiceTest extends BaseTestCase
         $provider = new OpenRouteService($this->getHttpClient($_SERVER['OPEN_ROUTE_SERVICE_API_KEY']), $_SERVER['OPEN_ROUTE_SERVICE_API_KEY']);
         $results = $provider->geocodeQuery(GeocodeQuery::create('Kalbacher Hauptstraße 10, 60437 Frankfurt, Germany'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(2, $results);
 
         /** @var \Geocoder\Model\Address $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(50.189017, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(8.6367809999999992, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('10a', $result->getStreetNumber());
