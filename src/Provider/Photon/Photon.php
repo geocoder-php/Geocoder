@@ -183,9 +183,13 @@ final class Photon extends AbstractHttpProvider implements Provider
             $layers = [$layers];
         }
 
+        if (!is_array($layers)) {
+            $layers = iterator_to_array($layers);
+        }
+
         return implode('', array_map(
             static fn ($layer) => sprintf('&layer=%s', $layer),
-            array_filter(iterator_to_array($layers), is_scalar(...)),
+            array_filter($layers, static fn ($layer) => is_scalar($layer)),
         ));
     }
 
