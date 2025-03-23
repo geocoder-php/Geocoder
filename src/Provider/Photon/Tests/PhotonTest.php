@@ -212,4 +212,33 @@ class PhotonTest extends BaseTestCase
         $this->assertEquals('city', $result->getType());
         $this->assertEquals('Berlin', $result->getLocality());
     }
+
+    public function testGeocodeQueryWithBbox(): void
+    {
+        // Germany
+        $bounds = new \Geocoder\Model\Bounds(
+            south: 47.2701,
+            west: 5.8663,
+            north: 55.992,
+            east: 15.0419
+        );
+
+        $provider = Photon::withKomootServer($this->getHttpClient());
+        $query = GeocodeQuery::create('Paris')
+            ->withLimit(5);
+        $results = $provider->geocodeQuery($query);
+
+        $this->assertCount(5, $results);
+        $this->assertEquals('France', $results->first()->getCountry());
+        $this->assertEquals('Paris', $results->first()->getLocality());
+
+        $query = GeocodeQuery::create('Paris')
+            ->withBounds($bounds)
+            ->withLimit(5);
+        $results = $provider->geocodeQuery($query);
+
+        $this->assertCount(2, $results);
+        $this->assertEquals('Deutschland', $results->first()->getCountry());
+        $this->assertEquals('Wörrstadt', $results->first()->getLocality());
+    }
 }
