@@ -220,6 +220,5 @@ class PhotonTest extends BaseTestCase
         $this->assertCount(2, $results);
         $this->assertEquals('Deutschland', $results->first()->getCountry());
         $this->assertEquals('Wörrstadt', $results->first()->getLocality());
-
     }
 }
