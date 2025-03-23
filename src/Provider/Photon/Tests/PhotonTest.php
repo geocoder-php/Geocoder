@@ -213,6 +213,32 @@ class PhotonTest extends BaseTestCase
         $this->assertEquals('Berlin', $result->getLocality());
     }
 
+    public function testReverseQueryWithMultipleLayers(): void
+    {
+        $provider = Photon::withKomootServer($this->getHttpClient());
+        $reverseQuery = ReverseQuery::fromCoordinates(49.001831, 21.239311)
+            ->withData('layer', 'city')
+            ->withLimit(2);
+
+        $results = $provider->reverseQuery($reverseQuery);
+        $this->assertInstanceOf(AddressCollection::class, $results);
+        $this->assertCount(1, $results);
+        $result0 = $results->get(0);
+        $this->assertInstanceOf(PhotonAddress::class, $result0);
+        $this->assertEquals('city', $result0->getType());
+
+        $reverseQuery = $reverseQuery->withData('layer', ['city', 'district']);
+        $results = $provider->reverseQuery($reverseQuery);
+        $this->assertInstanceOf(AddressCollection::class, $results);
+        $this->assertCount(2, $results);
+        $result0 = $results->get(0);
+        $this->assertInstanceOf(PhotonAddress::class, $result0);
+        $this->assertEquals('city', $result0->getType());
+        $result1 = $results->get(1);
+        $this->assertInstanceOf(PhotonAddress::class, $result1);
+        $this->assertEquals('district', $result1->getType());
+    }
+
     public function testGeocodeQueryWithBbox(): void
     {
         // Germany
