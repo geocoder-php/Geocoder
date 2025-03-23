@@ -68,12 +68,12 @@ final class Photon extends AbstractHttpProvider implements Provider
             .'/api?'
             .http_build_query([
                 'q' => $address,
-                'layer' => $query->getData('layer'),
                 'limit' => $query->getLimit(),
                 'lang' => $query->getLocale(),
                 'lat' => $query->getData('lat'),
                 'lon' => $query->getData('lon'),
             ]);
+        $url .= $this->buildLayerFilterQuery($query->getData('layer'));
         $osmTagFilters = $this->buildOsmTagFilterQuery($query->getData('osm_tag'));
         if (!empty($osmTagFilters)) {
             $url .= $osmTagFilters;
@@ -109,11 +109,11 @@ final class Photon extends AbstractHttpProvider implements Provider
             .http_build_query([
                 'lat' => $latitude,
                 'lon' => $longitude,
-                'layer' => $query->getData('layer'),
                 'radius' => $query->getData('radius'),
                 'limit' => $query->getLimit(),
                 'lang' => $query->getLocale(),
             ]);
+        $url .= $this->buildLayerFilterQuery($query->getData('layer'));
         $osmTagFilters = $this->buildOsmTagFilterQuery($query->getData('osm_tag'));
         if (!empty($osmTagFilters)) {
             $url .= $osmTagFilters;
@@ -175,6 +175,25 @@ final class Photon extends AbstractHttpProvider implements Provider
     public function getName(): string
     {
         return 'photon';
+    }
+
+    /**
+     * @param string|string[]|null $layers
+     */
+    private function buildLayerFilterQuery(mixed $layers): string
+    {
+        $query = '';
+        if (null === $layers) {
+            return $query;
+        }
+        if (is_string($layers)) {
+            return '&layer='.urlencode($layers);
+        }
+        foreach ($layers as $layer) {
+            $query .= '&layer='.urlencode($layer);
+        }
+
+        return $query;
     }
 
     /**
