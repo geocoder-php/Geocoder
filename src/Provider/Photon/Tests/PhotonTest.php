@@ -58,7 +58,7 @@ class PhotonTest extends BaseTestCase
         $provider = Photon::withKomootServer($this->getHttpClient());
         $results = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
 
-        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
+        $this->assertInstanceOf(AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var PhotonAddress $result */
@@ -87,7 +87,7 @@ class PhotonTest extends BaseTestCase
         $provider = Photon::withKomootServer($this->getHttpClient());
         $results = $provider->geocodeQuery(GeocodeQuery::create('Sherlock Holmes Museum, 221B Baker St, London, England'));
 
-        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
+        $this->assertInstanceOf(AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var PhotonAddress $result */
@@ -161,7 +161,7 @@ class PhotonTest extends BaseTestCase
         $reverseQuery = ReverseQuery::fromCoordinates(52, 10)->withLimit(1);
         $results = $provider->reverseQuery($reverseQuery);
 
-        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
+        $this->assertInstanceOf(AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var PhotonAddress $result */
