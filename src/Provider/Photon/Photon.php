@@ -177,20 +177,23 @@ final class Photon extends AbstractHttpProvider implements Provider
         return 'photon';
     }
 
+    /**
+     * @param string|string[]|null $layers
+     */
     private function buildLayerFilterQuery(mixed $layers): string
     {
-        if (!is_iterable($layers)) {
-            $layers = [$layers];
+        $query = '';
+        if (null === $layers) {
+            return $query;
+        }
+        if (is_string($layers)) {
+            return '&layer='.urlencode($layers);
+        }
+        foreach ($layers as $layer) {
+            $query .= '&layer='.urlencode($layer);
         }
 
-        if (!is_array($layers)) {
-            $layers = iterator_to_array($layers);
-        }
-
-        return implode('', array_map(
-            static fn ($layer) => sprintf('&layer=%s', $layer),
-            array_filter($layers, static fn ($layer) => is_scalar($layer)),
-        ));
+        return $query;
     }
 
     /**
