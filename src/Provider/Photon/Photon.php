@@ -77,7 +77,7 @@ final class Photon extends AbstractHttpProvider implements Provider
             $url .= $osmTagFilters;
         }
         $bboxQueryString = $this->buildBboxFilterQuery($query);
-        if ($bboxQueryString) {
+        if (!is_null($bboxQueryString)) {
             $url .= $bboxQueryString;
         }
 
@@ -200,7 +200,7 @@ final class Photon extends AbstractHttpProvider implements Provider
             return null;
         }
 
-        return '&bbox='.sprintf('%s,%s,%s,%s',
+        return '&bbox='.sprintf('%f,%f,%f,%f',
             $query->getBounds()->getWest(),
             $query->getBounds()->getSouth(),
             $query->getBounds()->getEast(),
