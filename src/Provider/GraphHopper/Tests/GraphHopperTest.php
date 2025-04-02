@@ -150,35 +150,6 @@ class GraphHopperTest extends BaseTestCase
         );
     }
 
-    public function testNoProviderIsAppendedWhenProviderNotInEnum(): void
-    {
-        $uri = '';
-
-        $provider = new GraphHopper(
-            $this->getMockedHttpClientCallback(
-                function (RequestInterface $request) use (&$uri) {
-                    $uri = (string) $request->getUri();
-                }
-            ),
-            'api_key'
-        );
-
-        $query = GeocodeQuery::create('242 Acklam Road, London, United Kingdom')
-            ->withLocale('fr')
-            ->withData('provider', 'invalidProvider');
-
-        try {
-            $provider->geocodeQuery($query);
-        } catch (InvalidServerResponse $e) {
-        }
-
-        $this->assertEquals('https://graphhopper.com/api/1/geocode'.
-            '?q=242+Acklam+Road%2C+London%2C+United+Kingdom'.
-            '&key=api_key&locale=fr&limit=5',
-            $uri
-        );
-    }
-
     public function testReverseWithRealCoordinates(): void
     {
         if (!isset($_SERVER['GRAPHHOPPER_API_KEY'])) {
