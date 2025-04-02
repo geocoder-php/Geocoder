@@ -75,7 +75,7 @@ final class GraphHopper extends AbstractHttpProvider implements Provider
         }
 
         $provider = $query->getData('provider');
-        if (is_string($provider) && GraphHopperProvider::tryFrom($provider)) {
+        if (is_string($provider) && '' !== $provider) {
             $url .= sprintf('&provider=%s', urlencode($provider));
         }
 
