@@ -4,11 +4,18 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 
 ## 4.7.0
 
+### Added
+
 - Add support for PHP Geocoder 5
 
 ## 4.6.0
 
+### Removed
+
 - Drop support for PHP 7
+
+### Changed
+
 - Make PSR-17 a first class citizen
 
 ## 4.5.0

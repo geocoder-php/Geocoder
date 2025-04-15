@@ -8,6 +8,7 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 
 - Add support for PHP 8.2, 8.3, and 8.4
 - Add support for municipality
+- Add support for PHP Geocoder 5
 
 ### Removed
 
