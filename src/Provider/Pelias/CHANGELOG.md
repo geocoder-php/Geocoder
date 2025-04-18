@@ -14,6 +14,12 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 
 - Add support for PHP 8.1
 - Add GitHub Actions workflow
+- Returns the following pelias properties as well:
+    - layer
+    - confidence
+    - source
+    - match_type
+    - accuracy
 
 ### Removed
 
