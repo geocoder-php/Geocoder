@@ -12,14 +12,16 @@ declare(strict_types=1);
 
 namespace Geocoder\Provider\IpInfo;
 
-use Geocoder\Collection;
+use Geocoder\Exception\InvalidCredentials;
 use Geocoder\Exception\UnsupportedOperation;
-use Geocoder\Http\Provider\AbstractHttpProvider;
+use Geocoder\Collection;
 use Geocoder\Model\Address;
 use Geocoder\Model\AddressCollection;
-use Geocoder\Provider\Provider;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
+use Geocoder\Http\Provider\AbstractHttpProvider;
+use Geocoder\Provider\Provider;
+use Psr\Http\Client\ClientInterface;
 
 /**
  * @author Roro Neutron <imprec@gmail.com>
@@ -30,6 +32,21 @@ final class IpInfo extends AbstractHttpProvider implements Provider
      * @var string
      */
     public const ENDPOINT_URL = 'https://ipinfo.io/%s/json';
+
+    /**
+     * @var string
+     */
+    private $apiKey = null;
+
+    /**
+     * @param ClientInterface $client  an HTTP adapter
+     * @param string          $apiKey  an API key
+     */
+    public function __construct(ClientInterface $client, ?string $apiKey = null)
+    {
+        $this->apiKey = $apiKey;
+        parent::__construct($client);
+    }
 
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
@@ -43,7 +60,10 @@ final class IpInfo extends AbstractHttpProvider implements Provider
             return new AddressCollection([$this->getLocationForLocalhost()]);
         }
 
-        return $this->executeQuery(sprintf(self::ENDPOINT_URL, $address));
+        return $this->executeQuery(
+            sprintf(self::ENDPOINT_URL, $address)
+            . ($this->apiKey ? '?token=' . $this->apiKey : '')
+        );
     }
 
     public function reverseQuery(ReverseQuery $query): Collection
