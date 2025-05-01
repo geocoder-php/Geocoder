@@ -19,7 +19,7 @@ jobs:
     name: Subtree for Common
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/create-github-app-token@v1
+      - uses: actions/create-github-app-token@v2
         id: app-token
         with:
           app-id: ${{ vars.SUBTREE_APP_ID }}
@@ -39,7 +39,7 @@ jobs:
     name: Subtree for Http
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/create-github-app-token@v1
+      - uses: actions/create-github-app-token@v2
         id: app-token
         with:
           app-id: ${{ vars.SUBTREE_APP_ID }}
@@ -59,7 +59,7 @@ jobs:
     name: Subtree for Plugin
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/create-github-app-token@v1
+      - uses: actions/create-github-app-token@v2
         id: app-token
         with:
           app-id: ${{ vars.SUBTREE_APP_ID }}
@@ -119,7 +119,7 @@ jobs:
           - { folder: TomTom, repository: tomtom-provider }
           - { folder: Yandex, repository: yandex-provider }
     steps:
-      - uses: actions/create-github-app-token@v1
+      - uses: actions/create-github-app-token@v2
         id: app-token
         with:
           app-id: ${{ vars.SUBTREE_APP_ID }}
