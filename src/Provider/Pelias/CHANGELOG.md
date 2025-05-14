@@ -2,6 +2,12 @@
 
 The change log describes what is "Added", "Removed", "Changed" or "Fixed" between each release.
 
+## 1.6.1
+
+### Fixed
+
+- Fix nullable properties
+
 ## 1.6.0
 
 ### Added
