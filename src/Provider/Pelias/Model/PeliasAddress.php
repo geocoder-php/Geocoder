@@ -40,7 +40,7 @@ final class PeliasAddress extends Address
     private $name;
 
     /**
-     * @var float
+     * @var float|null
      */
     private $confidence;
 
@@ -75,7 +75,7 @@ final class PeliasAddress extends Address
         return $new;
     }
 
-    public function getLayer(): string
+    public function getLayer(): ?string
     {
         return $this->layer;
     }
@@ -101,12 +101,12 @@ final class PeliasAddress extends Address
         return $new;
     }
 
-    public function getConfidence(): float
+    public function getConfidence(): ?float
     {
         return $this->confidence;
     }
 
-    public function withConfidence(float $confidence): self
+    public function withConfidence(?float $confidence): self
     {
         $new = clone $this;
         $new->confidence = $confidence;
