@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Geocoder\Provider\Photon\Tests;
 
 use Geocoder\IntegrationTest\BaseTestCase;
+use Geocoder\Model\AddressCollection;
 use Geocoder\Provider\Photon\Model\PhotonAddress;
 use Geocoder\Provider\Photon\Photon;
 use Geocoder\Query\GeocodeQuery;
@@ -57,12 +58,12 @@ class PhotonTest extends BaseTestCase
         $provider = Photon::withKomootServer($this->getHttpClient());
         $results = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var PhotonAddress $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(48.8631927, $result->getCoordinates()->getLatitude(), 0.00001);
         $this->assertEqualsWithDelta(2.3890894, $result->getCoordinates()->getLongitude(), 0.00001);
         $this->assertEquals('10', $result->getStreetNumber());
@@ -86,7 +87,7 @@ class PhotonTest extends BaseTestCase
         $provider = Photon::withKomootServer($this->getHttpClient());
         $results = $provider->geocodeQuery(GeocodeQuery::create('Sherlock Holmes Museum, 221B Baker St, London, England'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var PhotonAddress $result */
@@ -135,18 +136,37 @@ class PhotonTest extends BaseTestCase
         $this->assertGreaterThan(0, $countGalleries);
     }
 
+    public function testGeocodeQueryWithLatLon(): void
+    {
+        $provider = Photon::withKomootServer($this->getHttpClient());
+
+        $query = GeocodeQuery::create('Paris')->withLimit(1);
+        $results = $provider->geocodeQuery($query);
+        $this->assertInstanceOf(AddressCollection::class, $results);
+        $this->assertCount(1, $results);
+        $this->assertEquals('France', $results->first()->getCountry());
+
+        $query = $query
+            ->withData('lat', 33.661426)
+            ->withData('lon', -95.556321);
+        $results = $provider->geocodeQuery($query);
+        $this->assertInstanceOf(AddressCollection::class, $results);
+        $this->assertCount(1, $results);
+        $this->assertEquals('United States', $results->first()->getCountry());
+    }
+
     public function testReverseQuery(): void
     {
         $provider = Photon::withKomootServer($this->getHttpClient());
         $reverseQuery = ReverseQuery::fromCoordinates(52, 10)->withLimit(1);
         $results = $provider->reverseQuery($reverseQuery);
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var PhotonAddress $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(51.9982968, $result->getCoordinates()->getLatitude(), 0.00001);
         $this->assertEqualsWithDelta(9.998645, $result->getCoordinates()->getLongitude(), 0.00001);
         $this->assertEquals('31195', $result->getPostalCode());
@@ -191,5 +211,60 @@ class PhotonTest extends BaseTestCase
         $this->assertInstanceOf(PhotonAddress::class, $result);
         $this->assertEquals('city', $result->getType());
         $this->assertEquals('Berlin', $result->getLocality());
+    }
+
+    public function testReverseQueryWithMultipleLayers(): void
+    {
+        $provider = Photon::withKomootServer($this->getHttpClient());
+        $reverseQuery = ReverseQuery::fromCoordinates(49.001831, 21.239311)
+            ->withData('layer', 'city')
+            ->withLimit(2);
+
+        $results = $provider->reverseQuery($reverseQuery);
+        $this->assertInstanceOf(AddressCollection::class, $results);
+        $this->assertCount(1, $results);
+        $result0 = $results->get(0);
+        $this->assertInstanceOf(PhotonAddress::class, $result0);
+        $this->assertEquals('city', $result0->getType());
+
+        $reverseQuery = $reverseQuery->withData('layer', ['city', 'district']);
+        $results = $provider->reverseQuery($reverseQuery);
+        $this->assertInstanceOf(AddressCollection::class, $results);
+        $this->assertCount(2, $results);
+        $result0 = $results->get(0);
+        $this->assertInstanceOf(PhotonAddress::class, $result0);
+        $this->assertEquals('city', $result0->getType());
+        $result1 = $results->get(1);
+        $this->assertInstanceOf(PhotonAddress::class, $result1);
+        $this->assertEquals('district', $result1->getType());
+    }
+
+    public function testGeocodeQueryWithBbox(): void
+    {
+        // Germany
+        $bounds = new \Geocoder\Model\Bounds(
+            south: 47.2701,
+            west: 5.8663,
+            north: 55.992,
+            east: 15.0419
+        );
+
+        $provider = Photon::withKomootServer($this->getHttpClient());
+        $query = GeocodeQuery::create('Paris')
+            ->withLimit(5);
+        $results = $provider->geocodeQuery($query);
+
+        $this->assertCount(5, $results);
+        $this->assertEquals('France', $results->first()->getCountry());
+        $this->assertEquals('Paris', $results->first()->getLocality());
+
+        $query = GeocodeQuery::create('Paris')
+            ->withBounds($bounds)
+            ->withLimit(5);
+        $results = $provider->geocodeQuery($query);
+
+        $this->assertCount(2, $results);
+        $this->assertEquals('Deutschland', $results->first()->getCountry());
+        $this->assertEquals('Wörrstadt', $results->first()->getLocality());
     }
 }

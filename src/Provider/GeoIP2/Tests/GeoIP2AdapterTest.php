@@ -31,7 +31,7 @@ class GeoIP2AdapterTest extends TestCase
      */
     public static function setUpBeforeClass(): void
     {
-        if (false === class_exists('\GeoIp2\Database\Reader')) {
+        if (false === class_exists(\GeoIp2\Database\Reader::class)) {
             throw new \RuntimeException("The maxmind's lib 'geoip2/geoip2' is required to run this test.");
         }
     }
@@ -126,7 +126,7 @@ class GeoIP2AdapterTest extends TestCase
      */
     protected function getGeoIP2ProviderMock()
     {
-        $mock = $this->getMockBuilder('\GeoIp2\ProviderInterface')->getMock();
+        $mock = $this->getMockBuilder(\GeoIp2\ProviderInterface::class)->getMock();
 
         return $mock;
     }

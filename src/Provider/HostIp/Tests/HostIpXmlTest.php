@@ -45,12 +45,12 @@ class HostIpXmlTest extends BaseTestCase
         $provider = new HostIpXml($this->getMockedHttpClient());
         $results = $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertNull($result->getCoordinates());
 
         $this->assertNull($result->getPostalCode());
@@ -75,12 +75,12 @@ class HostIpXmlTest extends BaseTestCase
         $provider = new HostIpXml($this->getHttpClient());
         $results = $provider->geocodeQuery(GeocodeQuery::create('77.38.216.139'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(56.8833, $result->getCoordinates()->getLatitude(), 0.0001);
         $this->assertEqualsWithDelta(24.0833, $result->getCoordinates()->getLongitude(), 0.0001);
         $this->assertNull($result->getPostalCode());
@@ -113,12 +113,12 @@ class HostIpXmlTest extends BaseTestCase
         $provider = new HostIpXml($this->getHttpClient());
         $results = $provider->geocodeQuery(GeocodeQuery::create('33.33.33.22'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertNull($result->getCoordinates());
     }
 }

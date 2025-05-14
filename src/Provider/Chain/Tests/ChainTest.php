@@ -27,7 +27,7 @@ class ChainTest extends TestCase
 {
     public function testAdd(): void
     {
-        $mock = $this->getMockBuilder('Geocoder\Provider\Provider')->getMock();
+        $mock = $this->getMockBuilder(Provider::class)->getMock();
         $chain = new Chain();
 
         $chain->add($mock);
@@ -49,7 +49,7 @@ class ChainTest extends TestCase
                 throw new \Exception();
             }));
 
-        $mockTwo = $this->getMockBuilder('Geocoder\\Provider\\Provider')->getMock();
+        $mockTwo = $this->getMockBuilder(Provider::class)->getMock();
         $result = new AddressCollection(['foo' => 'bar']);
         $mockTwo->expects($this->once())
             ->method('reverseQuery')
@@ -63,14 +63,14 @@ class ChainTest extends TestCase
     public function testGeocode(): void
     {
         $query = GeocodeQuery::create('Paris');
-        $mockOne = $this->getMockBuilder('Geocoder\\Provider\\Provider')->getMock();
+        $mockOne = $this->getMockBuilder(Provider::class)->getMock();
         $mockOne->expects($this->once())
             ->method('geocodeQuery')
             ->will($this->returnCallback(function () {
                 throw new \Exception();
             }));
 
-        $mockTwo = $this->getMockBuilder('Geocoder\\Provider\\Provider')->getMock();
+        $mockTwo = $this->getMockBuilder(Provider::class)->getMock();
         $result = new AddressCollection(['foo' => 'bar']);
         $mockTwo->expects($this->once())
             ->method('geocodeQuery')
