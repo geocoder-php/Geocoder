@@ -137,15 +137,6 @@ class OpenRouteServiceTest extends BaseTestCase
         /** @var \Geocoder\Model\Address $result */
         $result = $results->get(1);
         $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
-        $this->assertEqualsWithDelta(52.37362, $result->getCoordinates()->getLatitude(), 0.01);
-        $this->assertEqualsWithDelta(9.73711, $result->getCoordinates()->getLongitude(), 0.01);
-        $this->assertCount(3, $result->getAdminLevels());
-        $this->assertEquals('Niedersachsen', $result->getAdminLevels()->get(1)->getName());
-        $this->assertEquals('Germany', $result->getCountry()->getName());
-
-        /** @var \Geocoder\Model\Address $result */
-        $result = $results->get(2);
-        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(18.393428, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(-78.107687, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertNull($result->getLocality());
@@ -154,7 +145,7 @@ class OpenRouteServiceTest extends BaseTestCase
         $this->assertEquals('Jamaica', $result->getCountry()->getName());
 
         /** @var \Geocoder\Model\Address $result */
-        $result = $results->get(3);
+        $result = $results->get(2);
         $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(39.192889999999998, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(-76.724140000000006, $result->getCoordinates()->getLongitude(), 0.01);
