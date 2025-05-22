@@ -227,6 +227,13 @@ class AzureMaps extends AbstractHttpProvider implements Provider
             $builder->setPostalCode($result->address->extendedPostalCode ?? null);
             $builder->setLocality($result->address->municipality ?? null);
 
+            if (isset($result->address->countrySubdivision)) {
+                $builder->addAdminLevel(
+                    1,
+                    $result->address->countrySubdivision,
+                );
+            }
+
             return $builder->build();
         }, $response->results);
     }
@@ -265,6 +272,13 @@ class AzureMaps extends AbstractHttpProvider implements Provider
             $builder->setCountry($address->address->country ?? null);
             $builder->setPostalCode($address->address->extendedPostalCode ?? null);
             $builder->setLocality($address->address->municipality ?? null);
+
+            if (isset($address->address->countrySubdivision)) {
+                $builder->addAdminLevel(
+                    1,
+                    $address->address->countrySubdivision,
+                );
+            }
 
             return $builder->build();
         }, $response->addresses));
