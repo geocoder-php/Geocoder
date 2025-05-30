@@ -53,7 +53,7 @@ class ChainTest extends TestCase
         $result = new AddressCollection(['foo' => 'bar']);
         $mockTwo->expects($this->once())
             ->method('reverseQuery')
-            ->will($this->returnValue($result));
+            ->willReturn($result);
 
         $chain = new Chain([$mockOne, $mockTwo]);
 
@@ -75,7 +75,7 @@ class ChainTest extends TestCase
         $mockTwo->expects($this->once())
             ->method('geocodeQuery')
             ->with($query)
-            ->will($this->returnValue($result));
+            ->willReturn($result);
 
         $chain = new Chain([$mockOne, $mockTwo]);
 
