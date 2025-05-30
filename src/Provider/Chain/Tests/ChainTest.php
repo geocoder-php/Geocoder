@@ -45,9 +45,9 @@ class ChainTest extends TestCase
         $mockOne = $this->getMockBuilder(Provider::class)->getMock();
         $mockOne->expects($this->once())
             ->method('reverseQuery')
-            ->will($this->returnCallback(function () {
+            ->willReturnCallback(function () {
                 throw new \Exception();
-            }));
+            });
 
         $mockTwo = $this->getMockBuilder(Provider::class)->getMock();
         $result = new AddressCollection(['foo' => 'bar']);
@@ -66,9 +66,9 @@ class ChainTest extends TestCase
         $mockOne = $this->getMockBuilder(Provider::class)->getMock();
         $mockOne->expects($this->once())
             ->method('geocodeQuery')
-            ->will($this->returnCallback(function () {
+            ->willReturnCallback(function () {
                 throw new \Exception();
-            }));
+            });
 
         $mockTwo = $this->getMockBuilder(Provider::class)->getMock();
         $result = new AddressCollection(['foo' => 'bar']);
