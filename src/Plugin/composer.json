@@ -22,7 +22,7 @@
     },
     "require-dev": {
         "cache/void-adapter": "^1.0",
-        "phpunit/phpunit": "^9.5"
+        "phpunit/phpunit": "^9.6.11"
     },
     "extra": {
         "branch-alias": {

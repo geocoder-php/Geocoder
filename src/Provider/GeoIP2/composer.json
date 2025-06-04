@@ -21,7 +21,7 @@
     },
     "require-dev": {
         "geocoder-php/provider-integration-tests": "^1.6.3",
-        "phpunit/phpunit": "^9.5"
+        "phpunit/phpunit": "^9.6.11"
     },
     "extra": {
         "branch-alias": {
