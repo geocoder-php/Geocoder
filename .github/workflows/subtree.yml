@@ -107,6 +107,7 @@ jobs:
           - { folder: LocationIQ, repository: locationiq-provider }
           - { folder: MapQuest, repository: mapquest-provider }
           - { folder: Mapbox, repository: mapbox-provider }
+          - { folder: MapTiler, repository: maptiler-provider }
           # - { folder: Mapzen, repository: mapzen-provider }
           - { folder: MaxMind, repository: maxmind-provider }
           - { folder: MaxMindBinary, repository: maxmind-binary-provider }
