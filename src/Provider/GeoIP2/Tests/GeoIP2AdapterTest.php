@@ -86,9 +86,7 @@ class GeoIP2AdapterTest extends TestCase
             ->expects($this->once())
             ->method($geoIp2Model)
             ->with('127.0.0.1')
-            ->will($this->returnValue(
-                $this->getGeoIP2ModelMock($geoIp2Model)
-            ));
+            ->willReturn($this->getGeoIP2ModelMock($geoIp2Model));
 
         $adapter = new GeoIP2Adapter($geoIp2Provider, $geoIp2Model);
         $adapter->getContent('file://geoip?127.0.0.1');
@@ -110,7 +108,7 @@ class GeoIP2AdapterTest extends TestCase
         $geoIp2Provider
             ->expects($this->any())
             ->method('city')
-            ->will($this->returnValue($cityModel));
+            ->willReturn($cityModel);
 
         $adapter = new GeoIP2Adapter($geoIp2Provider);
 
@@ -118,7 +116,7 @@ class GeoIP2AdapterTest extends TestCase
         $this->assertJson($result);
 
         $decodedResult = json_decode($result);
-        $this->assertObjectHasAttribute('city', $decodedResult);
+        $this->assertObjectHasProperty('city', $decodedResult);
     }
 
     /**
@@ -145,23 +143,21 @@ class GeoIP2AdapterTest extends TestCase
         $mock
             ->expects($this->any())
             ->method('jsonSerialize')
-            ->will($this->returnValue(
-                [
-                    'city' => [
-                        'geoname_id' => 2911298,
-                        'names' => [
-                            'de' => 'Hamburg',
-                            'en' => 'Hamburg',
-                            'es' => 'Hamburgo',
-                            'fr' => 'Hambourg',
-                            'ja' => 'ハンブルク',
-                            'pt-BR' => 'Hamburgo',
-                            'ru' => 'Гамбург',
-                            'zh-CN' => '汉堡市',
-                        ],
+            ->willReturn([
+                'city' => [
+                    'geoname_id' => 2911298,
+                    'names' => [
+                        'de' => 'Hamburg',
+                        'en' => 'Hamburg',
+                        'es' => 'Hamburgo',
+                        'fr' => 'Hambourg',
+                        'ja' => 'ハンブルク',
+                        'pt-BR' => 'Hamburgo',
+                        'ru' => 'Гамбург',
+                        'zh-CN' => '汉堡市',
                     ],
-                ]
-            ));
+                ],
+            ]);
 
         return $mock;
     }

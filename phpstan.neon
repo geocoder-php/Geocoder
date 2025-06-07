@@ -7,4 +7,3 @@ parameters:
     excludePaths:
         - **/vendor/**
     treatPhpDocTypesAsCertain: false
-    checkGenericClassInNonGenericObjectType: false

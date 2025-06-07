@@ -14,7 +14,6 @@
     "require": {
         "php": "^8.0",
         "geocoder-php/common-http": "^4.0",
-        "igorw/get-in": "^1.0",
         "willdurand/geocoder": "^4.0|^5.0"
     },
     "provide": {
@@ -23,7 +22,7 @@
     "require-dev": {
         "geocoder-php/provider-integration-tests": "^1.6.3",
         "php-http/message": "^1.0",
-        "phpunit/phpunit": "^9.5"
+        "phpunit/phpunit": "^9.6.11"
     },
     "extra": {
         "branch-alias": {

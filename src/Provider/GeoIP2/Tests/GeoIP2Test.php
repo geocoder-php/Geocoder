@@ -264,10 +264,7 @@ class GeoIP2Test extends BaseTestCase
      */
     private function getGeoIP2AdapterMock($returnValue = '')
     {
-        $mock = $this->getMockBuilder(GeoIP2Adapter::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['getContent'])
-            ->getMock();
+        $mock = $this->createPartialMock(GeoIP2Adapter::class, ['getContent']);
 
         if ($returnValue instanceof \Exception) {
             $returnValue = $this->throwException($returnValue);

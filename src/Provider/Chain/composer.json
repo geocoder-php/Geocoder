@@ -23,7 +23,7 @@
         "nyholm/nsa": "^1.1",
         "php-http/curl-client": "^2.2",
         "php-http/message": "^1.0",
-        "phpunit/phpunit": "^9.5"
+        "phpunit/phpunit": "^9.6.11"
     },
     "extra": {
         "branch-alias": {
