@@ -52,7 +52,7 @@ jobs:
           - TomTom
           - Yandex
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - name: Use PHP ${{ matrix.php-version }}
       uses: shivammathur/setup-php@v2
       with:
