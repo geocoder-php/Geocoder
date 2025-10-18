@@ -48,8 +48,7 @@ version="1.0"
         <type><![CDATA[Address]]></type>
     </wpt>
 </gpx>
-GPX
-            , Geocoder::VERSION, '0', '0');
+GPX, Geocoder::VERSION, '0', '0');
 
         $result = $this->dumper->dump($address);
 
@@ -77,8 +76,7 @@ version="1.0"
         <type><![CDATA[Address]]></type>
     </wpt>
 </gpx>
-GPX
-            , Geocoder::VERSION, $address->getCoordinates()->getLatitude(), $address->getCoordinates()->getLongitude());
+GPX, Geocoder::VERSION, $address->getCoordinates()->getLatitude(), $address->getCoordinates()->getLongitude());
 
         $result = $this->dumper->dump($address);
 
@@ -114,8 +112,7 @@ version="1.0"
         <type><![CDATA[Address]]></type>
     </wpt>
 </gpx>
-GPX
-            , Geocoder::VERSION, $bounds['east'], '48.863151', $bounds['east'], '48.863151', $bounds['north'], $bounds['west']);
+GPX, Geocoder::VERSION, $bounds['east'], '48.863151', $bounds['east'], '48.863151', $bounds['north'], $bounds['west']);
 
         $this->assertNotNull($address->getBounds());
 
@@ -159,8 +156,7 @@ version="1.0"
         <type><![CDATA[Address]]></type>
     </wpt>
 </gpx>
-GPX
-            , Geocoder::VERSION, $bounds['east'], '48.863151', $bounds['east'], '48.863151', $bounds['north'], $bounds['west']);
+GPX, Geocoder::VERSION, $bounds['east'], '48.863151', $bounds['east'], '48.863151', $bounds['north'], $bounds['west']);
 
         $this->assertNotNull($address->getBounds());
 
