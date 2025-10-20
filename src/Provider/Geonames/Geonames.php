@@ -84,7 +84,7 @@ final class Geonames extends AbstractHttpProvider implements Provider
         $this->token = $token;
 
         // Determine base URL based on secure flag.
-        if ($secure === TRUE) {
+        if ($secure === true) {
             $this->baseUrl = self::PREMIUM_WEBSERVICE_BASE_URL;
         } else {
             $this->baseUrl = self::FREE_WEBSERVICE_BASE_URL;
