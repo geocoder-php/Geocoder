@@ -32,20 +32,26 @@ use Psr\Http\Client\ClientInterface;
  */
 final class Geonames extends AbstractHttpProvider implements Provider
 {
-    /**
-     * @var string
-     */
-    public const GEOCODE_ENDPOINT_URL = 'http://api.geonames.org/searchJSON?q=%s&maxRows=%d&style=full&username=%s';
 
     /**
      * @var string
      */
-    public const REVERSE_ENDPOINT_URL = 'http://api.geonames.org/findNearbyPlaceNameJSON?lat=%F&lng=%F&style=full&maxRows=%d&username=%s';
+    public const PREMIUM_WEBSERVICE_BASE_URL = 'https://secure.geonames.net';
 
     /**
      * @var string
      */
-    public const BASE_ENDPOINT_URL = 'http://api.geonames.org/%s?username=%s';
+    public const FREE_WEBSERVICE_BASE_URL = 'http://api.geonames.net';
+
+    /**
+     * @var string
+     */
+    public const GEOCODE_ENDPOINT_PATH = '%s/searchJSON?q=%s&maxRows=%d&style=full&username=%s';
+
+    /**
+     * @var string
+     */
+    public const REVERSE_ENDPOINT_PATH = '%s/findNearbyPlaceNameJSON?lat=%F&lng=%F&style=full&maxRows=%d&username=%s';
 
     /**
      * @var string
@@ -77,11 +83,11 @@ final class Geonames extends AbstractHttpProvider implements Provider
         $this->username = $username;
         $this->token = $token;
 
-        // Determine base URL based on secure flag
-        if ($secure) {
-            $this->baseUrl = 'https://secure.geonames.net';
+        // Determine base URL based on secure flag.
+        if ($secure === TRUE) {
+            $this->baseUrl = self::PREMIUM_WEBSERVICE_BASE_URL;
         } else {
-            $this->baseUrl = 'http://api.geonames.org';
+            $this->baseUrl = self::FREE_WEBSERVICE_BASE_URL;
         }
 
         parent::__construct($client);
@@ -97,7 +103,7 @@ final class Geonames extends AbstractHttpProvider implements Provider
         }
 
         $url = sprintf(
-            '%s/searchJSON?q=%s&maxRows=%d&style=full&username=%s',
+            self::GEOCODE_ENDPOINT_PATH,
             $this->baseUrl,
             urlencode($address),
             $query->getLimit(),
@@ -116,7 +122,7 @@ final class Geonames extends AbstractHttpProvider implements Provider
         $latitude = $coordinates->getLatitude();
 
         $url = sprintf(
-            '%s/findNearbyPlaceNameJSON?lat=%F&lng=%F&style=full&maxRows=%d&username=%s',
+            self::REVERSE_ENDPOINT_PATH,
             $this->baseUrl,
             $latitude,
             $longitude,
