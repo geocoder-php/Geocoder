@@ -24,7 +24,7 @@ class GeonamesTest extends BaseTestCase
 {
     protected function getCacheDir(): ?string
     {
-        if (isset($_SERVER['USE_CACHED_RESPONSES']) && true === $_SERVER['USE_CACHED_RESPONSES']) {
+        if (isset($_SERVER['USE_CACHED_RESPONSES']) && 'true' === $_SERVER['USE_CACHED_RESPONSES']) {
             return __DIR__.'/.cached_responses';
         }
 
@@ -379,10 +379,13 @@ JSON;
             $this->markTestSkipped('You need to configure the GEONAMES_USERNAME and GEONAMES_TOKEN values in phpunit.xml');
         }
 
+        $username = $_SERVER['GEONAMES_USERNAME'];
+        $token = $_SERVER['GEONAMES_TOKEN'];
+
         $provider = new Geonames(
-            $this->getHttpClient($_SERVER['GEONAMES_USERNAME']),
-            $_SERVER['GEONAMES_USERNAME'],
-            $_SERVER['GEONAMES_TOKEN'],
+            $this->getHttpClient($token),
+            $username,
+            $token,
             true
         );
         $results = $provider->geocodeQuery(GeocodeQuery::create('London'));

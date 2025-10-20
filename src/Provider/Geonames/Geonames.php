@@ -41,7 +41,7 @@ final class Geonames extends AbstractHttpProvider implements Provider
     /**
      * @var string
      */
-    public const FREE_WEBSERVICE_BASE_URL = 'http://api.geonames.net';
+    public const FREE_WEBSERVICE_BASE_URL = 'http://api.geonames.org';
 
     /**
      * @var string
