@@ -24,7 +24,7 @@ class GeonamesTest extends BaseTestCase
 {
     protected function getCacheDir(): ?string
     {
-        if (isset($_SERVER['USE_CACHED_RESPONSES']) && 'true' === $_SERVER['USE_CACHED_RESPONSES']) {
+        if (isset($_SERVER['USE_CACHED_RESPONSES']) && ($_SERVER['USE_CACHED_RESPONSES'] === true || $_SERVER['USE_CACHED_RESPONSES'] === 'true')) {
             return __DIR__.'/.cached_responses';
         }
 
