@@ -25,7 +25,7 @@ jobs:
           app-id: ${{ vars.SUBTREE_APP_ID }}
           private-key: ${{ secrets.SUBTREE_APP_PRIVATE_KEY }}
           owner: ${{ github.repository_owner }}
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           token: ${{ steps.app-token.outputs.token }}
           fetch-depth: 0
@@ -45,7 +45,7 @@ jobs:
           app-id: ${{ vars.SUBTREE_APP_ID }}
           private-key: ${{ secrets.SUBTREE_APP_PRIVATE_KEY }}
           owner: ${{ github.repository_owner }}
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           token: ${{ steps.app-token.outputs.token }}
           fetch-depth: 0
@@ -65,7 +65,7 @@ jobs:
           app-id: ${{ vars.SUBTREE_APP_ID }}
           private-key: ${{ secrets.SUBTREE_APP_PRIVATE_KEY }}
           owner: ${{ github.repository_owner }}
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           token: ${{ steps.app-token.outputs.token }}
           fetch-depth: 0
@@ -126,7 +126,7 @@ jobs:
           app-id: ${{ vars.SUBTREE_APP_ID }}
           private-key: ${{ secrets.SUBTREE_APP_PRIVATE_KEY }}
           owner: ${{ github.repository_owner }}
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           token: ${{ steps.app-token.outputs.token }}
           fetch-depth: 0
