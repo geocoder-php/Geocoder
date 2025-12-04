@@ -74,6 +74,11 @@ final class GraphHopper extends AbstractHttpProvider implements Provider
             $url .= sprintf('&bbox=%f,%f,%f,%f', $bounds->getWest(), $bounds->getSouth(), $bounds->getEast(), $bounds->getNorth());
         }
 
+        $provider = $query->getData('provider');
+        if (is_string($provider) && '' !== $provider) {
+            $url .= sprintf('&provider=%s', urlencode($provider));
+        }
+
         return $this->executeQuery($url);
     }
 
