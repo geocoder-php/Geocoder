@@ -25,7 +25,7 @@
         "php-http/message": "^1.0",
         "php-http/mock-client": "^1.0",
         "phpunit/phpunit": "^9.6.11",
-        "symfony/stopwatch": "~2.5 || ~5.0"
+        "symfony/stopwatch": "~2.5 || ~5.0 || ^6.0 || ^7.0 || ^8.0"
     },
     "extra": {
         "branch-alias": {
