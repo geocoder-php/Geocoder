@@ -32,20 +32,26 @@ use Psr\Http\Client\ClientInterface;
  */
 final class Geonames extends AbstractHttpProvider implements Provider
 {
-    /**
-     * @var string
-     */
-    public const GEOCODE_ENDPOINT_URL = 'http://api.geonames.org/searchJSON?q=%s&maxRows=%d&style=full&username=%s';
 
     /**
      * @var string
      */
-    public const REVERSE_ENDPOINT_URL = 'http://api.geonames.org/findNearbyPlaceNameJSON?lat=%F&lng=%F&style=full&maxRows=%d&username=%s';
+    public const PREMIUM_WEBSERVICE_BASE_URL = 'https://secure.geonames.net';
 
     /**
      * @var string
      */
-    public const BASE_ENDPOINT_URL = 'http://api.geonames.org/%s?username=%s';
+    public const FREE_WEBSERVICE_BASE_URL = 'http://api.geonames.org';
+
+    /**
+     * @var string
+     */
+    public const GEOCODE_ENDPOINT_PATH = '%s/searchJSON?q=%s&maxRows=%d&style=full&username=%s';
+
+    /**
+     * @var string
+     */
+    public const REVERSE_ENDPOINT_PATH = '%s/findNearbyPlaceNameJSON?lat=%F&lng=%F&style=full&maxRows=%d&username=%s';
 
     /**
      * @var string
@@ -53,16 +59,37 @@ final class Geonames extends AbstractHttpProvider implements Provider
     private $username;
 
     /**
+     * @var string|null
+     */
+    private $token;
+
+    /**
+     * @var string
+     */
+    private $baseUrl;
+
+    /**
      * @param ClientInterface $client   An HTTP adapter
      * @param string          $username Username login (Free registration at http://www.geonames.org/login)
+     * @param string|null     $token    Optional token for premium accounts
+     * @param bool            $secure   Use secure endpoint (https://secure.geonames.net) for premium accounts
      */
-    public function __construct(ClientInterface $client, string $username)
+    public function __construct(ClientInterface $client, string $username, ?string $token = null, bool $secure = false)
     {
         if (empty($username)) {
             throw new InvalidCredentials('No username provided.');
         }
 
         $this->username = $username;
+        $this->token = $token;
+
+        // Determine base URL based on secure flag.
+        if ($secure === true) {
+            $this->baseUrl = self::PREMIUM_WEBSERVICE_BASE_URL;
+        } else {
+            $this->baseUrl = self::FREE_WEBSERVICE_BASE_URL;
+        }
+
         parent::__construct($client);
     }
 
@@ -75,7 +102,15 @@ final class Geonames extends AbstractHttpProvider implements Provider
             throw new UnsupportedOperation('The Geonames provider does not support IP addresses.');
         }
 
-        $url = sprintf(self::GEOCODE_ENDPOINT_URL, urlencode($address), $query->getLimit(), $this->username);
+        $url = sprintf(
+            self::GEOCODE_ENDPOINT_PATH,
+            $this->baseUrl,
+            urlencode($address),
+            $query->getLimit(),
+            $this->username
+        );
+
+        $url = $this->appendToken($url);
 
         return $this->executeQuery($url, $query->getLocale());
     }
@@ -86,7 +121,16 @@ final class Geonames extends AbstractHttpProvider implements Provider
         $longitude = $coordinates->getLongitude();
         $latitude = $coordinates->getLatitude();
 
-        $url = sprintf(self::REVERSE_ENDPOINT_URL, $latitude, $longitude, $query->getLimit(), $this->username);
+        $url = sprintf(
+            self::REVERSE_ENDPOINT_PATH,
+            $this->baseUrl,
+            $latitude,
+            $longitude,
+            $query->getLimit(),
+            $this->username
+        );
+
+        $url = $this->appendToken($url);
 
         return $this->executeQuery($url, $query->getLocale());
     }
@@ -96,7 +140,7 @@ final class Geonames extends AbstractHttpProvider implements Provider
      */
     public function getCountryInfo(?string $country = null, ?string $locale = null): array
     {
-        $url = sprintf(self::BASE_ENDPOINT_URL, 'countryInfoJSON', $this->username);
+        $url = sprintf('%s/countryInfoJSON?username=%s', $this->baseUrl, $this->username);
 
         if (isset($country)) {
             $url = sprintf('%s&country=%s', $url, $country);
@@ -108,6 +152,8 @@ final class Geonames extends AbstractHttpProvider implements Provider
             // Locale code transformation: for example from it_IT to it
             $url = sprintf('%s&lang=%s', $url, substr($locale, 0, 2));
         }
+
+        $url = $this->appendToken($url);
 
         $content = $this->getUrlContents($url);
         if (null === $json = json_decode($content)) {
@@ -216,5 +262,17 @@ final class Geonames extends AbstractHttpProvider implements Provider
         }
 
         return new AddressCollection($results);
+    }
+
+    /**
+     * Append token parameter to URL if token is provided.
+     */
+    private function appendToken(string $url): string
+    {
+        if (null !== $this->token && '' !== $this->token) {
+            $url = sprintf('%s&token=%s', $url, $this->token);
+        }
+
+        return $url;
     }
 }
