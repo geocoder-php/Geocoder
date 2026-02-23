@@ -12,16 +12,29 @@ This is the Here provider from the PHP Geocoder. This is a **READ ONLY** reposit
 
 ## API Versions
 
-This provider supports two HERE API versions:
+This provider supports two HERE API generations:
 
-| | v8 (Geocoding & Search API) | v7 (Legacy Geocoder API) |
+| | Geocoding & Search API | Legacy Geocoder REST API |
 |---|---|---|
-| Status | **Recommended** | **Deprecated** — retired December 31, 2023 |
-| Geocode endpoint | `geocode.search.hereapi.com/v1/geocode` | `geocoder.ls.hereapi.com/6.2/geocode.json` |
-| Reverse endpoint | `revgeocode.search.hereapi.com/v1/revgeocode` | `reverse.geocoder.ls.hereapi.com/6.2/reversegeocode.json` |
+| This provider calls it | **"v8"** (new default) | **"v7"** (deprecated) |
+| HERE's own name | "Geocoding & Search API v7" / GS7 | "Geocoder REST API" / 6.2 |
+| URL path | `/v1/` | `/6.2/` |
 | Authentication | API Key only | API Key or App ID + App Code |
+| Deprecated by HERE | — | **December 31, 2023** |
+| Shut down by HERE | — | **July 2025** |
+| Removed from this provider | — | **Next major release** |
 
-The v7 HERE Geocoder REST API was retired by HERE on **December 31, 2023**. Migrate to v8 as soon as possible.
+> **Note on version naming:** HERE's legacy API uses URL path `/6.2/` and is called the "Geocoder REST
+> API". HERE confusingly named its replacement the "Geocoding & Search API **v7**" (also known as GS7).
+> To avoid this collision, this provider uses the shorthand **"v8"** for the new Geocoding & Search API
+> and **"v7"** for the legacy 6.2 API.
+
+**Timeline:**
+- **December 31, 2023** — HERE deprecated the legacy Geocoder REST API (v7).
+- **July 2025** — HERE shut down the v7 endpoints. Live requests to `geocoder.ls.hereapi.com` will fail.
+- **Next major release of this provider** — The v7 compatibility code will be removed: `createV7UsingApiKey()`, `new Here($client, $appId, $appCode)`, all `GEOCODE_ENDPOINT_URL_*` / `REVERSE_ENDPOINT_URL_*` v7 constants, and `parseV7Response()`.
+
+Migrate to v8 as soon as possible.
 See the [HERE migration guide](https://www.here.com/docs/bundle/geocoding-and-search-api-migration-guide/page/migration-geocoder/README.html) for details.
 
 ### Install
@@ -66,10 +79,10 @@ In addition to standard Geocoder fields, `HereAddress` provides:
 - `getLocationName()` — formatted title of the result
 - `getAdditionalDataValue($name)` — access extra fields such as `Label`, `CountryName`, `StateName`, `CountyName`, `CountyCode`, `StateCode`, `District`, `Subdistrict`, `HouseNumberType`, etc.
 
-## Using v7 (Deprecated — Retired December 31, 2023)
+## Using v7 (Deprecated — Shut down July 2025)
 
-> **Warning:** The HERE Geocoder REST API v7 was retired on December 31, 2023. Requests will fail.
-> Migrate to v8 using `createUsingApiKey()` above.
+> **Warning:** The HERE Geocoder REST API v7 was deprecated December 31, 2023 and shut down in
+> July 2025. Requests will fail. Migrate to v8 using `createUsingApiKey()` above.
 > See the [HERE retirement announcement](https://www.here.com/learn/blog/additional-important-guidance-on-here-location-services-end-of-life) for details.
 
 If you have existing code that uses the legacy API Key authentication:
