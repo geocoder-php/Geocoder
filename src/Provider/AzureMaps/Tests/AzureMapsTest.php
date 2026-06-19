@@ -62,6 +62,7 @@ class AzureMapsTest extends BaseTestCase
         $this->assertEquals(6266924, $result->getPostalCode());
         $this->assertEquals('Israel', $result->getCountry()->getName());
         $this->assertEquals('IL', $result->getCountry()->getCode());
+        $this->assertEquals('Tel Aviv District', $result->getAdminLevels()->get(1)->getName());
     }
 
     public function testReverseWithRealCoordinates(): void
@@ -92,6 +93,7 @@ class AzureMapsTest extends BaseTestCase
         $this->assertEquals(6266924, $result->getPostalCode());
         $this->assertEquals('Israel', $result->getCountry()->getName());
         $this->assertEquals('IL', $result->getCountry()->getCode());
+        $this->assertEquals('Tel Aviv District', $result->getAdminLevels()->get(1)->getName());
     }
 
     public function testGeocodeIncludesMunicipality(): void
