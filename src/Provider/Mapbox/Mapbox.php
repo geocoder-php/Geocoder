@@ -329,43 +329,7 @@ final class Mapbox extends AbstractHttpProvider implements Provider
 
         $results = [];
         foreach ($json['features'] as $result) {
-            if (!array_key_exists('context', $result)) {
-                break;
-            }
-
-            $builder = new AddressBuilder($this->getName());
-            $this->parseCoordinates($builder, $result);
-
-            // set official Mapbox place id
-            if (isset($result['id'])) {
-                $builder->setValue('id', $result['id']);
-            }
-
-            // set official Mapbox place id
-            if (isset($result['text'])) {
-                $builder->setValue('street_name', $result['text']);
-            }
-
-            // update address components
-            foreach ($result['context'] as $component) {
-                $this->updateAddressComponent($builder, $component['id'], $component);
-            }
-
-            /** @var MapboxAddress $address */
-            $address = $builder->build(MapboxAddress::class);
-            $address = $address->withId($builder->getValue('id'));
-            if (isset($result['address'])) {
-                $address = $address->withStreetNumber($result['address']);
-            }
-            if (isset($result['place_type'])) {
-                $address = $address->withResultType($result['place_type']);
-            }
-            if (isset($result['place_name'])) {
-                $address = $address->withFormattedAddress($result['place_name']);
-            }
-            $address = $address->withStreetName($builder->getValue('street_name'));
-            $address = $address->withNeighborhood($builder->getValue('neighborhood'));
-            $results[] = $address;
+            $results[] = $this->parseFeature($result);
 
             if (count($results) >= $limit) {
                 break;
@@ -376,56 +340,115 @@ final class Mapbox extends AbstractHttpProvider implements Provider
     }
 
     /**
+     * @param array<string, mixed> $result
+     */
+    private function parseFeature(array $result): MapboxAddress
+    {
+        $properties = $result['properties'] ?? [];
+        $context = $properties['context'] ?? [];
+
+        $builder = new AddressBuilder($this->getName());
+        $this->parseCoordinates($builder, $result);
+
+        // update address components (context is an object keyed by feature type in v6)
+        foreach ($context as $type => $component) {
+            if (is_array($component)) {
+                $this->updateAddressComponent($builder, (string) $type, $component);
+            }
+        }
+
+        /** @var MapboxAddress $address */
+        $address = $builder->build(MapboxAddress::class);
+
+        if (isset($properties['mapbox_id'])) {
+            $address = $address->withId((string) $properties['mapbox_id']);
+        } elseif (isset($result['id'])) {
+            $address = $address->withId((string) $result['id']);
+        }
+
+        // street name without the house number (v5 semantics)
+        $streetName = $context['address']['street_name'] ?? $context['street']['name'] ?? $properties['name'] ?? null;
+        if (null !== $streetName) {
+            $address = $address->withStreetName((string) $streetName);
+        }
+
+        $streetNumber = $context['address']['address_number'] ?? null;
+        if (null !== $streetNumber) {
+            $address = $address->withStreetNumber((string) $streetNumber);
+        }
+
+        if (isset($properties['feature_type'])) {
+            $address = $address->withResultType([(string) $properties['feature_type']]);
+        }
+
+        if (isset($properties['full_address'])) {
+            $address = $address->withFormattedAddress((string) $properties['full_address']);
+        }
+
+        $neighborhood = $context['neighborhood']['name'] ?? null;
+        if (null !== $neighborhood && '' !== $neighborhood) {
+            $address = $address->withNeighborhood((string) $neighborhood);
+        }
+
+        if (isset($properties['match_code']) && is_array($properties['match_code'])) {
+            $address = $address->withMatchCode($properties['match_code']);
+            $confidence = $properties['match_code']['confidence'] ?? null;
+            if (null !== $confidence) {
+                $address = $address->withMatchConfidence((string) $confidence);
+            }
+        }
+
+        if (isset($properties['coordinates']['accuracy'])) {
+            $address = $address->withAccuracy((string) $properties['coordinates']['accuracy']);
+        }
+
+        return $address;
+    }
+
+    /**
      * Update current resultSet with given key/value.
      *
-     * @param string               $type  Component type
-     * @param array<string, mixed> $value Component value
+     * @param array<string, mixed> $component
      */
-    private function updateAddressComponent(AddressBuilder $builder, string $type, array $value): void
+    private function updateAddressComponent(AddressBuilder $builder, string $type, array $component): void
     {
-        $typeParts = explode('.', $type);
-        $type = reset($typeParts);
+        if (!isset($component['name']) || '' === $component['name']) {
+            return;
+        }
 
         switch ($type) {
             case 'postcode':
-                $builder->setPostalCode($value['text']);
+                $builder->setPostalCode($component['name']);
 
                 break;
 
             case 'locality':
-                $builder->setLocality($value['text']);
+                $builder->setLocality($component['name']);
 
                 break;
 
             case 'country':
-                $builder->setCountry($value['text']);
-                if (isset($value['short_code'])) {
-                    $builder->setCountryCode(strtoupper($value['short_code']));
+                $builder->setCountry($component['name']);
+                if (isset($component['country_code'])) {
+                    $builder->setCountryCode(strtoupper((string) $component['country_code']));
                 }
-
-                break;
-
-            case 'neighborhood':
-                $builder->setValue($type, $value['text']);
 
                 break;
 
             case 'place':
-                $builder->addAdminLevel(1, $value['text']);
-                $builder->setLocality($value['text']);
+                $builder->addAdminLevel(1, $component['name']);
+                $builder->setLocality($component['name']);
 
                 break;
 
             case 'region':
-                $code = null;
-                if (!empty($value['short_code']) && preg_match('/[A-z]{2}-/', $value['short_code'])) {
-                    $code = preg_replace('/[A-z]{2}-/', '', $value['short_code']);
-                }
-                $builder->addAdminLevel(2, $value['text'], $code);
+                $code = isset($component['region_code']) ? (string) $component['region_code'] : null;
+                $builder->addAdminLevel(2, $component['name'], $code);
 
                 break;
 
             default:
+                // address, street, district, neighborhood: handled (or intentionally ignored) elsewhere
         }
     }
 
