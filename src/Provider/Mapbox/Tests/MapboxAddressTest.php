@@ -30,4 +30,16 @@ class MapboxAddressTest extends TestCase
         $this->assertSame($matchCode, $address->getMatchCode());
         $this->assertNull($address->withMatchCode($matchCode)->withMatchCode()->getMatchCode());
     }
+
+    public function testMatchConfidence(): void
+    {
+        $address = (new AddressBuilder('mapbox'))->build(MapboxAddress::class);
+
+        $this->assertNull($address->getMatchConfidence());
+
+        $address = $address->withMatchConfidence('exact');
+
+        $this->assertSame('exact', $address->getMatchConfidence());
+        $this->assertNull($address->withMatchConfidence('exact')->withMatchConfidence()->getMatchConfidence());
+    }
 }

@@ -51,6 +51,11 @@ final class MapboxAddress extends Address
      */
     private $matchCode;
 
+    /**
+     * @var string|null
+     */
+    private $matchConfidence;
+
     public function withId(?string $id = null): self
     {
         $new = clone $this;
@@ -153,6 +158,19 @@ final class MapboxAddress extends Address
     {
         $new = clone $this;
         $new->matchCode = $matchCode;
+
+        return $new;
+    }
+
+    public function getMatchConfidence(): ?string
+    {
+        return $this->matchConfidence;
+    }
+
+    public function withMatchConfidence(?string $matchConfidence = null): self
+    {
+        $new = clone $this;
+        $new->matchConfidence = $matchConfidence;
 
         return $new;
     }
