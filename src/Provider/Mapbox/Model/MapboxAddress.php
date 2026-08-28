@@ -46,6 +46,11 @@ final class MapboxAddress extends Address
      */
     private $neighborhood;
 
+    /**
+     * @var array<string, mixed>|null
+     */
+    private $matchCode;
+
     public function withId(?string $id = null): self
     {
         $new = clone $this;
@@ -129,6 +134,25 @@ final class MapboxAddress extends Address
     {
         $new = clone $this;
         $new->neighborhood = $neighborhood;
+
+        return $new;
+    }
+
+    /**
+     * @return array<string, mixed>|null
+     */
+    public function getMatchCode(): ?array
+    {
+        return $this->matchCode;
+    }
+
+    /**
+     * @param array<string, mixed>|null $matchCode
+     */
+    public function withMatchCode(?array $matchCode = null): self
+    {
+        $new = clone $this;
+        $new->matchCode = $matchCode;
 
         return $new;
     }
