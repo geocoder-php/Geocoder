@@ -42,4 +42,16 @@ class MapboxAddressTest extends TestCase
         $this->assertSame('exact', $address->getMatchConfidence());
         $this->assertNull($address->withMatchConfidence('exact')->withMatchConfidence()->getMatchConfidence());
     }
+
+    public function testAccuracy(): void
+    {
+        $address = (new AddressBuilder('mapbox'))->build(MapboxAddress::class);
+
+        $this->assertNull($address->getAccuracy());
+
+        $address = $address->withAccuracy('rooftop');
+
+        $this->assertSame('rooftop', $address->getAccuracy());
+        $this->assertNull($address->withAccuracy('rooftop')->withAccuracy()->getAccuracy());
+    }
 }
