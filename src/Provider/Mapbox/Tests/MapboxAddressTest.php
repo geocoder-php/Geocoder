@@ -20,6 +20,7 @@ class MapboxAddressTest extends TestCase
 {
     public function testMatchCode(): void
     {
+        /** @var MapboxAddress $address */
         $address = (new AddressBuilder('mapbox'))->build(MapboxAddress::class);
 
         $this->assertNull($address->getMatchCode());
@@ -33,6 +34,7 @@ class MapboxAddressTest extends TestCase
 
     public function testMatchConfidence(): void
     {
+        /** @var MapboxAddress $address */
         $address = (new AddressBuilder('mapbox'))->build(MapboxAddress::class);
 
         $this->assertNull($address->getMatchConfidence());
@@ -45,6 +47,7 @@ class MapboxAddressTest extends TestCase
 
     public function testAccuracy(): void
     {
+        /** @var MapboxAddress $address */
         $address = (new AddressBuilder('mapbox'))->build(MapboxAddress::class);
 
         $this->assertNull($address->getAccuracy());

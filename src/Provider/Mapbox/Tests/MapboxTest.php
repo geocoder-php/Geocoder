@@ -12,8 +12,8 @@ declare(strict_types=1);
 
 namespace Geocoder\Provider\Mapbox\Tests;
 
-use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Exception\InvalidServerResponse;
+use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Model\AddressCollection;
 use Geocoder\Model\Bounds;
 use Geocoder\Provider\Mapbox\Mapbox;
