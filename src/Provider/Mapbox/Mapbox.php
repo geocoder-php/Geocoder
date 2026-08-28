@@ -13,7 +13,6 @@ declare(strict_types=1);
 namespace Geocoder\Provider\Mapbox;
 
 use Geocoder\Collection;
-use Geocoder\Exception\InvalidArgument;
 use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Http\Provider\AbstractHttpProvider;
@@ -30,30 +29,12 @@ final class Mapbox extends AbstractHttpProvider implements Provider
     /**
      * @var string
      */
-    public const GEOCODE_ENDPOINT_URL_SSL = 'https://api.mapbox.com/geocoding/v5/%s/%s.json';
+    public const FORWARD_ENDPOINT_URL = 'https://api.mapbox.com/search/geocode/v6/forward';
 
     /**
      * @var string
      */
-    public const REVERSE_ENDPOINT_URL_SSL = 'https://api.mapbox.com/geocoding/v5/%s/%F,%F.json';
-
-    /**
-     * @var string
-     */
-    public const GEOCODING_MODE_PLACES = 'mapbox.places';
-
-    /**
-     * @var string
-     */
-    public const GEOCODING_MODE_PLACES_PERMANENT = 'mapbox.places-permanent';
-
-    /**
-     * @var string[]
-     */
-    public const GEOCODING_MODES = [
-        self::GEOCODING_MODE_PLACES,
-        self::GEOCODING_MODE_PLACES_PERMANENT,
-    ];
+    public const REVERSE_ENDPOINT_URL = 'https://api.mapbox.com/search/geocode/v6/reverse';
 
     /**
      * @var string
@@ -117,16 +98,6 @@ final class Mapbox extends AbstractHttpProvider implements Provider
     public const TYPE_SECONDARY_ADDRESS = 'secondary_address';
 
     /**
-     * @var string
-     */
-    public const TYPE_POI = 'poi';
-
-    /**
-     * @var string
-     */
-    public const TYPE_POI_LANDMARK = 'poi.landmark';
-
-    /**
      * @var string[]
      */
     public const TYPES = [
@@ -137,9 +108,25 @@ final class Mapbox extends AbstractHttpProvider implements Provider
         self::TYPE_PLACE,
         self::TYPE_LOCALITY,
         self::TYPE_NEIGHBORHOOD,
+        self::TYPE_STREET,
         self::TYPE_ADDRESS,
-        self::TYPE_POI,
-        self::TYPE_POI_LANDMARK,
+    ];
+
+    /**
+     * Query data keys that trigger the v6 Structured Input mode (the query text is not sent).
+     *
+     * @var string[]
+     */
+    public const STRUCTURED_INPUT_FIELDS = [
+        'address_line1',
+        'address_number',
+        'street',
+        'block',
+        'place',
+        'region',
+        'postcode',
+        'locality',
+        'neighborhood',
     ];
 
     /**
@@ -158,91 +145,143 @@ final class Mapbox extends AbstractHttpProvider implements Provider
     private $country;
 
     /**
-     * @var string
+     * @var bool
      */
-    private $geocodingMode;
+    private $permanent;
 
     /**
      * @param ClientInterface $client      An HTTP adapter
      * @param string          $accessToken Your Mapbox access token
+     * @param string|null     $country     Restrict results to one or more ISO 3166 alpha-2 countries (comma separated)
+     * @param bool            $permanent   Store results permanently (v6 `permanent` parameter)
      */
     public function __construct(
         ClientInterface $client,
         string $accessToken,
         ?string $country = null,
-        string $geocodingMode = self::GEOCODING_MODE_PLACES,
+        bool $permanent = false,
     ) {
         parent::__construct($client);
 
-        if (!in_array($geocodingMode, self::GEOCODING_MODES)) {
-            throw new InvalidArgument('The Mapbox geocoding mode should be either mapbox.places or mapbox.places-permanent.');
-        }
-
         $this->accessToken = $accessToken;
         $this->country = $country;
-        $this->geocodingMode = $geocodingMode;
+        $this->permanent = $permanent;
     }
 
     public function geocodeQuery(GeocodeQuery $query): Collection
     {
-        // Mapbox API returns invalid data if IP address given
-        // This API doesn't handle IPs
+        // The Mapbox API does not geocode raw IP addresses
         if (filter_var($query->getText(), FILTER_VALIDATE_IP)) {
             throw new UnsupportedOperation('The Mapbox provider does not support IP addresses, only street addresses.');
         }
 
-        $url = sprintf(self::GEOCODE_ENDPOINT_URL_SSL, $this->geocodingMode, rawurlencode($query->getText()));
+        $parameters = [];
 
-        $urlParameters = [];
+        // v6 Structured Input: typed fields replace the `q` search text
+        $structured = $this->structuredInputFields($query);
+        if ([] !== $structured) {
+            foreach (self::STRUCTURED_INPUT_FIELDS as $field) {
+                if (isset($structured[$field])) {
+                    $parameters[$field] = $structured[$field];
+                }
+            }
+        } else {
+            $parameters['q'] = $query->getText();
+        }
+
         if ($query->getBounds()) {
             // Format is "minLon,minLat,maxLon,maxLat"
-            $urlParameters['bbox'] = sprintf(
+            $parameters['bbox'] = sprintf(
                 '%s,%s,%s,%s',
-                $query->getBounds()->getWest(),
-                $query->getBounds()->getSouth(),
-                $query->getBounds()->getEast(),
-                $query->getBounds()->getNorth()
+                $this->formatCoordinate($query->getBounds()->getWest()),
+                $this->formatCoordinate($query->getBounds()->getSouth()),
+                $this->formatCoordinate($query->getBounds()->getEast()),
+                $this->formatCoordinate($query->getBounds()->getNorth())
             );
         }
 
-        if (null !== $locationType = $query->getData('location_type')) {
-            $urlParameters['types'] = is_array($locationType) ? implode(',', $locationType) : $locationType;
-        } else {
-            $urlParameters['types'] = self::DEFAULT_TYPE;
+        $parameters['types'] = $this->locationTypes($query);
+
+        if (null !== $autocomplete = $query->getData('autocomplete')) {
+            $parameters['autocomplete'] = $autocomplete ? 'true' : 'false';
+        } elseif ([] !== $structured) {
+            // Mapbox recommends autocomplete=false for structured input
+            $parameters['autocomplete'] = 'false';
         }
 
-        if (null !== $fuzzyMatch = $query->getData('fuzzy_match')) {
-            $urlParameters['fuzzyMatch'] = $fuzzyMatch ? 'true' : 'false';
+        if (null !== $proximity = $query->getData('proximity')) {
+            $parameters['proximity'] = $proximity;
         }
 
-        if (count($urlParameters) > 0) {
-            $url .= '?'.http_build_query($urlParameters);
+        if (null !== $worldview = $query->getData('worldview')) {
+            $parameters['worldview'] = $worldview;
         }
 
-        return $this->fetchUrl($url, $query->getLimit(), $query->getLocale(), $query->getData('country', $this->country));
+        return $this->fetchUrl(
+            self::FORWARD_ENDPOINT_URL,
+            $query->getLimit(),
+            $query->getLocale(),
+            $query->getData('country', $this->country),
+            $parameters
+        );
     }
 
     public function reverseQuery(ReverseQuery $query): Collection
     {
         $coordinate = $query->getCoordinates();
-        $url = sprintf(
-            self::REVERSE_ENDPOINT_URL_SSL,
-            $this->geocodingMode,
-            $coordinate->getLongitude(),
-            $coordinate->getLatitude()
+        $parameters = [
+            'longitude' => $this->formatCoordinate($coordinate->getLongitude()),
+            'latitude' => $this->formatCoordinate($coordinate->getLatitude()),
+        ];
+
+        $parameters['types'] = $this->locationTypes($query);
+
+        return $this->fetchUrl(
+            self::REVERSE_ENDPOINT_URL,
+            $query->getLimit(),
+            $query->getLocale(),
+            $query->getData('country', $this->country),
+            $parameters
         );
+    }
 
+    /**
+     * @return array<string, mixed>
+     */
+    private function structuredInputFields(GeocodeQuery $query): array
+    {
+        $fields = [];
+
+        foreach (self::STRUCTURED_INPUT_FIELDS as $field) {
+            $value = $query->getData($field);
+            if (null !== $value && '' !== $value) {
+                $fields[$field] = $value;
+            }
+        }
+
+        return $fields;
+    }
+
+    /**
+     * @param GeocodeQuery|ReverseQuery $query
+     */
+    private function locationTypes($query): string
+    {
         if (null !== $locationType = $query->getData('location_type')) {
-            $urlParameters['types'] = is_array($locationType) ? implode(',', $locationType) : $locationType;
-        } else {
-            $urlParameters['types'] = self::DEFAULT_TYPE;
+            return is_array($locationType) ? implode(',', $locationType) : $locationType;
         }
 
-        if (count($urlParameters) > 0) {
-            $url .= '?'.http_build_query($urlParameters);
-        }
+        return self::DEFAULT_TYPE;
+    }
 
-        return $this->fetchUrl($url, $query->getLimit(), $query->getLocale(), $query->getData('country', $this->country));
+    /**
+     * Format a coordinate with the shortest decimal representation that round-trips the
+     * value exactly (a plain (string) cast truncates to the 14 significant digits of the
+     * default `precision` ini setting, which would change the request URL).
+     */
+    private function formatCoordinate(float $value): string
+    {
+        return (string) json_encode($value);
     }
 
     public function getName(): string
@@ -251,25 +290,35 @@ final class Mapbox extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * @return string query with extra params
+     * @param array<string, mixed> $parameters
      */
-    private function buildQuery(string $url, int $limit, ?string $locale = null, ?string $country = null): string
+    private function buildQuery(string $url, int $limit, ?string $locale, ?string $country, array $parameters): string
     {
-        $parameters = array_filter([
-            'country' => $country,
-            'language' => $locale,
-            'limit' => $limit,
-            'access_token' => $this->accessToken,
-        ]);
+        if (null !== $country) {
+            $parameters['country'] = $country;
+        }
 
-        $separator = parse_url($url, PHP_URL_QUERY) ? '&' : '?';
+        if (null !== $locale) {
+            $parameters['language'] = $locale;
+        }
 
-        return $url.$separator.http_build_query($parameters);
+        $parameters['limit'] = $limit;
+
+        if ($this->permanent) {
+            $parameters['permanent'] = 'true';
+        }
+
+        $parameters['access_token'] = $this->accessToken;
+
+        return $url.'?'.http_build_query($parameters);
     }
 
-    private function fetchUrl(string $url, int $limit, ?string $locale = null, ?string $country = null): AddressCollection
+    /**
+     * @param array<string, mixed> $parameters
+     */
+    private function fetchUrl(string $url, int $limit, ?string $locale, ?string $country, array $parameters): AddressCollection
     {
-        $url = $this->buildQuery($url, $limit, $locale, $country);
+        $url = $this->buildQuery($url, $limit, $locale, $country, $parameters);
         $content = $this->getUrlContents($url);
         $json = $this->validateResponse($url, $content);
 
