@@ -98,6 +98,27 @@ final class Mapbox extends AbstractHttpProvider implements Provider
     /**
      * @var string
      */
+    public const TYPE_STREET = 'street';
+
+    /**
+     * Japanese addresses only. The API accepts this type only for Japan-context requests
+     * (e.g. with country=jp and language=ja), so it is intentionally not part of TYPES.
+     *
+     * @var string
+     */
+    public const TYPE_BLOCK = 'block';
+
+    /**
+     * Sub-unit, suite, or lot within a parent address (US only). The API accepts this type
+     * only for US-context requests, so it is intentionally not part of TYPES.
+     *
+     * @var string
+     */
+    public const TYPE_SECONDARY_ADDRESS = 'secondary_address';
+
+    /**
+     * @var string
+     */
     public const TYPE_POI = 'poi';
 
     /**
