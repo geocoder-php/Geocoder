@@ -33,9 +33,23 @@ class IntegrationTest extends ProviderIntegrationTest
 
     protected bool $testIpv6 = false;
 
+    /**
+     * Creates a v7 (legacy) provider for backwards-compatible integration tests.
+     *
+     * @deprecated The legacy HERE Geocoder REST API was retired on December 31, 2023.
+     *             New integrations should use {@see createV8Provider()} instead.
+     */
     protected function createProvider(ClientInterface $httpClient, bool $useCIT = false)
     {
-        return Here::createUsingApiKey($httpClient, $this->getApiKey(), $useCIT);
+        return Here::createV7UsingApiKey($httpClient, $this->getApiKey(), $useCIT);
+    }
+
+    /**
+     * Creates a v8 (Geocoding & Search API) provider.
+     */
+    protected function createV8Provider(ClientInterface $httpClient): Here
+    {
+        return Here::createUsingApiKey($httpClient, $this->getApiKey());
     }
 
     protected function getCacheDir(): string
@@ -66,12 +80,12 @@ class IntegrationTest extends ProviderIntegrationTest
 
     protected function getApiKey(): string
     {
-        return $_SERVER['HERE_APP_ID'];
+        return $_SERVER['HERE_API_KEY'] ?? 'missing';
     }
 
     protected function getAppId(): string
     {
-        return $_SERVER['HERE_APP_ID'];
+        return $_SERVER['HERE_APP_ID'] ?? 'missing';
     }
 
     /**
@@ -79,8 +93,12 @@ class IntegrationTest extends ProviderIntegrationTest
      */
     protected function getAppCode(): string
     {
-        return $_SERVER['HERE_APP_CODE'];
+        return $_SERVER['HERE_APP_CODE'] ?? 'missing';
     }
+
+    // -------------------------------------------------------------------------
+    // v7 (legacy) integration tests — use v7 cached responses
+    // -------------------------------------------------------------------------
 
     public function testGeocodeQuery(): void
     {
@@ -107,7 +125,7 @@ class IntegrationTest extends ProviderIntegrationTest
         }
     }
 
-    public function testGeocodeQueryCIT(): void
+    public function testGeocodeQueryCITv7(): void
     {
         if (isset($this->skippedTests[__FUNCTION__])) {
             $this->markTestSkipped($this->skippedTests[__FUNCTION__]);
@@ -164,7 +182,7 @@ class IntegrationTest extends ProviderIntegrationTest
         $this->assertWellFormattedResult($result);
     }
 
-    public function testReverseQueryCIT(): void
+    public function testReverseQueryCITv7(): void
     {
         if (isset($this->skippedTests[__FUNCTION__])) {
             $this->markTestSkipped($this->skippedTests[__FUNCTION__]);
@@ -191,6 +209,83 @@ class IntegrationTest extends ProviderIntegrationTest
         }
 
         $provider = $this->createProvider($this->getCachedHttpClient());
+
+        $result = $provider->reverseQuery(ReverseQuery::fromCoordinates(0, 0));
+        $this->assertEquals(0, $result->count());
+    }
+
+    // -------------------------------------------------------------------------
+    // v8 (Geocoding & Search API) integration tests — use v8 cached responses
+    // -------------------------------------------------------------------------
+
+    public function testGeocodeQueryV8(): void
+    {
+        if (isset($this->skippedTests[__FUNCTION__])) {
+            $this->markTestSkipped($this->skippedTests[__FUNCTION__]);
+        }
+        if (!$this->testAddress) {
+            $this->markTestSkipped('Geocoding address is not supported by this provider');
+        }
+
+        $provider = $this->createV8Provider($this->getCachedHttpClient());
+        $query = GeocodeQuery::create('10 Downing St, London, UK')->withLocale('en');
+        $result = $provider->geocodeQuery($query);
+        $this->assertWellFormattedResult($result);
+
+        // Check Downing Street
+        $location = $result->first();
+        $this->assertEqualsWithDelta(51.5033, $location->getCoordinates()->getLatitude(), 0.1, 'Latitude should be in London');
+        $this->assertEqualsWithDelta(-0.1276, $location->getCoordinates()->getLongitude(), 0.1, 'Longitude should be in London');
+        $this->assertStringContainsString('Downing', $location->getStreetName(), 'Street name should contain "Downing St"');
+
+        if (null !== $streetNumber = $location->getStreetNumber()) {
+            $this->assertStringContainsString('10', $streetNumber, 'Street number should contain "10"');
+        }
+    }
+
+    public function testGeocodeQueryWithNoResultsV8(): void
+    {
+        if (isset($this->skippedTests[__FUNCTION__])) {
+            $this->markTestSkipped($this->skippedTests[__FUNCTION__]);
+        }
+        if (!$this->testAddress) {
+            $this->markTestSkipped('Geocoding address is not supported by this provider');
+        }
+
+        $provider = $this->createV8Provider($this->getCachedHttpClient());
+        $query = GeocodeQuery::create('jsajhgsdkfjhsfkjhaldkadjaslgldasd')->withLocale('en');
+        $result = $provider->geocodeQuery($query);
+        $this->assertWellFormattedResult($result);
+        $this->assertEquals(0, $result->count());
+    }
+
+    public function testReverseQueryV8(): void
+    {
+        if (isset($this->skippedTests[__FUNCTION__])) {
+            $this->markTestSkipped($this->skippedTests[__FUNCTION__]);
+        }
+        if (!$this->testReverse) {
+            $this->markTestSkipped('Reverse geocoding address is not supported by this provider');
+        }
+
+        $provider = $this->createV8Provider($this->getCachedHttpClient());
+
+        // Close to the white house
+        $result = $provider->reverseQuery(ReverseQuery::fromCoordinates(38.900206, -77.036991)->withLocale('en'));
+        $this->assertWellFormattedResult($result);
+    }
+
+    public function testReverseQueryWithNoResultsV8(): void
+    {
+        if (isset($this->skippedTests[__FUNCTION__])) {
+            $this->markTestSkipped($this->skippedTests[__FUNCTION__]);
+        }
+
+        if (!$this->testReverse) {
+            $this->markTestSkipped('Reverse geocoding address is not supported by this provider');
+        }
+
+        $provider = $this->createV8Provider($this->getCachedHttpClient());
 
         $result = $provider->reverseQuery(ReverseQuery::fromCoordinates(0, 0));
         $this->assertEquals(0, $result->count());
