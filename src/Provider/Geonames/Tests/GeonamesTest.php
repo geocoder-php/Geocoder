@@ -22,9 +22,13 @@ use Geocoder\Query\ReverseQuery;
 
 class GeonamesTest extends BaseTestCase
 {
-    protected function getCacheDir(): string
+    protected function getCacheDir(): ?string
     {
-        return __DIR__.'/.cached_responses';
+        if (isset($_SERVER['USE_CACHED_RESPONSES']) && ($_SERVER['USE_CACHED_RESPONSES'] === true || $_SERVER['USE_CACHED_RESPONSES'] === 'true')) {
+            return __DIR__.'/.cached_responses';
+        }
+
+        return null;
     }
 
     public function testGetName(): void
@@ -367,5 +371,33 @@ JSON;
 
         $this->assertInstanceOf(Collection::class, $result);
         $this->assertEquals(0, $result->count());
+    }
+
+    public function testGeocodeWithPremiumEndpointAndToken(): void
+    {
+        if (!isset($_SERVER['GEONAMES_USERNAME']) || !isset($_SERVER['GEONAMES_TOKEN'])) {
+            $this->markTestSkipped('You need to configure the GEONAMES_USERNAME and GEONAMES_TOKEN values in phpunit.xml');
+        }
+
+        $username = $_SERVER['GEONAMES_USERNAME'];
+        $token = $_SERVER['GEONAMES_TOKEN'];
+
+        $provider = new Geonames(
+            $this->getHttpClient($token),
+            $username,
+            $token,
+            true
+        );
+        $results = $provider->geocodeQuery(GeocodeQuery::create('London'));
+
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
+        $this->assertGreaterThan(0, $results->count());
+
+        /** @var Location $result */
+        $result = $results->first();
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
+        $this->assertNotNull($result->getCoordinates());
+        $this->assertEquals('United Kingdom', $result->getCountry()->getName());
+        $this->assertEquals('GB', $result->getCountry()->getCode());
     }
 }
