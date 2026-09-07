@@ -12,11 +12,13 @@ declare(strict_types=1);
 
 namespace Geocoder\Provider\GraphHopper\Tests;
 
+use Geocoder\Exception\InvalidServerResponse;
 use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Model\Bounds;
 use Geocoder\Provider\GraphHopper\GraphHopper;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * @author Gary Gale <gary@vicchi.org>
@@ -117,6 +119,35 @@ class GraphHopperTest extends BaseTestCase
         );
         $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(0, $results);
+    }
+
+    public function testCorrectlyAppendsProvider(): void
+    {
+        $uri = '';
+
+        $provider = new GraphHopper(
+            $this->getMockedHttpClientCallback(
+                function (RequestInterface $request) use (&$uri) {
+                    $uri = (string) $request->getUri();
+                }
+            ),
+            'api_key'
+        );
+
+        $query = GeocodeQuery::create('242 Acklam Road, London, United Kingdom')
+            ->withLocale('fr')
+            ->withData('provider', 'default');
+
+        try {
+            $provider->geocodeQuery($query);
+        } catch (InvalidServerResponse $e) {
+        }
+
+        $this->assertEquals('https://graphhopper.com/api/1/geocode'.
+            '?q=242+Acklam+Road%2C+London%2C+United+Kingdom'.
+            '&key=api_key&locale=fr&limit=5&provider=default',
+            $uri
+        );
     }
 
     public function testReverseWithRealCoordinates(): void
