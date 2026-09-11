@@ -46,6 +46,21 @@ final class MapboxAddress extends Address
      */
     private $neighborhood;
 
+    /**
+     * @var array<string, mixed>|null
+     */
+    private $matchCode;
+
+    /**
+     * @var string|null
+     */
+    private $matchConfidence;
+
+    /**
+     * @var string|null
+     */
+    private $accuracy;
+
     public function withId(?string $id = null): self
     {
         $new = clone $this;
@@ -129,6 +144,51 @@ final class MapboxAddress extends Address
     {
         $new = clone $this;
         $new->neighborhood = $neighborhood;
+
+        return $new;
+    }
+
+    /**
+     * @return array<string, mixed>|null
+     */
+    public function getMatchCode(): ?array
+    {
+        return $this->matchCode;
+    }
+
+    /**
+     * @param array<string, mixed>|null $matchCode
+     */
+    public function withMatchCode(?array $matchCode = null): self
+    {
+        $new = clone $this;
+        $new->matchCode = $matchCode;
+
+        return $new;
+    }
+
+    public function getMatchConfidence(): ?string
+    {
+        return $this->matchConfidence;
+    }
+
+    public function withMatchConfidence(?string $matchConfidence = null): self
+    {
+        $new = clone $this;
+        $new->matchConfidence = $matchConfidence;
+
+        return $new;
+    }
+
+    public function getAccuracy(): ?string
+    {
+        return $this->accuracy;
+    }
+
+    public function withAccuracy(?string $accuracy = null): self
+    {
+        $new = clone $this;
+        $new->accuracy = $accuracy;
 
         return $new;
     }
