@@ -86,7 +86,7 @@ XML;
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
+        $this->assertInstanceOf(Address::class, $result);
         $this->assertEquals('Rue Quincampoix', $result->getStreetName());
     }
 
@@ -102,7 +102,7 @@ XML;
         /** @var Address $result */
         $result = $results->first();
 
-        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
+        $this->assertInstanceOf(Address::class, $result);
         $this->assertEquals('Downing Street', $result->getStreetName());
         $this->assertEquals('United Kingdom', $result->getCountry()->getName());
 
