@@ -30,12 +30,12 @@ final class Mapbox extends AbstractHttpProvider implements Provider
     /**
      * @var string
      */
-    public const GEOCODE_ENDPOINT_URL_SSL = 'https://api.mapbox.com/geocoding/v5/%s/%s.json';
+    public const GEOCODE_ENDPOINT_URL_SSL = 'https://api.mapbox.com/search/geocode/v6/forward';
 
     /**
      * @var string
      */
-    public const REVERSE_ENDPOINT_URL_SSL = 'https://api.mapbox.com/geocoding/v5/%s/%F,%F.json';
+    public const REVERSE_ENDPOINT_URL_SSL = 'https://api.mapbox.com/search/geocode/v6/reverse';
 
     /**
      * @var string
@@ -98,12 +98,7 @@ final class Mapbox extends AbstractHttpProvider implements Provider
     /**
      * @var string
      */
-    public const TYPE_POI = 'poi';
-
-    /**
-     * @var string
-     */
-    public const TYPE_POI_LANDMARK = 'poi.landmark';
+    public const TYPE_STREET = 'street';
 
     /**
      * @var string[]
@@ -116,15 +111,32 @@ final class Mapbox extends AbstractHttpProvider implements Provider
         self::TYPE_PLACE,
         self::TYPE_LOCALITY,
         self::TYPE_NEIGHBORHOOD,
+        self::TYPE_STREET,
         self::TYPE_ADDRESS,
-        self::TYPE_POI,
-        self::TYPE_POI_LANDMARK,
     ];
 
     /**
      * @var string
      */
     public const DEFAULT_TYPE = self::TYPE_ADDRESS;
+
+    /**
+     * v6 Structured Input fields. When one or more of these is set on the
+     * query, the typed fields are sent and the `q` search text is dropped.
+     *
+     * @var string[]
+     */
+    public const STRUCTURED_INPUT_FIELDS = [
+        'address_line1',
+        'address_number',
+        'street',
+        'block',
+        'place',
+        'region',
+        'postcode',
+        'locality',
+        'neighborhood',
+    ];
 
     /**
      * @var string
@@ -142,8 +154,11 @@ final class Mapbox extends AbstractHttpProvider implements Provider
     private $geocodingMode;
 
     /**
-     * @param ClientInterface $client      An HTTP adapter
-     * @param string          $accessToken Your Mapbox access token
+     * @param ClientInterface $client        An HTTP adapter
+     * @param string          $accessToken   Your Mapbox access token
+     * @param string|null     $country       Restrict the results to one or more ISO 3166 alpha-2 countries
+     * @param string          $geocodingMode One of the GEOCODING_MODES; v6 expresses the permanent mode
+     *                                       through the `permanent` request parameter
      */
     public function __construct(
         ClientInterface $client,
@@ -170,17 +185,30 @@ final class Mapbox extends AbstractHttpProvider implements Provider
             throw new UnsupportedOperation('The Mapbox provider does not support IP addresses, only street addresses.');
         }
 
-        $url = sprintf(self::GEOCODE_ENDPOINT_URL_SSL, $this->geocodingMode, rawurlencode($query->getText()));
+        $url = self::GEOCODE_ENDPOINT_URL_SSL;
 
         $urlParameters = [];
+
+        // v6 Structured Input: the typed fields replace the `q` search text
+        $structured = $this->structuredInputFields($query);
+        if ([] !== $structured) {
+            foreach (self::STRUCTURED_INPUT_FIELDS as $field) {
+                if (isset($structured[$field])) {
+                    $urlParameters[$field] = $structured[$field];
+                }
+            }
+        } else {
+            $urlParameters['q'] = $query->getText();
+        }
+
         if ($query->getBounds()) {
             // Format is "minLon,minLat,maxLon,maxLat"
             $urlParameters['bbox'] = sprintf(
                 '%s,%s,%s,%s',
-                $query->getBounds()->getWest(),
-                $query->getBounds()->getSouth(),
-                $query->getBounds()->getEast(),
-                $query->getBounds()->getNorth()
+                $this->formatCoordinate($query->getBounds()->getWest()),
+                $this->formatCoordinate($query->getBounds()->getSouth()),
+                $this->formatCoordinate($query->getBounds()->getEast()),
+                $this->formatCoordinate($query->getBounds()->getNorth())
             );
         }
 
@@ -190,8 +218,12 @@ final class Mapbox extends AbstractHttpProvider implements Provider
             $urlParameters['types'] = self::DEFAULT_TYPE;
         }
 
-        if (null !== $fuzzyMatch = $query->getData('fuzzy_match')) {
-            $urlParameters['fuzzyMatch'] = $fuzzyMatch ? 'true' : 'false';
+        // v6 has no `fuzzyMatch` parameter; `autocomplete` is its closest replacement
+        if (null !== $autocomplete = $query->getData('autocomplete')) {
+            $urlParameters['autocomplete'] = $autocomplete ? 'true' : 'false';
+        } elseif ([] !== $structured) {
+            // Mapbox recommends disabling autocomplete for structured input
+            $urlParameters['autocomplete'] = 'false';
         }
 
         if (count($urlParameters) > 0) {
@@ -204,12 +236,12 @@ final class Mapbox extends AbstractHttpProvider implements Provider
     public function reverseQuery(ReverseQuery $query): Collection
     {
         $coordinate = $query->getCoordinates();
-        $url = sprintf(
-            self::REVERSE_ENDPOINT_URL_SSL,
-            $this->geocodingMode,
-            $coordinate->getLongitude(),
-            $coordinate->getLatitude()
-        );
+        $url = self::REVERSE_ENDPOINT_URL_SSL;
+
+        $urlParameters = [
+            'longitude' => $this->formatCoordinate($coordinate->getLongitude()),
+            'latitude' => $this->formatCoordinate($coordinate->getLatitude()),
+        ];
 
         if (null !== $locationType = $query->getData('location_type')) {
             $urlParameters['types'] = is_array($locationType) ? implode(',', $locationType) : $locationType;
@@ -237,9 +269,16 @@ final class Mapbox extends AbstractHttpProvider implements Provider
         $parameters = array_filter([
             'country' => $country,
             'language' => $locale,
-            'limit' => $limit,
-            'access_token' => $this->accessToken,
         ]);
+
+        $parameters['limit'] = $limit;
+
+        if (self::GEOCODING_MODE_PLACES_PERMANENT === $this->geocodingMode) {
+            // v6 replaced the "mapbox.places-permanent" mode with a `permanent` parameter
+            $parameters['permanent'] = 'true';
+        }
+
+        $parameters['access_token'] = $this->accessToken;
 
         $separator = parse_url($url, PHP_URL_QUERY) ? '&' : '?';
 
@@ -259,42 +298,64 @@ final class Mapbox extends AbstractHttpProvider implements Provider
 
         $results = [];
         foreach ($json['features'] as $result) {
-            if (!array_key_exists('context', $result)) {
-                break;
-            }
-
             $builder = new AddressBuilder($this->getName());
             $this->parseCoordinates($builder, $result);
 
+            // in v6 the feature details (id, name, type, context) live in `properties`
+            $properties = $result['properties'] ?? [];
+
             // set official Mapbox place id
-            if (isset($result['id'])) {
+            if (isset($properties['mapbox_id'])) {
+                $builder->setValue('id', $properties['mapbox_id']);
+            } elseif (isset($result['id'])) {
                 $builder->setValue('id', $result['id']);
             }
 
-            // set official Mapbox place id
-            if (isset($result['text'])) {
-                $builder->setValue('street_name', $result['text']);
-            }
-
-            // update address components
-            foreach ($result['context'] as $component) {
-                $this->updateAddressComponent($builder, $component['id'], $component);
+            // update address components (v6 `context` is an object keyed by feature type)
+            foreach ($properties['context'] ?? [] as $type => $component) {
+                $this->updateAddressComponent($builder, (string) $type, $component);
             }
 
             /** @var MapboxAddress $address */
             $address = $builder->build(MapboxAddress::class);
             $address = $address->withId($builder->getValue('id'));
-            if (isset($result['address'])) {
-                $address = $address->withStreetNumber($result['address']);
+
+            // street name without the house number
+            $streetName = $properties['context']['address']['street_name']
+                ?? $properties['context']['street']['name']
+                ?? $properties['name']
+                ?? null;
+            if (null !== $streetName) {
+                $address = $address->withStreetName((string) $streetName);
             }
-            if (isset($result['place_type'])) {
-                $address = $address->withResultType($result['place_type']);
+
+            if (isset($properties['context']['address']['address_number'])) {
+                $address = $address->withStreetNumber((string) $properties['context']['address']['address_number']);
             }
-            if (isset($result['place_name'])) {
-                $address = $address->withFormattedAddress($result['place_name']);
+
+            if (isset($properties['feature_type'])) {
+                $address = $address->withResultType([(string) $properties['feature_type']]);
             }
-            $address = $address->withStreetName($builder->getValue('street_name'));
-            $address = $address->withNeighborhood($builder->getValue('neighborhood'));
+
+            if (isset($properties['full_address'])) {
+                $address = $address->withFormattedAddress((string) $properties['full_address']);
+            }
+
+            if (isset($properties['context']['neighborhood']['name'])) {
+                $address = $address->withNeighborhood((string) $properties['context']['neighborhood']['name']);
+            }
+
+            if (isset($properties['match_code']) && is_array($properties['match_code'])) {
+                $address = $address->withMatchCode($properties['match_code']);
+                if (isset($properties['match_code']['confidence'])) {
+                    $address = $address->withMatchConfidence((string) $properties['match_code']['confidence']);
+                }
+            }
+
+            if (isset($properties['coordinates']['accuracy'])) {
+                $address = $address->withAccuracy((string) $properties['coordinates']['accuracy']);
+            }
+
             $results[] = $address;
 
             if (count($results) >= $limit) {
@@ -306,56 +367,76 @@ final class Mapbox extends AbstractHttpProvider implements Provider
     }
 
     /**
+     * @return array<string, mixed>
+     */
+    private function structuredInputFields(GeocodeQuery $query): array
+    {
+        $fields = [];
+
+        foreach (self::STRUCTURED_INPUT_FIELDS as $field) {
+            $value = $query->getData($field);
+            if (null !== $value && '' !== $value) {
+                $fields[$field] = $value;
+            }
+        }
+
+        return $fields;
+    }
+
+    /**
+     * Format a coordinate with the shortest representation that round-trips
+     * the value exactly (a plain (string) cast would truncate it to the
+     * `precision` ini setting).
+     */
+    private function formatCoordinate(float $value): string
+    {
+        return (string) json_encode($value);
+    }
+
+    /**
      * Update current resultSet with given key/value.
      *
-     * @param string               $type  Component type
-     * @param array<string, mixed> $value Component value
+     * @param array<string, mixed> $component
      */
-    private function updateAddressComponent(AddressBuilder $builder, string $type, array $value): void
+    private function updateAddressComponent(AddressBuilder $builder, string $type, array $component): void
     {
-        $typeParts = explode('.', $type);
-        $type = reset($typeParts);
+        if (!isset($component['name'])) {
+            return;
+        }
 
         switch ($type) {
             case 'postcode':
-                $builder->setPostalCode($value['text']);
+                $builder->setPostalCode($component['name']);
 
                 break;
 
             case 'locality':
-                $builder->setLocality($value['text']);
+                $builder->setLocality($component['name']);
 
                 break;
 
             case 'country':
-                $builder->setCountry($value['text']);
-                if (isset($value['short_code'])) {
-                    $builder->setCountryCode(strtoupper($value['short_code']));
+                $builder->setCountry($component['name']);
+                if (isset($component['country_code'])) {
+                    $builder->setCountryCode(strtoupper((string) $component['country_code']));
                 }
-
-                break;
-
-            case 'neighborhood':
-                $builder->setValue($type, $value['text']);
 
                 break;
 
             case 'place':
-                $builder->addAdminLevel(1, $value['text']);
-                $builder->setLocality($value['text']);
+                $builder->addAdminLevel(1, $component['name']);
+                $builder->setLocality($component['name']);
 
                 break;
 
             case 'region':
-                $code = null;
-                if (!empty($value['short_code']) && preg_match('/[A-z]{2}-/', $value['short_code'])) {
-                    $code = preg_replace('/[A-z]{2}-/', '', $value['short_code']);
-                }
-                $builder->addAdminLevel(2, $value['text'], $code);
+                $code = isset($component['region_code']) ? (string) $component['region_code'] : null;
+                $builder->addAdminLevel(2, $component['name'], $code);
 
                 break;
 
             default:
+                // address, street, district: handled elsewhere or not part of the address model
         }
     }
 
