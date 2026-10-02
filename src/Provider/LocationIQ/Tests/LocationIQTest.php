@@ -15,6 +15,8 @@ namespace Geocoder\Provider\LocationIQ\Tests;
 use Geocoder\Collection;
 use Geocoder\IntegrationTest\BaseTestCase;
 use Geocoder\Location;
+use Geocoder\Model\Address;
+use Geocoder\Model\Bounds;
 use Geocoder\Provider\LocationIQ\LocationIQ;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
@@ -84,7 +86,40 @@ XML;
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
+        $this->assertInstanceOf(Address::class, $result);
         $this->assertEquals('Rue Quincampoix', $result->getStreetName());
+    }
+
+    public function testCorrectBounds(): void
+    {
+        $provider = new LocationIQ($this->getHttpClient($_SERVER['LOCATIONIQ_API_KEY']), $_SERVER['LOCATIONIQ_API_KEY']);
+
+        $results = $provider->geocodeQuery(GeocodeQuery::create('10 Downing Street, London, United Kingdom'));
+
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
+        $this->assertCount(1, $results);
+
+        /** @var Address $result */
+        $result = $results->first();
+
+        $this->assertInstanceOf(Address::class, $result);
+        $this->assertEquals('Downing Street', $result->getStreetName());
+        $this->assertEquals('United Kingdom', $result->getCountry()->getName());
+
+        /** @var Bounds $bounds */
+        $bounds = $result->getBounds();
+
+        $north = $bounds->getNorth();
+        $south = $bounds->getSouth();
+        $west = $bounds->getWest();
+        $east = $bounds->getEast();
+
+        $this->assertTrue($north > $south);
+        $this->assertTrue($east > $west);
+
+        $this->assertEqualsWithDelta(51.5033074, $south, 1E-6);
+        $this->assertEqualsWithDelta(51.5036913, $north, 1E-6);
+        $this->assertEqualsWithDelta(-0.1277991, $west, 1E-6);
+        $this->assertEqualsWithDelta(-0.1273088, $east, 1E-6);
     }
 }
