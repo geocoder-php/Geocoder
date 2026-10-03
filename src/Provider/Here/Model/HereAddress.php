@@ -22,27 +22,27 @@ final class HereAddress extends Address
     /**
      * @var string|null
      */
-    private $locationId;
+    private ?string $locationId = null;
 
     /**
      * @var string|null
      */
-    private $locationType;
+    private ?string $locationType = null;
 
     /**
      * @var string|null
      */
-    private $locationName;
+    private ?string $locationName = null;
 
     /**
      * @var array<string, mixed>|null
      */
-    private $additionalData;
+    private ?array $additionalData = [];
 
     /**
      * @var array<string, mixed>|null
      */
-    private $shape;
+    private ?array $shape = [];
 
     /**
      * @return string|null
@@ -107,8 +107,10 @@ final class HereAddress extends Address
     {
         $new = clone $this;
 
-        foreach ($additionalData as $data) {
-            $new = $new->addAdditionalData($data['key'], $data['value']);
+        if (null !== $additionalData) {
+            foreach ($additionalData as $data) {
+                $new = $new->addAdditionalData($data['key'], $data['value']);
+            }
         }
 
         return $new;
@@ -136,7 +138,7 @@ final class HereAddress extends Address
 
     public function hasAdditionalDataValue(string $name): bool
     {
-        return array_key_exists($name, $this->additionalData);
+        return null !== $this->additionalData && array_key_exists($name, $this->additionalData);
     }
 
     /**
@@ -174,6 +176,6 @@ final class HereAddress extends Address
 
     public function hasShapeValue(string $name): bool
     {
-        return array_key_exists($name, $this->shape);
+        return null !== $this->shape && array_key_exists($name, $this->shape);
     }
 }
