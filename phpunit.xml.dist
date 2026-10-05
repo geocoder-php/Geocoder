@@ -42,6 +42,7 @@
     <server name="HERE_API_KEY" value="YOUR_API_KEY"/>
     <server name="IPINFODB_API_KEY" value="YOUR_API_KEY"/>
     <server name="IP2LOCATION_API_KEY" value="YOUR_API_KEY"/>
+    <server name="IPGEOLOCATION_API_KEY" value="YOUR_API_KEY"/>
     <server name="IPSTACK_API_KEY" value="YOUR_API_KEY"/>
     <server name="LOCATIONIQ_API_KEY" value="YOUR_API_KEY"/>
     <server name="MAPBOX_GEOCODING_KEY" value="YOUR_GEOCODING_KEY"/>

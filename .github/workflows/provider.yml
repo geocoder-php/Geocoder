@@ -34,6 +34,7 @@ jobs:
           - HostIp
           - IP2Location
           # - IP2LocationBinary
+          - IPGeolocation
           - IpInfo
           - IpInfoDb
           - Ipstack
