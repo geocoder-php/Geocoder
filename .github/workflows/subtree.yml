@@ -113,6 +113,7 @@ jobs:
           - { folder: MaxMindBinary, repository: maxmind-binary-provider }
           - { folder: Nominatim, repository: nominatim-provider }
           - { folder: OpenCage, repository: open-cage-provider }
+          - { folder: OpenGeocoding, repository: opengeocoding-provider }
           - { folder: OpenRouteService, repository: openrouteservice-provider }
           - { folder: Pelias, repository: pelias-provider }
           - { folder: Photon, repository: photon-provider }

@@ -45,6 +45,7 @@ jobs:
           - MaxMindBinary
           - Nominatim
           - OpenCage
+          - OpenGeocoding
           - OpenRouteService
           - Pelias
           - Photon

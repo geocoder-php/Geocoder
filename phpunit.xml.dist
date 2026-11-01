@@ -48,6 +48,7 @@
     <server name="MAPQUEST_API_KEY" value="YOUR_API_KEY"/>
     <server name="MAPZEN_API_KEY" value="YOUR_MAPZEN_API_KEY"/>
     <server name="OPENCAGE_API_KEY" value="YOUR_GEOCODING_KEY"/>
+    <env name="OPENGEOCODING_API_KEY" value="YOUR_API_KEY"/>
     <server name="PICKPOINT_API_KEY" value="YOUR_API_KEY"/>
     <server name="TOMTOM_MAP_KEY" value="YOUR_MAP_KEY"/>
     <server name="GEOCODE_EARTH_API_KEY" value="YOUR_GEOCODE_EARTH_API_KEY"/>

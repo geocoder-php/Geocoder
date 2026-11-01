@@ -1,0 +1,46 @@
+{
+    "name": "geocoder-php/opengeocoding-provider",
+    "type": "library",
+    "description": "Geocoder OpenGeocoding adapter",
+    "keywords": [
+        "geocoder",
+        "geocoding",
+        "reverse geocoding",
+        "openstreetmap",
+        "opengeocoding"
+    ],
+    "homepage": "https://opengeocoding.com",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Théo Mathieu",
+            "homepage": "https://github.com/Mokto"
+        }
+    ],
+    "require": {
+        "php": "^8.0",
+        "geocoder-php/common-http": "^4.6",
+        "willdurand/geocoder": "^4.0|^5.0"
+    },
+    "provide": {
+        "geocoder-php/provider-implementation": "1.0"
+    },
+    "require-dev": {
+        "geocoder-php/provider-integration-tests": "^1.6.3",
+        "php-http/message": "^1.0",
+        "phpunit/phpunit": "^9.6.11"
+    },
+    "autoload": {
+        "psr-4": {
+            "Geocoder\\Provider\\OpenGeocoding\\": ""
+        },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "test": "vendor/bin/phpunit"
+    }
+}
