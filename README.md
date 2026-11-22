@@ -112,10 +112,11 @@ and are highly configurable.
 
 ### Special providers
 
-Provider       | Package | Features | Stats
-:------------- |:------- |:-------- |:-------
-[Cache](https://github.com/geocoder-php/cache-provider) | `geocoder-php/cache-provider` | Wraps a provider and cached the results | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/cache-provider/v/stable)](https://packagist.org/packages/geocoder-php/cache-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/cache-provider/downloads)](https://packagist.org/packages/geocoder-php/cache-provider)
-[Chain](https://github.com/geocoder-php/chain-provider) | `geocoder-php/chain-provider` | Iterates over multiple providers | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/chain-provider/v/stable)](https://packagist.org/packages/geocoder-php/chain-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/chain-provider/downloads)](https://packagist.org/packages/geocoder-php/chain-provider)
+Provider       | Package                       | Features                                                        | Stats
+:------------- |:------------------------------|:----------------------------------------------------------------|:-------
+[Cache](https://github.com/geocoder-php/cache-provider) | `geocoder-php/cache-provider` | Wraps a provider and cached the results                         | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/cache-provider/v/stable)](https://packagist.org/packages/geocoder-php/cache-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/cache-provider/downloads)](https://packagist.org/packages/geocoder-php/cache-provider)
+[Chain](https://github.com/geocoder-php/chain-provider) | `geocoder-php/chain-provider` | Iterates over multiple providers                                | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/chain-provider/v/stable)](https://packagist.org/packages/geocoder-php/chain-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/chain-provider/downloads)](https://packagist.org/packages/geocoder-php/chain-provider)
+[Faker](https://github.com/geocoder-php/faker-provider) | `geocoder-php/faker-provider` | Provide fake data using [FakerPHP](https://fakerphp.github.io/) | [![Latest Stable Version](https://poser.pugx.org/geocoder-php/faker-provider/v/stable)](https://packagist.org/packages/geocoder-php/faker-provider) <br>[![Total Downloads](https://poser.pugx.org/geocoder-php/faker-provider/downloads)](https://packagist.org/packages/geocoder-php/faker-provider)
 
 ### Address
 
@@ -217,6 +218,11 @@ var_export($result);
 ```
 
 Everything is ok, enjoy!
+
+### The Faker Provider
+
+The `Faker` provider is a special provider that return fake data using [FakerPHP](https://fakerphp.github.io/).
+It's main purpose is to provide fake data during tests, avoiding unnecessary http requests.
 
 ### The ProviderAggregator
 

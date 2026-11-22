@@ -1,0 +1,52 @@
+{
+    "name": "geocoder-php/faker-provider",
+    "type": "library",
+    "description": "Geocoder Faker adapter",
+    "keywords": [],
+    "homepage": "https://geocoder-php.org/",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Romain Monteil",
+            "email": "monteil.romain@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "geocoder-php/common-http": "^4.1",
+        "willdurand/geocoder": "^4.0",
+        "fakerphp/faker": "^1.23"
+    },
+    "provide": {
+        "geocoder-php/provider-implementation": "1.0"
+    },
+    "require-dev": {
+        "geocoder-php/provider-integration-tests": "^1.6.3",
+        "php-http/message": "^1.0",
+        "phpunit/phpunit": "^9.5"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "4.0-dev"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Geocoder\\Provider\\Faker\\": ""
+        },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-ci": "vendor/bin/phpunit --coverage-text --coverage-clover=build/coverage.xml"
+    },
+    "config": {
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
+    }
+}
