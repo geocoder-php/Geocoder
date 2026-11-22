@@ -2,6 +2,12 @@
 
 The change log describes what is "Added", "Removed", "Changed" or "Fixed" between each release.
 
+## 0.7.0
+
+### Added
+
+- Add provider support for graphhopper geocoding API
+
 ## 0.6.0
 
 ### Added
