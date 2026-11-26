@@ -63,12 +63,12 @@ class GeoIP2Test extends BaseTestCase
     {
         $results = $this->provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEquals('localhost', $result->getLocality());
         $this->assertEquals('localhost', $result->getCountry()->getName());
     }
@@ -172,12 +172,12 @@ class GeoIP2Test extends BaseTestCase
 
         $results = $provider->geocodeQuery(GeocodeQuery::create($address));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         if (isset($expectedGeodata['latitude'])) {
             $this->assertEquals($expectedGeodata['latitude'], $result->getCoordinates()->getLatitude());
             $this->assertEquals($expectedGeodata['longitude'], $result->getCoordinates()->getLongitude());
@@ -264,10 +264,7 @@ class GeoIP2Test extends BaseTestCase
      */
     private function getGeoIP2AdapterMock($returnValue = '')
     {
-        $mock = $this->getMockBuilder(GeoIP2Adapter::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['getContent'])
-            ->getMock();
+        $mock = $this->createPartialMock(GeoIP2Adapter::class, ['getContent']);
 
         if ($returnValue instanceof \Exception) {
             $returnValue = $this->throwException($returnValue);

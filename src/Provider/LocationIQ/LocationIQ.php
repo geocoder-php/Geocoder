@@ -154,7 +154,7 @@ final class LocationIQ extends AbstractHttpProvider implements Provider
         if ($boundsAttr) {
             $bounds = [];
             list($bounds['south'], $bounds['north'], $bounds['west'], $bounds['east']) = explode(',', $boundsAttr);
-            $builder->setBounds((float) $bounds['south'], (float) $bounds['north'], (float) $bounds['west'], (float) $bounds['east']);
+            $builder->setBounds((float) $bounds['south'], (float) $bounds['west'], (float) $bounds['north'], (float) $bounds['east']);
         }
 
         return $builder->build();

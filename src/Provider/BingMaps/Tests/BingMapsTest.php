@@ -70,12 +70,12 @@ JSON;
         $provider = new BingMaps($this->getMockedHttpClient($json), 'api_key');
         $results = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(3, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(48.86321675999999, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(2.3887721299999995, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertNotNull($result->getBounds());
@@ -97,7 +97,7 @@ JSON;
 
         /** @var Location $result */
         $result = $results->get(1);
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(48.81342781, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(2.32503767, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertNotNull($result->getBounds());
@@ -117,7 +117,7 @@ JSON;
 
         /** @var Location $result */
         $result = $results->get(2);
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(48.81014147, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(2.43568048, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertNotNull($result->getBounds());
@@ -145,12 +145,12 @@ JSON;
         $provider = new BingMaps($this->getMockedHttpClient($json), 'api_key');
         $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(48.86321648955345, 2.3887719959020615));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(48.86321648955345, $result->getCoordinates()->getLatitude(), 0.0001);
         $this->assertEqualsWithDelta(2.3887719959020615, $result->getCoordinates()->getLongitude(), 0.0001);
         $this->assertNotNull($result->getBounds());
@@ -180,12 +180,12 @@ JSON;
         $provider = new BingMaps($this->getHttpClient($_SERVER['BINGMAPS_API_KEY']), $_SERVER['BINGMAPS_API_KEY']);
         $results = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France')->withLocale('fr-FR'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(48.86321675999999, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(2.3887721299999995, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertNotNull($result->getBounds());
@@ -217,7 +217,7 @@ JSON;
         $provider = new BingMaps($this->getHttpClient($_SERVER['BINGMAPS_API_KEY']), $_SERVER['BINGMAPS_API_KEY']);
         $results = $provider->geocodeQuery(GeocodeQuery::create('Castelnuovo, Italie')->withLocale('fr-FR'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(5, $results);
     }
 
@@ -230,12 +230,12 @@ JSON;
         $provider = new BingMaps($this->getHttpClient($_SERVER['BINGMAPS_API_KEY']), $_SERVER['BINGMAPS_API_KEY']);
         $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(48.86321648955345, 2.3887719959020615));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(48.86321648955345, $result->getCoordinates()->getLatitude(), 0.0001);
         $this->assertEqualsWithDelta(2.3887719959020615, $result->getCoordinates()->getLongitude(), 0.0001);
         $this->assertNotNull($result->getBounds());

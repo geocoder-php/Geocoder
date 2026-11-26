@@ -2,6 +2,43 @@
 
 The change log describes what is "Added", "Removed", "Changed" or "Fixed" between each release.
 
+## 0.11.0
+
+### Added
+
+- Add support for PHP Geocoder 5
+
+## 0.10.0
+
+### Added
+
+- Add support for multiple `layer` parameters
+
+## 0.9.0
+
+### Added
+
+- Add support for `lat`, `lon` parameters
+- Add support for `bbox` parameter
+
+## 0.8.0
+
+### Added
+
+- Add support for `layer` and `radius` parameters
+- Improve locality extraction
+
+## 0.7.0
+
+### Added
+
+- Add support for PHP 8.3 and 8.4
+- Add support for OpenStreetMap filters
+
+### Removed
+
+- Drop support for PHP 7.3
+
 ## 0.6.0
 
 ### Added

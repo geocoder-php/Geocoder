@@ -66,12 +66,12 @@ XML;
         $provider = new PickPoint($this->getHttpClient($_SERVER['PICKPOINT_API_KEY']), $_SERVER['PICKPOINT_API_KEY']);
         $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(48.86, 2.35));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEquals('Rue Quincampoix', $result->getStreetName());
     }
 }

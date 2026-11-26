@@ -41,14 +41,9 @@ class ProviderCacheTest extends TestCase
     {
         parent::setUp();
 
-        $this->cacheMock = $this->getMockBuilder(CacheInterface::class)
-            ->setMethods(['get', 'set', 'delete', 'clear', 'setMultiple', 'getMultiple', 'deleteMultiple', 'has'])
+        $this->cacheMock = $this->createPartialMock(CacheInterface::class, ['get', 'set', 'delete', 'clear', 'setMultiple', 'getMultiple', 'deleteMultiple', 'has']);
 
-            ->getMock();
-
-        $this->providerMock = $this->getMockBuilder(Provider::class)
-            ->setMethods(['getFoo', 'getName', 'geocodeQuery', 'reverseQuery'])
-            ->getMock();
+        $this->providerMock = $this->createPartialMock(Provider::class, ['getName', 'geocodeQuery', 'reverseQuery']);
     }
 
     public function testName(): void

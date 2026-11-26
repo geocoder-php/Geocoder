@@ -45,12 +45,12 @@ class FreeGeoIpTest extends BaseTestCase
         $provider = $this->getProvider();
         $results = $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEquals('localhost', $result->getLocality());
         $this->assertEquals('localhost', $result->getCountry()->getName());
     }
@@ -60,12 +60,12 @@ class FreeGeoIpTest extends BaseTestCase
         $provider = $this->getProvider();
         $results = $provider->geocodeQuery(GeocodeQuery::create('::1'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEquals('localhost', $result->getLocality());
         $this->assertEquals('localhost', $result->getCountry()->getName());
     }
@@ -75,12 +75,12 @@ class FreeGeoIpTest extends BaseTestCase
         $provider = $this->getProvider();
         $results = $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(37.751, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(-97.822, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('United States', $result->getCountry()->getName());
@@ -92,12 +92,12 @@ class FreeGeoIpTest extends BaseTestCase
         $provider = $this->getProvider();
         $results = $provider->geocodeQuery(GeocodeQuery::create('::ffff:74.200.247.59'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
 
         $this->assertEqualsWithDelta(37.751, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(-97.822, $result->getCoordinates()->getLongitude(), 0.01);
@@ -110,12 +110,12 @@ class FreeGeoIpTest extends BaseTestCase
         $provider = $this->getProvider();
         $results = $provider->geocodeQuery(GeocodeQuery::create('72.229.28.185'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
 
         $this->assertEqualsWithDelta(40.7263, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(-73.9819, $result->getCoordinates()->getLongitude(), 0.01);
@@ -133,12 +133,12 @@ class FreeGeoIpTest extends BaseTestCase
         $provider = $this->getProvider();
         $results = $provider->geocodeQuery(GeocodeQuery::create('::ffff:74.200.247.59'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
 
         $this->assertEquals('United States', $result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
@@ -149,7 +149,7 @@ class FreeGeoIpTest extends BaseTestCase
         $provider = $this->getProvider();
         $results = $provider->geocodeQuery(GeocodeQuery::create('129.67.242.154'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
         $this->assertEquals('GB', $results->first()->getCountry()->getCode());
 
@@ -163,7 +163,7 @@ class FreeGeoIpTest extends BaseTestCase
         $provider = $this->getProvider();
         $results = $provider->geocodeQuery(GeocodeQuery::create('::ffff:129.67.242.154'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
         $this->assertEquals('GB', $results->first()->getCountry()->getCode());
     }
@@ -173,7 +173,7 @@ class FreeGeoIpTest extends BaseTestCase
         $provider = $this->getProvider();
         $results = $provider->geocodeQuery(GeocodeQuery::create('81.27.51.253')->withLocale('ru'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
         $this->assertEquals('Владимирская область', $results->first()->getAdminLevels()->first()->getName());
         $this->assertEquals('Владимир', $results->first()->getLocality());
@@ -185,7 +185,7 @@ class FreeGeoIpTest extends BaseTestCase
         $provider = $this->getProvider();
         $results = $provider->geocodeQuery(GeocodeQuery::create('81.27.51.252')->withLocale('fr'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
         $this->assertEquals('Oblast de Vladimir', $results->first()->getAdminLevels()->first()->getName());
         $this->assertEquals('Vladimir', $results->first()->getLocality());
@@ -197,7 +197,7 @@ class FreeGeoIpTest extends BaseTestCase
         $provider = $this->getProvider();
         $results = $provider->geocodeQuery(GeocodeQuery::create('81.27.51.251')->withLocale('wrong_locale'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
         $this->assertEquals('Vladimirskaya Oblast\'', $results->first()->getAdminLevels()->first()->getName());
         $this->assertEquals('Vladimir', $results->first()->getLocality());

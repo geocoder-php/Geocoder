@@ -68,12 +68,12 @@ class MaxMindBinaryTest extends BaseTestCase
         $provider = new MaxMindBinary($this->binaryFile);
         $results = $provider->geocodeQuery(GeocodeQuery::create('24.24.24.24'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
 
         $this->assertEqualsWithDelta(43.089200000000005, $result->getCoordinates()->getLatitude(), 0.001);
         $this->assertEqualsWithDelta(-76.025000000000006, $result->getCoordinates()->getLongitude(), 0.001);
@@ -96,12 +96,12 @@ class MaxMindBinaryTest extends BaseTestCase
         $provider = new MaxMindBinary($this->binaryFile);
         $results = $provider->geocodeQuery(GeocodeQuery::create('80.24.24.24'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
 
         $this->assertEqualsWithDelta(41.543299999999988, $result->getCoordinates()->getLatitude(), 0.001);
         $this->assertEqualsWithDelta(2.1093999999999937, $result->getCoordinates()->getLongitude(), 0.001);
@@ -127,12 +127,12 @@ class MaxMindBinaryTest extends BaseTestCase
         $provider = new MaxMindBinary($this->binaryFile);
         $results = $provider->geocodeQuery(GeocodeQuery::create($ip));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEquals($expectedCity, $result->getLocality());
         $this->assertEquals($expectedCountry, $result->getCountry()->getName());
     }
@@ -144,7 +144,7 @@ class MaxMindBinaryTest extends BaseTestCase
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertSame('Châlette-sur-loing', $result->getLocality());
     }
 

@@ -2,6 +2,27 @@
 
 The change log describes what is "Added", "Removed", "Changed" or "Fixed" between each release.
 
+## 1.6.1
+
+### Fixed
+
+- Fix nullable properties
+
+## 1.6.0
+
+### Added
+
+- Add support for `id`, `layer`, `source`, `name`, `confidence`, and `accuracy` fields
+- Add support for locale
+- Add support for `layers` and `boundary.country` filters
+- Improve extraction of admin levels
+
+## 1.5.0
+
+### Added
+
+- Add support for PHP Geocoder 5
+
 ## 1.4.0
 
 ### Added

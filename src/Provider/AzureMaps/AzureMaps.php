@@ -225,6 +225,7 @@ class AzureMaps extends AbstractHttpProvider implements Provider
             $builder->setCountryCode($result->address->countryCode ?? null);
             $builder->setCountry($result->address->country ?? null);
             $builder->setPostalCode($result->address->extendedPostalCode ?? null);
+            $builder->setLocality($result->address->municipality ?? null);
 
             return $builder->build();
         }, $response->results);

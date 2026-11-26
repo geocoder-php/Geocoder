@@ -76,12 +76,12 @@ class IP2LocationTest extends BaseTestCase
         $provider = new IP2Location($this->getHttpClient($_SERVER['IP2LOCATION_API_KEY']), $_SERVER['IP2LOCATION_API_KEY']);
         $results = $provider->geocodeQuery(GeocodeQuery::create('74.125.45.100'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(36.154, $result->getCoordinates()->getLatitude(), 0.001);
         $this->assertEqualsWithDelta(-95.9928, $result->getCoordinates()->getLongitude(), 0.001);
         $this->assertEquals(74101, $result->getPostalCode());
@@ -101,12 +101,12 @@ class IP2LocationTest extends BaseTestCase
         $provider = new IP2Location($this->getHttpClient($_SERVER['IP2LOCATION_API_KEY']), $_SERVER['IP2LOCATION_API_KEY']);
         $results = $provider->geocodeQuery(GeocodeQuery::create('::ffff:74.125.45.100'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(36.154, $result->getCoordinates()->getLatitude(), 0.001);
         $this->assertEqualsWithDelta(-95.9928, $result->getCoordinates()->getLongitude(), 0.001);
         $this->assertEquals(74101, $result->getPostalCode());

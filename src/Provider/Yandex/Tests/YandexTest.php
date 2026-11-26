@@ -76,12 +76,12 @@ class YandexTest extends BaseTestCase
         $provider = new Yandex($this->getHttpClient());
         $results = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var YandexAddress $result */
         $result = $results->first();
-        $this->assertInstanceOf('Geocoder\Provider\Yandex\Model\YandexAddress', $result);
+        $this->assertInstanceOf(YandexAddress::class, $result);
         $this->assertEqualsWithDelta(48.863277, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(2.389016, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertNotNull($result->getBounds());
@@ -111,12 +111,12 @@ class YandexTest extends BaseTestCase
         $provider = new Yandex($this->getHttpClient());
         $results = $provider->geocodeQuery(GeocodeQuery::create('Copenhagen, Denmark')->withLocale('uk-UA'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(3, $results);
 
         /** @var YandexAddress $result */
         $result = $results->first();
-        $this->assertInstanceOf('Geocoder\Provider\Yandex\Model\YandexAddress', $result);
+        $this->assertInstanceOf(YandexAddress::class, $result);
         $this->assertEqualsWithDelta(55.675676, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(12.585828, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertNotNull($result->getBounds());
@@ -143,13 +143,13 @@ class YandexTest extends BaseTestCase
 
         /** @var YandexAddress $result */
         $result = $results->get(1);
-        $this->assertInstanceOf('Geocoder\Provider\Yandex\Model\YandexAddress', $result);
+        $this->assertInstanceOf(YandexAddress::class, $result);
         $this->assertEqualsWithDelta(55.716853, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(12.463837, $result->getCoordinates()->getLongitude(), 0.01);
 
         /** @var YandexAddress $result */
         $result = $results->get(2);
-        $this->assertInstanceOf('Geocoder\Provider\Yandex\Model\YandexAddress', $result);
+        $this->assertInstanceOf(YandexAddress::class, $result);
         $this->assertEqualsWithDelta(55.590338, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(12.130041, $result->getCoordinates()->getLongitude(), 0.01);
     }
@@ -159,12 +159,12 @@ class YandexTest extends BaseTestCase
         $provider = new Yandex($this->getHttpClient());
         $results = $provider->geocodeQuery(GeocodeQuery::create('1600 Pennsylvania Ave, Washington')->withLocale('en-US'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(5, $results);
 
         /** @var YandexAddress $result */
         $result = $results->first();
-        $this->assertInstanceOf('Geocoder\Provider\Yandex\Model\YandexAddress', $result);
+        $this->assertInstanceOf(YandexAddress::class, $result);
         $this->assertEqualsWithDelta(38.897695, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(-77.038692, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertNotNull($result->getBounds());
@@ -194,12 +194,12 @@ class YandexTest extends BaseTestCase
         $provider = new Yandex($this->getHttpClient());
         $results = $provider->geocodeQuery(GeocodeQuery::create('ул.Ленина, 19, Минск 220030, Республика Беларусь')->withLocale('be-BY'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var YandexAddress $result */
         $result = $results->first();
-        $this->assertInstanceOf('Geocoder\Provider\Yandex\Model\YandexAddress', $result);
+        $this->assertInstanceOf(YandexAddress::class, $result);
         $this->assertEqualsWithDelta(53.898077, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(27.563673, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertNotNull($result->getBounds());
@@ -228,12 +228,12 @@ class YandexTest extends BaseTestCase
         $provider = new Yandex($this->getHttpClient());
         $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(48.863216489553, 2.388771995902061));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(5, $results);
 
         /** @var YandexAddress $result */
         $result = $results->first();
-        $this->assertInstanceOf('Geocoder\Provider\Yandex\Model\YandexAddress', $result);
+        $this->assertInstanceOf(YandexAddress::class, $result);
         $this->assertEqualsWithDelta(48.863212, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(2.388773, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertNotNull($result->getBounds());
@@ -260,13 +260,13 @@ class YandexTest extends BaseTestCase
 
         /** @var YandexAddress $result */
         $result = $results->get(1);
-        $this->assertInstanceOf('Geocoder\Provider\Yandex\Model\YandexAddress', $result);
+        $this->assertInstanceOf(YandexAddress::class, $result);
         $this->assertEqualsWithDelta(48.864848, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(2.3993549, $result->getCoordinates()->getLongitude(), 0.01);
 
         /** @var YandexAddress $result */
         $result = $results->get(2);
-        $this->assertInstanceOf('Geocoder\Provider\Yandex\Model\YandexAddress', $result);
+        $this->assertInstanceOf(YandexAddress::class, $result);
         $this->assertEqualsWithDelta(48.856929, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(2.392115, $result->getCoordinates()->getLongitude(), 0.01);
     }
@@ -276,12 +276,12 @@ class YandexTest extends BaseTestCase
         $provider = new Yandex($this->getHttpClient(), 'street');
         $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(48.863216489553, 2.388771995902061)->withLocale('en-US'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(5, $results);
 
         /** @var YandexAddress $result */
         $result = $results->first();
-        $this->assertInstanceOf('Geocoder\Provider\Yandex\Model\YandexAddress', $result);
+        $this->assertInstanceOf(YandexAddress::class, $result);
         $this->assertEqualsWithDelta(48.87132, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(2.404017, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertNotNull($result->getBounds());
@@ -308,25 +308,25 @@ class YandexTest extends BaseTestCase
 
         /** @var YandexAddress $result */
         $result = $results->get(1);
-        $this->assertInstanceOf('Geocoder\Provider\Yandex\Model\YandexAddress', $result);
+        $this->assertInstanceOf(YandexAddress::class, $result);
         $this->assertEqualsWithDelta(48.863230, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(2.388261, $result->getCoordinates()->getLongitude(), 0.01);
 
         /** @var YandexAddress $result */
         $result = $results->get(2);
-        $this->assertInstanceOf('Geocoder\Provider\Yandex\Model\YandexAddress', $result);
+        $this->assertInstanceOf(YandexAddress::class, $result);
         $this->assertEqualsWithDelta(48.866022, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(2.389662, $result->getCoordinates()->getLongitude(), 0.01);
 
         /** @var YandexAddress $result */
         $result = $results->get(3);
-        $this->assertInstanceOf('Geocoder\Provider\Yandex\Model\YandexAddress', $result);
+        $this->assertInstanceOf(YandexAddress::class, $result);
         $this->assertEqualsWithDelta(48.863918, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(2.387767, $result->getCoordinates()->getLongitude(), 0.01);
 
         /** @var YandexAddress $result */
         $result = $results->get(4);
-        $this->assertInstanceOf('Geocoder\Provider\Yandex\Model\YandexAddress', $result);
+        $this->assertInstanceOf(YandexAddress::class, $result);
         $this->assertEqualsWithDelta(48.863787, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(2.389600, $result->getCoordinates()->getLongitude(), 0.01);
     }
@@ -336,12 +336,12 @@ class YandexTest extends BaseTestCase
         $provider = new Yandex($this->getHttpClient(), 'house');
         $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(60.4539471768582, 22.2567842183875)->withLocale('uk-UA'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(5, $results);
 
         /** @var YandexAddress $result */
         $result = $results->first();
-        $this->assertInstanceOf('Geocoder\Provider\Yandex\Model\YandexAddress', $result);
+        $this->assertInstanceOf(YandexAddress::class, $result);
         $this->assertEqualsWithDelta(60.454462, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(22.256561, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertNotNull($result->getBounds());
@@ -371,12 +371,12 @@ class YandexTest extends BaseTestCase
         $provider = new Yandex($this->getHttpClient(), 'locality');
         $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(40.900640, 29.198184)->withLocale('tr-TR'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(5, $results);
 
         /** @var YandexAddress $result */
         $result = $results->first();
-        $this->assertInstanceOf('Geocoder\Provider\Yandex\Model\YandexAddress', $result);
+        $this->assertInstanceOf(YandexAddress::class, $result);
         $this->assertEqualsWithDelta(41.01117, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(28.978151, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertNotNull($result->getBounds());
@@ -409,7 +409,7 @@ class YandexTest extends BaseTestCase
 
         /** @var YandexAddress $result */
         $result = $results->first();
-        $this->assertInstanceOf('Geocoder\Provider\Yandex\Model\YandexAddress', $result);
+        $this->assertInstanceOf(YandexAddress::class, $result);
         $this->assertEquals('other', $result->getPrecision());
         $this->assertEquals('метро Озерки', $result->getName());
         $this->assertEquals('metro', $result->getKind());

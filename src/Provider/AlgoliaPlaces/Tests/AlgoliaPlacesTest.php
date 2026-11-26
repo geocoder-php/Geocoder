@@ -47,12 +47,12 @@ class AlgoliaPlacesTest extends BaseTestCase
         $provider = new AlgoliaPlaces($this->getHttpClient($_SERVER['ALGOLIA_API_KEY'], $_SERVER['ALGOLIA_APP_ID']), $_SERVER['ALGOLIA_API_KEY'], $_SERVER['ALGOLIA_APP_ID']);
         $results = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France')->withLocale('fr-FR'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(48.8653, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(2.39844, $result->getCoordinates()->getLongitude(), 0.01);
 
@@ -72,12 +72,12 @@ class AlgoliaPlacesTest extends BaseTestCase
         $provider = new AlgoliaPlaces($this->getHttpClient($_SERVER['ALGOLIA_API_KEY'], $_SERVER['ALGOLIA_APP_ID']), $_SERVER['ALGOLIA_API_KEY'], $_SERVER['ALGOLIA_APP_ID']);
         $results = $provider->geocodeQuery(GeocodeQuery::create('Paris, France'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(20, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(48.8546, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(2.34771, $result->getCoordinates()->getLongitude(), 0.01);
 
@@ -93,7 +93,7 @@ class AlgoliaPlacesTest extends BaseTestCase
         $provider = new AlgoliaPlaces($this->getHttpClient());
         $results = $provider->geocodeQuery(GeocodeQuery::create('Paris, France'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(20, $results);
     }
 

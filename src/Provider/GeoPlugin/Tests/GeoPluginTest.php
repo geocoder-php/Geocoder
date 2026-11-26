@@ -44,7 +44,7 @@ class GeoPluginTest extends BaseTestCase
         $provider = new GeoPlugin($this->getMockedHttpClient());
         $results = $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         $result = $results->first();
@@ -57,7 +57,7 @@ class GeoPluginTest extends BaseTestCase
         $provider = new GeoPlugin($this->getMockedHttpClient());
         $results = $provider->geocodeQuery(GeocodeQuery::create('::1'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         $result = $results->first();
@@ -70,7 +70,7 @@ class GeoPluginTest extends BaseTestCase
         $provider = new GeoPlugin($this->getHttpClient());
         $results = $provider->geocodeQuery(GeocodeQuery::create('66.147.244.214'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         $result = $results->first();

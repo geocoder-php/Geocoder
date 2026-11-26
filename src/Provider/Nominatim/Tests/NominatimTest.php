@@ -69,12 +69,12 @@ class NominatimTest extends BaseTestCase
         $provider = Nominatim::withOpenStreetMapServer($this->getHttpClient(), 'Geocoder PHP/Nominatim Provider/Nominatim Test');
         $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(48.86, 2.35));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEquals('Rue Quincampoix', $result->getStreetName());
     }
 
@@ -83,12 +83,12 @@ class NominatimTest extends BaseTestCase
         $provider = Nominatim::withOpenStreetMapServer($this->getHttpClient(), 'Geocoder PHP/Nominatim Provider/Nominatim Test');
         $results = $provider->geocodeQuery(GeocodeQuery::create('1 Place des Palais 1000 bruxelles'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(5, $results);
 
         /** @var \Geocoder\Provider\Nominatim\Model\NominatimAddress $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(50.8419916, $result->getCoordinates()->getLatitude(), 0.00001);
         $this->assertEqualsWithDelta(4.361988, $result->getCoordinates()->getLongitude(), 0.00001);
         $this->assertEquals('1', $result->getStreetNumber());
@@ -154,7 +154,7 @@ class NominatimTest extends BaseTestCase
 
         $results = $provider->geocodeQuery($query);
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertGreaterThanOrEqual(1, $results->count());
 
         /** @var \Geocoder\Model\Address $result */
@@ -173,12 +173,12 @@ class NominatimTest extends BaseTestCase
 
         $results = $provider->geocodeQuery($query);
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(5, $results);
 
         /** @var \Geocoder\Provider\Nominatim\Model\NominatimAddress $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(50.8419916, $result->getCoordinates()->getLatitude(), 0.00001);
         $this->assertEqualsWithDelta(4.361988, $result->getCoordinates()->getLongitude(), 0.00001);
         $this->assertEquals('1', $result->getStreetNumber());
@@ -201,12 +201,12 @@ class NominatimTest extends BaseTestCase
         $provider = Nominatim::withOpenStreetMapServer($this->getHttpClient(), 'Geocoder PHP/Nominatim Provider/Nominatim Test');
         $results = $provider->geocodeQuery(GeocodeQuery::create('90210,United States'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var \Geocoder\Provider\Nominatim\Model\NominatimAddress $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEquals('90210', $result->getPostalCode());
         $this->assertEquals('US', $result->getCountry()->getCode());
 
@@ -225,12 +225,12 @@ class NominatimTest extends BaseTestCase
             ->withData('bounded', true);
         $results = $provider->geocodeQuery($query);
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var \Geocoder\Provider\Nominatim\Model\NominatimAddress $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEquals('Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright', $result->getAttribution());
 
         $this->assertEquals('Italia', $result->getDisplayName());
@@ -245,12 +245,12 @@ class NominatimTest extends BaseTestCase
         $provider = Nominatim::withOpenStreetMapServer($this->getHttpClient(), 'Geocoder PHP/Nominatim Provider/Nominatim Test');
         $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(35.685939, 139.811695)->withLocale('en'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var \Geocoder\Provider\Nominatim\Model\NominatimAddress $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEquals('Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright', $result->getAttribution());
 
         $this->assertEquals('Sarue 1-chome', $result->getNeighbourhood());

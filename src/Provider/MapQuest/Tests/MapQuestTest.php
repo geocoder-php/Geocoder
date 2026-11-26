@@ -67,12 +67,12 @@ class MapQuestTest extends BaseTestCase
         $provider = new MapQuest($this->getHttpClient($_SERVER['MAPQUEST_API_KEY']), $_SERVER['MAPQUEST_API_KEY']);
         $results = $provider->geocodeQuery(GeocodeQuery::create('10 avenue Gambetta, Paris, France'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(2, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(48.866205, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(2.389089, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('10 Avenue Gambetta', $result->getStreetName());
@@ -90,7 +90,7 @@ class MapQuestTest extends BaseTestCase
         $this->assertNull($result->getTimezone());
 
         $result = $results->get(1);
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(48.810071, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(2.435937, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('10 Avenue Gambetta', $result->getStreetName());
@@ -134,12 +134,12 @@ class MapQuestTest extends BaseTestCase
         $query = $query->withData(MapQuest::DATA_KEY_ADDRESS, $address);
         $results = $provider->geocodeQuery($query);
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(36.062933, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(-86.672811, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('Payne Road', $result->getStreetName());
@@ -166,12 +166,12 @@ class MapQuestTest extends BaseTestCase
         $provider = new MapQuest($this->getHttpClient($_SERVER['MAPQUEST_API_KEY']), $_SERVER['MAPQUEST_API_KEY']);
         $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(54.0484068, -2.7990345));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(54.0484068, $result->getCoordinates()->getLatitude(), 0.001);
         $this->assertEqualsWithDelta(-2.7990345, $result->getCoordinates()->getLongitude(), 0.001);
         $this->assertEquals('Collegian W.M.C.', $result->getStreetName());
@@ -197,14 +197,14 @@ class MapQuestTest extends BaseTestCase
         $provider = new MapQuest($this->getHttpClient($_SERVER['MAPQUEST_API_KEY']), $_SERVER['MAPQUEST_API_KEY']);
         $results = $provider->geocodeQuery(GeocodeQuery::create('Hanover'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(5, $results);
 
         $resultsArray = $results->all();
 
         /** @var Location $result */
         $result = reset($resultsArray);
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(52.374478, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(9.738553, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('Hanover', $result->getLocality());
@@ -216,7 +216,7 @@ class MapQuestTest extends BaseTestCase
 
         /** @var Location $result */
         $result = next($resultsArray);
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(18.384049, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(-78.131485, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('', $result->getLocality());
@@ -227,7 +227,7 @@ class MapQuestTest extends BaseTestCase
 
         /** @var Location $result */
         $result = next($resultsArray);
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(43.703622, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(-72.288666, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('Hanover', $result->getLocality());
@@ -239,7 +239,7 @@ class MapQuestTest extends BaseTestCase
 
         /** @var Location $result */
         $result = next($resultsArray);
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(39.806325, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(-76.984273, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('Hanover', $result->getLocality());
@@ -251,7 +251,7 @@ class MapQuestTest extends BaseTestCase
 
         /** @var Location $result */
         $result = next($resultsArray);
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(37.744783, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(-77.446416, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('', $result->getLocality());
@@ -278,14 +278,14 @@ class MapQuestTest extends BaseTestCase
         $query = $query->withData(MapQuest::DATA_KEY_ADDRESS, $address);
         $results = $provider->geocodeQuery($query);
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(5, $results);
 
         $resultsArray = $results->all();
 
         /** @var Location $result */
         $result = reset($resultsArray);
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(52.374478, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(9.738553, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('Hanover', $result->getLocality());
@@ -297,7 +297,7 @@ class MapQuestTest extends BaseTestCase
 
         /** @var Location $result */
         $result = next($resultsArray);
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(43.703622, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(-72.288666, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('Hanover', $result->getLocality());
@@ -309,7 +309,7 @@ class MapQuestTest extends BaseTestCase
 
         /** @var Location $result */
         $result = next($resultsArray);
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(39.806325, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(-76.984273, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('Hanover', $result->getLocality());
@@ -321,7 +321,7 @@ class MapQuestTest extends BaseTestCase
 
         /** @var Location $result */
         $result = next($resultsArray);
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(40.661764, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(-75.412404, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('Hanover', $result->getLocality());
@@ -333,7 +333,7 @@ class MapQuestTest extends BaseTestCase
 
         /** @var Location $result */
         $result = next($resultsArray);
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(40.651401, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(-75.440663, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('Hanover', $result->getLocality());
@@ -361,14 +361,14 @@ class MapQuestTest extends BaseTestCase
         $query = $query->withBounds(new Bounds(39, -77, 41, -75));
         $results = $provider->geocodeQuery($query);
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(5, $results);
 
         $resultsArray = $results->all();
 
         /** @var Location $result */
         $result = reset($resultsArray);
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEquals('17331', $result->getPostalCode());
         $this->assertEqualsWithDelta(39.806325, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(-76.984273, $result->getCoordinates()->getLongitude(), 0.01);
@@ -381,7 +381,7 @@ class MapQuestTest extends BaseTestCase
 
         /** @var Location $result */
         $result = next($resultsArray);
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(40.661764, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(-75.412404, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('Hanover', $result->getLocality());
@@ -393,7 +393,7 @@ class MapQuestTest extends BaseTestCase
 
         /** @var Location $result */
         $result = next($resultsArray);
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(40.651401, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(-75.440663, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('Hanover', $result->getLocality());
@@ -405,7 +405,7 @@ class MapQuestTest extends BaseTestCase
 
         /** @var Location $result */
         $result = next($resultsArray);
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEquals('20794:21076', $result->getPostalCode());
         $this->assertEqualsWithDelta(39.192885, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(-76.724137, $result->getCoordinates()->getLongitude(), 0.01);
@@ -418,7 +418,7 @@ class MapQuestTest extends BaseTestCase
 
         /** @var Location $result */
         $result = next($resultsArray);
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(52.374478, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(9.738553, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('Hanover', $result->getLocality());
@@ -438,12 +438,12 @@ class MapQuestTest extends BaseTestCase
         $provider = new MapQuest($this->getHttpClient($_SERVER['MAPQUEST_API_KEY']), $_SERVER['MAPQUEST_API_KEY']);
         $results = $provider->geocodeQuery(GeocodeQuery::create('Kalbacher Hauptstraße 10, 60437 Frankfurt, Germany'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(50.189062, $result->getCoordinates()->getLatitude(), 0.01);
         $this->assertEqualsWithDelta(8.636567, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('Kalbacher Hauptstraße 10', $result->getStreetName());

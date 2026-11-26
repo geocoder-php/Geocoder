@@ -56,14 +56,15 @@ class IpstackTest extends BaseTestCase
         $provider = new Ipstack($this->getMockedHttpClient(), 'api_key');
         $results = $provider->geocodeQuery(GeocodeQuery::create('127.0.0.1'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEquals('localhost', $result->getLocality());
         $this->assertEquals('localhost', $result->getCountry()->getName());
+        $this->assertEmpty($result->getAdminLevels());
     }
 
     public function testGeocodeWithLocalhostIPv6(): void
@@ -71,14 +72,15 @@ class IpstackTest extends BaseTestCase
         $provider = new Ipstack($this->getMockedHttpClient(), 'api_key');
         $results = $provider->geocodeQuery(GeocodeQuery::create('::1'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEquals('localhost', $result->getLocality());
         $this->assertEquals('localhost', $result->getCountry()->getName());
+        $this->assertEmpty($result->getAdminLevels());
     }
 
     public function testGeocodeWithRealIPv4(): void
@@ -86,16 +88,18 @@ class IpstackTest extends BaseTestCase
         $provider = new Ipstack($this->getHttpClient($_SERVER['IPSTACK_API_KEY']), $_SERVER['IPSTACK_API_KEY']);
         $results = $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEqualsWithDelta(37.751, $result->getCoordinates()->getLatitude(), 0.01);
-        $this->assertEqualsWithDelta(-97.822, $result->getCoordinates()->getLongitude(), 0.01);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
+        $this->assertEqualsWithDelta(40.724, $result->getCoordinates()->getLatitude(), 0.01);
+        $this->assertEqualsWithDelta(-74.059, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('United States', $result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
+        $this->assertCount(1, $result->getAdminLevels());
+        $this->assertEquals('New Jersey', $result->getAdminLevels()->get(1)->getName());
     }
 
     public function testGeocodeWithRealIPv4InFrench(): void
@@ -103,16 +107,18 @@ class IpstackTest extends BaseTestCase
         $provider = new Ipstack($this->getHttpClient($_SERVER['IPSTACK_API_KEY']), $_SERVER['IPSTACK_API_KEY']);
         $results = $provider->geocodeQuery(GeocodeQuery::create('74.200.247.59')->withLocale('fr'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
-        $this->assertEqualsWithDelta(37.751, $result->getCoordinates()->getLatitude(), 0.01);
-        $this->assertEqualsWithDelta(-97.822, $result->getCoordinates()->getLongitude(), 0.01);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
+        $this->assertEqualsWithDelta(40.724, $result->getCoordinates()->getLatitude(), 0.01);
+        $this->assertEqualsWithDelta(-74.059, $result->getCoordinates()->getLongitude(), 0.01);
         $this->assertEquals('États-Unis', $result->getCountry()->getName());
         $this->assertEquals('US', $result->getCountry()->getCode());
+        $this->assertCount(1, $result->getAdminLevels());
+        $this->assertEquals('New Jersey', $result->getAdminLevels()->get(1)->getName());
     }
 
     public function testReverse(): void

@@ -45,12 +45,12 @@ class TomTomTest extends BaseTestCase
         $provider = new TomTom($this->getHttpClient($_SERVER['TOMTOM_MAP_KEY']), $_SERVER['TOMTOM_MAP_KEY']);
         $results = $provider->geocodeQuery(GeocodeQuery::create('Tagensvej 47, 2200 København N')->withLocale('en-GB'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(55.70, $result->getCoordinates()->getLatitude(), 0.001);
         $this->assertEqualsWithDelta(12.5529, $result->getCoordinates()->getLongitude(), 0.001);
         $this->assertNull($result->getBounds());
@@ -69,12 +69,12 @@ class TomTomTest extends BaseTestCase
         $provider = new TomTom($this->getHttpClient($_SERVER['TOMTOM_MAP_KEY']), $_SERVER['TOMTOM_MAP_KEY']);
         $results = $provider->geocodeQuery(GeocodeQuery::create('Tagensvej 47, 2200 København N')->withLocale('fr-FR'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
     }
 
     public function testGeocodeWithLocalhostIPv4(): void
@@ -159,12 +159,12 @@ JSON;
         $provider = new TomTom($this->getHttpClient($_SERVER['TOMTOM_MAP_KEY']), $_SERVER['TOMTOM_MAP_KEY']);
         $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(48.86321648955345, 2.3887719959020615));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(48.86323, $result->getCoordinates()->getLatitude(), 0.001);
         $this->assertEqualsWithDelta(2.38877, $result->getCoordinates()->getLongitude(), 0.001);
         $this->assertNull($result->getBounds());
@@ -187,12 +187,12 @@ JSON;
         $provider = new TomTom($this->getHttpClient($_SERVER['TOMTOM_MAP_KEY']), $_SERVER['TOMTOM_MAP_KEY']);
         $results = $provider->reverseQuery(ReverseQuery::fromCoordinates(56.5231, 10.0659));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEqualsWithDelta(56.52435, $result->getCoordinates()->getLatitude(), 0.001);
         $this->assertEqualsWithDelta(10.06744, $result->getCoordinates()->getLongitude(), 0.001);
         $this->assertNull($result->getBounds());

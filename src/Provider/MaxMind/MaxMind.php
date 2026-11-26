@@ -146,8 +146,8 @@ final class MaxMind extends AbstractHttpProvider implements Provider
     {
         $adminLevels = [];
 
-        $region = \igorw\get_in($data, ['region']);
-        $regionCode = \igorw\get_in($data, ['regionCode']);
+        $region = $data['region'] ?? null;
+        $regionCode = $data['regionCode'] ?? null;
         unset($data['region'], $data['regionCode']);
 
         if (null !== $region || null !== $regionCode) {

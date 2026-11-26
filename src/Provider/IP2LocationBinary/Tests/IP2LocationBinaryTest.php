@@ -64,12 +64,12 @@ class IP2LocationBinaryTest extends BaseTestCase
         $provider = new IP2LocationBinary($this->binaryFile);
         $results = $provider->geocodeQuery(GeocodeQuery::create('8.8.8.8'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
 
         $this->assertEqualsWithDelta(37.405990600586, $result->getCoordinates()->getLatitude(), 0.001);
         $this->assertEqualsWithDelta(-122.07851409912, $result->getCoordinates()->getLongitude(), 0.001);
@@ -92,12 +92,12 @@ class IP2LocationBinaryTest extends BaseTestCase
         $provider = new IP2LocationBinary($this->binaryFile);
         $results = $provider->geocodeQuery(GeocodeQuery::create('123.123.123.123'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
 
         $this->assertEqualsWithDelta(39.907501220703, $result->getCoordinates()->getLatitude(), 0.001);
         $this->assertEqualsWithDelta(116.39723205566, $result->getCoordinates()->getLongitude(), 0.001);
@@ -120,12 +120,12 @@ class IP2LocationBinaryTest extends BaseTestCase
         $provider = new IP2LocationBinary($this->binaryFile);
         $results = $provider->geocodeQuery(GeocodeQuery::create('2001:4860:4860::8888'));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
 
         $this->assertEqualsWithDelta(37.386051, $result->getCoordinates()->getLatitude(), 0.001);
         $this->assertEqualsWithDelta(-122.083847, $result->getCoordinates()->getLongitude(), 0.001);
@@ -151,12 +151,12 @@ class IP2LocationBinaryTest extends BaseTestCase
         $provider = new IP2LocationBinary($this->binaryFile);
         $results = $provider->geocodeQuery(GeocodeQuery::create($ip));
 
-        $this->assertInstanceOf('Geocoder\Model\AddressCollection', $results);
+        $this->assertInstanceOf(\Geocoder\Model\AddressCollection::class, $results);
         $this->assertCount(1, $results);
 
         /** @var Location $result */
         $result = $results->first();
-        $this->assertInstanceOf('\Geocoder\Model\Address', $result);
+        $this->assertInstanceOf(\Geocoder\Model\Address::class, $result);
         $this->assertEquals($expectedCity, $result->getLocality());
         $this->assertEquals($expectedCountry, $result->getCountry()->getName());
     }

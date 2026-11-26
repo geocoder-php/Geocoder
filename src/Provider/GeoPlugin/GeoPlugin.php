@@ -86,8 +86,8 @@ final class GeoPlugin extends AbstractHttpProvider implements Provider
 
         $adminLevels = [];
 
-        $region = \igorw\get_in($data, ['geoplugin_regionName']);
-        $regionCode = \igorw\get_in($data, ['geoplugin_regionCode']);
+        $region = $data['geoplugin_regionName'] ?? null;
+        $regionCode = $data['geoplugin_regionCode'] ?? null;
 
         if (null !== $region || null !== $regionCode) {
             $adminLevels[] = ['name' => $region, 'code' => $regionCode, 'level' => 1];

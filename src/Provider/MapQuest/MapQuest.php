@@ -157,11 +157,10 @@ final class MapQuest extends AbstractHttpProvider implements Provider
             $params = $this->addOptionsForGetQuery($params, $options);
 
             return $this->executeGetQuery(static::GEOCODE_ENDPOINT, $params);
-        } else {
-            $params = $this->addOptionsForPostQuery($params, $options);
-
-            return $this->executePostQuery(static::GEOCODE_ENDPOINT, $params);
         }
+        $params = $this->addOptionsForPostQuery($params, $options);
+
+        return $this->executePostQuery(static::GEOCODE_ENDPOINT, $params);
     }
 
     public function reverseQuery(ReverseQuery $query): Collection

@@ -19,13 +19,13 @@ jobs:
     name: Subtree for Common
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/create-github-app-token@v1
+      - uses: actions/create-github-app-token@v3
         id: app-token
         with:
           app-id: ${{ vars.SUBTREE_APP_ID }}
           private-key: ${{ secrets.SUBTREE_APP_PRIVATE_KEY }}
           owner: ${{ github.repository_owner }}
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           token: ${{ steps.app-token.outputs.token }}
           fetch-depth: 0
@@ -39,13 +39,13 @@ jobs:
     name: Subtree for Http
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/create-github-app-token@v1
+      - uses: actions/create-github-app-token@v3
         id: app-token
         with:
           app-id: ${{ vars.SUBTREE_APP_ID }}
           private-key: ${{ secrets.SUBTREE_APP_PRIVATE_KEY }}
           owner: ${{ github.repository_owner }}
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           token: ${{ steps.app-token.outputs.token }}
           fetch-depth: 0
@@ -59,13 +59,13 @@ jobs:
     name: Subtree for Plugin
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/create-github-app-token@v1
+      - uses: actions/create-github-app-token@v3
         id: app-token
         with:
           app-id: ${{ vars.SUBTREE_APP_ID }}
           private-key: ${{ secrets.SUBTREE_APP_PRIVATE_KEY }}
           owner: ${{ github.repository_owner }}
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           token: ${{ steps.app-token.outputs.token }}
           fetch-depth: 0
@@ -107,6 +107,7 @@ jobs:
           - { folder: LocationIQ, repository: locationiq-provider }
           - { folder: MapQuest, repository: mapquest-provider }
           - { folder: Mapbox, repository: mapbox-provider }
+          - { folder: MapTiler, repository: maptiler-provider }
           # - { folder: Mapzen, repository: mapzen-provider }
           - { folder: MaxMind, repository: maxmind-provider }
           - { folder: MaxMindBinary, repository: maxmind-binary-provider }
@@ -119,13 +120,13 @@ jobs:
           - { folder: TomTom, repository: tomtom-provider }
           - { folder: Yandex, repository: yandex-provider }
     steps:
-      - uses: actions/create-github-app-token@v1
+      - uses: actions/create-github-app-token@v3
         id: app-token
         with:
           app-id: ${{ vars.SUBTREE_APP_ID }}
           private-key: ${{ secrets.SUBTREE_APP_PRIVATE_KEY }}
           owner: ${{ github.repository_owner }}
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           token: ${{ steps.app-token.outputs.token }}
           fetch-depth: 0

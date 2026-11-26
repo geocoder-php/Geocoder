@@ -55,6 +55,21 @@ final class PhotonAddress extends Address
     private $district;
 
     /**
+     * @var string|null
+     */
+    private $type;
+
+    public function getLocality(): ?string
+    {
+        $locality = parent::getLocality();
+        if (null === $locality && 'city' === $this->type && null !== $this->name) {
+            $locality = $this->name;
+        }
+
+        return $locality;
+    }
+
+    /**
      * @return string|null
      */
     public function getName()
@@ -170,6 +185,19 @@ final class PhotonAddress extends Address
     {
         $new = clone $this;
         $new->district = $district;
+
+        return $new;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function withType(?string $type = null): self
+    {
+        $new = clone $this;
+        $new->type = $type;
 
         return $new;
     }

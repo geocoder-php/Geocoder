@@ -47,7 +47,7 @@ class TimedGeocoderTest extends TestCase
     {
         $this->delegate->expects($this->once())
              ->method('geocodeQuery')
-             ->will($this->returnValue(new AddressCollection([])));
+             ->willReturn(new AddressCollection([]));
 
         $this->geocoder->geocode('foo');
 
@@ -74,7 +74,7 @@ class TimedGeocoderTest extends TestCase
     {
         $this->delegate->expects($this->once())
              ->method('reverseQuery')
-             ->will($this->returnValue(new AddressCollection([])));
+             ->willReturn(new AddressCollection([]));
 
         $this->geocoder->reverse(0, 0);
 

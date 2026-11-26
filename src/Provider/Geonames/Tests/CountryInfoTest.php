@@ -38,8 +38,8 @@ class CountryInfoTest extends BaseTestCase
         /* @var CountryInfo $result */
         $result = current($results);
 
-        $this->assertInstanceOf('Geocoder\Provider\Geonames\Model\CountryInfo', $result);
-        $this->assertInstanceOf('Geocoder\Model\Bounds', $result->getBounds());
+        $this->assertInstanceOf(CountryInfo::class, $result);
+        $this->assertInstanceOf(\Geocoder\Model\Bounds::class, $result->getBounds());
         $this->assertEquals('AS', $result->getContinent());
         $this->assertEquals('New Delhi', $result->getCapital());
         $this->assertIsArray($result->getLanguages());
