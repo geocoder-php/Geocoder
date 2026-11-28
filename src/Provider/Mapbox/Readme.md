@@ -20,6 +20,31 @@ composer require geocoder-php/mapbox-provider
 
 A valid `Access Token` is required for Mapbox.
 
+### Usage
+
+This provider targets the **Mapbox Geocoding API v6**. If you rely on the v5 API, pin
+`geocoder-php/mapbox-provider` to `^1.5`.
+
+```php
+$provider = new Mapbox($client, $accessToken);
+// optional: restrict the results to one or more ISO 3166 alpha-2 countries
+$provider = new Mapbox($client, $accessToken, 'US');
+// optional: store the results permanently (v6 `permanent` parameter)
+$provider = new Mapbox($client, $accessToken, null, Mapbox::GEOCODING_MODE_PLACES_PERMANENT);
+
+// Forward geocoding
+$provider->geocodeQuery(GeocodeQuery::create('149 9th St, San Francisco, CA 94103'));
+
+// Reverse geocoding
+$provider->reverseQuery(ReverseQuery::fromCoordinates(48.8631507, 2.388911));
+```
+
+Options can be set as query data: `location_type` (one or more `Mapbox::TYPE_*`
+constants), `autocomplete` (the v6 replacement for the v5 `fuzzy_match`) and the v6
+Structured Input fields (`address_line1`, `address_number`, `street`, `block`, `place`,
+`region`, `postcode`, `locality`, `neighborhood`), which replace the free-text query
+when set.
+
 ### Contribute
 
 Contributions are very welcome! Send a pull request to the [main repository](https://github.com/geocoder-php/Geocoder) or 
