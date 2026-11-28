@@ -35,6 +35,7 @@
     <server name="BINGMAPS_API_KEY" value="YOUR_API_KEY"/>
     <server name="GEOIPS_API_KEY" value="YOUR_API_KEY"/>
     <server name="GEONAMES_USERNAME" value="YOUR_USERNAME"/>
+    <server name="GEONAMES_TOKEN" value="YOUR_TOKEN"/>
     <server name="GOOGLE_GEOCODING_KEY" value="YOUR_GEOCODING_KEY"/>
     <server name="GRAPHHOPPER_API_KEY" value="YOUR_API_KEY"/>
     <server name="HERE_APP_CODE" value="YOUR_APP_CODE"/>
